@@ -6,15 +6,16 @@
 #include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
+#include "stomp_angular_coordinate_test.h"
 
-void AngularCoordinateTests() {
+void AngularCoordinateBasicTests() {
   // Ok, some basic routines.  We're going to declare an angular
   // position, convert it from Survey to Equatorial to Galactic coordinates
   // and make sure that it gives us the same pixel position regardless.
   std::cout << "\n";
-  std::cout << "********************************\n";
-  std::cout << "*** Angular transforms check ***\n";
-  std::cout << "********************************\n";
+  std::cout << "*************************************\n";
+  std::cout << "*** AngularCoordinate Basic tests ***\n";
+  std::cout << "*************************************\n";
   double lambda, eta, ra, dec, gal_lat, gal_lon;
 
   lambda = 10.0;
@@ -170,13 +171,13 @@ void AngularCoordinateRotationTests() {
     start_ang.Eta() << ")\n";
 }
 
-void WeightedAngularCoordinateTests() {
+void WeightedAngularCoordinateBasicTests() {
   // Ok, some basic routines to test the extensions to the AngularCoordinate
   // available in WeightedAngularCoordinate.
   std::cout << "\n";
-  std::cout << "***************************************\n";
-  std::cout << "*** WeightedAngularCoordinate Tests ***\n";
-  std::cout << "***************************************\n";
+  std::cout << "*********************************************\n";
+  std::cout << "*** WeightedAngularCoordinate Basic Tests ***\n";
+  std::cout << "*********************************************\n";
   double lambda, eta;
 
   lambda = 10.0;
@@ -214,21 +215,11 @@ void WeightedAngularCoordinateTests() {
   std::cout << "\tAfter restoring Weight, Weight = " << ang.Weight() << "\n";
 }
 
-// Define our command-line flags.
-DEFINE_bool(all_angular_coordinate_tests, false, "Run all class unit tests.");
-DEFINE_bool(angular_coordinate_tests, false, "Run AngularCoordinate tests");
-DEFINE_bool(angular_coordinate_position_angle_tests, false,
-            "Run AngularCoordinate position angle tests");
-DEFINE_bool(angular_coordinate_rotation_tests, false,
-            "Run AngularCoordinate rotation tests");
-DEFINE_bool(weighted_angular_coordinate_tests, false,
-            "Run WeightedAngularCoordinate tests");
-
 int main(int argc, char **argv) {
-  void AngularCoordinateTests();
+  void AngularCoordinateBasicTests();
   void AngularCoordinatePositionAngleTests();
   void AngularCoordinateRotationTests();
-  void WeightedAngularCoordinateTests();
+  void WeightedAngularCoordinateBasicTests();
 
   std::string usage = "Usage: ";
   usage += argv[0];
@@ -238,8 +229,9 @@ int main(int argc, char **argv) {
   // Check that AngularCoordinate transforms from one coordinate system to
   // another work properly and that we can recover the same pixel indices from
   // transformed coordinates.
-  if (FLAGS_all_angular_coordinate_tests || FLAGS_angular_coordinate_tests)
-    AngularCoordinateTests();
+  if (FLAGS_all_angular_coordinate_tests ||
+      FLAGS_angular_coordinate_basic_tests)
+    AngularCoordinateBasicTests();
 
   // Check that the AngularCoordinate position angles are being calculated
   // correctly.
@@ -255,8 +247,8 @@ int main(int argc, char **argv) {
 
   // Check WeightedAngularCoordinate extensions to the basic AngularCoordinate.
   if (FLAGS_all_angular_coordinate_tests ||
-      FLAGS_weighted_angular_coordinate_tests)
-    WeightedAngularCoordinateTests();
+      FLAGS_weighted_angular_coordinate_basic_tests)
+    WeightedAngularCoordinateBasicTests();
 
   return 0;
 }
