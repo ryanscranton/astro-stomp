@@ -714,7 +714,7 @@ void StompMapSoftenTests() {
     ", Min weight: " << soft_map.MinWeight() << "\n";
 }
 
-DEFINE_bool(all_tests, false, "Run all unit tests.");
+DEFINE_bool(all_map_tests, false, "Run all class unit tests.");
 DEFINE_bool(map_initialization_tests, false, "Run Map initialization tests");
 DEFINE_bool(map_write_tests, false, "Run Map write tests");
 DEFINE_bool(map_read_tests, false, "Run Map read tests");
@@ -750,47 +750,47 @@ int main(int argc, char **argv) {
 
   // Check the basic routines for generating Stomp::Map instances from a list
   // of contiguous pixels.
-  if (FLAGS_all_tests || FLAGS_map_initialization_tests)
+  if (FLAGS_all_map_tests || FLAGS_map_initialization_tests)
     StompMapInitializationTests();
 
   // Check the routines for writing Stomp::Map's to file.
-  if (FLAGS_all_tests || FLAGS_map_write_tests) StompMapWriteTests();
+  if (FLAGS_all_map_tests || FLAGS_map_write_tests) StompMapWriteTests();
 
   // Check the routines for reading a Stomp::Map from a simple ASCII file.
-  if (FLAGS_all_tests || FLAGS_map_read_tests) StompMapReadTests();
+  if (FLAGS_all_map_tests || FLAGS_map_read_tests) StompMapReadTests();
 
   // Check the routines for finding the Stomp::Map Coverage and Covering.
-  if (FLAGS_all_tests || FLAGS_map_cover_tests) StompMapCoverTests();
+  if (FLAGS_all_map_tests || FLAGS_map_cover_tests) StompMapCoverTests();
 
   // Check the routines for iterating through a Stomp::Map's pixels using the
   // Begin, End and Iterate methods.
-  if (FLAGS_all_tests || FLAGS_map_iterator_tests) StompMapIteratorTests();
+  if (FLAGS_all_map_tests || FLAGS_map_iterator_tests) StompMapIteratorTests();
 
   // Check the Stomp::Map methods for checking locations against the area
   // covered by a Stomp::Map.
-  if (FLAGS_all_tests || FLAGS_map_location_tests) StompMapLocationTests();
+  if (FLAGS_all_map_tests || FLAGS_map_location_tests) StompMapLocationTests();
 
   // Check the routines for finding the area of a pixel covered by a Stomp::Map.
-  if (FLAGS_all_tests || FLAGS_map_unmasked_fraction_tests)
+  if (FLAGS_all_map_tests || FLAGS_map_unmasked_fraction_tests)
     StompMapUnmaskedFractionTests();
 
   // Check the routines for testing whether one Stomp::Map is contained in
   // another Stomp::Map.
-  if (FLAGS_all_tests || FLAGS_map_contains_tests) StompMapContainsTests();
+  if (FLAGS_all_map_tests || FLAGS_map_contains_tests) StompMapContainsTests();
 
   // Check the routine for generating random points within a Stomp::Map's area.
-  if (FLAGS_all_tests || FLAGS_map_random_points_tests)
+  if (FLAGS_all_map_tests || FLAGS_map_random_points_tests)
     StompMapRandomPointsTests();
 
   // Check the different ways of combining Stomp::Map instances.
-  if (FLAGS_all_tests || FLAGS_map_multimap_tests) StompMapMultiMapTests();
+  if (FLAGS_all_map_tests || FLAGS_map_multimap_tests) StompMapMultiMapTests();
 
   // Check the routines for breaking a Stomp::Map into sub-regions.
-  if (FLAGS_all_tests || FLAGS_map_region_tests) StompMapRegionTests();
+  if (FLAGS_all_map_tests || FLAGS_map_region_tests) StompMapRegionTests();
 
   // Check the routines for softening the maximum resolution of the
   // Map and cutting the map based on the Weight.
-  if (FLAGS_all_tests || FLAGS_map_soften_tests) StompMapSoftenTests();
+  if (FLAGS_all_map_tests || FLAGS_map_soften_tests) StompMapSoftenTests();
 
   return 0;
 }

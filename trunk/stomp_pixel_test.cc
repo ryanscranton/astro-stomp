@@ -577,7 +577,7 @@ void AnnulusIntersectionTests() {
     "\t\tElapsed Time: " << stomp_watch.ElapsedTime() << " seconds.\n";
 }
 
-DEFINE_bool(all_tests, false, "Run all unit tests.");
+DEFINE_bool(all_pixel_tests, false, "Run all class unit tests.");
 DEFINE_bool(pixel_resolution_tests, false, "Run Pixel resolution tests");
 DEFINE_bool(stripe_tests, false, "Run Pixel stripe tests");
 DEFINE_bool(pixel_xy_tests, false, "Run Pixel XY tests");
@@ -600,22 +600,23 @@ int main(int argc, char **argv) {
   google::ParseCommandLineFlags(&argc, &argv, true);
 
   // Check that the hierarchical resolution scaling routines work properly.
-  if (FLAGS_all_tests || FLAGS_pixel_resolution_tests) PixelResolutionTests();
+  if (FLAGS_all_pixel_tests || FLAGS_pixel_resolution_tests)
+    PixelResolutionTests();
 
   // Check that the routines for generating the X-Y bounds of a given
   // region work correctly.
-  if (FLAGS_all_tests || FLAGS_pixel_xy_tests) PixelXYTests();
+  if (FLAGS_all_pixel_tests || FLAGS_pixel_xy_tests) PixelXYTests();
 
   // Quick checks for the various routines to return the pixel bounds in the
   // various coordinate systems.
-  if (FLAGS_all_tests || FLAGS_pixel_bound_tests) PixelBoundTests();
+  if (FLAGS_all_pixel_tests || FLAGS_pixel_bound_tests) PixelBoundTests();
 
   // Check the routines for taking the X-Y bounds and returning a list of pixels
   // with the specified radius.
-  if (FLAGS_all_tests || FLAGS_within_radius_tests) WithinRadiusTests();
+  if (FLAGS_all_pixel_tests || FLAGS_within_radius_tests) WithinRadiusTests();
 
   // Check the routines for determining whether or not annuli intersect pixels.
-  if (FLAGS_all_tests || FLAGS_annulus_intersection_tests)
+  if (FLAGS_all_pixel_tests || FLAGS_annulus_intersection_tests)
     AnnulusIntersectionTests();
 
   return 0;

@@ -544,7 +544,7 @@ void StompTreePixelNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
-DEFINE_bool(all_tests, false, "Run all unit tests.");
+DEFINE_bool(all_tree_pixel_tests, false, "Run all class unit tests.");
 DEFINE_bool(tree_pixel_tests, false, "Run TreePixel tests");
 DEFINE_bool(tree_pixel_pair_tests, false, "Run TreePixel pair tests");
 DEFINE_bool(tree_pixel_coverage_tests, false, "Run TreePixel coverage tests");
@@ -567,21 +567,23 @@ int main(int argc, char **argv) {
 
   // Check that the Stomp::TreePixel class is able to add points and
   // automatically generate sub-pixels.
-  if (FLAGS_all_tests || FLAGS_tree_pixel_tests) StompTreePixelTests();
+  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_tests)
+    StompTreePixelTests();
 
   // Check the Stomp::TreePixel pair-finding routines.
-  if (FLAGS_all_tests || FLAGS_tree_pixel_pair_tests) StompTreePixelPairTests();
+  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_pair_tests)
+    StompTreePixelPairTests();
 
   // Check the Stomp::TreePixel Coverage method works as advertised.
-  if (FLAGS_all_tests || FLAGS_tree_pixel_coverage_tests)
+  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_coverage_tests)
     StompTreePixelCoverageTests();
 
   // Checking pair finding routines with Field values.
-  if (FLAGS_all_tests || FLAGS_tree_pixel_field_pair_tests)
+  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_field_pair_tests)
     StompTreePixelFieldPairTests();
 
   // Checking nearest neighbor finding routines.
-  if (FLAGS_all_tests || FLAGS_tree_pixel_neighbor_tests)
+  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_neighbor_tests)
     StompTreePixelNeighborTests();
 
   return 0;

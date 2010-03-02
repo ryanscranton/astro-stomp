@@ -2,7 +2,7 @@ CC = g++
 LD = g++
 CCFLAGS = -O6 -Wall
 LDFLAGS = -lm -L./ -lstomp -lgflags
-LIB=libstomp.so
+LIB=libstomp.a
 
 CORE = stomp_core
 ANGULAR_COORDINATE = stomp_angular_coordinate
@@ -16,7 +16,6 @@ MAP = stomp_map
 SCALAR_MAP = stomp_scalar_map
 TREE_MAP = stomp_tree_map
 FOOTPRINT = stomp_footprint
-COSMOLOGY = stomp_cosmology
 UTIL = stomp_util
 
 TEST_EXEC = stomp_unit_test
@@ -30,53 +29,83 @@ lib: $(LIB)
 
 $(LIB): $(CORE).o $(ANGULAR_COORDINATE).o $(ANGULAR_BIN).o $(ANGULAR_CORRELATION).o $(PIXEL).o $(SCALAR_PIXEL).o $(TREE_PIXEL).o $(BASE_MAP).o $(MAP).o $(SCALAR_MAP).o $(TREE_MAP).o $(FOOTPRINT).o $(UTIL).o
 	@ echo linking $(LIB)
-	$(CC) -shared -o $(LIB) $(CORE).o $(ANGULAR_COORDINATE).o $(ANGULAR_BIN).o $(ANGULAR_CORRELATION).o $(PIXEL).o $(SCALAR_PIXEL).o $(TREE_PIXEL).o $(BASE_MAP).o $(MAP).o $(SCALAR_MAP).o $(TREE_MAP).o $(FOOTPRINT).o $(UTIL).o
+	ar -rv $(LIB) $(CORE).o $(ANGULAR_COORDINATE).o $(ANGULAR_BIN).o $(ANGULAR_CORRELATION).o $(PIXEL).o $(SCALAR_PIXEL).o $(TREE_PIXEL).o $(BASE_MAP).o $(MAP).o $(SCALAR_MAP).o $(TREE_MAP).o $(FOOTPRINT).o $(UTIL).o
 
 $(CORE).o: $(CORE).cc $(CORE).h
-	$(CC) -c -fPIC $(CCFLAGS) $(CORE).cc
+	$(CC) -c $(CCFLAGS) $(CORE).cc
 
 $(ANGULAR_COORDINATE).o: $(ANGULAR_COORDINATE).cc $(ANGULAR_COORDINATE).h $(CORE).h $(PIXEL).h
-	$(CC) -c -fPIC $(CCFLAGS) $(ANGULAR_COORDINATE).cc
+	$(CC) -c $(CCFLAGS) $(ANGULAR_COORDINATE).cc
 
 $(ANGULAR_BIN).o: $(ANGULAR_BIN).cc $(ANGULAR_BIN).h $(CORE).h
-	$(CC) -c -fPIC $(CCFLAGS) $(ANGULAR_BIN).cc
+	$(CC) -c $(CCFLAGS) $(ANGULAR_BIN).cc
 
 $(ANGULAR_CORRELATION).o: $(ANGULAR_CORRELATION).cc $(ANGULAR_CORRELATION).h $(CORE).h $(ANGULAR_COORDINATE).h $(ANGULAR_BIN).h $(MAP).h $(SCALAR_MAP).h $(TREE_MAP).h
-	$(CC) -c -fPIC $(CCFLAGS) $(ANGULAR_CORRELATION).cc
+	$(CC) -c $(CCFLAGS) $(ANGULAR_CORRELATION).cc
 
 $(PIXEL).o: $(PIXEL).cc $(PIXEL).h $(CORE).h $(ANGULAR_COORDINATE).h MersenneTwister.h $(ANGULAR_BIN).h
-	$(CC) -c -fPIC $(CCFLAGS) $(PIXEL).cc
+	$(CC) -c $(CCFLAGS) $(PIXEL).cc
 
 $(SCALAR_PIXEL).o: $(SCALAR_PIXEL).cc $(SCALAR_PIXEL).h $(CORE).h $(PIXEL).h
-	$(CC) -c -fPIC $(CCFLAGS) $(SCALAR_PIXEL).cc
+	$(CC) -c $(CCFLAGS) $(SCALAR_PIXEL).cc
 
 $(TREE_PIXEL).o: $(TREE_PIXEL).cc $(TREE_PIXEL).h $(CORE).h $(PIXEL).h $(ANGULAR_COORDINATE).h $(ANGULAR_BIN).h $(ANGULAR_CORRELATION).h
-	$(CC) -c -fPIC $(CCFLAGS) $(TREE_PIXEL).cc
+	$(CC) -c $(CCFLAGS) $(TREE_PIXEL).cc
 
 $(BASE_MAP).o: $(BASE_MAP).cc $(BASE_MAP).h $(CORE).h $(PIXEL).h
-	$(CC) -c -fPIC $(CCFLAGS) $(BASE_MAP).cc
+	$(CC) -c $(CCFLAGS) $(BASE_MAP).cc
 
 $(MAP).o: $(MAP).cc $(MAP).h $(CORE).h $(ANGULAR_COORDINATE).h $(PIXEL).h $(BASE_MAP).h
-	$(CC) -c -fPIC $(CCFLAGS) $(MAP).cc
+	$(CC) -c $(CCFLAGS) $(MAP).cc
 
 $(SCALAR_MAP).o: $(SCALAR_MAP).cc $(SCALAR_MAP).h $(CORE).h $(SCALAR_PIXEL).h $(ANGULAR_BIN).h $(BASE_MAP).h
-	$(CC) -c -fPIC $(CCFLAGS) $(SCALAR_MAP).cc
+	$(CC) -c $(CCFLAGS) $(SCALAR_MAP).cc
 
 $(TREE_MAP).o: $(TREE_MAP).cc $(TREE_MAP).h $(CORE).h $(TREE_PIXEL).h $(BASE_MAP).h $(ANGULAR_COORDINATE).h $(ANGULAR_BIN).h $(ANGULAR_CORRELATION).h
-	$(CC) -c -fPIC $(CCFLAGS) $(TREE_MAP).cc
+	$(CC) -c $(CCFLAGS) $(TREE_MAP).cc
 
 $(FOOTPRINT).o: $(FOOTPRINT).cc $(FOOTPRINT).h $(CORE).h $(PIXEL).h $(MAP).h $(ANGULAR_COORDINATE).h
-	$(CC) -c -fPIC $(CCFLAGS) $(FOOTPRINT).cc
+	$(CC) -c $(CCFLAGS) $(FOOTPRINT).cc
 
 $(UTIL).o: $(UTIL).cc $(UTIL).h $(CORE).h
-	$(CC) -c -fPIC $(CCFLAGS) $(UTIL).cc
+	$(CC) -c $(CCFLAGS) $(UTIL).cc
 
 # unit tests
 test: $(TEST_EXEC).o
-	$(LD) $(TEST_EXEC).o $(LDFLAGS) -o $(TEST_EXEC)
+	$(LD) $(TEST_EXEC).o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(FOOTPRINT)_test.o $(UTIL)_test.o $(LDFLAGS) -o $(TEST_EXEC)
 
 $(TEST_EXEC).o: $(LIB) $(TEST_EXEC).cc
-	$(CC) -c -fPIC $(CCFLAGS) $(TEST_EXEC).cc
+	$(CC) -c $(CCFLAGS) $(TEST_EXEC).cc
+
+$(ANGULAR_COORDINATE)_test.o: $(ANGULAR_COORDINATE)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(ANGULAR_COORDINATE)_test.cc
+
+$(ANGULAR_CORRELATION)_test.o: $(ANGULAR_CORRELATION)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(ANGULAR_CORRELATION)_test.cc
+
+$(PIXEL)_test.o: $(PIXEL)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(PIXEL)_test.cc
+
+$(SCALAR_PIXEL)_test.o: $(SCALAR_PIXEL)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(SCALAR_PIXEL)_test.cc
+
+$(TREE_PIXEL)_test.o: $(TREE_PIXEL)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(TREE_PIXEL)_test.cc
+
+$(MAP)_test.o: $(MAP)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(MAP)_test.cc
+
+$(SCALAR_MAP)_test.o: $(SCALAR_MAP)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(SCALAR_MAP)_test.cc
+
+$(TREE_MAP)_test.o: $(TREE_MAP)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(TREE_MAP)_test.cc
+
+$(FOOTPRINT)_test.o: $(FOOTPRINT)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(FOOTPRINT).cc
+
+$(UTIL)_test.o: $(UTIL)_test.cc $(LIB)
+	$(CC) -c $(CCFLAGS) $(UTIL)_test.cc
 
 
 # executable to generate random points and write various
