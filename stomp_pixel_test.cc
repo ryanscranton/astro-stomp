@@ -7,7 +7,7 @@
 #include "stomp_util.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
-
+#include "stomp_pixel_test.h"
 
 void PixelResolutionTests() {
   // Ok, now we'll try moving around a bit in resolution space.
@@ -61,13 +61,13 @@ void PixelResolutionTests() {
   }
 }
 
-void StripeTests() {
+void PixelStripeTests() {
   // Now, we'll do some spherical geometry Tests.  First up, we check the
   // multi-resolution stripe function.
   std::cout << "\n";
-  std::cout << "*******************\n";
-  std::cout << "*** Stripe test ***\n";
-  std::cout << "*******************\n";
+  std::cout << "*************************\n";
+  std::cout << "*** Pixel Stripe test ***\n";
+  std::cout << "*************************\n";
   Stomp::AngularCoordinate ang(20.0, 20.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
   tmp_pix.SetResolution(Stomp::MaxPixelResolution);
@@ -284,7 +284,7 @@ void PixelBoundTests() {
   }
 }
 
-void WithinRadiusTests() {
+void PixelWithinRadiusTests() {
   // Now we check our WithinRadius routine.  We'll stick with a 10 degree
   // radius, but cut the maximum resolution to check to 256 to save time.
   std::cout << "\n";
@@ -337,7 +337,7 @@ void WithinRadiusTests() {
   }
 }
 
-void AnnulusIntersectionTests() {
+void PixelAnnulusIntersectionTests() {
   std::cout << "\n";
   std::cout << "*********************************\n";
   std::cout << "*** Annulus Intersection Test ***\n";
@@ -577,22 +577,13 @@ void AnnulusIntersectionTests() {
     "\t\tElapsed Time: " << stomp_watch.ElapsedTime() << " seconds.\n";
 }
 
-DEFINE_bool(all_pixel_tests, false, "Run all class unit tests.");
-DEFINE_bool(pixel_resolution_tests, false, "Run Pixel resolution tests");
-DEFINE_bool(stripe_tests, false, "Run Pixel stripe tests");
-DEFINE_bool(pixel_xy_tests, false, "Run Pixel XY tests");
-DEFINE_bool(pixel_bound_tests, false, "Run Pixel bound tests");
-DEFINE_bool(within_radius_tests, false, "Run Pixel WithinRadius tests");
-DEFINE_bool(annulus_intersection_tests, false,
-            "Run Pixel AnnulusIntersection tests");
-
 int main(int argc, char **argv) {
   void PixelResolutionTests();
-  void StripeTests();
+  void PixelStripeTests();
   void PixelXYTests();
   void PixelBoundTests();
-  void WithinRadiusTests();
-  void AnnulusIntersectionTests();
+  void PixelWithinRadiusTests();
+  void PixelAnnulusIntersectionTests();
 
   std::string usage = "Usage: ";
   usage += argv[0];
@@ -605,6 +596,10 @@ int main(int argc, char **argv) {
 
   // Check that the routines for generating the X-Y bounds of a given
   // region work correctly.
+  if (FLAGS_all_pixel_tests || FLAGS_pixel_stripe_tests) PixelStripeTests();
+
+  // Check that the routines for generating the X-Y bounds of a given
+  // region work correctly.
   if (FLAGS_all_pixel_tests || FLAGS_pixel_xy_tests) PixelXYTests();
 
   // Quick checks for the various routines to return the pixel bounds in the
@@ -613,11 +608,12 @@ int main(int argc, char **argv) {
 
   // Check the routines for taking the X-Y bounds and returning a list of pixels
   // with the specified radius.
-  if (FLAGS_all_pixel_tests || FLAGS_within_radius_tests) WithinRadiusTests();
+  if (FLAGS_all_pixel_tests || FLAGS_pixel_within_radius_tests)
+    PixelWithinRadiusTests();
 
   // Check the routines for determining whether or not annuli intersect pixels.
-  if (FLAGS_all_pixel_tests || FLAGS_annulus_intersection_tests)
-    AnnulusIntersectionTests();
+  if (FLAGS_all_pixel_tests || FLAGS_pixel_annulus_intersection_tests)
+    PixelAnnulusIntersectionTests();
 
   return 0;
 }

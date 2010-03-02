@@ -7,15 +7,16 @@
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
 #include "stomp_scalar_pixel.h"
+#include "stomp_scalar_pixel_test.h"
 
-void StompScalarPixelTests() {
+void ScalarPixelBasicTests() {
   // Before moving on to the map tests, we need to verify that the
   // Stomp::ScalarPixel, a derived class from Stomp::Pixel, is working
   // properly. Let's start with some initialization.
   std::cout << "\n";
-  std::cout << "******************************\n";
-  std::cout << "*** StompScalarPixel Tests ***\n";
-  std::cout << "******************************\n";
+  std::cout << "*****************************\n";
+  std::cout << "*** ScalarPixel Basic Tests ***\n";
+  std::cout << "*****************************\n";
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::ScalarPixel* tmp_scalar =
     new Stomp::ScalarPixel(ang, 256, 1.0, 1.0);
@@ -78,11 +79,8 @@ void StompScalarPixelTests() {
     "), GalLon: " << tmp_scalar->GalLon() << " (" << ang.GalLon() << ")\n";
 }
 
-DEFINE_bool(all_scalar_pixel_tests, false, "Run all class unit tests.");
-DEFINE_bool(scalar_pixel_tests, false, "Run ScalarPixel tests");
-
 int main(int argc, char **argv) {
-  void StompScalarPixelTests();
+  void ScalarPixelBasicTests();
 
   std::string usage = "Usage: ";
   usage += argv[0];
@@ -91,8 +89,8 @@ int main(int argc, char **argv) {
 
   // Check the basic inheritance of the Stomp::ScalarPixel class from
   // Stomp::Pixel.
-  if (FLAGS_scalar_pixel_all_tests || FLAGS_scalar_pixel_tests)
-    StompScalarPixelTests();
+  if (FLAGS_scalar_pixel_all_tests || FLAGS_scalar_pixel_basic_tests)
+    ScalarPixelBasicTests();
 
   return 0;
 }

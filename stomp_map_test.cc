@@ -7,17 +7,18 @@
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
 #include "stomp_map.h"
+#include "stomp_map_test.h"
 
-void StompMapInitializationTests() {
+void MapBasicTests() {
   // Ok, now we're ready to start playing with the Stomp::Map interfaces.  We'll
   // start by making a vector of pixels at the same resolution that cover a
   // patch of sky.  Then, we invoke the Stomp::Map constructor, which should
   // resolve that vector into a smaller group of pixels at different
   // resolutions that cover the same area.
   std::cout << "\n";
-  std::cout << "*************************************\n";
-  std::cout << "*** StompMap Initialization Tests ***\n";
-  std::cout << "*************************************\n";
+  std::cout << "***********************\n";
+  std::cout << "*** Map Basic Tests ***\n";
+  std::cout << "***********************\n";
   double theta = 3.0;
   double true_circle_area =
     (1.0 - cos(theta*Stomp::DegToRad))*
@@ -44,11 +45,11 @@ void StompMapInitializationTests() {
     " square degrees.\n";
 }
 
-void StompMapWriteTests() {
+void MapWriteTests() {
   std::cout << "\n";
-  std::cout << "****************************\n";
-  std::cout << "*** StompMap Write Tests ***\n";
-  std::cout << "****************************\n";
+  std::cout << "***********************\n";
+  std::cout << "*** Map Write Tests ***\n";
+  std::cout << "***********************\n";
 
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
@@ -57,16 +58,16 @@ void StompMapWriteTests() {
   tmp_pix.WithinRadius(theta, annulus_pix);
   Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
 
-  std::string output_file_name = "StompMap.pix";
+  std::string output_file_name = "Map.pix";
   std::cout << "\t Writing Stomp::Map to " << output_file_name.c_str() << "\n";
   stomp_map->Write(output_file_name);
 }
 
-void StompMapReadTests() {
+void MapReadTests() {
   std::cout << "\n";
-  std::cout << "***************************\n";
-  std::cout << "*** StompMap Read Tests ***\n";
-  std::cout << "***************************\n";
+  std::cout << "**********************\n";
+  std::cout << "*** Map Read Tests ***\n";
+  std::cout << "**********************\n";
 
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
@@ -106,11 +107,11 @@ void StompMapReadTests() {
       stomp_map->PixelCount(resolution) << ")\n";
 }
 
-void StompMapCoverTests() {
+void MapCoverTests() {
   std::cout << "\n";
-  std::cout << "****************************\n";
-  std::cout << "*** StompMap Cover Tests ***\n";
-  std::cout << "****************************\n";
+  std::cout << "***********************\n";
+  std::cout << "*** Map Cover Tests ***\n";
+  std::cout << "***********************\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -139,11 +140,11 @@ void StompMapCoverTests() {
   }
 }
 
-void StompMapIteratorTests() {
+void MapIteratorTests() {
   std::cout << "\n";
-  std::cout << "*******************************\n";
-  std::cout << "*** StompMap Iterator Tests ***\n";
-  std::cout << "*******************************\n";
+  std::cout << "**************************\n";
+  std::cout << "*** Map Iterator Tests ***\n";
+  std::cout << "**************************\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -211,11 +212,11 @@ void StompMapIteratorTests() {
       " (" << stomp_map->PixelCount(resolution) << ")\n";
 }
 
-void StompMapLocationTests() {
+void MapLocationTests() {
   std::cout << "\n";
-  std::cout << "*******************************\n";
-  std::cout << "*** StompMap Location Tests ***\n";
-  std::cout << "*******************************\n";
+  std::cout << "**************************\n";
+  std::cout << "*** Map Location Tests ***\n";
+  std::cout << "**************************\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -260,14 +261,14 @@ void StompMapLocationTests() {
   }
 }
 
-void StompMapUnmaskedFractionTests() {
+void MapUnmaskedFractionTests() {
   // Ok, now to test the unmasked fraction code.  We'll scroll through the
   // the superpixels and make sure that the area returned matches the area
   // we've already established for them.
   std::cout << "\n";
-  std::cout << "****************************************\n";
-  std::cout << "*** StompMap Unmasked Fraction Tests ***\n";
-  std::cout << "****************************************\n";
+  std::cout << "***********************************\n";
+  std::cout << "*** Map Unmasked Fraction Tests ***\n";
+  std::cout << "***********************************\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -285,13 +286,13 @@ void StompMapUnmaskedFractionTests() {
   }
 }
 
-void StompMapContainsTests() {
+void MapContainsTests() {
   // Ok, now we want to test the various routines for determining whether or
   // not a map is contained within another.
   std::cout << "\n";
-  std::cout << "******************************\n";
-  std::cout << "*** StompMap Contain Tests ***\n";
-  std::cout << "******************************\n";
+  std::cout << "*************************\n";
+  std::cout << "*** Map Contain Tests ***\n";
+  std::cout << "*************************\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -347,14 +348,14 @@ void StompMapContainsTests() {
   }
 }
 
-void StompMapRandomPointsTests() {
+void MapRandomPointsTests() {
   // Alright, now we check the random position generator.  This should give
   // us back a fixed number of randomly selected positions within our original
   // map, so we'll check that that's happening.
   std::cout << "\n";
-  std::cout << "************************************\n";
-  std::cout << "*** StompMap Random Points Tests ***\n";
-  std::cout << "************************************\n";
+  std::cout << "*******************************\n";
+  std::cout << "*** Map Random Points Tests ***\n";
+  std::cout << "*******************************\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -407,15 +408,15 @@ void StompMapRandomPointsTests() {
       " points within far away map.\n";
 }
 
-void StompMapMultiMapTests() {
+void MapMultiMapTests() {
   // Ok, now we want to test the various routines for working with multiple
   // stomp maps.  We'll use the same basic routines to generate two new maps,
   // one that should partially overlap our original map and one that is well
   // away from the other two.
   std::cout << "\n";
-  std::cout << "********************************\n";
-  std::cout << "*** StompMap Multi-Map Tests ***\n";
-  std::cout << "********************************\n";
+  std::cout << "***************************\n";
+  std::cout << "*** Map Multi-Map Tests ***\n";
+  std::cout << "***************************\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -591,13 +592,13 @@ void StompMapMultiMapTests() {
   delete stomp_map_faraway;
 }
 
-void StompMapRegionTests() {
+void MapRegionTests() {
   // Ok, now we want to test the various routines for breaking our map into
   // nearly equal sub-regions.
   std::cout << "\n";
-  std::cout << "*****************************\n";
-  std::cout << "*** StompMap Region Tests ***\n";
-  std::cout << "*****************************\n\n";
+  std::cout << "************************\n";
+  std::cout << "*** Map Region Tests ***\n";
+  std::cout << "************************\n\n";
   double theta = 3.0;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
@@ -648,13 +649,13 @@ void StompMapRegionTests() {
   }
 }
 
-void StompMapSoftenTests() {
+void MapSoftenTests() {
   // Ok, now we test our routines for softening the maximum resolution of the
   // Map and cut the map based on the Weight.
   std::cout << "\n";
-  std::cout << "*****************************\n";
-  std::cout << "*** StompMap Soften Tests ***\n";
-  std::cout << "*****************************\n\n";
+  std::cout << "************************\n";
+  std::cout << "*** Map Soften Tests ***\n";
+  std::cout << "************************\n\n";
   double theta = 3.0;
   uint16_t resolution = 256;
   uint16_t soft_resolution = resolution/8;
@@ -714,34 +715,19 @@ void StompMapSoftenTests() {
     ", Min weight: " << soft_map.MinWeight() << "\n";
 }
 
-DEFINE_bool(all_map_tests, false, "Run all class unit tests.");
-DEFINE_bool(map_initialization_tests, false, "Run Map initialization tests");
-DEFINE_bool(map_write_tests, false, "Run Map write tests");
-DEFINE_bool(map_read_tests, false, "Run Map read tests");
-DEFINE_bool(map_cover_tests, false, "Run Map cover tests");
-DEFINE_bool(map_iterator_tests, false, "Run Map iterator tests");
-DEFINE_bool(map_location_tests, false, "Run Map location tests");
-DEFINE_bool(map_unmasked_fraction_tests, false,
-            "Run Map unmasked fraction tests");
-DEFINE_bool(map_contains_tests, false, "Run Map Contains tests");
-DEFINE_bool(map_random_points_tests, false, "Run Map random points tests");
-DEFINE_bool(map_multimap_tests, false, "Run Map multi-map tests");
-DEFINE_bool(map_region_tests, false, "Run Map region tests");
-DEFINE_bool(map_soften_tests, false, "Run Map soften tests");
-
 int main(int argc, char **argv) {
-  void StompMapInitializationTests();
-  void StompMapWriteTests();
-  void StompMapReadTests();
-  void StompMapCoverTests();
-  void StompMapIteratorTests();
-  void StompMapLocationTests();
-  void StompMapUnmaskedFractionTests();
-  void StompMapContainsTests();
-  void StompMapRandomPointsTests();
-  void StompMapMultiMapTests();
-  void StompMapRegionTests();
-  void StompMapSoftenTests();
+  void MapBasicTests();
+  void MapWriteTests();
+  void MapReadTests();
+  void MapCoverTests();
+  void MapIteratorTests();
+  void MapLocationTests();
+  void MapUnmaskedFractionTests();
+  void MapContainsTests();
+  void MapRandomPointsTests();
+  void MapMultiMapTests();
+  void MapRegionTests();
+  void MapSoftenTests();
 
   std::string usage = "Usage: ";
   usage += argv[0];
@@ -750,47 +736,46 @@ int main(int argc, char **argv) {
 
   // Check the basic routines for generating Stomp::Map instances from a list
   // of contiguous pixels.
-  if (FLAGS_all_map_tests || FLAGS_map_initialization_tests)
-    StompMapInitializationTests();
+  if (FLAGS_all_map_tests || FLAGS_map_basic_tests) MapBasicTests();
 
   // Check the routines for writing Stomp::Map's to file.
-  if (FLAGS_all_map_tests || FLAGS_map_write_tests) StompMapWriteTests();
+  if (FLAGS_all_map_tests || FLAGS_map_write_tests) MapWriteTests();
 
   // Check the routines for reading a Stomp::Map from a simple ASCII file.
-  if (FLAGS_all_map_tests || FLAGS_map_read_tests) StompMapReadTests();
+  if (FLAGS_all_map_tests || FLAGS_map_read_tests) MapReadTests();
 
   // Check the routines for finding the Stomp::Map Coverage and Covering.
-  if (FLAGS_all_map_tests || FLAGS_map_cover_tests) StompMapCoverTests();
+  if (FLAGS_all_map_tests || FLAGS_map_cover_tests) MapCoverTests();
 
   // Check the routines for iterating through a Stomp::Map's pixels using the
   // Begin, End and Iterate methods.
-  if (FLAGS_all_map_tests || FLAGS_map_iterator_tests) StompMapIteratorTests();
+  if (FLAGS_all_map_tests || FLAGS_map_iterator_tests) MapIteratorTests();
 
   // Check the Stomp::Map methods for checking locations against the area
   // covered by a Stomp::Map.
-  if (FLAGS_all_map_tests || FLAGS_map_location_tests) StompMapLocationTests();
+  if (FLAGS_all_map_tests || FLAGS_map_location_tests) MapLocationTests();
 
   // Check the routines for finding the area of a pixel covered by a Stomp::Map.
   if (FLAGS_all_map_tests || FLAGS_map_unmasked_fraction_tests)
-    StompMapUnmaskedFractionTests();
+    MapUnmaskedFractionTests();
 
   // Check the routines for testing whether one Stomp::Map is contained in
   // another Stomp::Map.
-  if (FLAGS_all_map_tests || FLAGS_map_contains_tests) StompMapContainsTests();
+  if (FLAGS_all_map_tests || FLAGS_map_contains_tests) MapContainsTests();
 
   // Check the routine for generating random points within a Stomp::Map's area.
   if (FLAGS_all_map_tests || FLAGS_map_random_points_tests)
-    StompMapRandomPointsTests();
+    MapRandomPointsTests();
 
   // Check the different ways of combining Stomp::Map instances.
-  if (FLAGS_all_map_tests || FLAGS_map_multimap_tests) StompMapMultiMapTests();
+  if (FLAGS_all_map_tests || FLAGS_map_multimap_tests) MapMultiMapTests();
 
   // Check the routines for breaking a Stomp::Map into sub-regions.
-  if (FLAGS_all_map_tests || FLAGS_map_region_tests) StompMapRegionTests();
+  if (FLAGS_all_map_tests || FLAGS_map_region_tests) MapRegionTests();
 
   // Check the routines for softening the maximum resolution of the
   // Map and cutting the map based on the Weight.
-  if (FLAGS_all_map_tests || FLAGS_map_soften_tests) StompMapSoftenTests();
+  if (FLAGS_all_map_tests || FLAGS_map_soften_tests) MapSoftenTests();
 
   return 0;
 }

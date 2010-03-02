@@ -11,12 +11,13 @@
 #include "stomp_pixel.h"
 #include "stomp_map.h"
 #include "stomp_tree_map.h"
+#include "stomp_tree_map_test.h"
 
-void StompTreeMapBasicTests() {
+void TreeMapBasicTests() {
   std::cout << "\n";
-  std::cout << "********************************\n";
-  std::cout << "*** StompTreeMap Basic Tests ***\n";
-  std::cout << "********************************\n";
+  std::cout << "***************************\n";
+  std::cout << "*** TreeMap Basic Tests ***\n";
+  std::cout << "***************************\n";
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points_per_node = 200;
   // Make the map at a non-standard resolution so that we can test the
@@ -89,11 +90,11 @@ void StompTreeMapBasicTests() {
   std::cout << "\n";
 }
 
-void StompTreeMapPairTests() {
+void TreeMapPairTests() {
   std::cout << "\n";
-  std::cout << "*********************************\n";
-  std::cout << "*** Stomp::TreeMap Pair Tests ***\n";
-  std::cout << "*********************************\n";
+  std::cout << "**************************\n";
+  std::cout << "*** TreeMap Pair Tests ***\n";
+  std::cout << "**************************\n";
   uint16_t n_points_per_node = 100;
   uint16_t resolution = 8;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
@@ -236,11 +237,11 @@ void StompTreeMapPairTests() {
   }
 }
 
-void StompTreeMapAreaTests() {
+void TreeMapAreaTests() {
   std::cout << "\n";
-  std::cout << "*******************************\n";
-  std::cout << "*** StompTreeMap Area Tests ***\n";
-  std::cout << "*******************************\n";
+  std::cout << "**************************\n";
+  std::cout << "*** TreeMap Area Tests ***\n";
+  std::cout << "**************************\n";
   // The goal here is to check that the estimate of the area associated with
   // the TreeMap improves as we add points.
 
@@ -292,11 +293,11 @@ void StompTreeMapAreaTests() {
   }
 }
 
-void StompTreeMapRegionTests() {
+void TreeMapRegionTests() {
   std::cout << "\n";
-  std::cout << "*********************************\n";
-  std::cout << "*** StompTreeMap Region Tests ***\n";
-  std::cout << "*********************************\n";
+  std::cout << "****************************\n";
+  std::cout << "*** TreeMap Region Tests ***\n";
+  std::cout << "****************************\n";
   // The goal here is to check that the regionation code works, provided that
   // we have a dense sampling of our data area.
 
@@ -381,12 +382,12 @@ void StompTreeMapRegionTests() {
   }
 }
 
-void StompTreeMapFieldPairTests() {
+void TreeMapFieldPairTests() {
   // Checking pair finding routines with Field values.
   std::cout << "\n";
-  std::cout << "*************************************\n";
-  std::cout << "*** StompTreeMap Field Pair Tests ***\n";
-  std::cout << "*************************************\n";
+  std::cout << "********************************\n";
+  std::cout << "*** TreeMap Field Pair Tests ***\n";
+  std::cout << "********************************\n";
 
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points_per_node = 200;
@@ -566,12 +567,12 @@ void StompTreeMapFieldPairTests() {
     "\n\t\t\tTime elapsed = " << stomp_watch.ElapsedTime() << "s\n";
 }
 
-void StompTreeMapNeighborTests() {
+void TreeMapNeighborTests() {
   // Checking nearest neighbor finding routines.
   std::cout << "\n";
-  std::cout << "*******************************************\n";
-  std::cout << "*** StompTreeMap Nearest Neighbor Tests ***\n";
-  std::cout << "*******************************************\n";
+  std::cout << "**************************************\n";
+  std::cout << "*** TreeMap Nearest Neighbor Tests ***\n";
+  std::cout << "**************************************\n";
 
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points_per_node = 200;
@@ -737,22 +738,13 @@ void StompTreeMapNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
-DEFINE_bool(all_tree_map_tests, false, "Run all class unit tests.");
-DEFINE_bool(tree_map_basic_tests, false, "Run TreeMap basic tests");
-DEFINE_bool(tree_map_pair_tests, false, "Run TreeMap pair tests");
-DEFINE_bool(tree_map_area_tests, false, "Run TreeMap area tests");
-DEFINE_bool(tree_map_region_tests, false, "Run TreeMap region tests");
-DEFINE_bool(tree_map_field_pair_tests, false, "Run TreeMap field pair tests");
-DEFINE_bool(tree_map_neighbor_tests, false,
-            "Run TreeMap nearest neighbor tests");
-
 int main(int argc, char **argv) {
-  void StompTreeMapTests();
-  void StompTreeMapPairTests();
-  void StompTreeMapAreaTests();
-  void StompTreeMapRegionTests();
-  void StompTreeMapFieldPairTests();
-  void StompTreeMapNeighborTests();
+  void TreeMapBasicTests();
+  void TreeMapPairTests();
+  void TreeMapAreaTests();
+  void TreeMapRegionTests();
+  void TreeMapFieldPairTests();
+  void TreeMapNeighborTests();
 
   std::string usage = "Usage: ";
   usage += argv[0];
@@ -762,28 +754,28 @@ int main(int argc, char **argv) {
   // Check that the Stomp::TreeMap class is able to add points and
   // automatically generate sub-pixels.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_basic_tests)
-    StompTreeMapBasicTests();
+    TreeMapBasicTests();
 
   // Check the Stomp::TreeMap pair-finding routines.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_pair_tests)
-    StompTreeMapPairTests();
+    TreeMapPairTests();
 
   // Check that the Stomp::TreeMap class area calculations improve as more
   // points are added to the map.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_area_tests)
-    StompTreeMapAreaTests();
+    TreeMapAreaTests();
 
   // Check that the Stomp::TreeMap class is able to regionate properly.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_region_tests)
-    StompTreeMapRegionTests();
+    TreeMapRegionTests();
 
   // Checking pair finding routines with Field values.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_field_pair_tests)
-    StompTreeMapFieldPairTests();
+    TreeMapFieldPairTests();
 
   // Checking nearest neighbor routines.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_neighbor_tests)
-    StompTreeMapNeighborTests();
+    TreeMapNeighborTests();
 
   return 0;
 }

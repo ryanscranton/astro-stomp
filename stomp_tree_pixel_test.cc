@@ -9,15 +9,16 @@
 #include "stomp_angular_correlation.h"
 #include "stomp_tree_pixel.h"
 #include "stomp_util.h"
+#include "stomp_tree_pixel_test.h"
 
-void StompTreePixelTests() {
+void TreePixelBasicTests() {
   // Before moving on to the map tests, we need to verify that the
   // Stomp::TreePixel, a derived class from Stomp::Pixel, is working properly.
   //  Let's start with some initialization.
   std::cout << "\n";
-  std::cout << "******************************\n";
-  std::cout << "*** Stomp::TreePixel Tests ***\n";
-  std::cout << "******************************\n";
+  std::cout << "*****************************\n";
+  std::cout << "*** TreePixel Basic Tests ***\n";
+  std::cout << "*****************************\n";
   Stomp::WeightedAngularCoordinate* ang =
     new Stomp::WeightedAngularCoordinate(60.0, 0.0, 1.0,
 					 Stomp::AngularCoordinate::Survey);
@@ -55,11 +56,11 @@ void StompTreePixelTests() {
     " points to this pixel\n";
 }
 
-void StompTreePixelPairTests() {
+void TreePixelPairTests() {
   std::cout << "\n";
-  std::cout << "*********************************\n";
-  std::cout << "*** StompTreePixel Pair Tests ***\n";
-  std::cout << "*********************************\n";
+  std::cout << "****************************\n";
+  std::cout << "*** TreePixel Pair Tests ***\n";
+  std::cout << "****************************\n";
 
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points_per_node = 500;
@@ -171,14 +172,14 @@ void StompTreePixelPairTests() {
   }
 }
 
-void StompTreePixelCoverageTests() {
+void TreePixelCoverageTests() {
   // Since we don't know a priori what the underlying distribution of the
   // points added to our TreePixel is, we estimate it using the Coverage
   // method.  This module verifies that Coverage is working properly.
   std::cout << "\n";
-  std::cout << "***************************************\n";
-  std::cout << "*** Stomp::TreePixel Coverage Tests ***\n";
-  std::cout << "***************************************\n";
+  std::cout << "********************************\n";
+  std::cout << "*** TreePixel Coverage Tests ***\n";
+  std::cout << "********************************\n";
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points = 20;
   Stomp::TreePixel tree_pix(ang, Stomp::HPixResolution, n_points);
@@ -269,12 +270,12 @@ void StompTreePixelCoverageTests() {
   }
 }
 
-void StompTreePixelFieldPairTests() {
+void TreePixelFieldPairTests() {
   // Checking pair finding routines with Field values.
   std::cout << "\n";
-  std::cout << "***************************************\n";
-  std::cout << "*** StompTreePixel Field Pair Tests ***\n";
-  std::cout << "***************************************\n";
+  std::cout << "**********************************\n";
+  std::cout << "*** TreePixel Field Pair Tests ***\n";
+  std::cout << "**********************************\n";
 
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points_per_node = 500;
@@ -377,12 +378,12 @@ void StompTreePixelFieldPairTests() {
     stomp_watch.ElapsedTime() << "s\n";
 }
 
-void StompTreePixelNeighborTests() {
+void TreePixelNeighborTests() {
   // Checking nearest neighbor finding routines.
   std::cout << "\n";
-  std::cout << "*********************************************\n";
-  std::cout << "*** StompTreePixel Nearest Neighbor Tests ***\n";
-  std::cout << "*********************************************\n";
+  std::cout << "****************************************\n";
+  std::cout << "*** TreePixel Nearest Neighbor Tests ***\n";
+  std::cout << "****************************************\n";
 
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points_per_node = 100;
@@ -544,21 +545,12 @@ void StompTreePixelNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
-DEFINE_bool(all_tree_pixel_tests, false, "Run all class unit tests.");
-DEFINE_bool(tree_pixel_tests, false, "Run TreePixel tests");
-DEFINE_bool(tree_pixel_pair_tests, false, "Run TreePixel pair tests");
-DEFINE_bool(tree_pixel_coverage_tests, false, "Run TreePixel coverage tests");
-DEFINE_bool(tree_pixel_field_pair_tests, false,
-            "Run TreePixel Field pair tests");
-DEFINE_bool(tree_pixel_neighbor_tests, false,
-            "Run TreePixel nearest neighbor tests");
-
 int main(int argc, char **argv) {
-  void StompTreePixelTests();
-  void StompTreePixelPairTests();
-  void StompTreePixelCoverageTests();
-  void StompTreePixelFieldPairTests();
-  void StompTreePixelNeighborTests();
+  void TreePixelBasicTests();
+  void TreePixelPairTests();
+  void TreePixelCoverageTests();
+  void TreePixelFieldPairTests();
+  void TreePixelNeighborTests();
 
   std::string usage = "Usage: ";
   usage += argv[0];
@@ -567,24 +559,24 @@ int main(int argc, char **argv) {
 
   // Check that the Stomp::TreePixel class is able to add points and
   // automatically generate sub-pixels.
-  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_tests)
-    StompTreePixelTests();
+  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_basic_tests)
+    TreePixelBasicTests();
 
   // Check the Stomp::TreePixel pair-finding routines.
   if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_pair_tests)
-    StompTreePixelPairTests();
+    TreePixelPairTests();
 
   // Check the Stomp::TreePixel Coverage method works as advertised.
   if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_coverage_tests)
-    StompTreePixelCoverageTests();
+    TreePixelCoverageTests();
 
   // Checking pair finding routines with Field values.
   if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_field_pair_tests)
-    StompTreePixelFieldPairTests();
+    TreePixelFieldPairTests();
 
   // Checking nearest neighbor finding routines.
   if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_neighbor_tests)
-    StompTreePixelNeighborTests();
+    TreePixelNeighborTests();
 
   return 0;
 }
