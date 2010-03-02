@@ -5,6 +5,8 @@
 #include <gflags/gflags.h>
 #include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
+#include "stomp_angular_bin.h"
+#include "stomp_angular_correlation.h"
 #include "stomp_pixel.h"
 #include "stomp_map.h"
 #include "stomp_scalar_map.h"
@@ -256,18 +258,74 @@ void StompScalarMapRegionTests() {
   delete hires_scalar_map;
 }
 
-DEFINE_bool(all_tests, false, "Run all unit tests.");
+void StompScalarMapAutoCorrelationTests() {
+  // Ok, finally, we get to try out the auto-correlation code.  It's really
+  // just this easy to invoke.
+  std::cout << "\n";
+  std::cout << "********************************************\n";
+  std::cout << "*** StompScalarMap AutoCorrelation Tests ***\n";
+  std::cout << "********************************************\n";
+  double theta = 3.0;
+  Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
+  Stomp::Pixel tmp_pix(ang, 256);
+  Stomp::PixelVector annulus_pix;
+  tmp_pix.WithinRadius(theta, annulus_pix);
+  Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
+  Stomp::ScalarMap* scalar_map =
+    new Stomp::ScalarMap(*stomp_map, 128, Stomp::ScalarMap::DensityField);
+
+  uint32_t n_random = 10000;
+  uint32_t n_found = 0;
+  Stomp::AngularVector rand_ang;
+  stomp_map->GenerateRandomPoints(rand_ang, n_random);
+  for (Stomp::AngularIterator iter=rand_ang.begin();iter!=rand_ang.end();++iter)
+    if (scalar_map->AddToMap(*iter)) n_found++;
+  if (n_random != n_found)
+    std::cout << "Failed to add all random points to the density map.\n";
+
+  double theta_min = 0.01;
+  double theta_max = 10.0;
+  Stomp::AngularCorrelation *wtheta =
+    new Stomp::AngularCorrelation(theta_min, theta_max, 6.0);
+
+  scalar_map->AutoCorrelate(*wtheta);
+
+  // Alrighty, now for our grand finale, let's lay out the code that we'd
+  // use to do the auto-correlation for all scales, using our current
+  // density map as the highest resolution map.
+  for (uint16_t resolution=scalar_map->Resolution()/2;
+       resolution>=wtheta->MinResolution();resolution/=2) {
+    Stomp::ScalarMap* sub_scalar_map =
+        new Stomp::ScalarMap(*scalar_map,resolution);
+    std::cout << "\t" << resolution <<
+        ": Original Map Density: " << scalar_map->Density() <<
+        ": New Map Density: " << sub_scalar_map->Density() << "\n";
+    sub_scalar_map->AutoCorrelate(*wtheta);
+
+    delete sub_scalar_map;
+  }
+
+  for (Stomp::ThetaIterator iter=wtheta->Begin(scalar_map->Resolution());
+       iter!=wtheta->End(wtheta->MinResolution());++iter)
+    std::cout << "\tw(" << iter->Theta() << ", " << iter->Resolution() <<
+      ") = " << iter->Wtheta() << "\n";
+}
+
+DEFINE_bool(all_scalar_map_tests, false, "Run all class unit tests.");
 DEFINE_bool(scalar_map_tests, false, "Run ScalarMap tests");
 DEFINE_bool(scalar_map_local_tests, false, "Run ScalarMap local tests");
 DEFINE_bool(scalar_map_resampling_tests, false,
             "Run ScalarMap resampling tests");
 DEFINE_bool(scalar_map_region_tests, false, "Run ScalarMap region tests");
+DEFINE_bool(scalar_map_autocorrelation_tests, false,
+            "Run ScalarMap auto-correlation tests");
 
 int main(int argc, char **argv) {
   void StompScalarMapTests();
   void StompScalarMapLocalTests();
   void StompScalarMapResamplingTests();
   void StompScalarMapRegionTests();
+  void StompScalarMapAutoCorrelationTests();
 
   std::string usage = "Usage: ";
   usage += argv[0];
@@ -276,22 +334,27 @@ int main(int argc, char **argv) {
 
   // Check the basic routines for generating a Stomp::ScalarMap from an input
   // Stomp::Map.
-  if (FLAGS_all_tests || FLAGS_scalar_map_tests) StompScalarMapTests();
+  if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_tests)
+    StompScalarMapTests();
 
   // Check the StomScalarMap methods for finding the area and density of the
   // map within a given pixel.
-  if (FLAGS_all_tests || FLAGS_scalar_map_local_tests)
+  if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_local_tests)
     StompScalarMapLocalTests();
 
   // Check the Stomp::ScalarMap methods for creating new, coarser resolution
   // Stomp::ScalarMaps from an initial high-resolution version.
-  if (FLAGS_all_tests || FLAGS_scalar_map_resampling_tests)
+  if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_resampling_tests)
     StompScalarMapResamplingTests();
 
   // Check the routines for splitting up the area of a Stomp::ScalarMap into
   // roughly equal-area regions.
-  if (FLAGS_all_tests || FLAGS_scalar_map_region_tests)
+  if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_region_tests)
     StompScalarMapRegionTests();
+
+  // Check the auto-correlation methods in the Stomp::ScalarMap class.
+  if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_autocorrelation_tests)
+    StompScalarMapAutoCorrelationTests();
 
   return 0;
 }

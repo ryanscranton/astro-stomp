@@ -789,7 +789,6 @@ void TreeMap::Coverage(PixelVector& superpix, uint16_t resolution) {
   // this is simple.
   if (resolution_ == resolution) {
     superpix.reserve(tree_map_.size());
-
     for (TreeDictIterator iter=tree_map_.begin();iter!=tree_map_.end();++iter) {
       Pixel pix(iter->second->PixelX(), iter->second->PixelY(),
 		iter->second->Resolution(), iter->second->Coverage());
@@ -814,12 +813,13 @@ void TreeMap::Coverage(PixelVector& superpix, uint16_t resolution) {
       }
 
       superpix.reserve(tmp_map.size());
-      for (TreeDictIterator iter=tree_map_.begin();
-	   iter!=tree_map_.end();++iter) {
+      for (TreeDictIterator iter=tmp_map.begin();
+	   iter!=tmp_map.end();++iter) {
 	Pixel pix(iter->second->PixelX(), iter->second->PixelY(),
 		  iter->second->Resolution(), 1.0);
 	pix.SetWeight(FindUnmaskedFraction(pix));
 	superpix.push_back(pix);
+	delete iter->second;
       }
     } else {
       // If the requested map is at higher resolution, then we iterate over

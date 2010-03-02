@@ -35,6 +35,7 @@ namespace Stomp {
 class AngularBin;           // class definition in stomp_angular_bin.h
 class AngularCorrelation;   // class definition in stomp_angular_correlation.h
 class Map;                  // class definition in stomp_map.h
+class TreePixel;            // class definition in stomp_tree_pixel.h
 class TreeMap;
 
 typedef std::map<const uint32_t, TreePixel *> TreeDict;

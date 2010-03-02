@@ -12,16 +12,16 @@
 #include "stomp_map.h"
 #include "stomp_tree_map.h"
 
-void StompTreeMapTests() {
+void StompTreeMapBasicTests() {
   std::cout << "\n";
-  std::cout << "**************************\n";
-  std::cout << "*** StompTreeMap Tests ***\n";
-  std::cout << "**************************\n";
+  std::cout << "********************************\n";
+  std::cout << "*** StompTreeMap Basic Tests ***\n";
+  std::cout << "********************************\n";
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
-  uint16_t n_points_per_node = 5000;
+  uint16_t n_points_per_node = 200;
   // Make the map at a non-standard resolution so that we can test the
   // Coverage and NodeMap methods later on.
-  uint16_t resolution = 4;
+  uint16_t resolution = 32;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution...\n";
@@ -44,7 +44,7 @@ void StompTreeMapTests() {
   tmp_pix.WithinRadius(theta, annulus_pix);
   Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
 
-  uint32_t n_points = 5000000;
+  uint32_t n_points = 500000;
   Stomp::AngularVector angVec;
   stomp_map->GenerateRandomPoints(angVec, n_points);
 
@@ -59,13 +59,23 @@ void StompTreeMapTests() {
   }
   stomp_watch.StopTimer();
   std::cout << "\tAdded " << tree_map.NPoints() << "/" << n_points <<
-    " points to this pixel (" << n_points/stomp_watch.ElapsedTime() <<
+    " points to this map (" << n_points/stomp_watch.ElapsedTime() <<
     " points/second)\n";
 
-  std::cout << "\t" << tree_map.Nodes() << " nodes at " <<
-    tree_map.Resolution() << " resolution used for this map\n";
+  std::cout << "\t" << tree_map.BaseNodes() << " nodes at " <<
+    tree_map.Resolution() << " resolution used for this map; " <<
+    tree_map.Nodes() << " total nodes.\n";
 
+  // First we check to make sure that we're recovering the base nodes properly.
+  // The Coverage method will raise alarms if this fails.  Otherwise, this can
+  // pass without comment.
   Stomp::PixelVector superpix;
+  tree_map.Coverage(superpix, tree_map.Resolution());
+
+  // Now we verify that the superpixels for our TreeMap match those for the
+  // Map that we built it from.
+  tree_map.Coverage(superpix);
+  tree_map.Coverage(superpix, tree_map.Resolution());
   tree_map.Coverage(superpix);
   std::cout << "\tMap covers " << superpix.size() << " superpixels:\n\t\t";
   for (Stomp::PixelIterator iter=superpix.begin();iter!=superpix.end();++iter)
@@ -85,7 +95,7 @@ void StompTreeMapPairTests() {
   std::cout << "*** Stomp::TreeMap Pair Tests ***\n";
   std::cout << "*********************************\n";
   uint16_t n_points_per_node = 100;
-  uint16_t resolution = 4;
+  uint16_t resolution = 8;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution with " << n_points_per_node << " points per node...\n";
@@ -113,49 +123,38 @@ void StompTreeMapPairTests() {
       std::cout << "\t\tFailed to add point: " <<
 	iter->RA() << ", " << iter->DEC() << "\n";
   }
-  double point_density = 1.0*n_points/stomp_map->Area();
+  std::cout << "\t" << tree_map.BaseNodes() << " nodes at " <<
+    tree_map.Resolution() << " resolution used for this map\n";
+  std::cout << "\t\t" << tree_map.Nodes() << " total nodes.\n";
 
   // We start by choosing a radius much larger than our area, which should mean
   // that we find all points in the map as pairs.
-  std::cout << "Encompassing radius test:\n";
+  std::cout << "\nEncompassing radius test:\n";
   uint32_t n_pairs = tree_map.FindPairs(ang, 4.0*theta_radius);
   std::cout << "\tFound " << n_pairs << " pairs (expect " << n_points << ")\n";
 
   // Next, we choose a smaller radius where we should begin to probe some of
   // the tree structure in the pixel.
   double theta = 0.1;
-  double circle_area =
-    (1.0 - cos(theta*Stomp::DegToRad))*
-    2.0*Stomp::Pi*Stomp::StradToDeg;
   uint32_t direct_pairs = 0;
   for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
     if (ang.AngularDistance(*iter) <= theta) direct_pairs++;
   }
-  std::cout << "Small circle test:\n";
-  std::cout << "\tFound " << tree_map.FindPairs(ang, theta) <<
-    " pairs; expect ~" << point_density*circle_area << " +- " <<
-    sqrt(point_density*circle_area) << " pairs; " << direct_pairs <<
-    " pairs from brute force.\n";
+  std::cout << "\nSmall circle test:\n";
+  std::cout << "\tFound " << tree_map.FindPairs(ang, theta) << " pairs; " <<
+    direct_pairs << " pairs from brute force.\n";
 
   // Now, we check the annulus finding.
   double theta_max = 0.5;
   double theta_min = 0.3;
-  double annulus_area =
-    (1.0 - cos(theta_max*Stomp::DegToRad))*
-    2.0*Stomp::Pi*Stomp::StradToDeg;
-  annulus_area -=
-    (1.0 - cos(theta_min*Stomp::DegToRad))*
-    2.0*Stomp::Pi*Stomp::StradToDeg;
   direct_pairs = 0;
   for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
     if ((ang.AngularDistance(*iter) <= theta_max) &&
 	(ang.AngularDistance(*iter) >= theta_min)) direct_pairs++;
   }
-  std::cout << "Annulus test:\n";
+  std::cout << "\nAnnulus test:\n";
   std::cout << "\tFound " << tree_map.FindPairs(ang, theta_min, theta_max) <<
-    " pairs; expect ~" << point_density*annulus_area << " +- " <<
-    sqrt(point_density*annulus_area) << " pairs; "<< direct_pairs <<
-    " pairs from brute force.\n";
+    " pairs; " << direct_pairs << " pairs from brute force.\n";
 
   // Now we test to see if the pair finding works at the edges of our map.
   // First, the top of the map, where the angular distortion should be
@@ -172,7 +171,7 @@ void StompTreeMapPairTests() {
     if ((ang.AngularDistance(*iter) <= theta_max) &&
 	(ang.AngularDistance(*iter) >= theta_min)) direct_pairs++;
   }
-  std::cout << "Top of the circle test (" <<
+  std::cout << "\nTop of the circle test (" <<
     ang.Lambda() << ", " << ang.Eta() << "):\n";
   std::cout << "\tFound " << tree_map.FindPairs(ang, theta_min, theta_max) <<
     " pairs; "<< direct_pairs << " pairs from brute force.\n";
@@ -190,13 +189,13 @@ void StompTreeMapPairTests() {
     if ((ang.AngularDistance(*iter) <= theta_max) &&
 	(ang.AngularDistance(*iter) >= theta_min)) direct_pairs++;
   }
-  std::cout << "Side of the circle test (" <<
+  std::cout << "\nSide of the circle test (" <<
     ang.Lambda() << ", " << ang.Eta() << "):\n";
   std::cout << "\tFound " << tree_map.FindPairs(ang, theta_min, theta_max) <<
     " pairs; "<< direct_pairs << " pairs from brute force.\n";
 
   Stomp::StompWatch stomp_watch;
-  std::cout << "Angular Bin test:\n";
+  std::cout << "\nAngular Bin test:\n";
   // We initialize the AngularCorrelation object with the last parameter set
   // to "false".  This will prevent the constructor from assigning resolutions
   // to each of the angular bins, marking them all as bins to use the
@@ -205,42 +204,36 @@ void StompTreeMapPairTests() {
   stomp_watch.StartTimer();
   tree_map.FindWeightedPairs(angVec, wtheta);
   stomp_watch.StopTimer();
-  for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
-    annulus_area =
-      (1.0 - cos(iter->ThetaMax()*Stomp::DegToRad))*
-      2.0*Stomp::Pi*Stomp::StradToDeg -
-      (1.0 - cos(iter->ThetaMin()*Stomp::DegToRad))*
-      2.0*Stomp::Pi*Stomp::StradToDeg;
-    std::cout << "\t" << iter->ThetaMin() << " - " << iter->ThetaMax() <<
-      ": " << iter->Counter() << " pairs; expect " <<
-      n_points*point_density*annulus_area << " +- " <<
-      sqrt(n_points*point_density*annulus_area) << "\n";
-    iter->ResetCounter();
-  }
-  std::cout << "Time elapsed: " << stomp_watch.ElapsedTime() << " seconds.\n";
+  std::cout << "\tTime elapsed: " << stomp_watch.ElapsedTime() << " seconds.\n";
 
   std::cout << "Checking direct counts...\n";
-  Stomp::ThetaIterator theta_begin = wtheta.Begin();
-  Stomp::ThetaIterator theta_end = wtheta.End();
+  Stomp::AngularCorrelation wtheta_brute(0.01, 1.0, 5.0, false);
+  Stomp::ThetaIterator theta_begin = wtheta_brute.Begin();
+  Stomp::ThetaIterator theta_end = wtheta_brute.End();
+  Stomp::ThetaIterator theta_iter;
+  double costheta = 0.0;
   stomp_watch.StartTimer();
-  for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
+  for (Stomp::AngularIterator ang_iter=angVec.begin();
+       ang_iter!=angVec.end();++ang_iter) {
     for (Stomp::AngularIterator inner_iter=angVec.begin();
-	 inner_iter!=angVec.end();++inner_iter) {
-      for (Stomp::ThetaIterator theta_iter=theta_begin;
-	   theta_iter!=theta_end;++theta_iter) {
-	if (theta_iter->WithinCosBounds(iter->DotProduct(*inner_iter)))
-	  theta_iter->AddToCounter();
-      }
+         inner_iter!=angVec.end();++inner_iter) {
+      costheta = ang_iter->DotProduct(*inner_iter);
+      theta_iter = wtheta_brute.Find(theta_begin, theta_end,
+                                     1.0-costheta*costheta);
+      if (theta_iter != theta_end) theta_iter->AddToCounter();
     }
   }
   stomp_watch.StopTimer();
+  std::cout << "\tTime elapsed: " << stomp_watch.ElapsedTime() << " seconds.\n";
 
-  std::cout << "Direct counting results:\n";
+  std::cout << "Direct counting comparison:\n";
   for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
+    double sin2theta = 0.5*(iter->Sin2ThetaMin()+iter->Sin2ThetaMax());
+    theta_iter = wtheta_brute.Find(theta_begin, theta_end, sin2theta);
     std::cout << "\t" << iter->ThetaMin() << " - " << iter->ThetaMax() <<
-      ": " << iter->Counter() << " pairs\n";
+      ": " << iter->Counter() << " pairs; " << theta_iter->Counter() <<
+      " brute force pairs.\n";
   }
-  std::cout << "Time elapsed: " << stomp_watch.ElapsedTime() << " seconds.\n";
 }
 
 void StompTreeMapAreaTests() {
@@ -274,7 +267,9 @@ void StompTreeMapAreaTests() {
 
   // Now we add an increasing number of points and track how the area of our
   // TreeMap compares with the area of the Map used to generate the random
-  // points.
+  // points.  Since we used a finer resolution to make the Map than for our
+  // TreeMap, we should start with a larger TreeMap area and then eventually
+  // get closer to the Map area as we add points.
   for (uint32_t k=1;k<200;k*=2) {
     uint32_t n_points = 5000*k;
 
@@ -290,8 +285,8 @@ void StompTreeMapAreaTests() {
     }
 
     std::cout << "\t" << tree_map.NPoints() << " points: " <<
-      tree_map.Nodes() << " nodes at " << tree_map.Resolution() <<
-      " resolution used for this map\n";
+      tree_map.BaseNodes() << " nodes at " << tree_map.Resolution() <<
+      " resolution; " << tree_map.Nodes() << " total nodes.\n";
     std::cout << "\t\tInput map area: " << stomp_map->Area() <<
       "; TreeMap area: " << tree_map.Area() << "\n";
   }
@@ -397,7 +392,7 @@ void StompTreeMapFieldPairTests() {
   uint16_t n_points_per_node = 200;
   // Make the map at a coarse resolution so that we can test the
   // Coverage and NodeMap methods later on.
-  uint16_t resolution = 4;
+  uint16_t resolution = 8;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution...\n";
@@ -742,15 +737,14 @@ void StompTreeMapNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
-DEFINE_bool(all_tests, false, "Run all unit tests.");
-DEFINE_bool(tree_map_tests, false, "Run TreeMap tests");
+DEFINE_bool(all_tree_map_tests, false, "Run all class unit tests.");
+DEFINE_bool(tree_map_basic_tests, false, "Run TreeMap basic tests");
 DEFINE_bool(tree_map_pair_tests, false, "Run TreeMap pair tests");
 DEFINE_bool(tree_map_area_tests, false, "Run TreeMap area tests");
 DEFINE_bool(tree_map_region_tests, false, "Run TreeMap region tests");
 DEFINE_bool(tree_map_field_pair_tests, false, "Run TreeMap field pair tests");
 DEFINE_bool(tree_map_neighbor_tests, false,
             "Run TreeMap nearest neighbor tests");
-
 
 int main(int argc, char **argv) {
   void StompTreeMapTests();
@@ -767,25 +761,28 @@ int main(int argc, char **argv) {
 
   // Check that the Stomp::TreeMap class is able to add points and
   // automatically generate sub-pixels.
-  if (FLAGS_all_tests || FLAGS_tree_map_tests) StompTreeMapTests();
+  if (FLAGS_all_tree_map_tests || FLAGS_tree_map_basic_tests)
+    StompTreeMapBasicTests();
 
   // Check the Stomp::TreeMap pair-finding routines.
-  if (FLAGS_all_tests || FLAGS_tree_map_pair_tests) StompTreeMapPairTests();
+  if (FLAGS_all_tree_map_tests || FLAGS_tree_map_pair_tests)
+    StompTreeMapPairTests();
 
   // Check that the Stomp::TreeMap class area calculations improve as more
   // points are added to the map.
-  if (FLAGS_all_tests || FLAGS_tree_map_area_tests) StompTreeMapAreaTests();
+  if (FLAGS_all_tree_map_tests || FLAGS_tree_map_area_tests)
+    StompTreeMapAreaTests();
 
   // Check that the Stomp::TreeMap class is able to regionate properly.
-  if (FLAGS_all_tests || FLAGS_tree_map_region_tests)
+  if (FLAGS_all_tree_map_tests || FLAGS_tree_map_region_tests)
     StompTreeMapRegionTests();
 
   // Checking pair finding routines with Field values.
-  if (FLAGS_all_tests || FLAGS_tree_map_field_pair_tests)
+  if (FLAGS_all_tree_map_tests || FLAGS_tree_map_field_pair_tests)
     StompTreeMapFieldPairTests();
 
   // Checking nearest neighbor routines.
-  if (FLAGS_all_tests || FLAGS_tree_map_neighbor_tests)
+  if (FLAGS_all_tree_map_tests || FLAGS_tree_map_neighbor_tests)
     StompTreeMapNeighborTests();
 
   return 0;

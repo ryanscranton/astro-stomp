@@ -78,7 +78,7 @@ void StompScalarPixelTests() {
     "), GalLon: " << tmp_scalar->GalLon() << " (" << ang.GalLon() << ")\n";
 }
 
-DEFINE_bool(all_tests, false, "Run all unit tests.");
+DEFINE_bool(all_scalar_pixel_tests, false, "Run all class unit tests.");
 DEFINE_bool(scalar_pixel_tests, false, "Run ScalarPixel tests");
 
 int main(int argc, char **argv) {
@@ -91,7 +91,8 @@ int main(int argc, char **argv) {
 
   // Check the basic inheritance of the Stomp::ScalarPixel class from
   // Stomp::Pixel.
-  if (FLAGS_all_tests || FLAGS_scalar_pixel_tests) StompScalarPixelTests();
+  if (FLAGS_scalar_pixel_all_tests || FLAGS_scalar_pixel_tests)
+    StompScalarPixelTests();
 
   return 0;
 }

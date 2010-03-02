@@ -215,7 +215,7 @@ void WeightedAngularCoordinateTests() {
 }
 
 // Define our command-line flags.
-DEFINE_bool(all_tests, false, "Run all unit tests.");
+DEFINE_bool(all_angular_coordinate_tests, false, "Run all class unit tests.");
 DEFINE_bool(angular_coordinate_tests, false, "Run AngularCoordinate tests");
 DEFINE_bool(angular_coordinate_position_angle_tests, false,
             "Run AngularCoordinate position angle tests");
@@ -238,21 +238,24 @@ int main(int argc, char **argv) {
   // Check that AngularCoordinate transforms from one coordinate system to
   // another work properly and that we can recover the same pixel indices from
   // transformed coordinates.
-  if (FLAGS_all_tests || FLAGS_angular_coordinate_tests)
+  if (FLAGS_all_angular_coordinate_tests || FLAGS_angular_coordinate_tests)
     AngularCoordinateTests();
 
   // Check that the AngularCoordinate position angles are being calculated
   // correctly.
-  if (FLAGS_all_tests || FLAGS_angular_coordinate_position_angle_tests)
+  if (FLAGS_all_angular_coordinate_tests ||
+      FLAGS_angular_coordinate_position_angle_tests)
     AngularCoordinatePositionAngleTests();
 
   // Check that the AngularCoordinate rotations are being calculated
   // correctly.
-  if (FLAGS_all_tests || FLAGS_angular_coordinate_rotation_tests)
+  if (FLAGS_all_angular_coordinate_tests ||
+      FLAGS_angular_coordinate_rotation_tests)
     AngularCoordinateRotationTests();
 
   // Check WeightedAngularCoordinate extensions to the basic AngularCoordinate.
-  if (FLAGS_all_tests || FLAGS_weighted_angular_coordinate_tests)
+  if (FLAGS_all_angular_coordinate_tests ||
+      FLAGS_weighted_angular_coordinate_tests)
     WeightedAngularCoordinateTests();
 
   return 0;
