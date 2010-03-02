@@ -95,7 +95,7 @@ void TreeMapPairTests() {
   std::cout << "**************************\n";
   std::cout << "*** TreeMap Pair Tests ***\n";
   std::cout << "**************************\n";
-  uint16_t n_points_per_node = 100;
+  uint16_t n_points_per_node = 200;
   uint16_t resolution = 8;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
@@ -109,13 +109,22 @@ void TreeMapPairTests() {
   double eta = 0.0;
   Stomp::AngularCoordinate ang(lambda, eta, Stomp::AngularCoordinate::Survey);
   double theta_radius = 5.0;
-  Stomp::Pixel tmp_pix(ang, 4);
+  Stomp::Pixel tmp_pix(ang, 32);
   Stomp::PixelVector annulus_pix;
   tmp_pix.WithinRadius(theta_radius, annulus_pix);
   Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
   uint32_t n_points = 10000;
   Stomp::AngularVector angVec;
   stomp_map->GenerateRandomPoints(angVec, n_points);
+
+  Stomp::PixelVector base_nodes;
+  stomp_map->Coverage(base_nodes, resolution);
+  std::cout << "\tInput map covers " << base_nodes.size() <<
+    " basenodes:\n\t\t";
+  for (Stomp::PixelIterator iter=base_nodes.begin();
+       iter!=base_nodes.end();++iter)
+    std::cout << iter->Superpixnum() << " ";
+  std::cout << "\n";
 
   bool added_point = false;
   for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
@@ -124,9 +133,9 @@ void TreeMapPairTests() {
       std::cout << "\t\tFailed to add point: " <<
 	iter->RA() << ", " << iter->DEC() << "\n";
   }
-  std::cout << "\t" << tree_map.BaseNodes() << " nodes at " <<
-    tree_map.Resolution() << " resolution used for this map\n";
-  std::cout << "\t\t" << tree_map.Nodes() << " total nodes.\n";
+  std::cout << "\t" << tree_map.BaseNodes() << " base nodes at " <<
+    tree_map.Resolution() << " resolution; " << tree_map.Nodes() <<
+    " total nodes.\n";
 
   // We start by choosing a radius much larger than our area, which should mean
   // that we find all points in the map as pairs.
@@ -389,14 +398,11 @@ void TreeMapFieldPairTests() {
   std::cout << "*** TreeMap Field Pair Tests ***\n";
   std::cout << "********************************\n";
 
-  Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
-  uint16_t n_points_per_node = 200;
-  // Make the map at a coarse resolution so that we can test the
-  // Coverage and NodeMap methods later on.
   uint16_t resolution = 8;
+  uint16_t n_points_per_node = 200;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
-    " resolution...\n";
+    " resolution with " << n_points_per_node << " points per node...\n";
 
   // Now we generate a bunch of random points around our original point and
   // attempt to add them to the Stomp::TreeMap.  We choose a large enough radius
@@ -405,10 +411,20 @@ void TreeMapFieldPairTests() {
   // pixels as we ingest points.
   double theta_bound = 5.0;
   uint16_t annulus_resolution = 32;
+  Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, annulus_resolution);
   Stomp::PixelVector annulus_pix;
   tmp_pix.WithinRadius(theta_bound, annulus_pix);
   Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
+
+  Stomp::PixelVector base_nodes;
+  stomp_map->Coverage(base_nodes, resolution);
+  std::cout << "\tInput map covers " << base_nodes.size() <<
+    " basenodes:\n\t\t";
+  for (Stomp::PixelIterator iter=base_nodes.begin();
+       iter!=base_nodes.end();++iter)
+    std::cout << iter->Superpixnum() << " ";
+  std::cout << "\n";
 
   // Now we add a high number of points to the TreeMap to flesh out its bounds.
   uint32_t n_points = 100000;
@@ -430,6 +446,9 @@ void TreeMapFieldPairTests() {
   }
 
   // Quick global accounting check.
+  std::cout << "\t" << tree_map.BaseNodes() << " base nodes at " <<
+    tree_map.Resolution() << " resolution; " << tree_map.Nodes() <<
+    " total nodes.\n";
   std::cout << "\t" << tree_map.NPoints() <<
     " points added.\n\tTotal Weight = " << tree_map.Weight() <<
     "\n\tTotal Field('two') = " << tree_map.FieldTotal("two") <<
