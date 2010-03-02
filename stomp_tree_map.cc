@@ -730,6 +730,8 @@ bool TreeMap::AddPoint(WeightedAngularCoordinate* ang) {
   if (iter == tree_map_.end()) {
     // If we didn't find the pixnum key in the map, then we need to add this
     // pixnum to the map and re-do the search.
+    std::cout << "Creating base node at " << pix.Pixnum() << "/" <<
+      pix.Resolution() << "/" << maximum_points_ << "\n";
     tree_map_.insert(std::pair<uint32_t,
 		     TreePixel *>(pix.Pixnum(),
 				  new TreePixel(pix.PixelX(), pix.PixelY(),
