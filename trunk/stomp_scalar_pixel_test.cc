@@ -7,7 +7,6 @@
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
 #include "stomp_scalar_pixel.h"
-#include "stomp_scalar_pixel_test.h"
 
 void ScalarPixelBasicTests() {
   // Before moving on to the map tests, we need to verify that the
@@ -78,6 +77,10 @@ void ScalarPixelBasicTests() {
     "\t\tGalLat: " << tmp_scalar->GalLat() << " (" << ang.GalLat() <<
     "), GalLon: " << tmp_scalar->GalLon() << " (" << ang.GalLon() << ")\n";
 }
+
+// Define our command line flags
+DEFINE_bool(all_scalar_pixel_tests, false, "Run all class unit tests.");
+DEFINE_bool(scalar_pixel_basic_tests, false, "Run ScalarPixel basic tests");
 
 void ScalarPixelUnitTests(bool run_all_tests) {
   void ScalarPixelBasicTests();

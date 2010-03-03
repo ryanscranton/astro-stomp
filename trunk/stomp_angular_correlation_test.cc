@@ -8,7 +8,6 @@
 #include "stomp_angular_correlation.h"
 #include "stomp_map.h"
 #include "stomp_scalar_map.h"
-#include "stomp_angular_correlation_test.h"
 
 void AngularBinningTests() {
   // Now we break out the angular bin code.  This class lets you define either
@@ -137,6 +136,11 @@ void AngularBinningTests() {
       " - " << theta_iter->ThetaMax() << "\n";
   }
 }
+
+// Define our command line flags
+DEFINE_bool(all_angular_correlation_tests, false, "Run all class unit tests.");
+DEFINE_bool(angular_binning_tests, false,
+            "Run AngularCorrelation binning tests");
 
 void AngularCorrelationUnitTests(bool run_all_tests) {
   void AngularBinningTests();

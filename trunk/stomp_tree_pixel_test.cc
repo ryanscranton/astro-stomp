@@ -9,7 +9,6 @@
 #include "stomp_angular_correlation.h"
 #include "stomp_tree_pixel.h"
 #include "stomp_util.h"
-#include "stomp_tree_pixel_test.h"
 
 void TreePixelBasicTests() {
   // Before moving on to the map tests, we need to verify that the
@@ -544,6 +543,16 @@ void TreePixelNeighborTests() {
     mean_nodes_visited/n_test_points << "/" << total_nodes <<
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
+
+// Define our command line flags
+DEFINE_bool(all_tree_pixel_tests, false, "Run all class unit tests.");
+DEFINE_bool(tree_pixel_basic_tests, false, "Run TreePixel basic tests");
+DEFINE_bool(tree_pixel_pair_tests, false, "Run TreePixel pair tests");
+DEFINE_bool(tree_pixel_coverage_tests, false, "Run TreePixel coverage tests");
+DEFINE_bool(tree_pixel_field_pair_tests, false,
+            "Run TreePixel Field pair tests");
+DEFINE_bool(tree_pixel_neighbor_tests, false,
+            "Run TreePixel nearest neighbor tests");
 
 void TreePixelUnitTests(bool run_all_tests) {
   void TreePixelBasicTests();

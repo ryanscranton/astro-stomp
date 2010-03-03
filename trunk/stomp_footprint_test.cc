@@ -7,7 +7,6 @@
 #include "stomp_angular_coordinate.h"
 #include "stomp_map.h"
 #include "stomp_footprint.h"
-#include "stomp_footprint_test.h"
 
 void CircleFootprintTests() {
   // Testing the basic pixelization routines.
@@ -166,6 +165,12 @@ void PolygonFootprintTests() {
     std::cout << "Pixelization failed...\n";
   }
 }
+
+// Define our command line flags
+DEFINE_bool(all_footprint_tests, false, "Run all class unit tests.");
+DEFINE_bool(circle_footprint_tests, false, "Run CircleFootprint tests");
+DEFINE_bool(wedge_footprint_tests, false, "Run WedgeFootprint tests");
+DEFINE_bool(polygon_footprint_tests, false, "Run PolygonFootprint tests");
 
 void FootprintUnitTests(bool run_all_tests) {
   void CircleFootprintTests();
