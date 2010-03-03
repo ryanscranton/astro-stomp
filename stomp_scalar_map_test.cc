@@ -312,17 +312,14 @@ void ScalarMapAutoCorrelationTests() {
       ") = " << iter->Wtheta() << "\n";
 }
 
-int main(int argc, char **argv) {
+void ScalarMapUnitTests(bool run_all_tests) {
   void ScalarMapBasicTests();
   void ScalarMapLocalTests();
   void ScalarMapResamplingTests();
   void ScalarMapRegionTests();
   void ScalarMapAutoCorrelationTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_scalar_map_tests = true;
 
   // Check the basic routines for generating a Stomp::ScalarMap from an input
   // Stomp::Map.
@@ -347,6 +344,4 @@ int main(int argc, char **argv) {
   // Check the auto-correlation methods in the Stomp::ScalarMap class.
   if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_autocorrelation_tests)
     ScalarMapAutoCorrelationTests();
-
-  return 0;
 }

@@ -221,17 +221,6 @@ class TreePixel : public Pixel {
   // internal method.
   void _NeighborRecursion(AngularCoordinate& ang, TreeNeighbor& neighbor);
 
-  // For the pair finding, we end up checking the X-Y-Z corners of the pixels
-  // a lot, so we store those values internally and use an internal method for
-  // finding the intersection of the pixel with the input annulus;
-  virtual int8_t IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta);
-
-  // We also have an internal version of the code for finding the edge
-  // distances.  The return boolean tells us whether the distance returned
-  // is to a pixel edge (true) or a pixel corner (false).
-  virtual bool EdgeDistances(AngularCoordinate& ang, double& min_edge_distance,
-			     double& max_edge_distance);
-
   // And a method to set these values up internally.
   void InitializeCorners();
 

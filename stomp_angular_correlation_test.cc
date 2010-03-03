@@ -138,18 +138,13 @@ void AngularBinningTests() {
   }
 }
 
-int main(int argc, char **argv) {
+void AngularCorrelationUnitTests(bool run_all_tests) {
   void AngularBinningTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_angular_correlation_tests = true;
 
   // Check the routines related to the AngularBin and AngularCorrelation
   // classes.
-  if (FLAGS_all_angular_correlation_tests || FLAGS_angular_correlation_tests)
+  if (FLAGS_all_angular_correlation_tests || FLAGS_angular_binning_tests)
     AngularBinningTests();
-
-  return 0;
 }

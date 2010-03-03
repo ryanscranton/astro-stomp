@@ -29,8 +29,8 @@ double Cosmology::OmegaL() {
   return 1.0 - omega_m;
 }
 
-void Cosmology::SetOmegaM(double omega_m) {
-  omega_m = omega_m;
+void Cosmology::SetOmegaM(double new_omega_m) {
+  omega_m = new_omega_m;
   a_ = AA_*omega_m;
   b_ = BB_*sqrt(omega_m);
 }
