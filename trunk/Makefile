@@ -104,8 +104,8 @@ $(SCALAR_MAP)_test.o: $(LIB) $(SCALAR_MAP)_test.cc $(SCALAR_MAP)_test.h
 $(TREE_MAP)_test.o: $(LIB) $(TREE_MAP)_test.cc $(TREE_MAP)_test.h
 	$(CC) -c $(CCFLAGS) $(TREE_MAP)_test.cc
 
-$(FOOTPRINT)_test.o: $(LIB) $(FOOTPRINT)_test.cc $(FOOTPRINT)_test.h 
-	$(CC) -c $(CCFLAGS) $(FOOTPRINT).cc
+$(FOOTPRINT)_test.o: $(LIB) $(FOOTPRINT)_test.cc $(FOOTPRINT)_test.h
+	$(CC) -c $(CCFLAGS) $(FOOTPRINT)_test.cc
 
 $(UTIL)_test.o: $(LIB) $(UTIL)_test.cc $(UTIL)_test.h
 	$(CC) -c $(CCFLAGS) $(UTIL)_test.cc

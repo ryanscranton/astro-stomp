@@ -95,8 +95,8 @@ void TreeMapPairTests() {
   std::cout << "**************************\n";
   std::cout << "*** TreeMap Pair Tests ***\n";
   std::cout << "**************************\n";
-  uint16_t n_points_per_node = 200;
-  uint16_t resolution = 8;
+  uint16_t n_points_per_node = 50;
+  uint16_t resolution = 4;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution with " << n_points_per_node << " points per node...\n";
@@ -116,15 +116,6 @@ void TreeMapPairTests() {
   uint32_t n_points = 10000;
   Stomp::AngularVector angVec;
   stomp_map->GenerateRandomPoints(angVec, n_points);
-
-  Stomp::PixelVector base_nodes;
-  stomp_map->Coverage(base_nodes, resolution);
-  std::cout << "\tInput map covers " << base_nodes.size() <<
-    " basenodes:\n\t\t";
-  for (Stomp::PixelIterator iter=base_nodes.begin();
-       iter!=base_nodes.end();++iter)
-    std::cout << iter->Superpixnum() << " ";
-  std::cout << "\n";
 
   bool added_point = false;
   for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
@@ -417,15 +408,6 @@ void TreeMapFieldPairTests() {
   tmp_pix.WithinRadius(theta_bound, annulus_pix);
   Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
 
-  Stomp::PixelVector base_nodes;
-  stomp_map->Coverage(base_nodes, resolution);
-  std::cout << "\tInput map covers " << base_nodes.size() <<
-    " basenodes:\n\t\t";
-  for (Stomp::PixelIterator iter=base_nodes.begin();
-       iter!=base_nodes.end();++iter)
-    std::cout << iter->Superpixnum() << " ";
-  std::cout << "\n";
-
   // Now we add a high number of points to the TreeMap to flesh out its bounds.
   uint32_t n_points = 100000;
   Stomp::AngularVector angVec;
@@ -435,8 +417,9 @@ void TreeMapFieldPairTests() {
   stomp_map->GenerateRandomPoints(angVec, n_points);
 
   for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
-    Stomp::WeightedAngularCoordinate tmp_ang(iter->Lambda(), iter->Eta(), 1.0,
-					     Stomp::AngularCoordinate::Survey);
+    Stomp::WeightedAngularCoordinate tmp_ang(iter->UnitSphereX(),
+					     iter->UnitSphereY(),
+					     iter->UnitSphereZ(), 1.0);
     tmp_ang.SetField("two", 2.0);
     w_angVec.push_back(tmp_ang);
 
@@ -597,7 +580,7 @@ void TreeMapNeighborTests() {
   uint16_t n_points_per_node = 200;
   // Make the map at a coarse resolution so that we can test the
   // Coverage and NodeMap methods later on.
-  uint16_t resolution = 4;
+  uint16_t resolution = 8;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution...\n";
@@ -622,8 +605,9 @@ void TreeMapNeighborTests() {
   stomp_map->GenerateRandomPoints(angVec, n_points);
 
   for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
-    Stomp::WeightedAngularCoordinate tmp_ang(iter->Lambda(), iter->Eta(), 1.0,
-					     Stomp::AngularCoordinate::Survey);
+    Stomp::WeightedAngularCoordinate tmp_ang(iter->UnitSphereX(),
+					     iter->UnitSphereY(),
+					     iter->UnitSphereZ(), 1.0);
     if (!tree_map.AddPoint(tmp_ang))
       std::cout << "\t\tFailed to add point: " <<
 	iter->RA() << ", " << iter->DEC() << "\n";
@@ -632,6 +616,9 @@ void TreeMapNeighborTests() {
   // Quick global accounting check.
   std::cout << "\t" << tree_map.NPoints() << " points added; " <<
     1.0*tree_map.NPoints()/tree_map.Area() << " points/sq. degree.\n";
+  std::cout << "\t" << tree_map.BaseNodes() << " base nodes at " <<
+    tree_map.Resolution() << " resolution; " << tree_map.Nodes() <<
+    " total nodes.\n";
 
   // Generate a smaller set of test points.
   uint32_t n_test_points = 1000;
@@ -757,7 +744,7 @@ void TreeMapNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
-int main(int argc, char **argv) {
+void TreeMapUnitTests(bool run_all_tests) {
   void TreeMapBasicTests();
   void TreeMapPairTests();
   void TreeMapAreaTests();
@@ -765,10 +752,7 @@ int main(int argc, char **argv) {
   void TreeMapFieldPairTests();
   void TreeMapNeighborTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_tree_map_tests = true;
 
   // Check that the Stomp::TreeMap class is able to add points and
   // automatically generate sub-pixels.
@@ -795,6 +779,4 @@ int main(int argc, char **argv) {
   // Checking nearest neighbor routines.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_neighbor_tests)
     TreeMapNeighborTests();
-
-  return 0;
 }

@@ -39,16 +39,11 @@ void CosmologyTests() {
   }
 }
 
-int main(int argc, char **argv) {
+void UtilUnitTests(bool run_all_tests) {
   void StompCosmologyTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_util_tests = true;
 
   // Now, we check our static Cosmology class to make sure it's functioning.
   if (FLAGS_all_util_tests || FLAGS_util_cosmology_tests) CosmologyTests();
-
-  return 0;
 }

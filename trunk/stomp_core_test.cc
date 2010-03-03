@@ -66,14 +66,11 @@ void MSBTests() {
     static_cast<int>(Stomp::MostSignificantBit(32768)) << "\n";
 }
 
-int main(int argc, char **argv) {
+void CoreUnitTests(bool run_all_tests) {
   void ConstantsTests();
   void MSBTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_core_tests = true;
 
   // First things first.  Let's check to make sure that our constants are
   // all in place.
@@ -81,6 +78,4 @@ int main(int argc, char **argv) {
 
   // Now, we check our MostSignificantBit method to make sure it's working.
   if (FLAGS_all_core_tests || FLAGS_core_msb_tests) MSBTests();
-
-  return 0;
 }

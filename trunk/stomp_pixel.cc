@@ -1340,8 +1340,16 @@ int8_t Pixel::IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta) {
     // means that the inner disk is either completely inside or outside the
     // pixel.  Checking the center should tell us which is which.
     if (contains_center) {
-      // disk is inside pixel.
-      intersects_inner_disk = -1;
+      if (Stomp::DoubleEQ(theta.ThetaMin(), 0.0)) {
+	// If the inner disk has radius = 0, then we've got a disk, not an
+	// annulus.  Since the inner disk has no area, then it's counted as
+	// outside the pixel and the intersect status will be determined only
+	// by the outer disk.
+	intersects_inner_disk = 0;
+      } else {
+	// disk is inside pixel.
+	intersects_inner_disk = -1;
+      }
     } else {
       // disk is outside pixel.
       intersects_inner_disk = 0;

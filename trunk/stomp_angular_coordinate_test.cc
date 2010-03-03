@@ -215,16 +215,13 @@ void WeightedAngularCoordinateBasicTests() {
   std::cout << "\tAfter restoring Weight, Weight = " << ang.Weight() << "\n";
 }
 
-int main(int argc, char **argv) {
+void AngularCoordinateUnitTests(bool run_all_tests) {
   void AngularCoordinateBasicTests();
   void AngularCoordinatePositionAngleTests();
   void AngularCoordinateRotationTests();
   void WeightedAngularCoordinateBasicTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_angular_coordinate_tests = true;
 
   // Check that AngularCoordinate transforms from one coordinate system to
   // another work properly and that we can recover the same pixel indices from
@@ -249,6 +246,4 @@ int main(int argc, char **argv) {
   if (FLAGS_all_angular_coordinate_tests ||
       FLAGS_weighted_angular_coordinate_basic_tests)
     WeightedAngularCoordinateBasicTests();
-
-  return 0;
 }

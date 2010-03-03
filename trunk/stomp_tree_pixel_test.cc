@@ -64,7 +64,7 @@ void TreePixelPairTests() {
 
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   uint16_t n_points_per_node = 500;
-  uint32_t n_points = 50000;
+  uint32_t n_points = 10000;
   Stomp::TreePixel tree_pix(ang, Stomp::HPixResolution,
 			    n_points_per_node);
 
@@ -504,7 +504,7 @@ void TreePixelNeighborTests() {
   double min_edge_distance, max_edge_distance;
   double mean_edge_distance = 0.0;
   for (uint16_t i=0;i<n_test_points;i++) {
-    tree_pix._EdgeDistances(test_angVec[i], min_edge_distance,
+    tree_pix.EdgeDistances(test_angVec[i], min_edge_distance,
 			    max_edge_distance);
     mean_edge_distance += Stomp::RadToDeg*asin(sqrt(min_edge_distance));
   }
@@ -545,17 +545,14 @@ void TreePixelNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
-int main(int argc, char **argv) {
+void TreePixelUnitTests(bool run_all_tests) {
   void TreePixelBasicTests();
   void TreePixelPairTests();
   void TreePixelCoverageTests();
   void TreePixelFieldPairTests();
   void TreePixelNeighborTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_tree_pixel_tests = true;
 
   // Check that the Stomp::TreePixel class is able to add points and
   // automatically generate sub-pixels.
@@ -577,6 +574,4 @@ int main(int argc, char **argv) {
   // Checking nearest neighbor finding routines.
   if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_neighbor_tests)
     TreePixelNeighborTests();
-
-  return 0;
 }

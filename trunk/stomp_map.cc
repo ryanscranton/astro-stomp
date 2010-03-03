@@ -992,7 +992,7 @@ void Map::Coverage(PixelVector& superpix, uint16_t resolution) {
 	}
       }
     }
-    sort(superpix.begin(), superpix.end(), Pixel::SuperPixelBasedOrder);
+    sort(superpix.begin(), superpix.end(), Pixel::LocalOrder);
   }
 }
 

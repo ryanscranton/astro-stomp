@@ -9,12 +9,12 @@
 #include "stomp_pixel.h"
 #include "stomp_pixel_test.h"
 
-void PixelResolutionTests() {
+void PixelBasicTests() {
   // Ok, now we'll try moving around a bit in resolution space.
   std::cout << "\n";
-  std::cout << "********************************\n";
-  std::cout << "*** Pixel Resolution scaling ***\n";
-  std::cout << "********************************\n";
+  std::cout << "***************************\n";
+  std::cout << "*** Pixel Basic scaling ***\n";
+  std::cout << "***************************\n";
   std::cout << "Setting index at each step manually:\n";
 
   Stomp::AngularCoordinate ang(20.0, 20.0, Stomp::AngularCoordinate::Survey);
@@ -363,7 +363,8 @@ void PixelAnnulusIntersectionTests() {
   } else {
     std::cout << "\tBad, a circle doesn't contain the pixel.\n";
     std::cout << "\tIntersectsAnnulus = " <<
-      tmp_pix.IntersectsAnnulus(ang, 0.0, theta) << "; should == 1\n";
+      static_cast<int>(tmp_pix.IntersectsAnnulus(ang, 0.0, theta)) <<
+      "; should == 1\n";
     if (tmp_pix.Contains(ang)) {
       std::cout << "\t\tContained in pixel.\n";
     } else {
@@ -577,25 +578,21 @@ void PixelAnnulusIntersectionTests() {
     "\t\tElapsed Time: " << stomp_watch.ElapsedTime() << " seconds.\n";
 }
 
-int main(int argc, char **argv) {
-  void PixelResolutionTests();
+void PixelUnitTests(bool run_all_tests) {
+  void PixelBasicTests();
   void PixelStripeTests();
   void PixelXYTests();
   void PixelBoundTests();
   void PixelWithinRadiusTests();
   void PixelAnnulusIntersectionTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_pixel_tests = true;
 
   // Check that the hierarchical resolution scaling routines work properly.
-  if (FLAGS_all_pixel_tests || FLAGS_pixel_resolution_tests)
-    PixelResolutionTests();
+  if (FLAGS_all_pixel_tests || FLAGS_pixel_basic_tests)
+    PixelBasicTests();
 
-  // Check that the routines for generating the X-Y bounds of a given
-  // region work correctly.
+  // Check that the routines for generating the stripe from a pixel work.
   if (FLAGS_all_pixel_tests || FLAGS_pixel_stripe_tests) PixelStripeTests();
 
   // Check that the routines for generating the X-Y bounds of a given
@@ -614,6 +611,4 @@ int main(int argc, char **argv) {
   // Check the routines for determining whether or not annuli intersect pixels.
   if (FLAGS_all_pixel_tests || FLAGS_pixel_annulus_intersection_tests)
     PixelAnnulusIntersectionTests();
-
-  return 0;
 }

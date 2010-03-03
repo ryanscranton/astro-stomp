@@ -79,18 +79,13 @@ void ScalarPixelBasicTests() {
     "), GalLon: " << tmp_scalar->GalLon() << " (" << ang.GalLon() << ")\n";
 }
 
-int main(int argc, char **argv) {
+void ScalarPixelUnitTests(bool run_all_tests) {
   void ScalarPixelBasicTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_scalar_pixel_tests = true;
 
   // Check the basic inheritance of the Stomp::ScalarPixel class from
   // Stomp::Pixel.
-  if (FLAGS_scalar_pixel_all_tests || FLAGS_scalar_pixel_basic_tests)
+  if (FLAGS_all_scalar_pixel_tests || FLAGS_scalar_pixel_basic_tests)
     ScalarPixelBasicTests();
-
-  return 0;
 }

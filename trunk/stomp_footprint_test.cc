@@ -5,6 +5,8 @@
 #include <gflags/gflags.h>
 #include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
+#include "stomp_map.h"
+#include "stomp_footprint.h"
 #include "stomp_footprint_test.h"
 
 void CircleFootprintTests() {
@@ -99,7 +101,7 @@ void WedgeFootprintTests() {
     std::cout << "Pixelizing...\n";
     std::cout << "\tStarting resolution level: " <<
       static_cast<int>(wedge->FindStartingResolutionLevel()) << "\n";
-    
+
     if (wedge->FindXYBounds(wedge->FindStartingResolutionLevel())) {
       std::cout << "\t\tFound X-Y bounds: " <<
         wedge->XMin() << " - " << wedge->XMax() << ", " <<
@@ -165,12 +167,12 @@ void PolygonFootprintTests() {
   }
 }
 
-int main(int argc, char **argv) {
+void FootprintUnitTests(bool run_all_tests) {
+  void CircleFootprintTests();
+  void WedgeFootprintTests();
+  void PolygonFootprintTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_footprint_tests = true;
 
   // Check the FootprintBound class, specifically the derived class for making
   // circular footprints around a central point.
@@ -184,6 +186,4 @@ int main(int argc, char **argv) {
   // Check the spherical polygon derived FootprintBound class.
   if (FLAGS_all_footprint_tests || FLAGS_polygon_footprint_tests)
     PolygonFootprintTests();
-
-  return 0;
 }

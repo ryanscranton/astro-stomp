@@ -715,7 +715,7 @@ void MapSoftenTests() {
     ", Min weight: " << soft_map.MinWeight() << "\n";
 }
 
-int main(int argc, char **argv) {
+void MapUnitTests(bool run_all_tests) {
   void MapBasicTests();
   void MapWriteTests();
   void MapReadTests();
@@ -729,10 +729,7 @@ int main(int argc, char **argv) {
   void MapRegionTests();
   void MapSoftenTests();
 
-  std::string usage = "Usage: ";
-  usage += argv[0];
-  google::SetUsageMessage(usage);
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  if (run_all_tests) FLAGS_all_map_tests = true;
 
   // Check the basic routines for generating Stomp::Map instances from a list
   // of contiguous pixels.
@@ -776,6 +773,4 @@ int main(int argc, char **argv) {
   // Check the routines for softening the maximum resolution of the
   // Map and cutting the map based on the Weight.
   if (FLAGS_all_map_tests || FLAGS_map_soften_tests) MapSoftenTests();
-
-  return 0;
 }
