@@ -4,7 +4,6 @@
 #include <string>
 #include <gflags/gflags.h>
 #include "stomp_util.h"
-#include "stomp_util_test.h"
 
 void CosmologyTests() {
   // Check to make sure that our Cosmology static class works properly.
@@ -38,6 +37,10 @@ void CosmologyTests() {
     z += 0.2;
   }
 }
+
+// Define our command line flags
+DEFINE_bool(all_util_tests, false, "Run all class unit tests.");
+DEFINE_bool(util_cosmology_tests, false, "Run cosmology tests");
 
 void UtilUnitTests(bool run_all_tests) {
   void StompCosmologyTests();

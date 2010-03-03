@@ -6,7 +6,6 @@
 #include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
-#include "stomp_angular_coordinate_test.h"
 
 void AngularCoordinateBasicTests() {
   // Ok, some basic routines.  We're going to declare an angular
@@ -214,6 +213,17 @@ void WeightedAngularCoordinateBasicTests() {
   ang.RestoreOriginalWeight();
   std::cout << "\tAfter restoring Weight, Weight = " << ang.Weight() << "\n";
 }
+
+// Define our command line flags
+DEFINE_bool(all_angular_coordinate_tests, false, "Run all class unit tests.");
+DEFINE_bool(angular_coordinate_basic_tests, false,
+            "Run AngularCoordinate basic tests");
+DEFINE_bool(angular_coordinate_position_angle_tests, false,
+            "Run AngularCoordinate position angle tests");
+DEFINE_bool(angular_coordinate_rotation_tests, false,
+            "Run AngularCoordinate rotation tests");
+DEFINE_bool(weighted_angular_coordinate_basic_tests, false,
+            "Run WeightedAngularCoordinate basic tests");
 
 void AngularCoordinateUnitTests(bool run_all_tests) {
   void AngularCoordinateBasicTests();

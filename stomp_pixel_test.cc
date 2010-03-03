@@ -7,7 +7,6 @@
 #include "stomp_util.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
-#include "stomp_pixel_test.h"
 
 void PixelBasicTests() {
   // Ok, now we'll try moving around a bit in resolution space.
@@ -577,6 +576,16 @@ void PixelAnnulusIntersectionTests() {
   std::cout <<
     "\t\tElapsed Time: " << stomp_watch.ElapsedTime() << " seconds.\n";
 }
+
+// Define our command line flags
+DEFINE_bool(all_pixel_tests, false, "Run all class unit tests.");
+DEFINE_bool(pixel_basic_tests, false, "Run Pixel resolution tests");
+DEFINE_bool(pixel_stripe_tests, false, "Run Pixel stripe tests");
+DEFINE_bool(pixel_xy_tests, false, "Run Pixel XY tests");
+DEFINE_bool(pixel_bound_tests, false, "Run Pixel bound tests");
+DEFINE_bool(pixel_within_radius_tests, false, "Run Pixel WithinRadius tests");
+DEFINE_bool(pixel_annulus_intersection_tests, false,
+            "Run Pixel AnnulusIntersection tests");
 
 void PixelUnitTests(bool run_all_tests) {
   void PixelBasicTests();
