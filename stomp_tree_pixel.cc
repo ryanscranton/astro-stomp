@@ -165,7 +165,7 @@ uint32_t TreePixel::FindPairs(AngularCoordinate& ang, AngularBin& theta,
     // number of points in this pixel.  In the latter case, we pass things
     // along to the sub-pixels.  If neither of those things are true, then
     // we're done and we send back zero.
-    int8_t intersects_annulus = _IntersectsAnnulus(ang, theta);
+    int8_t intersects_annulus = IntersectsAnnulus(ang, theta);
 
     if (intersects_annulus == 1) {
       // Fully contained in the annulus.
@@ -240,7 +240,7 @@ double TreePixel::FindWeightedPairs(AngularCoordinate& ang, AngularBin& theta,
     // number of points in this pixel.  In the latter case, we pass things
     // along to the sub-pixels.  If neither of those things are true, then
     // we're done and we send back zero.
-    int8_t intersects_annulus = _IntersectsAnnulus(ang, theta);
+    int8_t intersects_annulus = IntersectsAnnulus(ang, theta);
     if (intersects_annulus == 1) {
       // Fully contained in the annulus.
       total_weight = Weight();
@@ -317,7 +317,7 @@ double TreePixel::FindWeightedPairs(WeightedAngularCoordinate& w_ang,
     // number of points in this pixel.  In the latter case, we pass things
     // along to the sub-pixels.  If neither of those things are true, then
     // we're done and we send back zero.
-    int8_t intersects_annulus = _IntersectsAnnulus(w_ang, theta);
+    int8_t intersects_annulus = IntersectsAnnulus(w_ang, theta);
     if (intersects_annulus == 1) {
       // Fully contained in the annulus.
       total_weight = Weight()*w_ang.Weight();
@@ -457,7 +457,7 @@ double TreePixel::FindWeightedPairs(AngularCoordinate& ang, AngularBin& theta,
     // number of points in this pixel.  In the latter case, we pass things
     // along to the sub-pixels.  If neither of those things are true, then
     // we're done and we send back zero.
-    int8_t intersects_annulus = _IntersectsAnnulus(ang, theta);
+    int8_t intersects_annulus = IntersectsAnnulus(ang, theta);
     if (intersects_annulus == 1) {
       // Fully contained in the annulus.
       total_weight = FieldTotal(field_name);
@@ -564,7 +564,7 @@ double TreePixel::FindWeightedPairs(WeightedAngularCoordinate& w_ang,
     // number of points in this pixel.  In the latter case, we pass things
     // along to the sub-pixels.  If neither of those things are true, then
     // we're done and we send back zero.
-    int8_t intersects_annulus = _IntersectsAnnulus(w_ang, theta);
+    int8_t intersects_annulus = IntersectsAnnulus(w_ang, theta);
     if (intersects_annulus == 1) {
       // Fully contained in the annulus.
       total_weight = FieldTotal(field_name)*w_ang.Weight();
@@ -678,7 +678,7 @@ double TreePixel::FindWeightedPairs(WeightedAngularCoordinate& w_ang,
     // number of points in this pixel.  In the latter case, we pass things
     // along to the sub-pixels.  If neither of those things are true, then
     // we're done and we send back zero.
-    int8_t intersects_annulus = _IntersectsAnnulus(w_ang, theta);
+    int8_t intersects_annulus = IntersectsAnnulus(w_ang, theta);
     if (intersects_annulus == 1) {
       // Fully contained in the annulus.
       total_weight = FieldTotal(field_name)*w_ang.Field(ang_field_name);
@@ -813,7 +813,7 @@ void TreePixel::_NeighborRecursion(AngularCoordinate& ang,
 	(*iter)->_NeighborRecursion(ang, neighbors);
       } else {
 	double min_edge_distance, max_edge_distance;
-	(*iter)->_EdgeDistances(ang, min_edge_distance, max_edge_distance);
+	(*iter)->EdgeDistances(ang, min_edge_distance, max_edge_distance);
 	DistancePixelPair dist_pair(min_edge_distance, (*iter));
 	pix_queue.push(dist_pair);
       }
@@ -838,258 +838,6 @@ void TreePixel::_NeighborRecursion(AngularCoordinate& ang,
       pix_queue.pop();
     }
   }
-}
-
-int8_t TreePixel::_IntersectsAnnulus(AngularCoordinate& ang,
-				     AngularBin& theta) {
-  // By default, we assume that there is no intersection between the disk
-  // and the pixel.
-  int8_t intersects_annulus = 0;
-
-  double costheta =
-    ang.UnitSphereX()*unit_sphere_x_ +
-    ang.UnitSphereY()*unit_sphere_y_ +
-    ang.UnitSphereZ()*unit_sphere_z_;
-  double costheta_max = costheta;
-  double costheta_min = costheta;
-
-  double costheta_ul =
-    ang.UnitSphereX()*unit_sphere_x_ul_ +
-    ang.UnitSphereY()*unit_sphere_y_ul_ +
-    ang.UnitSphereZ()*unit_sphere_z_ul_;
-  if (costheta_ul > costheta_max) costheta_max = costheta_ul;
-  if (costheta_ul < costheta_min) costheta_min = costheta_ul;
-
-  double costheta_ll =
-    ang.UnitSphereX()*unit_sphere_x_ll_ +
-    ang.UnitSphereY()*unit_sphere_y_ll_ +
-    ang.UnitSphereZ()*unit_sphere_z_ll_;
-  if (costheta_ll > costheta_max) costheta_max = costheta_ll;
-  if (costheta_ll < costheta_min) costheta_min = costheta_ll;
-
-  double costheta_ur =
-    ang.UnitSphereX()*unit_sphere_x_ur_ +
-    ang.UnitSphereY()*unit_sphere_y_ur_ +
-    ang.UnitSphereZ()*unit_sphere_z_ur_;
-  if (costheta_ur > costheta_max) costheta_max = costheta_ur;
-  if (costheta_ur < costheta_min) costheta_min = costheta_ur;
-
-  double costheta_lr =
-    ang.UnitSphereX()*unit_sphere_x_lr_ +
-    ang.UnitSphereY()*unit_sphere_y_lr_ +
-    ang.UnitSphereZ()*unit_sphere_z_lr_;
-  if (costheta_lr > costheta_max) costheta_max = costheta_lr;
-  if (costheta_lr < costheta_min) costheta_min = costheta_lr;
-
-  double near_corner_distance = 1.0 - costheta_max*costheta_max;
-  double far_corner_distance = 1.0 - costheta_min*costheta_min;
-  double near_edge_distance;
-  double far_edge_distance;
-
-  if (!_EdgeDistances(ang, near_edge_distance, far_edge_distance)) {
-    near_edge_distance = near_corner_distance;
-    far_edge_distance = far_corner_distance;
-  }
-
-  bool contains_center = Contains(ang);
-
-  // First we tackle the inner disk.
-  int8_t intersects_inner_disk = 0;
-
-  if (Stomp::DoubleGE(near_edge_distance, theta.Sin2ThetaMin())) {
-    // If this is true, it means that the distance between the nearest edge
-    // and the annulus center is greater than the inner annulus radius.  This
-    // means that the inner disk is either completely inside or outside the
-    // pixel.  Checking the center should tell us which is which.
-    if (contains_center) {
-      // disk is inside pixel.
-      intersects_inner_disk = -1;
-    } else {
-      // disk is outside pixel.
-      intersects_inner_disk = 0;
-    }
-  } else {
-    // If the distance to the nearest edge is less than the inner annulus
-    // radius, then there is some intersection between the two; either the
-    // disk intersects the pixel edge or it completely contains the pixel.
-    // Checking the corners will tell is which is which.
-    if (Stomp::DoubleGE(costheta_ul, theta.CosThetaMax()) &&
-	Stomp::DoubleGE(costheta_ur, theta.CosThetaMax()) &&
-	Stomp::DoubleGE(costheta_ll, theta.CosThetaMax()) &&
-	Stomp::DoubleGE(costheta_lr, theta.CosThetaMax())) {
-      // pixel is inside the disk.
-      intersects_inner_disk = 1;
-    } else {
-      // pixel intersects the disk.
-      intersects_inner_disk = -1;
-    }
-  }
-
-  // Now, the outer disk.
-  int8_t intersects_outer_disk = 0;
-
-  if (Stomp::DoubleGE(near_edge_distance, theta.Sin2ThetaMax())) {
-    // If this is true, it means that the distance between the nearest edge
-    // and the annulus center is greater than the outer annulus radius.  This
-    // means that the outer disk is either completely inside or outside the
-    // pixel.  Checking the center should tell us which is which.
-    if (contains_center) {
-      // disk is inside pixel.
-      intersects_outer_disk = -1;
-    } else {
-      // disk is outside pixel.
-      intersects_outer_disk = 0;
-    }
-  } else {
-    // If the distance to the nearest edge is less than the outer annulus
-    // radius, then there is some intersection between the two; either the
-    // disk intersects the pixel edge or it completely contains the pixel.
-    // Checking the corners will tell is which is which.
-    if (Stomp::DoubleGE(costheta_ul, theta.CosThetaMin()) &&
-	Stomp::DoubleGE(costheta_ur, theta.CosThetaMin()) &&
-	Stomp::DoubleGE(costheta_ll, theta.CosThetaMin()) &&
-	Stomp::DoubleGE(costheta_lr, theta.CosThetaMin())) {
-      // pixel is inside the disk.
-      intersects_outer_disk = 1;
-    } else {
-      // pixel intersects the disk.
-      intersects_outer_disk = -1;
-    }
-  }
-
-  // Now we deal with cases.
-  if ((intersects_inner_disk == 1) && (intersects_outer_disk == 1)) {
-    // This means that the pixel is contained by the inner and outer disks.
-    // Hence, the pixel is in the hole of the annulus.
-    intersects_annulus = 0;
-  }
-
-  if ((intersects_inner_disk == -1) && (intersects_outer_disk == 1)) {
-    // This means that the inner disk shares some area with the pixel and the
-    // outer disk contains it completely.
-    intersects_annulus = -1;
-  }
-
-  if ((intersects_inner_disk == 0) && (intersects_outer_disk == 1)) {
-    // The inner disk is outside the pixel, but the outer disk contains it.
-    // Hence, the pixel is fully inside the annulus.
-    intersects_annulus = 1;
-  }
-
-
-  if ((intersects_inner_disk == 1) && (intersects_outer_disk == -1)) {
-    // This should be impossible.  Raise an error.
-    std::cout << "Impossible annulus intersection: " <<
-      intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
-    exit(2);
-  }
-
-  if ((intersects_inner_disk == -1) && (intersects_outer_disk == -1)) {
-    // There's partial overlap with both the inner and outer disks.
-    intersects_annulus = -1;
-  }
-
-  if ((intersects_inner_disk == 0) && (intersects_outer_disk == -1)) {
-    // The inner disk is outside, but the outer intersects, so there's some
-    // intersection between the pixel and annulus.
-    intersects_annulus = -1;
-  }
-
-
-  if ((intersects_inner_disk == 1) && (intersects_outer_disk == 0)) {
-    // This should be impossible.  Raise an error.
-    std::cout << "Impossible annulus intersection: " <<
-      intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
-    exit(2);
-  }
-
-  if ((intersects_inner_disk == -1) && (intersects_outer_disk == 0)) {
-    // This should be impossible.  Raise an error.
-    std::cout << "Impossible annulus intersection: " <<
-      intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
-    exit(2);
-  }
-
-  if ((intersects_inner_disk == 0) && (intersects_outer_disk == 0)) {
-    // The inner disk is outside the pixel, and so is the outer disk.
-    // Hence, the pixel is fully outside the annulus.
-    intersects_annulus = 0;
-  }
-
-  return intersects_annulus;
-}
-
-bool TreePixel::_EdgeDistances(AngularCoordinate& ang,
-			       double& min_edge_distance,
-			       double& max_edge_distance) {
-  bool inside_bounds = false;
-  double lambda_min = LambdaMin();
-  double lambda_max = LambdaMax();
-  double eta_min = EtaMin();
-  double eta_max = EtaMax();
-  double lam = ang.Lambda();
-  double eta = ang.Eta();
-
-  if (Stomp::DoubleLE(lam, lambda_max) && Stomp::DoubleGE(lam, lambda_min)) {
-    inside_bounds = true;
-
-    double eta_scaling = 1.0 +
-      lam*lam*(0.000192312 - lam*lam*(1.82764e-08 - 1.28162e-11*lam*lam));
-
-    min_edge_distance = fabs(eta - eta_min);
-    max_edge_distance = fabs(eta - eta_min);
-
-    if (min_edge_distance > fabs(eta - eta_max))
-      min_edge_distance = fabs(eta - eta_max);
-    if (max_edge_distance < fabs(eta - eta_max))
-      max_edge_distance = fabs(eta - eta_max);
-
-    min_edge_distance /= eta_scaling;
-    max_edge_distance /= eta_scaling;
-  }
-
-  if (Stomp::DoubleLE(eta, eta_max) && Stomp::DoubleGE(eta, eta_min)) {
-    if (inside_bounds) {
-      if (min_edge_distance > fabs(lam - lambda_min))
-	min_edge_distance = fabs(lam - lambda_min);
-      if (min_edge_distance > fabs(lam - lambda_max))
-	min_edge_distance = fabs(lam - lambda_max);
-
-      if (max_edge_distance < fabs(lam - lambda_min))
-	max_edge_distance = fabs(lam - lambda_min);
-      if (max_edge_distance < fabs(lam - lambda_max))
-	max_edge_distance = fabs(lam - lambda_max);
-    } else {
-      min_edge_distance = fabs(lam - lambda_min);
-      max_edge_distance = fabs(lam - lambda_max);
-
-      if (min_edge_distance > fabs(lam - lambda_max))
-	min_edge_distance = fabs(lam - lambda_max);
-      if (max_edge_distance < fabs(lam - lambda_max))
-	max_edge_distance = fabs(lam - lambda_max);
-    }
-    inside_bounds = true;
-  }
-
-  if (inside_bounds) {
-    // The return value for this function is (sin(theta))^2 rather than just
-    // the angle theta.  If we can get by with the small angle approximation,
-    // then we use that for speed purposes.
-    if (min_edge_distance < 3.0) {
-      min_edge_distance = min_edge_distance*Stomp::DegToRad;
-    } else {
-      min_edge_distance = sin(min_edge_distance*Stomp::DegToRad);
-    }
-    min_edge_distance *= min_edge_distance;
-
-    if (max_edge_distance < 3.0) {
-      max_edge_distance = max_edge_distance*Stomp::DegToRad;
-    } else {
-      max_edge_distance = sin(max_edge_distance*Stomp::DegToRad);
-    }
-    max_edge_distance *= max_edge_distance;
-  }
-  return inside_bounds;
 }
 
 void TreePixel::InitializeCorners() {
@@ -1456,6 +1204,119 @@ void TreePixel::Clear() {
       delete subpix_[i];
     }
   subpix_.clear();
+}
+
+double TreePixel::UnitSphereX() {
+  return unit_sphere_x_;
+}
+
+double TreePixel::UnitSphereY() {
+  return unit_sphere_y_;
+}
+
+double TreePixel::UnitSphereZ() {
+  return unit_sphere_z_;
+}
+
+double TreePixel::UnitSphereX_UL() {
+  return unit_sphere_x_ul_;
+}
+
+double TreePixel::UnitSphereY_UL() {
+  return unit_sphere_y_ul_;
+}
+
+double TreePixel::UnitSphereZ_UL() {
+  return unit_sphere_z_ul_;
+}
+
+double TreePixel::UnitSphereX_UR() {
+  return unit_sphere_x_ur_;
+}
+
+double TreePixel::UnitSphereY_UR() {
+  return unit_sphere_y_ur_;
+}
+
+double TreePixel::UnitSphereZ_UR() {
+  return unit_sphere_z_ur_;
+}
+
+double TreePixel::UnitSphereX_LL() {
+  return unit_sphere_x_ll_;
+}
+
+double TreePixel::UnitSphereY_LL() {
+  return unit_sphere_y_ll_;
+}
+
+double TreePixel::UnitSphereZ_LL() {
+  return unit_sphere_z_ll_;
+}
+
+double TreePixel::UnitSphereX_LR() {
+  return unit_sphere_x_lr_;
+}
+
+double TreePixel::UnitSphereY_LR() {
+  return unit_sphere_y_lr_;
+}
+
+double TreePixel::UnitSphereZ_LR() {
+  return unit_sphere_z_lr_;
+}
+
+void TreePixel::WithinAnnulus(AngularBin& theta, PixelVector& pix,
+			      bool check_full_pixel) {
+  if (!pix.empty()) pix.clear();
+
+  uint32_t y_min;
+  uint32_t y_max;
+  std::vector<uint32_t> x_min;
+  std::vector<uint32_t> x_max;
+
+  XYBounds(theta.ThetaMax(), x_min, x_max, y_min, y_max, true);
+
+  uint32_t nx = Nx0*Resolution();
+  uint32_t nx_pix;
+
+  for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
+    if ((x_max[n] < x_min[n]) && (x_min[n] > nx/2)) {
+      nx_pix = nx - x_min[n] + x_max[n] + 1;
+    } else {
+      nx_pix = x_max[n] - x_min[n] + 1;
+    }
+    if (nx_pix > nx) nx_pix = nx;
+    for (uint32_t m=0,x=x_min[n];m<nx_pix;m++,x++) {
+      if (x == nx) x = 0;
+      TreePixel tree_pix(x, y, Resolution());
+      bool within_bounds =
+	theta.WithinCosBounds(UnitSphereX()*tree_pix.UnitSphereX() +
+			      UnitSphereY()*tree_pix.UnitSphereY() +
+			      UnitSphereZ()*tree_pix.UnitSphereZ());
+      if (check_full_pixel && within_bounds) {
+	if (theta.WithinCosBounds(UnitSphereX()*tree_pix.UnitSphereX_UL() +
+				  UnitSphereY()*tree_pix.UnitSphereY_UL() +
+				  UnitSphereZ()*tree_pix.UnitSphereZ_UL()) &&
+	    theta.WithinCosBounds(UnitSphereX()*tree_pix.UnitSphereX_UR() +
+				  UnitSphereY()*tree_pix.UnitSphereY_UR() +
+				  UnitSphereZ()*tree_pix.UnitSphereZ_UR()) &&
+	    theta.WithinCosBounds(UnitSphereX()*tree_pix.UnitSphereX_LL() +
+				  UnitSphereY()*tree_pix.UnitSphereY_LL() +
+				  UnitSphereZ()*tree_pix.UnitSphereZ_LL()) &&
+	    theta.WithinCosBounds(UnitSphereX()*tree_pix.UnitSphereX_LR() +
+				  UnitSphereY()*tree_pix.UnitSphereY_LR() +
+				  UnitSphereZ()*tree_pix.UnitSphereZ_LR())) {
+	  within_bounds = true;
+	} else {
+	  within_bounds = false;
+	}
+      }
+      if (within_bounds) pix.push_back(Pixel(tree_pix.PixelX(),
+					     tree_pix.PixelY(),
+					     tree_pix.Resolution(), 1.0));
+    }
+  }
 }
 
 TreeNeighbor::TreeNeighbor(AngularCoordinate& reference_ang,

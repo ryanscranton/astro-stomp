@@ -702,8 +702,8 @@ void TreeMap::_NeighborRecursion(AngularCoordinate& ang,
     TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
     if (iter != tree_map_.end() && !pix_iter->Contains(ang)) {
       double min_edge_distance, max_edge_distance;
-      tree_map_[pix_iter->Pixnum()]->_EdgeDistances(ang, min_edge_distance,
-						    max_edge_distance);
+      tree_map_[pix_iter->Pixnum()]->EdgeDistances(ang, min_edge_distance,
+						   max_edge_distance);
       DistancePixelPair dist_pair(min_edge_distance,
 				  tree_map_[pix_iter->Pixnum()]);
       pix_queue.push(dist_pair);
