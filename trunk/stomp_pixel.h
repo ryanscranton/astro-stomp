@@ -153,12 +153,12 @@ class Pixel {
 
   // Given an angle in degrees (or upper and lower angular bounds in degrees),
   // return a list of pixels at the same resolution within those bounds.
-  void WithinRadius(double theta_max, PixelVector& pix,
-                    bool check_full_pixel=false);
-  void WithinAnnulus(double theta_min, double theta_max,
-		     PixelVector& pix, bool check_full_pixel=false);
-  void WithinAnnulus(AngularBin& theta, PixelVector& pix,
-                     bool check_full_pixel=false);
+  virtual void WithinRadius(double theta_max, PixelVector& pix,
+			    bool check_full_pixel=false);
+  virtual void WithinAnnulus(double theta_min, double theta_max,
+			     PixelVector& pix, bool check_full_pixel=false);
+  virtual void WithinAnnulus(AngularBin& theta, PixelVector& pix,
+			     bool check_full_pixel=false);
 
   // While the methods above are useful, sometimes we want a bit less precision.
   // The return vector of pixels include any possible pixels that might be
@@ -218,6 +218,13 @@ class Pixel {
   double NearCornerDistance(AngularCoordinate& ang);
   double FarCornerDistance(AngularCoordinate& ang);
 
+  // Alternatively, we can get both edge distances in a single call.  The
+  // returned boolean tells us whether the distances are to pixel edges (true)
+  // or pixel corners (false).
+  bool EdgeDistances(AngularCoordinate& ang, double& near_edge_distance,
+		     double& far_edge_distance);
+
+
   // Finishing up the angle-checking methods, we have two more methods that
   // return true or false based on whether the current pixel is within a given
   // angular range of a point on the sphere (specified by either a raw angular
@@ -228,22 +235,22 @@ class Pixel {
   // checking), a return value of 0 indicates that it is fully outside the
   // annulus and a return value of -1 indicates a partial containment.
   bool IsWithinRadius(AngularCoordinate& ang, double theta_max,
-                      bool check_full_pixel=false);
+		      bool check_full_pixel=false);
   bool IsWithinRadius(Pixel& pix, double theta_max,
-                      bool check_full_pixel=false);
+		      bool check_full_pixel=false);
   bool IsWithinAnnulus(AngularCoordinate& ang, double theta_min,
-                       double theta_max, bool check_full_pixel=false);
+		       double theta_max, bool check_full_pixel=false);
   bool IsWithinAnnulus(Pixel& pix, double theta_min, double theta_max,
-                       bool check_full_pixel=false);
+		       bool check_full_pixel=false);
   bool IsWithinAnnulus(AngularCoordinate& ang, AngularBin& theta,
-                       bool check_full_pixel=false);
+		       bool check_full_pixel=false);
   bool IsWithinAnnulus(Pixel& pix, AngularBin& theta,
-                       bool check_full_pixel=false);
+		       bool check_full_pixel=false);
   int8_t IntersectsAnnulus(AngularCoordinate& ang,
-			    double theta_min, double theta_max);
+				   double theta_min, double theta_max);
   int8_t IntersectsAnnulus(Pixel& pix,
-			    double theta_min, double theta_max);
-  int8_t IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta);
+			   double theta_min, double theta_max);
+  virtual int8_t IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta);
   int8_t IntersectsAnnulus(Pixel& pix, AngularBin& theta);
 
   // A hold-over from the SDSS coordinate system, this converts the current
@@ -262,9 +269,9 @@ class Pixel {
   double Eta();
 
   // ... likewise for the Cartesian coordinates on the unit sphere.
-  double UnitSphereX();
-  double UnitSphereY();
-  double UnitSphereZ();
+  virtual double UnitSphereX();
+  virtual double UnitSphereY();
+  virtual double UnitSphereZ();
 
   // Since the pixels are rectangular in survey coordinates, we have meaningful
   // notions of the bounds in lambda-eta space.
@@ -305,21 +312,21 @@ class Pixel {
 
   // And it can be useful to be able to quickly extract the x-y-z positions of
   // the pixel corners.
-  double UnitSphereX_UL();
-  double UnitSphereY_UL();
-  double UnitSphereZ_UL();
+  virtual double UnitSphereX_UL();
+  virtual double UnitSphereY_UL();
+  virtual double UnitSphereZ_UL();
 
-  double UnitSphereX_UR();
-  double UnitSphereY_UR();
-  double UnitSphereZ_UR();
+  virtual double UnitSphereX_UR();
+  virtual double UnitSphereY_UR();
+  virtual double UnitSphereZ_UR();
 
-  double UnitSphereX_LL();
-  double UnitSphereY_LL();
-  double UnitSphereZ_LL();
+  virtual double UnitSphereX_LL();
+  virtual double UnitSphereY_LL();
+  virtual double UnitSphereZ_LL();
 
-  double UnitSphereX_LR();
-  double UnitSphereY_LR();
-  double UnitSphereZ_LR();
+  virtual double UnitSphereX_LR();
+  virtual double UnitSphereY_LR();
+  virtual double UnitSphereZ_LR();
 
   void Iterate(bool wrap_pixel = true);
 

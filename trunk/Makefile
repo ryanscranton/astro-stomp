@@ -71,40 +71,43 @@ $(UTIL).o: $(UTIL).cc $(UTIL).h $(CORE).h
 	$(CC) -c $(CCFLAGS) $(UTIL).cc
 
 # unit tests
-test: $(TEST_EXEC).o
-	$(LD) $(TEST_EXEC).o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(FOOTPRINT)_test.o $(UTIL)_test.o $(LDFLAGS) -o $(TEST_EXEC)
+test: $(TEST_EXEC).o $(CORE)_test.o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(FOOTPRINT)_test.o $(UTIL)_test.o
+	$(LD) $(TEST_EXEC).o $(CORE)_test.o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(FOOTPRINT)_test.o $(UTIL)_test.o $(LDFLAGS) -o $(TEST_EXEC)
 
 $(TEST_EXEC).o: $(LIB) $(TEST_EXEC).cc
 	$(CC) -c $(CCFLAGS) $(TEST_EXEC).cc
 
-$(ANGULAR_COORDINATE)_test.o: $(ANGULAR_COORDINATE)_test.cc $(LIB)
+$(CORE)_test.o: $(LIB) $(CORE)_test.cc $(CORE)_test.h
+	$(CC) -c $(CCFLAGS) $(CORE)_test.cc
+
+$(ANGULAR_COORDINATE)_test.o: $(ANGULAR_COORDINATE)_test.cc $(ANGULAR_COORDINATE)_test.h $(LIB)
 	$(CC) -c $(CCFLAGS) $(ANGULAR_COORDINATE)_test.cc
 
-$(ANGULAR_CORRELATION)_test.o: $(ANGULAR_CORRELATION)_test.cc $(LIB)
+$(ANGULAR_CORRELATION)_test.o: $(LIB) $(ANGULAR_CORRELATION)_test.cc $(ANGULAR_CORRELATION)_test.h
 	$(CC) -c $(CCFLAGS) $(ANGULAR_CORRELATION)_test.cc
 
-$(PIXEL)_test.o: $(PIXEL)_test.cc $(LIB)
+$(PIXEL)_test.o: $(LIB) $(PIXEL)_test.cc $(PIXEL)_test.h
 	$(CC) -c $(CCFLAGS) $(PIXEL)_test.cc
 
-$(SCALAR_PIXEL)_test.o: $(SCALAR_PIXEL)_test.cc $(LIB)
+$(SCALAR_PIXEL)_test.o: $(LIB) $(SCALAR_PIXEL)_test.cc $(SCALAR_PIXEL)_test.h
 	$(CC) -c $(CCFLAGS) $(SCALAR_PIXEL)_test.cc
 
-$(TREE_PIXEL)_test.o: $(TREE_PIXEL)_test.cc $(LIB)
+$(TREE_PIXEL)_test.o: $(LIB) $(TREE_PIXEL)_test.cc $(TREE_PIXEL)_test.h
 	$(CC) -c $(CCFLAGS) $(TREE_PIXEL)_test.cc
 
-$(MAP)_test.o: $(MAP)_test.cc $(LIB)
+$(MAP)_test.o: $(LIB) $(MAP)_test.cc $(MAP)_test.cc
 	$(CC) -c $(CCFLAGS) $(MAP)_test.cc
 
-$(SCALAR_MAP)_test.o: $(SCALAR_MAP)_test.cc $(LIB)
+$(SCALAR_MAP)_test.o: $(LIB) $(SCALAR_MAP)_test.cc $(SCALAR_MAP)_test.h
 	$(CC) -c $(CCFLAGS) $(SCALAR_MAP)_test.cc
 
-$(TREE_MAP)_test.o: $(TREE_MAP)_test.cc $(LIB)
+$(TREE_MAP)_test.o: $(LIB) $(TREE_MAP)_test.cc $(TREE_MAP)_test.h
 	$(CC) -c $(CCFLAGS) $(TREE_MAP)_test.cc
 
-$(FOOTPRINT)_test.o: $(FOOTPRINT)_test.cc $(LIB)
+$(FOOTPRINT)_test.o: $(LIB) $(FOOTPRINT)_test.cc $(FOOTPRINT)_test.h 
 	$(CC) -c $(CCFLAGS) $(FOOTPRINT).cc
 
-$(UTIL)_test.o: $(UTIL)_test.cc $(LIB)
+$(UTIL)_test.o: $(LIB) $(UTIL)_test.cc $(UTIL)_test.h
 	$(CC) -c $(CCFLAGS) $(UTIL)_test.cc
 
 

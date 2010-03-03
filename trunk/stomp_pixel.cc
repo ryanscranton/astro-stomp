@@ -1125,6 +1125,78 @@ double Pixel::FarCornerDistance(AngularCoordinate& ang) {
   return 1.0 - costheta_final*costheta_final;
 }
 
+bool Pixel::EdgeDistances(AngularCoordinate& ang, double& min_edge_distance,
+			  double& max_edge_distance) {
+  bool inside_bounds = false;
+  double lambda_min = LambdaMin();
+  double lambda_max = LambdaMax();
+  double eta_min = EtaMin();
+  double eta_max = EtaMax();
+  double lam = ang.Lambda();
+  double eta = ang.Eta();
+
+  if (Stomp::DoubleLE(lam, lambda_max) && Stomp::DoubleGE(lam, lambda_min)) {
+    inside_bounds = true;
+
+    double eta_scaling = 1.0 +
+      lam*lam*(0.000192312 - lam*lam*(1.82764e-08 - 1.28162e-11*lam*lam));
+
+    min_edge_distance = fabs(eta - eta_min);
+    max_edge_distance = fabs(eta - eta_min);
+
+    if (min_edge_distance > fabs(eta - eta_max))
+      min_edge_distance = fabs(eta - eta_max);
+    if (max_edge_distance < fabs(eta - eta_max))
+      max_edge_distance = fabs(eta - eta_max);
+
+    min_edge_distance /= eta_scaling;
+    max_edge_distance /= eta_scaling;
+  }
+
+  if (Stomp::DoubleLE(eta, eta_max) && Stomp::DoubleGE(eta, eta_min)) {
+    if (inside_bounds) {
+      if (min_edge_distance > fabs(lam - lambda_min))
+	min_edge_distance = fabs(lam - lambda_min);
+      if (min_edge_distance > fabs(lam - lambda_max))
+	min_edge_distance = fabs(lam - lambda_max);
+
+      if (max_edge_distance < fabs(lam - lambda_min))
+	max_edge_distance = fabs(lam - lambda_min);
+      if (max_edge_distance < fabs(lam - lambda_max))
+	max_edge_distance = fabs(lam - lambda_max);
+    } else {
+      min_edge_distance = fabs(lam - lambda_min);
+      max_edge_distance = fabs(lam - lambda_max);
+
+      if (min_edge_distance > fabs(lam - lambda_max))
+	min_edge_distance = fabs(lam - lambda_max);
+      if (max_edge_distance < fabs(lam - lambda_max))
+	max_edge_distance = fabs(lam - lambda_max);
+    }
+    inside_bounds = true;
+  }
+
+  if (inside_bounds) {
+    // The return value for this function is (sin(theta))^2 rather than just
+    // the angle theta.  If we can get by with the small angle approximation,
+    // then we use that for speed purposes.
+    if (min_edge_distance < 3.0) {
+      min_edge_distance = min_edge_distance*Stomp::DegToRad;
+    } else {
+      min_edge_distance = sin(min_edge_distance*Stomp::DegToRad);
+    }
+    min_edge_distance *= min_edge_distance;
+
+    if (max_edge_distance < 3.0) {
+      max_edge_distance = max_edge_distance*Stomp::DegToRad;
+    } else {
+      max_edge_distance = sin(max_edge_distance*Stomp::DegToRad);
+    }
+    max_edge_distance *= max_edge_distance;
+  }
+  return inside_bounds;
+}
+
 bool Pixel::IsWithinRadius(AngularCoordinate& ang, double theta_max,
 			   bool check_full_pixel) {
   AngularBin theta(0.0, theta_max);
@@ -1208,44 +1280,178 @@ int8_t Pixel::IntersectsAnnulus(Pixel& pix, double theta_min,
 }
 
 int8_t Pixel::IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta) {
-  // By default, we assume that there is no intersection between the annulus
+  // By default, we assume that there is no intersection between the disk
   // and the pixel.
   int8_t intersects_annulus = 0;
 
-  if (IsWithinAnnulus(ang, theta, true)) {
-    // Fully contained in the annulus.
-    intersects_annulus = 1;
-  } else {
-    // We're not fully contained, so we need to do some checking to see
-    // if there's a possibility that the annulus intersects some part of
-    // our pixel.  We check the case following cases:
-    //   * the annulus center and inner boundary is within the pixel
-    //   * the annulus cuts through the middle of the pixel
-    //   * the annulus straddles the near pixel edge
-    //   * the annulus straddles the far pixel edge.
-    //   * the annulus includes either the near or far corners
-    //   * the annulus is between the near and far corners
-    // If these all fail, then the annulus doesn't intersect the pixel.
-      double near_corner_distance = NearCornerDistance(ang);
-      double far_corner_distance = FarCornerDistance(ang);
-      if ((DoubleLE(near_corner_distance, theta.Sin2ThetaMax()) &&
-	   DoubleGE(far_corner_distance, theta.Sin2ThetaMin())) ||
-	  theta.WithinSin2Bounds(far_corner_distance))
-	intersects_annulus = -1;
+  double costheta =
+    ang.UnitSphereX()*UnitSphereX() +
+    ang.UnitSphereY()*UnitSphereY() +
+    ang.UnitSphereZ()*UnitSphereZ();
+  double costheta_max = costheta;
+  double costheta_min = costheta;
 
-    if (intersects_annulus == 0) {
-      // Edge checking is more expensive, so we only do it if the edge
-      // checking has failed.
-      double near_edge_distance = NearEdgeDistance(ang);
-      double far_edge_distance = FarEdgeDistance(ang);
-      if ((Contains(ang) &&
-	   DoubleLE(theta.Sin2ThetaMin(), far_edge_distance)) ||
-	  (DoubleGE(far_edge_distance, theta.Sin2ThetaMax()) &&
-	   DoubleLE(near_edge_distance, theta.Sin2ThetaMin())) ||
-	  theta.WithinSin2Bounds(far_edge_distance) ||
-	  theta.WithinSin2Bounds(near_edge_distance))
-	intersects_annulus = -1;
+  double costheta_ul =
+    ang.UnitSphereX()*UnitSphereX_UL() +
+    ang.UnitSphereY()*UnitSphereY_UL() +
+    ang.UnitSphereZ()*UnitSphereZ_UL();
+  if (costheta_ul > costheta_max) costheta_max = costheta_ul;
+  if (costheta_ul < costheta_min) costheta_min = costheta_ul;
+
+  double costheta_ll =
+    ang.UnitSphereX()*UnitSphereX_LL() +
+    ang.UnitSphereY()*UnitSphereY_LL() +
+    ang.UnitSphereZ()*UnitSphereZ_LL();
+  if (costheta_ll > costheta_max) costheta_max = costheta_ll;
+  if (costheta_ll < costheta_min) costheta_min = costheta_ll;
+
+  double costheta_ur =
+    ang.UnitSphereX()*UnitSphereX_UR() +
+    ang.UnitSphereY()*UnitSphereY_UR() +
+    ang.UnitSphereZ()*UnitSphereZ_UR();
+  if (costheta_ur > costheta_max) costheta_max = costheta_ur;
+  if (costheta_ur < costheta_min) costheta_min = costheta_ur;
+
+  double costheta_lr =
+    ang.UnitSphereX()*UnitSphereX_LR() +
+    ang.UnitSphereY()*UnitSphereY_LR() +
+    ang.UnitSphereZ()*UnitSphereZ_LR();
+  if (costheta_lr > costheta_max) costheta_max = costheta_lr;
+  if (costheta_lr < costheta_min) costheta_min = costheta_lr;
+
+  double near_corner_distance = 1.0 - costheta_max*costheta_max;
+  double far_corner_distance = 1.0 - costheta_min*costheta_min;
+  double near_edge_distance;
+  double far_edge_distance;
+
+  if (!EdgeDistances(ang, near_edge_distance, far_edge_distance)) {
+    near_edge_distance = near_corner_distance;
+    far_edge_distance = far_corner_distance;
+  }
+
+  bool contains_center = Contains(ang);
+
+  // First we tackle the inner disk.
+  int8_t intersects_inner_disk = 0;
+
+  if (Stomp::DoubleGE(near_edge_distance, theta.Sin2ThetaMin())) {
+    // If this is true, it means that the distance between the nearest edge
+    // and the annulus center is greater than the inner annulus radius.  This
+    // means that the inner disk is either completely inside or outside the
+    // pixel.  Checking the center should tell us which is which.
+    if (contains_center) {
+      // disk is inside pixel.
+      intersects_inner_disk = -1;
+    } else {
+      // disk is outside pixel.
+      intersects_inner_disk = 0;
     }
+  } else {
+    // If the distance to the nearest edge is less than the inner annulus
+    // radius, then there is some intersection between the two; either the
+    // disk intersects the pixel edge or it completely contains the pixel.
+    // Checking the corners will tell is which is which.
+    if (Stomp::DoubleGE(costheta_ul, theta.CosThetaMax()) &&
+	Stomp::DoubleGE(costheta_ur, theta.CosThetaMax()) &&
+	Stomp::DoubleGE(costheta_ll, theta.CosThetaMax()) &&
+	Stomp::DoubleGE(costheta_lr, theta.CosThetaMax())) {
+      // pixel is inside the disk.
+      intersects_inner_disk = 1;
+    } else {
+      // pixel intersects the disk.
+      intersects_inner_disk = -1;
+    }
+  }
+
+  // Now, the outer disk.
+  int8_t intersects_outer_disk = 0;
+
+  if (Stomp::DoubleGE(near_edge_distance, theta.Sin2ThetaMax())) {
+    // If this is true, it means that the distance between the nearest edge
+    // and the annulus center is greater than the outer annulus radius.  This
+    // means that the outer disk is either completely inside or outside the
+    // pixel.  Checking the center should tell us which is which.
+    if (contains_center) {
+      // disk is inside pixel.
+      intersects_outer_disk = -1;
+    } else {
+      // disk is outside pixel.
+      intersects_outer_disk = 0;
+    }
+  } else {
+    // If the distance to the nearest edge is less than the outer annulus
+    // radius, then there is some intersection between the two; either the
+    // disk intersects the pixel edge or it completely contains the pixel.
+    // Checking the corners will tell is which is which.
+    if (Stomp::DoubleGE(costheta_ul, theta.CosThetaMin()) &&
+	Stomp::DoubleGE(costheta_ur, theta.CosThetaMin()) &&
+	Stomp::DoubleGE(costheta_ll, theta.CosThetaMin()) &&
+	Stomp::DoubleGE(costheta_lr, theta.CosThetaMin())) {
+      // pixel is inside the disk.
+      intersects_outer_disk = 1;
+    } else {
+      // pixel intersects the disk.
+      intersects_outer_disk = -1;
+    }
+  }
+
+  // Now we deal with cases.
+  if ((intersects_inner_disk == 1) && (intersects_outer_disk == 1)) {
+    // This means that the pixel is contained by the inner and outer disks.
+    // Hence, the pixel is in the hole of the annulus.
+    intersects_annulus = 0;
+  }
+
+  if ((intersects_inner_disk == -1) && (intersects_outer_disk == 1)) {
+    // This means that the inner disk shares some area with the pixel and the
+    // outer disk contains it completely.
+    intersects_annulus = -1;
+  }
+
+  if ((intersects_inner_disk == 0) && (intersects_outer_disk == 1)) {
+    // The inner disk is outside the pixel, but the outer disk contains it.
+    // Hence, the pixel is fully inside the annulus.
+    intersects_annulus = 1;
+  }
+
+
+  if ((intersects_inner_disk == 1) && (intersects_outer_disk == -1)) {
+    // This should be impossible.  Raise an error.
+    std::cout << "Impossible annulus intersection: " <<
+      intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
+    exit(2);
+  }
+
+  if ((intersects_inner_disk == -1) && (intersects_outer_disk == -1)) {
+    // There's partial overlap with both the inner and outer disks.
+    intersects_annulus = -1;
+  }
+
+  if ((intersects_inner_disk == 0) && (intersects_outer_disk == -1)) {
+    // The inner disk is outside, but the outer intersects, so there's some
+    // intersection between the pixel and annulus.
+    intersects_annulus = -1;
+  }
+
+
+  if ((intersects_inner_disk == 1) && (intersects_outer_disk == 0)) {
+    // This should be impossible.  Raise an error.
+    std::cout << "Impossible annulus intersection: " <<
+      intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
+    exit(2);
+  }
+
+  if ((intersects_inner_disk == -1) && (intersects_outer_disk == 0)) {
+    // This should be impossible.  Raise an error.
+    std::cout << "Impossible annulus intersection: " <<
+      intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
+    exit(2);
+  }
+
+  if ((intersects_inner_disk == 0) && (intersects_outer_disk == 0)) {
+    // The inner disk is outside the pixel, and so is the outer disk.
+    // Hence, the pixel is fully outside the annulus.
+    intersects_annulus = 0;
   }
 
   return intersects_annulus;

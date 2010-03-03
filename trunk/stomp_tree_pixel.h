@@ -224,12 +224,13 @@ class TreePixel : public Pixel {
   // For the pair finding, we end up checking the X-Y-Z corners of the pixels
   // a lot, so we store those values internally and use an internal method for
   // finding the intersection of the pixel with the input annulus;
-  int8_t _IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta);
+  virtual int8_t IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta);
 
   // We also have an internal version of the code for finding the edge
-  // distances.
-  bool _EdgeDistances(AngularCoordinate& ang, double& min_edge_distance,
-		      double& max_edge_distance);
+  // distances.  The return boolean tells us whether the distance returned
+  // is to a pixel edge (true) or a pixel corner (false).
+  virtual bool EdgeDistances(AngularCoordinate& ang, double& min_edge_distance,
+			     double& max_edge_distance);
 
   // And a method to set these values up internally.
   void InitializeCorners();
@@ -316,6 +317,33 @@ class TreePixel : public Pixel {
   // to explicitly delete them to clear all of the memory associated with the
   // pixel.
   void Clear();
+
+  // Since we've got this data stored locally in variables, we can use faster
+  // accessors than the standard Pixel methods.
+  virtual double UnitSphereX();
+  virtual double UnitSphereY();
+  virtual double UnitSphereZ();
+
+  virtual double UnitSphereX_UL();
+  virtual double UnitSphereY_UL();
+  virtual double UnitSphereZ_UL();
+
+  virtual double UnitSphereX_UR();
+  virtual double UnitSphereY_UR();
+  virtual double UnitSphereZ_UR();
+
+  virtual double UnitSphereX_LL();
+  virtual double UnitSphereY_LL();
+  virtual double UnitSphereZ_LL();
+
+  virtual double UnitSphereX_LR();
+  virtual double UnitSphereY_LR();
+  virtual double UnitSphereZ_LR();
+
+  // We can also speed up some of the other pixel boundary checking routines
+  // by using internal versions.
+  virtual void WithinAnnulus(AngularBin& theta, PixelVector& pix,
+			     bool check_full_pixel);
 
  private:
   WAngularPtrVector ang_;
