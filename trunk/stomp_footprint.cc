@@ -55,89 +55,7 @@ bool FootprintBound::FindAngularBounds() {
 }
 
 bool FootprintBound::FindArea() {
-  return Stomp::HPixArea*Stomp::MaxSuperpixnum;
-}
-
-double FootprintBound::ScorePixel(Pixel& pix) {
-
-  double inv_nx = 1.0/static_cast<double>(Stomp::Nx0*pix.Resolution());
-  double inv_ny = 1.0/static_cast<double>(Stomp::Ny0*pix.Resolution());
-  double x = static_cast<double>(pix.PixelX());
-  double y = static_cast<double>(pix.PixelY());
-
-  double lammid = 90.0 - Stomp::RadToDeg*acos(1.0-2.0*(y+0.5)*inv_ny);
-  double lammin = 90.0 - Stomp::RadToDeg*acos(1.0-2.0*(y+1.0)*inv_ny);
-  double lammax = 90.0 - Stomp::RadToDeg*acos(1.0-2.0*(y+0.0)*inv_ny);
-  double lam_quart = 90.0 - Stomp::RadToDeg*acos(1.0-2.0*(y+0.75)*inv_ny);
-  double lam_three = 90.0 - Stomp::RadToDeg*acos(1.0-2.0*(y+0.25)*inv_ny);
-
-  double etamid = Stomp::RadToDeg*(2.0*Stomp::Pi*(x+0.5))*inv_nx +
-      Stomp::EtaOffSet;
-  if (etamid >= 180.0) etamid -= 360.0;
-  if (etamid <= -180.0) etamid += 360.0;
-
-  double etamin = Stomp::RadToDeg*(2.0*Stomp::Pi*(x+0.0))*inv_nx +
-      Stomp::EtaOffSet;
-  if (etamin >= 180.0) etamin -= 360.0;
-  if (etamin <= -180.0) etamin += 360.0;
-
-  double etamax = Stomp::RadToDeg*(2.0*Stomp::Pi*(x+1.0))*inv_nx +
-      Stomp::EtaOffSet;
-  if (etamax >= 180.0) etamax -= 360.0;
-  if (etamax <= -180.0) etamax += 360.0;
-
-  double eta_quart = Stomp::RadToDeg*(2.0*Stomp::Pi*(x+0.25))*inv_nx +
-      Stomp::EtaOffSet;
-  if (eta_quart >= 180.0) eta_quart -= 360.0;
-  if (eta_quart <= -180.0) eta_quart += 360.0;
-
-  double eta_three = Stomp::RadToDeg*(2.0*Stomp::Pi*(x+0.75))*inv_nx +
-      Stomp::EtaOffSet;
-  if (eta_three >= 180.0) eta_three -= 360.0;
-  if (eta_three <= -180.0) eta_three += 360.0;
-
-  double score = 0.0;
-
-  AngularCoordinate ang(lammid,etamid,AngularCoordinate::Survey);
-  if (CheckPoint(ang)) score -= 4.0;
-
-  ang.SetSurveyCoordinates(lam_quart,etamid);
-  if (CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_three,etamid);
-  if (CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lammid,eta_quart);
-  if (CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lammid,eta_quart);
-  if (CheckPoint(ang)) score -= 3.0;
-
-  ang.SetSurveyCoordinates(lam_quart,eta_quart);
-  if (CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_three,eta_quart);
-  if (CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_quart,eta_three);
-  if (CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_three,eta_three);
-  if (CheckPoint(ang)) score -= 3.0;
-
-  ang.SetSurveyCoordinates(lammid,etamax);
-  if (CheckPoint(ang)) score -= 2.0;
-  ang.SetSurveyCoordinates(lammid,etamin);
-  if (CheckPoint(ang)) score -= 2.0;
-  ang.SetSurveyCoordinates(lammax,etamid);
-  if (CheckPoint(ang)) score -= 2.0;
-  ang.SetSurveyCoordinates(lammin,etamid);
-  if (CheckPoint(ang)) score -= 2.0;
-
-  ang.SetSurveyCoordinates(lammax,etamax);
-  if (CheckPoint(ang)) score -= 1.0;
-  ang.SetSurveyCoordinates(lammax,etamin);
-  if (CheckPoint(ang)) score -= 1.0;
-  ang.SetSurveyCoordinates(lammin,etamax);
-  if (CheckPoint(ang)) score -= 1.0;
-  ang.SetSurveyCoordinates(lammin,etamin);
-  if (CheckPoint(ang)) score -= 1.0;
-
-  return score/40.0;
+  return HPixArea*MaxSuperpixnum;
 }
 
 uint8_t FootprintBound::FindStartingResolutionLevel() {
@@ -149,7 +67,7 @@ uint8_t FootprintBound::FindStartingResolutionLevel() {
     return -1;
   }
 
-  uint16_t starting_resolution = Stomp::HPixResolution;
+  uint16_t starting_resolution = HPixResolution;
 
   // We want to start things off with the coarsest possible resolution to
   // save time, but we have to be careful that we're not so coarse that we
@@ -168,12 +86,12 @@ uint8_t FootprintBound::FindStartingResolutionLevel() {
 
   if (starting_resolution % 2 == 0) found_starting_resolution_ = true;
 
-  return Stomp::MostSignificantBit(starting_resolution);
+  return MostSignificantBit(starting_resolution);
 }
 
 bool FootprintBound::FindXYBounds(const uint8_t resolution_level) {
   uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
-  uint32_t nx = Stomp::Nx0*resolution, ny = Stomp::Ny0*resolution;
+  uint32_t nx = Nx0*resolution, ny = Ny0*resolution;
   Pixel::AreaIndex(resolution,lammin_,lammax_,etamin_,etamax_,
 		   x_min_, x_max_, y_min_, y_max_);
 
@@ -333,7 +251,7 @@ bool FootprintBound::Pixelize() {
 
   uint8_t starting_resolution_level = FindStartingResolutionLevel();
 
-  if ((starting_resolution_level < Stomp::HPixLevel) ||
+  if ((starting_resolution_level < HPixLevel) ||
       (starting_resolution_level > max_resolution_level_)) {
     return false;
   }
@@ -341,7 +259,7 @@ bool FootprintBound::Pixelize() {
   // We need to be careful around the poles since the pixels there get
   // very distorted.
   if ((lammin_ > 85.0) || (lammax_ < -85.0))
-    starting_resolution_level = Stomp::MostSignificantBit(512);
+    starting_resolution_level = MostSignificantBit(512);
 
   if (FindXYBounds(starting_resolution_level)) {
 
@@ -352,7 +270,7 @@ bool FootprintBound::Pixelize() {
       uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
 
       unsigned n_keep = 0;
-      uint32_t nx = Stomp::Nx0*resolution;
+      uint32_t nx = Nx0*resolution;
       Pixel tmp_pix;
       tmp_pix.SetResolution(resolution);
 
@@ -471,13 +389,183 @@ bool FootprintBound::Pixelize() {
   }
 }
 
+double FootprintBound::ScorePixel(Pixel& pix) {
+
+  double inv_nx = 1.0/static_cast<double>(Nx0*pix.Resolution());
+  double inv_ny = 1.0/static_cast<double>(Ny0*pix.Resolution());
+  double x = static_cast<double>(pix.PixelX());
+  double y = static_cast<double>(pix.PixelY());
+
+  double lammid = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.5)*inv_ny);
+  double lammin = 90.0 - RadToDeg*acos(1.0-2.0*(y+1.0)*inv_ny);
+  double lammax = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.0)*inv_ny);
+  double lam_quart = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.75)*inv_ny);
+  double lam_three = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.25)*inv_ny);
+
+  double etamid = RadToDeg*(2.0*Pi*(x+0.5))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamid, 180.0)) etamid -= 360.0;
+  if (DoubleLE(etamid, -180.0)) etamid += 360.0;
+
+  double etamin = RadToDeg*(2.0*Pi*(x+0.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamin, 180.0)) etamin -= 360.0;
+  if (DoubleLE(etamin, -180.0)) etamin += 360.0;
+
+  double etamax = RadToDeg*(2.0*Pi*(x+1.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamax, 180.0)) etamax -= 360.0;
+  if (DoubleLE(etamax, -180.0)) etamax += 360.0;
+
+  double eta_quart = RadToDeg*(2.0*Pi*(x+0.25))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_quart, 180.0)) eta_quart -= 360.0;
+  if (DoubleLE(eta_quart, -180.0)) eta_quart += 360.0;
+
+  double eta_three = RadToDeg*(2.0*Pi*(x+0.75))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_three, 180.0)) eta_three -= 360.0;
+  if (DoubleLE(eta_three, -180.0)) eta_three += 360.0;
+
+  double score = 0.0;
+
+  AngularCoordinate ang(lammid, etamid, AngularCoordinate::Survey);
+  if (CheckPoint(ang)) score -= 4.0;
+
+  ang.SetSurveyCoordinates(lam_quart,etamid);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,etamid);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lammid,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lammid,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+
+  ang.SetSurveyCoordinates(lam_quart,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_quart,eta_three);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,eta_three);
+  if (CheckPoint(ang)) score -= 3.0;
+
+  ang.SetSurveyCoordinates(lammid,etamax);
+  if (CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammid,etamin);
+  if (CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammax,etamid);
+  if (CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammin,etamid);
+  if (CheckPoint(ang)) score -= 2.0;
+
+  ang.SetSurveyCoordinates(lammax,etamax);
+  if (CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammax,etamin);
+  if (CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammin,etamax);
+  if (CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammin,etamin);
+  if (CheckPoint(ang)) score -= 1.0;
+
+  return score/40.0;
+}
+
+Map::Map* FootprintBound::ExportMap() {
+  return new Map::Map(pix_);
+}
+
+void FootprintBound::ExportMap(Map& stomp_map) {
+  stomp_map.Clear();
+  stomp_map.Initialize(pix_);
+}
+
+void FootprintBound::SetMaxResolution(uint16_t resolution) {
+  max_resolution_level_ = Stomp::MostSignificantBit(resolution);
+}
+
+void FootprintBound::SetArea(double input_area) {
+  area_ = input_area;
+}
+
+double FootprintBound::Area() {
+  return area_;
+}
+
+void FootprintBound::AddToPixelizedArea(uint16_t resolution) {
+  pixel_area_ += Pixel::PixelArea(resolution);
+}
+
+double FootprintBound::Weight() {
+    return weight_;
+}
+
+void FootprintBound::SetWeight(double input_weight) {
+  weight_ = input_weight;
+}
+
+double FootprintBound::PixelizedArea() {
+  return pixel_area_;
+}
+
+uint32_t FootprintBound::NPixel() {
+  return pix_.size();
+}
+
+void FootprintBound::SetAngularBounds(double lammin, double lammax,
+				      double etamin, double etamax) {
+  lammin_ = lammin;
+  lammax_ = lammax;
+  etamin_ = etamin;
+  etamax_ = etamax;
+}
+
+double FootprintBound::LambdaMin() {
+  return lammin_;
+}
+
+double FootprintBound::LambdaMax() {
+  return lammax_;
+}
+
+double FootprintBound::EtaMin() {
+  return etamin_;
+}
+
+double FootprintBound::EtaMax() {
+  return etamax_;
+}
+
+uint32_t FootprintBound::XMin() {
+  return x_min_;
+}
+
+uint32_t FootprintBound::XMax() {
+  return x_max_;
+}
+
+uint32_t FootprintBound::YMin() {
+  return y_min_;
+}
+
+uint32_t FootprintBound::YMax() {
+  return y_max_;
+}
+
+PixelIterator FootprintBound::Begin() {
+  return pix_.begin();
+}
+
+PixelIterator FootprintBound::End() {
+  return pix_.end();
+}
+
+void FootprintBound::Clear() {
+  pix_.clear();
+}
+
 CircleBound::CircleBound(const AngularCoordinate& ang,
                          double radius, double weight) {
   SetWeight(weight);
 
   ang_ = ang;
   radius_ = radius;
-  sin2radius_ = sin(radius*Stomp::DegToRad)*sin(radius*Stomp::DegToRad);
+  sin2radius_ = sin(radius*DegToRad)*sin(radius*DegToRad);
 
   FindArea();
   FindAngularBounds();
@@ -492,22 +580,22 @@ CircleBound::~CircleBound() {
 bool CircleBound::FindAngularBounds() {
 
   double lammin = ang_.Lambda() - radius_;
-  if (Stomp::DoubleLE(lammin, -90.0)) lammin = -90.0;
+  if (DoubleLE(lammin, -90.0)) lammin = -90.0;
 
   double lammax = ang_.Lambda() + radius_;
-  if (Stomp::DoubleGE(lammax, 90.0)) lammax = 90.0;
+  if (DoubleGE(lammax, 90.0)) lammax = 90.0;
 
   // double eta_multiplier =
   // AngularCoordinate::EtaMultiplier(0.5*(lammax+lammin));
   double eta_multiplier = 1.0;
 
   double etamin = ang_.Eta() - radius_*eta_multiplier;
-  if (Stomp::DoubleGT(etamin, 180.0)) etamin -= 360.0;
-  if (Stomp::DoubleLT(etamin, -180.0)) etamin += 360.0;
+  if (DoubleGT(etamin, 180.0)) etamin -= 360.0;
+  if (DoubleLT(etamin, -180.0)) etamin += 360.0;
 
   double etamax = ang_.Eta() + radius_*eta_multiplier;
-  if (Stomp::DoubleGT(etamax, 180.0)) etamax -= 360.0;
-  if (Stomp::DoubleLT(etamax, -180.0)) etamax += 360.0;
+  if (DoubleGT(etamax, 180.0)) etamax -= 360.0;
+  if (DoubleLT(etamax, -180.0)) etamax += 360.0;
 
   SetAngularBounds(lammin,lammax,etamin,etamax);
 
@@ -516,7 +604,7 @@ bool CircleBound::FindAngularBounds() {
 
 bool CircleBound::FindArea() {
   SetArea((1.0 -
-           cos(radius_*Stomp::DegToRad))*2.0*Stomp::Pi*Stomp::StradToDeg);
+           cos(radius_*DegToRad))*2.0*Pi*StradToDeg);
   return true;
 }
 
@@ -539,8 +627,8 @@ WedgeBound::WedgeBound(const AngularCoordinate& ang, double radius,
 
   ang_ = ang;
   radius_ = radius;
-  sin2radius_ = sin(radius*Stomp::DegToRad)*sin(radius*Stomp::DegToRad);
-  if (Stomp::DoubleLT(position_angle_min, position_angle_max)) {
+  sin2radius_ = sin(radius*DegToRad)*sin(radius*DegToRad);
+  if (DoubleLT(position_angle_min, position_angle_max)) {
     position_angle_max_ = position_angle_max;
     position_angle_min_ = position_angle_min;
   } else {
@@ -586,19 +674,19 @@ bool WedgeBound::FindAngularBounds() {
   AngularCoordinate new_ang;
   start_ang.Rotate(ang_, position_angle_min_, new_ang);
   
-  if (Stomp::DoubleLE(new_ang.Lambda(), lammin)) lammin = new_ang.Lambda();
-  if (Stomp::DoubleGE(new_ang.Lambda(), lammax)) lammax = new_ang.Lambda();
+  if (DoubleLE(new_ang.Lambda(), lammin)) lammin = new_ang.Lambda();
+  if (DoubleGE(new_ang.Lambda(), lammax)) lammax = new_ang.Lambda();
 
-  if (Stomp::DoubleLE(new_ang.Eta(), etamin)) etamin = new_ang.Eta();
-  if (Stomp::DoubleGE(new_ang.Eta(), etamax)) etamax = new_ang.Eta();
+  if (DoubleLE(new_ang.Eta(), etamin)) etamin = new_ang.Eta();
+  if (DoubleGE(new_ang.Eta(), etamax)) etamax = new_ang.Eta();
 
   start_ang.Rotate(ang_, position_angle_max_, new_ang);
 
-  if (Stomp::DoubleLE(new_ang.Lambda(), lammin)) lammin = new_ang.Lambda();
-  if (Stomp::DoubleGE(new_ang.Lambda(), lammax)) lammax = new_ang.Lambda();
+  if (DoubleLE(new_ang.Lambda(), lammin)) lammin = new_ang.Lambda();
+  if (DoubleGE(new_ang.Lambda(), lammax)) lammax = new_ang.Lambda();
 
-  if (Stomp::DoubleLE(new_ang.Eta(), etamin)) etamin = new_ang.Eta();
-  if (Stomp::DoubleGE(new_ang.Eta(), etamax)) etamax = new_ang.Eta();
+  if (DoubleLE(new_ang.Eta(), etamin)) etamin = new_ang.Eta();
+  if (DoubleGE(new_ang.Eta(), etamax)) etamax = new_ang.Eta();
 
   SetAngularBounds(lammin,lammax,etamin,etamax);
 
@@ -607,7 +695,7 @@ bool WedgeBound::FindAngularBounds() {
 
 bool WedgeBound::FindArea() {
   double circle_area =
-    (1.0 - cos(radius_*Stomp::DegToRad))*2.0*Stomp::Pi*Stomp::StradToDeg;
+    (1.0 - cos(radius_*DegToRad))*2.0*Pi*StradToDeg;
   SetArea(circle_area*(position_angle_max_ - position_angle_min_)/360.0);
   return true;
 }
@@ -621,8 +709,8 @@ bool WedgeBound::CheckPoint(AngularCoordinate& ang) {
 
   if (1.0-costheta*costheta <= sin2radius_ + 1.0e-10) {
     double position_angle = ang_.PositionAngle(ang);
-    if (Stomp::DoubleGE(position_angle, position_angle_min_) &&
-	Stomp::DoubleLE(position_angle, position_angle_max_))
+    if (DoubleGE(position_angle, position_angle_min_) &&
+	DoubleLE(position_angle, position_angle_max_))
       return true;
   }
   return false;
@@ -715,9 +803,9 @@ bool PolygonBound::FindArea() {
     sum += acos(cm);
   }
 
-  double tmp_area = (sum - (n_vert_ - 2)*Stomp::Pi)*Stomp::StradToDeg;
+  double tmp_area = (sum - (n_vert_ - 2)*Pi)*StradToDeg;
 
-  if (tmp_area > 4.0*Stomp::Pi*Stomp::StradToDeg) {
+  if (tmp_area > 4.0*Pi*StradToDeg) {
     std::cout << "Polygon area is over half the sphere.  This is bad.\n";
     return false;
   }
