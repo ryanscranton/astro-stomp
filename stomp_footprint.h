@@ -37,39 +37,77 @@ typedef WedgeVector::iterator WedgeIterator;
 typedef std::vector<PolygonBound> PolygonVector;
 typedef PolygonVector::iterator PolygonIterator;
 
-class FootprintBound {
-  // This is the base class for generating footprints.  A footprint object is
-  // essentially a scaffolding around the Map class that contains the
-  // methods necessary for converting some analytic expression of a region on
-  // a sphere into the equivalent Map.  All footprints do roughly the same
-  // operations to go about this task, but the details differ based on how the
-  // analytic decription is implemented.  This is a true abstract class and
-  // should never actually be instantiated.  Instead, you should derive classes
-  // from this one that replace the virtual methods with ones that are
-  // appropriate to your particular footprint geometric description.
-
+class GeometricBound {
+  // The starting point for a footprint is some analytic geometric bound.  This
+  // object needs to be able to do three things:
+  //
+  // * Given a point on the sky, return a boolean indicating whether that
+  //   point is inside or outside the bound.
+  // * Determine its angular extent in Survey coordinates.
+  // * Determine its area.
+  //
+  // In principle, GeometricBounds could be complex objects composed of
+  // multiple GeometricBounds which could be combined to include or exclude
+  // regions.  However, the difficulty in keeping track of the bounds and area
+  // of such an object will limit our ambitions for the moment.
+  //
+  // Either way, the GeometricBound class is intended to be an abstract class.
+  // The derived classes will handle the actual implementation of these methods.
  public:
-  FootprintBound();
-  virtual ~FootprintBound();
+  GeometricBound();
+  virtual ~GeometricBound();
 
-  // All footprint derived classes need to replace these virtual methods
-  // with ones specific to their respective geometries.  You need a method
-  // for saying whether or not a point on the sphere is inside or outside of
-  // your area, you need a method to give the footprint object an idea of where
-  // to start looking for pixels that might be in your footprint and you need
-  // a way to calculate the area of your footprint so that the class can figure
-  // out how closely the area of its pixelization of your footprint matches
-  // the analytic value.
+  // The three methods that all derived classes need to implement.
   virtual bool CheckPoint(AngularCoordinate& ang);
   virtual bool FindAngularBounds();
   virtual bool FindArea();
+
+  // And some simple getters and setters for the values that determine the
+  // area and bounds.
+  void SetArea(); // need this since we store in the area in the base class.
+  double Area();
+  void SetAngularBounds(double lammin, double lammax,
+			double etamin, double etamax);
+  double LambdaMin();
+  double LambdaMax();
+  double EtaMin();
+  double EtaMax();
+
+ private:
+  double area_, lammin_, lammax_, etamin_, etamax_;
+};
+
+
+class Footprint {
+  // This is the base class for generating footprints.  A footprint object is
+  // essentially a scaffolding around the Map class that contains the
+  // methods necessary for converting some analytic expression of a region on
+  // a sphere into the equivalent Map.  Once this is done this Map can be
+  // exported from the Footprint object or queried from within.
+ public:
+  FootprintBound();
+
+  // In addition to the default constructor, we can also instantiate it with
+  // the GeometricBound object we want pixelized and initiate pixelizaiton
+  // right away with the input weight value.
+  FootprintBound(GeometricBound& geometric_bound, double weight = 1.0,
+		 bool pixelize_bound = true);
+  virtual ~FootprintBound();
+
+  // If we didn't instantiate with one, we need to set the GeometricBound that
+  // we're going to pixelize.
+  void SetBound(GeometricBound& geometric_bound);
+
+  // Setter and getter for the weight assigned to the pixels in the Map.
+  void SetWeight(double weight);
+  double Weight();
 
   // The pixelization method is iteratively adaptive.  First, it tries to find
   // the largest pixels that will likely fit inside the footprint.  Then it
   // checks those pixels against the footprint and keeps the ones that are
   // fully inside the footprint.  For the ones that were at least partially
   // inside the footprint, it refines them to the next resolution level and
-  // tests the sub-pixels.  Those that pass are kept, the misses are discarded
+  // tests their sub-pixels.  Those that pass are kept, the misses are discarded
   // and the partials are refined again.  This continues until we reach the
   // maximum resolution level, at which point we keep enough of the partials
   // to match the footprint's area.  When doing the job of pixelizing a given
@@ -93,91 +131,120 @@ class FootprintBound {
   // footprint bounds.
   double ScorePixel(Pixel& pix);
 
+  // Since we're translating an analytic bound into a set of pixels, we need
+  // to choose the level of fidelity we want to use.  A higher resolution means
+  // a better approximation of the analytic bound, but it also means a larger
+  // set of pixels and a longer time to pixelize.
+  void SetMaxResolution(uint16_t resolution = MaxPixelResolution);
+
   // Once we've pixelized the footprint, we want to return a Map
   // representing the results.  This method returns a pointer to that map.
-  inline Map::Map* ExportMap() {
-    return new Map::Map(pix_);
-  }
-  inline void ExportMap(Map& stomp_map) {
-    stomp_map.Clear();
-    stomp_map.Initialize(pix_);
-  }
-  inline void SetMaxResolution(uint16_t resolution =
-			       Stomp::MaxPixelResolution) {
-    max_resolution_level_ = Stomp::MostSignificantBit(resolution);
-  }
+  Map::Map* ExportMap();
+  void ExportMap(Map& stomp_map);
 
-  // Since we store the area and pixelized area in this class, we need methods
-  // for setting and getting those values.  Likewise with the weight that will
-  // be assigned to the Pixels that will make up the Map that results.
-  inline void SetArea(double input_area) {
-    area_ = input_area;
-  };
-  inline double Area() {
-    return area_;
-  };
-  inline void AddToPixelizedArea(uint16_t resolution) {
-    pixel_area_ += Pixel::PixelArea(resolution);
-  };
-  inline double Weight() {
-    return weight_;
-  };
-  inline void SetWeight(double input_weight) {
-    weight_ = input_weight;
-  };
-  inline double PixelizedArea() {
-    return pixel_area_;
-  };
-  inline uint32_t NPixel() {
-    return pix_.size();
-  };
-  inline void SetAngularBounds(double lammin, double lammax,
-                               double etamin, double etamax) {
-    lammin_ = lammin;
-    lammax_ = lammax;
-    etamin_ = etamin;
-    etamax_ = etamax;
-  };
-  inline double LambdaMin() {
-    return lammin_;
-  };
-  inline double LambdaMax() {
-    return lammax_;
-  };
-  inline double EtaMin() {
-    return etamin_;
-  };
-  inline double EtaMax() {
-    return etamax_;
-  };
-  inline uint32_t XMin() {
-    return x_min_;
-  };
-  inline uint32_t XMax() {
-    return x_max_;
-  };
-  inline uint32_t YMin() {
-    return y_min_;
-  };
-  inline uint32_t YMax() {
-    return y_max_;
-  };
-  inline PixelIterator Begin() {
-    return pix_.begin();
-  };
-  inline PixelIterator End() {
-    return pix_.end();
-  };
-  inline void Clear() {
-    pix_.clear();
-  };
+  // Alternatively, we can iterate through the Map stored internally as we
+  // do with the Map object.
+  MapIterator Begin();
+  MapIterator End();
+  void Iterate(MapIterator* iter);
 
+  // By default we return the area given by the geometric bound.  Alternatively,
+  // we can return the area of the pixelized Map.
+  double Area();
+  double PixelizedArea();
+
+  // Some of the standard methods from the Map class.  We omit any of the
+  // methods that would change the geometry of the underlying Map since we want
+  // it to match the input GeometricBound.
+  bool FindLocation(AngularCoordinate& ang);
+  bool FindLocation(AngularCoordinate& ang, double& weight);
+  double FindLocationWeight(AngularCoordinate& ang);
+
+  bool Contains(Pixel& pix);
+  bool Contains(Map& stomp_map);
+
+  double FindUnmaskedFraction(Pixel& pix);
+  void FindUnmaskedFraction(PixelVector& pix,
+                            std::vector<double>& unmasked_fraction);
+  void FindUnmaskedFraction(PixelVector& pix);
+  double FindUnmaskedFraction(Map& stomp_map);
+
+  int8_t FindUnmaskedStatus(Pixel& pix);
+  void FindUnmaskedStatus(PixelVector& pix,
+                          std::vector<int8_t>& unmasked_status);
+  int8_t FindUnmaskedStatus(Map& stomp_map);
+
+  double FindAverageWeight(Pixel& pix);
+  void FindAverageWeight(PixelVector& pix,
+                         std::vector<double>& average_weight);
+  void FindAverageWeight(PixelVector& pix);
+  double AverageWeight();
+
+  void FindMatchingPixels(Pixel& pix,
+                          PixelVector& match_pix,
+                          bool use_local_weights = false);
+  void FindMatchingPixels(PixelVector& pix,
+                          PixelVector& match_pix,
+                          bool use_local_weights = false);
+
+  void Coverage(PixelVector& superpix,
+		uint16_t resolution = Stomp::HPixResolution);
+  bool Covering(Map& stomp_map, uint32_t maximum_pixels);
+
+  uint16_t InitializeRegions(uint16_t n_regions,
+                             uint16_t region_resolution = 0);
+  bool InitializeRegions(BaseMap& base_map);
+  int16_t FindRegion(AngularCoordinate& ang);
+  void ClearRegions();
+  void RegionArea(int16_t region, PixelVector& pix);
+  int16_t Region(uint32_t region_idx);
+  double RegionArea(int16_t region);
+  uint16_t NRegion();
+  uint16_t RegionResolution();
+  bool RegionsInitialized();
+  RegionIterator RegionBegin();
+  RegionIterator RegionEnd();
+  bool RegionOnlyMap(int16_t region_index, Map& stomp_map);
+  bool RegionExcludedMap(int16_t region_index, Map& stomp_map);
+
+  void GenerateRandomPoints(AngularVector& ang, uint32_t n_point = 1,
+                            bool use_weighted_sampling = false);
+  void GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang);
+  void GenerateRandomPoints(WAngularVector& ang, std::vector<double>& weights);
+
+  bool Write(std::string& OutputFile, bool hpixel_format = true,
+             bool weighted_map = true);
+
+  void ScaleWeight(const double weight_scale);
+  void AddConstantWeight(const double add_weight);
+  void InvertWeight();
+
+  void Pixels(PixelVector& pix, uint32_t superpixnum = Stomp::MaxSuperpixnum);
+
+  bool ContainsSuperpixel(uint32_t superpixnum);
+
+  uint16_t MinResolution();
+  uint16_t MinResolution(uint32_t superpixnum);
+  uint16_t MaxResolution();
+  uint16_t MaxResolution(uint32_t superpixnum);
+  double MinWeight();
+  double MinWeight(uint32_t superpixnum);
+  double MaxWeight();
+  double MaxWeight(uint32_t superpixnum);
+  uint32_t Size();
+  uint32_t Size(uint32_t superpixnum);
+  bool Empty();
+  uint32_t PixelCount(uint16_t resolution);
+
+  // Reset everything and delete internal Map and GeometricBound.
+  void Clear();
 
  private:
-  PixelVector pix_;
+  Map stomp_map_;
+  GeometricBound bound_;
   bool found_starting_resolution_, found_xy_bounds_;
   uint8_t max_resolution_level_;
-  double area_, pixel_area_, lammin_, lammax_, etamin_, etamax_, weight_;
+  double weight_;
   uint32_t x_min_, x_max_, y_min_, y_max_;
 };
 
@@ -234,14 +301,6 @@ class PolygonBound : public FootprintBound {
   virtual bool CheckPoint(AngularCoordinate& ang);
   virtual bool FindAngularBounds();
   virtual bool FindArea();
-  inline bool DoubleGE(const double x, const double y) {
-    static double tolerance = 1.0e-10;
-    return (x >= y - tolerance ? true : false);
-  };
-  inline bool DoubleLE(const double x, const double y) {
-    static double tolerance = 1.0e-10;
-    return (x <= y + tolerance ? true : false);
-  };
 
  private:
   AngularVector ang_;
