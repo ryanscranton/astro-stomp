@@ -142,6 +142,12 @@ class Map : public BaseMap {
   bool Initialize();
   bool Initialize(PixelVector& pix, bool force_resolve = true);
 
+  // Alternatively, we can add pixels one at a time.  If this is done in such
+  // a way that the input pixels are not ordered in the same manner as they
+  // are stored in the Map object, then you will need to call Initialize()
+  // before most of the Map methods will work properly.
+  void AddPixel(Pixel& pix);
+
   // Simple call to determine if a point is within the current Map
   // instance.  Returns true if the point is within the map; false, otherwise.
   bool FindLocation(AngularCoordinate& ang);

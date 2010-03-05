@@ -19,14 +19,16 @@
 #include <algorithm>
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
+#include "stomp_map.h"
 
 namespace Stomp {
 
 class Map;              // class definition in stomp_map.h
-class FootprintBound;
+class GeometricBound;
 class CircleBound;
 class WedgeBound;
 class PolygonBound;
+class Footprint;
 
 typedef std::vector<CircleBound> CircleVector;
 typedef CircleVector::iterator CircleIterator;
@@ -36,6 +38,9 @@ typedef WedgeVector::iterator WedgeIterator;
 
 typedef std::vector<PolygonBound> PolygonVector;
 typedef PolygonVector::iterator PolygonIterator;
+
+typedef std::vector<Footprint> FootprintVector;
+typedef FootprintVector::iterator FootprintIterator;
 
 class GeometricBound {
   // The starting point for a footprint is some analytic geometric bound.  This
@@ -63,8 +68,9 @@ class GeometricBound {
   virtual bool FindArea();
 
   // And some simple getters and setters for the values that determine the
-  // area and bounds.
-  void SetArea(); // need this since we store in the area in the base class.
+  // area and bounds.  We need the setters since these values will be stored in
+  // the base class.
+  void SetArea(double input_area);
   double Area();
   void SetAngularBounds(double lammin, double lammax,
 			double etamin, double etamax);
@@ -77,22 +83,82 @@ class GeometricBound {
   double area_, lammin_, lammax_, etamin_, etamax_;
 };
 
+class CircleBound : public GeometricBound {
+  // An example of a derived GeometricBound class.  This implements a simple
+  // circular footprint of a given radius (in degrees) around a central
+  // angular position.
+
+ public:
+  CircleBound(const AngularCoordinate& ang, double radius);
+  virtual ~CircleBound();
+  virtual bool CheckPoint(AngularCoordinate& ang);
+  virtual bool FindAngularBounds();
+  virtual bool FindArea();
+
+ private:
+  AngularCoordinate ang_;
+  double radius_, sin2radius_;
+};
+
+
+class WedgeBound : public GeometricBound {
+  // A variant of the CircleBound class.  Instead of pixelizing the entire
+  // circle, we only pixelize a wedge from the circle.  The position angle
+  // values and radius should be specified in degrees.
+ public:
+  WedgeBound(const AngularCoordinate& ang, double radius,
+	     double position_angle_min, double position_angle_max,
+	     AngularCoordinate::Sphere sphere = AngularCoordinate::Survey);
+  virtual ~WedgeBound();
+  virtual bool CheckPoint(AngularCoordinate& ang);
+  virtual bool FindAngularBounds();
+  virtual bool FindArea();
+
+ private:
+  AngularCoordinate ang_;
+  double radius_, sin2radius_, position_angle_min_, position_angle_max_;
+  AngularCoordinate::Sphere sphere_;
+};
+
+
+class PolygonBound : public GeometricBound {
+  // Another derived GeometricBound class, this one for a spherical polygon
+  // represented by a vector of vertices.  In this case, the vertices need to
+  // be in clockwise order as seen from outside the sphere, i.e. the order
+  // is right-handed when your thumb is pointed towards the center of the
+  // sphere.
+
+ public:
+  PolygonBound(AngularVector& ang);
+  virtual ~PolygonBound();
+  virtual bool CheckPoint(AngularCoordinate& ang);
+  virtual bool FindAngularBounds();
+  virtual bool FindArea();
+
+ private:
+  AngularVector ang_;
+  std::vector<double> x_, y_, z_, dot_;
+  uint32_t n_vert_;
+};
+
 
 class Footprint {
   // This is the base class for generating footprints.  A footprint object is
-  // essentially a scaffolding around the Map class that contains the
-  // methods necessary for converting some analytic expression of a region on
-  // a sphere into the equivalent Map.  Once this is done this Map can be
-  // exported from the Footprint object or queried from within.
+  // essentially a scaffolding that takes a GeometricBound object and pixelizes
+  // it into a Map object.  This can be done either by instantiating a Footprint
+  // with a GeometricBound object, pixelizing and then interacting with the
+  // underlying Map object through the Footprint object or by using the static
+  // method PixelizeBound().
  public:
-  FootprintBound();
+  Footprint();
 
   // In addition to the default constructor, we can also instantiate it with
   // the GeometricBound object we want pixelized and initiate pixelizaiton
   // right away with the input weight value.
-  FootprintBound(GeometricBound& geometric_bound, double weight = 1.0,
-		 bool pixelize_bound = true);
-  virtual ~FootprintBound();
+  Footprint(GeometricBound& geometric_bound, double weight = 1.0,
+	    uint16_t max_resolution = MaxPixelResolution,
+	    bool pixelize_bound = true);
+  virtual ~Footprint();
 
   // If we didn't instantiate with one, we need to set the GeometricBound that
   // we're going to pixelize.
@@ -110,17 +176,15 @@ class Footprint {
   // tests their sub-pixels.  Those that pass are kept, the misses are discarded
   // and the partials are refined again.  This continues until we reach the
   // maximum resolution level, at which point we keep enough of the partials
-  // to match the footprint's area.  When doing the job of pixelizing a given
-  // footprint, these three methods should be called subsquently, with the
-  // output of FindStartingResolution fed into FindXYBounds as its
-  // argument.  A false return value for either FindXYBounds or Pixelize
-  // indicates a failure in the corresponding step.
+  // to match the footprint's area.
   //
-  // Alternatively, just call Pixelize() and it will call the other two
-  // routines as necessary.
-  uint8_t FindStartingResolutionLevel();
-  bool FindXYBounds(const uint8_t resolution_level);
+  // Just call Pixelize() and it will call the other two routines as necessary.
   bool Pixelize();
+  static uint8_t _FindStartingResolutionLevel(double bound_area);
+  static bool _FindXYBounds(const uint8_t resolution_level,
+			    GeometricBound& bound,
+			    uint32_t& x_min, uint32_t& x_max,
+			    uint32_t& y_min, uint32_t& y_max);
 
   // Part of the pixelization process is figuring out what fraction of a
   // given pixel is within the bounds delineated by the footprint's geometry.
@@ -129,7 +193,7 @@ class Footprint {
   // it's completely outside.  This allows one to sort pixels by their score
   // and keep the ones that are closest to being completely inside the
   // footprint bounds.
-  double ScorePixel(Pixel& pix);
+  static double ScorePixel(GeometricBound& bound, Pixel& pix);
 
   // Since we're translating an analytic bound into a set of pixels, we need
   // to choose the level of fidelity we want to use.  A higher resolution means
@@ -137,13 +201,15 @@ class Footprint {
   // set of pixels and a longer time to pixelize.
   void SetMaxResolution(uint16_t resolution = MaxPixelResolution);
 
-  // Once we've pixelized the footprint, we want to return a Map
-  // representing the results.  This method returns a pointer to that map.
-  Map::Map* ExportMap();
-  void ExportMap(Map& stomp_map);
+  // If we don't want to actually bother instantiating a Footprint class, we
+  // can go right from input parameters to a pixelized map.  As with Pixelize(),
+  // the return boolean indicates succces or failure.
+  static bool PixelizeBound(GeometricBound& geometric_bound,
+			    Map& stomp_map, double weight = 1.0,
+			    uint16_t maximum_resolution = MaxPixelResolution);
 
-  // Alternatively, we can iterate through the Map stored internally as we
-  // do with the Map object.
+  // We can iterate through the Map stored internally as we do with the
+  // Map object.
   MapIterator Begin();
   MapIterator End();
   void Iterate(MapIterator* iter);
@@ -242,70 +308,8 @@ class Footprint {
  private:
   Map stomp_map_;
   GeometricBound bound_;
-  bool found_starting_resolution_, found_xy_bounds_;
   uint8_t max_resolution_level_;
   double weight_;
-  uint32_t x_min_, x_max_, y_min_, y_max_;
-};
-
-
-class CircleBound : public FootprintBound {
-  // An example of a derived FootprintBound class.  This implements a simple
-  // circular footprint of a given radius (in degrees) around a central
-  // angular position.
-
- public:
-  CircleBound(const AngularCoordinate& ang, double radius, double weight);
-  virtual ~CircleBound();
-  virtual bool CheckPoint(AngularCoordinate& ang);
-  virtual bool FindAngularBounds();
-  virtual bool FindArea();
-
- private:
-  AngularCoordinate ang_;
-  double radius_, sin2radius_;
-};
-
-
-class WedgeBound : public FootprintBound {
-  // A variant of the CircleBound class.  Instead of pixelizing the entire
-  // circle, we only pixelize a wedge from the circle.  The position angle
-  // values and radius should be specified in degrees.
- public:
-  WedgeBound(const AngularCoordinate& ang, double radius,
-	     double position_angle_min, double position_angle_max,
-	     double weight, AngularCoordinate::Sphere sphere =
-	     AngularCoordinate::Survey);
-  virtual ~WedgeBound();
-  virtual bool CheckPoint(AngularCoordinate& ang);
-  virtual bool FindAngularBounds();
-  virtual bool FindArea();
-
- private:
-  AngularCoordinate ang_;
-  double radius_, sin2radius_, position_angle_min_, position_angle_max_;
-  AngularCoordinate::Sphere sphere_;
-};
-
-
-class PolygonBound : public FootprintBound {
-  // Another derived FootprintBoundClass, this one for a spherical polygon
-  // represented by a vector of vertices.  In this case, the vertices need to
-  // be in clockwise order as seen from outside the sphere, i.e. the order
-  // is right-handed when your thumb is pointed towards the center of the
-  // sphere.
-
- public:
-  PolygonBound(AngularVector& ang, double weight);
-  virtual ~PolygonBound();
-  virtual bool CheckPoint(AngularCoordinate& ang);
-  virtual bool FindAngularBounds();
-  virtual bool FindArea();
-
- private:
-  AngularVector ang_;
-  std::vector<double> x_, y_, z_, dot_;
-  uint32_t n_vert_;
 };
 
 } // end namespace Stomp
