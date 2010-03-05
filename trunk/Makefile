@@ -15,7 +15,7 @@ BASE_MAP = stomp_base_map
 MAP = stomp_map
 SCALAR_MAP = stomp_scalar_map
 TREE_MAP = stomp_tree_map
-FOOTPRINT = stomp_footprint
+GEOMETRY = stomp_geometry
 UTIL = stomp_util
 
 TEST_EXEC = stomp_unit_test
@@ -27,9 +27,9 @@ all: lib test genrand
 
 lib: $(LIB)
 
-$(LIB): $(CORE).o $(ANGULAR_COORDINATE).o $(ANGULAR_BIN).o $(ANGULAR_CORRELATION).o $(PIXEL).o $(SCALAR_PIXEL).o $(TREE_PIXEL).o $(BASE_MAP).o $(MAP).o $(SCALAR_MAP).o $(TREE_MAP).o $(FOOTPRINT).o $(UTIL).o
+$(LIB): $(CORE).o $(ANGULAR_COORDINATE).o $(ANGULAR_BIN).o $(ANGULAR_CORRELATION).o $(PIXEL).o $(SCALAR_PIXEL).o $(TREE_PIXEL).o $(BASE_MAP).o $(MAP).o $(SCALAR_MAP).o $(TREE_MAP).o $(GEOMETRY).o $(UTIL).o
 	@ echo linking $(LIB)
-	ar -rv $(LIB) $(CORE).o $(ANGULAR_COORDINATE).o $(ANGULAR_BIN).o $(ANGULAR_CORRELATION).o $(PIXEL).o $(SCALAR_PIXEL).o $(TREE_PIXEL).o $(BASE_MAP).o $(MAP).o $(SCALAR_MAP).o $(TREE_MAP).o $(FOOTPRINT).o $(UTIL).o
+	ar -rv $(LIB) $(CORE).o $(ANGULAR_COORDINATE).o $(ANGULAR_BIN).o $(ANGULAR_CORRELATION).o $(PIXEL).o $(SCALAR_PIXEL).o $(TREE_PIXEL).o $(BASE_MAP).o $(MAP).o $(SCALAR_MAP).o $(TREE_MAP).o $(GEOMETRY).o $(UTIL).o
 
 $(CORE).o: $(CORE).cc $(CORE).h
 	$(CC) -c $(CCFLAGS) $(CORE).cc
@@ -55,7 +55,7 @@ $(TREE_PIXEL).o: $(TREE_PIXEL).cc $(TREE_PIXEL).h $(CORE).h $(PIXEL).h $(ANGULAR
 $(BASE_MAP).o: $(BASE_MAP).cc $(BASE_MAP).h $(CORE).h $(PIXEL).h
 	$(CC) -c $(CCFLAGS) $(BASE_MAP).cc
 
-$(MAP).o: $(MAP).cc $(MAP).h $(CORE).h $(ANGULAR_COORDINATE).h $(PIXEL).h $(BASE_MAP).h
+$(MAP).o: $(MAP).cc $(MAP).h $(CORE).h $(ANGULAR_COORDINATE).h $(PIXEL).h $(BASE_MAP).h $(GEOMETRY).h
 	$(CC) -c $(CCFLAGS) $(MAP).cc
 
 $(SCALAR_MAP).o: $(SCALAR_MAP).cc $(SCALAR_MAP).h $(CORE).h $(SCALAR_PIXEL).h $(ANGULAR_BIN).h $(BASE_MAP).h
@@ -64,15 +64,15 @@ $(SCALAR_MAP).o: $(SCALAR_MAP).cc $(SCALAR_MAP).h $(CORE).h $(SCALAR_PIXEL).h $(
 $(TREE_MAP).o: $(TREE_MAP).cc $(TREE_MAP).h $(CORE).h $(TREE_PIXEL).h $(BASE_MAP).h $(ANGULAR_COORDINATE).h $(ANGULAR_BIN).h $(ANGULAR_CORRELATION).h
 	$(CC) -c $(CCFLAGS) $(TREE_MAP).cc
 
-$(FOOTPRINT).o: $(FOOTPRINT).cc $(FOOTPRINT).h $(CORE).h $(PIXEL).h $(MAP).h $(ANGULAR_COORDINATE).h
-	$(CC) -c $(CCFLAGS) $(FOOTPRINT).cc
+$(GEOMETRY).o: $(GEOMETRY).cc $(GEOMETRY).h $(CORE).h $(ANGULAR_COORDINATE).h
+	$(CC) -c $(CCFLAGS) $(GEOMETRY).cc
 
 $(UTIL).o: $(UTIL).cc $(UTIL).h $(CORE).h
 	$(CC) -c $(CCFLAGS) $(UTIL).cc
 
 # unit tests
-test: $(TEST_EXEC).o $(CORE)_test.o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(FOOTPRINT)_test.o $(UTIL)_test.o
-	$(LD) $(TEST_EXEC).o $(CORE)_test.o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(FOOTPRINT)_test.o $(UTIL)_test.o $(LDFLAGS) -o $(TEST_EXEC)
+test: $(TEST_EXEC).o $(CORE)_test.o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(GEOMETRY)_test.o $(UTIL)_test.o
+	$(LD) $(TEST_EXEC).o $(CORE)_test.o $(ANGULAR_COORDINATE)_test.o $(ANGULAR_CORRELATION)_test.o $(PIXEL)_test.o $(SCALAR_PIXEL)_test.o $(TREE_PIXEL)_test.o $(MAP)_test.o $(SCALAR_MAP)_test.o $(TREE_MAP)_test.o $(GEOMETRY)_test.o $(UTIL)_test.o $(LDFLAGS) -o $(TEST_EXEC)
 
 $(TEST_EXEC).o: $(LIB) $(TEST_EXEC).cc
 	$(CC) -c $(CCFLAGS) $(TEST_EXEC).cc
@@ -95,7 +95,7 @@ $(SCALAR_PIXEL)_test.o:  $(SCALAR_PIXEL)_test.cc $(SCALAR_PIXEL).h $(PIXEL).h $(
 $(TREE_PIXEL)_test.o:  $(TREE_PIXEL)_test.cc $(TREE_PIXEL).h $(PIXEL).h $(CORE).h $(UTIL).h $(ANGULAR_COORDINATE).h $(ANGULAR_CORRELATION).h $(ANGULAR_BIN).h
 	$(CC) -c $(CCFLAGS) $(TREE_PIXEL)_test.cc
 
-$(MAP)_test.o:  $(MAP)_test.cc $(MAP).h $(PIXEL).h $(CORE).h $(ANGULAR_COORDINATE).h
+$(MAP)_test.o:  $(MAP)_test.cc $(MAP).h $(PIXEL).h $(CORE).h $(ANGULAR_COORDINATE).h $(GEOMETRY).h
 	$(CC) -c $(CCFLAGS) $(MAP)_test.cc
 
 $(SCALAR_MAP)_test.o:  $(SCALAR_MAP)_test.cc $(SCALAR_MAP).h $(PIXEL).h $(CORE).h $(MAP).h $(ANGULAR_COORDINATE).h $(ANGULAR_CORRELATION).h $(ANGULAR_BIN).h
@@ -104,8 +104,8 @@ $(SCALAR_MAP)_test.o:  $(SCALAR_MAP)_test.cc $(SCALAR_MAP).h $(PIXEL).h $(CORE).
 $(TREE_MAP)_test.o:  $(TREE_MAP)_test.cc $(TREE_MAP).h $(PIXEL).h $(CORE).h $(UTIL).h $(ANGULAR_COORDINATE).h $(ANGULAR_CORRELATION).h $(ANGULAR_BIN).h $(MAP).h
 	$(CC) -c $(CCFLAGS) $(TREE_MAP)_test.cc
 
-$(FOOTPRINT)_test.o:  $(FOOTPRINT)_test.cc $(FOOTPRINT).h $(MAP).h $(CORE).h $(ANGULAR_COORDINATE).h
-	$(CC) -c $(CCFLAGS) $(FOOTPRINT)_test.cc
+$(GEOMETRY)_test.o:  $(GEOMETRY)_test.cc $(GEOMETRY).h $(CORE).h $(ANGULAR_COORDINATE).h
+	$(CC) -c $(CCFLAGS) $(GEOMETRY)_test.cc
 
 $(UTIL)_test.o:  $(UTIL)_test.cc $(UTIL).h
 	$(CC) -c $(CCFLAGS) $(UTIL)_test.cc
