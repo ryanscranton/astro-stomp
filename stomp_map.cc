@@ -951,6 +951,19 @@ bool Map::Initialize(PixelVector& pix, bool force_resolve) {
   return found_valid_superpixel;
 }
 
+void Map::AddPixel(Pixel& pix) {
+  sub_map_[pix.Superpixnum()].AddPixel(pix);
+
+  area_ += pix.Area();
+  size_++;
+
+  if (min_resolution_ > pix.Resolution()) min_resolution_ = pix.Resolution();
+  if (max_resolution_ < pix.Resolution()) max_resolution_ = pix.Resolution();
+  if (pix.Weight() < min_weight_) min_weight_ = pix.Weight();
+  if (pix.Weight() > max_weight_) max_weight_ = pix.Weight();
+  pixel_count_[pix.Resolution()]++;
+}
+
 void Map::Coverage(PixelVector& superpix, uint16_t resolution) {
   if (!superpix.empty()) superpix.clear();
 
