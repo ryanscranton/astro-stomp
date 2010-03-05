@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
   void MapUnitTests(bool run_all_tests);
   void ScalarMapUnitTests(bool run_all_tests);
   void TreeMapUnitTests(bool run_all_tests);
-  void FootprintUnitTests(bool run_all_tests);
+  void GeometryUnitTests(bool run_all_tests);
   void UtilUnitTests(bool run_all_tests);
 
   std::string usage = "Usage: ";
@@ -55,8 +55,8 @@ int main(int argc, char **argv) {
   // The TreeMap class
   TreeMapUnitTests(FLAGS_all_tests);
 
-  // The FootprintBound class and derivatives
-  FootprintUnitTests(FLAGS_all_tests);
+  // The GeometricBound class and derivatives
+  GeometryUnitTests(FLAGS_all_tests);
 
   // The utility classes
   UtilUnitTests(FLAGS_all_tests);

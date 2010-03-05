@@ -6,6 +6,7 @@
 #include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
+#include "stomp_geometry.h"
 #include "stomp_map.h"
 
 void MapBasicTests() {
@@ -104,6 +105,48 @@ void MapReadTests() {
     std::cout << "\t\t" << resolution << ": " <<
       read_stomp_map->PixelCount(resolution) << " (" <<
       stomp_map->PixelCount(resolution) << ")\n";
+}
+
+void MapPixelizationTests() {
+  // Now we try generating a Map from a GeometricBound object
+  std::cout << "\n";
+  std::cout << "******************************\n";
+  std::cout << "*** Map Pixelization Tests ***\n";
+  std::cout << "******************************\n";
+
+  Stomp::AngularCoordinate ang(20.0, 0.0, Stomp::AngularCoordinate::Survey);
+  double radius = 3.0;
+  Stomp::CircleBound circle(ang, radius);
+
+  Stomp::Map* stomp_map = new Stomp::Map();
+
+  std::cout << "Pixelizing at full resolution...\n";
+  uint8_t max_resolution_level = Stomp::MaxPixelLevel;
+  uint8_t resolution_level =
+    stomp_map->_FindStartingResolutionLevel(circle.Area());
+  std::cout << "\tPixelization resolution level range: " <<
+    static_cast<int>(resolution_level) << " - " <<
+    static_cast<int>(max_resolution_level) << "\n";
+
+  if (stomp_map->PixelizeBound(circle, 1.0)) {
+    std::cout << "\tPixelization success!\n\t\tArea Check: Real: " <<
+      circle.Area() << ", Pixelized: " << stomp_map->Area() << "; " <<
+      stomp_map->Size() << " pixels.\n";
+  } else {
+    std::cout << "Pixelization failed...\n";
+  }
+
+  uint16_t resolution = 2048;
+  std::cout << "\nPixelizing at coarser resolution level: " <<
+    static_cast<int>(resolution_level) << " - " <<
+    static_cast<int>(Stomp::MostSignificantBit(resolution)) << "\n";
+  if (stomp_map->PixelizeBound(circle, 1.0, resolution)) {
+    std::cout << "\tPixelization success!\n\t\tArea Check: Real: " <<
+      circle.Area() << ", Pixelized: " << stomp_map->Area() << "; " <<
+      stomp_map->Size() << " pixels.\n";
+  } else {
+    std::cout << "Pixelization failed...\n";
+  }
 }
 
 void MapCoverTests() {
@@ -719,6 +762,7 @@ DEFINE_bool(all_map_tests, false, "Run all class unit tests.");
 DEFINE_bool(map_basic_tests, false, "Run Map basic tests");
 DEFINE_bool(map_write_tests, false, "Run Map write tests");
 DEFINE_bool(map_read_tests, false, "Run Map read tests");
+DEFINE_bool(map_pixelization_tests, false, "Run Map pixelization tests");
 DEFINE_bool(map_cover_tests, false, "Run Map cover tests");
 DEFINE_bool(map_iterator_tests, false, "Run Map iterator tests");
 DEFINE_bool(map_location_tests, false, "Run Map location tests");
@@ -734,6 +778,7 @@ void MapUnitTests(bool run_all_tests) {
   void MapBasicTests();
   void MapWriteTests();
   void MapReadTests();
+  void MapPixelizationTests();
   void MapCoverTests();
   void MapIteratorTests();
   void MapLocationTests();
@@ -755,6 +800,10 @@ void MapUnitTests(bool run_all_tests) {
 
   // Check the routines for reading a Stomp::Map from a simple ASCII file.
   if (FLAGS_all_map_tests || FLAGS_map_read_tests) MapReadTests();
+
+  // Check the routines for generating a Stomp::Map from a GeometricBound
+  if (FLAGS_all_map_tests || FLAGS_map_pixelization_tests)
+    MapPixelizationTests();
 
   // Check the routines for finding the Stomp::Map Coverage and Covering.
   if (FLAGS_all_map_tests || FLAGS_map_cover_tests) MapCoverTests();

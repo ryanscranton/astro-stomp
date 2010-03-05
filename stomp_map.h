@@ -35,6 +35,7 @@ namespace Stomp {
 
 class AngularCoordinate;  // class declaration in stomp_angular_coordinate.h
 class Pixel;              // class declaration in stomp_pixel.h
+class GeometricBound;     // class declaration in stomp_geometry.h
 class SubMap;
 class Map;
 
@@ -134,6 +135,18 @@ class Map : public BaseMap {
   Map(std::string& InputFile,
       const bool hpixel_format = true,
       const bool weighted_map = true);
+
+  // Alternatively, we can specify a Map's geometry using a GeometricBound.
+  // This object provides an analytic description of a spatial region that
+  // the Map then approximates using uniform weight Pixels.  The fidelity of
+  // the pixelization is determined by the maximum resolution specified in the
+  // constructor.  Likewise, since this is an approximation, a boolean flag is
+  // included to provide feedback on whether the pixelization was successful
+  // or not and how the area of the resulting Map area compares to the input
+  // GeometricBound's area.
+  Map(GeometricBound& bound, double weight = 1.0,
+      uint16_t maximum_resolution = MaxPixelResolution,
+      bool verbose = false);
   virtual ~Map();
 
   // Initialize is called to organize the Map internally.  Unless the
@@ -306,6 +319,33 @@ class Map : public BaseMap {
   // re-initialize the map with the contents of the input file.
   bool Read(std::string& InputFile, const bool hpixel_format = true,
 	    const bool weighted_map = true);
+
+  // Another option for specifying the Map geometry is to use a GeometricBound
+  // object.  This translates from the analytic region described in the
+  // GeometricBound to a pixel-based version that we can use as a basis for a
+  // Map.  The input weight value will be uniform over the Map and the
+  // maximum_resolution value controls the level of Map fidelity to the
+  // GeometricBound's area (although higher fidelity comes at the expense of
+  // more pixels).  The return value indicates success or failure of the
+  // translation.
+  bool PixelizeBound(GeometricBound& bound, double weight = 1.0,
+		     uint16_t maximum_resolution = MaxPixelResolution);
+
+  // The pixelization method is iteratively adaptive.  First, it tries to find
+  // the largest pixels that will likely fit inside the footprint.  Then it
+  // checks those pixels against the bound, keeping the ones that are
+  // fully inside.  The ones that were at least partially inside are refined
+  // to the next resolution level and tested again.  This continues until we
+  // reach the maximum resolution level, at which point we keep enough of the
+  // partials to match the footprint's area, preferentially keeping those
+  // pixels that are most contained by the bound.  These internal methods
+  // handle this process.
+  uint8_t _FindStartingResolutionLevel(double bound_area);
+  bool _FindXYBounds(const uint8_t resolution_level,
+		     GeometricBound& bound,
+		     uint32_t& x_min, uint32_t& x_max,
+		     uint32_t& y_min, uint32_t& y_max);
+  double _ScorePixel(GeometricBound& bound, Pixel& pix);
 
   // Three simple functions for performing the same operation on the weights
   // of all of the pixels in the current map.  These are prelude to the next

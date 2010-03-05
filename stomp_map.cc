@@ -18,6 +18,7 @@
 
 #include "stomp_core.h"
 #include "stomp_map.h"
+#include "stomp_geometry.h"
 
 namespace Stomp {
 
@@ -836,6 +837,17 @@ Map::Map(std::string& InputFile, bool hpixel_format, bool weighted_map) {
   Read(InputFile, hpixel_format, weighted_map);
 }
 
+Map::Map(GeometricBound& bound, double weight, uint16_t max_resolution,
+	 bool verbose) {
+  if (PixelizeBound(bound, weight, max_resolution) && verbose) {
+    std::cout << "Successfully pixelized GeometricBound.\n" <<
+      "\tOriginal Area: " << bound.Area() << " sq. degrees; " <<
+      "Pixelized Area: " << Area() << " sq. degrees.\n";
+  } else {
+    if (verbose) std::cout << "Pixelization failed.\n";
+  }
+}
+
 Map::~Map() {
   min_resolution_ = max_resolution_ = 0;
   min_weight_ = 1.0e30;
@@ -962,6 +974,267 @@ void Map::AddPixel(Pixel& pix) {
   if (pix.Weight() < min_weight_) min_weight_ = pix.Weight();
   if (pix.Weight() > max_weight_) max_weight_ = pix.Weight();
   pixel_count_[pix.Resolution()]++;
+}
+
+bool Map::FindLocation(AngularCoordinate& ang) {
+  bool keep = false;
+  double weight;
+
+  uint32_t k;
+  Pixel::Ang2Pix(HPixResolution, ang, k);
+
+  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
+
+  return keep;
+}
+
+bool Map::FindLocation(AngularCoordinate& ang, double& weight) {
+  bool keep = false;
+
+  uint32_t k;
+  Pixel::Ang2Pix(HPixResolution, ang, k);
+
+  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
+
+  return keep;
+}
+
+double Map::FindLocationWeight(AngularCoordinate& ang) {
+  bool keep = false;
+  double weight = -1.0e-30;
+
+  uint32_t k;
+  Pixel::Ang2Pix(HPixResolution,ang,k);
+
+  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
+
+  return weight;
+}
+
+bool Map::Contains(Pixel& pix) {
+  return (FindUnmaskedStatus(pix) == 1 ? true : false);
+}
+
+bool Map::Contains(Map& stomp_map) {
+  return (FindUnmaskedStatus(stomp_map) == 1 ? true : false);
+}
+
+double Map::FindUnmaskedFraction(Pixel& pix) {
+  double unmasked_fraction = 0.0;
+
+  uint32_t k = pix.Superpixnum();
+
+  if (sub_map_[k].Initialized())
+    unmasked_fraction = sub_map_[k].FindUnmaskedFraction(pix);
+
+  return unmasked_fraction;
+}
+
+void Map::FindUnmaskedFraction(PixelVector& pix,
+			       std::vector<double>& unmasked_fraction) {
+
+  if (!unmasked_fraction.empty()) unmasked_fraction.clear();
+
+  unmasked_fraction.reserve(pix.size());
+
+  for (uint32_t i=0;i<pix.size();i++){
+    double pixel_unmasked_fraction = 0.0;
+    uint32_t k = pix[i].Superpixnum();
+
+    if (sub_map_[k].Initialized())
+      pixel_unmasked_fraction = sub_map_[k].FindUnmaskedFraction(pix[i]);
+
+    unmasked_fraction.push_back(pixel_unmasked_fraction);
+  }
+}
+
+void Map::FindUnmaskedFraction(PixelVector& pix) {
+  for (uint32_t i=0;i<pix.size();i++){
+    double pixel_unmasked_fraction = 0.0;
+    uint32_t k = pix[i].Superpixnum();
+
+    if (sub_map_[k].Initialized())
+      pixel_unmasked_fraction = sub_map_[k].FindUnmaskedFraction(pix[i]);
+    pix[i].SetWeight(pixel_unmasked_fraction);
+  }
+}
+
+double Map::FindUnmaskedFraction(Map& stomp_map) {
+  double total_unmasked_area = 0.0;
+  for (MapIterator iter=stomp_map.Begin();
+       iter!=stomp_map.End();stomp_map.Iterate(&iter)) {
+    double pixel_unmasked_fraction = 0.0;
+    uint32_t k = iter.second->Superpixnum();
+
+    if (sub_map_[k].Initialized())
+      pixel_unmasked_fraction =
+	sub_map_[k].FindUnmaskedFraction(*(iter.second));
+    total_unmasked_area += pixel_unmasked_fraction*iter.second->Area();
+  }
+
+  return total_unmasked_area/stomp_map.Area();
+}
+
+int8_t Map::FindUnmaskedStatus(Pixel& pix) {
+  int8_t unmasked_status = 0;
+
+  uint32_t k = pix.Superpixnum();
+
+  if (sub_map_[k].Initialized())
+    unmasked_status = sub_map_[k].FindUnmaskedStatus(pix);
+
+  return unmasked_status;
+}
+
+void Map::FindUnmaskedStatus(PixelVector& pix,
+			     std::vector<int8_t>& unmasked_status) {
+
+  if (!unmasked_status.empty()) unmasked_status.clear();
+  unmasked_status.reserve(pix.size());
+
+  for (uint32_t i=0;i<pix.size();i++){
+    int8_t pixel_unmasked_status = 0;
+    uint32_t k = pix[i].Superpixnum();
+
+    if (sub_map_[k].Initialized())
+      pixel_unmasked_status = sub_map_[k].FindUnmaskedStatus(pix[i]);
+
+    unmasked_status.push_back(pixel_unmasked_status);
+  }
+}
+
+int8_t Map::FindUnmaskedStatus(Map& stomp_map) {
+  // Get the status for the first pixel in the map to seed our initial status.
+  MapIterator iter=stomp_map.Begin();
+  int8_t map_unmasked_status = 0;
+  uint32_t k = iter.second->Superpixnum();
+
+  if (sub_map_[k].Initialized())
+    map_unmasked_status = sub_map_[k].FindUnmaskedStatus(*(iter.second));
+
+  stomp_map.Iterate(&iter);
+
+  // Now iterate over the rest of the map to figure out the global status.
+  for (;iter!=stomp_map.End();stomp_map.Iterate(&iter)) {
+    int8_t unmasked_status = 0;
+    k = iter.second->Superpixnum();
+
+    if (sub_map_[k].Initialized())
+      unmasked_status = sub_map_[k].FindUnmaskedStatus(*(iter.second));
+
+    if (map_unmasked_status == 1) {
+      // If we currently thought that the input Map was completely inside of our
+      // Map, but find that this Pixel is either outside the Map or only
+      // partially inside the Map, then we switch the global status to partial.
+      if (unmasked_status == 0 || unmasked_status == -1)
+	map_unmasked_status = -1;
+    }
+
+    if (map_unmasked_status == 0) {
+      // If we currently thought that the input Map was completely outside the
+      // Map, but find that this Pixel is either fully or partially contained
+      // in the Map, then we switch the global status to partial.
+      if (unmasked_status == 1 || unmasked_status == -1)
+	map_unmasked_status = -1;
+    }
+
+    if (map_unmasked_status == -1) {
+      // If we find that the input Map's unmasked status is partial, then no
+      // further testing will change that status.  At this point, we can break
+      // our loop and return the global status.
+      break;
+    }
+  }
+
+  return map_unmasked_status;
+}
+
+double Map::FindAverageWeight(Pixel& pix) {
+  double weighted_average = 0.0;
+  uint32_t k = pix.Superpixnum();
+
+  if (sub_map_[k].Initialized())
+    weighted_average = sub_map_[k].FindAverageWeight(pix);
+
+  return weighted_average;
+}
+
+void Map::FindAverageWeight(PixelVector& pix,
+			    std::vector<double>& weighted_average) {
+  if (!weighted_average.empty()) weighted_average.clear();
+
+  for (uint32_t i=0;i<pix.size();i++) {
+    double pixel_weighted_average = 0.0;
+    uint32_t k = pix[i].Superpixnum();
+
+    if (sub_map_[k].Initialized())
+      pixel_weighted_average = sub_map_[k].FindAverageWeight(pix[i]);
+
+    weighted_average.push_back(pixel_weighted_average);
+  }
+}
+
+void Map::FindAverageWeight(PixelVector& pix) {
+  for (uint32_t i=0;i<pix.size();i++) {
+    double pixel_weighted_average = 0.0;
+    uint32_t k = pix[i].Superpixnum();
+
+    if (sub_map_[k].Initialized())
+      pixel_weighted_average = sub_map_[k].FindAverageWeight(pix[i]);
+    pix[i].SetWeight(pixel_weighted_average);
+  }
+}
+
+double Map::AverageWeight() {
+  double unmasked_fraction = 0.0, weighted_average = 0.0;
+
+  for (SubMapIterator iter=sub_map_.begin();iter!=sub_map_.end();++iter) {
+    if (iter->Initialized()) {
+      weighted_average += iter->AverageWeight()*iter->Area();
+      unmasked_fraction += iter->Area();
+    }
+  }
+
+  if (unmasked_fraction > 0.000000001) weighted_average /= unmasked_fraction;
+
+  return weighted_average;
+}
+
+void Map::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
+			     bool use_local_weights) {
+  if (!match_pix.empty()) match_pix.clear();
+
+  uint32_t k = pix.Superpixnum();
+
+  if (sub_map_[k].Initialized()) {
+    PixelVector tmp_pix;
+
+    sub_map_[k].FindMatchingPixels(pix,tmp_pix,use_local_weights);
+
+    if (!tmp_pix.empty())
+      for (PixelIterator iter=tmp_pix.begin();iter!=tmp_pix.end();++iter)
+        match_pix.push_back(*iter);
+  }
+}
+
+void Map::FindMatchingPixels(PixelVector& pix, PixelVector& match_pix,
+			     bool use_local_weights) {
+  if (!match_pix.empty()) match_pix.clear();
+
+  for (uint32_t i=0;i<pix.size();i++) {
+
+    uint32_t k = pix[i].Superpixnum();
+
+    if (sub_map_[k].Initialized()) {
+      PixelVector tmp_pix;
+
+      sub_map_[k].FindMatchingPixels(pix[i],tmp_pix,use_local_weights);
+
+      if (!tmp_pix.empty())
+        for (PixelIterator iter=tmp_pix.begin();iter!=tmp_pix.end();++iter)
+          match_pix.push_back(*iter);
+    }
+  }
 }
 
 void Map::Coverage(PixelVector& superpix, uint16_t resolution) {
@@ -1185,252 +1458,6 @@ bool Map::RegionExcludedMap(int16_t region_index, Map& stomp_map) {
   }
 
   return map_generation_success;
-}
-
-bool Map::FindLocation(AngularCoordinate& ang) {
-  bool keep = false;
-  double weight;
-
-  uint32_t k;
-  Pixel::Ang2Pix(HPixResolution, ang, k);
-
-  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
-
-  return keep;
-}
-
-bool Map::FindLocation(AngularCoordinate& ang, double& weight) {
-  bool keep = false;
-
-  uint32_t k;
-  Pixel::Ang2Pix(HPixResolution, ang, k);
-
-  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
-
-  return keep;
-}
-
-double Map::FindLocationWeight(AngularCoordinate& ang) {
-  bool keep = false;
-  double weight = -1.0e-30;
-
-  uint32_t k;
-  Pixel::Ang2Pix(HPixResolution,ang,k);
-
-  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
-
-  return weight;
-}
-
-bool Map::Contains(Pixel& pix) {
-  return (FindUnmaskedStatus(pix) == 1 ? true : false);
-}
-
-bool Map::Contains(Map& stomp_map) {
-  return (FindUnmaskedStatus(stomp_map) == 1 ? true : false);
-}
-
-double Map::FindUnmaskedFraction(Pixel& pix) {
-  double unmasked_fraction = 0.0;
-
-  uint32_t k = pix.Superpixnum();
-
-  if (sub_map_[k].Initialized())
-    unmasked_fraction = sub_map_[k].FindUnmaskedFraction(pix);
-
-  return unmasked_fraction;
-}
-
-void Map::FindUnmaskedFraction(PixelVector& pix,
-			       std::vector<double>& unmasked_fraction) {
-
-  if (!unmasked_fraction.empty()) unmasked_fraction.clear();
-
-  unmasked_fraction.reserve(pix.size());
-
-  for (uint32_t i=0;i<pix.size();i++){
-    double pixel_unmasked_fraction = 0.0;
-    uint32_t k = pix[i].Superpixnum();
-
-    if (sub_map_[k].Initialized())
-      pixel_unmasked_fraction = sub_map_[k].FindUnmaskedFraction(pix[i]);
-
-    unmasked_fraction.push_back(pixel_unmasked_fraction);
-  }
-}
-
-void Map::FindUnmaskedFraction(PixelVector& pix) {
-  for (uint32_t i=0;i<pix.size();i++){
-    double pixel_unmasked_fraction = 0.0;
-    uint32_t k = pix[i].Superpixnum();
-
-    if (sub_map_[k].Initialized())
-      pixel_unmasked_fraction = sub_map_[k].FindUnmaskedFraction(pix[i]);
-    pix[i].SetWeight(pixel_unmasked_fraction);
-  }
-}
-
-double Map::FindUnmaskedFraction(Map& stomp_map) {
-  double total_unmasked_area = 0.0;
-  for (MapIterator iter=stomp_map.Begin();
-       iter!=stomp_map.End();stomp_map.Iterate(&iter)) {
-    double pixel_unmasked_fraction = 0.0;
-    uint32_t k = iter.second->Superpixnum();
-
-    if (sub_map_[k].Initialized())
-      pixel_unmasked_fraction =
-	sub_map_[k].FindUnmaskedFraction(*(iter.second));
-    total_unmasked_area += pixel_unmasked_fraction*iter.second->Area();
-  }
-
-  return total_unmasked_area/stomp_map.Area();
-}
-
-int8_t Map::FindUnmaskedStatus(Pixel& pix) {
-  int8_t unmasked_status = 0;
-
-  uint32_t k = pix.Superpixnum();
-
-  if (sub_map_[k].Initialized())
-    unmasked_status = sub_map_[k].FindUnmaskedStatus(pix);
-
-  return unmasked_status;
-}
-
-void Map::FindUnmaskedStatus(PixelVector& pix,
-			     std::vector<int8_t>& unmasked_status) {
-
-  if (!unmasked_status.empty()) unmasked_status.clear();
-  unmasked_status.reserve(pix.size());
-
-  for (uint32_t i=0;i<pix.size();i++){
-    int8_t pixel_unmasked_status = 0;
-    uint32_t k = pix[i].Superpixnum();
-
-    if (sub_map_[k].Initialized())
-      pixel_unmasked_status = sub_map_[k].FindUnmaskedStatus(pix[i]);
-
-    unmasked_status.push_back(pixel_unmasked_status);
-  }
-}
-
-int8_t Map::FindUnmaskedStatus(Map& stomp_map) {
-  // Get the status for the first pixel in the map to seed our initial status.
-  MapIterator iter=stomp_map.Begin();
-  int8_t map_unmasked_status = 0;
-  uint32_t k = iter.second->Superpixnum();
-
-  if (sub_map_[k].Initialized())
-    map_unmasked_status = sub_map_[k].FindUnmaskedStatus(*(iter.second));
-
-  stomp_map.Iterate(&iter);
-
-  // Now iterate over the rest of the map to figure out the global status.
-  for (;iter!=stomp_map.End();stomp_map.Iterate(&iter)) {
-    int8_t unmasked_status = 0;
-    k = iter.second->Superpixnum();
-
-    if (sub_map_[k].Initialized())
-      unmasked_status = sub_map_[k].FindUnmaskedStatus(*(iter.second));
-
-    if (map_unmasked_status == 1) {
-      // If we currently thought that the input Map was completely inside of our
-      // Map, but find that this Pixel is either outside the Map or only
-      // partially inside the Map, then we switch the global status to partial.
-      if (unmasked_status == 0 || unmasked_status == -1)
-	map_unmasked_status = -1;
-    }
-
-    if (map_unmasked_status == 0) {
-      // If we currently thought that the input Map was completely outside the
-      // Map, but find that this Pixel is either fully or partially contained
-      // in the Map, then we switch the global status to partial.
-      if (unmasked_status == 1 || unmasked_status == -1)
-	map_unmasked_status = -1;
-    }
-
-    if (map_unmasked_status == -1) {
-      // If we find that the input Map's unmasked status is partial, then no
-      // further testing will change that status.  At this point, we can break
-      // our loop and return the global status.
-      break;
-    }
-  }
-
-  return map_unmasked_status;
-}
-
-double Map::FindAverageWeight(Pixel& pix) {
-  double weighted_average = 0.0;
-  uint32_t k = pix.Superpixnum();
-
-  if (sub_map_[k].Initialized())
-    weighted_average = sub_map_[k].FindAverageWeight(pix);
-
-  return weighted_average;
-}
-
-void Map::FindAverageWeight(PixelVector& pix,
-			    std::vector<double>& weighted_average) {
-  if (!weighted_average.empty()) weighted_average.clear();
-
-  for (uint32_t i=0;i<pix.size();i++) {
-    double pixel_weighted_average = 0.0;
-    uint32_t k = pix[i].Superpixnum();
-
-    if (sub_map_[k].Initialized())
-      pixel_weighted_average = sub_map_[k].FindAverageWeight(pix[i]);
-
-    weighted_average.push_back(pixel_weighted_average);
-  }
-}
-
-void Map::FindAverageWeight(PixelVector& pix) {
-  for (uint32_t i=0;i<pix.size();i++) {
-    double pixel_weighted_average = 0.0;
-    uint32_t k = pix[i].Superpixnum();
-
-    if (sub_map_[k].Initialized())
-      pixel_weighted_average = sub_map_[k].FindAverageWeight(pix[i]);
-    pix[i].SetWeight(pixel_weighted_average);
-  }
-}
-
-void Map::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
-			     bool use_local_weights) {
-  if (!match_pix.empty()) match_pix.clear();
-
-  uint32_t k = pix.Superpixnum();
-
-  if (sub_map_[k].Initialized()) {
-    PixelVector tmp_pix;
-
-    sub_map_[k].FindMatchingPixels(pix,tmp_pix,use_local_weights);
-
-    if (!tmp_pix.empty())
-      for (PixelIterator iter=tmp_pix.begin();iter!=tmp_pix.end();++iter)
-        match_pix.push_back(*iter);
-  }
-}
-
-void Map::FindMatchingPixels(PixelVector& pix, PixelVector& match_pix,
-			     bool use_local_weights) {
-  if (!match_pix.empty()) match_pix.clear();
-
-  for (uint32_t i=0;i<pix.size();i++) {
-
-    uint32_t k = pix[i].Superpixnum();
-
-    if (sub_map_[k].Initialized()) {
-      PixelVector tmp_pix;
-
-      sub_map_[k].FindMatchingPixels(pix[i],tmp_pix,use_local_weights);
-
-      if (!tmp_pix.empty())
-        for (PixelIterator iter=tmp_pix.begin();iter!=tmp_pix.end();++iter)
-          match_pix.push_back(*iter);
-    }
-  }
 }
 
 void Map::GenerateRandomPoints(AngularVector& ang, uint32_t n_point,
@@ -1678,19 +1705,432 @@ bool Map::Read(std::string& InputFile, bool hpixel_format,
   return found_file;
 }
 
-double Map::AverageWeight() {
-  double unmasked_fraction = 0.0, weighted_average = 0.0;
+bool Map::PixelizeBound(GeometricBound& bound, double weight,
+			uint16_t maximum_resolution) {
+  bool pixelized_map = false;
 
-  for (SubMapIterator iter=sub_map_.begin();iter!=sub_map_.end();++iter) {
-    if (iter->Initialized()) {
-      weighted_average += iter->AverageWeight()*iter->Area();
-      unmasked_fraction += iter->Area();
-    }
+  Clear();
+
+  uint8_t max_resolution_level = MostSignificantBit(maximum_resolution);
+
+  uint8_t starting_resolution_level =
+    _FindStartingResolutionLevel(bound.Area());
+
+  if (starting_resolution_level > max_resolution_level)
+    starting_resolution_level = max_resolution_level;
+
+  if (starting_resolution_level < HPixLevel)
+    starting_resolution_level = HPixLevel;
+
+  // We need to be careful around the poles since the pixels there get
+  // very distorted.
+  if ((bound.LambdaMin() > 85.0) || (bound.LambdaMax() < -85.0)) {
+    starting_resolution_level = MostSignificantBit(512);
+    if (max_resolution_level < starting_resolution_level)
+      max_resolution_level = starting_resolution_level;
   }
 
-  if (unmasked_fraction > 0.000000001) weighted_average /= unmasked_fraction;
+  // std::cout << "Pixelizing from level " <<
+  // static_cast<int>(starting_resolution_level) << " to " <<
+  // static_cast<int>(max_resolution_level) << "...\n";
 
-  return weighted_average;
+  uint32_t x_min, x_max, y_min, y_max;
+  if (_FindXYBounds(starting_resolution_level, bound,
+		    x_min, x_max, y_min, y_max)) {
+
+    PixelVector resolve_pix, previous_pix, kept_pix;
+    double pixel_area = 0.0;
+
+    for (uint8_t resolution_level=starting_resolution_level;
+         resolution_level<=max_resolution_level;resolution_level++) {
+      uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
+
+      unsigned n_keep = 0;
+      uint32_t nx = Nx0*resolution;
+      Pixel tmp_pix;
+      tmp_pix.SetResolution(resolution);
+      double unit_area = tmp_pix.Area();
+
+      double score;
+      AngularCoordinate ang;
+
+      if (resolution_level == starting_resolution_level) {
+        resolve_pix.clear();
+        previous_pix.clear();
+
+        uint32_t nx_pix;
+        if ((x_max < x_min) && (x_min > nx/2)) {
+          nx_pix = nx - x_min + x_max + 1;
+        } else {
+          nx_pix = x_max - x_min + 1;
+        }
+
+        for (uint32_t y=y_min;y<=y_max;y++) {
+          for (uint32_t m=0,x=x_min;m<nx_pix;m++,x++) {
+            if (x==nx) x = 0;
+            tmp_pix.SetPixnumFromXY(x,y);
+
+            score = _ScorePixel(bound, tmp_pix);
+
+            if (score < -0.99999) {
+              tmp_pix.SetWeight(weight);
+              kept_pix.push_back(tmp_pix);
+	      pixel_area += unit_area;
+              n_keep++;
+            } else {
+              if (score < -0.00001) {
+                tmp_pix.SetWeight(score);
+                resolve_pix.push_back(tmp_pix);
+              }
+            }
+            previous_pix.push_back(tmp_pix);
+          }
+        }
+      } else {
+        if (resolve_pix.size() == 0) {
+          std::cout << "Missed all pixels in initial search; trying again...\n";
+          for (PixelIterator iter=previous_pix.begin();
+               iter!=previous_pix.end();++iter) {
+            PixelVector sub_pix;
+            iter->SubPix(resolution,sub_pix);
+            for (PixelIterator sub_iter=sub_pix.begin();
+                 sub_iter!=sub_pix.end();++sub_iter)
+              resolve_pix.push_back(*sub_iter);
+          }
+        }
+
+        previous_pix.clear();
+
+	previous_pix.reserve(resolve_pix.size());
+        for (PixelIterator iter=resolve_pix.begin();
+             iter!=resolve_pix.end();++iter) previous_pix.push_back(*iter);
+
+        resolve_pix.clear();
+
+        uint32_t x_min, x_max, y_min, y_max;
+
+        for (PixelIterator iter=previous_pix.begin();
+             iter!=previous_pix.end();++iter) {
+
+          iter->SubPix(resolution,x_min,x_max,y_min,y_max);
+
+          for (uint32_t y=y_min;y<=y_max;y++) {
+            for (uint32_t x=x_min;x<=x_max;x++) {
+              tmp_pix.SetPixnumFromXY(x,y);
+
+              score = _ScorePixel(bound, tmp_pix);
+
+              if (score < -0.99999) {
+                tmp_pix.SetWeight(weight);
+		kept_pix.push_back(tmp_pix);
+		pixel_area += unit_area;
+                n_keep++;
+              } else {
+                if (score < -0.00001) {
+                  tmp_pix.SetWeight(score);
+                  resolve_pix.push_back(tmp_pix);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    previous_pix.clear();
+
+    if (bound.Area() > pixel_area) {
+      sort(resolve_pix.begin(), resolve_pix.end(), Pixel::WeightedOrder);
+
+      uint32_t n=0;
+      double ur_weight = resolve_pix[n].Weight();
+      double unit_area = resolve_pix[n].Area();
+      while ((n < resolve_pix.size()) &&
+             ((bound.Area() > pixel_area) ||
+              DoubleEQ(resolve_pix[n].Weight(), ur_weight))) {
+        ur_weight = resolve_pix[n].Weight();
+        resolve_pix[n].SetWeight(weight);
+	kept_pix.push_back(resolve_pix[n]);
+	pixel_area += unit_area;
+        n++;
+      }
+    }
+
+    Initialize(kept_pix);
+
+    pixelized_map = true;
+  }
+
+  return pixelized_map;
+}
+
+uint8_t Map::_FindStartingResolutionLevel(double bound_area) {
+  if (bound_area < 10.0*Pixel::PixelArea(MaxPixelResolution)) {
+    return 0;
+  }
+
+  uint16_t starting_resolution = HPixResolution;
+
+  // We want to start things off with the coarsest possible resolution to
+  // save time, but we have to be careful that we're not so coarse that we
+  // miss parts of the footprint.  This finds the resolution that has pixels
+  // about 1/100th the area of the footprint.
+  while (bound_area/Pixel::PixelArea(starting_resolution) <= 100.0)
+    starting_resolution *= 2;
+
+  return MostSignificantBit(starting_resolution);
+}
+
+bool Map::_FindXYBounds(const uint8_t resolution_level,
+			GeometricBound& bound,
+			uint32_t& x_min, uint32_t&x_max,
+			uint32_t& y_min, uint32_t&y_max) {
+
+  uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
+  uint32_t nx = Nx0*resolution, ny = Ny0*resolution;
+
+  Pixel::AreaIndex(resolution,
+		   bound.LambdaMin(), bound.LambdaMax(),
+		   bound.EtaMin(), bound.EtaMax(),
+		   x_min, x_max, y_min, y_max);
+
+  // std::cout << "Starting bounds:\n\tX: " << x_min << " - " << x_max <<
+  // ", Y: " << y_min << " - " << y_max << "\n";
+
+  // Checking top border
+  bool found_pixel = true;
+  bool boundary_failure = false;
+
+  Pixel tmp_pix;
+  tmp_pix.SetResolution(resolution);
+
+  uint8_t n_iter = 0;
+  uint8_t max_iter = 20;
+  while (found_pixel && n_iter < max_iter) {
+    found_pixel = false;
+    uint32_t y = y_max, nx_pix;
+
+    if ((x_max < x_min) && (x_min > nx/2)) {
+      nx_pix = nx - x_min + x_max + 1;
+    } else {
+      nx_pix = x_max - x_min + 1;
+    }
+
+    for (uint32_t m=0,x=x_min;m<nx_pix;m++,x++) {
+      if (x == nx) x = 0;
+
+      tmp_pix.SetPixnumFromXY(x,y);
+
+      // This if statement checks positions within the pixel against the
+      // footprint bound.
+      if (DoubleLT(_ScorePixel(bound, tmp_pix), 0.0)) {
+	// std::cout << m << "," << y << ": " <<
+	// tmp_pix.Lambda() << ", " << tmp_pix.Eta() << ": " <<
+	// _ScorePixel(bound, tmp_pix) << "\n";
+        found_pixel = true;
+        m = nx_pix + 1;
+      }
+    }
+
+    if (found_pixel) {
+      // The exception to that case is if we've already reached the maximum
+      // y index for the pixels.  In that case, we're just done.
+      if (y_max < ny - 1) {
+        y_max++;
+      } else {
+        found_pixel = false;
+      }
+    }
+    n_iter++;
+  }
+  if (n_iter == max_iter) boundary_failure = true;
+  // if (boundary_failure) std::cout << "\t\tBoundary failure on top bound\n";
+
+  // Checking bottom border
+  found_pixel = true;
+  n_iter = 0;
+  while (!boundary_failure && found_pixel && n_iter < max_iter) {
+    found_pixel = false;
+    uint32_t y = y_min, nx_pix;
+
+    if ((x_max < x_min) && (x_min > nx/2)) {
+      nx_pix = nx - x_min + x_max + 1;
+    } else {
+      nx_pix = x_max - x_min + 1;
+    }
+
+    for (uint32_t m=0,x=x_min;m<nx_pix;m++,x++) {
+      if (x == nx) x = 0;
+
+      tmp_pix.SetPixnumFromXY(x,y);
+
+      // This if statement checks positions within the pixel against the
+      // footprint bound.
+      if (_ScorePixel(bound, tmp_pix) < -0.000001) {
+        found_pixel = true;
+        m = nx_pix + 1;
+      }
+    }
+
+    if (found_pixel) {
+      // The exception to that case is if we've already reached the minimum
+      // y index for the pixels.  In that case, we're just done.
+      if (y_min > 0) {
+        y_min--;
+      } else {
+        found_pixel = false;
+      }
+    }
+    n_iter++;
+  }
+
+  if (n_iter == max_iter) boundary_failure = true;
+  // if (boundary_failure) std::cout << "\t\tBoundary failure on lower bound\n";
+
+  // Checking left border
+  found_pixel = true;
+  n_iter = 0;
+  while (!boundary_failure && found_pixel && n_iter < max_iter) {
+    found_pixel = false;
+    uint32_t x = x_min;
+
+    for (uint32_t y=y_min;y<=y_max;y++) {
+
+      tmp_pix.SetPixnumFromXY(x,y);
+
+      // This if statement checks positions within the pixel against the
+      // footprint bound.
+      if (_ScorePixel(bound, tmp_pix) < -0.000001) {
+        found_pixel = true;
+        y = y_max + 1;
+      }
+    }
+
+    if (found_pixel) {
+      if (x_min == 0) {
+        x_min = nx - 1;
+      } else {
+        x_min--;
+      }
+    }
+    n_iter++;
+  }
+  if (n_iter == max_iter) boundary_failure = true;
+  // if (boundary_failure) std::cout << "\t\tBoundary failure on left bound\n";
+
+  // Checking right border
+  found_pixel = true;
+  n_iter = 0;
+  while (!boundary_failure && found_pixel && n_iter < max_iter) {
+    found_pixel = false;
+    uint32_t x = x_max;
+
+    for (uint32_t y=y_min;y<=y_max;y++) {
+
+      tmp_pix.SetPixnumFromXY(x,y);
+
+      // This if statement checks positions within the pixel against the
+      // footprint bound.
+      if (_ScorePixel(bound, tmp_pix) < -0.000001) {
+        found_pixel = true;
+        y = y_max + 1;
+      }
+    }
+
+    if (found_pixel) {
+      if (x_max == nx - 1) {
+        x_max = 0;
+      } else {
+        x_max++;
+      }
+    }
+    n_iter++;
+  }
+
+  if (n_iter == max_iter) boundary_failure = true;
+  // if (boundary_failure) std::cout << "\t\tBoundary failure on right bound\n";
+
+  // std::cout << "Final bounds:\n\tX: " << x_min << " - " << x_max <<
+  // ", Y: " << y_min << " - " << y_max << "\n";
+
+  return !boundary_failure;
+}
+
+double Map::_ScorePixel(GeometricBound& bound, Pixel& pix) {
+
+  double inv_nx = 1.0/static_cast<double>(Nx0*pix.Resolution());
+  double inv_ny = 1.0/static_cast<double>(Ny0*pix.Resolution());
+  double x = static_cast<double>(pix.PixelX());
+  double y = static_cast<double>(pix.PixelY());
+
+  double lammid = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.5)*inv_ny);
+  double lammin = 90.0 - RadToDeg*acos(1.0-2.0*(y+1.0)*inv_ny);
+  double lammax = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.0)*inv_ny);
+  double lam_quart = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.75)*inv_ny);
+  double lam_three = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.25)*inv_ny);
+
+  double etamid = RadToDeg*(2.0*Pi*(x+0.5))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamid, 180.0)) etamid -= 360.0;
+  if (DoubleLE(etamid, -180.0)) etamid += 360.0;
+
+  double etamin = RadToDeg*(2.0*Pi*(x+0.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamin, 180.0)) etamin -= 360.0;
+  if (DoubleLE(etamin, -180.0)) etamin += 360.0;
+
+  double etamax = RadToDeg*(2.0*Pi*(x+1.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamax, 180.0)) etamax -= 360.0;
+  if (DoubleLE(etamax, -180.0)) etamax += 360.0;
+
+  double eta_quart = RadToDeg*(2.0*Pi*(x+0.25))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_quart, 180.0)) eta_quart -= 360.0;
+  if (DoubleLE(eta_quart, -180.0)) eta_quart += 360.0;
+
+  double eta_three = RadToDeg*(2.0*Pi*(x+0.75))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_three, 180.0)) eta_three -= 360.0;
+  if (DoubleLE(eta_three, -180.0)) eta_three += 360.0;
+
+  double score = 0.0;
+
+  AngularCoordinate ang(lammid, etamid, AngularCoordinate::Survey);
+  if (bound.CheckPoint(ang)) score -= 4.0;
+
+  ang.SetSurveyCoordinates(lam_quart,etamid);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,etamid);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lammid,eta_quart);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lammid,eta_quart);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+
+  ang.SetSurveyCoordinates(lam_quart,eta_quart);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,eta_quart);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_quart,eta_three);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,eta_three);
+  if (bound.CheckPoint(ang)) score -= 3.0;
+
+  ang.SetSurveyCoordinates(lammid,etamax);
+  if (bound.CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammid,etamin);
+  if (bound.CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammax,etamid);
+  if (bound.CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammin,etamid);
+  if (bound.CheckPoint(ang)) score -= 2.0;
+
+  ang.SetSurveyCoordinates(lammax,etamax);
+  if (bound.CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammax,etamin);
+  if (bound.CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammin,etamax);
+  if (bound.CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammin,etamin);
+  if (bound.CheckPoint(ang)) score -= 1.0;
+
+  return score/40.0;
 }
 
 bool Map::IngestMap(PixelVector& pix, bool destroy_copy) {
