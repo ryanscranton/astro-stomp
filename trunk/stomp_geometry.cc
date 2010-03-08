@@ -128,15 +128,16 @@ bool CircleBound::FindArea() {
 }
 
 bool CircleBound::CheckPoint(AngularCoordinate& ang) {
+  bool within_bound = false;
 
   double costheta =
       ang.UnitSphereX()*ang_.UnitSphereX() +
       ang.UnitSphereY()*ang_.UnitSphereY() +
       ang.UnitSphereZ()*ang_.UnitSphereZ();
 
-  if (1.0-costheta*costheta <= sin2radius_ + 1.0e-10) return true;
+  if (DoubleLE(1.0-costheta*costheta, sin2radius_)) within_bound = true;
 
-  return false;
+  return within_bound;
 }
 
 WedgeBound::WedgeBound(const AngularCoordinate& ang, double radius,
@@ -163,45 +164,31 @@ WedgeBound::~WedgeBound() {
 }
 
 bool WedgeBound::FindAngularBounds() {
-  // We should be able to define our bounds based on the three points that
-  // define the wedge.
-  double lammin = ang_.Lambda();
-  double lammax = ang_.Lambda();
-  double etamin = ang_.Eta();
-  double etamax = ang_.Eta();
+  // This is ported directly from the CircleBound object, so the bounds aren't
+  // a function of the slice of the wedge we're actually pixelizing.
+  //
+  // TODO(ryan.scranton): To properly calculate the wedge bounds, the reference
+  // angles using the PositionAngle and Rotation methods need to be sync'd up.
+  // Currently, a Rotation() from a point North of the reference location will
+  // not align with a point at a given PositionAngle().
 
-  // Now we define a new point directly north of the center of the circle.
-  AngularCoordinate start_ang;
-  switch(sphere_) {
-  case AngularCoordinate::Survey:
-    start_ang.SetSurveyCoordinates(ang_.Lambda()+radius_, ang_.Eta());
-    break;
-  case AngularCoordinate::Equatorial:
-    start_ang.SetEquatorialCoordinates(ang_.RA(), ang_.DEC()+radius_);
-    break;
-  case AngularCoordinate::Galactic:
-    start_ang.SetGalacticCoordinates(ang_.GalLon(), ang_.GalLat()+radius_);
-    break;
-  }
+  double lammin = ang_.Lambda() - radius_;
+  if (DoubleLE(lammin, -90.0)) lammin = -90.0;
 
-  // Using that point as a reference, we can rotate to our minimum and
-  // maximum position angles.
-  AngularCoordinate new_ang;
-  start_ang.Rotate(ang_, position_angle_min_, new_ang);
+  double lammax = ang_.Lambda() + radius_;
+  if (DoubleGE(lammax, 90.0)) lammax = 90.0;
 
-  if (DoubleLE(new_ang.Lambda(), lammin)) lammin = new_ang.Lambda();
-  if (DoubleGE(new_ang.Lambda(), lammax)) lammax = new_ang.Lambda();
+  // double eta_multiplier =
+  // AngularCoordinate::EtaMultiplier(0.5*(lammax+lammin));
+  double eta_multiplier = 1.0;
 
-  if (DoubleLE(new_ang.Eta(), etamin)) etamin = new_ang.Eta();
-  if (DoubleGE(new_ang.Eta(), etamax)) etamax = new_ang.Eta();
+  double etamin = ang_.Eta() - radius_*eta_multiplier;
+  if (DoubleGT(etamin, 180.0)) etamin -= 360.0;
+  if (DoubleLT(etamin, -180.0)) etamin += 360.0;
 
-  start_ang.Rotate(ang_, position_angle_max_, new_ang);
-
-  if (DoubleLE(new_ang.Lambda(), lammin)) lammin = new_ang.Lambda();
-  if (DoubleGE(new_ang.Lambda(), lammax)) lammax = new_ang.Lambda();
-
-  if (DoubleLE(new_ang.Eta(), etamin)) etamin = new_ang.Eta();
-  if (DoubleGE(new_ang.Eta(), etamax)) etamax = new_ang.Eta();
+  double etamax = ang_.Eta() + radius_*eta_multiplier;
+  if (DoubleGT(etamax, 180.0)) etamax -= 360.0;
+  if (DoubleLT(etamax, -180.0)) etamax += 360.0;
 
   SetAngularBounds(lammin,lammax,etamin,etamax);
 
@@ -216,19 +203,22 @@ bool WedgeBound::FindArea() {
 }
 
 bool WedgeBound::CheckPoint(AngularCoordinate& ang) {
+  bool within_bound = false;
 
   double costheta =
     ang.UnitSphereX()*ang_.UnitSphereX() +
     ang.UnitSphereY()*ang_.UnitSphereY() +
     ang.UnitSphereZ()*ang_.UnitSphereZ();
 
-  if (1.0-costheta*costheta <= sin2radius_ + 1.0e-10) {
-    double position_angle = ang_.PositionAngle(ang);
+  if (DoubleLE(1.0-costheta*costheta, sin2radius_)) {
+    double position_angle = 90.0 - ang_.PositionAngle(ang);
+    if (DoubleLT(position_angle, 0.0)) position_angle += 360.0;
     if (DoubleGE(position_angle, position_angle_min_) &&
 	DoubleLE(position_angle, position_angle_max_))
-      return true;
+      within_bound = true;
   }
-  return false;
+
+  return within_bound;
 }
 
 PolygonBound::PolygonBound(AngularVector& ang) {
