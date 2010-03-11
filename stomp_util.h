@@ -81,6 +81,13 @@ class StompWatch {
   timeval stop;
 };
 
+// A simple utility function for breaking up a string into its component items,
+// generally when the string is a list of filenames or such (separated by the
+// input delimiter).
+void Tokenize(const std::string& str,
+	       std::vector<std::string>& tokens,
+	       const std::string& delimiters = " ");
+
 } // end namespace Stomp
 
 #endif

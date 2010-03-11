@@ -132,6 +132,11 @@ class AngularCoordinate {
   // about that point.  The rotation angle will be in degrees, East of
   // North.  In the second variant, we leave our current position static and
   // return a copy of the rotated position.
+  //
+  // TODO(ryan.scranton): Rotate does not work properly with PositionAngle, in
+  // that applying a Rotation to a point about a reference location does not
+  // result in the PositionAngle from the reference point to the rotated point
+  // matching the rotation applied.  This needs to be fixed.
   void Rotate(AngularCoordinate& fixed_ang, double rotation_angle);
   void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
 	      AngularCoordinate& rotated_ang);
