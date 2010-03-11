@@ -3,6 +3,7 @@ LD = g++
 CCFLAGS = -O6 -Wall
 LDFLAGS = -lm -L./ -lstomp -lgflags
 LIB=libstomp.a
+PREFIX=/usr/local
 
 CORE = stomp_core
 ANGULAR_COORDINATE = stomp_angular_coordinate
@@ -17,13 +18,21 @@ SCALAR_MAP = stomp_scalar_map
 TREE_MAP = stomp_tree_map
 GEOMETRY = stomp_geometry
 UTIL = stomp_util
+STOMP = stomp
 
 TEST_EXEC = stomp_unit_test
 GENRAND_EXEC = stomp_genrand
 
 default: lib
 
-all: lib test genrand
+all: lib test
+
+install: $(LIB)
+	@ echo Copying to $(PREFIX)/*/stomp
+	cp $(LIB) $(PREFIX)/lib/
+	#mkdir -f $(PREFIX)/include/stomp
+	cp $(CORE).h $(ANGULAR_COORDINATE).h $(ANGULAR_BIN).h $(ANGULAR_CORRELATION).h $(PIXEL).h $(SCALAR_PIXEL).h $(TREE_PIXEL).h $(BASE_MAP).h $(MAP).h $(SCALAR_MAP).h $(TREE_MAP).h $(GEOMETRY).h $(UTIL).h MersenneTwister.h $(PREFIX)/include/stomp/
+	cp $(STOMP).h $(PREFIX)/include/
 
 lib: $(LIB)
 

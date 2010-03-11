@@ -341,26 +341,30 @@ double AngularCoordinate::SinPositionAngle(Pixel& pix, Sphere sphere) {
 
 void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
 			       double rotation_angle) {
-  double cos_theta = cos(rotation_angle*Stomp::DegToRad);
-  double sin_theta = sin(rotation_angle*Stomp::DegToRad);
+  // Using a quaternion to rotate our current position about the vector
+  // represented by the input AngularCoordinate.  Our starting quarternion is
+  //
+  // q = cos(theta/2) + fixed_ang*sin(theta/2)
+  double cos_theta = cos(0.5*rotation_angle*Stomp::DegToRad);
+  double sin_theta = sin(0.5*rotation_angle*Stomp::DegToRad);
 
-  double new_x = us_x_*cos_theta + (1.0 - cos_theta)*
-    (fixed_ang.UnitSphereX()*fixed_ang.UnitSphereX()*us_x_ +
-     fixed_ang.UnitSphereX()*fixed_ang.UnitSphereY()*us_y_ +
-     fixed_ang.UnitSphereX()*fixed_ang.UnitSphereZ()*us_z_) +
-    (fixed_ang.UnitSphereY()*us_z_ - fixed_ang.UnitSphereZ()*us_y_)*sin_theta;
+  double q1 = cos_theta;
+  double q2 = sin_theta*fixed_ang.UnitSphereX();
+  double q3 = sin_theta*fixed_ang.UnitSphereY();
+  double q4 = sin_theta*fixed_ang.UnitSphereZ();
 
-  double new_y = us_y_*cos_theta + (1.0 - cos_theta)*
-    (fixed_ang.UnitSphereY()*fixed_ang.UnitSphereX()*us_x_ +
-     fixed_ang.UnitSphereY()*fixed_ang.UnitSphereY()*us_y_ +
-     fixed_ang.UnitSphereY()*fixed_ang.UnitSphereZ()*us_z_) +
-    (fixed_ang.UnitSphereZ()*us_x_ - fixed_ang.UnitSphereX()*us_z_)*sin_theta;
-
-  double new_z = us_z_*cos_theta + (1.0 - cos_theta)*
-    (fixed_ang.UnitSphereZ()*fixed_ang.UnitSphereX()*us_x_ +
-     fixed_ang.UnitSphereZ()*fixed_ang.UnitSphereY()*us_y_ +
-     fixed_ang.UnitSphereZ()*fixed_ang.UnitSphereZ()*us_z_) +
-    (fixed_ang.UnitSphereX()*us_y_ - fixed_ang.UnitSphereY()*us_x_)*sin_theta;
+  double new_x =
+    2.0*((-q3*q3 - q4*q4)*UnitSphereX() +
+	 (q2*q3 - q1*q4)*UnitSphereY() +
+	 (q1*q3 - q2*q4)*UnitSphereZ()) + UnitSphereX();
+  double new_y =
+    2.0*((q1*q4 + q2*q3)*UnitSphereX() +
+	 (-q2*q2 - q4*q4)*UnitSphereY() +
+	 (q3*q4 - q1*q3)*UnitSphereZ()) + UnitSphereY();
+  double new_z =
+    2.0*((q2*q4 - q1*q3)*UnitSphereX() +
+	 (q1*q3 + q3*q4)*UnitSphereY() +
+	 (-q2*q2 - q3*q3)*UnitSphereZ()) + UnitSphereZ();
 
   SetUnitSphereCoordinates(new_x, new_y, new_z);
 }
@@ -368,26 +372,30 @@ void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
 void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
 			       double rotation_angle,
 			       AngularCoordinate& rotated_ang) {
-  double cos_theta = cos(rotation_angle*Stomp::DegToRad);
-  double sin_theta = sin(rotation_angle*Stomp::DegToRad);
+  // Using a quaternion to rotate our current position about the vector
+  // represented by the input AngularCoordinate.  Our starting quarternion is
+  //
+  // q = cos(theta/2) + fixed_ang*sin(theta/2)
+  double cos_theta = cos(0.5*rotation_angle*Stomp::DegToRad);
+  double sin_theta = sin(0.5*rotation_angle*Stomp::DegToRad);
 
-  double new_x = us_x_*cos_theta + (1.0 - cos_theta)*
-    (fixed_ang.UnitSphereX()*fixed_ang.UnitSphereX()*us_x_ +
-     fixed_ang.UnitSphereX()*fixed_ang.UnitSphereY()*us_y_ +
-     fixed_ang.UnitSphereX()*fixed_ang.UnitSphereZ()*us_z_) +
-    (fixed_ang.UnitSphereY()*us_z_ - fixed_ang.UnitSphereZ()*us_y_)*sin_theta;
+  double q1 = cos_theta;
+  double q2 = sin_theta*fixed_ang.UnitSphereX();
+  double q3 = sin_theta*fixed_ang.UnitSphereY();
+  double q4 = sin_theta*fixed_ang.UnitSphereZ();
 
-  double new_y = us_y_*cos_theta + (1.0 - cos_theta)*
-    (fixed_ang.UnitSphereY()*fixed_ang.UnitSphereX()*us_x_ +
-     fixed_ang.UnitSphereY()*fixed_ang.UnitSphereY()*us_y_ +
-     fixed_ang.UnitSphereY()*fixed_ang.UnitSphereZ()*us_z_) +
-    (fixed_ang.UnitSphereZ()*us_x_ - fixed_ang.UnitSphereX()*us_z_)*sin_theta;
-
-  double new_z = us_z_*cos_theta + (1.0 - cos_theta)*
-    (fixed_ang.UnitSphereZ()*fixed_ang.UnitSphereX()*us_x_ +
-     fixed_ang.UnitSphereZ()*fixed_ang.UnitSphereY()*us_y_ +
-     fixed_ang.UnitSphereZ()*fixed_ang.UnitSphereZ()*us_z_) +
-    (fixed_ang.UnitSphereX()*us_y_ - fixed_ang.UnitSphereY()*us_x_)*sin_theta;
+  double new_x =
+    2.0*((-q3*q3 - q4*q4)*UnitSphereX() +
+	 (q2*q3 - q1*q4)*UnitSphereY() +
+	 (q1*q3 - q2*q4)*UnitSphereZ()) + UnitSphereX();
+  double new_y =
+    2.0*((q1*q4 + q2*q3)*UnitSphereX() +
+	 (-q2*q2 - q4*q4)*UnitSphereY() +
+	 (q3*q4 - q1*q3)*UnitSphereZ()) + UnitSphereY();
+  double new_z =
+    2.0*((q2*q4 - q1*q3)*UnitSphereX() +
+	 (q1*q3 + q3*q4)*UnitSphereY() +
+	 (-q2*q2 - q3*q3)*UnitSphereZ()) + UnitSphereZ();
 
   rotated_ang.SetUnitSphereCoordinates(new_x, new_y, new_z);
 }
