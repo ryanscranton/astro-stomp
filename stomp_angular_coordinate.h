@@ -27,6 +27,7 @@ namespace Stomp {
 class Pixel;  // class declaration in stomp_pixel.h
 class AngularCoordinate;
 class WeightedAngularCoordinate;
+class CosmoCoordinate;
 
 typedef std::vector<AngularCoordinate> AngularVector;
 typedef AngularVector::iterator AngularIterator;
@@ -40,6 +41,11 @@ typedef std::vector<WeightedAngularCoordinate> WAngularVector;
 typedef WAngularVector::iterator WAngularIterator;
 typedef std::vector<WeightedAngularCoordinate *> WAngularPtrVector;
 typedef WAngularPtrVector::iterator WAngularPtrIterator;
+
+typedef std::vector<CosmoCoordinate> CosmoVector;
+typedef CosmoVector::iterator CosmoIterator;
+typedef std::vector<CosmoCoordinate *> CosmoPtrVector;
+typedef CosmoPtrVector::iterator CosmoPtrIterator;
 
 class AngularCoordinate {
   // Our generic class for handling angular positions.  The idea is that
@@ -237,6 +243,46 @@ class WeightedAngularCoordinate : public AngularCoordinate {
  private:
   double weight_;
   FieldDict field_;
+};
+
+class CosmoCoordinate : public WeightedAngularCoordinate {
+  // Sub-class of WeightedAngularCoordinate where we attach a redshift to the
+  // angular position on the sphere.  This is instantiated with a redshift, so
+  // the position is now a three dimensional coordinate.
+
+ public:
+  CosmoCoordinate();
+  CosmoCoordinate(double theta, double phi, double weight,
+		  double redshift, Sphere sphere = Survey);
+  CosmoCoordinate(double unit_sphere_x, double unit_sphere_y,
+		  double unit_sphere_z, double weight, double redshift);
+  ~CosmoCoordinate();
+
+  // Since we have a redshift attached to the location, we can now attach some
+  // functionality related to the 3-D coordinates.  Start with some conversions
+  // between angular distance between an input point and our coordinate and
+  // the projected radius at our coordinate's redshift.  Since we're getting
+  // this data out of the Cosmology class, we follow that class's convention
+  // of giving distance in comoving Mpc/h
+  double ProjectedRadius(AngularCoordinate& ang);
+  double ProjectedRadius(AngularCoordinate* ang);
+
+  // We can aslo offer variations on the dot product that takes
+  // CosmoCoordinates and do their calculations with the full 3-D vectors
+  double DotProduct(CosmoCoordinate& ang);
+  double DotProduct(CosmoCoordinate* ang);
+
+  // Some methods for accessing the distance values implied by our redshift.
+  double ComovingDistance();
+  double AngularDiameterDistance();
+  double LuminosityDistance();
+
+  // Getter and setter for the redshift.
+  double Redshift();
+  void SetRedshift(double redshift);
+
+ private:
+  double redshift_;
 };
 
 } // end namespace Stomp

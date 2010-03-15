@@ -16,6 +16,7 @@
 #include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
+#include "stomp_util.h"
 
 namespace Stomp {
 
@@ -585,7 +586,7 @@ WeightedAngularCoordinate::WeightedAngularCoordinate(double unit_sphere_x,
 }
 
 WeightedAngularCoordinate::~WeightedAngularCoordinate() {
-weight_ = 0.0;
+  weight_ = 0.0;
 }
 
 void WeightedAngularCoordinate::SetWeight(double weight) {
@@ -660,6 +661,85 @@ void WeightedAngularCoordinate::RestoreOriginalWeight() {
   if (field_.find(temporary_field_name) != field_.end()) {
     weight_ = field_[temporary_field_name];
   }
+}
+
+CosmoCoordinate::CosmoCoordinate() {
+  redshift_ = 0.0;
+}
+
+CosmoCoordinate::CosmoCoordinate(double theta, double phi, double weight,
+				 double redshift, Sphere sphere) {
+  switch (sphere) {
+  case Survey:
+    SetSurveyCoordinates(theta, phi);
+    break;
+  case Equatorial:
+    SetEquatorialCoordinates(theta, phi);
+    break;
+  case Galactic:
+    SetGalacticCoordinates(theta, phi);
+    break;
+  }
+
+  SetWeight(weight);
+
+  redshift_ = redshift;
+}
+
+CosmoCoordinate::CosmoCoordinate(double unit_sphere_x, double unit_sphere_y,
+				 double unit_sphere_z, double weight,
+				 double redshift) {
+  SetUnitSphereCoordinates(unit_sphere_x, unit_sphere_y, unit_sphere_z);
+
+  SetWeight(weight);
+
+  redshift_ = redshift;
+}
+
+CosmoCoordinate::~CosmoCoordinate() {
+  redshift_ = 0.0;
+}
+
+double CosmoCoordinate::ProjectedRadius(AngularCoordinate& ang) {
+  return Cosmology::ProjectedDistance(redshift_, AngularDistance(ang));
+}
+
+double CosmoCoordinate::ProjectedRadius(AngularCoordinate* ang) {
+  return Cosmology::ProjectedDistance(redshift_, AngularDistance(ang));
+}
+
+double CosmoCoordinate::DotProduct(CosmoCoordinate& ang) {
+  double dot_product = (UnitSphereX()*ang.UnitSphereX() +
+			UnitSphereY()*ang.UnitSphereY() +
+			UnitSphereZ()*ang.UnitSphereZ());
+  return ComovingDistance()*ang.ComovingDistance()*dot_product;
+}
+
+double CosmoCoordinate::DotProduct(CosmoCoordinate* ang) {
+  double dot_product = (UnitSphereX()*ang->UnitSphereX() +
+			UnitSphereY()*ang->UnitSphereY() +
+			UnitSphereZ()*ang->UnitSphereZ());
+  return ComovingDistance()*ang->ComovingDistance()*dot_product;
+}
+
+double CosmoCoordinate::ComovingDistance() {
+  return Cosmology::ComovingDistance(redshift_);
+}
+
+double CosmoCoordinate::AngularDiameterDistance() {
+  return Cosmology::AngularDiameterDistance(redshift_);
+}
+
+double CosmoCoordinate::LuminosityDistance() {
+  return Cosmology::LuminosityDistance(redshift_);
+}
+
+double CosmoCoordinate::Redshift() {
+  return redshift_;
+}
+
+void CosmoCoordinate::SetRedshift(double redshift) {
+  redshift_ = redshift;
 }
 
 } // end namespace Stomp
