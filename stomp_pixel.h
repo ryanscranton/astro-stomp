@@ -76,6 +76,7 @@ class Pixel {
   void SetPixnumFromXY(uint32_t x, uint32_t y);
   void SetWeight(double weight);
 
+  uint8_t Level();
   uint16_t Resolution();
   uint32_t PixelX();
   uint32_t PixelY();

@@ -216,7 +216,7 @@ double SubMap::FindUnmaskedFraction(Pixel& pix) {
 
 int8_t SubMap::FindUnmaskedStatus(Pixel& pix) {
   PixelIterator iter;
-  if (pix.Resolution() == max_resolution_) {
+  if (pix.Resolution() >= max_resolution_) {
     iter = pix_.end();
   } else {
     Pixel tmp_pix(pix.PixelX0()*2, pix.PixelY0()*2,
@@ -225,15 +225,16 @@ int8_t SubMap::FindUnmaskedStatus(Pixel& pix) {
                        Pixel::SuperPixelBasedOrder);
   }
 
-  uint16_t resolution = min_resolution_;
+  uint8_t resolution_level = MostSignificantBit(min_resolution_);
   int8_t unmasked_status = 0;
-  while ((resolution <= pix.Resolution()) && (unmasked_status == 0)) {
+  while ((resolution_level <= pix.Level()) && (unmasked_status == 0)) {
     Pixel tmp_pix = pix;
+    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
     tmp_pix.SetToSuperPix(resolution);
     PixelPair super_iter = equal_range(pix_.begin(),iter,tmp_pix,
                                        Pixel::SuperPixelBasedOrder);
     if (super_iter.first != super_iter.second) unmasked_status = 1;
-    resolution *= 2;
+    resolution_level++;
   }
 
   while ((iter != pix_.end()) && (unmasked_status == 0)) {

@@ -205,6 +205,10 @@ void Pixel::SetPixnumFromXY(uint32_t x, uint32_t y) {
   y_ = y;
 }
 
+uint8_t Pixel::Level() {
+  return resolution_;
+}
+
 uint16_t Pixel::Resolution() {
   return static_cast<uint16_t>(1 << resolution_);
 }

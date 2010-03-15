@@ -302,6 +302,19 @@ class TreePixel : public Pixel {
   void SetPixelCapacity(uint16_t maximum_points);
   uint16_t PixelCapacity();
 
+  // Occasionally, it can be useful for outside code to be able to traverse
+  // the tree structure contained in the pixel and sub-nodes.  These hooks allow
+  // for access to the pointers to the sub-nodes and any point data directly.
+  WAngularPtrIterator PointsBegin();
+  WAngularPtrIterator PointsEnd();
+  TreePtrIterator NodesBegin();
+  TreePtrIterator NodesEnd();
+
+  // And a pair of methods for indicating if the node contains points or
+  // sub-nodes.
+  bool HasPoints();
+  bool HasNodes();
+
   // Since we're storing pointers to the WeightedAngularCoordinates, we need
   // to explicitly delete them to clear all of the memory associated with the
   // pixel.
