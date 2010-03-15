@@ -1193,6 +1193,30 @@ uint16_t TreePixel::PixelCapacity() {
   return maximum_points_;
 }
 
+WAngularPtrIterator TreePixel::PointsBegin() {
+  return ang_.begin();
+}
+
+WAngularPtrIterator TreePixel::PointsEnd() {
+  return ang_.end();
+}
+
+TreePtrIterator TreePixel::NodesBegin() {
+  return subpix_.begin();
+}
+
+TreePtrIterator TreePixel::NodesEnd() {
+  return subpix_.end();
+}
+
+bool TreePixel::HasPoints() {
+  return (ang_.empty() ? false : true);
+}
+  
+bool TreePixel::HasNodes() {
+  return (subpix_.empty() ? false : true);
+}
+
 void TreePixel::Clear() {
   if (!ang_.empty())
     for (WAngularPtrIterator iter=ang_.begin();iter!=ang_.end();++iter)
