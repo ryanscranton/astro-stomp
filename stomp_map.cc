@@ -177,7 +177,7 @@ bool SubMap::FindLocation(AngularCoordinate& ang, double& weight) {
 
 double SubMap::FindUnmaskedFraction(Pixel& pix) {
   PixelIterator iter;
-  if (pix.Resolution() == max_resolution_) {
+  if (pix.Resolution() >= max_resolution_) {
     iter = pix_.end();
   } else {
     Pixel tmp_pix(pix.PixelX0()*2, pix.PixelY0()*2,
@@ -186,11 +186,12 @@ double SubMap::FindUnmaskedFraction(Pixel& pix) {
                        tmp_pix,Pixel::SuperPixelBasedOrder);
   }
 
-  uint16_t resolution = min_resolution_;
+  uint8_t resolution_level = MostSignificantBit(min_resolution_);
   double unmasked_fraction = 0.0;
   bool found_pixel = false;
-  while (resolution <= pix.Resolution() && !found_pixel) {
+  while (resolution_level <= pix.Level() && !found_pixel) {
     Pixel tmp_pix = pix;
+    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
     tmp_pix.SetToSuperPix(resolution);
     PixelPair super_iter = equal_range(pix_.begin(), iter, tmp_pix,
                                        Pixel::SuperPixelBasedOrder);
@@ -198,7 +199,7 @@ double SubMap::FindUnmaskedFraction(Pixel& pix) {
       found_pixel = true;
       unmasked_fraction = 1.0;
     }
-    resolution *= 2;
+    resolution_level++;
   }
 
   while (iter != pix_.end() && !found_pixel) {
@@ -248,7 +249,7 @@ int8_t SubMap::FindUnmaskedStatus(Pixel& pix) {
 double SubMap::FindAverageWeight(Pixel& pix) {
   PixelIterator iter;
 
-  if (pix.Resolution() == max_resolution_) {
+  if (pix.Resolution() >= max_resolution_) {
     iter = pix_.end();
   } else {
     Pixel tmp_pix(pix.Resolution()*2,0,pix.Superpixnum(),1.0);
@@ -258,9 +259,10 @@ double SubMap::FindAverageWeight(Pixel& pix) {
 
   double unmasked_fraction = 0.0, weighted_average = 0.0;
   bool found_pixel = false;
-  uint16_t resolution = min_resolution_;
-  while (resolution <= pix.Resolution() && !found_pixel) {
+  uint8_t resolution_level = MostSignificantBit(min_resolution_);
+  while (resolution_level <= pix.Level() && !found_pixel) {
     Pixel tmp_pix = pix;
+    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
     tmp_pix.SetToSuperPix(resolution);
     PixelPair super_iter = equal_range(pix_.begin(), iter, tmp_pix,
                                        Pixel::SuperPixelBasedOrder);
@@ -269,7 +271,7 @@ double SubMap::FindAverageWeight(Pixel& pix) {
       weighted_average = super_iter.first->Weight();
       unmasked_fraction = 1.0;
     }
-    resolution *= 2;
+    resolution_level++;
   }
 
   while (iter != pix_.end() && !found_pixel) {
@@ -294,7 +296,7 @@ void SubMap::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
 
   bool found_pixel = false;
   PixelIterator iter, find_iter;
-  if (pix.Resolution() == max_resolution_) {
+  if (pix.Resolution() >= max_resolution_) {
     iter = pix_.end();
   } else {
     Pixel tmp_pix(pix.PixelX0()*2, pix.PixelY0()*2, pix.Resolution()*2, 1.0);
@@ -302,9 +304,10 @@ void SubMap::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
                        Pixel::SuperPixelBasedOrder);
   }
 
-  uint16_t resolution = min_resolution_;
-  while (resolution <= pix.Resolution() && !found_pixel) {
+  uint8_t resolution_level = MostSignificantBit(min_resolution_);
+  while (resolution_level <= pix.Level() && !found_pixel) {
     Pixel tmp_pix = pix;
+    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
     tmp_pix.SetToSuperPix(resolution);
     find_iter = lower_bound(pix_.begin(), iter, tmp_pix,
                             Pixel::SuperPixelBasedOrder);
@@ -314,7 +317,7 @@ void SubMap::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
       if (use_local_weights) tmp_pix.SetWeight(find_iter->Weight());
       match_pix.push_back(tmp_pix);
     }
-    resolution *= 2;
+    resolution_level++;
   }
 
   while (iter != pix_.end() && !found_pixel) {
