@@ -110,7 +110,7 @@ void AngularBin::InitializeRegions(int16_t n_regions) {
   }
 }
 
-void AngularBin::SetResolution(uint16_t resolution) {
+void AngularBin::SetResolution(uint32_t resolution) {
   resolution_ = resolution;
 }
 
@@ -309,7 +309,7 @@ void AngularBin::ResetRandRand() {
     for (int16_t k=0;k<n_region_;k++) rand_rand_region_[k] = 0.0;
 }
 
-uint16_t AngularBin::Resolution() {
+uint32_t AngularBin::Resolution() {
   return resolution_;
 }
 

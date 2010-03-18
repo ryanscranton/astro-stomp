@@ -21,7 +21,7 @@ void TreeMapBasicTests() {
   uint16_t n_points_per_node = 200;
   // Make the map at a non-standard resolution so that we can test the
   // Coverage and NodeMap methods later on.
-  uint16_t resolution = 32;
+  uint32_t resolution = 32;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution...\n";
@@ -95,7 +95,7 @@ void TreeMapPairTests() {
   std::cout << "*** TreeMap Pair Tests ***\n";
   std::cout << "**************************\n";
   uint16_t n_points_per_node = 50;
-  uint16_t resolution = 4;
+  uint32_t resolution = 4;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution with " << n_points_per_node << " points per node...\n";
@@ -248,7 +248,7 @@ void TreeMapAreaTests() {
   uint16_t n_points_per_node = 200;
   // Make the map at a coarse resolution so that we can test the
   // Coverage and NodeMap methods later on.
-  uint16_t resolution = 4;
+  uint32_t resolution = 4;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution...\n";
@@ -259,7 +259,7 @@ void TreeMapAreaTests() {
   // contained the initial point to make sure that we're properly adding new
   // pixels as we ingest points.
   double theta = 5.0;
-  uint16_t annulus_resolution = 32;
+  uint32_t annulus_resolution = 32;
   Stomp::Pixel tmp_pix(ang, annulus_resolution);
   Stomp::PixelVector annulus_pix;
   tmp_pix.WithinRadius(theta, annulus_pix);
@@ -304,7 +304,7 @@ void TreeMapRegionTests() {
   uint16_t n_points_per_node = 200;
   // Make the map at a coarse resolution so that we can test the
   // Coverage and NodeMap methods later on.
-  uint16_t resolution = 4;
+  uint32_t resolution = 4;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution...\n";
@@ -315,7 +315,7 @@ void TreeMapRegionTests() {
   // contained the initial point to make sure that we're properly adding new
   // pixels as we ingest points.
   double theta = 5.0;
-  uint16_t annulus_resolution = 32;
+  uint32_t annulus_resolution = 32;
   Stomp::Pixel tmp_pix(ang, annulus_resolution);
   Stomp::PixelVector annulus_pix;
   tmp_pix.WithinRadius(theta, annulus_pix);
@@ -388,7 +388,7 @@ void TreeMapFieldPairTests() {
   std::cout << "*** TreeMap Field Pair Tests ***\n";
   std::cout << "********************************\n";
 
-  uint16_t resolution = 8;
+  uint32_t resolution = 8;
   uint16_t n_points_per_node = 200;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
@@ -400,7 +400,7 @@ void TreeMapFieldPairTests() {
   // contained the initial point to make sure that we're properly adding new
   // pixels as we ingest points.
   double theta_bound = 5.0;
-  uint16_t annulus_resolution = 32;
+  uint32_t annulus_resolution = 32;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, annulus_resolution);
   Stomp::PixelVector annulus_pix;
@@ -579,7 +579,7 @@ void TreeMapNeighborTests() {
   uint16_t n_points_per_node = 200;
   // Make the map at a coarse resolution so that we can test the
   // Coverage and NodeMap methods later on.
-  uint16_t resolution = 8;
+  uint32_t resolution = 8;
   Stomp::TreeMap tree_map(resolution, n_points_per_node);
   std::cout << "Building Stomp::TreeMap at " << resolution <<
     " resolution...\n";
@@ -590,7 +590,7 @@ void TreeMapNeighborTests() {
   // contained the initial point to make sure that we're properly adding new
   // pixels as we ingest points.
   double theta_bound = 5.0;
-  uint16_t annulus_resolution = 32;
+  uint32_t annulus_resolution = 32;
   Stomp::Pixel tmp_pix(ang, annulus_resolution);
   Stomp::PixelVector annulus_pix;
   tmp_pix.WithinRadius(theta_bound, annulus_pix);

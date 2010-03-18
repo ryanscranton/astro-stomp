@@ -80,7 +80,7 @@ class RegionMap {
   // we used in the final splitting, in case the specified number had to be
   // reduced to match the available number of pixels.
   uint16_t InitializeRegions(BaseMap* base_map, uint16_t n_region,
-			     uint16_t region_resolution = 0);
+			     uint32_t region_resolution = 0);
 
   // Alternatively, we could import our region map from another BaseMap.  The
   // return value indicates success or failure.
@@ -111,7 +111,7 @@ class RegionMap {
 
   // Some getter methods to describe the state of the RegionMap.
   uint16_t NRegion();
-  uint16_t Resolution();
+  uint32_t Resolution();
   bool Initialized();
 
   // Return iterators for the set of RegionMap objects.
@@ -121,7 +121,8 @@ class RegionMap {
  private:
   RegionDict region_map_;
   RegionAreaDict region_area_;
-  uint16_t region_resolution_, n_region_;
+  uint32_t region_resolution_;
+  uint16_t n_region_;
 };
 
 
@@ -142,7 +143,7 @@ class BaseMap {
   // overall BaseMap geometry.  See the Map class for more thorough
   // documentation of each of these methods.
   virtual void Coverage(PixelVector& superpix,
-			uint16_t resolution = Stomp::HPixResolution);
+			uint32_t resolution = HPixResolution);
   virtual double FindUnmaskedFraction(Pixel& pix);
   virtual int8_t FindUnmaskedStatus(Pixel& pix);
 
@@ -158,13 +159,15 @@ class BaseMap {
   // Further, each map needs to give a sense of the range of pixel resolutions
   // involved.  This is important because the RegionMap can't be created at
   // a resolution smaller than the map itself can resolve.
-  virtual uint16_t MinResolution();
-  virtual uint16_t MaxResolution();
+  virtual uint32_t MinResolution();
+  virtual uint32_t MaxResolution();
+  virtual uint8_t MinLevel();
+  virtual uint8_t MaxLevel();
 
   // These methods all act as wrappers for the RegionMapper object contained
   // in the class.  See that class for documentation.
   uint16_t InitializeRegions(uint16_t n_regions,
-			     uint16_t region_resolution = 0);
+			     uint32_t region_resolution = 0);
   bool InitializeRegions(BaseMap& base_map);
   int16_t FindRegion(AngularCoordinate& ang);
   void ClearRegions();
@@ -172,7 +175,7 @@ class BaseMap {
   int16_t Region(uint32_t region_idx);
   double RegionArea(int16_t region);
   uint16_t NRegion();
-  uint16_t RegionResolution();
+  uint32_t RegionResolution();
   bool RegionsInitialized();
   RegionIterator RegionBegin();
   RegionIterator RegionEnd();

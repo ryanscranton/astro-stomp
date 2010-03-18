@@ -64,19 +64,18 @@ class AngularCorrelation {
   // for each bin is set to -1, which would indicate that any correlation
   // calculation with that bin should be done using a pair-based estimator.
   void AssignBinResolutions(double lammin = -70.0, double lammax = 70.0,
-			    uint16_t min_resolution =
-			    Stomp::MaxPixelResolution);
+			    uint32_t min_resolution = MaxPixelResolution);
 
   // For small angular scales, it's usually faster and more memory
   // efficient to use a pair-based estimator.  To set this scale, we choose
   // a maximum resolution scale we're willing to use our pixel-based estimator
   // on and modify all smaller angular bins to use the pair-based estimator.
-  void SetMaxResolution(uint16_t resolution);
+  void SetMaxResolution(uint32_t resolution);
 
   // Additionally, if we are using regions to calculate correlation functions,
   // we need to set the minimum resolution to match the resolution used to
   // divide the total survey area.
-  void SetMinResolution(uint16_t resolution);
+  void SetMinResolution(uint32_t resolution);
 
   // Some wrapper methods for find the auto-correlation and cross-correlations
   void FindAutoCorrelation(Map& stomp_map,
@@ -123,25 +122,25 @@ class AngularCorrelation {
   // Now, some accessor methods for finding the angular range of the bins
   // with a given resolution attached to them (the default value returns the
   // results for all angular bins; for pair-based bins, resolution = -1).
-  double ThetaMin(uint16_t resolution = 1);
-  double ThetaMax(uint16_t resolution = 1);
-  double Sin2ThetaMin(uint16_t resolution = 1);
-  double Sin2ThetaMax(uint16_t resolution = 1);
-  ThetaIterator Begin(uint16_t resolution = 1);
-  ThetaIterator End(uint16_t resolution = 1);
+  double ThetaMin(uint32_t resolution = 1);
+  double ThetaMax(uint32_t resolution = 1);
+  double Sin2ThetaMin(uint32_t resolution = 1);
+  double Sin2ThetaMax(uint32_t resolution = 1);
+  ThetaIterator Begin(uint32_t resolution = 1);
+  ThetaIterator End(uint32_t resolution = 1);
   ThetaIterator Find(ThetaIterator begin, ThetaIterator end,
 		     double sin2theta);
   ThetaIterator BinIterator(uint8_t bin_idx = 0);
   uint32_t NBins();
-  uint16_t MinResolution();
-  uint16_t MaxResolution();
+  uint32_t MinResolution();
+  uint32_t MaxResolution();
 
  private:
   ThetaVector thetabin_;
   ThetaIterator theta_pixel_begin_;
   ThetaIterator theta_pair_begin_, theta_pair_end_;
   double theta_min_, theta_max_, sin2theta_min_, sin2theta_max_;
-  uint16_t min_resolution_, max_resolution_;
+  uint32_t min_resolution_, max_resolution_;
 };
 
 } // end namespace Stomp

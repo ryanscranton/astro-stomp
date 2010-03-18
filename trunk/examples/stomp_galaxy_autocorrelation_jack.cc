@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
 
   std::cout << "Setting maximum resolution to " <<
     FLAGS_maximum_resolution << "...\n";
-  wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+  wtheta.SetMaxResolution(static_cast<uint32_t>(FLAGS_maximum_resolution));
 
   // Now we use the regions version of the auto-correlation code to find our
   // result.

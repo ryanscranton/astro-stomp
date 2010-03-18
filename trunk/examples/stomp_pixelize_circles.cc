@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
 	if (Stomp::Stomp::DoubleLE(ang.Lambda()+radius, 82.0) &&
 	    Stomp::Stomp::DoubleGE(ang.Lambda()-radius, -82.0)) {
 	  Stomp::CircleBound* circle_bound =
-	    new Stomp::CircleBound(ang, radius, FLAGS_weight);
+	    new Stomp::CircleBound(ang, radius);
 
 	  // Set the maximum resolution
 	  circle_bound->SetMaxResolution(FLAGS_max_resolution);

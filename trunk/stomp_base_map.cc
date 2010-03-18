@@ -56,7 +56,7 @@ RegionMap::~RegionMap() {
 };
 
 uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map, uint16_t n_region,
-				      uint16_t region_resolution) {
+				      uint32_t region_resolution) {
   ClearRegions();
 
   // If we have the default value for the resolution, we need to attempt to
@@ -315,7 +315,7 @@ uint16_t RegionMap::NRegion() {
   return n_region_;
 }
 
-uint16_t RegionMap::Resolution() {
+uint32_t RegionMap::Resolution() {
   return region_resolution_;
 }
 
@@ -339,7 +339,7 @@ BaseMap::~BaseMap() {
   ClearRegions();
 }
 
-void BaseMap::Coverage(PixelVector& superpix, uint16_t resolution) {
+void BaseMap::Coverage(PixelVector& superpix, uint32_t resolution) {
   superpix.clear();
 }
 
@@ -367,16 +367,24 @@ double BaseMap::Area() {
   return 0.0;
 }
 
-uint16_t BaseMap::MinResolution() {
+uint32_t BaseMap::MinResolution() {
   return Stomp::HPixResolution;
 }
 
-uint16_t BaseMap::MaxResolution() {
+uint32_t BaseMap::MaxResolution() {
   return Stomp::MaxPixelResolution;
 }
 
+uint8_t BaseMap::MinLevel() {
+  return Stomp::HPixLevel;
+}
+
+uint8_t BaseMap::MaxLevel() {
+  return Stomp::MaxPixelLevel;
+}
+
 uint16_t BaseMap::InitializeRegions(uint16_t n_regions,
-				    uint16_t region_resolution) {
+				    uint32_t region_resolution) {
   return region_map_.InitializeRegions(this, n_regions, region_resolution);
 }
 
@@ -408,7 +416,7 @@ uint16_t BaseMap::NRegion() {
   return region_map_.NRegion();
 }
 
-uint16_t BaseMap::RegionResolution() {
+uint32_t BaseMap::RegionResolution() {
   return region_map_.Resolution();
 }
 

@@ -86,9 +86,9 @@ int main(int argc, char **argv) {
   Stomp::AngularCoordinate::Sphere coord = Stomp::AngularCoordinate::Survey;
   if (FLAGS_radec) coord = Stomp::AngularCoordinate::Equatorial;
 
-  uint16_t max_resolution = stomp_map->MaxResolution();
+  uint32_t max_resolution = stomp_map->MaxResolution();
   if (FLAGS_max_resolution != -1)
-    max_resolution = static_cast<uint16_t>(FLAGS_max_resolution);
+    max_resolution = static_cast<uint32_t>(FLAGS_max_resolution);
 
   if (!input_file.is_open()) {
     std::cout << FLAGS_input_file << " does not exist!  Exiting.\n";

@@ -165,7 +165,7 @@ void ScalarMapResamplingTests() {
   if (n_random != n_found)
     std::cout << "Failed to add all random points to the density map.\n";
 
-  for (uint16_t resolution=scalar_map->Resolution()/2;
+  for (uint32_t resolution=scalar_map->Resolution()/2;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     Stomp::ScalarMap* sub_scalar_map =
         new Stomp::ScalarMap(*scalar_map,resolution);
@@ -192,7 +192,7 @@ void ScalarMapResamplingTests() {
 
   scalar_map->ConvertToOverDensity();
 
-  for (uint16_t resolution=scalar_map->Resolution()/2;
+  for (uint32_t resolution=scalar_map->Resolution()/2;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     Stomp::ScalarMap* sub_scalar_map =
       new Stomp::ScalarMap(*scalar_map,resolution);
@@ -293,7 +293,7 @@ void ScalarMapAutoCorrelationTests() {
   // Alrighty, now for our grand finale, let's lay out the code that we'd
   // use to do the auto-correlation for all scales, using our current
   // density map as the highest resolution map.
-  for (uint16_t resolution=scalar_map->Resolution()/2;
+  for (uint32_t resolution=scalar_map->Resolution()/2;
        resolution>=wtheta->MinResolution();resolution/=2) {
     Stomp::ScalarMap* sub_scalar_map =
         new Stomp::ScalarMap(*scalar_map,resolution);

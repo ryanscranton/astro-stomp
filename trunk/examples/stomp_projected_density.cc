@@ -3,19 +3,19 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "stomp_util.h"
+#include <stomp.h>
 #include <gflags/gflags.h>
 
 // Define our command-line flags.
-DEFINE_string(map_file, "", 
+DEFINE_string(map_file, "",
               "Name of the ASCII file containing the StompMap geometry");
-DEFINE_string(background_files, "", 
+DEFINE_string(background_files, "",
               "CSV names of the ASCII file containing the background objects");
 DEFINE_bool(background_radec, false, "Background coordinates are in RA-DEC");
-DEFINE_string(foreground_file, "", 
+DEFINE_string(foreground_file, "",
               "ASCII file containing the locations to sample.");
 DEFINE_bool(foreground_radec, false, "Foreground coordinates are in RA-DEC");
-DEFINE_string(output_tag, "test", 
+DEFINE_string(output_tag, "test",
               "Tag for output file: LocalDensity_OUTPUT_TAG");
 DEFINE_double(r_min, 0.001, "Minimum projected scale (in Mpc/h)");
 DEFINE_double(r_max, 100.0, "Maximum projected scale (in Mpc/h)");
@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
       stomp_map = new Stomp::Map(FLAGS_map_file, false, false);
     } else {
       stomp_map = new Stomp::Map(FLAGS_map_file, false);
-    }      
+    }
   } else {
     if (FLAGS_no_weight) {
       stomp_map = new Stomp::Map(FLAGS_map_file, true, false);
@@ -85,8 +85,8 @@ int main(int argc, char **argv) {
   // input vector of file names should be comma-separated.
   std::vector<std::string> background_files;
 
-  Stomp::Stomp::Tokenize(FLAGS_background_files, background_files, ",");
-  
+  Stomp::Tokenize(FLAGS_background_files, background_files, ",");
+
   std::cout << "Parsing " << background_files.size() << " files...\n";
   unsigned long n_background = 0;
 
@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
     std::cout << "\tParsing " << file_iter->c_str() << "...\n";
     std::ifstream background_file(file_iter->c_str());
     double lambda, eta, prob, mag;
-  
+
     while (!background_file.eof()) {
       background_file >> lambda >> eta >> prob >> mag;
       Stomp::WeightedAngularCoordinate tmp_ang(lambda, eta, prob,
@@ -132,12 +132,12 @@ int main(int argc, char **argv) {
   std::cout << "\tParsing " << FLAGS_foreground_file << "...\n";
   std::ifstream foreground_file(FLAGS_foreground_file.c_str());
   double theta, phi, weight;
-  
+
   while (!foreground_file.eof()) {
     foreground_file >> theta >> phi >> weight;
     Stomp::WeightedAngularCoordinate tmp_ang(theta, phi, weight,
 					     foreground_sphere);
-    
+
     if (stomp_map->FindLocation(tmp_ang)) foreground.push_back(tmp_ang);
     n_foreground++;
   }
@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
   // binning.  The minimum and maximum radii are taken to be in Mpc/h.
   Stomp::AngularCorrelation wrp(FLAGS_r_min, FLAGS_r_max,
 				FLAGS_n_bins_per_decade);
-  
+
   // We want to find the mean weight of our background sample in the same
   // radial bins around each foreground object.  This is complicated by the
   // fact that the foreground objects are at different redshifts.
@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
   // is somewhat arbitrary.
   std::cout << "\tBuilding background tree...\n";
   Stomp::TreeMap* background_tree =
-    new Stomp::TreeMap(wtheta.MinResolution(), 200);
+    new Stomp::TreeMap(wrp.MinResolution(), 200);
 
   for (Stomp::WAngularIterator iter=background.begin();
        iter!=background.end();++iter) {
@@ -192,10 +192,10 @@ int main(int argc, char **argv) {
 
       // Now we translate the radial bins to angular scales.
       tmp_iter->
-	SetThetaMin(Stomp::Cosmology::ProjectedAngle(foreground->Weight(),
+	SetThetaMin(Stomp::Cosmology::ProjectedAngle(foreground_iter->Weight(),
 						     rp_iter->ThetaMin()));
       tmp_iter->
-	SetThetaMax(Stomp::Cosmology::ProjectedAngle(foreground->Weight(),
+	SetThetaMax(Stomp::Cosmology::ProjectedAngle(foreground_iter->Weight(),
 						     rp_iter->ThetaMax()));
     }
 
@@ -207,7 +207,7 @@ int main(int argc, char **argv) {
 
       // This will store the sum of the weights in the Weight field and
       // the number of pairs in the Counter field for each angular bin.
-      background_map->FindWeightedPairs(*foreground_iter, *theta_iter);
+      background_tree->FindWeightedPairs(*foreground_iter, *theta_iter);
     }
 
     // Once we've iterated through all of the angular bins, we add the
@@ -224,7 +224,7 @@ int main(int argc, char **argv) {
   // Finally, we write out the results...
   std::string proj_file_name = "ProjectedDensity_" + FLAGS_output_tag;
   std::cout << "Writing projected densities to " <<
-    wtheta_file_name << "\n";
+    proj_file_name << "\n";
 
   std::ofstream output_file(proj_file_name.c_str());
   for (int i=0;i<foreground.size();i++) {

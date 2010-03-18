@@ -50,8 +50,8 @@ class ScalarSubMap {
  public:
   ScalarSubMap(uint32_t superpixnum);
   ~ScalarSubMap();
-  void AddToArea(uint16_t resolution, double weight);
-  void AddToIntensity(const double intensity, const uint16_t n_point = 1);
+  void AddToArea(uint32_t resolution, double weight);
+  void AddToIntensity(const double intensity, const uint32_t n_point = 1);
   void SetIntensity(const double intensity);
   void SetNPoints(const int n_point);
   double Area();
@@ -119,7 +119,7 @@ class ScalarMap : public BaseMap {
   // constructor.  A warning will be issued if the input value is not
   // "ScalarField".
   ScalarMap(Map& stomp_map,
-	    uint16_t resolution,
+	    uint32_t resolution,
 	    ScalarMapType scalar_map_type = ScalarField,
 	    double min_unmasked_fraction = 0.0000001,
 	    bool use_map_weight_as_intensity = false);
@@ -127,7 +127,7 @@ class ScalarMap : public BaseMap {
   // If the map used to initialize the current one is also a ScalarMap, then
   // the ScalarMapType will be based on the input map, as will the geometry.
   ScalarMap(ScalarMap& scalar_map,
-	    uint16_t resolution,
+	    uint32_t resolution,
 	    double min_unmasked_fraction = 0.0000001);
 
   // Initialize based on a vector of ScalarPixels.  If the input vector contains
@@ -141,7 +141,7 @@ class ScalarMap : public BaseMap {
   ScalarMap(Map& stomp_map,
 	    AngularCoordinate& center,
 	    double theta_max,
-	    uint16_t resolution,
+	    uint32_t resolution,
 	    ScalarMapType scalar_map_type = ScalarField,
 	    double min_unmasked_fraction = 0.0000001,
 	    double theta_min = -1.0);
@@ -154,7 +154,7 @@ class ScalarMap : public BaseMap {
   // you want to re-initialize the same object with different parameters or
   // use the constructor without any arguments, this will set the
   // resolution of the map.
-  void SetResolution(uint16_t resolution);
+  void SetResolution(uint32_t resolution);
 
   // If you change the map resolution, then you will need to re-initialize
   // the coverage of the map from either a Map or a higher resolution
@@ -162,9 +162,9 @@ class ScalarMap : public BaseMap {
   // case, if a resolution is supplied it will over-ride the current map's
   // resolution value.  This will also reset any previously set region
   // information.
-  void InitializeFromMap(Map& stomp_map, uint16_t resolution=0,
+  void InitializeFromMap(Map& stomp_map, uint32_t resolution=0,
 			 bool use_map_weight_as_intensity = false);
-  void InitializeFromScalarMap(ScalarMap& scalar_map, uint16_t resolution=0);
+  void InitializeFromScalarMap(ScalarMap& scalar_map, uint32_t resolution=0);
 
   // If you re-initialize from a vector of ScalarPixels, the resolution of
   // those pixels will automatically over-ride the current map's resolution
@@ -203,7 +203,7 @@ class ScalarMap : public BaseMap {
   // pixels, but values indicating that the pixel is within the map don't
   // necessarily mean the same as they do for the Map class.
   virtual void Coverage(PixelVector& superpix,
-			uint16_t resolution = HPixResolution);
+			uint32_t resolution = HPixResolution);
   bool Covering(Map& stomp_map, uint32_t maximum_pixels);
   virtual double FindUnmaskedFraction(Pixel& pix);
   virtual int8_t FindUnmaskedStatus(Pixel& pix);
@@ -287,7 +287,7 @@ class ScalarMap : public BaseMap {
 				 ThetaIterator theta_iter);
 
   // Meaningful, since all of the pixels in the map share a common resolution.
-  uint16_t Resolution();
+  uint32_t Resolution();
 
   // Some global methods for accessing the aggregate area, intensity, density
   // and so for for the map.  If a superpixnum index is given as an
@@ -313,8 +313,10 @@ class ScalarMap : public BaseMap {
   double Area(uint32_t superpixnum);
   virtual uint32_t Size();
   uint32_t Size(uint32_t superpixnum);
-  virtual uint16_t MinResolution();
-  virtual uint16_t MaxResolution();
+  virtual uint32_t MinResolution();
+  virtual uint32_t MaxResolution();
+  virtual uint8_t MinLevel();
+  virtual uint8_t MaxLevel();
   virtual bool Empty();
   virtual void Clear();
 
@@ -324,7 +326,7 @@ class ScalarMap : public BaseMap {
   ScalarSubMapVector sub_map_;
   ScalarMapType map_type_;
   double area_, mean_intensity_, unmasked_fraction_minimum_, total_intensity_;
-  uint16_t resolution_, total_points_;
+  uint32_t resolution_, total_points_;
   bool converted_to_overdensity_, calculated_mean_intensity_;
   bool initialized_sub_map_;
 };

@@ -19,7 +19,7 @@ void PixelBasicTests() {
   Stomp::AngularCoordinate ang(20.0, 20.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, 256);
 
-  for (uint16_t resolution=Stomp::MaxPixelResolution;
+  for (uint32_t resolution=Stomp::MaxPixelResolution;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetResolution(resolution);
     tmp_pix.SetPixnumFromAng(ang);
@@ -31,7 +31,7 @@ void PixelBasicTests() {
   tmp_pix.SetResolution(Stomp::MaxPixelResolution);
   tmp_pix.SetPixnumFromAng(ang);
 
-  for (uint16_t resolution=Stomp::MaxPixelResolution;
+  for (uint32_t resolution=Stomp::MaxPixelResolution;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\tHPixnum, Superpixnum, Resolution: " <<
@@ -48,7 +48,7 @@ void PixelBasicTests() {
     tmp_pix.PixelX() << ", " << tmp_pix.PixelY() <<
     ", " << tmp_pix.Resolution() << "\n";
 
-  for (uint16_t resolution=Stomp::HPixResolution, i=0;
+  for (uint32_t resolution=Stomp::HPixResolution, i=0;
        i<Stomp::ResolutionLevels;resolution*=2,i++) {
     uint32_t x_min, x_max, y_min, y_max, n_pixel;
     tmp_pix.SubPix(resolution,x_min,x_max,y_min,y_max);
@@ -72,7 +72,7 @@ void PixelStripeTests() {
   tmp_pix.SetResolution(Stomp::MaxPixelResolution);
   tmp_pix.SetPixnumFromAng(ang);
 
-  for (uint16_t resolution=Stomp::MaxPixelResolution;
+  for (uint32_t resolution=Stomp::MaxPixelResolution;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     std::cout << "\tResolution " << resolution << ": Stripe = " <<
       tmp_pix.Stripe(resolution) << "\n";
@@ -101,7 +101,7 @@ void PixelXYTests() {
   ang.SetSurveyCoordinates(0.0,0.0);
   tmp_pix.SetResolution(Stomp::MaxPixelResolution);
   tmp_pix.SetPixnumFromAng(ang);
-  for (uint16_t resolution=Stomp::MaxPixelResolution;
+  for (uint32_t resolution=Stomp::MaxPixelResolution;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetToSuperPix(resolution);
 
@@ -119,7 +119,7 @@ void PixelXYTests() {
   ang.SetSurveyCoordinates(60.0,0.0);
   tmp_pix.SetResolution(Stomp::MaxPixelResolution);
   tmp_pix.SetPixnumFromAng(ang);
-  for (uint16_t resolution=Stomp::MaxPixelResolution;
+  for (uint32_t resolution=Stomp::MaxPixelResolution;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetToSuperPix(resolution);
 
@@ -137,7 +137,7 @@ void PixelXYTests() {
   ang.SetSurveyCoordinates(0.0,0.0);
   tmp_pix.SetResolution(Stomp::MaxPixelResolution);
   tmp_pix.SetPixnumFromAng(ang);
-  for (uint16_t resolution=Stomp::MaxPixelResolution;
+  for (uint32_t resolution=Stomp::MaxPixelResolution;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetToSuperPix(resolution);
 
@@ -157,7 +157,7 @@ void PixelXYTests() {
   ang.SetSurveyCoordinates(60.0,0.0);
   tmp_pix.SetResolution(Stomp::MaxPixelResolution);
   tmp_pix.SetPixnumFromAng(ang);
-  for (uint16_t resolution=Stomp::MaxPixelResolution;
+  for (uint32_t resolution=Stomp::MaxPixelResolution;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetToSuperPix(resolution);
 
@@ -181,7 +181,7 @@ void PixelBoundTests() {
   std::cout << "*** Pixel Boundary Tests ***\n";
   std::cout << "****************************\n";
 
-  uint16_t starting_resolution = 2048;
+  uint32_t starting_resolution = 2048;
   Stomp::AngularCoordinate ang(0.0, 180.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, starting_resolution);
 
@@ -190,7 +190,7 @@ void PixelBoundTests() {
   // for the pixels.
   std::cout << "\nSurvey Coordinates (Lambda = " << ang.Lambda() <<
     ", Eta = " << ang.Eta() << "):\n";
-  for (uint16_t resolution=starting_resolution;
+  for (uint32_t resolution=starting_resolution;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\t" << tmp_pix.Resolution() << ": " << tmp_pix.EtaMin() <<
@@ -204,7 +204,7 @@ void PixelBoundTests() {
   tmp_pix.SetPixnumFromAng(ang);
   std::cout << "\nEquatorial Coordinates (RA = " << ang.RA() <<
     ", DEC = " << ang.DEC() << "):\n";
-  for (uint16_t resolution=starting_resolution;
+  for (uint32_t resolution=starting_resolution;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\t" << tmp_pix.Resolution() << ": " << tmp_pix.RAMin() <<
@@ -218,7 +218,7 @@ void PixelBoundTests() {
   tmp_pix.SetPixnumFromAng(ang);
   std::cout << "\nEquatorial Coordinates (RA = " << ang.RA() <<
     ", DEC = " << ang.DEC() << "):\n";
-  for (uint16_t resolution=starting_resolution;
+  for (uint32_t resolution=starting_resolution;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\t" << tmp_pix.Resolution() << ": " << tmp_pix.RAMin() <<
@@ -232,7 +232,7 @@ void PixelBoundTests() {
   tmp_pix.SetPixnumFromAng(ang);
   std::cout << "\nEquatorial Coordinates (RA = " << ang.RA() <<
     ", DEC = " << ang.DEC() << "):\n";
-  for (uint16_t resolution=starting_resolution;
+  for (uint32_t resolution=starting_resolution;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\t" << tmp_pix.Resolution() << ": " << tmp_pix.RAMin() <<
@@ -246,7 +246,7 @@ void PixelBoundTests() {
   tmp_pix.SetPixnumFromAng(ang);
   std::cout << "\nGalactic Coordinates (GalLon = " << ang.GalLon() <<
     ", GalLat = " << ang.GalLat() << "):\n";
-  for (uint16_t resolution=starting_resolution;
+  for (uint32_t resolution=starting_resolution;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\t" << tmp_pix.Resolution() << ": " << tmp_pix.GalLonMin() <<
@@ -260,7 +260,7 @@ void PixelBoundTests() {
   tmp_pix.SetPixnumFromAng(ang);
   std::cout << "\nGalactic Coordinates (GalLon = " << ang.GalLon() <<
     ", GalLat = " << ang.GalLat() << "):\n";
-  for (uint16_t resolution=starting_resolution;
+  for (uint32_t resolution=starting_resolution;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\t" << tmp_pix.Resolution() << ": " << tmp_pix.GalLonMin() <<
@@ -274,7 +274,7 @@ void PixelBoundTests() {
   tmp_pix.SetPixnumFromAng(ang);
   std::cout << "\nGalactic Coordinates (GalLon = " << ang.GalLon() <<
     ", GalLat = " << ang.GalLat() << "):\n";
-  for (uint16_t resolution=starting_resolution;
+  for (uint32_t resolution=starting_resolution;
        resolution>=Stomp::HPixResolution;resolution /= 2) {
     tmp_pix.SetToSuperPix(resolution);
     std::cout << "\t" << tmp_pix.Resolution() << ": " << tmp_pix.GalLonMin() <<
@@ -295,7 +295,7 @@ void PixelWithinRadiusTests() {
   Stomp::Pixel tmp_pix(ang, 128);
   double theta = 10.0;  //  Look for all pixels within 10 degrees.
   std::cout << "Low latitude (Lambda = 0.0), flexible box\n";
-  for (uint16_t resolution=128;
+  for (uint32_t resolution=128;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetToSuperPix(resolution);
 
@@ -317,7 +317,7 @@ void PixelWithinRadiusTests() {
   ang.SetSurveyCoordinates(60.0,0.0);
   tmp_pix.SetResolution(128);
   tmp_pix.SetPixnumFromAng(ang);
-  for (uint16_t resolution=128;
+  for (uint32_t resolution=128;
        resolution>=Stomp::HPixResolution;resolution/=2) {
     tmp_pix.SetToSuperPix(resolution);
 

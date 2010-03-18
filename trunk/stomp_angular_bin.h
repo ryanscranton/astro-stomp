@@ -68,7 +68,7 @@ class AngularBin {
   // which maps to use for this bin.  Alternatively, by setting this value to
   // an illegal resolution, we can signal that this angular scale is better
   // suited to the pair-based method.
-  void SetResolution(uint16_t resolution);
+  void SetResolution(uint32_t resolution);
 
   // Seting the angular minima, maxima and mid-point.
   //
@@ -139,7 +139,7 @@ class AngularBin {
   void ResetRandRand();
 
   // Some basic getters for the internal data.
-  uint16_t Resolution();
+  uint32_t Resolution();
   int16_t NRegion();
   double Theta();
   double ThetaMin();
@@ -193,7 +193,7 @@ class AngularBin {
   std::vector<double> pixel_wtheta_region_, pixel_weight_region_;
   std::vector<double> wtheta_region_, wtheta_error_region_;
   std::vector<uint32_t> counter_region_;
-  uint16_t resolution_;
+  uint32_t resolution_;
   int16_t n_region_;
   bool set_wtheta_error_, set_wtheta_;
 };

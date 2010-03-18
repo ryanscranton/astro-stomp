@@ -92,7 +92,7 @@ AngularCorrelation::AngularCorrelation(uint32_t n_bins,
 }
 
 void AngularCorrelation::AssignBinResolutions(double lammin, double lammax,
-					      uint16_t min_resolution) {
+					      uint32_t min_resolution) {
   min_resolution_ = MaxPixelResolution;
   max_resolution_ = HPixResolution;
 
@@ -109,7 +109,7 @@ void AngularCorrelation::AssignBinResolutions(double lammin, double lammax,
   AngularCoordinate max_ang(lammax,0.0,AngularCoordinate::Survey);
 
   for (ThetaIterator iter=thetabin_.begin();iter!=thetabin_.end();++iter) {
-    uint16_t pixel_resolution = HPixResolution;
+    uint32_t pixel_resolution = HPixResolution;
 
     uint32_t ny_req = 1000000000, ny_min, ny_max;
     uint32_t small_good = 0, eta_good = 0;
@@ -160,7 +160,7 @@ void AngularCorrelation::AssignBinResolutions(double lammin, double lammax,
   }
 }
 
-void AngularCorrelation::SetMaxResolution(uint16_t resolution) {
+void AngularCorrelation::SetMaxResolution(uint32_t resolution) {
   max_resolution_ = resolution;
   theta_pair_begin_ = thetabin_.begin();
   for (ThetaIterator iter=thetabin_.begin();iter!=thetabin_.end();++iter) {
@@ -172,7 +172,7 @@ void AngularCorrelation::SetMaxResolution(uint16_t resolution) {
   }
 }
 
-void AngularCorrelation::SetMinResolution(uint16_t resolution) {
+void AngularCorrelation::SetMinResolution(uint32_t resolution) {
   min_resolution_ = resolution;
   for (ThetaIterator iter=theta_pixel_begin_;iter!=thetabin_.end();++iter) {
     if (iter->Resolution() < min_resolution_) {
@@ -274,7 +274,7 @@ void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& stomp_map) {
     }
   }
 
-  for (uint16_t resolution=stomp_map.Resolution()/2;
+  for (uint32_t resolution=stomp_map.Resolution()/2;
        resolution>=min_resolution_;resolution/=2) {
     ScalarMap* sub_scalar_map =
       new ScalarMap(stomp_map,resolution);
@@ -340,7 +340,7 @@ void AngularCorrelation::FindPixelCrossCorrelation(ScalarMap& map_a,
     }
   }
 
-  for (uint16_t resolution=map_a.Resolution()/2;
+  for (uint32_t resolution=map_a.Resolution()/2;
        resolution>=min_resolution_;resolution/=2) {
     ScalarMap* sub_map_a = new ScalarMap(map_a, resolution);
     ScalarMap* sub_map_b = new ScalarMap(map_b, resolution);
@@ -572,7 +572,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
   }
 }
 
-double AngularCorrelation::ThetaMin(uint16_t resolution) {
+double AngularCorrelation::ThetaMin(uint32_t resolution) {
   double theta_min = -1.0;
   if ((resolution < HPixResolution) ||
       (resolution > MaxPixelResolution) ||
@@ -595,7 +595,7 @@ double AngularCorrelation::ThetaMin(uint16_t resolution) {
   return theta_min;
 }
 
-double AngularCorrelation::ThetaMax(uint16_t resolution) {
+double AngularCorrelation::ThetaMax(uint32_t resolution) {
   double theta_max = -1.0;
   if ((resolution < HPixResolution) ||
       (resolution > MaxPixelResolution) ||
@@ -619,7 +619,7 @@ double AngularCorrelation::ThetaMax(uint16_t resolution) {
   return theta_max;
 }
 
-double AngularCorrelation::Sin2ThetaMin(uint16_t resolution) {
+double AngularCorrelation::Sin2ThetaMin(uint32_t resolution) {
   double sin2theta_min = -1.0;
   if ((resolution < HPixResolution) ||
       (resolution > MaxPixelResolution) ||
@@ -642,7 +642,7 @@ double AngularCorrelation::Sin2ThetaMin(uint16_t resolution) {
   return sin2theta_min;
 }
 
-double AngularCorrelation::Sin2ThetaMax(uint16_t resolution) {
+double AngularCorrelation::Sin2ThetaMax(uint32_t resolution) {
   double sin2theta_max = -1.0;
   if ((resolution < HPixResolution) ||
       (resolution > MaxPixelResolution) ||
@@ -666,7 +666,7 @@ double AngularCorrelation::Sin2ThetaMax(uint16_t resolution) {
   return sin2theta_max;
 }
 
-ThetaIterator AngularCorrelation::Begin(uint16_t resolution) {
+ThetaIterator AngularCorrelation::Begin(uint32_t resolution) {
   if ((resolution < HPixResolution) ||
       (resolution > MaxPixelResolution) ||
       (resolution % 2 != 0)) {
@@ -684,7 +684,7 @@ ThetaIterator AngularCorrelation::Begin(uint16_t resolution) {
   }
 }
 
-ThetaIterator AngularCorrelation::End(uint16_t resolution) {
+ThetaIterator AngularCorrelation::End(uint32_t resolution) {
   if ((resolution < HPixResolution) ||
       (resolution > MaxPixelResolution) ||
       (resolution % 2 != 0)) {
@@ -743,11 +743,11 @@ uint32_t AngularCorrelation::NBins() {
   return thetabin_.size();
 }
 
-uint16_t AngularCorrelation::MinResolution() {
+uint32_t AngularCorrelation::MinResolution() {
   return min_resolution_;
 }
 
-uint16_t AngularCorrelation::MaxResolution() {
+uint32_t AngularCorrelation::MaxResolution() {
   return max_resolution_;
 }
 
