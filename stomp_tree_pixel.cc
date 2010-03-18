@@ -28,7 +28,7 @@ TreePixel::TreePixel() {
   InitializeCorners();
 }
 
-TreePixel::TreePixel(const uint16_t input_resolution,
+TreePixel::TreePixel(const uint32_t input_resolution,
 		     const uint32_t input_pixnum,
 		     const uint16_t maximum_points) {
   SetResolution(input_resolution);
@@ -44,26 +44,9 @@ TreePixel::TreePixel(const uint16_t input_resolution,
   InitializeCorners();
 }
 
-TreePixel::TreePixel(const uint16_t input_resolution,
-		     const uint32_t input_hpixnum,
-		     const uint32_t input_superpixnum,
-		     const uint16_t maximum_points) {
-  SetResolution(input_resolution);
-  uint32_t tmp_x, tmp_y;
-  Pixel::HPix2XY(input_resolution, input_hpixnum, input_superpixnum,
-		 tmp_x, tmp_y);
-
-  SetPixnumFromXY(tmp_x, tmp_y);
-  SetWeight(0.0);
-  maximum_points_ = maximum_points;
-  point_count_ = 0;
-  initialized_subpixels_ = false;
-  InitializeCorners();
-}
-
 TreePixel:: TreePixel(const uint32_t input_x,
 		      const uint32_t input_y,
-		      const uint16_t input_resolution,
+		      const uint32_t input_resolution,
 		      const uint16_t maximum_points) {
   SetResolution(input_resolution);
   SetPixnumFromXY(input_x, input_y);
@@ -75,7 +58,7 @@ TreePixel:: TreePixel(const uint32_t input_x,
 }
 
 TreePixel::TreePixel(AngularCoordinate& ang,
-		     const uint16_t input_resolution,
+		     const uint32_t input_resolution,
 		     const uint16_t maximum_points) {
   SetResolution(input_resolution);
   SetPixnumFromAng(ang);

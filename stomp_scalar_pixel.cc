@@ -26,7 +26,7 @@ ScalarPixel::ScalarPixel() {
   n_point_ = 0;
 }
 
-ScalarPixel::ScalarPixel(const uint16_t input_resolution,
+ScalarPixel::ScalarPixel(const uint32_t input_resolution,
 			 const uint32_t input_pixnum,
 			 const double input_weight,
 			 const double input_intensity,
@@ -42,27 +42,9 @@ ScalarPixel::ScalarPixel(const uint16_t input_resolution,
   n_point_ = n_point;
 }
 
-ScalarPixel::ScalarPixel(const uint16_t input_resolution,
-			 const uint32_t input_hpixnum,
-			 const uint32_t input_superpixnum,
-			 const double input_weight,
-			 const double input_intensity,
-			 const uint32_t n_point) {
-  SetResolution(input_resolution);
-
-  uint32_t tmp_x, tmp_y;
-  Pixel::HPix2XY(input_resolution, input_hpixnum, input_superpixnum,
-		 tmp_x, tmp_y);
-
-  SetPixnumFromXY(tmp_x, tmp_y);
-  SetWeight(input_weight);
-  intensity_ = input_intensity;
-  n_point_ = n_point;
-}
-
 ScalarPixel::ScalarPixel(const uint32_t input_x,
 			 const uint32_t input_y,
-			 const uint16_t input_resolution,
+			 const uint32_t input_resolution,
 			 const double input_weight,
 			 const double input_intensity,
 			 const uint32_t n_point) {
@@ -74,7 +56,7 @@ ScalarPixel::ScalarPixel(const uint32_t input_x,
 }
 
 ScalarPixel::ScalarPixel(AngularCoordinate& ang,
-			 const uint16_t input_resolution,
+			 const uint32_t input_resolution,
 			 const double input_weight,
 			 const double input_intensity,
 			 const uint32_t n_point) {

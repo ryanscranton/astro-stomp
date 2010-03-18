@@ -40,14 +40,14 @@ ScalarSubMap::~ScalarSubMap() {
   size_ = 0;
 }
 
-void ScalarSubMap::AddToArea(uint16_t resolution, double weight) {
+void ScalarSubMap::AddToArea(uint32_t resolution, double weight) {
   area_ +=weight*HPixArea*HPixResolution*HPixResolution/
     (resolution*resolution);
   size_++;
 }
 
 void ScalarSubMap::AddToIntensity(const double intensity,
-				  const uint16_t n_point) {
+				  const uint32_t n_point) {
   total_intensity_ += intensity;
   total_points_ += n_point;
 }
@@ -125,7 +125,7 @@ ScalarMap::ScalarMap() {
   map_type_ = ScalarField;
 }
 
-ScalarMap::ScalarMap(Map& stomp_map, uint16_t input_resolution,
+ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
 		     ScalarMapType scalar_map_type,
 		     double min_unmasked_fraction,
 		     bool use_map_weight_as_intensity) {
@@ -179,7 +179,7 @@ ScalarMap::ScalarMap(Map& stomp_map, uint16_t input_resolution,
 }
 
 ScalarMap::ScalarMap(ScalarMap& scalar_map,
-		     uint16_t input_resolution,
+		     uint32_t input_resolution,
 		     double min_unmasked_fraction) {
   if (input_resolution > scalar_map.Resolution()) {
     std::cout << "Cannot make higher resolution density map " <<
@@ -269,7 +269,7 @@ ScalarMap::ScalarMap(ScalarVector& pix,
 
 ScalarMap::ScalarMap(Map& stomp_map,
 		     AngularCoordinate& center, double theta_max,
-		     uint16_t input_resolution,
+		     uint32_t input_resolution,
 		     ScalarMapType scalar_map_type,
 		     double min_unmasked_fraction,
 		     double theta_min) {
@@ -345,14 +345,14 @@ bool ScalarMap::_InitializeSubMap() {
   return true;
 }
 
-void ScalarMap::SetResolution(uint16_t resolution) {
+void ScalarMap::SetResolution(uint32_t resolution) {
   Clear();
   resolution_ = resolution;
 }
 
-void ScalarMap::InitializeFromMap(Map& stomp_map, uint16_t input_resolution,
+void ScalarMap::InitializeFromMap(Map& stomp_map, uint32_t input_resolution,
 				  bool use_map_weight_as_intensity) {
-  uint16_t current_resolution = resolution_;
+  uint32_t current_resolution = resolution_;
   Clear();
 
   if (input_resolution != 0) {
@@ -409,14 +409,14 @@ void ScalarMap::InitializeFromMap(Map& stomp_map, uint16_t input_resolution,
 }
 
 void ScalarMap::InitializeFromScalarMap(ScalarMap& scalar_map,
-					uint16_t input_resolution) {
+					uint32_t input_resolution) {
   if (input_resolution > scalar_map.Resolution()) {
     std::cout << "Cannot make higher resolution density map " <<
       "by resampling. Exiting.\n";
     exit(1);
   }
 
-  uint16_t current_resolution = resolution_;
+  uint32_t current_resolution = resolution_;
   Clear();
 
   if (input_resolution != 0) {
@@ -587,7 +587,7 @@ bool ScalarMap::AddToMap(Pixel& pix) {
   }
 }
 
-void ScalarMap::Coverage(PixelVector& superpix, uint16_t resolution) {
+void ScalarMap::Coverage(PixelVector& superpix, uint32_t resolution) {
   if (!superpix.empty()) superpix.clear();
 
   if (resolution > resolution_) {
@@ -1592,7 +1592,7 @@ void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
   if (convert_input_map_back_to_raw) scalar_map.ConvertFromOverDensity();
 }
 
-uint16_t ScalarMap::Resolution() {
+uint32_t ScalarMap::Resolution() {
   return resolution_;
 }
 
@@ -1654,12 +1654,20 @@ uint32_t ScalarMap::Size(uint32_t superpixnum) {
   return sub_map_[superpixnum].Size();
 }
 
-uint16_t ScalarMap::MinResolution() {
+uint32_t ScalarMap::MinResolution() {
   return resolution_;
 }
 
-uint16_t ScalarMap::MaxResolution() {
+uint32_t ScalarMap::MaxResolution() {
   return resolution_;
+}
+
+uint8_t ScalarMap::MinLevel() {
+  return Pixel::Resolution2Level(resolution_);
+}
+
+uint8_t ScalarMap::MaxLevel() {
+  return Pixel::Resolution2Level(resolution_);
 }
 
 bool ScalarMap::Empty() {
@@ -1668,7 +1676,7 @@ bool ScalarMap::Empty() {
 
 void ScalarMap::Clear() {
   area_ = 0.0;
-  resolution_ = -1;
+  resolution_ = 0;
   total_points_ = 0;
   mean_intensity_ = 0.0;
   total_intensity_ = 0.0;

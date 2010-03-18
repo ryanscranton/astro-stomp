@@ -26,8 +26,8 @@ SubMap::SubMap(uint32_t superpixnum) {
   superpixnum_ = superpixnum;
   area_ = 0.0;
   size_ = 0;
-  min_resolution_ = MaxPixelResolution;
-  max_resolution_ = HPixResolution;
+  min_level_ = MaxPixelLevel;
+  max_level_ = HPixLevel;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   Pixel::PixelBound(HPixResolution, superpixnum, lambda_min_,
@@ -37,8 +37,8 @@ SubMap::SubMap(uint32_t superpixnum) {
   initialized_ = false;
   unsorted_ = false;
 
-  for (uint16_t resolution=HPixResolution, i=0;
-       i<ResolutionLevels;resolution*=2, i++) {
+  for (uint32_t resolution=HPixResolution;
+       resolution<=MaxPixelResolution;resolution*=2) {
     pixel_count_[resolution] = 0;
   }
 }
@@ -61,8 +61,8 @@ void SubMap::AddPixel(Pixel& pix) {
   // since the results will be over-written by the Resolve method.
   if (!unsorted_) {
     area_ += pix.Area();
-    if (pix.Resolution() < min_resolution_) min_resolution_ = pix.Resolution();
-    if (pix.Resolution() > max_resolution_) max_resolution_ = pix.Resolution();
+    if (pix.Level() < min_level_) min_level_ = pix.Level();
+    if (pix.Level() > max_level_) max_level_ = pix.Level();
     if (pix.Weight() < min_weight_) min_weight_ = pix.Weight();
     if (pix.Weight() > max_weight_) max_weight_ = pix.Weight();
     pixel_count_[pix.Resolution()]++;
@@ -80,21 +80,19 @@ void SubMap::Resolve(bool force_resolve) {
     Pixel::ResolveSuperPixel(pix_);
 
     area_ = 0.0;
-    min_resolution_ = MaxPixelResolution;
-    max_resolution_ = HPixResolution;
+    min_level_ = MaxPixelLevel;
+    max_level_ = HPixLevel;
     min_weight_ = 1.0e30;
     max_weight_ = -1.0e30;
-    for (uint16_t resolution=HPixResolution, i=0;
-	 i<ResolutionLevels;resolution*=2, i++) {
+    for (uint32_t resolution=HPixResolution;
+	 resolution<=MaxPixelResolution;resolution*=2) {
       pixel_count_[resolution] = 0;
     }
 
     for (PixelIterator iter=pix_.begin();iter!=pix_.end();++iter) {
       area_ += iter->Area();
-      if (iter->Resolution() < min_resolution_)
-        min_resolution_ = iter->Resolution();
-      if (iter->Resolution() > max_resolution_)
-        max_resolution_ = iter->Resolution();
+      if (iter->Level() < min_level_) min_level_ = iter->Level();
+      if (iter->Level() > max_level_) max_level_ = iter->Level();
       if (iter->Weight() < min_weight_) min_weight_ = iter->Weight();
       if (iter->Weight() > max_weight_) max_weight_ = iter->Weight();
       pixel_count_[iter->Resolution()]++;
@@ -128,7 +126,7 @@ void SubMap::SetMaximumWeight(double max_weight) {
   Resolve();
 }
 
-void SubMap::SetMaximumResolution(uint16_t max_resolution,
+void SubMap::SetMaximumResolution(uint32_t max_resolution,
 				  bool average_weights) {
   PixelVector pix;
   pix.reserve(Size());
@@ -160,16 +158,16 @@ bool SubMap::FindLocation(AngularCoordinate& ang, double& weight) {
   bool keep = false;
   weight = -1.0e-30;
 
-  for (uint16_t resolution=min_resolution_;
-       resolution<=max_resolution_;resolution*=2) {
-    Pixel tmp_pix(ang,resolution);
+  for (uint32_t resolution=MinResolution();
+       resolution<=MaxResolution();resolution*=2) {
+    Pixel tmp_pix(ang, resolution);
     PixelPair iter = equal_range(pix_.begin(), pix_.end(), tmp_pix,
                                  Pixel::SuperPixelBasedOrder);
     if (iter.first != iter.second) {
       keep = true;
       weight = iter.first->Weight();
     }
-    if (keep) resolution = max_resolution_*2;
+    if (keep) break;
   }
 
   return keep;
@@ -177,7 +175,7 @@ bool SubMap::FindLocation(AngularCoordinate& ang, double& weight) {
 
 double SubMap::FindUnmaskedFraction(Pixel& pix) {
   PixelIterator iter;
-  if (pix.Resolution() >= max_resolution_) {
+  if (pix.Level() >= MaxLevel()) {
     iter = pix_.end();
   } else {
     Pixel tmp_pix(pix.PixelX0()*2, pix.PixelY0()*2,
@@ -186,20 +184,19 @@ double SubMap::FindUnmaskedFraction(Pixel& pix) {
                        tmp_pix,Pixel::SuperPixelBasedOrder);
   }
 
-  uint8_t resolution_level = MostSignificantBit(min_resolution_);
+  uint8_t level = MinLevel();
   double unmasked_fraction = 0.0;
   bool found_pixel = false;
-  while (resolution_level <= pix.Level() && !found_pixel) {
+  while (level <= pix.Level() && !found_pixel) {
     Pixel tmp_pix = pix;
-    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
-    tmp_pix.SetToSuperPix(resolution);
+    tmp_pix.SetToLevel(level);
     PixelPair super_iter = equal_range(pix_.begin(), iter, tmp_pix,
                                        Pixel::SuperPixelBasedOrder);
     if (super_iter.first != super_iter.second) {
       found_pixel = true;
       unmasked_fraction = 1.0;
     }
-    resolution_level++;
+    level++;
   }
 
   while (iter != pix_.end() && !found_pixel) {
@@ -217,7 +214,7 @@ double SubMap::FindUnmaskedFraction(Pixel& pix) {
 
 int8_t SubMap::FindUnmaskedStatus(Pixel& pix) {
   PixelIterator iter;
-  if (pix.Resolution() >= max_resolution_) {
+  if (pix.Level() >= MaxLevel()) {
     iter = pix_.end();
   } else {
     Pixel tmp_pix(pix.PixelX0()*2, pix.PixelY0()*2,
@@ -226,16 +223,15 @@ int8_t SubMap::FindUnmaskedStatus(Pixel& pix) {
                        Pixel::SuperPixelBasedOrder);
   }
 
-  uint8_t resolution_level = MostSignificantBit(min_resolution_);
+  uint8_t level = MinLevel();
   int8_t unmasked_status = 0;
-  while ((resolution_level <= pix.Level()) && (unmasked_status == 0)) {
+  while ((level <= pix.Level()) && (unmasked_status == 0)) {
     Pixel tmp_pix = pix;
-    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
-    tmp_pix.SetToSuperPix(resolution);
+    tmp_pix.SetToLevel(level);
     PixelPair super_iter = equal_range(pix_.begin(),iter,tmp_pix,
                                        Pixel::SuperPixelBasedOrder);
     if (super_iter.first != super_iter.second) unmasked_status = 1;
-    resolution_level++;
+    level++;
   }
 
   while ((iter != pix_.end()) && (unmasked_status == 0)) {
@@ -249,21 +245,21 @@ int8_t SubMap::FindUnmaskedStatus(Pixel& pix) {
 double SubMap::FindAverageWeight(Pixel& pix) {
   PixelIterator iter;
 
-  if (pix.Resolution() >= max_resolution_) {
+  if (pix.Level() >= MaxLevel()) {
     iter = pix_.end();
   } else {
-    Pixel tmp_pix(pix.Resolution()*2,0,pix.Superpixnum(),1.0);
+    Pixel tmp_pix(pix.PixelX0()*2, pix.PixelY0()*2,
+		  pix.Resolution()*2, 1.0);
     iter = lower_bound(pix_.begin(),pix_.end(),tmp_pix,
                        Pixel::SuperPixelBasedOrder);
   }
 
   double unmasked_fraction = 0.0, weighted_average = 0.0;
   bool found_pixel = false;
-  uint8_t resolution_level = MostSignificantBit(min_resolution_);
-  while (resolution_level <= pix.Level() && !found_pixel) {
+  uint8_t level = MinLevel();
+  while (level <= pix.Level() && !found_pixel) {
     Pixel tmp_pix = pix;
-    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
-    tmp_pix.SetToSuperPix(resolution);
+    tmp_pix.SetToLevel(level);
     PixelPair super_iter = equal_range(pix_.begin(), iter, tmp_pix,
                                        Pixel::SuperPixelBasedOrder);
     if (super_iter.first != super_iter.second) {
@@ -271,7 +267,7 @@ double SubMap::FindAverageWeight(Pixel& pix) {
       weighted_average = super_iter.first->Weight();
       unmasked_fraction = 1.0;
     }
-    resolution_level++;
+    level++;
   }
 
   while (iter != pix_.end() && !found_pixel) {
@@ -296,7 +292,7 @@ void SubMap::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
 
   bool found_pixel = false;
   PixelIterator iter, find_iter;
-  if (pix.Resolution() >= max_resolution_) {
+  if (pix.Level() >= MaxLevel()) {
     iter = pix_.end();
   } else {
     Pixel tmp_pix(pix.PixelX0()*2, pix.PixelY0()*2, pix.Resolution()*2, 1.0);
@@ -304,11 +300,10 @@ void SubMap::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
                        Pixel::SuperPixelBasedOrder);
   }
 
-  uint8_t resolution_level = MostSignificantBit(min_resolution_);
-  while (resolution_level <= pix.Level() && !found_pixel) {
+  uint8_t level = MinLevel();
+  while (level <= pix.Level() && !found_pixel) {
     Pixel tmp_pix = pix;
-    uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
-    tmp_pix.SetToSuperPix(resolution);
+    tmp_pix.SetToLevel(level);
     find_iter = lower_bound(pix_.begin(), iter, tmp_pix,
                             Pixel::SuperPixelBasedOrder);
     if (Pixel::PixelMatch(*find_iter,tmp_pix)) {
@@ -317,7 +312,7 @@ void SubMap::FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
       if (use_local_weights) tmp_pix.SetWeight(find_iter->Weight());
       match_pix.push_back(tmp_pix);
     }
-    resolution_level++;
+    level++;
   }
 
   while (iter != pix_.end() && !found_pixel) {
@@ -344,7 +339,7 @@ double SubMap::AverageWeight() {
   return weighted_average;
 }
 
-void SubMap::Soften(PixelVector& output_pix, uint16_t max_resolution,
+void SubMap::Soften(PixelVector& output_pix, uint32_t max_resolution,
 		    bool average_weights) {
   if (!output_pix.empty()) output_pix.clear();
   output_pix.reserve(pix_.size());
@@ -686,8 +681,8 @@ void SubMap::Pixels(PixelVector& pix) {
 void SubMap::Clear() {
   area_ = 0.0;
   size_ = 0;
-  min_resolution_ = MaxPixelResolution;
-  max_resolution_ = HPixResolution;
+  min_level_ = MaxPixelLevel;
+  max_level_ = HPixLevel;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   if (!pix_.empty()) pix_.clear();
@@ -719,12 +714,20 @@ bool SubMap::Unsorted() {
   return unsorted_;
 }
 
-uint16_t SubMap::MinResolution() {
-  return min_resolution_;
+uint32_t SubMap::MinResolution() {
+  return Pixel::Level2Resolution(min_level_);
 }
 
-uint16_t SubMap::MaxResolution() {
-  return max_resolution_;
+uint32_t SubMap::MaxResolution() {
+  return Pixel::Level2Resolution(max_level_);
+}
+
+uint8_t SubMap::MinLevel() {
+  return min_level_;
+}
+
+uint8_t SubMap::MaxLevel() {
+  return max_level_;
 }
 
 double SubMap::MinWeight() {
@@ -763,21 +766,21 @@ uint32_t SubMap::Size() {
   return size_;
 }
 
-uint32_t SubMap::PixelCount(uint16_t resolution) {
+uint32_t SubMap::PixelCount(uint32_t resolution) {
   return (!(resolution % 2) ? pixel_count_[resolution] : 0);
 }
 
 Map::Map() {
   area_ = 0.0;
   size_ = 0;
-  min_resolution_ = MaxPixelResolution;
-  max_resolution_ = HPixResolution;
+  min_level_ = MaxPixelLevel;
+  max_level_ = HPixLevel;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   ClearRegions();
 
-  for (uint16_t resolution=HPixResolution, i=0;
-       i<ResolutionLevels;resolution*=2, i++)
+  for (uint32_t resolution=HPixResolution;
+       resolution<=MaxPixelResolution;resolution*=2)
     pixel_count_[resolution] = 0;
 
   sub_map_.reserve(MaxSuperpixnum);
@@ -792,13 +795,13 @@ Map::Map() {
 Map::Map(PixelVector& pix, bool force_resolve) {
   area_ = 0.0;
   size_ = 0;
-  min_resolution_ = MaxPixelResolution;
-  max_resolution_ = HPixResolution;
+  min_level_ = MaxPixelLevel;
+  max_level_ = HPixLevel;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   ClearRegions();
-  for (uint16_t resolution=HPixResolution, i=0;
-       i<ResolutionLevels;resolution*=2, i++) {
+  for (uint32_t resolution=HPixResolution;
+       resolution<=MaxPixelResolution;resolution*=2) {
     pixel_count_[resolution] = 0;
   }
 
@@ -823,14 +826,12 @@ Map::Map(PixelVector& pix, bool force_resolve) {
 
       area_ += iter->Area();
       size_ += iter->Size();
-      if (min_resolution_ > iter->MinResolution())
-        min_resolution_ = iter->MinResolution();
-      if (max_resolution_ < iter->MaxResolution())
-        max_resolution_ = iter->MaxResolution();
+      if (min_level_ > iter->MinLevel()) min_level_ = iter->MinLevel();
+      if (max_level_ < iter->MaxLevel()) max_level_ = iter->MaxLevel();
       if (iter->MinWeight() < min_weight_) min_weight_ = iter->MinWeight();
       if (iter->MaxWeight() > max_weight_) max_weight_ = iter->MaxWeight();
-      for (uint16_t resolution=HPixResolution, i=0;
-	   i<ResolutionLevels;resolution*=2, i++) {
+      for (uint32_t resolution=HPixResolution;
+	   resolution<=MaxPixelResolution;resolution*=2) {
 	pixel_count_[resolution] += iter->PixelCount(resolution);
       }
     }
@@ -841,7 +842,7 @@ Map::Map(std::string& InputFile, bool hpixel_format, bool weighted_map) {
   Read(InputFile, hpixel_format, weighted_map);
 }
 
-Map::Map(GeometricBound& bound, double weight, uint16_t max_resolution,
+Map::Map(GeometricBound& bound, double weight, uint32_t max_resolution,
 	 bool verbose) {
   if (PixelizeBound(bound, weight, max_resolution) && verbose) {
     std::cout << "Successfully pixelized GeometricBound.\n" <<
@@ -853,7 +854,7 @@ Map::Map(GeometricBound& bound, double weight, uint16_t max_resolution,
 }
 
 Map::~Map() {
-  min_resolution_ = max_resolution_ = 0;
+  min_level_ = max_level_ = 0;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   Clear();
@@ -862,13 +863,13 @@ Map::~Map() {
 bool Map::Initialize() {
   area_ = 0.0;
   size_ = 0;
-  min_resolution_ = MaxPixelResolution;
-  max_resolution_ = HPixResolution;
+  min_level_ = MaxPixelLevel;
+  max_level_ = HPixLevel;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   ClearRegions();
-  for (uint16_t resolution=HPixResolution, i=0;
-       i<ResolutionLevels;resolution*=2, i++) {
+  for (uint32_t resolution=HPixResolution;
+       resolution<=MaxPixelResolution;resolution*=2) {
     pixel_count_[resolution] = 0;
   }
 
@@ -887,14 +888,12 @@ bool Map::Initialize() {
 
       area_ += iter->Area();
       size_ += iter->Size();
-      if (min_resolution_ > iter->MinResolution())
-        min_resolution_ = iter->MinResolution();
-      if (max_resolution_ < iter->MaxResolution())
-        max_resolution_ = iter->MaxResolution();
+      if (min_level_ > iter->MinLevel()) min_level_ = iter->MinLevel();
+      if (max_level_ < iter->MaxLevel()) max_level_ = iter->MaxLevel();
       if (iter->MinWeight() < min_weight_) min_weight_ = iter->MinWeight();
       if (iter->MaxWeight() > max_weight_) max_weight_ = iter->MaxWeight();
-      for (uint16_t resolution=HPixResolution, i=0;
-	   i<ResolutionLevels;resolution*=2, i++) {
+      for (uint32_t resolution=HPixResolution;
+	   resolution<=MaxPixelResolution;resolution*=2) {
 	pixel_count_[resolution] += iter->PixelCount(resolution);
       }
     }
@@ -906,13 +905,13 @@ bool Map::Initialize() {
 bool Map::Initialize(PixelVector& pix, bool force_resolve) {
   area_ = 0.0;
   size_ = 0;
-  min_resolution_ = MaxPixelResolution;
-  max_resolution_ = HPixResolution;
+  min_level_ = MaxPixelLevel;
+  max_level_ = HPixLevel;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   ClearRegions();
-  for (uint16_t resolution=HPixResolution, i=0;
-       i<ResolutionLevels;resolution*=2, i++) {
+  for (uint32_t resolution=HPixResolution;
+       resolution<=MaxPixelResolution;resolution*=2) {
     pixel_count_[resolution] = 0;
   }
 
@@ -951,14 +950,12 @@ bool Map::Initialize(PixelVector& pix, bool force_resolve) {
 
       area_ += iter->Area();
       size_ += iter->Size();
-      if (min_resolution_ > iter->MinResolution())
-        min_resolution_ = iter->MinResolution();
-      if (max_resolution_ < iter->MaxResolution())
-        max_resolution_ = iter->MaxResolution();
+      if (min_level_ > iter->MinLevel()) min_level_ = iter->MinLevel();
+      if (max_level_ < iter->MaxLevel()) max_level_ = iter->MaxLevel();
       if (iter->MinWeight() < min_weight_) min_weight_ = iter->MinWeight();
       if (iter->MaxWeight() > max_weight_) max_weight_ = iter->MaxWeight();
-      for (uint16_t resolution=HPixResolution, i=0;
-	   i<ResolutionLevels;resolution*=2, i++) {
+      for (uint32_t resolution=HPixResolution;
+	   resolution<=MaxPixelResolution;resolution*=2) {
 	pixel_count_[resolution] += iter->PixelCount(resolution);
       }
     }
@@ -973,8 +970,8 @@ void Map::AddPixel(Pixel& pix) {
   area_ += pix.Area();
   size_++;
 
-  if (min_resolution_ > pix.Resolution()) min_resolution_ = pix.Resolution();
-  if (max_resolution_ < pix.Resolution()) max_resolution_ = pix.Resolution();
+  if (min_level_ > pix.Level()) min_level_ = pix.Level();
+  if (max_level_ < pix.Level()) max_level_ = pix.Level();
   if (pix.Weight() < min_weight_) min_weight_ = pix.Weight();
   if (pix.Weight() > max_weight_) max_weight_ = pix.Weight();
   pixel_count_[pix.Resolution()]++;
@@ -1241,7 +1238,7 @@ void Map::FindMatchingPixels(PixelVector& pix, PixelVector& match_pix,
   }
 }
 
-void Map::Coverage(PixelVector& superpix, uint16_t resolution) {
+void Map::Coverage(PixelVector& superpix, uint32_t resolution) {
   if (!superpix.empty()) superpix.clear();
 
   if (resolution == HPixResolution) {
@@ -1325,7 +1322,7 @@ bool Map::Covering(Map& stomp_map, uint32_t maximum_pixels) {
       // that level and check that against our limit, iterating again at a
       // coarser resolution limit if necessary.  This should minimize
       // the number of times that we need to re-create the pixel map.
-      uint16_t maximum_resolution = HPixResolution;
+      uint32_t maximum_resolution = HPixResolution;
       uint32_t reduced_map_pixels = pixel_count_[maximum_resolution];
 
       while (reduced_map_pixels + 2*pixel_count_[2*maximum_resolution] <
@@ -1371,7 +1368,7 @@ bool Map::Covering(Map& stomp_map, uint32_t maximum_pixels) {
   return met_pixel_requirement;
 }
 
-void Map::Soften(Map& stomp_map, uint16_t maximum_resolution,
+void Map::Soften(Map& stomp_map, uint32_t maximum_resolution,
 		 bool average_weights) {
   if (!stomp_map.Empty()) stomp_map.Clear();
 
@@ -1389,7 +1386,7 @@ void Map::Soften(Map& stomp_map, uint16_t maximum_resolution,
   stomp_map.Initialize(pix);
 }
 
-void Map::Soften(uint16_t maximum_resolution, bool average_weights) {
+void Map::Soften(uint32_t maximum_resolution, bool average_weights) {
   for (uint32_t k=0;k<MaxSuperpixnum;k++) {
     if (sub_map_[k].Initialized()) {
       sub_map_[k].SetMaximumResolution(maximum_resolution, average_weights);
@@ -1638,7 +1635,7 @@ bool Map::Read(std::string& InputFile, bool hpixel_format,
 
   std::ifstream input_file(InputFile.c_str());
 
-  uint32_t hpixnum, superpixnum, pixnum;
+  uint32_t hpixnum, superpixnum, pixnum, x, y;
   int resolution;  // have to use an int here because of old map formats
   double weight;
   bool found_file = false;
@@ -1665,10 +1662,11 @@ bool Map::Read(std::string& InputFile, bool hpixel_format,
       if (!input_file.eof() && (resolution % 2 == 0) &&
 	  (resolution > 0)) {
 	if (!hpixel_format)
-	  Pixel::Pix2HPix(static_cast<uint16_t>(resolution), pixnum,
+	  Pixel::Pix2HPix(static_cast<uint32_t>(resolution), pixnum,
 			  hpixnum, superpixnum);
-	Pixel tmp_pix(static_cast<uint16_t>(resolution), hpixnum,
-		      superpixnum, weight);
+	Pixel::HPix2XY(static_cast<uint32_t>(resolution), hpixnum, superpixnum,
+		       x, y);
+	Pixel tmp_pix(x, y, static_cast<uint32_t>(resolution), weight);
 	sub_map_[superpixnum].AddPixel(tmp_pix);
       }
     }
@@ -1688,14 +1686,12 @@ bool Map::Read(std::string& InputFile, bool hpixel_format,
 
 	area_ += iter->Area();
 	size_ += iter->Size();
-	if (min_resolution_ > iter->MinResolution())
-	  min_resolution_ = iter->MinResolution();
-	if (max_resolution_ < iter->MaxResolution())
-	  max_resolution_ = iter->MaxResolution();
+	if (min_level_ > iter->MinLevel()) min_level_ = iter->MinLevel();
+	if (max_level_ < iter->MaxLevel()) max_level_ = iter->MaxLevel();
 	if (iter->MinWeight() < min_weight_) min_weight_ = iter->MinWeight();
 	if (iter->MaxWeight() > max_weight_) max_weight_ = iter->MaxWeight();
-	for (uint16_t resolution_iter=HPixResolution, i=0;
-	     i<ResolutionLevels;resolution_iter*=2, i++) {
+	for (uint32_t resolution_iter=HPixResolution;
+	     resolution_iter<=MaxPixelResolution;resolution_iter*=2) {
 	  pixel_count_[resolution_iter] += iter->PixelCount(resolution_iter);
 	}
       }
@@ -1710,7 +1706,7 @@ bool Map::Read(std::string& InputFile, bool hpixel_format,
 }
 
 bool Map::PixelizeBound(GeometricBound& bound, double weight,
-			uint16_t maximum_resolution) {
+			uint32_t maximum_resolution) {
   bool pixelized_map = false;
 
   Clear();
@@ -1747,7 +1743,7 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
 
     for (uint8_t resolution_level=starting_resolution_level;
          resolution_level<=max_resolution_level;resolution_level++) {
-      uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
+      uint32_t resolution = Pixel::Level2Resolution(resolution_level);
 
       unsigned n_keep = 0;
       uint32_t nx = Nx0*resolution;
@@ -1873,7 +1869,7 @@ uint8_t Map::_FindStartingResolutionLevel(double bound_area) {
     return 0;
   }
 
-  uint16_t starting_resolution = HPixResolution;
+  uint32_t starting_resolution = HPixResolution;
 
   // We want to start things off with the coarsest possible resolution to
   // save time, but we have to be careful that we're not so coarse that we
@@ -1882,7 +1878,7 @@ uint8_t Map::_FindStartingResolutionLevel(double bound_area) {
   while (bound_area/Pixel::PixelArea(starting_resolution) <= 100.0)
     starting_resolution *= 2;
 
-  return MostSignificantBit(starting_resolution);
+  return Pixel::Resolution2Level(starting_resolution);
 }
 
 bool Map::_FindXYBounds(const uint8_t resolution_level,
@@ -1890,7 +1886,7 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 			uint32_t& x_min, uint32_t&x_max,
 			uint32_t& y_min, uint32_t&y_max) {
 
-  uint16_t resolution = static_cast<uint16_t>(1 << resolution_level);
+  uint32_t resolution = Pixel::Level2Resolution(resolution_level);
   uint32_t nx = Nx0*resolution, ny = Ny0*resolution;
 
   Pixel::AreaIndex(resolution,
@@ -2540,14 +2536,14 @@ void Map::Iterate(MapIterator* iter) {
 void Map::Clear() {
   area_ = 0.0;
   size_ = 0;
-  min_resolution_ = MaxPixelResolution;
-  max_resolution_ = HPixResolution;
+  min_level_ = MaxPixelLevel;
+  max_level_ = HPixLevel;
   min_weight_ = 1.0e30;
   max_weight_ = -1.0e30;
   ClearRegions();
 
-  for (uint16_t resolution=HPixResolution, i=0;
-       i<ResolutionLevels;resolution*=2, i++)
+  for (uint32_t resolution=HPixResolution;
+       resolution<=MaxPixelResolution;resolution*=2)
     pixel_count_[resolution] = 0;
 
   if (!sub_map_.empty()) {
@@ -2583,22 +2579,40 @@ double Map::Area(uint32_t superpixnum) {
 	  sub_map_[superpixnum].Area() : 0.0);
 }
 
-uint16_t Map::MinResolution() {
-  return min_resolution_;
+uint32_t Map::MinResolution() {
+  return Pixel::Level2Resolution(min_level_);
 }
 
-uint16_t Map::MinResolution(uint32_t superpixnum) {
+uint32_t Map::MinResolution(uint32_t superpixnum) {
   return (superpixnum < MaxSuperpixnum ?
 	  sub_map_[superpixnum].MinResolution() : 0);
 }
 
-uint16_t Map::MaxResolution() {
-  return max_resolution_;
+uint32_t Map::MaxResolution() {
+  return Pixel::Level2Resolution(max_level_);
 }
 
-uint16_t Map::MaxResolution(uint32_t superpixnum) {
+uint32_t Map::MaxResolution(uint32_t superpixnum) {
   return (superpixnum < MaxSuperpixnum ?
 	  sub_map_[superpixnum].MaxResolution() : 0);
+}
+
+uint8_t Map::MinLevel() {
+  return min_level_;
+}
+
+uint8_t Map::MinLevel(uint32_t superpixnum) {
+  return (superpixnum < MaxSuperpixnum ?
+	  sub_map_[superpixnum].MinLevel() : 0);
+}
+
+uint8_t Map::MaxLevel() {
+  return max_level_;
+}
+
+uint8_t Map::MaxLevel(uint32_t superpixnum) {
+  return (superpixnum < MaxSuperpixnum ?
+	  sub_map_[superpixnum].MaxLevel() : 0);
 }
 
 double Map::MinWeight() {
@@ -2632,7 +2646,7 @@ bool Map::Empty() {
   return (size_ == 0 ? true : false);
 }
 
-uint32_t Map::PixelCount(uint16_t resolution) {
+uint32_t Map::PixelCount(uint32_t resolution) {
   return (!(resolution % 2) ? pixel_count_[resolution] : 0);
 }
 

@@ -22,13 +22,13 @@
 namespace Stomp {
 
 Pixel::Pixel() {
-  resolution_ = 0;
+  level_ = 0;
   y_ = 0;
   x_ = 0;
   weight_ = 0.0;
 }
 
-Pixel::Pixel(const uint16_t input_resolution,
+Pixel::Pixel(const uint32_t input_resolution,
 	     const uint32_t input_pixnum,
 	     const double input_weight) {
   if ((input_resolution < HPixResolution) ||
@@ -45,44 +45,9 @@ Pixel::Pixel(const uint16_t input_resolution,
   weight_ = input_weight;
 }
 
-Pixel::Pixel(const uint16_t input_resolution,
-	     const uint32_t input_hpixnum,
-	     const uint32_t input_superpixnum,
-	     const double input_weight) {
-  if ((input_resolution < HPixResolution) ||
-      (input_resolution%2 != 0) ||
-      (input_resolution > MaxPixelResolution)) {
-    std::cout << "Invalid resolution value: " << input_resolution << ".\n";
-    exit(2);
-  }
-
-  if (input_hpixnum > MaxPixnum)
-    std::cout << "Invalid hpixel index value.\n ";
-
-  if (input_superpixnum > MaxSuperpixnum)
-    std::cout << "Invalid superpixel index value.\n ";
-
-  SetResolution(input_resolution);
-
-  uint16_t hnx = Resolution()/HPixResolution;
-
-  uint32_t y0 = input_superpixnum/(Nx0*HPixResolution);
-  uint32_t x0 = input_superpixnum - y0*Nx0*HPixResolution;
-
-  y0 *= hnx;
-  x0 *= hnx;
-
-  uint32_t tmp_y = input_hpixnum/hnx;
-  uint32_t tmp_x = input_hpixnum - hnx*tmp_y;
-
-  x_ = tmp_x + x0;
-  y_ = tmp_y + y0;
-  weight_ = input_weight;
-}
-
 Pixel::Pixel(const uint32_t input_x,
 	     const uint32_t input_y,
-	     const uint16_t input_resolution,
+	     const uint32_t input_resolution,
 	     const double input_weight) {
   if ((input_resolution < HPixResolution) ||
       (input_resolution%2 != 0) ||
@@ -103,7 +68,7 @@ Pixel::Pixel(const uint32_t input_x,
   weight_ = input_weight;
 }
 
-Pixel::Pixel(AngularCoordinate& ang, const uint16_t input_resolution,
+Pixel::Pixel(AngularCoordinate& ang, const uint32_t input_resolution,
 	     const double input_weight) {
 
   if ((input_resolution < HPixResolution) ||
@@ -137,7 +102,7 @@ Pixel::Pixel(AngularCoordinate& ang, const uint16_t input_resolution,
 
 Pixel::~Pixel() {
   x_ = y_ = 0;
-  resolution_ = 0;
+  level_ = 0;
   weight_ = 0.0;
 }
 
@@ -194,8 +159,14 @@ void Pixel::SetPixnumFromAng(AngularCoordinate& ang) {
   }
 }
 
-void Pixel::SetResolution(uint16_t resolution) {
-  resolution_ = MostSignificantBit(resolution);
+void Pixel::SetResolution(uint32_t resolution) {
+  level_ = MostSignificantBit(resolution);
+  x_ = 0;
+  y_ = 0;
+}
+
+void Pixel::SetLevel(uint8_t level) {
+  level_ = level;
   x_ = 0;
   y_ = 0;
 }
@@ -206,11 +177,11 @@ void Pixel::SetPixnumFromXY(uint32_t x, uint32_t y) {
 }
 
 uint8_t Pixel::Level() {
-  return resolution_;
+  return level_;
 }
 
-uint16_t Pixel::Resolution() {
-  return static_cast<uint16_t>(1 << resolution_);
+uint32_t Pixel::Resolution() {
+  return static_cast<uint32_t>(1 << level_);
 }
 
 double Pixel::Weight() {
@@ -237,22 +208,38 @@ uint32_t Pixel::PixelY() {
   return y_;
 }
 
-bool Pixel::SetToSuperPix(uint16_t lo_resolution) {
+bool Pixel::SetToSuperPix(uint32_t lo_resolution) {
+  bool success = false;
   if (Resolution() < lo_resolution) {
     std::cout << "Illegal resolution value: " << lo_resolution <<
-        " < " << Resolution();
-    return false;
+      " < " << Resolution();
+  } else {
+    x_ /= Resolution()/lo_resolution;
+    y_ /= Resolution()/lo_resolution;
+    level_ = MostSignificantBit(lo_resolution);
+
+    success = true;
   }
 
-  x_ /= Resolution()/lo_resolution;
-  y_ /= Resolution()/lo_resolution;
-
-  resolution_ = MostSignificantBit(lo_resolution);
-
-  return true;
+  return success;
 }
 
-void Pixel::SubPix(uint16_t hi_resolution, PixelVector& pix) {
+bool Pixel::SetToLevel(uint8_t lo_level) {
+  bool success = false;
+  if (Level() < lo_level) {
+    std::cout << "Illegal level value: " << lo_level << " < " << Level();
+  } else {
+    x_ /= Resolution()/Level2Resolution(lo_level);
+    y_ /= Resolution()/Level2Resolution(lo_level);
+    level_ = lo_level;
+
+    success = true;
+  }
+
+  return success;
+}
+
+void Pixel::SubPix(uint32_t hi_resolution, PixelVector& pix) {
   if (!pix.empty()) pix.clear();
 
   uint32_t x_min, x_max, y_min, y_max;
@@ -266,14 +253,14 @@ void Pixel::SubPix(uint16_t hi_resolution, PixelVector& pix) {
   }
 }
 
-void Pixel::SubPix(uint16_t hi_resolution, uint32_t& x_min,
+void Pixel::SubPix(uint32_t hi_resolution, uint32_t& x_min,
 		   uint32_t& x_max, uint32_t& y_min,
 		   uint32_t& y_max) {
   if (Resolution() == hi_resolution) {
     y_min = y_max = y_;
     x_min = x_max = x_;
   } else {
-    uint16_t tmp_res;
+    uint32_t tmp_res;
 
     x_min = x_max = x_;
     y_min = y_max = y_;
@@ -340,7 +327,7 @@ double Pixel::Area() {
     (Resolution()*Resolution());
 }
 
-uint32_t Pixel::SuperPix(uint16_t lo_resolution) {
+uint32_t Pixel::SuperPix(uint32_t lo_resolution) {
   return (Resolution() < lo_resolution ?
 	  Nx0*Ny0*lo_resolution*lo_resolution :
 	  Nx0*lo_resolution*
@@ -367,7 +354,7 @@ uint32_t Pixel::Pixnum() {
   return Nx0*Resolution()*y_ + x_;
 }
 
-bool Pixel::Contains(uint16_t pixel_resolution, uint32_t pixel_x,
+bool Pixel::Contains(uint32_t pixel_resolution, uint32_t pixel_x,
 		     uint32_t pixel_y) {
   return ((pixel_resolution >= Resolution()) &&
 	  (pixel_x*Resolution()/pixel_resolution == x_) &&
@@ -1476,7 +1463,7 @@ int8_t Pixel::IntersectsAnnulus(Pixel& pix, AngularBin& theta) {
   return IntersectsAnnulus(ang, theta);
 }
 
-uint32_t Pixel::Stripe(uint16_t input_resolution) {
+uint32_t Pixel::Stripe(uint32_t input_resolution) {
   if ((input_resolution%2 != 0) || (input_resolution < 4)) {
     std::cout << "Illegal resolution in Stripe() call!\nExiting...\n";
     exit(1);
@@ -2025,7 +2012,15 @@ void Pixel::GenerateRandomPoints(AngularVector& ang, uint32_t n_point) {
   }
 }
 
-void Pixel::Ang2Pix(uint16_t input_resolution, AngularCoordinate& ang,
+uint8_t Pixel::Resolution2Level(const uint32_t resolution) {
+  return MostSignificantBit(resolution);
+}
+
+uint32_t Pixel::Level2Resolution(const uint8_t level) {
+  return static_cast<uint32_t>(1 << level);
+}
+
+void Pixel::Ang2Pix(uint32_t input_resolution, AngularCoordinate& ang,
 		    uint32_t& output_pixnum) {
   double lambda = ang.Lambda();
   double eta = ang.Eta();
@@ -2053,7 +2048,7 @@ void Pixel::Ang2Pix(uint16_t input_resolution, AngularCoordinate& ang,
   output_pixnum = nx*j + i;
 }
 
-void Pixel::Pix2Ang(uint16_t input_resolution, uint32_t input_pixnum,
+void Pixel::Pix2Ang(uint32_t input_resolution, uint32_t input_pixnum,
 		    AngularCoordinate& ang) {
   uint32_t nx = Nx0*input_resolution;
   uint32_t ny = Ny0*input_resolution;
@@ -2066,7 +2061,7 @@ void Pixel::Pix2Ang(uint16_t input_resolution, uint32_t input_pixnum,
 			   EtaOffSet);
 }
 
-void Pixel::Pix2HPix(uint16_t input_resolution,
+void Pixel::Pix2HPix(uint32_t input_resolution,
 		     uint32_t input_pixnum,
 		     uint32_t& output_hpixnum,
 		     uint32_t& output_superpixnum) {
@@ -2075,7 +2070,7 @@ void Pixel::Pix2HPix(uint16_t input_resolution,
   uint32_t y = input_pixnum/nx;
   uint32_t x = input_pixnum - nx*y;
 
-  uint16_t hnx = input_resolution/HPixResolution;
+  uint32_t hnx = input_resolution/HPixResolution;
 
   uint32_t x0 = x/hnx;
   uint32_t y0 = y/hnx;
@@ -2087,8 +2082,8 @@ void Pixel::Pix2HPix(uint16_t input_resolution,
   output_superpixnum = Nx0*HPixResolution*y0 + x0;
 }
 
-void Pixel::SuperPix(uint16_t hi_resolution, uint32_t hi_pixnum,
-		     uint16_t lo_resolution, uint32_t& lo_pixnum) {
+void Pixel::SuperPix(uint32_t hi_resolution, uint32_t hi_pixnum,
+		     uint32_t lo_resolution, uint32_t& lo_pixnum) {
   if (hi_resolution < lo_resolution) {
     std::cout << "Can't go from low resolution to higher resolution.\n ";
     exit(1);
@@ -2096,7 +2091,7 @@ void Pixel::SuperPix(uint16_t hi_resolution, uint32_t hi_pixnum,
     uint32_t nx_hi = Nx0*hi_resolution;
     uint32_t nx_lo = Nx0*lo_resolution;
 
-    uint16_t ratio = hi_resolution/lo_resolution;
+    uint32_t ratio = hi_resolution/lo_resolution;
 
     uint32_t j = hi_pixnum/nx_hi;
     uint32_t i = hi_pixnum - nx_hi*j;
@@ -2108,7 +2103,7 @@ void Pixel::SuperPix(uint16_t hi_resolution, uint32_t hi_pixnum,
   }
 }
 
-void Pixel::NextSubPix(uint16_t input_resolution, uint32_t input_pixnum,
+void Pixel::NextSubPix(uint32_t input_resolution, uint32_t input_pixnum,
 		       uint32_t& sub_pixnum1,
 		       uint32_t& sub_pixnum2,
 		       uint32_t& sub_pixnum3,
@@ -2125,8 +2120,8 @@ void Pixel::NextSubPix(uint16_t input_resolution, uint32_t input_pixnum,
   sub_pixnum4 = nx_hi*(2*j + 1) + 2*i + 1;
 }
 
-void Pixel::SubPix(uint16_t lo_resolution, uint32_t lo_pixnum,
-		   uint16_t hi_resolution, uint32_t& x_min,
+void Pixel::SubPix(uint32_t lo_resolution, uint32_t lo_pixnum,
+		   uint32_t hi_resolution, uint32_t& x_min,
 		   uint32_t& x_max, uint32_t& y_min,
 		   uint32_t& y_max) {
   uint32_t nx_hi = Nx0*hi_resolution;
@@ -2137,7 +2132,7 @@ void Pixel::SubPix(uint16_t lo_resolution, uint32_t lo_pixnum,
     x_max = lo_pixnum - nx_hi*y_max;
   } else {
     uint32_t tmp_pixnum, pixnum1, pixnum2, pixnum3, pixnum4;
-    uint16_t tmp_res;
+    uint32_t tmp_res;
 
     tmp_pixnum = lo_pixnum;
     for (tmp_res=lo_resolution;tmp_res<hi_resolution;tmp_res*=2) {
@@ -2159,7 +2154,7 @@ void Pixel::SubPix(uint16_t lo_resolution, uint32_t lo_pixnum,
   }
 }
 
-void Pixel::AreaIndex(uint16_t input_resolution,
+void Pixel::AreaIndex(uint32_t input_resolution,
 		      double lammin, double lammax,
 		      double etamin, double etamax,
 		      uint32_t& x_min, uint32_t& x_max,
@@ -2193,7 +2188,7 @@ void Pixel::AreaIndex(uint16_t input_resolution,
   }
 }
 
-uint8_t Pixel::Pix2EtaStep(uint16_t input_resolution, uint32_t input_pixnum,
+uint8_t Pixel::Pix2EtaStep(uint32_t input_resolution, uint32_t input_pixnum,
 		       double theta) {
   uint32_t nx = Nx0*input_resolution;
   uint32_t ny = Ny0*input_resolution;
@@ -2211,7 +2206,7 @@ uint8_t Pixel::Pix2EtaStep(uint16_t input_resolution, uint32_t input_pixnum,
   return etastep;
 }
 
-void Pixel::PixelBound(uint16_t input_resolution, uint32_t input_pixnum,
+void Pixel::PixelBound(uint32_t input_resolution, uint32_t input_pixnum,
 		       double& lammin, double& lammax, double& etamin,
 		       double& etamax) {
   uint32_t nx = Nx0*input_resolution;
@@ -2228,7 +2223,7 @@ void Pixel::PixelBound(uint16_t input_resolution, uint32_t input_pixnum,
   if (etamax >= 180.0) etamax = etamax - 360.0;
 }
 
-void Pixel::CohortPix(uint16_t input_resolution, uint32_t input_pixnum,
+void Pixel::CohortPix(uint32_t input_resolution, uint32_t input_pixnum,
 		      uint32_t& co_pixnum1,
 		      uint32_t& co_pixnum2,
 		      uint32_t& co_pixnum3) {
@@ -2261,22 +2256,22 @@ void Pixel::CohortPix(uint16_t input_resolution, uint32_t input_pixnum,
   }
 }
 
-double Pixel::PixelArea(uint16_t resolution) {
+double Pixel::PixelArea(uint32_t resolution) {
   return HPixArea*HPixResolution*HPixResolution/
     (resolution*resolution);
 }
 
-double Pixel::HPixelArea(uint16_t resolution) {
+double Pixel::HPixelArea(uint32_t resolution) {
   return HPixArea*HPixResolution*HPixResolution/
     (resolution*resolution);
 }
 
-void Pixel::XY2Pix(uint16_t resolution, uint32_t x, uint32_t y,
+void Pixel::XY2Pix(uint32_t resolution, uint32_t x, uint32_t y,
 		   uint32_t& pixnum) {
   pixnum = Nx0*resolution*y + x;
 }
 
-void Pixel::Pix2XY(uint16_t resolution, uint32_t pixnum,
+void Pixel::Pix2XY(uint32_t resolution, uint32_t pixnum,
 		   uint32_t& x, uint32_t& y) {
   y = pixnum/(Nx0*resolution);
   x = pixnum - Nx0*resolution*y;
@@ -2510,13 +2505,13 @@ void Pixel::FindUniquePixels(PixelVector& input_pix, PixelVector& unique_pix) {
   }
 }
 
-void Pixel::Ang2HPix(uint16_t input_resolution, AngularCoordinate& ang,
+void Pixel::Ang2HPix(uint32_t input_resolution, AngularCoordinate& ang,
 		     uint32_t& output_hpixnum,
 		     uint32_t& output_superpixnum) {
   uint32_t nx = Nx0*input_resolution;
   uint32_t ny = Ny0*input_resolution;
 
-  uint16_t hnx = input_resolution/HPixResolution;
+  uint32_t hnx = input_resolution/HPixResolution;
 
   double eta = (ang.Eta() - EtaOffSet)*DegToRad;
 
@@ -2544,13 +2539,13 @@ void Pixel::Ang2HPix(uint16_t input_resolution, AngularCoordinate& ang,
   output_superpixnum = Nx0*HPixResolution*y0 + x0;
 }
 
-void Pixel::HPix2Ang(uint16_t input_resolution, uint32_t input_hpixnum,
+void Pixel::HPix2Ang(uint32_t input_resolution, uint32_t input_hpixnum,
 		     uint32_t input_superpixnum,
 		     AngularCoordinate& ang) {
   uint32_t nx = Nx0*input_resolution;
   uint32_t ny = Ny0*input_resolution;
 
-  uint16_t hnx = input_resolution/HPixResolution;
+  uint32_t hnx = input_resolution/HPixResolution;
 
   uint32_t y0 = input_superpixnum/(Nx0*HPixResolution);
   uint32_t x0 = input_superpixnum - y0*Nx0*HPixResolution;
@@ -2566,10 +2561,10 @@ void Pixel::HPix2Ang(uint16_t input_resolution, uint32_t input_hpixnum,
 			   EtaOffSet);
 }
 
-void Pixel::XY2HPix(uint16_t input_resolution, uint32_t x,
+void Pixel::XY2HPix(uint32_t input_resolution, uint32_t x,
 		    uint32_t y, uint32_t& output_hpixnum,
 		    uint32_t& output_superpixnum) {
-  uint16_t hnx = input_resolution/HPixResolution;
+  uint32_t hnx = input_resolution/HPixResolution;
 
   uint32_t x0 = x/hnx;
   uint32_t y0 = y/hnx;
@@ -2581,10 +2576,9 @@ void Pixel::XY2HPix(uint16_t input_resolution, uint32_t x,
   output_superpixnum = Nx0*HPixResolution*y0 + x0;
 }
 
-void Pixel::HPix2XY(uint16_t input_resolution, uint32_t input_hpixnum,
-		    uint32_t input_superpixnum,
-		    uint32_t& x, uint32_t& y) {
-  uint16_t hnx = input_resolution/HPixResolution;
+void Pixel::HPix2XY(uint32_t input_resolution, uint32_t input_hpixnum,
+		    uint32_t input_superpixnum, uint32_t& x, uint32_t& y) {
+  uint32_t hnx = input_resolution/HPixResolution;
 
   uint32_t y0 = input_superpixnum/(Nx0*HPixResolution);
   uint32_t x0 = input_superpixnum - y0*Nx0*HPixResolution;
@@ -2596,8 +2590,8 @@ void Pixel::HPix2XY(uint16_t input_resolution, uint32_t input_hpixnum,
   y = tmp_y + y0*hnx;
 }
 
-void Pixel::SuperHPix(uint16_t hi_resolution, uint32_t hi_hpixnum,
-		      uint16_t lo_resolution, uint32_t& lo_hpixnum) {
+void Pixel::SuperHPix(uint32_t hi_resolution, uint32_t hi_hpixnum,
+		      uint32_t lo_resolution, uint32_t& lo_hpixnum) {
   if (hi_resolution < lo_resolution) {
     std::cout << "Can't go from low resolution to higher resolution.\n ";
     exit(1);
@@ -2605,7 +2599,7 @@ void Pixel::SuperHPix(uint16_t hi_resolution, uint32_t hi_hpixnum,
     uint32_t nx_hi = hi_resolution/HPixResolution;
     uint32_t nx_lo = lo_resolution/HPixResolution;
 
-    uint16_t ratio = hi_resolution/lo_resolution;
+    uint32_t ratio = hi_resolution/lo_resolution;
 
     uint32_t y = hi_hpixnum/nx_hi;
     uint32_t x = hi_hpixnum - nx_hi*y;
@@ -2617,7 +2611,7 @@ void Pixel::SuperHPix(uint16_t hi_resolution, uint32_t hi_hpixnum,
   }
 }
 
-void Pixel::NextSubHPix(uint16_t input_resolution, uint32_t input_hpixnum,
+void Pixel::NextSubHPix(uint32_t input_resolution, uint32_t input_hpixnum,
 			uint32_t& sub_hpixnum1,
 			uint32_t& sub_hpixnum2,
 			uint32_t& sub_hpixnum3,
@@ -2634,8 +2628,8 @@ void Pixel::NextSubHPix(uint16_t input_resolution, uint32_t input_hpixnum,
   sub_hpixnum4 = nx_hi*(2*y + 1) + 2*x + 1;
 }
 
-void Pixel::SubHPix(uint16_t lo_resolution, uint32_t lo_hpixnum,
-		    uint32_t lo_superpixnum, uint16_t hi_resolution,
+void Pixel::SubHPix(uint32_t lo_resolution, uint32_t lo_hpixnum,
+		    uint32_t lo_superpixnum, uint32_t hi_resolution,
 		    uint32_t& x_min, uint32_t& x_max,
 		    uint32_t& y_min, uint32_t& y_max) {
   uint32_t tmp_x, tmp_y;
@@ -2649,7 +2643,7 @@ void Pixel::SubHPix(uint16_t lo_resolution, uint32_t lo_hpixnum,
     x_max = tmp_x;
   } else {
     uint32_t tmp_hpixnum, hpixnum1, hpixnum2, hpixnum3, hpixnum4;
-    uint16_t tmp_res;
+    uint32_t tmp_res;
 
     tmp_hpixnum = lo_hpixnum;
     for (tmp_res=lo_resolution;tmp_res<hi_resolution;tmp_res*=2) {
@@ -2677,14 +2671,14 @@ void Pixel::SubHPix(uint16_t lo_resolution, uint32_t lo_hpixnum,
   }
 }
 
-void Pixel::HPixelBound(uint16_t input_resolution, uint32_t input_hpixnum,
+void Pixel::HPixelBound(uint32_t input_resolution, uint32_t input_hpixnum,
 			uint32_t input_superpixnum,
 			double& lammin, double& lammax,
 			double& etamin, double& etamax) {
   uint32_t nx = Nx0*input_resolution;
   uint32_t ny = Ny0*input_resolution;
 
-  uint16_t hnx = input_resolution/HPixResolution;
+  uint32_t hnx = input_resolution/HPixResolution;
 
   uint32_t y0 = input_superpixnum/(Nx0*HPixResolution);
   uint32_t x0 = input_superpixnum - y0*Nx0*HPixResolution;
@@ -2705,7 +2699,7 @@ void Pixel::HPixelBound(uint16_t input_resolution, uint32_t input_hpixnum,
   if (etamax >= 180.0) etamax = etamax - 360.0;
 }
 
-void Pixel::CohortHPix(uint16_t input_resolution, uint32_t input_hpixnum,
+void Pixel::CohortHPix(uint32_t input_resolution, uint32_t input_hpixnum,
 		       uint32_t& co_hpixnum1,
 		       uint32_t& co_hpixnum2,
 		       uint32_t& co_hpixnum3) {
@@ -2738,11 +2732,11 @@ void Pixel::CohortHPix(uint16_t input_resolution, uint32_t input_hpixnum,
   }
 }
 
-uint8_t Pixel::HPix2EtaStep(uint16_t input_resolution, uint32_t input_hpixnum,
+uint8_t Pixel::HPix2EtaStep(uint32_t input_resolution, uint32_t input_hpixnum,
 			    uint32_t input_superpixnum, double theta) {
 
   uint32_t ny = Ny0*input_resolution;
-  uint16_t hnx = input_resolution/HPixResolution;
+  uint32_t hnx = input_resolution/HPixResolution;
 
   uint32_t y0 = input_superpixnum/(Nx0*HPixResolution);
   uint32_t x0 = input_superpixnum - y0*Nx0*HPixResolution;

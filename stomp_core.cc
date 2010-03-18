@@ -15,10 +15,10 @@ const double SurveyCenterRA = 185.0;
 const double SurveyCenterDEC = 32.5;
 const double Node = DegToRad*(SurveyCenterRA-90.0);
 const double EtaPole = DegToRad*SurveyCenterDEC;
-const uint8_t HPixLevel = 2; // 4 in the old parlance.
-const uint8_t MaxPixelLevel = 15; // 2^15 = 32768
-const uint16_t HPixResolution = 1 << HPixLevel;
-const uint16_t MaxPixelResolution = 1 << MaxPixelLevel;  // 32768
+const uint8_t HPixLevel = 2;  // 4 in the old parlance.
+const uint8_t MaxPixelLevel = 15;  // 2^15 = 32768
+const uint32_t HPixResolution = 1 << HPixLevel;  // 4
+const uint32_t MaxPixelResolution = 1 << MaxPixelLevel;  // 32768
 const uint8_t ResolutionLevels = MaxPixelLevel - HPixLevel + 1;
 const double HPixArea =
       4.0*Pi*StradToDeg/(HPixResolution*HPixResolution*Nx0*Ny0);

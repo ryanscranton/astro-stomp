@@ -186,7 +186,7 @@ void TreePixelCoverageTests() {
   // Now we find the sub-pixels for the current tree_pix a few levels down
   // and start generating random points from them.
   Stomp::PixelVector pixVec;
-  uint16_t hi_resolution = Stomp::HPixResolution*32;
+  uint32_t hi_resolution = Stomp::HPixResolution*32;
   tree_pix.SubPix(hi_resolution, pixVec);
 
   Stomp::AngularVector angVec;
@@ -255,7 +255,7 @@ void TreePixelCoverageTests() {
   // Now we check to make sure that the super-pixels leading from the original
   // TreePixel to our current sub-pixels have the expected Coverages.
   std::cout << "\nResolution tests:\n";
-  for (uint16_t resolution=tree_pix.Resolution()*2;resolution<=hi_resolution;
+  for (uint32_t resolution=tree_pix.Resolution()*2;resolution<=hi_resolution;
        resolution*=2) {
     tree_pix.SubPix(resolution, pixVec);
     std::cout << "\tResolution: " << resolution <<

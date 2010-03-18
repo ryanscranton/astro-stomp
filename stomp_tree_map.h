@@ -65,7 +65,7 @@ class TreeMap : public BaseMap {
   // pair counting in conjunction with a DensityMap that uses sub-regions.
   // The region resolution for that DensityMap must match the resolution
   // chosen for the base level of the TreeMap.
-  TreeMap(uint16_t resolution=HPixResolution,
+  TreeMap(uint32_t resolution=HPixResolution,
 	  uint16_t maximum_points=50);
   ~TreeMap();
 
@@ -290,7 +290,7 @@ class TreeMap : public BaseMap {
 
   // Equivalent methods as their namesakes in the BaseMap class.
   virtual void Coverage(PixelVector& superpix,
-			uint16_t resolution = HPixResolution);
+			uint32_t resolution = HPixResolution);
   bool Covering(Map& stomp_map, uint32_t maximum_pixels);
   virtual double FindUnmaskedFraction(Pixel& pix);
   virtual int8_t FindUnmaskedStatus(Pixel& pix);
@@ -302,13 +302,10 @@ class TreeMap : public BaseMap {
   // functional forms.
   void NodeMap(Map& stomp_map);
 
-  // Return the base level resolution for the tree map.
-  uint16_t Resolution();
+  // Some getters and setters for the base level resolution and pixel capacity.
+  uint32_t Resolution();
   uint16_t PixelCapacity();
-
-  // Using either of these two methods will automatically remove any data
-  // from the TreeMap.
-  void SetResolution(uint16_t resolution);
+  void SetResolution(uint32_t resolution);
   void SetPixelCapacity(int pixel_capacity);
 
   // Total number of points in the tree map or total number of points in
@@ -353,16 +350,18 @@ class TreeMap : public BaseMap {
   virtual uint32_t Size();
   virtual double Area();
   void CalculateArea();
-  virtual uint16_t MinResolution();
-  virtual uint16_t MaxResolution();
+  virtual uint32_t MinResolution();
+  virtual uint32_t MaxResolution();
+  virtual uint8_t MinLevel();
+  virtual uint8_t MaxLevel();
   virtual bool Empty();
   virtual void Clear();
 
  private:
   TreeDict tree_map_;
   FieldDict field_total_;
-  uint16_t maximum_points_, resolution_, nodes_;
-  uint32_t point_count_;
+  uint16_t maximum_points_, nodes_;
+  uint32_t point_count_, resolution_;
   double weight_, area_;
   bool modified_;
 };

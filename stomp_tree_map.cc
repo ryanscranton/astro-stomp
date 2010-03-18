@@ -24,7 +24,7 @@
 
 namespace Stomp {
 
-TreeMap::TreeMap(uint16_t input_resolution, uint16_t maximum_points) {
+TreeMap::TreeMap(uint32_t input_resolution, uint16_t maximum_points) {
   resolution_ = input_resolution;
   maximum_points_ = maximum_points;
   weight_ = 0.0;
@@ -775,7 +775,7 @@ bool TreeMap::AddPoint(AngularCoordinate& ang, double object_weight) {
   return AddPoint(w_ang);
 }
 
-void TreeMap::Coverage(PixelVector& superpix, uint16_t resolution) {
+void TreeMap::Coverage(PixelVector& superpix, uint32_t resolution) {
   if (!superpix.empty()) superpix.clear();
 
   if (resolution > resolution_) {
@@ -974,7 +974,7 @@ void TreeMap::NodeMap(Map& stomp_map) {
   stomp_map.Initialize(pix);
 }
 
-uint16_t TreeMap::Resolution() {
+uint32_t TreeMap::Resolution() {
   return resolution_;
 }
 
@@ -982,7 +982,7 @@ uint16_t TreeMap::PixelCapacity() {
   return maximum_points_;
 }
 
-void TreeMap::SetResolution(uint16_t resolution) {
+void TreeMap::SetResolution(uint32_t resolution) {
   Clear();
   resolution_ = resolution;
 }
@@ -1207,12 +1207,20 @@ void TreeMap::CalculateArea() {
   modified_ = false;
 }
 
-uint16_t TreeMap::MinResolution() {
+uint32_t TreeMap::MinResolution() {
   return resolution_;
 }
 
-uint16_t TreeMap::MaxResolution() {
+uint32_t TreeMap::MaxResolution() {
   return resolution_;
+}
+
+uint8_t TreeMap::MinLevel() {
+  return Pixel::Resolution2Level(resolution_);
+}
+
+uint8_t TreeMap::MaxLevel() {
+  return Pixel::Resolution2Level(resolution_);
 }
 
 bool TreeMap::Empty() {

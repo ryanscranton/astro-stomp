@@ -63,13 +63,11 @@ class TreePixel : public Pixel {
  public:
   friend class NearestNeighborPixel;
   TreePixel();
-  TreePixel(const uint16_t resolution, const uint32_t pixnum,
+  TreePixel(const uint32_t resolution, const uint32_t pixnum,
 	    const uint16_t maximum_points=200);
-  TreePixel(const uint16_t resolution, const uint32_t hpixnum,
-	    const uint32_t superpixnum, const uint16_t maximum_points=200);
-  TreePixel(AngularCoordinate& ang, const uint16_t resolution,
+  TreePixel(AngularCoordinate& ang, const uint32_t resolution,
 	    const uint16_t maximum_points=200);
-  TreePixel(const uint32_t x, const uint32_t y, const uint16_t resolution,
+  TreePixel(const uint32_t x, const uint32_t y, const uint32_t resolution,
 	    const uint16_t maximum_points=200);
   virtual ~TreePixel();
 

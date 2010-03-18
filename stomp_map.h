@@ -39,7 +39,7 @@ class GeometricBound;     // class declaration in stomp_geometry.h
 class SubMap;
 class Map;
 
-typedef std::map<const uint16_t, uint32_t> ResolutionDict;
+typedef std::map<const uint32_t, uint32_t> ResolutionDict;
 typedef ResolutionDict::iterator ResolutionIterator;
 typedef std::pair<ResolutionIterator, ResolutionIterator> ResolutionPair;
 
@@ -66,7 +66,7 @@ class SubMap {
   void Resolve(bool force_resolve = false);
   void SetMinimumWeight(double minimum_weight);
   void SetMaximumWeight(double maximum_weight);
-  void SetMaximumResolution(uint16_t maximum_resolution, bool average_weights);
+  void SetMaximumResolution(uint32_t maximum_resolution, bool average_weights);
   bool FindLocation(AngularCoordinate& ang, double& weight);
   double FindUnmaskedFraction(Pixel& pix);
   int8_t FindUnmaskedStatus(Pixel& pix);
@@ -74,7 +74,7 @@ class SubMap {
   void FindMatchingPixels(Pixel& pix, PixelVector& match_pix,
 			  bool use_local_weights = false);
   double AverageWeight();
-  void Soften(PixelVector& softened_pix, uint16_t maximum_resolution,
+  void Soften(PixelVector& softened_pix, uint32_t maximum_resolution,
 	      bool average_weights);
   bool Add(Map& stomp_map, bool drop_single);
   bool Multiply(Map& stomp_map, bool drop_single);
@@ -83,7 +83,7 @@ class SubMap {
   void AddConstantWeight(const double add_weight);
   void InvertWeight();
   void Pixels(PixelVector& pix);
-  void CheckResolution(uint16_t resolution);
+  void CheckResolution(uint32_t resolution);
   void Clear();
   uint32_t Superpixnum();
   PixelIterator Begin();
@@ -91,8 +91,10 @@ class SubMap {
   double Area();
   bool Initialized();
   bool Unsorted();
-  uint16_t MinResolution();
-  uint16_t MaxResolution();
+  uint32_t MinResolution();
+  uint32_t MaxResolution();
+  uint8_t MinLevel();
+  uint8_t MaxLevel();
   double MinWeight();
   double MaxWeight();
   double LambdaMin();
@@ -102,14 +104,14 @@ class SubMap {
   double ZMin();
   double ZMax();
   uint32_t Size();
-  uint32_t PixelCount(uint16_t resolution);
+  uint32_t PixelCount(uint32_t resolution);
 
  private:
   uint32_t superpixnum_, size_;
   PixelVector pix_;
   double area_, lambda_min_, lambda_max_, eta_min_, eta_max_, z_min_, z_max_;
   double min_weight_, max_weight_;
-  uint16_t min_resolution_, max_resolution_;
+  uint8_t min_level_, max_level_;
   bool initialized_, unsorted_;
   ResolutionDict pixel_count_;
 };
@@ -145,7 +147,7 @@ class Map : public BaseMap {
   // or not and how the area of the resulting Map area compares to the input
   // GeometricBound's area.
   Map(GeometricBound& bound, double weight = 1.0,
-      uint16_t maximum_resolution = MaxPixelResolution,
+      uint32_t maximum_resolution = MaxPixelResolution,
       bool verbose = false);
   virtual ~Map();
 
@@ -237,7 +239,7 @@ class Map : public BaseMap {
   // the pixels will reflect the fraction of the pixel that is within the
   // current map.
   virtual void Coverage(PixelVector& superpix,
-			uint16_t resolution = Stomp::HPixResolution);
+			uint32_t resolution = Stomp::HPixResolution);
 
   // Instead of a set of vectors at the same resolution, we may want to
   // generate a lower resolution version of our current map where the needs of
@@ -265,11 +267,11 @@ class Map : public BaseMap {
   // weight for any pixels which are resampled.  If set to false, the resulting
   // map will have unity weight, except for the pixels were resampled, where the
   // value will indicate the included fraction.
-  void Soften(Map& stomp_map, uint16_t maximum_resolution,
+  void Soften(Map& stomp_map, uint32_t maximum_resolution,
 	      bool average_weights=false);
 
   // Rather than creating a new Map, we can Soften the current Map
-  void Soften(uint16_t maximum_resolution, bool average_weights=false);
+  void Soften(uint32_t maximum_resolution, bool average_weights=false);
 
   // In addition to modifying the maximum resolution of the Map (which is
   // basically what Soften does), we can also filter the current Map based on
@@ -329,7 +331,7 @@ class Map : public BaseMap {
   // more pixels).  The return value indicates success or failure of the
   // translation.
   bool PixelizeBound(GeometricBound& bound, double weight = 1.0,
-		     uint16_t maximum_resolution = MaxPixelResolution);
+		     uint32_t maximum_resolution = MaxPixelResolution);
 
   // The pixelization method is iteratively adaptive.  First, it tries to find
   // the largest pixels that will likely fit inside the footprint.  Then it
@@ -428,10 +430,14 @@ class Map : public BaseMap {
   // Some general methods for querying the state of the current map.
   virtual double Area();
   double Area(uint32_t superpixnum);
-  virtual uint16_t MinResolution();
-  uint16_t MinResolution(uint32_t superpixnum);
-  virtual uint16_t MaxResolution();
-  uint16_t MaxResolution(uint32_t superpixnum);
+  virtual uint32_t MinResolution();
+  uint32_t MinResolution(uint32_t superpixnum);
+  virtual uint32_t MaxResolution();
+  uint32_t MaxResolution(uint32_t superpixnum);
+  virtual uint8_t MinLevel();
+  uint8_t MinLevel(uint32_t superpixnum);
+  virtual uint8_t MaxLevel();
+  uint8_t MaxLevel(uint32_t superpixnum);
   double MinWeight();
   double MinWeight(uint32_t superpixnum);
   double MaxWeight();
@@ -439,14 +445,14 @@ class Map : public BaseMap {
   virtual uint32_t Size();
   uint32_t Size(uint32_t superpixnum);
   virtual bool Empty();
-  uint32_t PixelCount(uint16_t resolution);
+  uint32_t PixelCount(uint32_t resolution);
 
 
 private:
   SubMapVector sub_map_;
   MapIterator begin_, end_;
   double area_, min_weight_, max_weight_;
-  uint16_t min_resolution_, max_resolution_;
+  uint8_t min_level_, max_level_;
   uint32_t size_;
   ResolutionDict pixel_count_;
 };

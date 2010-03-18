@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
   Stomp::WAngularVector galaxy;
   std::ifstream galaxy_file(FLAGS_galaxy_file.c_str());
   double lambda, eta, prob, mag;
-  uint16_t n_galaxy = 0;
+  uint32_t n_galaxy = 0;
 
   while (!galaxy_file.eof()) {
     galaxy_file >> lambda >> eta >> prob >> mag;
@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
 
   // Now, we iterate through our resolutions, making re-sampled maps and
   // calculating auto-correlations for the corresponding bins.
-  for (uint16_t resolution=scalar_map->Resolution()/2;
+  for (uint32_t resolution=scalar_map->Resolution()/2;
        resolution>=wtheta.MinResolution();resolution/=2) {
     Stomp::ScalarMap* sub_scalar_map =
       new Stomp::ScalarMap(*scalar_map, resolution);

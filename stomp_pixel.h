@@ -45,14 +45,12 @@ class Pixel {
 
  public:
   Pixel();
-  Pixel(const uint16_t resolution, const uint32_t pixnum,
+  Pixel(const uint32_t resolution, const uint32_t pixnum,
 	const double weight = 0.0);
-  Pixel(const uint16_t resolution, const uint32_t hpixnum,
-	const uint32_t superpixnum, const double weight = 0.0);
-  Pixel(AngularCoordinate& ang, const uint16_t resolution,
+  Pixel(AngularCoordinate& ang, const uint32_t resolution,
 	const double weight = 0.0);
   Pixel(const uint32_t x, const uint32_t y,
-	const uint16_t resolution, const double weight = 0.0);
+	const uint32_t resolution, const double weight = 0.0);
   virtual ~Pixel();
 
   // For the purposes of simple ordering (as would be done in various STL
@@ -72,12 +70,13 @@ class Pixel {
 
   // Some basic setters and getters.
   void SetPixnumFromAng(AngularCoordinate& ang);
-  void SetResolution(uint16_t resolution);
+  void SetResolution(uint32_t resolution);
+  void SetLevel(uint8_t level);
   void SetPixnumFromXY(uint32_t x, uint32_t y);
   void SetWeight(double weight);
 
   uint8_t Level();
-  uint16_t Resolution();
+  uint32_t Resolution();
   uint32_t PixelX();
   uint32_t PixelY();
   double Weight();
@@ -88,13 +87,15 @@ class Pixel {
 
   // These methods all relate the hierarchical nature of the pixelization
   // method.  SetToSuperPix degrades a high resolution pixel into the lower
-  // resolution pixel that contains it.  SubPix returns either a vector of
+  // resolution pixel that contains it.  SetToLevel does the same, but takes
+  // Level() as an argument.  SubPix returns either a vector of
   // higher resolution pixels contained by this pixel or the X-Y pixel index
   // bounds that will let one iterate through the sub-pixels without
   // instantiating them.
-  bool SetToSuperPix(uint16_t lo_resolution);
-  void SubPix(uint16_t hi_resolution, PixelVector& pix);
-  void SubPix(uint16_t hi_resolution, uint32_t& x_min, uint32_t& x_max,
+  bool SetToSuperPix(uint32_t lo_resolution);
+  bool SetToLevel(uint8_t lo_level);
+  void SubPix(uint32_t hi_resolution, PixelVector& pix);
+  void SubPix(uint32_t hi_resolution, uint32_t& x_min, uint32_t& x_max,
 	      uint32_t& y_min, uint32_t& y_max);
 
   // CohortPix returns the pixels at the same resolution that would combine
@@ -113,7 +114,7 @@ class Pixel {
 
   // This returns the index of the pixel that contains the current pixel at
   // a coarser resolution.
-  uint32_t SuperPix(uint16_t lo_resolution);
+  uint32_t SuperPix(uint32_t lo_resolution);
 
   // The fundamental unit of the spherical pixelization.  There are 7488
   // superpixels covering the sky, which makes isolating any searches to just
@@ -135,7 +136,7 @@ class Pixel {
   // Given either the X-Y-resolution, Pixel or AngularCoordinate, return
   // true or false based on whether the implied location is within the current
   // Pixel.
-  bool Contains(uint16_t pixel_resolution, uint32_t pixel_x,
+  bool Contains(uint32_t pixel_resolution, uint32_t pixel_x,
 		uint32_t pixel_y);
   bool Contains(Pixel& pix);
   bool Contains(AngularCoordinate& ang);
@@ -258,7 +259,7 @@ class Pixel {
   // pixel index into an SDSS stripe number.  Although this is generally not
   // useful information in an of itself, stripe number is used as a proxy
   // for constructing roughly square subsections of Maps.
-  uint32_t Stripe(uint16_t resolution = Stomp::HPixResolution);
+  uint32_t Stripe(uint32_t resolution = Stomp::HPixResolution);
 
   // Some methods for extracting the angular position of the pixel center...
   double RA();
@@ -356,69 +357,71 @@ class Pixel {
   // to a straight C interface.  True, we're using references which aren't
   // in C, but these methods still allow users to access the basic interfaces
   // without instantiating a Pixel, which can be handy in some cases.
-  static void Ang2Pix(const uint16_t resolution, AngularCoordinate& ang,
+  static uint8_t Resolution2Level(const uint32_t resolution);
+  static uint32_t Level2Resolution(const uint8_t level);
+  static void Ang2Pix(const uint32_t resolution, AngularCoordinate& ang,
 		      uint32_t& pixnum);
-  static void Pix2Ang(uint16_t resolution, uint32_t pixnum,
+  static void Pix2Ang(uint32_t resolution, uint32_t pixnum,
                       AngularCoordinate& ang);
-  static void Pix2HPix(uint16_t input_resolution, uint32_t input_pixnum,
+  static void Pix2HPix(uint32_t input_resolution, uint32_t input_pixnum,
 		       uint32_t& output_hpixnum,
 		       uint32_t& output_superpixnum);
-  static void HPix2Pix(uint16_t input_resolution, uint32_t input_hpixnum,
+  static void HPix2Pix(uint32_t input_resolution, uint32_t input_hpixnum,
 		       uint32_t input_superpixnum,
 		       uint32_t& output_pixnum);
-  static void SuperPix(uint16_t hi_resolution, uint32_t hi_pixnum,
-                       uint16_t lo_resolution, uint32_t& lo_pixnum);
-  static void SubPix(uint16_t lo_resolution, uint32_t hi_pixnum,
-		     uint16_t hi_resolution, uint32_t& x_min,
+  static void SuperPix(uint32_t hi_resolution, uint32_t hi_pixnum,
+                       uint32_t lo_resolution, uint32_t& lo_pixnum);
+  static void SubPix(uint32_t lo_resolution, uint32_t hi_pixnum,
+		     uint32_t hi_resolution, uint32_t& x_min,
 		     uint32_t& x_max, uint32_t& y_min,
 		     uint32_t& y_max);
-  static void NextSubPix(uint16_t input_resolution, uint32_t input_pixnum,
+  static void NextSubPix(uint32_t input_resolution, uint32_t input_pixnum,
 			 uint32_t& sub_pixnum1,
 			 uint32_t& sub_pixnum2,
 			 uint32_t& sub_pixnum3,
 			 uint32_t& sub_pixnum4);
-  static void AreaIndex(uint16_t resolution, double lammin, double lammax,
+  static void AreaIndex(uint32_t resolution, double lammin, double lammax,
 			double etamin, double etamax, uint32_t& x_min,
 			uint32_t& x_max, uint32_t& y_min,
 			uint32_t& y_max);
-  static void PixelBound(uint16_t resolution, uint32_t pixnum, double& lammin,
+  static void PixelBound(uint32_t resolution, uint32_t pixnum, double& lammin,
 			 double& lammax, double& etamin, double& etamax);
-  static void CohortPix(uint16_t resolution, uint32_t hpixnum,
+  static void CohortPix(uint32_t resolution, uint32_t hpixnum,
 			uint32_t& pixnum1, uint32_t& pixnum2,
 			uint32_t& pixnum3);
-  static double PixelArea(uint16_t resolution);
-  static uint8_t Pix2EtaStep(uint16_t resolution, uint32_t pixnum,
+  static double PixelArea(uint32_t resolution);
+  static uint8_t Pix2EtaStep(uint32_t resolution, uint32_t pixnum,
 			     double theta);
-  static void Ang2HPix(uint16_t resolution, AngularCoordinate& ang,
+  static void Ang2HPix(uint32_t resolution, AngularCoordinate& ang,
 		       uint32_t& hpixnum, uint32_t& superpixnum);
-  static void HPix2Ang(uint16_t resolution, uint32_t hpixnum,
+  static void HPix2Ang(uint32_t resolution, uint32_t hpixnum,
                        uint32_t superpixnum, AngularCoordinate& ang);
-  static void XY2HPix(uint16_t resolution, uint32_t x, uint32_t y,
+  static void XY2HPix(uint32_t resolution, uint32_t x, uint32_t y,
                       uint32_t& hpixnum, uint32_t& superpixnum);
-  static void HPix2XY(uint16_t resolution, uint32_t hpixnum,
+  static void HPix2XY(uint32_t resolution, uint32_t hpixnum,
 		      uint32_t superpixnum, uint32_t& x,
 		      uint32_t& y);
-  static void SuperHPix(uint16_t hi_resolution, uint32_t hi_hpixnum,
-                        uint16_t lo_resolution, uint32_t& lo_hpixnum);
-  static void NextSubHPix(uint16_t resolution, uint32_t hpixnum,
+  static void SuperHPix(uint32_t hi_resolution, uint32_t hi_hpixnum,
+                        uint32_t lo_resolution, uint32_t& lo_hpixnum);
+  static void NextSubHPix(uint32_t resolution, uint32_t hpixnum,
 			  uint32_t& hpixnum1, uint32_t& hpixnum2,
 			  uint32_t& hpixnum3, uint32_t& hpixnum4);
-  static void SubHPix(uint16_t lo_resolution, uint32_t hi_hpixnum,
-		      uint32_t hi_superpixnum, uint16_t hi_resolution,
+  static void SubHPix(uint32_t lo_resolution, uint32_t hi_hpixnum,
+		      uint32_t hi_superpixnum, uint32_t hi_resolution,
 		      uint32_t& x_min, uint32_t& x_max,
 		      uint32_t& y_min, uint32_t& y_max);
-  static void HPixelBound(uint16_t resolution, uint32_t hpixnum,
+  static void HPixelBound(uint32_t resolution, uint32_t hpixnum,
 			  uint32_t superpixnum, double& lammin,
 			  double& lammax, double& etamin, double& etamax);
-  static void CohortHPix(uint16_t resolution, uint32_t hpixnum,
+  static void CohortHPix(uint32_t resolution, uint32_t hpixnum,
 			 uint32_t& hpixnum1, uint32_t& hpixnum2,
 			 uint32_t& hpixnum3);
-  static double HPixelArea(uint16_t resolution);
-  static uint8_t HPix2EtaStep(uint16_t resolution, uint32_t hpixnum,
+  static double HPixelArea(uint32_t resolution);
+  static uint8_t HPix2EtaStep(uint32_t resolution, uint32_t hpixnum,
 			      uint32_t superpixnum, double theta);
-  static void XY2Pix(uint16_t resolution, uint32_t x, uint32_t y,
+  static void XY2Pix(uint32_t resolution, uint32_t x, uint32_t y,
 		     uint32_t& pixnum);
-  static void Pix2XY(uint16_t resolution, uint32_t pixnum,
+  static void Pix2XY(uint32_t resolution, uint32_t pixnum,
 		     uint32_t& x, uint32_t& y);
 
   // Now we've got the various methods to establish ordering on the pixels.
@@ -459,7 +462,7 @@ class Pixel {
  private:
   double weight_;
   uint32_t x_, y_;
-  uint8_t resolution_;
+  uint8_t level_;
 };
 
 } // end namespace Stomp

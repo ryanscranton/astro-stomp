@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
     stomp_map->Area() << " sq. deg.\n";
 
   // Now we create our ScalarMap from the Map at the specified resolution.
-  uint16_t resolution  = static_cast<uint16_t>(FLAGS_resolution);
+  uint32_t resolution  = static_cast<uint32_t>(FLAGS_resolution);
   Stomp::ScalarMap* scalar_map =
     new Stomp::ScalarMap(*stomp_map, resolution,
 			 Stomp::ScalarMap::DensityField);
@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
   // map.
   std::ifstream galaxy_file(FLAGS_galaxy_file.c_str());
   double theta, phi;
-  uint16_t n_galaxy = 0;
+  uint32_t n_galaxy = 0;
 
   Stomp::AngularCoordinate::Sphere coord = Stomp::AngularCoordinate::Survey;
   if (FLAGS_radec) coord = Stomp::AngularCoordinate::Equatorial;

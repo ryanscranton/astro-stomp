@@ -100,7 +100,7 @@ void MapReadTests() {
     read_stomp_map->MaxResolution() << " (" << stomp_map->MinResolution() <<
     " - " << stomp_map->MaxResolution() << ")\n";
   std::cout << "\tResolution break-down:\n";
-  for (uint16_t resolution=Stomp::HPixResolution, i=0;
+  for (uint32_t resolution=Stomp::HPixResolution, i=0;
        i<Stomp::ResolutionLevels;resolution*=2, i++)
     std::cout << "\t\t" << resolution << ": " <<
       read_stomp_map->PixelCount(resolution) << " (" <<
@@ -136,7 +136,7 @@ void MapPixelizationTests() {
     std::cout << "Pixelization failed...\n";
   }
 
-  uint16_t resolution = 2048;
+  uint32_t resolution = 2048;
   std::cout << "\nPixelizing at coarser resolution level: " <<
     static_cast<int>(resolution_level) << " - " <<
     static_cast<int>(Stomp::MostSignificantBit(resolution)) << "\n";
@@ -211,16 +211,16 @@ void MapIteratorTests() {
   double area = 0.0;
   double weight_min = 1.0e30;
   double weight_max = -1.0e30;
-  uint16_t resolution_min = Stomp::MaxPixelResolution;
-  uint16_t resolution_max = Stomp::HPixResolution;
+  uint32_t resolution_min = Stomp::MaxPixelResolution;
+  uint32_t resolution_max = Stomp::HPixResolution;
   Stomp::ResolutionDict pixel_count;
   std::cout << "\nAttempting to iterate through " << stomp_map->Size() <<
     " pixels...\n";
   for (Stomp::MapIterator iter=stomp_map->Begin();
        iter!=stomp_map->End();stomp_map->Iterate(&iter), counter++) {
-    uint16_t resolution = iter.second->Resolution();
-    uint16_t resolution_counter = 0;
-    for (uint16_t resolution_mask=Stomp::HPixResolution, i=0;
+    uint32_t resolution = iter.second->Resolution();
+    uint32_t resolution_counter = 0;
+    for (uint32_t resolution_mask=Stomp::HPixResolution, i=0;
 	 i<Stomp::ResolutionLevels;resolution_mask*=2, i++)
       if (resolution & resolution_mask) resolution_counter++;
     if (resolution_counter == 1) {
@@ -248,7 +248,7 @@ void MapIteratorTests() {
     " (" << stomp_map->MinResolution() << " - " <<
     stomp_map->MaxResolution() << ")\n";
   std::cout << "\tResolution break-down:\n";
-  for (uint16_t resolution=Stomp::HPixResolution, i=0;
+  for (uint32_t resolution=Stomp::HPixResolution, i=0;
        i<Stomp::ResolutionLevels;resolution*=2, i++)
     std::cout << "\t\t" << resolution << ": " << pixel_count[resolution] <<
       " (" << stomp_map->PixelCount(resolution) << ")\n";
@@ -699,8 +699,8 @@ void MapSoftenTests() {
   std::cout << "*** Map Soften Tests ***\n";
   std::cout << "************************\n\n";
   double theta = 3.0;
-  uint16_t resolution = 256;
-  uint16_t soft_resolution = resolution/8;
+  uint32_t resolution = 256;
+  uint32_t soft_resolution = resolution/8;
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
   Stomp::Pixel tmp_pix(ang, resolution);
   Stomp::PixelVector annulus_pix;

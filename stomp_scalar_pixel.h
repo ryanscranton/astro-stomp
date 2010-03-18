@@ -52,17 +52,14 @@ class ScalarPixel : public Pixel {
   // map is not generically available.
  public:
   ScalarPixel();
-  ScalarPixel(const uint16_t resolution, const uint32_t pixnum,
+  ScalarPixel(const uint32_t resolution, const uint32_t pixnum,
 	      const double weight = 0.0, const double intensity = 0.0,
 	      const uint32_t n_points = 0);
-  ScalarPixel(const uint16_t resolution, const uint32_t hpixnum,
-	      const uint32_t superpixnum, const double weight = 0.0,
-	      const double intensity = 0.0, const uint32_t n_points = 0);
-  ScalarPixel(AngularCoordinate& ang, const uint16_t resolution,
+  ScalarPixel(AngularCoordinate& ang, const uint32_t resolution,
 	      const double weight = 0.0, const double intensity = 0.0,
 	      const uint32_t n_points = 0);
   ScalarPixel(const uint32_t x, const uint32_t y,
-	      const uint16_t resolution, const double weight = 0.0,
+	      const uint32_t resolution, const double weight = 0.0,
 	      const double intensity = 0.0, const uint32_t n_points = 0);
   virtual ~ScalarPixel();
 
