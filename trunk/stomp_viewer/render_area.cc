@@ -165,6 +165,11 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
   grid_pixmap_ = new QPixmap(width(), height());
   grid_pixmap_->fill(Qt::transparent);
 
+  show_points_ = false;
+  filter_points_ = false;
+  points_pixmap_ = new QPixmap(width(), height());
+  points_pixmap_->fill(Qt::transparent);
+
   n_tick_divisions_ = 21;
   tick_divisions_ = new double[n_tick_divisions_];
   tick_divisions_[0] = 0.00001;

@@ -491,7 +491,10 @@ void StompViewer::inputMapDialog() {
   renderArea->setUpdatesEnabled(false);
 
   // launch our dialog box
-  QFileDialog::Options options = QFileDialog::ReadOnly;
+  QFileDialog::Options options = 0;
+#ifdef Q_WS_MAC
+  options = QFileDialog::ReadOnly;
+#endif
   QString selectedFilter;
   QString fileName =
     QFileDialog::getOpenFileName(this,
@@ -809,7 +812,10 @@ void StompViewer::inputPointsDialog() {
   bool weighted_points = weightedPointsCheckBox->isChecked();
 
   // launch our dialog box
-  QFileDialog::Options options = QFileDialog::ReadOnly;
+  QFileDialog::Options options = 0;
+#ifdef Q_WS_MAC
+  options = QFileDialog::ReadOnly;
+#endif
   QString selectedFilter;
   QString fileName =
     QFileDialog::getOpenFileName(this,

@@ -5,11 +5,11 @@
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
-INCLUDEPATH += /Users/scranton/SDSS/STOMP/stomp_viewer/. .
+INCLUDEPATH += .
+CONFIG += debug
 
 # Input
 HEADERS += render_area.h stomp_viewer.h
 SOURCES += main.cc render_area.cc stomp_viewer.cc
 RESOURCES += stomp_viewer.qrc
-INCLUDEPATH += ../
 LIBS += -lm -lstomp
