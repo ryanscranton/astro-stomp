@@ -91,6 +91,7 @@ class SubMap {
   double Area();
   bool Initialized();
   bool Unsorted();
+  void SetUnsorted();
   uint32_t MinResolution();
   uint32_t MaxResolution();
   uint8_t MinLevel();

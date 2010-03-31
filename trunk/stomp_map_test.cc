@@ -459,67 +459,78 @@ void MapMultiMapTests() {
   std::cout << "***************************\n";
   std::cout << "*** Map Multi-Map Tests ***\n";
   std::cout << "***************************\n";
-  double theta = 3.0;
-  Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
-  Stomp::Pixel tmp_pix(ang, 256);
-  Stomp::PixelVector annulus_pix;
-  tmp_pix.WithinRadius(theta, annulus_pix);
-  Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
+  uint32_t pixelate_resolution = 2048;
+  double radius = 3.0;
+  std::cout << "\tCenter circle:\n\t";
+  Stomp::AngularCoordinate center_ang(20.0, 0.0,
+				      Stomp::AngularCoordinate::Survey);
+  Stomp::CircleBound center_circle(center_ang, radius);
+  Stomp::Map* stomp_map =
+    new Stomp::Map(center_circle, 1.0, pixelate_resolution, true);
+  std::string output_file = "CenterCircle.map";
+  stomp_map->Write(output_file);
 
-  ang.SetSurveyCoordinates(62.0,2.0);
-  tmp_pix.SetResolution(256);
-  tmp_pix.SetPixnumFromAng(ang);
-  tmp_pix.WithinRadius(theta,annulus_pix);
-  Stomp::Map* stomp_map_nearby = new Stomp::Map(annulus_pix);
+  std::cout << "\tNearby circle:\n\t";
+  Stomp::AngularCoordinate nearby_ang(22.0, 2.0,
+				      Stomp::AngularCoordinate::Survey);
+  Stomp::CircleBound nearby_circle(nearby_ang, radius);
+  Stomp::Map* nearby_map =
+    new Stomp::Map(nearby_circle, 1.0, pixelate_resolution, true);
+  output_file = "NearbyCircle.map";
+  nearby_map->Write(output_file);
 
-  ang.SetSurveyCoordinates(0.0,0.0);
-  tmp_pix.SetResolution(256);
-  tmp_pix.SetPixnumFromAng(ang);
-  tmp_pix.WithinRadius(theta,annulus_pix);
-  Stomp::Map* stomp_map_faraway = new Stomp::Map(annulus_pix);
+  std::cout << "\tFaraway circle:\n\t";
+  Stomp::AngularCoordinate faraway_ang(0.0, 0.0,
+				      Stomp::AngularCoordinate::Survey);
+  Stomp::CircleBound faraway_circle(faraway_ang, radius);
+  Stomp::Map* faraway_map =
+    new Stomp::Map(faraway_circle, 1.0, pixelate_resolution, true);
+  output_file = "FarawayCircle.map";
+  faraway_map->Write(output_file);
 
   // Now, we'll test the routines for doing logical AND, OR and NOT with the
   // various maps.
   std::cout << "\n\t**********************\n";
   std::cout << "\t*** Ingestion Test ***\n";
   std::cout << "\t**********************\n";
-  ang.SetSurveyCoordinates(60.0,0.0);
-  tmp_pix.SetResolution(256);
-  tmp_pix.SetPixnumFromAng(ang);
-  tmp_pix.WithinRadius(theta, annulus_pix);
-
-  Stomp::Map* tmp_map = new Stomp::Map(annulus_pix);
-  tmp_map->IngestMap(*stomp_map_nearby, false);
+  Stomp::Map* tmp_map = new Stomp::Map(center_circle, 1.0, pixelate_resolution);
+  tmp_map->IngestMap(*nearby_map, false);
   std::cout << "\t\tOriginal map area: " << stomp_map->Area() <<
     " sq. degrees.\n";
-  std::cout << "\t\tNearby: Adding " << stomp_map_nearby->Area() <<
+  std::cout << "\t\tNearby: Adding " << nearby_map->Area() <<
       " sq. degree map to original map\n";
   std::cout << "\t\t\tNew Map: " << tmp_map->Area() << " sq. degrees.\n";
+  output_file = "NearbyIngestion.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
-  tmp_map = new Stomp::Map(annulus_pix);
-  tmp_map->IngestMap(*stomp_map_faraway, false);
-  std::cout << "\t\tFar Away: Adding " << stomp_map_faraway->Area() <<
+  tmp_map = new Stomp::Map(center_circle, 1.0, pixelate_resolution);
+  tmp_map->IngestMap(*faraway_map, false);
+  std::cout << "\t\tFar Away: Adding " << faraway_map->Area() <<
       " sq. degree map to original map.\n";
   std::cout << "\t\t\tNew Map: " << tmp_map->Area() << " (" <<
-      stomp_map->Area()+stomp_map_faraway->Area() << ") sq. degrees.\n";
+      stomp_map->Area()+faraway_map->Area() << ") sq. degrees.\n";
+  output_file = "FarawayIngestion.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
   std::cout << "\n\t*************************\n";
   std::cout << "\t*** Intersection Test ***\n";
   std::cout << "\t*************************\n";
-  tmp_map = new Stomp::Map(annulus_pix);
-  if (tmp_map->IntersectMap(*stomp_map_nearby)) {
+  tmp_map = new Stomp::Map(center_circle, 1.0, pixelate_resolution);
+  if (tmp_map->IntersectMap(*nearby_map)) {
     std::cout << "\t\tNearby intersection area: " <<
         tmp_map->Area() << " sq. degrees.\n";
+    output_file = "NearbyIntersection.map";
+    tmp_map->Write(output_file);
   } else {
     std::cout << "\t\tThis is bad," <<
         " there should have been some intersecting area.\n";
   }
   delete tmp_map;
 
-  tmp_map = new Stomp::Map(annulus_pix);
-  if (tmp_map->IntersectMap(*stomp_map_faraway)) {
+  tmp_map = new Stomp::Map(center_circle, 1.0, pixelate_resolution);
+  if (tmp_map->IntersectMap(*faraway_map)) {
     std::cout << "\t\tBad. Far away intersection area: " <<
         tmp_map->Area() << " sq. degrees.  Should be 0 and leave unchanged.\n";
   } else {
@@ -531,31 +542,35 @@ void MapMultiMapTests() {
   std::cout << "\n\t**********************\n";
   std::cout << "\t*** Exclusion Test ***\n";
   std::cout << "\t**********************\n";
-  tmp_map = new Stomp::Map(annulus_pix);
-  if (tmp_map->ExcludeMap(*stomp_map_nearby,false)) {
+  tmp_map = new Stomp::Map(center_circle, 1.0, pixelate_resolution);
+  if (tmp_map->ExcludeMap(*nearby_map, false)) {
     std::cout << "\t\tArea remaining after excluding nearby map: " <<
         tmp_map->Area() << " sq. degrees.\n";
   } else {
     std::cout << "\t\tThis is bad," <<
         " there should have been some area left over.\n";
   }
+  output_file = "NearbyExclusion.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
-  tmp_map = new Stomp::Map(annulus_pix);
-  if (tmp_map->ExcludeMap(*stomp_map_faraway,false)) {
+  tmp_map = new Stomp::Map(center_circle, 1.0, pixelate_resolution);
+  if (tmp_map->ExcludeMap(*faraway_map, false)) {
     std::cout << "\t\tArea remaining after excluding faraway map: " <<
         tmp_map->Area() << " sq. degrees.\n";
   } else {
     std::cout <<
       "\t\tBad, we should have recovered all of the original area.\n";
   }
+  output_file = "FarawayExclusion.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
   std::cout << "\n\t*********************\n";
   std::cout << "\t*** Addition Test ***\n";
   std::cout << "\t*********************\n";
-  tmp_map = new Stomp::Map(annulus_pix);
-  if (tmp_map->AddMap(*stomp_map_nearby)) {
+  tmp_map = new Stomp::Map(center_circle, 3.0, pixelate_resolution);
+  if (tmp_map->AddMap(*nearby_map, true)) {
     std::cout << "\t\tNearby overlapping area: " <<
         tmp_map->Area() << " sq. degrees.\n";
     std::cout << "\t\tAverage weight: " << tmp_map->AverageWeight() <<
@@ -564,11 +579,12 @@ void MapMultiMapTests() {
     std::cout << "\t\tThis is bad," <<
         " there should have been some area left over.\n";
   }
+  output_file = "NearbyAdditionDropSingle.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
-  tmp_map = new Stomp::Map(annulus_pix);
-  tmp_map->ScaleWeight(2.0);
-  if (tmp_map->AddMap(*stomp_map_nearby,false)) {
+  tmp_map = new Stomp::Map(center_circle, 3.0, pixelate_resolution);
+  if (tmp_map->AddMap(*nearby_map, false)) {
     std::cout << "\t\tNearby combined area: " <<
         tmp_map->Area() << " sq. degrees.\n";
     std::cout << "\t\tAverage weight: " << tmp_map->AverageWeight() <<
@@ -577,10 +593,12 @@ void MapMultiMapTests() {
     std::cout << "\t\tThis is bad," <<
         " there should have been some area left over.\n";
   }
+  output_file = "NearbyAdditionKeepSingle.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
-  tmp_map = new Stomp::Map(annulus_pix);
-  if (tmp_map->AddMap(*stomp_map_faraway,false)) {
+  tmp_map = new Stomp::Map(center_circle, 2.0, pixelate_resolution);
+  if (tmp_map->AddMap(*faraway_map, false)) {
     std::cout << "\t\tFaraway combined area: " << tmp_map->Area() <<
         " sq. degrees.\n";
     std::cout << "\t\tAverage weight: " << tmp_map->AverageWeight() <<
@@ -589,13 +607,16 @@ void MapMultiMapTests() {
     std::cout <<
       "\t\tBad, we should have recovered all of the original area.\n";
   }
+  output_file = "FarawayKeepSingle.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
   std::cout << "\n\t***************************\n";
   std::cout << "\t*** Multiplication Test ***\n";
   std::cout << "\t***************************\n";
-  tmp_map = new Stomp::Map(annulus_pix);
-  if (tmp_map->MultiplyMap(*stomp_map_nearby)) {
+
+  tmp_map = new Stomp::Map(center_circle, 3.0, pixelate_resolution);
+  if (tmp_map->MultiplyMap(*nearby_map, true)) {
     std::cout << "\t\tNearby overlapping area: " <<
         tmp_map->Area() << " sq. degrees.\n";
     std::cout << "\t\tAverage weight: " << tmp_map->AverageWeight() << "\n";
@@ -603,11 +624,12 @@ void MapMultiMapTests() {
     std::cout << "\t\tThis is bad," <<
         " there should have been some area left over.\n";
   }
+  output_file = "NearbyMultiplicationDropSingle.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
-  tmp_map = new Stomp::Map(annulus_pix);
-  tmp_map->ScaleWeight(2.0);
-  if (tmp_map->MultiplyMap(*stomp_map_nearby,false)) {
+  tmp_map = new Stomp::Map(center_circle, 3.0, pixelate_resolution);
+  if (tmp_map->MultiplyMap(*nearby_map, false)) {
     std::cout << "\t\tNearby combined area: " <<
         tmp_map->Area() << " sq. degrees.\n";
     std::cout << "\t\tAverage weight: " << tmp_map->AverageWeight() << "\n";
@@ -615,11 +637,12 @@ void MapMultiMapTests() {
     std::cout << "\t\tThis is bad," <<
         " there should have been some area left over.\n";
   }
+  output_file = "NearbyMultiplicationKeepSingle.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
-  tmp_map = new Stomp::Map(annulus_pix);
-  tmp_map->ScaleWeight(3.0);
-  if (tmp_map->MultiplyMap(*stomp_map_faraway,false)) {
+  tmp_map = new Stomp::Map(center_circle, 2.0, pixelate_resolution);
+  if (tmp_map->MultiplyMap(*faraway_map, false)) {
     std::cout << "\t\tFaraway combined area: " << tmp_map->Area() <<
         " sq. degrees.\n";
     std::cout << "\t\tAverage weight: " << tmp_map->AverageWeight() << "\n";
@@ -627,11 +650,12 @@ void MapMultiMapTests() {
     std::cout <<
       "\t\tBad, we should have recovered all of the original area.\n";
   }
-
+  output_file = "FarawayMultiplicationKeepSingle.map";
+  tmp_map->Write(output_file);
   delete tmp_map;
 
-  delete stomp_map_nearby;
-  delete stomp_map_faraway;
+  delete nearby_map;
+  delete faraway_map;
 }
 
 void MapRegionTests() {

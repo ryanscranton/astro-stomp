@@ -386,7 +386,7 @@ bool SubMap::Add(Map& stomp_map, bool drop_single) {
     // different weights in the input map.
     if (status == 1) {
       PixelVector match_pix;
-      stomp_map.FindMatchingPixels(*iter, match_pix);
+      stomp_map.FindMatchingPixels(*iter, match_pix, true);
       for (PixelIterator match_iter=match_pix.begin();
 	   match_iter!=match_pix.end();++match_iter) {
 	match_iter->SetWeight(match_iter->Weight() + iter->Weight());
@@ -426,7 +426,7 @@ bool SubMap::Add(Map& stomp_map, bool drop_single) {
 
       if (status == 1) {
 	PixelVector match_pix;
-	stomp_map.FindMatchingPixels(*iter, match_pix);
+	stomp_map.FindMatchingPixels(*iter, match_pix, true);
 	for (PixelIterator match_iter=match_pix.begin();
 	     match_iter!=match_pix.end();++match_iter) {
 	  match_iter->SetWeight(match_iter->Weight() + iter->Weight());
@@ -447,16 +447,61 @@ bool SubMap::Add(Map& stomp_map, bool drop_single) {
   }
 
   // That covers the area in our current map.  However, if we're not dropping
-  // area that is contained in just one map, we need to find those pixels in
-  // the input Map that didn't overlap with anything in our current Map and
-  // add those to the array of keep pixels.
+  // area that is contained in just one map, we need to find the pixels in the
+  // input Map that weren't contained entirely in our current Map.  The ones
+  // that are entirely outside our Map can be added directly.  The ones that are
+  // partially inside our Map need to be refined until we find the pieces that
+  // are outside our Map (the parts that were inside have already been handled
+  // by the procedure above).
   if (!drop_single) {
+    resolve_pix.clear();
     PixelVector stomp_pix;
     stomp_map.Pixels(stomp_pix, Superpixnum());
 
     for (PixelIterator iter=stomp_pix.begin();iter!=stomp_pix.end();++iter) {
-      // Only keep those pixels that are completely outside of our current Map.
-      if (FindUnmaskedStatus(*iter)) keep_pix.push_back(*iter);
+      int8_t status = FindUnmaskedStatus(*iter);
+
+      // If the pixel is completely outside our Map, we keep it.
+      if (status == 0) keep_pix.push_back(*iter);
+
+      // If it's partially inside, then we need to refine it to find the part
+      // not contained in our Map.
+      if (status == -1) {
+	PixelVector sub_pix;
+	iter->SubPix(2*iter->Resolution(), sub_pix);
+	for (PixelIterator sub_iter=sub_pix.begin();
+	     sub_iter!=sub_pix.end();++sub_iter) {
+	  sub_iter->SetWeight(iter->Weight());
+	  resolve_pix.push_back(*sub_iter);
+	}
+      }
+    }
+    stomp_pix.clear();
+
+    // Now we iterate over the partial pixels until we've cleared them out.
+    while (resolve_pix.size() > 0) {
+      PixelVector tmp_pix;
+      tmp_pix.reserve(resolve_pix.size());
+      for (PixelIterator iter=resolve_pix.begin();
+	   iter!=resolve_pix.end();++iter) tmp_pix.push_back(*iter);
+
+      resolve_pix.clear();
+
+      for (PixelIterator iter=tmp_pix.begin();iter!=tmp_pix.end();++iter) {
+	int8_t status = FindUnmaskedStatus(*iter);
+
+	if (status == 0) keep_pix.push_back(*iter);
+
+	if (status == -1) {
+	  PixelVector sub_pix;
+	  iter->SubPix(2*iter->Resolution(), sub_pix);
+	  for (PixelIterator sub_iter=sub_pix.begin();
+	       sub_iter!=sub_pix.end();++sub_iter) {
+	    sub_iter->SetWeight(iter->Weight());
+	    resolve_pix.push_back(*sub_iter);
+	  }
+	}
+      }
     }
   }
 
@@ -494,7 +539,7 @@ bool SubMap::Multiply(Map& stomp_map, bool drop_single) {
     // different weights in the input map.
     if (status == 1) {
       PixelVector match_pix;
-      stomp_map.FindMatchingPixels(*iter, match_pix);
+      stomp_map.FindMatchingPixels(*iter, match_pix, true);
       for (PixelIterator match_iter=match_pix.begin();
 	   match_iter!=match_pix.end();++match_iter) {
 	match_iter->SetWeight(match_iter->Weight()*iter->Weight());
@@ -534,7 +579,7 @@ bool SubMap::Multiply(Map& stomp_map, bool drop_single) {
 
       if (status == 1) {
 	PixelVector match_pix;
-	stomp_map.FindMatchingPixels(*iter, match_pix);
+	stomp_map.FindMatchingPixels(*iter, match_pix, true);
 	for (PixelIterator match_iter=match_pix.begin();
 	     match_iter!=match_pix.end();++match_iter) {
 	  match_iter->SetWeight(match_iter->Weight()*iter->Weight());
@@ -555,16 +600,61 @@ bool SubMap::Multiply(Map& stomp_map, bool drop_single) {
   }
 
   // That covers the area in our current map.  However, if we're not dropping
-  // area that is contained in just one map, we need to find those pixels in
-  // the input Map that didn't overlap with anything in our current Map and
-  // add those to the array of keep pixels.
+  // area that is contained in just one map, we need to find the pixels in the
+  // input Map that weren't contained entirely in our current Map.  The ones
+  // that are entirely outside our Map can be added directly.  The ones that are
+  // partially inside our Map need to be refined until we find the pieces that
+  // are outside our Map (the parts that were inside have already been handled
+  // by the procedure above).
   if (!drop_single) {
+    resolve_pix.clear();
     PixelVector stomp_pix;
     stomp_map.Pixels(stomp_pix, Superpixnum());
 
     for (PixelIterator iter=stomp_pix.begin();iter!=stomp_pix.end();++iter) {
-      // Only keep those pixels that are completely outside of our current Map.
-      if (FindUnmaskedStatus(*iter)) keep_pix.push_back(*iter);
+      int8_t status = FindUnmaskedStatus(*iter);
+
+      // If the pixel is completely outside our Map, we keep it.
+      if (status == 0) keep_pix.push_back(*iter);
+
+      // If it's partially inside, then we need to refine it to find the part
+      // not contained in our Map.
+      if (status == -1) {
+	PixelVector sub_pix;
+	iter->SubPix(2*iter->Resolution(), sub_pix);
+	for (PixelIterator sub_iter=sub_pix.begin();
+	     sub_iter!=sub_pix.end();++sub_iter) {
+	  sub_iter->SetWeight(iter->Weight());
+	  resolve_pix.push_back(*sub_iter);
+	}
+      }
+    }
+    stomp_pix.clear();
+
+    // Now we iterate over the partial pixels until we've cleared them out.
+    while (resolve_pix.size() > 0) {
+      PixelVector tmp_pix;
+      tmp_pix.reserve(resolve_pix.size());
+      for (PixelIterator iter=resolve_pix.begin();
+	   iter!=resolve_pix.end();++iter) tmp_pix.push_back(*iter);
+
+      resolve_pix.clear();
+
+      for (PixelIterator iter=tmp_pix.begin();iter!=tmp_pix.end();++iter) {
+	int8_t status = FindUnmaskedStatus(*iter);
+
+	if (status == 0) keep_pix.push_back(*iter);
+
+	if (status == -1) {
+	  PixelVector sub_pix;
+	  iter->SubPix(2*iter->Resolution(), sub_pix);
+	  for (PixelIterator sub_iter=sub_pix.begin();
+	       sub_iter!=sub_pix.end();++sub_iter) {
+	    sub_iter->SetWeight(iter->Weight());
+	    resolve_pix.push_back(*sub_iter);
+	  }
+	}
+      }
     }
   }
 
@@ -712,6 +802,10 @@ bool SubMap::Initialized() {
 
 bool SubMap::Unsorted() {
   return unsorted_;
+}
+
+void SubMap::SetUnsorted() {
+  unsorted_ = true;
 }
 
 uint32_t SubMap::MinResolution() {
@@ -2137,6 +2231,7 @@ bool Map::IngestMap(PixelVector& pix, bool destroy_copy) {
   for (PixelIterator iter=pix.begin();iter!=pix.end();++iter) {
     uint32_t k = iter->Superpixnum();
     sub_map_[k].AddPixel(*iter);
+    sub_map_[k].SetUnsorted();
   }
 
   if (destroy_copy) pix.clear();
@@ -2159,6 +2254,7 @@ bool Map::IngestMap(Map& stomp_map, bool destroy_copy) {
 
     for (uint32_t i=0;i<tmp_pix.size();i++) {
       sub_map_[iter->Superpixnum()].AddPixel(tmp_pix[i]);
+      sub_map_[iter->Superpixnum()].SetUnsorted();
     }
   }
 
