@@ -15,6 +15,7 @@
 #include "stomp_util.h"
 %}
 
+%include stdint.i
 %include stl.i
 %include std_string.i
 %include std_pair.i
