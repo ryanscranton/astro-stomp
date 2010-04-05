@@ -141,8 +141,13 @@ class RenderArea : public QWidget {
   void useSurveyCoordinates();
   void useEquatorialCoordinates();
   void useGalacticCoordinates();
+
+  // In order to help navigate the map presented, we have zoom in and zoom out
+  // functionality (default is x2 zoom).
   void zoomIn();
   void zoomOut();
+  void zoomIn(double zoom_factor);
+  void zoomOut(double zoom_factor);
 
   // Fill the polygons. Or don't.
   void fillPolygons(bool fill_polygons);
@@ -179,13 +184,33 @@ class RenderArea : public QWidget {
   void newMapParameters();
 
  protected:
+  // paintEvent is an over-ridden method from the QWidget class that we use to
+  // render our displayed Map/Points/Grid image.  paintEvent is called every
+  // time the window system needs to re-draw the window, so it's called very
+  // frequently.  To keep from having to re-render each time paintEvent is
+  // called, we put each of the Map/Points/Grid images into a QPixmap which
+  // paintEvent re-draws each time it's called.
   void paintEvent(QPaintEvent *event);
+
+  // Another over-ridden QWidget method.  By default, double-clicking on our
+  // rendered area zooms in on the location clicked by a factor of 2.
   void mouseDoubleClickEvent(QMouseEvent *event);
-  void zoomIn(double new_longitude_center, double new_latitude_center);
-  void zoomOut(double new_longitude_center, double new_latitude_center);
+
+  // These methods handle both the double click zoom and the zoom functionality
+  // allowed by the zoom slot.
+  void zoomIn(double new_longitude_center, double new_latitude_center,
+	      double zoom_factor = 2.0);
+  void zoomOut(double new_longitude_center, double new_latitude_center,
+	       double zoom_factor = 2.0);
+
+  // When we do need to change the Map/Points/Grid QPixmaps, these methods
+  // are called.
   bool paintMap(QPaintDevice *device);
   bool paintPoints(QPaintDevice *device);
   bool paintGrid(QPaintDevice *device);
+
+  // The remainder of these methods are for purely internal usage.  First up,
+  // the methods for drawing the Grid QPixmap.
   void _drawLonTick(QPainter* painter, double longitude, bool major_tick);
   void _drawLonTickLabel(QPainter* painter, double longitude);
   void _drawLatTick(QPainter* painter, double latitude, bool major_tick);
@@ -194,13 +219,16 @@ class RenderArea : public QWidget {
   void _drawLatLabel(QPainter* painter, QString& label);
   void _drawLonGrid(QPainter* painter, double longitude);
   void _drawLatGrid(QPainter* painter, double latitude);
+
+  // A set of methods for returning the weight and coordinate bounds based on
+  // either an input Map or set of AngualarCoordinates.
   void _findNewWeightBounds(Stomp::Map* stomp_map);
   void _findNewWeightBounds(Stomp::WAngularVector& ang);
   void _findNewImageBounds(Stomp::Map* stomp_map);
   void _findNewImageBounds(Stomp::WAngularVector& ang);
   void _findNewMaxResolution(Stomp::Map* stomp_map);
 
-  // For checkBounds, we have no initial idea of what the coordinate bounds
+  // For _checkBounds, we have no initial idea of what the coordinate bounds
   // are or should be.  Hence, it will handle cases under the assumption of
   // maximum ignorance.  For _enforceBounds, we know we have lon-lat values that
   // are valid, we just need to check against possible double precision errors
@@ -208,6 +236,13 @@ class RenderArea : public QWidget {
   void _checkBounds();
   void _enforceBounds(double& lon, double& lat);
 
+  // When rendering the pixels, we have a few cases to consider.  If a pixel is
+  // so small that rendering it would cover just a few pixels in our QPixmap,
+  // we're better off just putting a point there than spending time drawing the
+  // full polygon.  If the pixel is big enough to be rendered, but wraps past
+  // the longitude disontinuity, then we have to draw both halves separately.
+  // Finally, there's just the simple case of taking a pixel and turning it into
+  // a polygon.
   void _pixelToPoint(uint32_t pixel_x, uint32_t pixel_y,
 		     uint32_t resolution, QPointF& point);
   void _pixelToPolygon(uint32_t pixel_x, uint32_t pixel_y,
@@ -215,20 +250,45 @@ class RenderArea : public QWidget {
   void _splitPixelToPolygons(uint32_t pixel_x, uint32_t pixel_y,
 			     uint32_t resolution, QPolygonF& left_polygon,
 			     QPolygonF& right_polygon);
+
+  // AngularCoordinates are simply turned into QPointFs.
   bool _angToPoint(Stomp::WeightedAngularCoordinate& w_ang, QPointF& point);
+
+  // Four methods for going back and forth between angular space and QPixmap
+  // XY pixel-space.
   qreal _lonToX(double longitude);
   qreal _latToY(double latitude);
   double _xToLon(qreal pixel_x);
   double _yToLat(qreal pixel_y);
+
+  // Thanks to the longitude discontinuity and the fact that the longitude spans
+  // for our various coordinate systems aren't the same, it's easier to put
+  // these values into functions rather than re-calculating them in various
+  // methods.
   double _lonRange();
   double _latRange();
   double _lonCenter();
   double _latCenter();
+
+  // Translate between Cartesian and Aitoff-Hammer projections.
   void _cartesianToAitoff(double& longitude, double& latitude);
+
+  // Given an input weight, return a value between [0,1) that we can use to
+  // select the appropriate Pallete color.
   double _normalizeWeight(double weight);
   double _normalizePointsWeight(double weight);
+
+  // Based on the current display bounds, figure out the area of a QPixmap
+  // pixel.  Any Pixels with areas smaller than that should be rendered with
+  // _pixelToPoint instead of _pixelToPolygon
   double _renderPixelArea();
+
+  // Based on the current display bounds, find the version of the input map
+  // that contains a reasonable number of Pixels for rendering.
   void _findRenderLevel(uint32_t target_pixels = 100000);
+
+  // Since our set of Maps is complicated (and may contain duplicate pointers),
+  // we need to be careful when deleting them so we don't free a pointer twice.
   void _clearMaps();
 
  private:

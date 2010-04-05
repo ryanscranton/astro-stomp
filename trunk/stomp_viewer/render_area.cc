@@ -208,14 +208,6 @@ QSize RenderArea::sizeHint() const {
   return QSize(1024, 512);
 }
 
-bool RenderArea::autoUpdating() {
-  return auto_update_;
-}
-
-bool RenderArea::fullSky() {
-  return full_sky_;
-}
-
 double RenderArea::weightMin() {
   return weight_min_;
 }
@@ -250,6 +242,14 @@ double RenderArea::latitudeMax() {
 
 uint32_t RenderArea::maxResolution() {
   return max_resolution_;
+}
+
+bool RenderArea::autoUpdating() {
+  return auto_update_;
+}
+
+bool RenderArea::fullSky() {
+  return full_sky_;
 }
 
 bool RenderArea::displayingCoordinates() {
@@ -573,6 +573,22 @@ void RenderArea::useGalacticCoordinates() {
   if (auto_update_) updatePixmap();
 }
 
+void RenderArea::zoomIn() {
+  zoomIn(_lonCenter(), _latCenter());
+}
+
+void RenderArea::zoomOut() {
+  zoomOut(_lonCenter(), _latCenter());
+}
+
+void RenderArea::zoomIn(double zoom_factor) {
+  zoomIn(_lonCenter(), _latCenter(), zoom_factor);
+}
+
+void RenderArea::zoomOut(double zoom_factor) {
+  zoomOut(_lonCenter(), _latCenter(), zoom_factor);
+}
+
 void RenderArea::fillPolygons(bool fill_polygons) {
   fill_ = fill_polygons;
   if (auto_update_) updatePixmap();
@@ -629,17 +645,20 @@ void RenderArea::mouseDoubleClickEvent(QMouseEvent *event) {
     zoomIn(_xToLon(new_center.x()), _yToLat(new_center.y()));
 }
 
-void RenderArea::zoomIn() {
-  zoomIn(_lonCenter(), _latCenter());
-}
-
 void RenderArea::zoomIn(double new_longitude_center,
-			double new_latitude_center) {
-  lonmin_ = new_longitude_center - 0.25*_lonRange();
-  lonmax_ = new_longitude_center + 0.25*_lonRange();
+			double new_latitude_center,
+			double zoom_factor) {
+  // After zooming in, the longitude range (2*lon_span), should decrease by
+  // 1/zoom_factor.
+  double lon_span = 0.5*_lonRange()/zoom_factor;
 
-  latmin_ = new_latitude_center - 0.25*_latRange();
-  latmax_ = new_latitude_center + 0.25*_latRange();
+  lonmin_ = new_longitude_center - lon_span;
+  lonmax_ = new_longitude_center + lon_span;
+
+  double lat_span = 0.5*_latRange()/zoom_factor;
+
+  latmin_ = new_latitude_center - lat_span;
+  latmax_ = new_latitude_center + lat_span;
 
   _checkBounds();
 
@@ -648,36 +667,36 @@ void RenderArea::zoomIn(double new_longitude_center,
   emit newMapParameters();
 }
 
-void RenderArea::zoomOut() {
-  zoomOut(_lonCenter(), _latCenter());
-}
-
 void RenderArea::zoomOut(double new_longitude_center,
-			 double new_latitude_center) {
-  double lon_range = _lonRange();
-  double lat_range = _latRange();
+			 double new_latitude_center,
+			 double zoom_factor) {
+  // After zooming out, the longitude range (2*lon_span), should increase by
+  // zoom_factor.
+  double lon_span = 0.5*_lonRange()*zoom_factor;
+  double lat_span = 0.5*_latRange()*zoom_factor;
 
-  if (Stomp::DoubleLE(lon_range, 180.0) && Stomp::DoubleLE(lat_range, 90.0)) {
+  if (Stomp::DoubleLE(lon_span, 180.0) &&
+      Stomp::DoubleLE(lat_span, 90.0)) {
     // Provided that zooming out won't max out either of our coordinates, we
-    // can safely double each range.
-    lonmin_ = new_longitude_center - lon_range;
-    lonmax_ = new_longitude_center + lon_range;
+    // can safely increase each range.
+    lonmin_ = new_longitude_center - lon_span;
+    lonmax_ = new_longitude_center + lon_span;
 
-    latmin_ = new_latitude_center - lat_range;
-    latmax_ = new_latitude_center + lat_range;
+    latmin_ = new_latitude_center - lat_span;
+    latmax_ = new_latitude_center + lat_span;
   } else {
-    if (Stomp::DoubleGE(lon_range, 180.0) &&
-	Stomp::DoubleGE(lat_range, 90.0)) {
-      // If doubling both ranges means we'd encompass at least the full sphere
+    if (Stomp::DoubleGE(lon_span, 180.0) &&
+	Stomp::DoubleGE(lat_span, 90.0)) {
+      // If increasing both ranges means we'd encompass at least the full sphere
       // then go to that option.
       setFullSky(true);
       setFullSky(false);
     } else {
-      // Otherwise, we double if we can or set to the maximum allowed range if
-      // we can't.
-      if (Stomp::DoubleLE(lon_range, 180.0)) {
-	lonmin_ = new_longitude_center - lon_range;
-	lonmax_ = new_longitude_center + lon_range;
+      // Otherwise, we increase if we can or set to the maximum allowed range
+      // if we can't.
+      if (Stomp::DoubleLE(lon_span, 180.0)) {
+	lonmin_ = new_longitude_center - lon_span;
+	lonmax_ = new_longitude_center + lon_span;
       } else {
 	if (sphere_ == Stomp::AngularCoordinate::Survey) {
 	  lonmin_ = -180.0;
@@ -687,9 +706,9 @@ void RenderArea::zoomOut(double new_longitude_center,
 	  lonmax_ = 360.0;
 	}
       }
-      if (Stomp::DoubleLE(lat_range, 90.0)) {
-	latmin_ = new_latitude_center - lat_range;
-	latmax_ = new_latitude_center + lat_range;
+      if (Stomp::DoubleLE(lat_span, 90.0)) {
+	latmin_ = new_latitude_center - lat_span;
+	latmax_ = new_latitude_center + lat_span;
       } else {
 	latmin_ = -90.0;
 	latmax_ = 90.0;
@@ -1095,27 +1114,6 @@ void RenderArea::_drawLatGrid(QPainter* painter, double latitude) {
   painter->setPen(QPen(Qt::darkGray));
 }
 
-double RenderArea::_renderPixelArea() {
-  double n_pixel =
-    static_cast<double>((width() - buffer_left_ - buffer_right_)*
-			(height() - buffer_top_ - buffer_bottom_));
-
-  double cartesian_area = (latmax_ - latmin_)*(lonmax_ - lonmin_);
-
-  return cartesian_area/n_pixel;
-}
-
-void RenderArea::_findRenderLevel(uint32_t target_pixels) {
-  render_level_ = Stomp::HPixLevel;
-  for (uint8_t level=Stomp::HPixLevel+1;level<=Stomp::MaxPixelLevel;level++) {
-    if (stomp_map_[level]->Size() < target_pixels) {
-      render_level_ = level;
-    } else {
-      break;
-    }
-  }
-}
-
 void RenderArea::_findNewWeightBounds(Stomp::Map* stomp_map) {
   setWeightRange(stomp_map->MinWeight(), stomp_map->MaxWeight());
 }
@@ -1266,6 +1264,46 @@ void RenderArea::_enforceBounds(double& lon, double& lat) {
     if (Stomp::DoubleGE(lon, 360.0)) lon = 360.0 - 0.0000001;
     if (Stomp::DoubleLE(lon, 0.0)) lon = 0.0 + 0.0000001;
   }
+}
+
+void RenderArea::_pixelToPoint(uint32_t pixel_x, uint32_t pixel_y,
+			       uint32_t resolution, QPointF& point) {
+  uint32_t nx = resolution*Stomp::Nx0;
+  uint32_t ny = resolution*Stomp::Ny0;
+
+  double lat_center =
+    90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+0.5)/ny);
+  double lon_center =
+    Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.5))/nx +
+    Stomp::EtaOffSet;
+  if (Stomp::DoubleGT(lon_center, 180.0)) lon_center -= 360.0;
+  if (Stomp::DoubleLT(lon_center, -180.0)) lon_center += 360.0;
+
+  double tmp_lon, tmp_lat;
+
+  switch (sphere_) {
+  case Stomp::AngularCoordinate::Survey:
+    break;
+  case Stomp::AngularCoordinate::Equatorial:
+    Stomp::AngularCoordinate::SurveyToEquatorial(lat_center, lon_center,
+						 tmp_lon, tmp_lat);
+    lon_center = tmp_lon;
+    lat_center = tmp_lat;
+    break;
+  case Stomp::AngularCoordinate::Galactic:
+    Stomp::AngularCoordinate::SurveyToGalactic(lat_center, lon_center,
+					       tmp_lon, tmp_lat);
+    lon_center = tmp_lon;
+    lat_center = tmp_lat;
+    break;
+  }
+
+  _enforceBounds(lon_center, lat_center);
+
+  if (aitoff_projection_) _cartesianToAitoff(lon_center, lat_center);
+
+  point.setX(_lonToX(lon_center));
+  point.setY(_latToY(lat_center));
 }
 
 void RenderArea::_pixelToPolygon(uint32_t pixel_x, uint32_t pixel_y,
@@ -1691,46 +1729,6 @@ void RenderArea::_splitPixelToPolygons(uint32_t pixel_x, uint32_t pixel_y,
   right_polygon << QPointF(_lonToX(right_lon), _latToY(lat));
 }
 
-void RenderArea::_pixelToPoint(uint32_t pixel_x, uint32_t pixel_y,
-			       uint32_t resolution, QPointF& point) {
-  uint32_t nx = resolution*Stomp::Nx0;
-  uint32_t ny = resolution*Stomp::Ny0;
-
-  double lat_center =
-    90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+0.5)/ny);
-  double lon_center =
-    Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.5))/nx +
-    Stomp::EtaOffSet;
-  if (Stomp::DoubleGT(lon_center, 180.0)) lon_center -= 360.0;
-  if (Stomp::DoubleLT(lon_center, -180.0)) lon_center += 360.0;
-
-  double tmp_lon, tmp_lat;
-
-  switch (sphere_) {
-  case Stomp::AngularCoordinate::Survey:
-    break;
-  case Stomp::AngularCoordinate::Equatorial:
-    Stomp::AngularCoordinate::SurveyToEquatorial(lat_center, lon_center,
-						 tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  case Stomp::AngularCoordinate::Galactic:
-    Stomp::AngularCoordinate::SurveyToGalactic(lat_center, lon_center,
-					       tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  }
-
-  _enforceBounds(lon_center, lat_center);
-
-  if (aitoff_projection_) _cartesianToAitoff(lon_center, lat_center);
-
-  point.setX(_lonToX(lon_center));
-  point.setY(_latToY(lat_center));
-}
-
 bool RenderArea::_angToPoint(Stomp::WeightedAngularCoordinate& ang,
 			     QPointF& point) {
   double latitude, longitude;
@@ -1765,30 +1763,6 @@ bool RenderArea::_angToPoint(Stomp::WeightedAngularCoordinate& ang,
   }
 
   return inside_bounds;
-}
-
-double RenderArea::_normalizeWeight(double weight) {
-  if (Stomp::DoubleGE(weight, weight_max_)) weight = weight_max_;
-  if (Stomp::DoubleLE(weight, weight_min_)) weight = weight_min_;
-  return (weight - weight_min_)/(weight_max_ - weight_min_);
-}
-
-double RenderArea::_normalizePointsWeight(double weight) {
-  if (Stomp::DoubleGE(weight, points_weight_max_)) weight = points_weight_max_;
-  if (Stomp::DoubleLE(weight, points_weight_min_)) weight = points_weight_min_;
-  return
-    (weight - points_weight_min_)/(points_weight_max_ - points_weight_min_);
-}
-
-void RenderArea::_clearMaps() {
-  delete stomp_map_[Stomp::MaxPixelLevel];
-  for (uint8_t level=Stomp::MaxPixelLevel-1;level>=Stomp::HPixLevel;level--) {
-    if (stomp_map_[level] != stomp_map_[level+1])
-      delete stomp_map_[level];
-  }
-
-  stomp_map_.clear();
-  good_map_ = false;
 }
 
 qreal RenderArea::_lonToX(double longitude) {
@@ -1909,3 +1883,49 @@ void RenderArea::_cartesianToAitoff(double& longitude, double& latitude) {
       (sphere_ == Stomp::AngularCoordinate::Galactic)) longitude += 180.0;
   latitude = sin(delta)*r2/denom;
 }
+
+double RenderArea::_normalizeWeight(double weight) {
+  if (Stomp::DoubleGE(weight, weight_max_)) weight = weight_max_;
+  if (Stomp::DoubleLE(weight, weight_min_)) weight = weight_min_;
+  return (weight - weight_min_)/(weight_max_ - weight_min_);
+}
+
+double RenderArea::_normalizePointsWeight(double weight) {
+  if (Stomp::DoubleGE(weight, points_weight_max_)) weight = points_weight_max_;
+  if (Stomp::DoubleLE(weight, points_weight_min_)) weight = points_weight_min_;
+  return
+    (weight - points_weight_min_)/(points_weight_max_ - points_weight_min_);
+}
+
+double RenderArea::_renderPixelArea() {
+  double n_pixel =
+    static_cast<double>((width() - buffer_left_ - buffer_right_)*
+			(height() - buffer_top_ - buffer_bottom_));
+
+  double cartesian_area = _lonRange()*_latRange();
+
+  return cartesian_area/n_pixel;
+}
+
+void RenderArea::_findRenderLevel(uint32_t target_pixels) {
+  render_level_ = Stomp::HPixLevel;
+  for (uint8_t level=Stomp::HPixLevel+1;level<=Stomp::MaxPixelLevel;level++) {
+    if (stomp_map_[level]->Size() < target_pixels) {
+      render_level_ = level;
+    } else {
+      break;
+    }
+  }
+}
+
+void RenderArea::_clearMaps() {
+  delete stomp_map_[Stomp::MaxPixelLevel];
+  for (uint8_t level=Stomp::MaxPixelLevel-1;level>=Stomp::HPixLevel;level--) {
+    if (stomp_map_[level] != stomp_map_[level+1])
+      delete stomp_map_[level];
+  }
+
+  stomp_map_.clear();
+  good_map_ = false;
+}
+
