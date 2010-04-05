@@ -932,7 +932,7 @@ Map::Map(PixelVector& pix, bool force_resolve) {
   }
 }
 
-Map::Map(std::string& InputFile, bool hpixel_format, bool weighted_map) {
+Map::Map(const std::string& InputFile, bool hpixel_format, bool weighted_map) {
   Read(InputFile, hpixel_format, weighted_map);
 }
 
@@ -1678,7 +1678,7 @@ void Map::GenerateRandomPoints(WAngularVector& ang,
   }
 }
 
-bool Map::Write(std::string& OutputFile, bool hpixel_format,
+bool Map::Write(const std::string& OutputFile, bool hpixel_format,
 		bool weighted_map) {
   std::ofstream output_file(OutputFile.c_str());
 
@@ -1723,7 +1723,7 @@ bool Map::Write(std::string& OutputFile, bool hpixel_format,
   }
 }
 
-bool Map::Read(std::string& InputFile, bool hpixel_format,
+bool Map::Read(const std::string& InputFile, bool hpixel_format,
 	       bool weighted_map) {
   Clear();
 

@@ -1,18 +1,18 @@
 %module stomp
 %{
-#include "stomp_core.h"
-#include "stomp_angular_bin.h"
-#include "stomp_angular_coordinate.h"
-#include "stomp_angular_correlation.h"
-#include "stomp_pixel.h"
-#include "stomp_scalar_pixel.h"
-#include "stomp_tree_pixel.h"
-#include "stomp_base_map.h"
-#include "stomp_map.h"
-#include "stomp_scalar_map.h"
-#include "stomp_tree_map.h"
-#include "stomp_geometry.h"
-#include "stomp_util.h"
+#include "../stomp_core.h"
+#include "../stomp_angular_bin.h"
+#include "../stomp_angular_coordinate.h"
+#include "../stomp_angular_correlation.h"
+#include "../stomp_pixel.h"
+#include "../stomp_scalar_pixel.h"
+#include "../stomp_tree_pixel.h"
+#include "../stomp_base_map.h"
+#include "../stomp_map.h"
+#include "../stomp_scalar_map.h"
+#include "../stomp_tree_map.h"
+#include "../stomp_geometry.h"
+#include "../stomp_util.h"
 %}
 
 %include stdint.i
@@ -65,16 +65,16 @@ typedef std::priority_queue<DistancePointPair,
   std::vector<DistancePointPair>, NearestNeighborPoint> PointQueue;
 }
 
-%include "stomp_core.h"
-%include "stomp_angular_bin.h"
-%include "stomp_angular_correlation.h"
-%include "stomp_pixel.h"
-%include "stomp_scalar_pixel.h"
-%include "stomp_base_map.h"
-%include "stomp_map.h"
-%include "stomp_scalar_map.h"
-%include "stomp_geometry.h"
-%include "stomp_util.h"
+%include "../stomp_core.h"
+%include "../stomp_angular_bin.h"
+%include "../stomp_angular_correlation.h"
+%include "../stomp_pixel.h"
+%include "../stomp_scalar_pixel.h"
+%include "../stomp_base_map.h"
+%include "../stomp_map.h"
+%include "../stomp_scalar_map.h"
+%include "../stomp_geometry.h"
+%include "../stomp_util.h"
 
 namespace Stomp {
 
@@ -501,3 +501,6 @@ class TreeMap : public BaseMap {
 
 } // end namespace Stomp
 
+%template(AngularVector) std::vector<Stomp::AngularCoordinate>;
+%template(WAngularVector) std::vector<Stomp::WeightedAngularCoordinate>;
+%template(PixelVector) std::vector<Stomp::Pixel>;
