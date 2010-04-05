@@ -503,7 +503,7 @@ void ScalarMap::InitializeFromScalarPixels(ScalarVector& pix,
 
 bool ScalarMap::AddToMap(AngularCoordinate& ang, double object_weight) {
   ScalarPixel tmp_pix(ang,resolution_,object_weight,1);
-
+  bool added_point = false;
   uint32_t k = tmp_pix.Superpixnum();
 
   if (sub_map_[k].Initialized()) {
@@ -520,18 +520,16 @@ bool ScalarMap::AddToMap(AngularCoordinate& ang, double object_weight) {
       }
       total_intensity_ += object_weight;
       total_points_++;
-      return true;
-    } else {
-      return false;
+      added_point = true;
     }
-  } else {
-    return false;
   }
+
+  return added_point;
 }
 
 bool ScalarMap::AddToMap(WeightedAngularCoordinate& ang) {
   ScalarPixel tmp_pix(ang,resolution_,ang.Weight());
-
+  bool added_point = false;
   uint32_t k = tmp_pix.Superpixnum();
 
   if (sub_map_[k].Initialized()) {
@@ -548,17 +546,16 @@ bool ScalarMap::AddToMap(WeightedAngularCoordinate& ang) {
       }
       total_intensity_ += ang.Weight();
       total_points_++;
-      return true;
-    } else {
-      return false;
+      added_point = true;
     }
-  } else {
-    return false;
   }
+
+  return added_point;
 }
 
 bool ScalarMap::AddToMap(Pixel& pix) {
   uint32_t k = pix.Superpixnum();
+  bool added_pixel = false;
 
   if (sub_map_[k].Initialized() && (pix.Resolution() <= resolution_) &&
       (map_type_ == ScalarField)) {
@@ -581,10 +578,10 @@ bool ScalarMap::AddToMap(Pixel& pix) {
 	total_intensity_ += pix.Weight();
       }
     }
-    return true;
-  } else {
-    return false;
+    added_pixel = true;
   }
+
+  return added_pixel;
 }
 
 void ScalarMap::Coverage(PixelVector& superpix, uint32_t resolution) {

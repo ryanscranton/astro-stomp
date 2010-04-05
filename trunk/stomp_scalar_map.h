@@ -190,12 +190,6 @@ class ScalarMap : public BaseMap {
   // value is false.  For wholesale sampling from a Map, use InitializeFromMap.
   bool AddToMap(Pixel& pix);
 
-  // Finally, if we want to set the map values directly, we can add a
-  // ScalarPixel to the map.  If the resolution of the pixel doesn't match the
-  // map resolution or the pixel can't be found in the map, the return value is
-  // false.
-  bool AddToMap(ScalarPixel& pix);
-
   // The instance of the same methods from the BaseMap class.  Note that, if
   // the input pixel is at a higher resolution than the current map,
   // FindUnmaskedFraction will return an invalid value (-1.0).  Likewise,

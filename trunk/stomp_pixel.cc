@@ -2062,9 +2062,9 @@ void Pixel::Pix2Ang(uint32_t input_resolution, uint32_t input_pixnum,
 }
 
 void Pixel::Pix2HPix(uint32_t input_resolution,
-		     uint32_t input_pixnum,
-		     uint32_t& output_hpixnum,
-		     uint32_t& output_superpixnum) {
+                     uint32_t input_pixnum,
+                     uint32_t& output_hpixnum,
+                     uint32_t& output_superpixnum) {
   uint32_t nx = Nx0*input_resolution;
 
   uint32_t y = input_pixnum/nx;
@@ -2080,6 +2080,25 @@ void Pixel::Pix2HPix(uint32_t input_resolution,
 
   output_hpixnum = hnx*y + x;
   output_superpixnum = Nx0*HPixResolution*y0 + x0;
+}
+
+void Pixel::HPix2Pix(uint32_t input_resolution,
+                     uint32_t input_hpixnum,
+                     uint32_t input_superpixnum,
+                     uint32_t& output_pixnum) {
+  uint32_t nx = Nx0*input_resolution;
+  uint32_t hnx = input_resolution/HPixResolution;
+
+  uint32_t y0 = input_superpixnum/(Nx0*HPixResolution);
+  uint32_t x0 = input_superpixnum - y0*Nx0*HPixResolution;
+
+  y0 *= input_resolution/HPixResolution;
+  x0 *= input_resolution/HPixResolution;
+
+  uint32_t y = input_hpixnum/hnx;
+  uint32_t x = input_hpixnum - hnx*y;
+
+  output_pixnum = nx*(y+y0) + x+x0;
 }
 
 void Pixel::SuperPix(uint32_t hi_resolution, uint32_t hi_pixnum,
