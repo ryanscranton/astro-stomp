@@ -65,13 +65,6 @@ class AngularCoordinate {
                     double unit_sphere_z);
   ~AngularCoordinate();
 
-  // In addition to the angular coordinate, this class also allows you to
-  // extract the X-Y-Z Cartesian coordinates of the angular position on a unit
-  // sphere.  This method initializes that functionality, but probably
-  // shouldn't ever need to be called explicitly since it's called whenever
-  // necessary by the associated methods.
-  void InitializeUnitSphere();
-
   // These three methods let you explicitly set the angular coordinate in one
   // of the supported angular coordinate systems.  Calling these methods resets
   // any other previous values that the AngularCoordinate instance may have

@@ -84,7 +84,6 @@ class TreeMap : public BaseMap {
   uint32_t FindPairs(AngularCoordinate& ang,
 		     double theta_min, double theta_max);
   uint32_t FindPairs(AngularCoordinate& ang, double theta_max);
-  void FindPairs(AngularCoordinate& ang, AngularCorrelation& wtheta);
   void FindPairs(AngularVector& ang, AngularBin& theta);
   void FindPairs(AngularVector& ang, AngularCorrelation& wtheta);
 
@@ -178,71 +177,6 @@ class TreeMap : public BaseMap {
                                     const std::string& ang_field_name,
                                     AngularCorrelation& wtheta,
                                     const std::string& field_name);
-
-  // In many cases, we want to find pairs within the TreeMap itself.  These
-  // methods allow for that without having to incur the full memory hit of
-  // having a full copy of the data in memory at any one time.
-  void FindPairs(AngularBin& theta);
-  void FindPairs(AngularCorrelation& wtheta);
-  void FindWeightedPairs(AngularBin& theta);
-  void FindWeightedPairs(AngularCorrelation& wtheta);
-  void FindWeightedPairs(AngularBin& theta, const std::string& field_name);
-  void FindWeightedPairs(AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindWeightedPairs(const std::string& ang_field_name, AngularBin& theta,
-			 const std::string& field_name);
-  void FindWeightedPairs(const std::string& ang_field_name,
-			 AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindPairsWithRegions(AngularBin& theta);
-  void FindPairsWithRegions(AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(AngularBin& theta);
-  void FindWeightedPairsWithRegions(AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(AngularCorrelation& wtheta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(const std::string& ang_field_name,
-				    AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(const std::string& ang_field_name,
-				    AngularCorrelation& wtheta,
-				    const std::string& field_name);
-
-  // The final set of iterations takes another TreeMap as an argument.  Like
-  // the previous set, this allows for cross-correlation between data sets
-  // while keeping the memory footprint smaller.
-  void FindPairs(TreeMap& tree_map, AngularBin& theta);
-  void FindPairs(TreeMap& tree_map, AngularCorrelation& wtheta);
-  void FindWeightedPairs(TreeMap& tree_map, AngularBin& theta);
-  void FindWeightedPairs(TreeMap& tree_map, AngularCorrelation& wtheta);
-  void FindWeightedPairs(TreeMap& tree_map, AngularBin& theta,
-			 const std::string& field_name);
-  void FindWeightedPairs(TreeMap& tree_map, AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindWeightedPairs(TreeMap& tree_map, const std::string& ang_field_name,
-			 AngularBin& theta, const std::string& field_name);
-  void FindWeightedPairs(TreeMap& tree_map, const std::string& ang_field_name,
-			 AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindPairsWithRegions(TreeMap& tree_map, AngularBin& theta);
-  void FindPairsWithRegions(TreeMap& tree_map, AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map, AngularBin& theta);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map, AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    AngularCorrelation& wtheta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    const std::string& ang_field_name,
-				    AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    const std::string& ang_field_name,
-				    AngularCorrelation& wtheta,
-				    const std::string& field_name);
 
   // In addition to pair finding, we can also use the tree structure we've
   // built to do efficient nearest neighbor searches.  In the general case,

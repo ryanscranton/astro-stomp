@@ -90,7 +90,6 @@ class AngularCoordinate {
                     double unit_sphere_z);
   ~AngularCoordinate();
 
-  void InitializeUnitSphere();
   void SetSurveyCoordinates(double lambda, double eta);
   void SetEquatorialCoordinates(double ra, double dec);
   void SetGalacticCoordinates(double gal_lon, double gal_lat);
@@ -372,7 +371,6 @@ class TreeMap : public BaseMap {
   uint32_t FindPairs(AngularCoordinate& ang,
 		     double theta_min, double theta_max);
   uint32_t FindPairs(AngularCoordinate& ang, double theta_max);
-  void FindPairs(AngularCoordinate& ang, AngularCorrelation& wtheta);
   void FindPairs(AngularVector& ang, AngularBin& theta);
   void FindPairs(AngularVector& ang, AngularCorrelation& wtheta);
   double FindWeightedPairs(AngularCoordinate& ang, AngularBin& theta);
@@ -455,63 +453,6 @@ class TreeMap : public BaseMap {
                                     const std::string& ang_field_name,
                                     AngularCorrelation& wtheta,
                                     const std::string& field_name);
-  void FindPairs(AngularBin& theta);
-  void FindPairs(AngularCorrelation& wtheta);
-  void FindWeightedPairs(AngularBin& theta);
-  void FindWeightedPairs(AngularCorrelation& wtheta);
-  void FindWeightedPairs(AngularBin& theta, const std::string& field_name);
-  void FindWeightedPairs(AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindWeightedPairs(const std::string& ang_field_name, AngularBin& theta,
-			 const std::string& field_name);
-  void FindWeightedPairs(const std::string& ang_field_name,
-			 AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindPairsWithRegions(AngularBin& theta);
-  void FindPairsWithRegions(AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(AngularBin& theta);
-  void FindWeightedPairsWithRegions(AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(AngularCorrelation& wtheta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(const std::string& ang_field_name,
-				    AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(const std::string& ang_field_name,
-				    AngularCorrelation& wtheta,
-				    const std::string& field_name);
-  void FindPairs(TreeMap& tree_map, AngularBin& theta);
-  void FindPairs(TreeMap& tree_map, AngularCorrelation& wtheta);
-  void FindWeightedPairs(TreeMap& tree_map, AngularBin& theta);
-  void FindWeightedPairs(TreeMap& tree_map, AngularCorrelation& wtheta);
-  void FindWeightedPairs(TreeMap& tree_map, AngularBin& theta,
-			 const std::string& field_name);
-  void FindWeightedPairs(TreeMap& tree_map, AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindWeightedPairs(TreeMap& tree_map, const std::string& ang_field_name,
-			 AngularBin& theta, const std::string& field_name);
-  void FindWeightedPairs(TreeMap& tree_map, const std::string& ang_field_name,
-			 AngularCorrelation& wtheta,
-			 const std::string& field_name);
-  void FindPairsWithRegions(TreeMap& tree_map, AngularBin& theta);
-  void FindPairsWithRegions(TreeMap& tree_map, AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map, AngularBin& theta);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    AngularCorrelation& wtheta);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map, AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    AngularCorrelation& wtheta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    const std::string& ang_field_name,
-				    AngularBin& theta,
-				    const std::string& field_name);
-  void FindWeightedPairsWithRegions(TreeMap& tree_map,
-				    const std::string& ang_field_name,
-				    AngularCorrelation& wtheta,
-				    const std::string& field_name);
   uint16_t FindKNearestNeighbors(AngularCoordinate& ang, uint8_t n_neighbors,
 				 WAngularVector& neighbors_ang);
   uint16_t FindNearestNeighbor(AngularCoordinate& ang,

@@ -84,7 +84,6 @@ class SubMap {
   void AddConstantWeight(const double add_weight);
   void InvertWeight();
   void Pixels(PixelVector& pix);
-  void CheckResolution(uint32_t resolution);
   void Clear();
   uint32_t Superpixnum();
   PixelIterator Begin();

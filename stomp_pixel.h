@@ -365,11 +365,11 @@ class Pixel {
   static void Pix2Ang(uint32_t resolution, uint32_t pixnum,
                       AngularCoordinate& ang);
   static void Pix2HPix(uint32_t input_resolution, uint32_t input_pixnum,
-		       uint32_t& output_hpixnum,
-		       uint32_t& output_superpixnum);
+                       uint32_t& output_hpixnum,
+                       uint32_t& output_superpixnum);
   static void HPix2Pix(uint32_t input_resolution, uint32_t input_hpixnum,
-		       uint32_t input_superpixnum,
-		       uint32_t& output_pixnum);
+                       uint32_t input_superpixnum,
+                       uint32_t& output_pixnum);
   static void SuperPix(uint32_t hi_resolution, uint32_t hi_pixnum,
                        uint32_t lo_resolution, uint32_t& lo_pixnum);
   static void SubPix(uint32_t lo_resolution, uint32_t hi_pixnum,
@@ -438,7 +438,6 @@ class Pixel {
   // whether or not we're looking at equivalent pixels, one where the weights
   // associated with the pixels matter and one that's purely geometric.
   static bool LocalOrder(const Pixel pix_a, const Pixel pix_b);
-  static bool LocalOrderByReference(const Pixel pix_a, const Pixel pix_b);
   static bool SuperPixelBasedOrder(const Pixel pix_a, const Pixel pix_b);
   static bool SuperPixelOrder(const Pixel pix_a, const Pixel pix_b);
   static bool WeightedOrder(Pixel pix_a, Pixel pix_b);
