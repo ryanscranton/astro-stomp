@@ -135,7 +135,7 @@ class Map : public BaseMap {
   // ASCII text file as well.
   Map();
   Map(PixelVector& pix, bool force_resolve = true);
-  Map(std::string& InputFile,
+  Map(const std::string& InputFile,
       const bool hpixel_format = true,
       const bool weighted_map = true);
 
@@ -315,12 +315,12 @@ class Map : public BaseMap {
   // The book-end to the initialization method that takes an ASCII filename
   // as an argument, this method writes the current map to an ASCII file using
   // the same formatting conventions.
-  bool Write(std::string& OutputFile, bool hpixel_format = true,
+  bool Write(const std::string& OutputFile, bool hpixel_format = true,
              bool weighted_map = true);
 
   // Alternatively, if the default constructor is used, this method will
   // re-initialize the map with the contents of the input file.
-  bool Read(std::string& InputFile, const bool hpixel_format = true,
+  bool Read(const std::string& InputFile, const bool hpixel_format = true,
 	    const bool weighted_map = true);
 
   // Another option for specifying the Map geometry is to use a GeometricBound
