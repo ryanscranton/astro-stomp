@@ -22,6 +22,7 @@
 #include <stdint.h>
 #include <vector>
 #include <map>
+#include "stomp_core.h"
 #include "stomp_pixel.h"
 
 namespace Stomp {

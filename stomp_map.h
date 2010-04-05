@@ -27,6 +27,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
 #include "stomp_base_map.h"

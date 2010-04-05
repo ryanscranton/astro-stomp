@@ -26,6 +26,7 @@
 #include <map>
 #include <queue>
 #include <algorithm>
+#include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_tree_pixel.h"
 #include "stomp_base_map.h"
