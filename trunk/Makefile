@@ -1,6 +1,6 @@
 CC = g++
 LD = g++
-CCFLAGS = -O6 -Wall
+CCFLAGS = -O6 -Wall -fPIC
 LDFLAGS = -lm -L./ -lstomp -lgflags
 LIB=libstomp.a
 PREFIX=/usr/local
@@ -30,7 +30,7 @@ all: lib test
 install: $(LIB)
 	@ echo Copying to $(PREFIX)/*/stomp
 	cp $(LIB) $(PREFIX)/lib/
-	#mkdir -f $(PREFIX)/include/stomp
+        #mkdir -f $(PREFIX)/include/stomp
 	cp $(CORE).h $(ANGULAR_COORDINATE).h $(ANGULAR_BIN).h $(ANGULAR_CORRELATION).h $(PIXEL).h $(SCALAR_PIXEL).h $(TREE_PIXEL).h $(BASE_MAP).h $(MAP).h $(SCALAR_MAP).h $(TREE_MAP).h $(GEOMETRY).h $(UTIL).h MersenneTwister.h $(PREFIX)/include/stomp/
 	cp $(STOMP).h $(PREFIX)/include/
 

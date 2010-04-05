@@ -20,6 +20,7 @@
 
 #include <stdint.h>
 #include <vector>
+#include "stomp_core.h"
 #include "stomp_angular_bin.h"
 #include "stomp_scalar_pixel.h"
 #include "stomp_base_map.h"

@@ -17,6 +17,7 @@
 #define STOMP_ANGULAR_CORRELATION_H
 
 #include <vector>
+#include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_angular_bin.h"
 

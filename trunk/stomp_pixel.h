@@ -21,6 +21,7 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
+#include "stomp_core.h"
 #include "stomp_angular_coordinate.h"
 #include "MersenneTwister.h"
 
@@ -259,7 +260,7 @@ class Pixel {
   // pixel index into an SDSS stripe number.  Although this is generally not
   // useful information in an of itself, stripe number is used as a proxy
   // for constructing roughly square subsections of Maps.
-  uint32_t Stripe(uint32_t resolution = Stomp::HPixResolution);
+  uint32_t Stripe(uint32_t resolution = HPixResolution);
 
   // Some methods for extracting the angular position of the pixel center...
   double RA();
