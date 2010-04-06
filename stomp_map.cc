@@ -1824,10 +1824,6 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
       max_resolution_level = starting_resolution_level;
   }
 
-  // std::cout << "Pixelizing from level " <<
-  // static_cast<int>(starting_resolution_level) << " to " <<
-  // static_cast<int>(max_resolution_level) << "...\n";
-
   uint32_t x_min, x_max, y_min, y_max;
   if (_FindXYBounds(starting_resolution_level, bound,
 		    x_min, x_max, y_min, y_max)) {
@@ -1969,7 +1965,8 @@ uint8_t Map::_FindStartingResolutionLevel(double bound_area) {
   // save time, but we have to be careful that we're not so coarse that we
   // miss parts of the footprint.  This finds the resolution that has pixels
   // about 1/100th the area of the footprint.
-  while (bound_area/Pixel::PixelArea(starting_resolution) <= 100.0)
+  while ((bound_area/Pixel::PixelArea(starting_resolution) <= 100.0) &&
+	 (starting_resolution < MaxPixelResolution))
     starting_resolution *= 2;
 
   return Pixel::Resolution2Level(starting_resolution);
@@ -1987,9 +1984,6 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 		   bound.LambdaMin(), bound.LambdaMax(),
 		   bound.EtaMin(), bound.EtaMax(),
 		   x_min, x_max, y_min, y_max);
-
-  // std::cout << "Starting bounds:\n\tX: " << x_min << " - " << x_max <<
-  // ", Y: " << y_min << " - " << y_max << "\n";
 
   // Checking top border
   bool found_pixel = true;
@@ -2018,9 +2012,6 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
       // This if statement checks positions within the pixel against the
       // footprint bound.
       if (DoubleLT(_ScorePixel(bound, tmp_pix), 0.0)) {
-	// std::cout << m << "," << y << ": " <<
-	// tmp_pix.Lambda() << ", " << tmp_pix.Eta() << ": " <<
-	// _ScorePixel(bound, tmp_pix) << "\n";
         found_pixel = true;
         m = nx_pix + 1;
       }
@@ -2038,7 +2029,6 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
     n_iter++;
   }
   if (n_iter == max_iter) boundary_failure = true;
-  // if (boundary_failure) std::cout << "\t\tBoundary failure on top bound\n";
 
   // Checking bottom border
   found_pixel = true;
@@ -2079,7 +2069,6 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
   }
 
   if (n_iter == max_iter) boundary_failure = true;
-  // if (boundary_failure) std::cout << "\t\tBoundary failure on lower bound\n";
 
   // Checking left border
   found_pixel = true;
@@ -2110,7 +2099,6 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
     n_iter++;
   }
   if (n_iter == max_iter) boundary_failure = true;
-  // if (boundary_failure) std::cout << "\t\tBoundary failure on left bound\n";
 
   // Checking right border
   found_pixel = true;
@@ -2142,10 +2130,6 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
   }
 
   if (n_iter == max_iter) boundary_failure = true;
-  // if (boundary_failure) std::cout << "\t\tBoundary failure on right bound\n";
-
-  // std::cout << "Final bounds:\n\tX: " << x_min << " - " << x_max <<
-  // ", Y: " << y_min << " - " << y_max << "\n";
 
   return !boundary_failure;
 }
