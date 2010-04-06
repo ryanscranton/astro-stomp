@@ -1,0 +1,14 @@
+# Top level makefile for STOMP
+
+AUTOMAKE_OPTIONS = foreign
+
+#Build these directories
+SUBDIRS = stomp
+
+#Distribute these directories:
+DIST_SUBDIRS = stomp
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = stomp-1.0.pc
+
+EXTRA_DIST=autogen.sh
