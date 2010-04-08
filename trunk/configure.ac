@@ -46,17 +46,37 @@ AM_INIT_AUTOMAKE($PACKAGE, $VERSION, ryan.scranton@gmail.com)
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_AWK
 AC_PROG_CPP
 AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+AC_PROB_RANLIB
+AM_PROG_LIBTOOL
 AM_SANITY_CHECK
 AC_LANG_CPLUSPLUS
 
-# Turn on library exporting.
-AC_PROG_LIBTOOL
-AC_SUBST(LIBTOOL_DEPS)
+# Checks for header files.
+AC_CHECK_HEADERS([limits.h stdint.h sys/time.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STDBOOL
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_INT16_T
+AC_TYPE_INT32_T
+AC_TYPE_INT8_T
+AC_C_RESTRICT
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
+AC_TYPE_UINT16_T
+AC_TYPE_UINT32_T
+AC_TYPE_UINT8_T
+
+# Checks for library functions.
+AC_HEADER_STDC
+AC_CHECK_FUNCS([floor gettimeofday pow sqrt])
 
 # Location of gflags directories as input by user.
 gflags_dir_given="no"
@@ -75,6 +95,14 @@ if test "$gflags_dir_given" = "yes"; then
   CXXFLAGS="$CXXFLAGS -I$with_gflags_dir/include"
   LDFLAGS="$LDFLAGS -L$with_gflags_dir/lib"
 fi
+
+# Checks for math library.
+AC_CHECK_LIB([m], [floor], [],
+             [AC_MSG_ERROR([cannot find required math function])])
+AC_CHECK_LIB([m], [pow], [],
+             [AC_MSG_ERROR([cannot find required math function])])
+AC_CHECK_LIB([m], [sqrt], [],
+             [AC_MSG_ERROR([cannot find required math function])])
 
 # Check for C++ stl.
 AC_LANG_CPLUSPLUS
