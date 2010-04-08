@@ -6,7 +6,7 @@ includedir=@includedir@
 Name: Ryan Scranton
 Description: C++ library for astronomical statistics
 Version: @VERSION@
-Libs: -L${libdir} -l@GENERIC_LIBRARY_NAME@-@GENERIC_API_VERSION@
+Libs: -L${libdir} -l@GENERIC_LIBRARY_NAME@
 Cflags: -I${includedir}/@GENERIC_LIBRARY_NAME@-@GENERIC_API_VERSION@ -I${libdir}
-/@GENERIC_LIBRARY_NAME@-@GENERIC_API_VERSION@/include
+/@GENERIC_LIBRARY_NAME@/include
 
