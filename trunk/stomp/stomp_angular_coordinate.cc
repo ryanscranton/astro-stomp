@@ -553,6 +553,132 @@ double AngularCoordinate::GalLonMultiplier(double glat) {
     glat*glat*(0.000192312 - glat*glat*(1.82764e-08 + 1.28162e-11*glat*glat));
 }
 
+bool AngularCoordinate::ToAngularVector(std::vector<double>& thetaVec,
+					std::vector<double>& phiVec,
+					AngularVector& ang,
+					Sphere sphere) {
+  bool io_success = false;
+
+  if (thetaVec.size() == phiVec.size()) {
+    if (!ang.empty()) ang.clear();
+
+    ang.reserve(thetaVec.size());
+
+    for (uint32_t i=0;i<thetaVec.size();i++)
+      ang.push_back(AngularCoordinate(thetaVec[i], phiVec[i], sphere));
+
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool AngularCoordinate::ToAngularVector(const std::string& input_file,
+					AngularVector& ang,
+					Sphere sphere,
+					uint8_t theta_column,
+					uint8_t phi_column) {
+  if (!ang.empty()) ang.clear();
+  bool io_success = false;
+
+  if (theta_column != phi_column) {
+    std::ifstream input_file_str(input_file.c_str());
+
+    uint32_t n_lines = 0;
+
+    if (input_file_str) {
+      while (!input_file_str.eof()) {
+	if (!input_file_str.eof()) {
+	  // This should read each line into a buffer, convert that buffer into
+	  // a string and then break that string into a vector of strings.  We
+	  // should then be able to access theta and phi by converting the
+	  // appropriate elements of that vector to doubles.
+	  char line_buffer[1000];
+	  std::vector<std::string> line_elements;
+
+	  input_file_str.getline(line_buffer, 1000);
+	  std::string line_string(line_buffer);
+	  Stomp::Tokenize(line_string, line_elements);
+	  n_lines++;
+
+	  if ((line_elements.size() > theta_column) &&
+	      (line_elements.size() > phi_column)) {
+	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
+	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
+	    ang.push_back(AngularCoordinate(theta, phi, sphere));
+	  }
+	}
+      }
+      input_file_str.close();
+      io_success = true;
+    }
+  }
+
+  return io_success;
+}
+
+bool AngularCoordinate::FromAngularVector(AngularVector& ang,
+					  std::vector<double>& thetaVec,
+					  std::vector<double>& phiVec,
+					  Sphere sphere) {
+  if (!thetaVec.empty()) thetaVec.clear();
+  if (!phiVec.empty()) phiVec.clear();
+
+  thetaVec.reserve(ang.size());
+  phiVec.reserve(ang.size());
+
+  bool io_success = false;
+
+  for (AngularIterator iter=ang.begin();iter!=ang.end();++iter) {
+    switch (sphere) {
+    case Survey:
+      thetaVec.push_back(iter->Lambda());
+      phiVec.push_back(iter->Eta());
+      break;
+    case Equatorial:
+      thetaVec.push_back(iter->RA());
+      phiVec.push_back(iter->DEC());
+    break;
+    case Galactic:
+      thetaVec.push_back(iter->GalLon());
+      phiVec.push_back(iter->GalLat());
+      break;
+    }
+  }
+
+  if (thetaVec.size() == ang.size()) io_success = true;
+
+  return io_success;
+}
+
+bool AngularCoordinate::FromAngularVector(AngularVector& ang,
+					  const std::string& output_file,
+					  Sphere sphere) {
+  std::ofstream output_file_str(output_file.c_str());
+
+  bool io_success = false;
+
+  if (output_file_str.is_open()) {
+    for (AngularIterator iter=ang.begin();iter!=ang.end();++iter) {
+      switch (sphere) {
+      case Survey:
+	output_file_str << iter->Lambda() << " " << iter->Eta() << "\n";
+	break;
+      case Equatorial:
+	output_file_str << iter->RA() << " " << iter->DEC() << "\n";
+	break;
+      case Galactic:
+	output_file_str << iter->GalLon() << " " << iter->GalLat() << "\n";
+	break;
+      }
+    }
+    output_file_str.close();
+    io_success = true;
+  }
+
+  return io_success;
+}
+
 WeightedAngularCoordinate::WeightedAngularCoordinate() {
   weight_ = 0.0;
 }
@@ -663,12 +789,190 @@ void WeightedAngularCoordinate::RestoreOriginalWeight() {
   }
 }
 
+bool WeightedAngularCoordinate::ToWAngularVector(std::vector<double>& thetaVec,
+						 std::vector<double>& phiVec,
+						 std::vector<double>& weightVec,
+						 WAngularVector& w_ang,
+						 Sphere sphere) {
+  bool io_success = false;
+
+  if ((thetaVec.size() == phiVec.size()) &&
+      (thetaVec.size() == weightVec.size())) {
+    if (!w_ang.empty()) w_ang.clear();
+
+    w_ang.reserve(thetaVec.size());
+
+    for (uint32_t i=0;i<thetaVec.size();i++)
+      w_ang.push_back(WeightedAngularCoordinate(thetaVec[i], phiVec[i],
+						weightVec[i], sphere));
+
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool WeightedAngularCoordinate::ToWAngularVector(std::vector<double>& thetaVec,
+						 std::vector<double>& phiVec,
+						 double weight,
+						 WAngularVector& w_ang,
+						 Sphere sphere) {
+  bool io_success = false;
+
+  if (thetaVec.size() == phiVec.size()) {
+    if (!w_ang.empty()) w_ang.clear();
+
+    w_ang.reserve(thetaVec.size());
+
+    for (uint32_t i=0;i<thetaVec.size();i++)
+      w_ang.push_back(WeightedAngularCoordinate(thetaVec[i], phiVec[i],
+						weight, sphere));
+
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
+						 WAngularVector& w_ang,
+						 Sphere sphere,
+						 uint8_t theta_column,
+						 uint8_t phi_column,
+						 int8_t weight_column) {
+
+  if (!w_ang.empty()) w_ang.clear();
+  bool io_success = false;
+
+  if (theta_column != phi_column) {
+    std::ifstream input_file_str(input_file.c_str());
+
+    uint32_t n_lines = 0;
+    uint8_t weight_idx = static_cast<uint8_t>(weight_column);
+
+    if (input_file_str) {
+      while (!input_file_str.eof()) {
+	if (!input_file_str.eof()) {
+	  // This should read each line into a buffer, convert that buffer into
+	  // a string and then break that string into a vector of strings.  We
+	  // should then be able to access theta and phi by converting the
+	  // appropriate elements of that vector to doubles.
+	  char line_buffer[1000];
+	  std::vector<std::string> line_elements;
+
+	  input_file_str.getline(line_buffer, 1000);
+	  std::string line_string(line_buffer);
+	  Stomp::Tokenize(line_string, line_elements);
+	  n_lines++;
+
+	  if ((line_elements.size() > theta_column) &&
+	      (line_elements.size() > phi_column)) {
+	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
+	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
+	    double weight = 1.0;
+	    if ((weight_column > -1) &&
+		(line_elements.size() > weight_idx))
+	      weight = strtod(line_elements[weight_idx].c_str(), NULL);
+	    w_ang.push_back(WeightedAngularCoordinate(theta, phi,
+						      weight, sphere));
+	  }
+	}
+      }
+      input_file_str.close();
+      io_success = true;
+    }
+  }
+
+  return io_success;
+}
+
+bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
+						   std::vector<double>& theta,
+						   std::vector<double>& phi,
+						   std::vector<double>& weight,
+						   Sphere sphere) {
+  if (!theta.empty()) theta.clear();
+  if (!phi.empty()) phi.clear();
+  if (!weight.empty()) weight.clear();
+
+  theta.reserve(w_ang.size());
+  phi.reserve(w_ang.size());
+  weight.reserve(w_ang.size());
+
+  bool io_success = false;
+
+  for (WAngularIterator iter=w_ang.begin();iter!=w_ang.end();++iter) {
+    weight.push_back(iter->Weight());
+    switch (sphere) {
+    case Survey:
+      theta.push_back(iter->Lambda());
+      phi.push_back(iter->Eta());
+      break;
+    case Equatorial:
+      theta.push_back(iter->RA());
+      phi.push_back(iter->DEC());
+    break;
+    case Galactic:
+      theta.push_back(iter->GalLon());
+      phi.push_back(iter->GalLat());
+      break;
+    }
+  }
+
+  if (theta.size() == w_ang.size()) io_success = true;
+
+  return io_success;
+}
+
+bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
+						   const std::string& out_file,
+						   Sphere sphere) {
+  std::ofstream output_file_str(out_file.c_str());
+
+  bool io_success = false;
+
+  if (output_file_str.is_open()) {
+    for (WAngularIterator iter=w_ang.begin();iter!=w_ang.end();++iter) {
+      switch (sphere) {
+      case Survey:
+	output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	break;
+      case Equatorial:
+	output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	break;
+      case Galactic:
+	output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	break;
+      }
+      output_file_str << iter->Weight() << "\n";
+    }
+    output_file_str.close();
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool WeightedAngularCoordinate::AddField(WAngularVector& w_ang,
+					 const std::string& field_name,
+					 std::vector<double>& field_value) {
+  bool add_success = false;
+
+  if (w_ang.size() == field_value.size()) {
+    for (uint32_t i=0;i<w_ang.size();i++)
+      w_ang[i].SetField(field_name, field_value[i]);
+    add_success = true;
+  }
+
+  return add_success;
+}
+
 CosmoCoordinate::CosmoCoordinate() {
   redshift_ = 0.0;
 }
 
-CosmoCoordinate::CosmoCoordinate(double theta, double phi, double weight,
-				 double redshift, Sphere sphere) {
+CosmoCoordinate::CosmoCoordinate(double theta, double phi, double redshift,
+				 double weight, Sphere sphere) {
   switch (sphere) {
   case Survey:
     SetSurveyCoordinates(theta, phi);
@@ -687,8 +991,8 @@ CosmoCoordinate::CosmoCoordinate(double theta, double phi, double weight,
 }
 
 CosmoCoordinate::CosmoCoordinate(double unit_sphere_x, double unit_sphere_y,
-				 double unit_sphere_z, double weight,
-				 double redshift) {
+				 double unit_sphere_z, double redshift,
+				 double weight) {
   SetUnitSphereCoordinates(unit_sphere_x, unit_sphere_y, unit_sphere_z);
 
   SetWeight(weight);
@@ -740,6 +1044,181 @@ double CosmoCoordinate::Redshift() {
 
 void CosmoCoordinate::SetRedshift(double redshift) {
   redshift_ = redshift;
+}
+
+bool CosmoCoordinate::ToCosmoVector(std::vector<double>& thetaVec,
+				    std::vector<double>& phiVec,
+				    std::vector<double>& redshiftVec,
+				    std::vector<double>& weightVec,
+				    CosmoVector& z_ang,
+				    Sphere sphere) {
+  bool io_success = false;
+
+  if ((thetaVec.size() == phiVec.size()) &&
+      (thetaVec.size() == redshiftVec.size()) &&
+      (thetaVec.size() == weightVec.size())) {
+    if (!z_ang.empty()) z_ang.clear();
+
+    z_ang.reserve(thetaVec.size());
+
+    for (uint32_t i=0;i<thetaVec.size();i++)
+      z_ang.push_back(CosmoCoordinate(thetaVec[i], phiVec[i], redshiftVec[i],
+				      weightVec[i], sphere));
+
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool CosmoCoordinate::ToCosmoVector(std::vector<double>& thetaVec,
+				    std::vector<double>& phiVec,
+				    std::vector<double>& redshiftVec,
+				    double weight,
+				    CosmoVector& z_ang,
+				    Sphere sphere) {
+  bool io_success = false;
+
+  if ((thetaVec.size() == phiVec.size()) &&
+      (thetaVec.size() == redshiftVec.size())) {
+    if (!z_ang.empty()) z_ang.clear();
+
+    z_ang.reserve(thetaVec.size());
+
+    for (uint32_t i=0;i<thetaVec.size();i++)
+      z_ang.push_back(CosmoCoordinate(thetaVec[i], phiVec[i], redshiftVec[i],
+				      weight, sphere));
+
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool CosmoCoordinate::ToCosmoVector(const std::string& input_file,
+				    CosmoVector& z_ang,
+				    Sphere sphere,
+				    uint8_t theta_column,
+				    uint8_t phi_column,
+				    uint8_t redshift_column,
+				    int8_t weight_column) {
+
+  if (!z_ang.empty()) z_ang.clear();
+  bool io_success = false;
+
+  if (theta_column != phi_column) {
+    std::ifstream input_file_str(input_file.c_str());
+
+    uint32_t n_lines = 0;
+    uint8_t weight_idx = static_cast<uint8_t>(weight_column);
+
+    if (input_file_str) {
+      while (!input_file_str.eof()) {
+	if (!input_file_str.eof()) {
+	  // This should read each line into a buffer, convert that buffer into
+	  // a string and then break that string into a vector of strings.  We
+	  // should then be able to access theta and phi by converting the
+	  // appropriate elements of that vector to doubles.
+	  char line_buffer[1000];
+	  std::vector<std::string> line_elements;
+
+	  input_file_str.getline(line_buffer, 1000);
+	  std::string line_string(line_buffer);
+	  Stomp::Tokenize(line_string, line_elements);
+	  n_lines++;
+
+	  if ((line_elements.size() > theta_column) &&
+	      (line_elements.size() > phi_column) &&
+	      (line_elements.size() > redshift_column)) {
+	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
+	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
+	    double redshift =
+	      strtod(line_elements[redshift_column].c_str(), NULL);
+	    double weight = 1.0;
+	    if ((weight_column > -1) &&
+		(line_elements.size() > weight_idx))
+	      weight = strtod(line_elements[weight_idx].c_str(), NULL);
+	    z_ang.push_back(CosmoCoordinate(theta, phi, redshift,
+					    weight, sphere));
+	  }
+	}
+      }
+      input_file_str.close();
+      io_success = true;
+    }
+  }
+
+  return io_success;
+}
+
+bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
+				      std::vector<double>& theta,
+				      std::vector<double>& phi,
+				      std::vector<double>& redshift,
+				      std::vector<double>& weight,
+				      Sphere sphere) {
+  if (!theta.empty()) theta.clear();
+  if (!phi.empty()) phi.clear();
+  if (!redshift.empty()) redshift.clear();
+  if (!weight.empty()) weight.clear();
+
+  theta.reserve(z_ang.size());
+  phi.reserve(z_ang.size());
+  weight.reserve(z_ang.size());
+
+  bool io_success = false;
+
+  for (CosmoIterator iter=z_ang.begin();iter!=z_ang.end();++iter) {
+    redshift.push_back(iter->Redshift());
+    weight.push_back(iter->Weight());
+    switch (sphere) {
+    case Survey:
+      theta.push_back(iter->Lambda());
+      phi.push_back(iter->Eta());
+      break;
+    case Equatorial:
+      theta.push_back(iter->RA());
+      phi.push_back(iter->DEC());
+    break;
+    case Galactic:
+      theta.push_back(iter->GalLon());
+      phi.push_back(iter->GalLat());
+      break;
+    }
+  }
+
+  if (theta.size() == z_ang.size()) io_success = true;
+
+  return io_success;
+}
+
+bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
+				      const std::string& output_file,
+				      Sphere sphere) {
+  std::ofstream output_file_str(output_file.c_str());
+
+  bool io_success = false;
+
+  if (output_file_str.is_open()) {
+    for (CosmoIterator iter=z_ang.begin();iter!=z_ang.end();++iter) {
+      switch (sphere) {
+      case Survey:
+	output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	break;
+      case Equatorial:
+	output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	break;
+      case Galactic:
+	output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	break;
+      }
+      output_file_str << iter->Redshift() << " " << iter->Weight() << "\n";
+    }
+    output_file_str.close();
+    io_success = true;
+  }
+
+  return io_success;
 }
 
 } // end namespace Stomp
