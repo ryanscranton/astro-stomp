@@ -1,5 +1,7 @@
 #include <stdint.h>
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 #include <math.h>
 #include <string>
 #include <gflags/gflags.h>
@@ -170,6 +172,137 @@ void AngularCoordinateRotationTests() {
     start_ang.Eta() << ")\n";
 }
 
+void AngularVectorIOTests() {
+  // Check to make sure that our static methods for converting between
+  // std::vectors and AngularVectors are working properly..
+  std::cout << "\n";
+  std::cout << "*******************************\n";
+  std::cout << "*** AngularVector I/O Check ***\n";
+  std::cout << "*******************************\n\n";
+
+  // Start by making some RA & DEC vectors.
+  std::vector<double> raVec, decVec;
+
+  raVec.push_back(0.0);
+  raVec.push_back(20.0);
+  raVec.push_back(90.0);
+
+  decVec.push_back(0.0);
+  decVec.push_back(50.0);
+  decVec.push_back(-90.0);
+
+  // Now let's make an AngularVector out of those coordinates.
+  Stomp::AngularCoordinate::Sphere sphere =
+    Stomp::AngularCoordinate::Equatorial;
+  Stomp::AngularVector ang;
+
+  if (Stomp::AngularCoordinate::ToAngularVector(raVec, decVec, ang, sphere)) {
+    std::cout << "\tConverted doubles vectors to AngularVector...\n\n";
+  } else {
+    std::cout << "\tFailed to convert doubles vectors to AngularVector...\n\n";
+  }
+
+  // And generate new doubles vectors from that AngularVector
+  std::vector<double> raVec_out, decVec_out;
+  if (Stomp::AngularCoordinate::FromAngularVector(ang, raVec_out,
+						  decVec_out, sphere)) {
+    std::cout << "\tConverted AngularVector to doubles vectors...\n\n";
+  } else {
+    std::cout << "\tFailed to convert AngularVector to doubles vectors...\n\n";
+  }
+
+  // And finish up with some visual output to verify that things are working.
+  std::cout << "Coordinate check:\n" <<
+    "\tInput vector\tAngularVector\tOutputVector\n" <<
+    "\t------------\t-------------\t------------\n";
+  for (uint8_t i=0;i<raVec.size();i++) {
+    std::cout << "\t" << raVec[i] << "," << decVec[i] << "\t\t" <<
+      ang[i].RA() << "," << ang[i].DEC() << "\t\t" <<
+      raVec_out[i] << "," << decVec_out[i] << "\n";
+  }
+}
+
+void AngularVectorFileIOTests() {
+  // Check to make sure that our static methods for reading ASCII files into
+  // AngularVectors are working properly..
+  std::cout << "\n";
+  std::cout << "************************************\n";
+  std::cout << "*** AngularVector File I/O Check ***\n";
+  std::cout << "************************************\n\n";
+
+  // Start by making some RA & DEC vectors.
+  std::vector<double> raVec, decVec;
+
+  raVec.push_back(0.0);
+  raVec.push_back(20.0);
+  raVec.push_back(90.0);
+
+  decVec.push_back(0.0);
+  decVec.push_back(50.0);
+  decVec.push_back(-90.0);
+
+  // Now we'll write them to the simplest file to parse
+  std::string test_file = "AngularVectorTest.dat";
+  std::ofstream test_file_str(test_file.c_str());
+
+  if (test_file_str.is_open()) {
+    for (uint8_t i=0;i<raVec.size();i++) {
+      test_file_str << raVec[i] << " " << decVec[i] << "\n";
+    }
+  }
+
+  test_file_str.close();
+
+  // Now we attempt to read in those coordinates.
+  Stomp::AngularCoordinate::Sphere sphere =
+    Stomp::AngularCoordinate::Equatorial;
+  Stomp::AngularVector ang;
+
+  if (Stomp::AngularCoordinate::ToAngularVector(test_file, ang, sphere)) {
+    std::cout << "\tRead " << test_file << " to AngularVector...\n\n";
+  } else {
+    std::cout << "\tFailed to read " << test_file << " to AngularVector...\n\n";
+  }
+
+  // Check to make sure that our coordinates were read in correctly.
+  std::cout << "Coordinate check:\n" <<
+    "\tFile coordinate\tAngularVector\n" <<
+    "\t---------------\t-------------\n";
+  for (uint8_t i=0;i<raVec.size();i++) {
+    std::cout << "\t" << raVec[i] << "," << decVec[i] << "\t\t" <<
+      ang[i].RA() << "," << ang[i].DEC() << "\n";
+  }
+  std::cout << "\n";
+
+  // Now a trickier version where we've mixed up the coordinates and added
+  // some intervening columns.
+  std::ofstream test_file2_str(test_file.c_str());
+
+  if (test_file2_str.is_open()) {
+    for (uint8_t i=0;i<raVec.size();i++) {
+      test_file2_str << "0.0 0.0 " << decVec[i] << " 0.0 0.0 0.0 " <<
+	raVec[i] << " 0.0 0.0 0.0 0.0\n";
+    }
+  }
+
+  test_file2_str.close();
+
+  if (Stomp::AngularCoordinate::ToAngularVector(test_file, ang, sphere, 6 ,2)) {
+    std::cout << "\tRead " << test_file << " to AngularVector...\n\n";
+  } else {
+    std::cout << "\tFailed to read " << test_file << " to AngularVector...\n\n";
+  }
+
+  // Check to make sure that our coordinates were read in correctly.
+  std::cout << "Coordinate check:\n" <<
+    "\tFile coordinate\tAngularVector\n" <<
+    "\t---------------\t-------------\n";
+  for (uint8_t i=0;i<raVec.size();i++) {
+    std::cout << "\t" << raVec[i] << "," << decVec[i] << "\t\t" <<
+      ang[i].RA() << "," << ang[i].DEC() << "\n";
+  }
+}
+
 void WeightedAngularCoordinateBasicTests() {
   // Ok, some basic routines to test the extensions to the AngularCoordinate
   // available in WeightedAngularCoordinate.
@@ -222,6 +355,10 @@ DEFINE_bool(angular_coordinate_position_angle_tests, false,
             "Run AngularCoordinate position angle tests");
 DEFINE_bool(angular_coordinate_rotation_tests, false,
             "Run AngularCoordinate rotation tests");
+DEFINE_bool(angular_vector_io_tests, false,
+            "Run AngularVector I/O tests ");
+DEFINE_bool(angular_vector_file_io_tests, false,
+            "Run AngularVector file I/O tests ");
 DEFINE_bool(weighted_angular_coordinate_basic_tests, false,
             "Run WeightedAngularCoordinate basic tests");
 
@@ -229,6 +366,8 @@ void AngularCoordinateUnitTests(bool run_all_tests) {
   void AngularCoordinateBasicTests();
   void AngularCoordinatePositionAngleTests();
   void AngularCoordinateRotationTests();
+  void AngularVectorIOTests();
+  void AngularVectorFileIOTests();
   void WeightedAngularCoordinateBasicTests();
 
   if (run_all_tests) FLAGS_all_angular_coordinate_tests = true;
@@ -251,6 +390,16 @@ void AngularCoordinateUnitTests(bool run_all_tests) {
   if (FLAGS_all_angular_coordinate_tests ||
       FLAGS_angular_coordinate_rotation_tests)
     AngularCoordinateRotationTests();
+
+  // Check that the conversions between vector<double> and AngularVector are
+  // working properly
+  if (FLAGS_all_angular_coordinate_tests || FLAGS_angular_vector_io_tests)
+    AngularVectorIOTests();
+
+  // Check that the methods to read ASCII files into AngularVectors are
+  // working properly
+  if (FLAGS_all_angular_coordinate_tests || FLAGS_angular_vector_file_io_tests)
+    AngularVectorFileIOTests();
 
   // Check WeightedAngularCoordinate extensions to the basic AngularCoordinate.
   if (FLAGS_all_angular_coordinate_tests ||

@@ -1,3 +1,18 @@
+// Copyright 2010  All Rights Reserved.
+// Author: ryan.scranton@gmail.com (Ryan Scranton)
+
+// STOMP is a set of libraries for doing astrostatistical analysis on the
+// celestial sphere.  The goal is to enable descriptions of arbitrary regions
+// on the sky which may or may not encode futher spatial information (galaxy
+// density, CMB temperature, observational depth, etc.) and to do so in such
+// a way as to make the analysis of that data as algorithmically efficient as
+// possible.
+//
+// This header file contains the class that acts as a wrapper for the RenderArea
+// class (described in render_area.h).  StompViewer handles all of the window
+// decorations for the GUI as well as file and user I/O.
+
+
 #ifndef STOMP_VIEWER_H
 #define STOMP_VIEWER_H
 

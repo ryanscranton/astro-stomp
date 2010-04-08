@@ -1,18 +1,18 @@
 %module stomp
 %{
-#include "../stomp_core.h"
-#include "../stomp_angular_bin.h"
-#include "../stomp_angular_coordinate.h"
-#include "../stomp_angular_correlation.h"
-#include "../stomp_pixel.h"
-#include "../stomp_scalar_pixel.h"
-#include "../stomp_tree_pixel.h"
-#include "../stomp_base_map.h"
-#include "../stomp_map.h"
-#include "../stomp_scalar_map.h"
-#include "../stomp_tree_map.h"
-#include "../stomp_geometry.h"
-#include "../stomp_util.h"
+#include "../stomp/stomp_core.h"
+#include "../stomp/stomp_angular_bin.h"
+#include "../stomp/stomp_angular_coordinate.h"
+#include "../stomp/stomp_angular_correlation.h"
+#include "../stomp/stomp_pixel.h"
+#include "../stomp/stomp_scalar_pixel.h"
+#include "../stomp/stomp_tree_pixel.h"
+#include "../stomp/stomp_base_map.h"
+#include "../stomp/stomp_map.h"
+#include "../stomp/stomp_scalar_map.h"
+#include "../stomp/stomp_tree_map.h"
+#include "../stomp/stomp_geometry.h"
+#include "../stomp/stomp_util.h"
 %}
 
 %include stdint.i
@@ -65,16 +65,16 @@ typedef std::priority_queue<DistancePointPair,
   std::vector<DistancePointPair>, NearestNeighborPoint> PointQueue;
 }
 
-%include "../stomp_core.h"
-%include "../stomp_angular_bin.h"
-%include "../stomp_angular_correlation.h"
-%include "../stomp_pixel.h"
-%include "../stomp_scalar_pixel.h"
-%include "../stomp_base_map.h"
-%include "../stomp_map.h"
-%include "../stomp_scalar_map.h"
-%include "../stomp_geometry.h"
-%include "../stomp_util.h"
+%include "../stomp/stomp_core.h"
+%include "../stomp/stomp_angular_bin.h"
+%include "../stomp/stomp_angular_correlation.h"
+%include "../stomp/stomp_pixel.h"
+%include "../stomp/stomp_scalar_pixel.h"
+%include "../stomp/stomp_base_map.h"
+%include "../stomp/stomp_map.h"
+%include "../stomp/stomp_scalar_map.h"
+%include "../stomp/stomp_geometry.h"
+%include "../stomp/stomp_util.h"
 
 namespace Stomp {
 
@@ -139,6 +139,22 @@ class AngularCoordinate {
   static double EtaMultiplier(double lam);
   static double RAMultiplier(double dec);
   static double GalLonMultiplier(double glat);
+  static bool ToAngularVector(std::vector<double>& thetaVec,
+  			      std::vector<double>& phiVec,
+			      AngularVector& ang,
+			      Sphere sphere = Equatorial);
+  static bool ToAngularVector(const std::string& input_file,
+			      AngularVector& ang,
+			      Sphere sphere = Equatorial,
+			      uint8_t theta_column = 0,
+			      uint8_t phi_column = 1);
+  static bool FromAngularVector(AngularVector& ang,
+				std::vector<double>& thetaVec,
+				std::vector<double>& phiVec,
+				Sphere sphere = Equatorial);
+  static bool FromAngularVector(AngularVector& ang,
+				const std::string& output_file,
+				Sphere sphere = Equatorial);
 };
 
 class WeightedAngularCoordinate : public AngularCoordinate {
@@ -162,6 +178,33 @@ class WeightedAngularCoordinate : public AngularCoordinate {
   void CopyFields(WeightedAngularCoordinate& w_ang);
   void CopyFieldToWeight(const std::string& field_name);
   void RestoreOriginalWeight();
+  static bool ToWAngularVector(std::vector<double>& thetaVec,
+			       std::vector<double>& phiVec,
+			       std::vector<double>& weightVec,
+			       WAngularVector& w_ang,
+			       Sphere sphere = Equatorial);
+  static bool ToWAngularVector(std::vector<double>& thetaVec,
+			       std::vector<double>& phiVec,
+			       double weight,
+			       WAngularVector& w_ang,
+			       Sphere sphere = Equatorial);
+  static bool ToWAngularVector(const std::string& input_file,
+			       WAngularVector& w_ang,
+			       Sphere sphere = Equatorial,
+			       uint8_t theta_column = 1,
+			       uint8_t phi_column = 2,
+			       int8_t weight_column = -1);
+  static bool FromWAngularVector(WAngularVector& w_ang,
+				 std::vector<double>& thetaVec,
+				 std::vector<double>& phiVec,
+				 std::vector<double>& weightVec,
+				 Sphere sphere = Equatorial);
+  static bool FromWAngularVector(WAngularVector& w_ang,
+				 const std::string& output_file,
+				 Sphere sphere = Equatorial);
+  static bool AddField(WAngularVector& w_ang,
+		       const std::string& field_name,
+		       std::vector<double>& field_value);
 };
 
 class CosmoCoordinate : public WeightedAngularCoordinate {
@@ -180,6 +223,34 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
   double LuminosityDistance();
   double Redshift();
   void SetRedshift(double redshift);
+  static bool ToCosmoVector(std::vector<double>& thetaVec,
+			    std::vector<double>& phiVec,
+			    std::vector<double>& redshiftVec,
+			    std::vector<double>& weightVec,
+			    CosmoVector& z_ang,
+			    Sphere sphere = Equatorial);
+  static bool ToCosmoVector(std::vector<double>& thetaVec,
+			    std::vector<double>& phiVec,
+			    std::vector<double>& redshiftVec,
+			    double weight,
+			    CosmoVector& z_ang,
+			    Sphere sphere = Equatorial);
+  static bool ToCosmoVector(const std::string& input_file,
+			    CosmoVector& z_ang,
+			    Sphere sphere = Equatorial,
+			    uint8_t theta_column = 1,
+			    uint8_t phi_column = 2,
+			    uint8_t redshift_column = 3,
+			    int8_t weight_column = -1);
+  static bool FromCosmoVector(CosmoVector& z_ang,
+			      std::vector<double>& thetaVec,
+			      std::vector<double>& phiVec,
+			      std::vector<double>& redshiftVec,
+			      std::vector<double>& weightVec,
+			      Sphere sphere = Equatorial);
+  static bool FromCosmoVector(CosmoVector& z_ang,
+			      const std::string& output_file,
+			      Sphere sphere = Equatorial);
 };
 
 class TreePixel : public Pixel {

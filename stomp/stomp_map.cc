@@ -1969,8 +1969,8 @@ uint8_t Map::_FindStartingResolutionLevel(double bound_area) {
   // save time, but we have to be careful that we're not so coarse that we
   // miss parts of the footprint.  This finds the resolution that has pixels
   // about 1/100th the area of the footprint.
-  while (bound_area/Pixel::PixelArea(starting_resolution) <= 100.0)
-    starting_resolution *= 2;
+  while ((bound_area/Pixel::PixelArea(starting_resolution) <= 100.0) &&
+	 (starting_resolution < MaxPixelResolution)) starting_resolution *= 2;
 
   return Pixel::Resolution2Level(starting_resolution);
 }

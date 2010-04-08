@@ -1,3 +1,18 @@
+// Copyright 2010  All Rights Reserved.
+// Author: ryan.scranton@gmail.com (Ryan Scranton)
+
+// STOMP is a set of libraries for doing astrostatistical analysis on the
+// celestial sphere.  The goal is to enable descriptions of arbitrary regions
+// on the sky which may or may not encode futher spatial information (galaxy
+// density, CMB temperature, observational depth, etc.) and to do so in such
+// a way as to make the analysis of that data as algorithmically efficient as
+// possible.
+//
+// This header file contains two classes used for generating images from input
+// Stomp::Maps and Stomp::AngularCoordinates.  Palette translates between the
+// weights for each of these objects and a color palette and RenderArea does
+// the work of creating the images.
+
 #ifndef RENDERAREA_H
 #define RENDERAREA_H
 

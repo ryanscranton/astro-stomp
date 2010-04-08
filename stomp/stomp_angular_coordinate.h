@@ -11,13 +11,18 @@
 // This header file contains the classes used to store point-like data on the
 // sphere.  This can be simply a location on the sky (the AngularCoordinate
 // class) or a location along with additional information about the object at
-// that position (WeightedAngularCoordinate).
+// that position (WeightedAngularCoordinate).  CosmoCoordinate extends the
+// latter functionality to also allow for treatment of cosmological coordinates.
 
 
 #ifndef STOMP_ANGULAR_COORDINATE_H
 #define STOMP_ANGULAR_COORDINATE_H
 
 #include <math.h>
+#include <cstdlib>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <map>
@@ -171,6 +176,32 @@ class AngularCoordinate {
   static double RAMultiplier(double dec);
   static double GalLonMultiplier(double glat);
 
+  // Finally, we provide a number of static methods for doing bulk conversion
+  // of input vectors into AngularVectors and file I/O.  The idea here is to
+  // provide a standard interface that users can adopt without having to
+  // duplicate the same code over and over again.  Since most of the
+  // astronomical community uses RA-DEC coordinates, that will be our default
+  // as well.  Any failure to parse the input will return "false".  Like C++
+  // arrays, the columns in an input file are zero-indexed, so the default
+  // behavior is to read the first two columns of the input file as theta and
+  // phi, respectively.
+  static bool ToAngularVector(std::vector<double>& thetaVec,
+			      std::vector<double>& phiVec,
+			      AngularVector& ang,
+			      Sphere sphere = Equatorial);
+  static bool ToAngularVector(const std::string& input_file,
+			      AngularVector& ang,
+			      Sphere sphere = Equatorial,
+			      uint8_t theta_column = 0,
+			      uint8_t phi_column = 1);
+  static bool FromAngularVector(AngularVector& ang,
+				std::vector<double>& thetaVec,
+				std::vector<double>& phiVec,
+				Sphere sphere = Equatorial);
+  static bool FromAngularVector(AngularVector& ang,
+				const std::string& output_file,
+				Sphere sphere = Equatorial);
+
  private:
   double us_x_, us_y_, us_z_;
 };
@@ -233,6 +264,40 @@ class WeightedAngularCoordinate : public AngularCoordinate {
   // copy that value back into the Weight variable.
   void RestoreOriginalWeight();
 
+  // Static methods for I/O to and from WAngularVectors.  For the input method
+  // using a file, a negative value for the weight column results in unit
+  // weights for all of the WAngularVector members.
+  static bool ToWAngularVector(std::vector<double>& thetaVec,
+			       std::vector<double>& phiVec,
+			       std::vector<double>& weightVec,
+			       WAngularVector& w_ang,
+			       Sphere sphere = Equatorial);
+  static bool ToWAngularVector(std::vector<double>& thetaVec,
+			       std::vector<double>& phiVec,
+			       double weight,
+			       WAngularVector& w_ang,
+			       Sphere sphere = Equatorial);
+  static bool ToWAngularVector(const std::string& input_file,
+			       WAngularVector& w_ang,
+			       Sphere sphere = Equatorial,
+			       uint8_t theta_column = 1,
+			       uint8_t phi_column = 2,
+			       int8_t weight_column = -1);
+  static bool FromWAngularVector(WAngularVector& w_ang,
+				 std::vector<double>& thetaVec,
+				 std::vector<double>& phiVec,
+				 std::vector<double>& weightVec,
+				 Sphere sphere = Equatorial);
+  static bool FromWAngularVector(WAngularVector& w_ang,
+				 const std::string& output_file,
+				 Sphere sphere = Equatorial);
+
+  // We can also provide some wrapper methods for bulk adding of Field values
+  // to WAngularVectors
+  static bool AddField(WAngularVector& w_ang,
+		       const std::string& field_name,
+		       std::vector<double>& field_value);
+
  private:
   double weight_;
   FieldDict field_;
@@ -245,10 +310,10 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
 
  public:
   CosmoCoordinate();
-  CosmoCoordinate(double theta, double phi, double weight,
-		  double redshift, Sphere sphere = Survey);
+  CosmoCoordinate(double theta, double phi, double redshift,
+		  double weight, Sphere sphere = Survey);
   CosmoCoordinate(double unit_sphere_x, double unit_sphere_y,
-		  double unit_sphere_z, double weight, double redshift);
+		  double unit_sphere_z, double redshift, double weight);
   ~CosmoCoordinate();
 
   // Since we have a redshift attached to the location, we can now attach some
@@ -273,6 +338,38 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
   // Getter and setter for the redshift.
   double Redshift();
   void SetRedshift(double redshift);
+
+  // Static methods for I/O to and from CosmoVectors.  For the input method
+  // using a file, a negative value for the weight column results in unit
+  // weights for all of the WAngularVector members.
+  static bool ToCosmoVector(std::vector<double>& thetaVec,
+			    std::vector<double>& phiVec,
+			    std::vector<double>& redshiftVec,
+			    std::vector<double>& weightVec,
+			    CosmoVector& z_ang,
+			    Sphere sphere = Equatorial);
+  static bool ToCosmoVector(std::vector<double>& thetaVec,
+			    std::vector<double>& phiVec,
+			    std::vector<double>& redshiftVec,
+			    double weight,
+			    CosmoVector& z_ang,
+			    Sphere sphere = Equatorial);
+  static bool ToCosmoVector(const std::string& input_file,
+			    CosmoVector& z_ang,
+			    Sphere sphere = Equatorial,
+			    uint8_t theta_column = 1,
+			    uint8_t phi_column = 2,
+			    uint8_t redshift_column = 3,
+			    int8_t weight_column = -1);
+  static bool FromCosmoVector(CosmoVector& z_ang,
+			      std::vector<double>& thetaVec,
+			      std::vector<double>& phiVec,
+			      std::vector<double>& redshiftVec,
+			      std::vector<double>& weightVec,
+			      Sphere sphere = Equatorial);
+  static bool FromCosmoVector(CosmoVector& z_ang,
+			      const std::string& output_file,
+			      Sphere sphere = Equatorial);
 
  private:
   double redshift_;
