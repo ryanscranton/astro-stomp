@@ -3,14 +3,14 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "stomp_util.h"
+#include <stomp.h>
 #include <gflags/gflags.h>
 
 namespace Stomp {
   class SysPixel : public Pixel {
   public:
     SysPixel() {
-      SetResolution(-1);
+      SetResolution(0);
 
       SetPixnumFromXY(0, 0);
       SetWeight(0.0);
@@ -20,11 +20,11 @@ namespace Stomp {
       sum_sky_ = 0.0;
       n_obj_ = 0;
     };
-    SysPixel(int resolution, unsigned long pixnum, double unmasked_fraction) {
+    SysPixel(uint32_t resolution, uint32_t pixnum, double unmasked_fraction) {
       SetResolution(resolution);
 
-      unsigned long tmp_y = pixnum/(Stomp::Nx0*Resolution());
-      unsigned long tmp_x = pixnum - Stomp::Nx0*Resolution()*tmp_y;
+      uint32_t tmp_y = pixnum/(Stomp::Nx0*Resolution());
+      uint32_t tmp_x = pixnum - Stomp::Nx0*Resolution()*tmp_y;
 
       SetPixnumFromXY(tmp_x, tmp_y);
       SetWeight(unmasked_fraction);
@@ -34,13 +34,13 @@ namespace Stomp {
       sum_sky_ = 0.0;
       n_obj_ = 0;
     };
-    SysPixel(int resolution, unsigned long pixnum, double unmasked_fraction,
+    SysPixel(uint32_t resolution, uint32_t pixnum, double unmasked_fraction,
 	     double mean_seeing, double mean_extinction, double mean_sky,
 	     int n_objects) {
       SetResolution(resolution);
 
-      unsigned long tmp_y = pixnum/(Stomp::Nx0*Resolution());
-      unsigned long tmp_x = pixnum - Stomp::Nx0*Resolution()*tmp_y;
+      uint32_t tmp_y = pixnum/(Stomp::Nx0*Resolution());
+      uint32_t tmp_x = pixnum - Stomp::Nx0*Resolution()*tmp_y;
 
       SetPixnumFromXY(tmp_x, tmp_y);
       SetWeight(unmasked_fraction);
@@ -51,7 +51,7 @@ namespace Stomp {
       n_obj_ = n_objects;
     };
     ~SysPixel() {
-      SetResolution(-1);
+      SetResolution(0);
 
       SetPixnumFromXY(0, 0);
       SetWeight(0.0);
@@ -89,7 +89,7 @@ namespace Stomp {
   };
 } // end namespace Stomp
 
-typedef std::map<const unsigned long, Stomp::SysPixel> SysDict;
+typedef std::map<const uint32_t, Stomp::SysPixel> SysDict;
 typedef SysDict::iterator SysDictIterator;
 
 // Define our command-line flags.
@@ -173,19 +173,18 @@ int main(int argc, char **argv) {
   // Now we start reading in our systematics files.
   std::vector<std::string> input_files;
 
-  Stomp::Stomp::Tokenize(FLAGS_input_files, input_files, ",");
+  Stomp::Tokenize(FLAGS_input_files, input_files, ",");
 
   std::cout << "Parsing " << input_files.size() << " files...\n";
 
-  unsigned long n_obj = 0;
-  unsigned long n_keep = 0;
+  uint32_t n_obj = 0, n_keep = 0;
   for (std::vector<std::string>::iterator file_iter=input_files.begin();
        file_iter!=input_files.end();++file_iter) {
 
     std::cout << "\tParsing " << file_iter->c_str() << "...\n";
     std::ifstream systematics_file(file_iter->c_str());
     double lambda, eta, seeing, extinction, sky;
-    unsigned long pixnum;
+    uint32_t pixnum;
     SysDictIterator sys_iter;
 
     while (!systematics_file.eof()) {
