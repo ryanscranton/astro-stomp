@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "stomp_util.h"
+#include <stomp.h>
 #include <gflags/gflags.h>
 
 
@@ -34,7 +34,7 @@ DEFINE_double(theta_min, 0.09, "Minimum angular scale (in degrees)");
 DEFINE_double(theta_max, 2.0, "Maximum angular scale (in degrees)");
 DEFINE_int32(n_bins_per_decade, 8, "Number of angular bins per decade.");
 
-typedef std::map<const unsigned long, int> KeepDict;
+typedef std::map<const uint32_t, int> KeepDict;
 typedef KeepDict::iterator KeepDictIterator;
 
 enum SystematicsField {
@@ -208,8 +208,7 @@ int main(int argc, char **argv) {
 void FindAllowedArea(KeepDict& keep_map) {
   std::ifstream sysmap_file(FLAGS_sysmap_file.c_str());
   double unmasked, seeing, extinction, sky;
-  unsigned long hpixnum, superpixnum;
-  unsigned int resolution, n_objects;
+  uint32_t x, y, hpixnum, superpixnum, resolution, n_objects;
   double total_area = 0.0;
 
   std::cout << "Reading systematics map from " << FLAGS_sysmap_file << "...\n";
@@ -228,7 +227,8 @@ void FindAllowedArea(KeepDict& keep_map) {
 	  (sky >= FLAGS_sky_min) &&
 	  (sky <= FLAGS_sky_max) &&
 	  (n_objects > 0)) {
-	Stomp::Pixel tmp_pix(resolution, hpixnum, superpixnum);
+	Stomp::Pixel::HPix2XY(resolution, hpixnum, superpixnum, x, y);
+	Stomp::Pixel tmp_pix(x, y, resolution, 1.0);
 	total_area += unmasked*tmp_pix.Area();
 	keep_map[tmp_pix.Pixnum()] = 1;
 	n_keep++;
@@ -253,8 +253,7 @@ void FindAllowedArea(KeepDict& keep_map) {
 
 Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
   std::ifstream galmap_file(FLAGS_galmap_file.c_str());
-  unsigned long hpixnum, superpixnum;
-  unsigned int resolution, n_objects;
+  uint32_t x, y, hpixnum, superpixnum, resolution, n_objects;
   double total_area = 0.0;
   double galaxies, unmasked;
   Stomp::ScalarVector galaxy_pix;
@@ -270,8 +269,8 @@ Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
       Stomp::Pixel tmp_pix(resolution, hpixnum, superpixnum);
       keep_iter = keep_map.find(tmp_pix.Pixnum());
       if (keep_iter != keep_map.end()) {
-	Stomp::ScalarPixel pix(resolution, hpixnum, superpixnum,
-			       unmasked, galaxies, n_objects);
+	Stomp::Pixel::HPix2XY(resolution, hpixnum, superpixnum, x, y);
+	Stomp::ScalarPixel pix(x, y, resolution, unmasked, galaxies, n_objects);
 	total_area += unmasked*pix.Area();
 	galaxy_pix.push_back(pix);
       }

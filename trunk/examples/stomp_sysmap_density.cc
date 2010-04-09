@@ -22,7 +22,7 @@ namespace Stomp {
       sum_galaxies_ = 0.0;
       n_obj_ = 0;
     };
-    SysPixel(uint16_t resolution, uint32_t hpixnum, uint16_t superpixnum,
+    SysPixel(uint32_t resolution, uint32_t hpixnum, uint32_t superpixnum,
 	     double unmasked_fraction, double mean_seeing,
 	     double mean_extinction, double mean_sky, uint16_t n_objects) {
       SetResolution(resolution);
@@ -213,7 +213,7 @@ private:
   BinVector bins_;
 };
 
-typedef std::map<const unsigned long, Stomp::SysPixel> SysDict;
+typedef std::map<const uint32_t, Stomp::SysPixel> SysDict;
 typedef SysDict::iterator SysDictIterator;
 
 // Define our command-line flags.
@@ -269,8 +269,7 @@ int main(int argc, char **argv) {
     FLAGS_sysmap_file << "...\n";
   std::ifstream sysmap_file(FLAGS_sysmap_file.c_str());
   double unmasked, seeing, extinction, sky;
-  uint32_t hpixnum, superpixnum;
-  uint16_t resolution, n_objects;
+  uint32_t hpixnum, superpixnum, resolution, n_objects;
 
   uint32_t n_pixel = 0, n_keep = 0;
   while (!sysmap_file.eof()) {

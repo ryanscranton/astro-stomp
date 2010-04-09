@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "stomp_util.h"
+#include <stomp.h>
 #include <gflags/gflags.h>
 
 
@@ -72,10 +72,9 @@ int main(int argc, char **argv) {
   Stomp::PixelVector sysmap_raw;
   std::ifstream sysmap_file(FLAGS_sysmap_file.c_str());
   double unmasked, seeing, extinction, sky;
-  unsigned long hpixnum, superpixnum;
-  unsigned int resolution, n_objects;
+  uint32_t x, y, hpixnum, superpixnum, resolution, n_objects;
 
-  unsigned long n_pixel = 0, n_keep = 0;
+  uint32_t n_pixel = 0, n_keep = 0;
   while (!sysmap_file.eof()) {
     sysmap_file >> hpixnum >> superpixnum >> resolution >> unmasked >>
       seeing >> extinction >> sky >> n_objects;
@@ -89,7 +88,8 @@ int main(int argc, char **argv) {
 	  (sky >= FLAGS_sky_min) &&
 	  (sky <= FLAGS_sky_max) &&
 	  (n_objects > 0)) {
-	Stomp::Pixel pix(resolution, hpixnum, superpixnum, 1.0);
+	Stomp::Pixel::HPix2XY(resolution, hpixnum, superpixnum, x, y);
+	Stomp::Pixel pix(x, y, resolution, 1.0);
 	sysmap_raw.push_back(pix);
 	n_keep++;
       }
