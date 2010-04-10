@@ -79,6 +79,8 @@ class AngularCoordinate {
   void SetGalacticCoordinates(double gal_lon, double gal_lat);
   void SetUnitSphereCoordinates(double unit_sphere_x, double unit_sphere_y,
 				double unit_sphere_z);
+  // set by Sphere type, more scriptable from python
+  void Set(double theta, double phi, Sphere sphere);
 
   // The basic methods for extracting each of the angular coordinate values.
   // Survey coordinates.
