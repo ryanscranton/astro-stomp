@@ -86,6 +86,27 @@ AngularCoordinate::~AngularCoordinate() {
   us_z_ = 0.0;
 }
 
+
+// set by Sphere type, more scriptable from python
+void AngularCoordinate::Set(
+		double theta,
+		double phi,
+		Sphere sphere) {
+
+  switch (sphere) {
+	  case Survey:
+		  SetSurveyCoordinates(theta, phi);
+		  break;
+	  case Equatorial:
+		  SetEquatorialCoordinates(theta, phi);
+		  break;
+	  case Galactic:
+		  SetGalacticCoordinates(theta, phi);
+		  break;
+  }
+}
+
+
 void AngularCoordinate::SetSurveyCoordinates(double lambda, double eta) {
   if (Stomp::DoubleGE(lambda, 90.0)) lambda = 90.0;
   if (Stomp::DoubleLE(lambda, -90.0)) lambda = -90.0;
