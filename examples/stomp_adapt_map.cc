@@ -58,20 +58,8 @@ int main(int argc, char **argv) {
   // First, we read our STOMP map into a map object.  There are a couple
   // permutations based on the various map formats that are out there: with
   // or without a weight column or in the single index or double index format.
-  Stomp::Map* stomp_map;
-  if (FLAGS_single_index) {
-    if (FLAGS_no_weight) {
-      stomp_map = new Stomp::Map(FLAGS_input_map, false, false);
-    } else {
-      stomp_map = new Stomp::Map(FLAGS_input_map, false);
-    }
-  } else {
-    if (FLAGS_no_weight) {
-      stomp_map = new Stomp::Map(FLAGS_input_map, true, false);
-    } else {
-      stomp_map = new Stomp::Map(FLAGS_input_map);
-    }
-  }
+  Stomp::Map* stomp_map = new Stomp::Map(FLAGS_input_map, !FLAGS_single_index,
+					 !FLAGS_no_weight);
   std::cout << "Read map from " << FLAGS_input_map << "; total area: " <<
     stomp_map->Area() << " sq. deg.\n";
 

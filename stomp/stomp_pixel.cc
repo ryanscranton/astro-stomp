@@ -160,7 +160,7 @@ void Pixel::SetPixnumFromAng(AngularCoordinate& ang) {
 }
 
 void Pixel::SetResolution(uint32_t resolution) {
-  level_ = MostSignificantBit(resolution);
+  level_ = ResolutionToLevel(resolution);
   x_ = 0;
   y_ = 0;
 }
@@ -229,8 +229,8 @@ bool Pixel::SetToLevel(uint8_t lo_level) {
   if (Level() < lo_level) {
     std::cout << "Illegal level value: " << lo_level << " < " << Level();
   } else {
-    x_ /= Resolution()/Level2Resolution(lo_level);
-    y_ /= Resolution()/Level2Resolution(lo_level);
+    x_ /= Resolution()/LevelToResolution(lo_level);
+    y_ /= Resolution()/LevelToResolution(lo_level);
     level_ = lo_level;
 
     success = true;
@@ -2012,11 +2012,11 @@ void Pixel::GenerateRandomPoints(AngularVector& ang, uint32_t n_point) {
   }
 }
 
-uint8_t Pixel::Resolution2Level(const uint32_t resolution) {
+uint8_t Pixel::ResolutionToLevel(const uint32_t resolution) {
   return MostSignificantBit(resolution);
 }
 
-uint32_t Pixel::Level2Resolution(const uint8_t level) {
+uint32_t Pixel::LevelToResolution(const uint8_t level) {
   return static_cast<uint32_t>(1 << level);
 }
 

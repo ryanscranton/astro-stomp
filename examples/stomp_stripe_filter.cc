@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "stomp_util.h"
+#include <stomp.h>
 #include <gflags/gflags.h>
 
 
@@ -46,20 +46,8 @@ int main(int argc, char **argv) {
   // permutations based on the various map formats that are out there: with
   // or without a weight column or in the single index or double index format.
   std::cout << "Reading in initial map...\n";
-  Stomp::Map* stomp_map;
-  if (FLAGS_single_index) {
-    if (FLAGS_no_weight) {
-      stomp_map = new Stomp::Map(FLAGS_map_file, false, false);
-    } else {
-      stomp_map = new Stomp::Map(FLAGS_map_file, false);
-    }      
-  } else {
-    if (FLAGS_no_weight) {
-      stomp_map = new Stomp::Map(FLAGS_map_file, true, false);
-    } else {
-      stomp_map = new Stomp::Map(FLAGS_map_file);
-    }
-  }
+  Stomp::Map* stomp_map = new Stomp::Map(FLAGS_map_file, !FLAGS_single_index,
+					 !FLAGS_no_weight);
   std::cout << "Read map from " << FLAGS_map_file << "; initial area: " <<
     stomp_map->Area() << " sq. deg.\n";
 
@@ -90,8 +78,8 @@ int main(int argc, char **argv) {
   // Now, we assemble vector of StompPixels from the allowed stripes that we'll
   // turn into a StompMap.
   Stomp::PixelVector pix;
-  for (unsigned long k=0;k<Stomp::Stomp::MaxSuperpixnum;k++) {
-    Stomp::Pixel tmp_pix(Stomp::Stomp::HPixResolution, k, 0.0);
+  for (unsigned long k=0;k<Stomp::MaxSuperpixnum;k++) {
+    Stomp::Pixel tmp_pix(Stomp::HPixResolution, k, 0.0);
     if (std::binary_search(stripes.begin(), stripes.end(), tmp_pix.Stripe()))
       pix.push_back(tmp_pix);
   }

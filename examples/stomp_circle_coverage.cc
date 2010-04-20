@@ -54,20 +54,8 @@ int main(int argc, char **argv) {
   // permutations based on the various map formats that are out there: with
   // or without a weight column or in the single index or double index format.
   std::cout << "Reading in initial map...\n";
-  Stomp::Map* stomp_map;
-  if (FLAGS_single_index) {
-    if (FLAGS_no_weight) {
-      stomp_map = new Stomp::Map(FLAGS_map_file, false, false);
-    } else {
-      stomp_map = new Stomp::Map(FLAGS_map_file, false);
-    }
-  } else {
-    if (FLAGS_no_weight) {
-      stomp_map = new Stomp::Map(FLAGS_map_file, true, false);
-    } else {
-      stomp_map = new Stomp::Map(FLAGS_map_file);
-    }
-  }
+  Stomp::Map* stomp_map = new Stomp::Map(FLAGS_map_file, !FLAGS_single_index,
+					 !FLAGS_no_weight);
   std::cout << "Read map from " << FLAGS_map_file << "; initial area: " <<
     stomp_map->Area() << " sq. deg.\n";
 
@@ -89,6 +77,7 @@ int main(int argc, char **argv) {
   uint32_t max_resolution = stomp_map->MaxResolution();
   if (FLAGS_max_resolution != -1)
     max_resolution = static_cast<uint32_t>(FLAGS_max_resolution);
+  std::cout << "Pixelizing at " << static_cast<int>(max_resolution) << "...\n";
 
   if (!input_file.is_open()) {
     std::cout << FLAGS_input_file << " does not exist!  Exiting.\n";
@@ -96,7 +85,7 @@ int main(int argc, char **argv) {
   }
 
   int n_circle = 0;
-  int check = 1000;
+  int check = 100;
   while (!input_file.eof()) {
     double theta, phi, radius;
     input_file >> theta >> phi >> radius;
@@ -113,27 +102,51 @@ int main(int argc, char **argv) {
 
       // Now we assemble a Map for each of the quadrants and see if they are
       // inside our reference Map.
-      double position_angle_min = 0.0;
-      double position_angle_max = 90.0;
-      for (int i=0;i<4;i++) {
-	Stomp::WedgeBound wedge_bound(ang, radius, position_angle_min,
-				      position_angle_max, coord);
+      {
+	Stomp::WedgeBound wedge_bound(ang, radius, 0.0, 90.0, coord);
+	Stomp::Map* wedge_map =
+	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
 
-	Stomp::Map* wedge_map = new Stomp::Map(wedge_bound, 1.0,
-					       FLAGS_max_resolution);
-
-	if (stomp_map->Contains(*wedge_map)) idx += 1 << i+1;
+	if (stomp_map->Contains(*wedge_map)) idx += FIRST_QUADRANT;
 
 	delete wedge_map;
-	position_angle_min += 90.0;
-	position_angle_max += 90.0;
+      }
+
+      {
+	Stomp::WedgeBound wedge_bound(ang, radius, 90.0, 180.0, coord);
+	Stomp::Map* wedge_map =
+	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
+
+	if (stomp_map->Contains(*wedge_map)) idx += SECOND_QUADRANT;
+
+	delete wedge_map;
+      }
+
+      {
+	Stomp::WedgeBound wedge_bound(ang, radius, 180.0, 270.0, coord);
+	Stomp::Map* wedge_map =
+	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
+
+	if (stomp_map->Contains(*wedge_map)) idx += THIRD_QUADRANT;
+
+	delete wedge_map;
+      }
+
+      {
+	Stomp::WedgeBound wedge_bound(ang, radius, 270.0, 360.0, coord);
+	Stomp::Map* wedge_map =
+	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
+
+	if (stomp_map->Contains(*wedge_map)) idx += FOURTH_QUADRANT;
+
+	delete wedge_map;
       }
 
       n_circle++;
       if (n_circle > 0 && n_circle % check == 0)
 	std::cout << "Processed " << n_circle << " objects...\n";
 
-      output_file << theta << phi << radius << idx << "\n";
+      output_file << theta << " " << phi << " " << radius << " " << idx << "\n";
     }
   }
   input_file.close();

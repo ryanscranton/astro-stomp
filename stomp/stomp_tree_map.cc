@@ -1216,11 +1216,11 @@ uint32_t TreeMap::MaxResolution() {
 }
 
 uint8_t TreeMap::MinLevel() {
-  return Pixel::Resolution2Level(resolution_);
+  return Pixel::ResolutionToLevel(resolution_);
 }
 
 uint8_t TreeMap::MaxLevel() {
-  return Pixel::Resolution2Level(resolution_);
+  return Pixel::ResolutionToLevel(resolution_);
 }
 
 bool TreeMap::Empty() {

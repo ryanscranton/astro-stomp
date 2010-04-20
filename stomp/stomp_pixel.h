@@ -358,8 +358,8 @@ class Pixel {
   // to a straight C interface.  True, we're using references which aren't
   // in C, but these methods still allow users to access the basic interfaces
   // without instantiating a Pixel, which can be handy in some cases.
-  static uint8_t Resolution2Level(const uint32_t resolution);
-  static uint32_t Level2Resolution(const uint8_t level);
+  static uint8_t ResolutionToLevel(const uint32_t resolution);
+  static uint32_t LevelToResolution(const uint8_t level);
   static void Ang2Pix(const uint32_t resolution, AngularCoordinate& ang,
 		      uint32_t& pixnum);
   static void Pix2Ang(uint32_t resolution, uint32_t pixnum,

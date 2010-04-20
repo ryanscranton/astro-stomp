@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "stomp_util.h"
+#include <stomp.h>
 #include <gflags/gflags.h>
 
 // Define our command-line flags.
@@ -46,23 +46,24 @@ int main(int argc, char **argv) {
   Stomp::Map* stomp_map = new Stomp::Map();
 
 
+  // Cast the maximum resolution to the proper variable type
+  uint32_t max_resolution = static_cast<uint32_t>(FLAGS_max_resolution);
+
   // Now we extract the circle parameters, pixelize them and add their maps
   // to the global map.
   std::cout << "Parsing " << FLAGS_input_file << "...\n";
   std::ifstream circle_file(FLAGS_input_file.c_str());
   double ra, dec, radius;
-  unsigned long idx;
+  int32_t idx;
 
   if (!circle_file.is_open()) {
     std::cout << FLAGS_input_file << " does not exist!  Exiting.\n";
     exit(1);
   }
 
-  unsigned long n_circle = 0;
-  unsigned long n_kept = 0;
-  double raw_area = 0.0;
-  double pixelized_raw_area = 0.0;
-  unsigned long check = 1000;
+  int32_t n_circle = 0, n_kept = 0;
+  double raw_area = 0.0, pixelized_raw_area = 0.0;
+  uint32_t check = 1000;
   while (!circle_file.eof()) {
     circle_file >> idx >> ra >> dec >> radius;
 
@@ -75,48 +76,29 @@ int main(int argc, char **argv) {
 	// Stars that are too close to the lambda poles won't be properly
 	// pixelized, so we drop them.  They will be outside of our footprint
 	// anyway, so there's no problem.
-	if (Stomp::Stomp::DoubleLE(ang.Lambda()+radius, 82.0) &&
-	    Stomp::Stomp::DoubleGE(ang.Lambda()-radius, -82.0)) {
+	if (Stomp::DoubleLE(ang.Lambda()+radius, 82.0) &&
+	    Stomp::DoubleGE(ang.Lambda()-radius, -82.0)) {
 	  Stomp::CircleBound* circle_bound =
 	    new Stomp::CircleBound(ang, radius);
-
-	  // Set the maximum resolution
-	  circle_bound->SetMaxResolution(FLAGS_max_resolution);
-
-	  // If we're being verbose, then we output the starting pixelization
-	  // parameters.
-	  if (FLAGS_verbose) {
-	    int starting_resolution = circle_bound->FindStartingResolution();
-	    circle_bound->FindXYBounds(starting_resolution);
-	    std::cout << idx << ", (" << ang.Lambda() << "," << ang.Eta() <<
-	      ", " << radius << "): " << starting_resolution << ", " <<
-	      circle_bound->XMin() << " - " << circle_bound->XMax() << ", " <<
-	      circle_bound->YMin() << " - " << circle_bound->YMax() << "\n";
-	  }
-
-	  // If the circle is too small to properly pixelize with the input
-	  // resolution, then the pixelization may fail.  Provided that it
-	  // doesn't, we can go forward and add the resulting Map to the
-	  // aggregate.
-	  if (circle_bound->Pixelize()) {
+	  Stomp::Map* circle_map = new Stomp::Map(*circle_bound, 1.0,
+					      max_resolution, FLAGS_verbose);
+	  if (circle_map->Size() > 0) {
 	    n_kept++;
 
-	    pixelized_raw_area += circle_bound->PixelizedArea();
+	    pixelized_raw_area += circle_map->Area();
 	    raw_area += circle_bound->Area();
-
-	    Stomp::Map* circle_map = circle_bound->ExportMap();
 
 	    stomp_map->IngestMap(*circle_map, true);
 
 	    // If we're being verbose, output the results of pixelizing this
 	    // circle.
 	    if (FLAGS_verbose)
-	      std::cout << "\t" << circle_bound->NPixel() <<
-		" pixels, " << circle_bound->PixelizedArea() <<
-		" sq. degrees. (" << circle_bound->Area() << ")\n";
-	    delete circle_map;
-	    delete circle_bound;
+	      std::cout << "\t" << circle_map->Size() << " pixels, " <<
+		circle_map->Area() << " sq. degrees. (" <<
+		circle_bound->Area() << ")\n";
 	  }
+	  delete circle_map;
+	  delete circle_bound;
 	}
 	n_circle++;
       }

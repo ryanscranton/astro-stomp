@@ -26,7 +26,7 @@ tablefile.close()
 
 
 
-stomp_module = Extension("_stomp",
+stomp_module = Extension("_stomp_base",
                            sources=["../stomp/stomp_core.cc",
                                     "../stomp/stomp_angular_bin.cc",
                                     "../stomp/stomp_angular_coordinate.cc",
@@ -54,7 +54,7 @@ density, CMB temperature, observational depth, etc.) and to do so in such
 a way as to make the analysis of that data as algorithmically efficient as
 possible.
 """,
-        data_files=[('ups',['ups/stomp.table'])],
+       data_files=[('ups',['ups/stomp.table'])],
        ext_modules = [stomp_module],
        py_modules = ["stomp"],
        )

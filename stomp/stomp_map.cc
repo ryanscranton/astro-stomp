@@ -809,11 +809,11 @@ void SubMap::SetUnsorted() {
 }
 
 uint32_t SubMap::MinResolution() {
-  return Pixel::Level2Resolution(min_level_);
+  return Pixel::LevelToResolution(min_level_);
 }
 
 uint32_t SubMap::MaxResolution() {
-  return Pixel::Level2Resolution(max_level_);
+  return Pixel::LevelToResolution(max_level_);
 }
 
 uint8_t SubMap::MinLevel() {
@@ -1837,7 +1837,7 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
 
     for (uint8_t resolution_level=starting_resolution_level;
          resolution_level<=max_resolution_level;resolution_level++) {
-      uint32_t resolution = Pixel::Level2Resolution(resolution_level);
+      uint32_t resolution = Pixel::LevelToResolution(resolution_level);
 
       unsigned n_keep = 0;
       uint32_t nx = Nx0*resolution;
@@ -1972,7 +1972,7 @@ uint8_t Map::_FindStartingResolutionLevel(double bound_area) {
   while ((bound_area/Pixel::PixelArea(starting_resolution) <= 100.0) &&
 	 (starting_resolution < MaxPixelResolution)) starting_resolution *= 2;
 
-  return Pixel::Resolution2Level(starting_resolution);
+  return Pixel::ResolutionToLevel(starting_resolution);
 }
 
 bool Map::_FindXYBounds(const uint8_t resolution_level,
@@ -1980,7 +1980,7 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 			uint32_t& x_min, uint32_t&x_max,
 			uint32_t& y_min, uint32_t&y_max) {
 
-  uint32_t resolution = Pixel::Level2Resolution(resolution_level);
+  uint32_t resolution = Pixel::LevelToResolution(resolution_level);
   uint32_t nx = Nx0*resolution, ny = Ny0*resolution;
 
   Pixel::AreaIndex(resolution,
@@ -2676,7 +2676,7 @@ double Map::Area(uint32_t superpixnum) {
 }
 
 uint32_t Map::MinResolution() {
-  return Pixel::Level2Resolution(min_level_);
+  return Pixel::LevelToResolution(min_level_);
 }
 
 uint32_t Map::MinResolution(uint32_t superpixnum) {
@@ -2685,7 +2685,7 @@ uint32_t Map::MinResolution(uint32_t superpixnum) {
 }
 
 uint32_t Map::MaxResolution() {
-  return Pixel::Level2Resolution(max_level_);
+  return Pixel::LevelToResolution(max_level_);
 }
 
 uint32_t Map::MaxResolution(uint32_t superpixnum) {
