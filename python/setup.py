@@ -26,7 +26,7 @@ tablefile.close()
 
 
 
-stomp_module = Extension("_stomp_base",
+stomp_module = Extension("_stomp",
                            sources=["../stomp/stomp_core.cc",
                                     "../stomp/stomp_angular_bin.cc",
                                     "../stomp/stomp_angular_coordinate.cc",
