@@ -164,31 +164,41 @@ WedgeBound::~WedgeBound() {
 }
 
 bool WedgeBound::FindAngularBounds() {
-  // This is ported directly from the CircleBound object, so the bounds aren't
-  // a function of the slice of the wedge we're actually pixelizing.
-  //
-  // TODO(ryan.scranton): To properly calculate the wedge bounds, the reference
-  // angles using the PositionAngle and Rotation methods need to be sync'd up.
-  // Currently, a Rotation() from a point North of the reference location will
-  // not align with a point at a given PositionAngle().
+  // Start with position directly above center point.
+  AngularCoordinate start_ang;
 
-  double lammin = ang_.Lambda() - radius_;
+  switch (sphere_) {
+  case AngularCoordinate::Survey:
+    start_ang.SetSurveyCoordinates(ang_.Lambda()+radius_, ang_.Eta());
+    break;
+  case AngularCoordinate::Equatorial:
+    start_ang.SetEquatorialCoordinates(ang_.RA(), ang_.DEC()+radius_);
+    break;
+  case AngularCoordinate::Galactic:
+    start_ang.SetGalacticCoordinates(ang_.GalLon(), ang_.GalLat()+radius_);
+    break;
+  }
+
+  double lammin = ang_.Lambda(), lammax = ang_.Lambda();
+  double etamin = ang_.Eta(), etamax = ang_.Eta();
+
+  AngularCoordinate rotate_ang;
+  start_ang.Rotate(ang_, position_angle_min_, rotate_ang, sphere_);
+  if (DoubleLT(rotate_ang.Lambda(), lammin)) lammin = rotate_ang.Lambda();
+  if (DoubleGT(rotate_ang.Lambda(), lammax)) lammax = rotate_ang.Lambda();
+  if (DoubleLT(rotate_ang.Eta(), etamin)) etamin = rotate_ang.Eta();
+  if (DoubleGT(rotate_ang.Eta(), etamax)) etamax = rotate_ang.Eta();
+
+  start_ang.Rotate(ang_, position_angle_max_, rotate_ang, sphere_);
+  if (DoubleLT(rotate_ang.Lambda(), lammin)) lammin = rotate_ang.Lambda();
+  if (DoubleGT(rotate_ang.Lambda(), lammax)) lammax = rotate_ang.Lambda();
+  if (DoubleLT(rotate_ang.Eta(), etamin)) etamin = rotate_ang.Eta();
+  if (DoubleGT(rotate_ang.Eta(), etamax)) etamax = rotate_ang.Eta();
+
   if (DoubleLE(lammin, -90.0)) lammin = -90.0;
-
-  double lammax = ang_.Lambda() + radius_;
   if (DoubleGE(lammax, 90.0)) lammax = 90.0;
-
-  // double eta_multiplier =
-  // AngularCoordinate::EtaMultiplier(0.5*(lammax+lammin));
-  double eta_multiplier = 1.0;
-
-  double etamin = ang_.Eta() - radius_*eta_multiplier;
   if (DoubleGT(etamin, 180.0)) etamin -= 360.0;
   if (DoubleLT(etamin, -180.0)) etamin += 360.0;
-
-  double etamax = ang_.Eta() + radius_*eta_multiplier;
-  if (DoubleGT(etamax, 180.0)) etamax -= 360.0;
-  if (DoubleLT(etamax, -180.0)) etamax += 360.0;
 
   SetAngularBounds(lammin,lammax,etamin,etamax);
 
@@ -211,8 +221,7 @@ bool WedgeBound::CheckPoint(AngularCoordinate& ang) {
     ang.UnitSphereZ()*ang_.UnitSphereZ();
 
   if (DoubleLE(1.0-costheta*costheta, sin2radius_)) {
-    double position_angle = 90.0 - ang_.PositionAngle(ang);
-    if (DoubleLT(position_angle, 0.0)) position_angle += 360.0;
+    double position_angle = ang_.PositionAngle(ang, sphere_);
     if (DoubleGE(position_angle, position_angle_min_) &&
 	DoubleLE(position_angle, position_angle_max_))
       within_bound = true;

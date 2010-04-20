@@ -79,6 +79,8 @@ class AngularCoordinate {
   void SetGalacticCoordinates(double gal_lon, double gal_lat);
   void SetUnitSphereCoordinates(double unit_sphere_x, double unit_sphere_y,
 				double unit_sphere_z);
+  void SetUnitSphereCoordinates(double unit_sphere_x, double unit_sphere_y,
+				double unit_sphere_z, Sphere sphere);
   // set by Sphere type, more scriptable from python
   void Set(double theta, double phi, Sphere sphere);
 
@@ -101,6 +103,14 @@ class AngularCoordinate {
   double UnitSphereY();
   double UnitSphereZ();
 
+  // The previous methods give access to the internal representation that the
+  // class uses to store an angular position.  Occasionally, however, it can be
+  // useful to provide a Cartesian breakdown of the position for a particular
+  // coordinate basis.
+  double UnitSphereX(Sphere sphere);
+  double UnitSphereY(Sphere sphere);
+  double UnitSphereZ(Sphere sphere);
+
   // Once you have a single angular position on the sphere, very quickly you
   // end up wanting to know the angular distance between your coordinate and
   // another.  This method returns that value in degrees.
@@ -111,14 +121,17 @@ class AngularCoordinate {
   // the unit vector represented by your angular position and another.
   double DotProduct(AngularCoordinate& ang);
   double DotProduct(AngularCoordinate* ang);
-  AngularCoordinate CrossProduct(AngularCoordinate& ang);
-  AngularCoordinate CrossProduct(AngularCoordinate* ang);
+  AngularCoordinate CrossProduct(AngularCoordinate& ang,
+				 Sphere sphere = Equatorial);
+  AngularCoordinate CrossProduct(AngularCoordinate* ang,
+				 Sphere sphere = Equatorial);
 
   // Given another AngularCoordinate, return the AngularCoordinate that defines
   // the great circle running through the current point and the input point.
   // This is different than just the cross-product in that we need to do the
   // calculation in the native coordinate system of the current point.
-  void GreatCircle(AngularCoordinate& ang, AngularCoordinate& great_circle);
+  void GreatCircle(AngularCoordinate& ang, AngularCoordinate& great_circle,
+		   Sphere sphere = Equatorial);
 
   // Given either another AngularCoordinate or a Pixel, return the position
   // angle (in degrees, East of North) from the current coordinate to the input
@@ -137,15 +150,24 @@ class AngularCoordinate {
   // Given an input position on the sphere, we can rotate our current position
   // about that point.  The rotation angle will be in degrees, East of
   // North.  In the second variant, we leave our current position static and
-  // return a copy of the rotated position.
+  // return a copy of the rotated position.  The third variant is where we'll
+  // actually do the work of the rotation, but the other two methods are the
+  // preferred interfaces.
   //
-  // TODO(ryan.scranton): Rotate does not work properly with PositionAngle, in
-  // that applying a Rotation to a point about a reference location does not
-  // result in the PositionAngle from the reference point to the rotated point
-  // matching the rotation applied.  This needs to be fixed.
-  void Rotate(AngularCoordinate& fixed_ang, double rotation_angle);
+  // TODO(ryan.scranton): Rotate now works in concert with PositionAngle.
+  // However, consecutive calls to Rotate do not have the expected effect; e.g.
+  //
+  // ang.Rotate(fixed_ang, 90);
+  // ang.Rotate(fixed_ang, 90);
+  //
+  // is not equivalent to ang.Rotate(fixed_ang, 180);
   void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
-	      AngularCoordinate& rotated_ang);
+	      Sphere sphere = Equatorial);
+  void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
+	      AngularCoordinate& rotated_ang, Sphere sphere = Equatorial);
+  void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
+	      Sphere sphere, double& unit_sphere_x, double& unit_sphere_y,
+	      double& unit_sphere_z);
 
   // Static methods for when users want to switch between coordinate systems
   // without instantiating the class.

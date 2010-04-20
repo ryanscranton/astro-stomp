@@ -96,6 +96,8 @@ class AngularCoordinate {
   void SetGalacticCoordinates(double gal_lon, double gal_lat);
   void SetUnitSphereCoordinates(double unit_sphere_x, double unit_sphere_y,
 				double unit_sphere_z);
+  void SetUnitSphereCoordinates(double unit_sphere_x, double unit_sphere_y,
+				double unit_sphere_z, Sphere sphere);
   // set by Sphere type, more scriptable from python
   void Set(double theta, double phi, Sphere sphere);
   double Lambda();
@@ -109,17 +111,19 @@ class AngularCoordinate {
   double UnitSphereZ();
   double AngularDistance(AngularCoordinate& ang);
   double DotProduct(AngularCoordinate& ang);
-  AngularCoordinate CrossProduct(AngularCoordinate& ang);
-  void GreatCircle(AngularCoordinate& ang, AngularCoordinate& great_circle);
+  AngularCoordinate CrossProduct(AngularCoordinate& ang, Sphere sphere);
+  void GreatCircle(AngularCoordinate& ang, AngularCoordinate& great_circle,
+                   Sphere sphere);
   double PositionAngle(AngularCoordinate& ang, Sphere sphere = Equatorial);
   double PositionAngle(Pixel& pix, Sphere sphere = Equatorial);
   double CosPositionAngle(AngularCoordinate& ang, Sphere sphere = Equatorial);
   double CosPositionAngle(Pixel& pix, Sphere sphere = Equatorial);
   double SinPositionAngle(AngularCoordinate& ang, Sphere sphere = Equatorial);
   double SinPositionAngle(Pixel& pix, Sphere sphere = Equatorial);
-  void Rotate(AngularCoordinate& fixed_ang, double rotation_angle);
   void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
-	      AngularCoordinate& rotated_ang);
+              Sphere sphere = Equatorial);
+  void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
+	      AngularCoordinate& rotated_ang, Sphere sphere = Equatorial);
   static void SurveyToGalactic(double lambda, double eta,
                                double& gal_lon, double& gal_lat);
   static void SurveyToEquatorial(double lambda, double eta,
