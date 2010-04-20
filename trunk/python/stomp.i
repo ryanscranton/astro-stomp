@@ -1,4 +1,4 @@
-%module stomp
+%module stomp_base
 %{
 #include "../stomp/stomp_core.h"
 #include "../stomp/stomp_angular_bin.h"

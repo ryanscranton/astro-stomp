@@ -1660,11 +1660,11 @@ uint32_t ScalarMap::MaxResolution() {
 }
 
 uint8_t ScalarMap::MinLevel() {
-  return Pixel::Resolution2Level(resolution_);
+  return Pixel::ResolutionToLevel(resolution_);
 }
 
 uint8_t ScalarMap::MaxLevel() {
-  return Pixel::Resolution2Level(resolution_);
+  return Pixel::ResolutionToLevel(resolution_);
 }
 
 bool ScalarMap::Empty() {

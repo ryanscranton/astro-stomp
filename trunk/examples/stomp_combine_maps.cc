@@ -65,20 +65,8 @@ int main(int argc, char **argv) {
 
       std::cout << "\tParsing " << file_iter->c_str() << "...\n";
 
-      Stomp::Map* tmp_map;
-      if (FLAGS_single_index) {
-	if (FLAGS_no_weight) {
-	  tmp_map = new Stomp::Map(*file_iter, false, false);
-	} else {
-	  tmp_map = new Stomp::Map(*file_iter, false);
-	}
-      } else {
-	if (FLAGS_no_weight) {
-	  tmp_map = new Stomp::Map(*file_iter, true, false);
-	} else {
-	  tmp_map = new Stomp::Map(*file_iter);
-	}
-      }
+      Stomp::Map* tmp_map = new Stomp::Map(*file_iter, !FLAGS_single_index,
+					   !FLAGS_no_weight);
 
       std::cout << "\t\tAdding map with " << tmp_map->Area() <<
 	" sq. degrees (" << tmp_map->Size() << ")...\n";

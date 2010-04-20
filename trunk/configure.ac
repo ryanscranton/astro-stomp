@@ -119,5 +119,6 @@ AC_CHECK_LIB([gflags], [main], [],
 
 AC_OUTPUT(Makefile \
           stomp-1.0.pc \
-          stomp/Makefile
+          stomp/Makefile \
+	  examples/Makefile
 )
