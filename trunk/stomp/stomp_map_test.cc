@@ -459,7 +459,7 @@ void MapMultiMapTests() {
   std::cout << "***************************\n";
   std::cout << "*** Map Multi-Map Tests ***\n";
   std::cout << "***************************\n";
-  uint32_t pixelate_resolution = 2048;
+  uint32_t pixelate_resolution = 32768;
   double radius = 3.0;
   std::cout << "\tCenter circle:\n\t";
   Stomp::AngularCoordinate center_ang(20.0, 0.0,

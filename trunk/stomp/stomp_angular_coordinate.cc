@@ -86,26 +86,20 @@ AngularCoordinate::~AngularCoordinate() {
   us_z_ = 0.0;
 }
 
-
-// set by Sphere type, more scriptable from python
-void AngularCoordinate::Set(
-		double theta,
-		double phi,
-		Sphere sphere) {
+void AngularCoordinate::Set(double theta, double phi, Sphere sphere) {
 
   switch (sphere) {
-	  case Survey:
-		  SetSurveyCoordinates(theta, phi);
-		  break;
-	  case Equatorial:
-		  SetEquatorialCoordinates(theta, phi);
-		  break;
-	  case Galactic:
-		  SetGalacticCoordinates(theta, phi);
-		  break;
+  case Survey:
+    SetSurveyCoordinates(theta, phi);
+    break;
+  case Equatorial:
+    SetEquatorialCoordinates(theta, phi);
+    break;
+  case Galactic:
+    SetGalacticCoordinates(theta, phi);
+    break;
   }
 }
-
 
 void AngularCoordinate::SetSurveyCoordinates(double lambda, double eta) {
   if (Stomp::DoubleGE(lambda, 90.0)) lambda = 90.0;
@@ -155,13 +149,36 @@ void AngularCoordinate::SetGalacticCoordinates(double gal_lon, double gal_lat) {
 void AngularCoordinate::SetUnitSphereCoordinates(double unit_sphere_x,
 						 double unit_sphere_y,
 						 double unit_sphere_z) {
-  double r_norm = sqrt(unit_sphere_x*unit_sphere_x +
-		       unit_sphere_y*unit_sphere_y +
-		       unit_sphere_z*unit_sphere_z);
+  double r_norm = 1.0/sqrt(unit_sphere_x*unit_sphere_x +
+			   unit_sphere_y*unit_sphere_y +
+			   unit_sphere_z*unit_sphere_z);
 
-  us_x_ = unit_sphere_x/r_norm;
-  us_y_ = unit_sphere_y/r_norm;
-  us_z_ = unit_sphere_z/r_norm;
+  us_x_ = unit_sphere_x*r_norm;
+  us_y_ = unit_sphere_y*r_norm;
+  us_z_ = unit_sphere_z*r_norm;
+}
+
+void AngularCoordinate::SetUnitSphereCoordinates(double unit_sphere_x,
+						 double unit_sphere_y,
+						 double unit_sphere_z,
+						 Sphere sphere) {
+  double r_norm = 1.0/sqrt(unit_sphere_x*unit_sphere_x +
+			   unit_sphere_y*unit_sphere_y +
+			   unit_sphere_z*unit_sphere_z);
+  double phi = asin(unit_sphere_z*r_norm)*RadToDeg;
+  double theta = atan2(unit_sphere_y*r_norm, unit_sphere_x*r_norm)*RadToDeg;
+
+  switch (sphere) {
+  case Survey:
+    SetSurveyCoordinates(phi, theta);
+    break;
+  case Equatorial:
+    SetEquatorialCoordinates(theta, phi);
+    break;
+  case Galactic:
+    SetGalacticCoordinates(theta, phi);
+    break;
+  }
 }
 
 double AngularCoordinate::Lambda() {
@@ -210,6 +227,60 @@ double AngularCoordinate::UnitSphereZ() {
   return us_z_;
 }
 
+double AngularCoordinate::UnitSphereX(Sphere sphere) {
+  double theta = 0.0, phi = 0.0;
+  switch (sphere) {
+  case Survey:
+    theta = Eta()*Stomp::DegToRad;
+    phi = Lambda()*Stomp::DegToRad;
+    break;
+  case Equatorial:
+    theta = RA()*Stomp::DegToRad;
+    phi = DEC()*Stomp::DegToRad;
+    break;
+  case Galactic:
+    theta = GalLon()*Stomp::DegToRad;
+    phi = GalLat()*Stomp::DegToRad;
+    break;
+  }
+  return cos(theta)*cos(phi);
+}
+
+double AngularCoordinate::UnitSphereY(Sphere sphere) {
+  double theta = 0.0, phi = 0.0;
+  switch (sphere) {
+  case Survey:
+    theta = Eta()*Stomp::DegToRad;
+    phi = Lambda()*Stomp::DegToRad;
+    break;
+  case Equatorial:
+    theta = RA()*Stomp::DegToRad;
+    phi = DEC()*Stomp::DegToRad;
+    break;
+  case Galactic:
+    theta = GalLon()*Stomp::DegToRad;
+    phi = GalLat()*Stomp::DegToRad;
+    break;
+  }
+  return sin(theta)*cos(phi);
+}
+
+double AngularCoordinate::UnitSphereZ(Sphere sphere) {
+  double phi = 0.0;
+  switch (sphere) {
+  case Survey:
+    phi = Lambda()*Stomp::DegToRad;
+    break;
+  case Equatorial:
+    phi = DEC()*Stomp::DegToRad;
+    break;
+  case Galactic:
+    phi = GalLat()*Stomp::DegToRad;
+    break;
+  }
+  return sin(phi);
+}
+
 double AngularCoordinate::AngularDistance(AngularCoordinate& ang) {
   return acos(us_x_*ang.UnitSphereX() + us_y_*ang.UnitSphereY() +
 	      us_z_*ang.UnitSphereZ())*Stomp::RadToDeg;
@@ -230,31 +301,42 @@ double AngularCoordinate::DotProduct(AngularCoordinate* ang) {
     us_z_*ang->UnitSphereZ();
 }
 
-AngularCoordinate AngularCoordinate::CrossProduct(AngularCoordinate& ang) {
-  return AngularCoordinate(us_y_*ang.UnitSphereZ() - us_z_*ang.UnitSphereY(),
-			   us_x_*ang.UnitSphereZ() - us_z_*ang.UnitSphereX(),
-			   us_x_*ang.UnitSphereY() - us_y_*ang.UnitSphereX());
+AngularCoordinate AngularCoordinate::CrossProduct(AngularCoordinate& ang,
+						  Sphere sphere) {
+  return AngularCoordinate(UnitSphereY(sphere)*ang.UnitSphereZ(sphere) -
+			   UnitSphereZ(sphere)*ang.UnitSphereY(sphere),
+			   UnitSphereX(sphere)*ang.UnitSphereZ(sphere) -
+			   UnitSphereZ(sphere)*ang.UnitSphereX(sphere),
+			   UnitSphereX(sphere)*ang.UnitSphereY(sphere) -
+			   UnitSphereY(sphere)*ang.UnitSphereX(sphere));
 }
 
-AngularCoordinate AngularCoordinate::CrossProduct(AngularCoordinate* ang) {
-  return AngularCoordinate(us_y_*ang->UnitSphereZ()-us_z_*ang->UnitSphereY(),
-			   us_x_*ang->UnitSphereZ()-us_z_*ang->UnitSphereX(),
-			   us_x_*ang->UnitSphereY()-us_y_*ang->UnitSphereX());
+AngularCoordinate AngularCoordinate::CrossProduct(AngularCoordinate* ang,
+						  Sphere sphere) {
+  return AngularCoordinate(UnitSphereY(sphere)*ang->UnitSphereZ(sphere) -
+			   UnitSphereZ(sphere)*ang->UnitSphereY(sphere),
+			   UnitSphereX(sphere)*ang->UnitSphereZ(sphere) -
+			   UnitSphereZ(sphere)*ang->UnitSphereX(sphere),
+			   UnitSphereX(sphere)*ang->UnitSphereY(sphere) -
+			   UnitSphereY(sphere)*ang->UnitSphereX(sphere));
 }
 
 void AngularCoordinate::GreatCircle(AngularCoordinate& ang,
-				    AngularCoordinate& great_circle) {
-  great_circle = CrossProduct(ang);
+				    AngularCoordinate& great_circle,
+				    Sphere sphere) {
+  great_circle = CrossProduct(ang, sphere);
 }
 
 double AngularCoordinate::PositionAngle(AngularCoordinate& ang, Sphere sphere) {
-  return Stomp::RadToDeg*atan2(SinPositionAngle(ang, sphere),
-			       CosPositionAngle(ang, sphere));
+  double pos_angle = Stomp::RadToDeg*atan2(SinPositionAngle(ang, sphere),
+					   CosPositionAngle(ang, sphere));
+  return (DoubleGT(pos_angle, 0.0) ? pos_angle : pos_angle + 360.0);
 }
 
 double AngularCoordinate::PositionAngle(Pixel& pix, Sphere sphere) {
-  return Stomp::RadToDeg*atan2(SinPositionAngle(pix, sphere),
-			       CosPositionAngle(pix, sphere));
+  double pos_angle = Stomp::RadToDeg*atan2(SinPositionAngle(pix, sphere),
+					   CosPositionAngle(pix, sphere));
+  return (DoubleGT(pos_angle, 0.0) ? pos_angle : pos_angle + 360.0);
 }
 
 double AngularCoordinate::CosPositionAngle(AngularCoordinate& ang,
@@ -362,64 +444,59 @@ double AngularCoordinate::SinPositionAngle(Pixel& pix, Sphere sphere) {
 }
 
 void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
-			       double rotation_angle) {
-  // Using a quaternion to rotate our current position about the vector
-  // represented by the input AngularCoordinate.  Our starting quarternion is
-  //
-  // q = cos(theta/2) + fixed_ang*sin(theta/2)
-  double cos_theta = cos(0.5*rotation_angle*Stomp::DegToRad);
-  double sin_theta = sin(0.5*rotation_angle*Stomp::DegToRad);
+			       double rotation_angle, Sphere sphere) {
+  double new_x, new_y, new_z;
+  Rotate(fixed_ang, rotation_angle, sphere, new_x, new_y, new_z);
 
-  double q1 = cos_theta;
-  double q2 = sin_theta*fixed_ang.UnitSphereX();
-  double q3 = sin_theta*fixed_ang.UnitSphereY();
-  double q4 = sin_theta*fixed_ang.UnitSphereZ();
-
-  double new_x =
-    2.0*((-q3*q3 - q4*q4)*UnitSphereX() +
-	 (q2*q3 - q1*q4)*UnitSphereY() +
-	 (q1*q3 - q2*q4)*UnitSphereZ()) + UnitSphereX();
-  double new_y =
-    2.0*((q1*q4 + q2*q3)*UnitSphereX() +
-	 (-q2*q2 - q4*q4)*UnitSphereY() +
-	 (q3*q4 - q1*q3)*UnitSphereZ()) + UnitSphereY();
-  double new_z =
-    2.0*((q2*q4 - q1*q3)*UnitSphereX() +
-	 (q1*q3 + q3*q4)*UnitSphereY() +
-	 (-q2*q2 - q3*q3)*UnitSphereZ()) + UnitSphereZ();
-
-  SetUnitSphereCoordinates(new_x, new_y, new_z);
+  SetUnitSphereCoordinates(new_x, new_y, new_z, sphere);
 }
 
 void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
 			       double rotation_angle,
-			       AngularCoordinate& rotated_ang) {
-  // Using a quaternion to rotate our current position about the vector
-  // represented by the input AngularCoordinate.  Our starting quarternion is
+			       AngularCoordinate& rotated_ang,
+			       Sphere sphere) {
+  double new_x, new_y, new_z;
+  Rotate(fixed_ang, rotation_angle, sphere, new_x, new_y, new_z);
+
+  rotated_ang.SetUnitSphereCoordinates(new_x, new_y, new_z, sphere);
+}
+
+void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
+			       double rotation_angle, Sphere sphere,
+			       double& new_unit_sphere_x,
+			       double& new_unit_sphere_y,
+			       double& new_unit_sphere_z) {
+  // Use a quaternion to rotate our current position about the vector
+  // represented by the input AngularCoordinate.  Our quarternion axis is
   //
   // q = cos(theta/2) + fixed_ang*sin(theta/2)
-  double cos_theta = cos(0.5*rotation_angle*Stomp::DegToRad);
-  double sin_theta = sin(0.5*rotation_angle*Stomp::DegToRad);
+  //
+  // In order to have our rotations match up with the orientation of the
+  // PositionAngle method, we need to reverse the sign of the rotation angle.
+  double cos_theta = cos(-0.5*rotation_angle*DegToRad);
+  double sin_theta = sin(-0.5*rotation_angle*DegToRad);
 
-  double q1 = cos_theta;
-  double q2 = sin_theta*fixed_ang.UnitSphereX();
-  double q3 = sin_theta*fixed_ang.UnitSphereY();
-  double q4 = sin_theta*fixed_ang.UnitSphereZ();
+  double q_w = cos_theta;
+  double q_x = sin_theta*fixed_ang.UnitSphereX(sphere);
+  double q_y = sin_theta*fixed_ang.UnitSphereY(sphere);
+  double q_z = sin_theta*fixed_ang.UnitSphereZ(sphere);
 
-  double new_x =
-    2.0*((-q3*q3 - q4*q4)*UnitSphereX() +
-	 (q2*q3 - q1*q4)*UnitSphereY() +
-	 (q1*q3 - q2*q4)*UnitSphereZ()) + UnitSphereX();
-  double new_y =
-    2.0*((q1*q4 + q2*q3)*UnitSphereX() +
-	 (-q2*q2 - q4*q4)*UnitSphereY() +
-	 (q3*q4 - q1*q3)*UnitSphereZ()) + UnitSphereY();
-  double new_z =
-    2.0*((q2*q4 - q1*q3)*UnitSphereX() +
-	 (q1*q3 + q3*q4)*UnitSphereY() +
-	 (-q2*q2 - q3*q3)*UnitSphereZ()) + UnitSphereZ();
+  double unit_sphere_x = UnitSphereX(sphere);
+  double unit_sphere_y = UnitSphereY(sphere);
+  double unit_sphere_z = UnitSphereZ(sphere);
 
-  rotated_ang.SetUnitSphereCoordinates(new_x, new_y, new_z);
+  new_unit_sphere_x =
+    2.0*((-q_y*q_y - q_z*q_z)*unit_sphere_x +
+	 (q_x*q_y - q_w*q_z)*unit_sphere_y +
+	 (q_x*q_z + q_w*q_y)*unit_sphere_z) + unit_sphere_x;
+  new_unit_sphere_y =
+    2.0*((q_x*q_y + q_w*q_z)*unit_sphere_x +
+	 (-q_x*q_x - q_z*q_z)*unit_sphere_y +
+	 (q_y*q_z - q_w*q_x)*unit_sphere_z) + unit_sphere_y;
+  new_unit_sphere_z =
+    2.0*((q_x*q_z - q_w*q_y)*unit_sphere_x +
+	 (q_y*q_z - q_w*q_x)*unit_sphere_y +
+	 (-q_x*q_x - q_y*q_y)*unit_sphere_z) + unit_sphere_z;
 }
 
 void AngularCoordinate::GalacticToSurvey(double gal_lon, double gal_lat,

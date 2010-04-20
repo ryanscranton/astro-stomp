@@ -46,8 +46,8 @@ void WedgeBoundTests() {
   std::cout << "*** WedgeBound Tests ***\n";
   std::cout << "************************\n";
   // First, we test a wedge in Survey coordinates.
-  Stomp::AngularCoordinate center_ang(20.0, 0.0,
-				      Stomp::AngularCoordinate::Survey);
+  Stomp::AngularCoordinate::Sphere sphere = Stomp::AngularCoordinate::Survey;
+  Stomp::AngularCoordinate center_ang(20.0, 0.0, sphere);
   double radius = 1.0;
   std::cout << "Testing wedges at Lambda,Eta = " << center_ang.Lambda() <<
     "," << center_ang.Eta() << " with " << radius << " degree radius...\n";
@@ -56,8 +56,7 @@ void WedgeBoundTests() {
     double position_angle_min = 0.0 + i*90.0;
     double position_angle_max = 90.0 + i*90.0;
     Stomp::WedgeBound wedge(center_ang, radius,
-			    position_angle_min, position_angle_max,
-			    Stomp::AngularCoordinate::Survey);
+			    position_angle_min, position_angle_max, sphere);
     std::cout << "\n" << position_angle_min << " - " << position_angle_max <<
       " degrees Wedge Area: " << wedge.Area() << "\n";
 
@@ -69,30 +68,32 @@ void WedgeBoundTests() {
     Stomp::AngularCoordinate tmp_ang;
     tmp_ang.SetSurveyCoordinates(center_ang.Lambda()+0.5*radius,
 				 center_ang.Eta());
-    tmp_ang.Rotate(center_ang, 0.5*(position_angle_min+position_angle_max));
+    tmp_ang.Rotate(center_ang, 0.5*(position_angle_min+position_angle_max),
+		   sphere);
     if (wedge.CheckPoint(tmp_ang)) {
       std::cout << "\tGood: CheckPoint inside the bound (Lambda,Eta = " <<
 	tmp_ang.Lambda() << "," << tmp_ang.Eta() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as true\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as true\n";
     } else {
       std::cout << "\tBad: CheckPoint inside the bound (Lambda,Eta = " <<
 	tmp_ang.Lambda() << "," << tmp_ang.Eta() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as false\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as false\n";
     }
 
-    tmp_ang.Rotate(center_ang, 90.0);
+    tmp_ang.Rotate(center_ang, 90.0, sphere);
     if (wedge.CheckPoint(tmp_ang)) {
       std::cout << "\tBad: CheckPoint outside the bound (Lambda,Eta = " <<
 	tmp_ang.Lambda() << "," << tmp_ang.Eta() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as true\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as true\n";
     } else {
       std::cout << "\tGood: CheckPoint outside the bound (Lambda,Eta = " <<
 	tmp_ang.Lambda() << "," << tmp_ang.Eta() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as false\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as false\n";
     }
   }
 
   // Now we test a similar set of wedges in Equatorial coordinates.
+  sphere = Stomp::AngularCoordinate::Equatorial;
   center_ang.SetEquatorialCoordinates(0.0, 20.0);
   std::cout << "\n\nTesting wedges at RA,DEC = " << center_ang.RA() <<
     "," << center_ang.DEC() << " with " << radius << " degree radius...\n";
@@ -101,8 +102,7 @@ void WedgeBoundTests() {
     double position_angle_min = 0.0 + i*90.0;
     double position_angle_max = 90.0 + i*90.0;
     Stomp::WedgeBound wedge(center_ang, radius,
-			    position_angle_min, position_angle_max,
-			    Stomp::AngularCoordinate::Equatorial);
+			    position_angle_min, position_angle_max, sphere);
     std::cout << "\n" << position_angle_min << " - " << position_angle_max <<
       " degrees Wedge Area: " << wedge.Area() << "\n";
 
@@ -114,26 +114,27 @@ void WedgeBoundTests() {
     Stomp::AngularCoordinate tmp_ang;
     tmp_ang.SetEquatorialCoordinates(center_ang.RA(),
 				     center_ang.DEC()+0.5*radius);
-    tmp_ang.Rotate(center_ang, 0.5*(position_angle_min+position_angle_max));
+    tmp_ang.Rotate(center_ang, 0.5*(position_angle_min+position_angle_max),
+		   sphere);
     if (wedge.CheckPoint(tmp_ang)) {
       std::cout << "\tGood: CheckPoint inside the bound (RA,DEC = " <<
 	tmp_ang.RA() << "," << tmp_ang.DEC() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as true\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as true\n";
     } else {
       std::cout << "\tBad: CheckPoint inside the bound (RA,DEC = " <<
 	tmp_ang.RA() << "," << tmp_ang.DEC() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as false\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as false\n";
     }
 
-    tmp_ang.Rotate(center_ang, 90.0);
+    tmp_ang.Rotate(center_ang, 90.0, sphere);
     if (wedge.CheckPoint(tmp_ang)) {
       std::cout << "\tBad: CheckPoint outside the bound (RA,DEC = " <<
 	tmp_ang.RA() << "," << tmp_ang.DEC() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as true\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as true\n";
     } else {
       std::cout << "\tGood: CheckPoint outside the bound (RA,DEC = " <<
 	tmp_ang.RA() << "," << tmp_ang.DEC() << "; PA = " <<
-	center_ang.PositionAngle(tmp_ang) << ") returns as false\n";
+	center_ang.PositionAngle(tmp_ang, sphere) << ") returns as false\n";
     }
   }
 

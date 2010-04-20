@@ -39,11 +39,21 @@ void AngularCoordinateBasicTests() {
   std::cout << "\tGalLat: " << ang.GalLat() << " (" << gal_lat << "), "
     "GalLon: " << ang.GalLon() <<  " (" << gal_lon << "); " <<
     tmp_pix.HPixnum() << " " << tmp_pix.Superpixnum() << "\n";
+}
 
-  Stomp::AngularCoordinate ang_a(0.0, 0.0, Stomp::AngularCoordinate::Survey);
-  Stomp::AngularCoordinate ang_b(45.0, 0.0, Stomp::AngularCoordinate::Survey);
-  Stomp::AngularCoordinate ang_c(60.0, 0.01, Stomp::AngularCoordinate::Survey);
-  Stomp::AngularCoordinate ang_d(0.0, 60.0, Stomp::AngularCoordinate::Survey);
+void AngularCoordinateDistanceTests() {
+  // Test our routines for calculating the angular distance between points along
+  // with those for generating dot products, cross products and great circles.
+  std::cout << "\n";
+  std::cout << "****************************************\n";
+  std::cout << "*** AngularCoordinate Distance tests ***\n";
+  std::cout << "****************************************\n";
+
+  Stomp::AngularCoordinate::Sphere sphere = Stomp::AngularCoordinate::Survey;
+  Stomp::AngularCoordinate ang_a(0.0, 0.0, sphere);
+  Stomp::AngularCoordinate ang_b(45.0, 0.0, sphere);
+  Stomp::AngularCoordinate ang_c(60.0, 0.01, sphere);
+  Stomp::AngularCoordinate ang_d(0.0, 60.0, sphere);
   std::cout << "\tPoint A: " << ang_a.Lambda() << ", " << ang_a.Eta() << "\n";
   std::cout << "\tPoint B: " << ang_b.Lambda() << ", " << ang_b.Eta() << "\n";
   std::cout << "\tPoint C: " << ang_c.Lambda() << ", " << ang_c.Eta() << "\n";
@@ -51,9 +61,9 @@ void AngularCoordinateBasicTests() {
   std::cout << "\tA * B: " << ang_a.DotProduct(ang_b) << "\t\t\t B * A: " <<
     ang_b.DotProduct(ang_a) << "\n";
   Stomp::AngularCoordinate ang_n;
-  ang_a.GreatCircle(ang_b, ang_n);
+  ang_a.GreatCircle(ang_b, ang_n, sphere);
   Stomp::AngularCoordinate ang_m;
-  ang_b.GreatCircle(ang_a, ang_m);
+  ang_b.GreatCircle(ang_a, ang_m, sphere);
 
   std::cout << "\tA x B: " << ang_n.Lambda() << ", " << ang_n.Eta() <<
     "\t\t B x A: " << ang_m.Lambda() << ", " << ang_m.Eta() << "\n";
@@ -64,6 +74,79 @@ void AngularCoordinateBasicTests() {
   std::cout << "\tDistance from (A x B) to C: " <<
     ang_n.AngularDistance(ang_c) << "; Distance from (B x A) to D: " <<
     ang_m.AngularDistance(ang_d) << "\n";
+}
+
+void AngularCoordinateUnitSphereTests() {
+  // Test that our routines for going back and forth from the Cartesian
+  // coordinates are working properly.
+  std::cout << "\n";
+  std::cout << "*******************************************\n";
+  std::cout << "*** AngularCoordinate Unit Sphere tests ***\n";
+  std::cout << "*******************************************\n";
+
+  double theta = 60.0, phi = 30.0;
+
+  // Start in Survey coordinates.
+  Stomp::AngularCoordinate::Sphere sphere = Stomp::AngularCoordinate::Survey;
+  Stomp::AngularCoordinate ang(phi, theta, sphere);
+  std::cout << "(Lambda, Eta) = " << ang.Lambda() << "," << ang.Eta() <<
+    " -> (" << ang.UnitSphereX() << "," << ang.UnitSphereY() << "," <<
+    ang.UnitSphereZ() << ")\n";
+  std::cout << "\tSurvey (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Survey) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Survey) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Survey) <<  ")\n";
+  std::cout << "\tEquatorial (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Equatorial) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Equatorial) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Equatorial) << ")\n";
+  std::cout << "\tGalactic (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Galactic) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Galactic) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Galactic) << ")\n";
+
+  ang.SetEquatorialCoordinates(theta, phi);
+  std::cout << "\n(RA, DEC) = " << ang.RA() << "," << ang.DEC() <<
+    " -> (" << ang.UnitSphereX() << "," << ang.UnitSphereY() << "," <<
+    ang.UnitSphereZ() << ")\n";
+  std::cout << "\tSurvey (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Survey) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Survey) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Survey) <<  ")\n";
+  std::cout << "\tEquatorial (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Equatorial) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Equatorial) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Equatorial) << ")\n";
+  std::cout << "\tGalactic (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Galactic) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Galactic) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Galactic) << ")\n";
+
+  ang.SetGalacticCoordinates(theta, phi);
+  std::cout << "\n(GalLon, GalLat) = " << ang.GalLon() << "," << ang.GalLat() <<
+    " -> (" << ang.UnitSphereX() << "," << ang.UnitSphereY() << "," <<
+    ang.UnitSphereZ() << ")\n";
+  std::cout << "\tSurvey (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Survey) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Survey) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Survey) <<  ")\n";
+  std::cout << "\tEquatorial (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Equatorial) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Equatorial) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Equatorial) << ")\n";
+  std::cout << "\tGalactic (x,y,z): (" <<
+    ang.UnitSphereX(Stomp::AngularCoordinate::Galactic) << "," <<
+    ang.UnitSphereY(Stomp::AngularCoordinate::Galactic) << "," <<
+    ang.UnitSphereZ(Stomp::AngularCoordinate::Galactic) << ")\n";
+
+  std::cout << "\nSetting coordinates based on Cartesian coordinates...\n";
+  sphere = Stomp::AngularCoordinate::Survey;
+  ang.SetSurveyCoordinates(phi, theta);
+  ang.SetUnitSphereCoordinates(ang.UnitSphereX(sphere), ang.UnitSphereY(sphere),
+			       ang.UnitSphereZ(sphere), sphere);
+
+  std::cout << "\t(Lambda, Eta) = " << ang.Lambda() << "," << ang.Eta() <<
+    " (should be (" << phi << "," << theta << "))\n";
 }
 
 void AngularCoordinatePositionAngleTests() {
@@ -121,55 +204,89 @@ void AngularCoordinateRotationTests() {
   std::cout << "****************************************\n";
   std::cout << "*** AngularCoordinate rotation check ***\n";
   std::cout << "****************************************\n\n";
-  double theta = 0.0;
-  double phi = 0.0;
-  double radius = 10.0;
-  std::cout << "Starting in Equatorial coordinates.\n" <<
-    "\tRotating around RA,DEC = 0,0\n";
-  Stomp::AngularCoordinate fixed_ang(theta, phi,
-				     Stomp::AngularCoordinate::Equatorial);
-  Stomp::AngularCoordinate start_ang(theta, phi+radius,
-				     Stomp::AngularCoordinate::Equatorial);
+  double fixed_theta = 0.0;
+  double fixed_phi = 0.0;
+  double starting_theta = 0.0;
+  double starting_phi = 10.0;
+  Stomp::AngularCoordinate::Sphere sphere =
+    Stomp::AngularCoordinate::Equatorial;
 
+  Stomp::AngularCoordinate fixed_ang(fixed_theta, fixed_phi, sphere);
+  Stomp::AngularCoordinate start_ang(starting_theta, starting_phi, sphere);
+
+  std::cout << "Starting in Equatorial coordinates.\n" <<
+    "\tRotating around RA,DEC = " << fixed_ang.RA() << "," <<
+    fixed_ang.DEC() << " (" <<
+    fixed_ang.UnitSphereX(sphere) << "," <<
+    fixed_ang.UnitSphereY(sphere) << "," <<
+    fixed_ang.UnitSphereZ(sphere) << ")\n";
   // First, we'll try rotating start_ang about fixed_ang by 90 degrees.
   Stomp::AngularCoordinate test_ang;
   start_ang.Rotate(fixed_ang, 90.0, test_ang);
   std::cout << "\t(" << start_ang.RA() << ", " << start_ang.DEC() <<
     ") rotated 90 degrees to (" << test_ang.RA() << ", " <<
-    test_ang.DEC() << ")\n";
+    test_ang.DEC() << ")\n\t\t(" <<
+    test_ang.UnitSphereX(sphere) << "," <<
+    test_ang.UnitSphereY(sphere) << "," <<
+    test_ang.UnitSphereZ(sphere) << ")\n";
 
   // Now, we'll rotate test_ang another 90 degrees.
-  test_ang.Rotate(fixed_ang, 90.0);
+  start_ang.Rotate(fixed_ang, 180.0, test_ang);
+  // test_ang.Rotate(fixed_ang, 90.0);
   std::cout << "\tRotated another 90 degrees to (" << test_ang.RA() <<
-    ", " << test_ang.DEC() << ")\n";
+    ", " << test_ang.DEC() << ")\n\t\t(" <<
+    test_ang.UnitSphereX(sphere) << "," <<
+    test_ang.UnitSphereY(sphere) << "," <<
+    test_ang.UnitSphereZ(sphere) << ")\n";
 
   // And finally another 180 degrees to take us back to our starting point.
-  test_ang.Rotate(fixed_ang, 180.0);
+  start_ang.Rotate(fixed_ang, 360.0, test_ang);
+  //test_ang.Rotate(fixed_ang, 180.0);
   std::cout << "\tRotated another 180 degrees to (" << test_ang.RA() <<
     ", " << test_ang.DEC() << ") (should be " << start_ang.RA() << "," <<
-    start_ang.DEC() << ")\n";
+    start_ang.DEC() << ")\n\t\t(" <<
+    test_ang.UnitSphereX(sphere) << "," <<
+    test_ang.UnitSphereY(sphere) << "," <<
+    test_ang.UnitSphereZ(sphere) << ")\n";
+
 
   // Now do the same tests in Survey coordinates.
-  std::cout << "Now Survey coordinates.\n" <<
-    "\tRotating around Lambda,Eta = 0,0\n";
-  fixed_ang.SetSurveyCoordinates(theta, phi);
-  start_ang.SetSurveyCoordinates(theta+radius, phi);
+  sphere = Stomp::AngularCoordinate::Survey;
+  fixed_ang.SetSurveyCoordinates(fixed_phi, fixed_theta);
+  start_ang.SetSurveyCoordinates(starting_phi, starting_theta);
+  std::cout << "\nNow Survey coordinates.\n" <<
+    "\tRotating around Lambda,Eta = " << fixed_ang.Lambda() << "," <<
+    fixed_ang.Eta() << " (" <<
+    fixed_ang.UnitSphereX(sphere) << "," <<
+    fixed_ang.UnitSphereY(sphere) << "," <<
+    fixed_ang.UnitSphereZ(sphere) << ")\n";
 
   start_ang.Rotate(fixed_ang, 90.0, test_ang);
   std::cout << "\t(" << start_ang.Lambda() << ", " << start_ang.Eta() <<
     ") rotated 90 degrees to (" << test_ang.Lambda() << ", " <<
-    test_ang.Eta() << ")\n";
+    test_ang.Eta() << ")\n\t\t(" <<
+    test_ang.UnitSphereX(sphere) << "," <<
+    test_ang.UnitSphereY(sphere) << "," <<
+    test_ang.UnitSphereZ(sphere) << ")\n";
 
   // Now, we'll rotate test_ang another 90 degrees.
-  test_ang.Rotate(fixed_ang, 90.0);
+  start_ang.Rotate(fixed_ang, 180.0, test_ang);
+  // test_ang.Rotate(fixed_ang, 90.0);
   std::cout << "\tRotated another 90 degrees to (" << test_ang.Lambda() <<
-    ", " << test_ang.Eta() << ")\n";
+    ", " << test_ang.Eta() << ")\n\t\t(" <<
+    test_ang.UnitSphereX(sphere) << "," <<
+    test_ang.UnitSphereY(sphere) << "," <<
+    test_ang.UnitSphereZ(sphere) << ")\n";
 
   // And finally another 180 degrees to take us back to our starting point.
-  test_ang.Rotate(fixed_ang, 180.0);
+  start_ang.Rotate(fixed_ang, 270.0, test_ang);
+  //test_ang.Rotate(fixed_ang, 180.0);
   std::cout << "\tRotated another 180 degrees to (" << test_ang.Lambda() <<
     ", " << test_ang.Eta() << ") (should be " << start_ang.Lambda() << "," <<
-    start_ang.Eta() << ")\n";
+    start_ang.Eta() << ")\n\t\t(" <<
+    test_ang.UnitSphereX(sphere) << "," <<
+    test_ang.UnitSphereY(sphere) << "," <<
+    test_ang.UnitSphereZ(sphere) << ")\n";
 }
 
 void AngularVectorIOTests() {
@@ -351,6 +468,10 @@ void WeightedAngularCoordinateBasicTests() {
 DEFINE_bool(all_angular_coordinate_tests, false, "Run all class unit tests.");
 DEFINE_bool(angular_coordinate_basic_tests, false,
             "Run AngularCoordinate basic tests");
+DEFINE_bool(angular_coordinate_distance_tests, false,
+            "Run AngularCoordinate angular distance tests");
+DEFINE_bool(angular_coordinate_unit_sphere_tests, false,
+            "Run AngularCoordinate Cartesian coordinate tests");
 DEFINE_bool(angular_coordinate_position_angle_tests, false,
             "Run AngularCoordinate position angle tests");
 DEFINE_bool(angular_coordinate_rotation_tests, false,
@@ -364,6 +485,8 @@ DEFINE_bool(weighted_angular_coordinate_basic_tests, false,
 
 void AngularCoordinateUnitTests(bool run_all_tests) {
   void AngularCoordinateBasicTests();
+  void AngularCoordinateDistanceTests();
+  void AngularCoordinateUnitSphereTests();
   void AngularCoordinatePositionAngleTests();
   void AngularCoordinateRotationTests();
   void AngularVectorIOTests();
@@ -378,6 +501,18 @@ void AngularCoordinateUnitTests(bool run_all_tests) {
   if (FLAGS_all_angular_coordinate_tests ||
       FLAGS_angular_coordinate_basic_tests)
     AngularCoordinateBasicTests();
+
+  // Check that our routines for calculating angular distances, dot and cross
+  // products are working.
+  if (FLAGS_all_angular_coordinate_tests ||
+      FLAGS_angular_coordinate_distance_tests)
+    AngularCoordinateDistanceTests();
+
+  // Check that our routines for calculating and setting the Cartesian
+  // coordinates are are working properly
+  if (FLAGS_all_angular_coordinate_tests ||
+      FLAGS_angular_coordinate_unit_sphere_tests)
+    AngularCoordinateUnitSphereTests();
 
   // Check that the AngularCoordinate position angles are being calculated
   // correctly.

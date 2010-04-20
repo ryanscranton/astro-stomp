@@ -2461,7 +2461,7 @@ bool Map::ExcludeMap(PixelVector& pix, bool destroy_copy) {
 
   if (destroy_copy) pix.clear();
 
-  return ExcludeMap(stomp_map,destroy_copy);
+  return ExcludeMap(stomp_map, destroy_copy);
 }
 
 bool Map::ExcludeMap(Map& stomp_map, bool destroy_copy) {
