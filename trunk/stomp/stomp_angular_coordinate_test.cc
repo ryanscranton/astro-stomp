@@ -222,7 +222,7 @@ void AngularCoordinateRotationTests() {
     fixed_ang.UnitSphereZ(sphere) << ")\n";
   // First, we'll try rotating start_ang about fixed_ang by 90 degrees.
   Stomp::AngularCoordinate test_ang;
-  start_ang.Rotate(fixed_ang, 90.0, test_ang);
+  start_ang.Rotate(fixed_ang, 90.0, test_ang, sphere);
   std::cout << "\t(" << start_ang.RA() << ", " << start_ang.DEC() <<
     ") rotated 90 degrees to (" << test_ang.RA() << ", " <<
     test_ang.DEC() << ")\n\t\t(" <<
@@ -231,8 +231,7 @@ void AngularCoordinateRotationTests() {
     test_ang.UnitSphereZ(sphere) << ")\n";
 
   // Now, we'll rotate test_ang another 90 degrees.
-  start_ang.Rotate(fixed_ang, 180.0, test_ang);
-  // test_ang.Rotate(fixed_ang, 90.0);
+  test_ang.Rotate(fixed_ang, 90.0, sphere);
   std::cout << "\tRotated another 90 degrees to (" << test_ang.RA() <<
     ", " << test_ang.DEC() << ")\n\t\t(" <<
     test_ang.UnitSphereX(sphere) << "," <<
@@ -240,8 +239,7 @@ void AngularCoordinateRotationTests() {
     test_ang.UnitSphereZ(sphere) << ")\n";
 
   // And finally another 180 degrees to take us back to our starting point.
-  start_ang.Rotate(fixed_ang, 360.0, test_ang);
-  //test_ang.Rotate(fixed_ang, 180.0);
+  test_ang.Rotate(fixed_ang, 180.0, sphere);
   std::cout << "\tRotated another 180 degrees to (" << test_ang.RA() <<
     ", " << test_ang.DEC() << ") (should be " << start_ang.RA() << "," <<
     start_ang.DEC() << ")\n\t\t(" <<
@@ -261,7 +259,7 @@ void AngularCoordinateRotationTests() {
     fixed_ang.UnitSphereY(sphere) << "," <<
     fixed_ang.UnitSphereZ(sphere) << ")\n";
 
-  start_ang.Rotate(fixed_ang, 90.0, test_ang);
+  start_ang.Rotate(fixed_ang, 90.0, test_ang, sphere);
   std::cout << "\t(" << start_ang.Lambda() << ", " << start_ang.Eta() <<
     ") rotated 90 degrees to (" << test_ang.Lambda() << ", " <<
     test_ang.Eta() << ")\n\t\t(" <<
@@ -270,8 +268,7 @@ void AngularCoordinateRotationTests() {
     test_ang.UnitSphereZ(sphere) << ")\n";
 
   // Now, we'll rotate test_ang another 90 degrees.
-  start_ang.Rotate(fixed_ang, 180.0, test_ang);
-  // test_ang.Rotate(fixed_ang, 90.0);
+  test_ang.Rotate(fixed_ang, 90.0, sphere);
   std::cout << "\tRotated another 90 degrees to (" << test_ang.Lambda() <<
     ", " << test_ang.Eta() << ")\n\t\t(" <<
     test_ang.UnitSphereX(sphere) << "," <<
@@ -279,8 +276,7 @@ void AngularCoordinateRotationTests() {
     test_ang.UnitSphereZ(sphere) << ")\n";
 
   // And finally another 180 degrees to take us back to our starting point.
-  start_ang.Rotate(fixed_ang, 270.0, test_ang);
-  //test_ang.Rotate(fixed_ang, 180.0);
+  test_ang.Rotate(fixed_ang, 180.0, sphere);
   std::cout << "\tRotated another 180 degrees to (" << test_ang.Lambda() <<
     ", " << test_ang.Eta() << ") (should be " << start_ang.Lambda() << "," <<
     start_ang.Eta() << ")\n\t\t(" <<

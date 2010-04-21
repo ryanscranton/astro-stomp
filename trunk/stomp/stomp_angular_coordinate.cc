@@ -87,7 +87,6 @@ AngularCoordinate::~AngularCoordinate() {
 }
 
 void AngularCoordinate::Set(double theta, double phi, Sphere sphere) {
-
   switch (sphere) {
   case Survey:
     SetSurveyCoordinates(theta, phi);
@@ -481,6 +480,13 @@ void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
   double q_y = sin_theta*fixed_ang.UnitSphereY(sphere);
   double q_z = sin_theta*fixed_ang.UnitSphereZ(sphere);
 
+  double q_norm = 1.0/sqrt(q_w*q_w + q_x*q_x + q_y*q_y + q_z*q_z);
+
+  q_w *= q_norm;
+  q_x *= q_norm;
+  q_y *= q_norm;
+  q_z *= q_norm;
+
   double unit_sphere_x = UnitSphereX(sphere);
   double unit_sphere_y = UnitSphereY(sphere);
   double unit_sphere_z = UnitSphereZ(sphere);
@@ -495,7 +501,7 @@ void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
 	 (q_y*q_z - q_w*q_x)*unit_sphere_z) + unit_sphere_y;
   new_unit_sphere_z =
     2.0*((q_x*q_z - q_w*q_y)*unit_sphere_x +
-	 (q_y*q_z - q_w*q_x)*unit_sphere_y +
+	 (q_y*q_z + q_w*q_x)*unit_sphere_y +
 	 (-q_x*q_x - q_y*q_y)*unit_sphere_z) + unit_sphere_z;
 }
 
