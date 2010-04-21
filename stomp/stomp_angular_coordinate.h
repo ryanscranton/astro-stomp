@@ -153,14 +153,6 @@ class AngularCoordinate {
   // return a copy of the rotated position.  The third variant is where we'll
   // actually do the work of the rotation, but the other two methods are the
   // preferred interfaces.
-  //
-  // TODO(ryan.scranton): Rotate now works in concert with PositionAngle.
-  // However, consecutive calls to Rotate do not have the expected effect; e.g.
-  //
-  // ang.Rotate(fixed_ang, 90);
-  // ang.Rotate(fixed_ang, 90);
-  //
-  // is not equivalent to ang.Rotate(fixed_ang, 180);
   void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
 	      Sphere sphere = Equatorial);
   void Rotate(AngularCoordinate& fixed_ang, double rotation_angle,
