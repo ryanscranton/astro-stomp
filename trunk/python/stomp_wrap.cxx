@@ -17773,7 +17773,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Pixel_Resolution2Level(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Pixel_ResolutionToLevel(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   uint32_t arg1 ;
   unsigned int val1 ;
@@ -17781,13 +17781,13 @@ SWIGINTERN PyObject *_wrap_Pixel_Resolution2Level(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   uint8_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Pixel_Resolution2Level",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Pixel_ResolutionToLevel",&obj0)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_Resolution2Level" "', argument " "1"" of type '" "uint32_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_ResolutionToLevel" "', argument " "1"" of type '" "uint32_t""'");
   } 
   arg1 = static_cast< uint32_t >(val1);
-  result = (uint8_t)Stomp::Pixel::Resolution2Level(arg1);
+  result = (uint8_t)Stomp::Pixel::ResolutionToLevel(arg1);
   resultobj = SWIG_From_unsigned_SS_char(static_cast< unsigned char >(result));
   return resultobj;
 fail:
@@ -17795,7 +17795,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Pixel_Level2Resolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Pixel_LevelToResolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   uint8_t arg1 ;
   unsigned char val1 ;
@@ -17803,13 +17803,13 @@ SWIGINTERN PyObject *_wrap_Pixel_Level2Resolution(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   uint32_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Pixel_Level2Resolution",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Pixel_LevelToResolution",&obj0)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_char(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_Level2Resolution" "', argument " "1"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_LevelToResolution" "', argument " "1"" of type '" "uint8_t""'");
   } 
   arg1 = static_cast< uint8_t >(val1);
-  result = (uint32_t)Stomp::Pixel::Level2Resolution(arg1);
+  result = (uint32_t)Stomp::Pixel::LevelToResolution(arg1);
   resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
   return resultobj;
 fail:
@@ -62129,8 +62129,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Pixel_PixelX1", _wrap_Pixel_PixelX1, METH_VARARGS, NULL},
 	 { (char *)"Pixel_PixelY1", _wrap_Pixel_PixelY1, METH_VARARGS, NULL},
 	 { (char *)"Pixel_GenerateRandomPoints", _wrap_Pixel_GenerateRandomPoints, METH_VARARGS, NULL},
-	 { (char *)"Pixel_Resolution2Level", _wrap_Pixel_Resolution2Level, METH_VARARGS, NULL},
-	 { (char *)"Pixel_Level2Resolution", _wrap_Pixel_Level2Resolution, METH_VARARGS, NULL},
+	 { (char *)"Pixel_ResolutionToLevel", _wrap_Pixel_ResolutionToLevel, METH_VARARGS, NULL},
+	 { (char *)"Pixel_LevelToResolution", _wrap_Pixel_LevelToResolution, METH_VARARGS, NULL},
 	 { (char *)"Pixel_Ang2Pix", _wrap_Pixel_Ang2Pix, METH_VARARGS, NULL},
 	 { (char *)"Pixel_Pix2Ang", _wrap_Pixel_Pix2Ang, METH_VARARGS, NULL},
 	 { (char *)"Pixel_Pix2HPix", _wrap_Pixel_Pix2HPix, METH_VARARGS, NULL},
