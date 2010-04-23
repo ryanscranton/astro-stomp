@@ -21,6 +21,7 @@
 #include "stomp_map.h"
 #include "stomp_angular_bin.h"
 #include "stomp_angular_correlation.h"
+#include "stomp_util.h"
 
 namespace Stomp {
 
@@ -773,6 +774,123 @@ bool TreeMap::AddPoint(AngularCoordinate& ang, double object_weight) {
     new WeightedAngularCoordinate(ang.UnitSphereX(), ang.UnitSphereY(),
 				  ang.UnitSphereZ(), object_weight);
   return AddPoint(w_ang);
+}
+
+bool TreeMap::Read(const std::string& input_file,
+		   AngularCoordinate::Sphere sphere,
+		   uint8_t theta_column, uint8_t phi_column,
+		   int8_t weight_column) {
+  bool io_success = false;
+
+  if (theta_column != phi_column) {
+    std::ifstream input_file_str(input_file.c_str());
+
+    uint32_t n_lines = 0;
+    uint8_t weight_idx = static_cast<uint8_t>(weight_column);
+
+    if (input_file_str) {
+      io_success = true;
+      while (!input_file_str.eof()) {
+	if (!input_file_str.eof()) {
+	  // This should read each line into a buffer, convert that buffer into
+	  // a string and then break that string into a vector of strings.  We
+	  // should then be able to access theta and phi by converting the
+	  // appropriate elements of that vector to doubles.
+	  char line_buffer[1000];
+	  std::vector<std::string> line_elements;
+
+	  input_file_str.getline(line_buffer, 1000);
+	  std::string line_string(line_buffer);
+	  Tokenize(line_string, line_elements);
+	  n_lines++;
+
+	  if ((line_elements.size() > theta_column) &&
+	      (line_elements.size() > phi_column)) {
+	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
+	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
+	    double weight = 1.0;
+	    if ((weight_column > -1) &&
+		(line_elements.size() > weight_idx)) {
+	      weight = strtod(line_elements[weight_idx].c_str(), NULL);
+	    }
+
+	    WeightedAngularCoordinate* w_ang =
+	      new WeightedAngularCoordinate(theta, phi, weight, sphere);
+	    if (!AddPoint(w_ang)) io_success = false;
+	  }
+	}
+      }
+      input_file_str.close();
+    } else {
+      std::cout << input_file << " does not exist!\n";
+    }
+  }
+
+  return io_success;
+}
+
+bool TreeMap::Read(const std::string& input_file,
+		   FieldColumnDict& field_columns,
+		   AngularCoordinate::Sphere sphere,
+		   uint8_t theta_column, uint8_t phi_column,
+		   int8_t weight_column) {
+  bool io_success = false;
+
+  if (theta_column != phi_column) {
+    std::ifstream input_file_str(input_file.c_str());
+
+    uint32_t n_lines = 0;
+    uint8_t weight_idx = static_cast<uint8_t>(weight_column);
+
+    if (input_file_str) {
+      io_success = true;
+      while (!input_file_str.eof()) {
+	if (!input_file_str.eof()) {
+	  // This should read each line into a buffer, convert that buffer into
+	  // a string and then break that string into a vector of strings.  We
+	  // should then be able to access theta and phi by converting the
+	  // appropriate elements of that vector to doubles.
+	  char line_buffer[1000];
+	  std::vector<std::string> line_elements;
+
+	  input_file_str.getline(line_buffer, 1000);
+	  std::string line_string(line_buffer);
+	  Tokenize(line_string, line_elements);
+	  n_lines++;
+
+	  if ((line_elements.size() > theta_column) &&
+	      (line_elements.size() > phi_column)) {
+	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
+	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
+	    double weight = 1.0;
+	    if ((weight_column > -1) &&
+		(line_elements.size() > weight_idx)) {
+	      weight = strtod(line_elements[weight_idx].c_str(), NULL);
+	    }
+
+	    FieldDict fields;
+	    for (FieldColumnIterator iter=field_columns.begin();
+		 iter!=field_columns.end();++iter) {
+	      fields[iter->first] = 0.0;
+	      if (line_elements.size() > iter->second) {
+		fields[iter->first] =
+		  strtod(line_elements[iter->second].c_str(), NULL);
+	      }
+	    }
+
+	    WeightedAngularCoordinate* w_ang =
+	      new WeightedAngularCoordinate(theta, phi, weight, fields, sphere);
+	    if (!AddPoint(w_ang)) io_success = false;
+	  }
+	}
+      }
+      input_file_str.close();
+    } else {
+      std::cout << input_file << " does not exist!\n";
+    }
+  }
+
+  return io_success;
 }
 
 void TreeMap::Coverage(PixelVector& superpix, uint32_t resolution) {

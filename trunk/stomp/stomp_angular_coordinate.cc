@@ -702,7 +702,7 @@ bool AngularCoordinate::ToAngularVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Stomp::Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements);
 	  n_lines++;
 
 	  if ((line_elements.size() > theta_column) &&
@@ -715,6 +715,8 @@ bool AngularCoordinate::ToAngularVector(const std::string& input_file,
       }
       input_file_str.close();
       io_success = true;
+    } else {
+      std::cout << input_file << " does not exist!\n";
     }
   }
 
@@ -806,6 +808,29 @@ WeightedAngularCoordinate::WeightedAngularCoordinate(double theta,
   weight_ = weight;
 }
 
+WeightedAngularCoordinate::WeightedAngularCoordinate(double theta,
+						     double phi,
+						     double weight,
+						     FieldDict& fields,
+						     Sphere sphere) {
+  switch (sphere) {
+  case Survey:
+    SetSurveyCoordinates(theta, phi);
+    break;
+  case Equatorial:
+    SetEquatorialCoordinates(theta, phi);
+    break;
+  case Galactic:
+    SetGalacticCoordinates(theta, phi);
+    break;
+  }
+
+  weight_ = weight;
+
+  for (FieldIterator iter=fields.begin();iter!=fields.end();++iter)
+    SetField(iter->first, iter->second);
+}
+
 WeightedAngularCoordinate::WeightedAngularCoordinate(double unit_sphere_x,
 						     double unit_sphere_y,
 						     double unit_sphere_z,
@@ -813,6 +838,19 @@ WeightedAngularCoordinate::WeightedAngularCoordinate(double unit_sphere_x,
   SetUnitSphereCoordinates(unit_sphere_x, unit_sphere_y, unit_sphere_z);
 
   weight_ = weight;
+}
+
+WeightedAngularCoordinate::WeightedAngularCoordinate(double unit_sphere_x,
+						     double unit_sphere_y,
+						     double unit_sphere_z,
+						     double weight,
+						     FieldDict& fields) {
+  SetUnitSphereCoordinates(unit_sphere_x, unit_sphere_y, unit_sphere_z);
+
+  weight_ = weight;
+
+  for (FieldIterator iter=fields.begin();iter!=fields.end();++iter)
+    SetField(iter->first, iter->second);
 }
 
 WeightedAngularCoordinate::~WeightedAngularCoordinate() {
@@ -966,7 +1004,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Stomp::Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements);
 	  n_lines++;
 
 	  if ((line_elements.size() > theta_column) &&
@@ -984,6 +1022,8 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
       }
       input_file_str.close();
       io_success = true;
+    } else {
+      std::cout << input_file << " does not exist!\n";
     }
   }
 
@@ -1049,6 +1089,131 @@ bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
 	break;
       }
       output_file_str << iter->Weight() << "\n";
+    }
+    output_file_str.close();
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
+						 WAngularVector& w_ang,
+						 FieldColumnDict& field_columns,
+						 Sphere sphere,
+						 uint8_t theta_column,
+						 uint8_t phi_column,
+						 int8_t weight_column) {
+
+  if (!w_ang.empty()) w_ang.clear();
+  bool io_success = false;
+
+  if (theta_column != phi_column) {
+    std::ifstream input_file_str(input_file.c_str());
+
+    uint32_t n_lines = 0;
+    uint8_t weight_idx = static_cast<uint8_t>(weight_column);
+
+    if (input_file_str) {
+      while (!input_file_str.eof()) {
+	if (!input_file_str.eof()) {
+	  // This should read each line into a buffer, convert that buffer into
+	  // a string and then break that string into a vector of strings.  We
+	  // should then be able to access theta and phi by converting the
+	  // appropriate elements of that vector to doubles.
+	  char line_buffer[1000];
+	  std::vector<std::string> line_elements;
+
+	  input_file_str.getline(line_buffer, 1000);
+	  std::string line_string(line_buffer);
+	  Tokenize(line_string, line_elements);
+	  n_lines++;
+
+	  if ((line_elements.size() > theta_column) &&
+	      (line_elements.size() > phi_column)) {
+	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
+	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
+	    double weight = 1.0;
+	    if ((weight_column > -1) &&
+		(line_elements.size() > weight_idx)) {
+	      weight = strtod(line_elements[weight_idx].c_str(), NULL);
+	    }
+
+	    FieldDict fields;
+	    for (FieldColumnIterator iter=field_columns.begin();
+		 iter!=field_columns.end();++iter) {
+	      fields[iter->first] = 0.0;
+	      if (line_elements.size() > iter->second) {
+		fields[iter->first] =
+		  strtod(line_elements[iter->second].c_str(), NULL);
+	      }
+	    }
+
+	    w_ang.push_back(WeightedAngularCoordinate(theta, phi, weight,
+						      fields, sphere));
+	  }
+	}
+      }
+      input_file_str.close();
+      io_success = true;
+    } else {
+      std::cout << input_file << " does not exist!\n";
+    }
+  }
+
+  return io_success;
+}
+
+bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
+						   FieldColumnDict& field_names,
+						   const std::string& out_file,
+						   Sphere sphere,
+						   uint8_t theta_column,
+						   uint8_t phi_column,
+						   uint8_t weight_column) {
+  std::ofstream output_file_str(out_file.c_str());
+
+  bool io_success = false;
+
+  uint8_t max_column = theta_column;
+  if (phi_column > max_column) max_column = phi_column;
+  if (weight_column > max_column) max_column = weight_column;
+
+  for (FieldColumnIterator iter=field_names.begin();
+       iter!=field_names.end();++iter) {
+    if (iter->second > max_column) max_column = iter->second;
+  }
+  max_column++;
+
+  std::vector<double> column_values;
+  column_values.reserve(max_column);
+
+  if (output_file_str.is_open()) {
+    for (WAngularIterator iter=w_ang.begin();iter!=w_ang.end();++iter) {
+      for (uint8_t i=0;i<max_column;i++) column_values[i] = 0.0;
+      switch (sphere) {
+      case Survey:
+	column_values[theta_column] = iter->Lambda();
+	column_values[phi_column] = iter->Eta();
+	break;
+      case Equatorial:
+	column_values[theta_column] = iter->RA();
+	column_values[phi_column] = iter->DEC();
+	break;
+      case Galactic:
+	column_values[theta_column] = iter->GalLon();
+	column_values[phi_column] = iter->GalLat();
+	break;
+      }
+      column_values[weight_column] = iter->Weight();
+      for (FieldColumnIterator field_iter=field_names.begin();
+	   field_iter!=field_names.end();++field_iter) {
+	column_values[field_iter->second] = iter->Field(field_iter->first);
+      }
+      output_file_str << column_values[0];
+      for (uint8_t i=1;i<max_column;i++)
+	output_file_str << " " << column_values[i];
+      output_file_str << "\n";
     }
     output_file_str.close();
     io_success = true;
@@ -1228,7 +1393,7 @@ bool CosmoCoordinate::ToCosmoVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Stomp::Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements);
 	  n_lines++;
 
 	  if ((line_elements.size() > theta_column) &&
