@@ -2510,117 +2510,128 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_Stomp__AngularPtrVector__iterator swig_types[3]
 #define SWIGTYPE_p_Stomp__AngularVector__iterator swig_types[4]
 #define SWIGTYPE_p_Stomp__BaseMap swig_types[5]
-#define SWIGTYPE_p_Stomp__CircleBound swig_types[6]
-#define SWIGTYPE_p_Stomp__CircleVector__iterator swig_types[7]
-#define SWIGTYPE_p_Stomp__CosmoCoordinate swig_types[8]
-#define SWIGTYPE_p_Stomp__CosmoPtrVector__iterator swig_types[9]
-#define SWIGTYPE_p_Stomp__CosmoVector__iterator swig_types[10]
-#define SWIGTYPE_p_Stomp__Cosmology swig_types[11]
-#define SWIGTYPE_p_Stomp__FieldDict__iterator swig_types[12]
-#define SWIGTYPE_p_Stomp__FootprintVector__iterator swig_types[13]
-#define SWIGTYPE_p_Stomp__GeometricBound swig_types[14]
-#define SWIGTYPE_p_Stomp__Map swig_types[15]
-#define SWIGTYPE_p_Stomp__NearestNeighborPixel swig_types[16]
-#define SWIGTYPE_p_Stomp__NearestNeighborPoint swig_types[17]
-#define SWIGTYPE_p_Stomp__Pixel swig_types[18]
-#define SWIGTYPE_p_Stomp__PixelPtrVector__iterator swig_types[19]
-#define SWIGTYPE_p_Stomp__PixelVector__iterator swig_types[20]
-#define SWIGTYPE_p_Stomp__PolygonBound swig_types[21]
-#define SWIGTYPE_p_Stomp__PolygonVector__iterator swig_types[22]
-#define SWIGTYPE_p_Stomp__RegionAreaDict__iterator swig_types[23]
-#define SWIGTYPE_p_Stomp__RegionDict__iterator swig_types[24]
-#define SWIGTYPE_p_Stomp__RegionMap swig_types[25]
-#define SWIGTYPE_p_Stomp__ResolutionDict__iterator swig_types[26]
-#define SWIGTYPE_p_Stomp__ScalarMap swig_types[27]
-#define SWIGTYPE_p_Stomp__ScalarMapVector__iterator swig_types[28]
-#define SWIGTYPE_p_Stomp__ScalarPixel swig_types[29]
-#define SWIGTYPE_p_Stomp__ScalarPtrVector__iterator swig_types[30]
-#define SWIGTYPE_p_Stomp__ScalarSubMap swig_types[31]
-#define SWIGTYPE_p_Stomp__ScalarSubMapVector__iterator swig_types[32]
-#define SWIGTYPE_p_Stomp__ScalarVector__iterator swig_types[33]
-#define SWIGTYPE_p_Stomp__Section swig_types[34]
-#define SWIGTYPE_p_Stomp__StompWatch swig_types[35]
-#define SWIGTYPE_p_Stomp__SubMap swig_types[36]
-#define SWIGTYPE_p_Stomp__SubMapVector__iterator swig_types[37]
-#define SWIGTYPE_p_Stomp__ThetaPtrVector__iterator swig_types[38]
-#define SWIGTYPE_p_Stomp__ThetaVector__iterator swig_types[39]
-#define SWIGTYPE_p_Stomp__TreeMap swig_types[40]
-#define SWIGTYPE_p_Stomp__TreeNeighbor swig_types[41]
-#define SWIGTYPE_p_Stomp__TreePixel swig_types[42]
-#define SWIGTYPE_p_Stomp__WAngularPtrVector__iterator swig_types[43]
-#define SWIGTYPE_p_Stomp__WAngularVector__iterator swig_types[44]
-#define SWIGTYPE_p_Stomp__WThetaVector__iterator swig_types[45]
-#define SWIGTYPE_p_Stomp__WedgeBound swig_types[46]
-#define SWIGTYPE_p_Stomp__WedgeVector__iterator swig_types[47]
-#define SWIGTYPE_p_Stomp__WeightedAngularCoordinate swig_types[48]
-#define SWIGTYPE_p_allocator_type swig_types[49]
-#define SWIGTYPE_p_char swig_types[50]
-#define SWIGTYPE_p_difference_type swig_types[51]
-#define SWIGTYPE_p_double swig_types[52]
-#define SWIGTYPE_p_int swig_types[53]
-#define SWIGTYPE_p_long_long swig_types[54]
-#define SWIGTYPE_p_p_PyObject swig_types[55]
-#define SWIGTYPE_p_short swig_types[56]
-#define SWIGTYPE_p_signed_char swig_types[57]
-#define SWIGTYPE_p_size_type swig_types[58]
-#define SWIGTYPE_p_std__invalid_argument swig_types[59]
-#define SWIGTYPE_p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t swig_types[60]
-#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t swig_types[61]
-#define SWIGTYPE_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t swig_types[62]
-#define SWIGTYPE_p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t swig_types[63]
-#define SWIGTYPE_p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t swig_types[64]
-#define SWIGTYPE_p_std__pairT_Stomp__RegionAreaDict__iterator_Stomp__RegionAreaDict__iterator_t swig_types[65]
-#define SWIGTYPE_p_std__pairT_Stomp__RegionDict__iterator_Stomp__RegionDict__iterator_t swig_types[66]
-#define SWIGTYPE_p_std__pairT_Stomp__ResolutionDict__iterator_Stomp__ResolutionDict__iterator_t swig_types[67]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarMapVector__iterator_Stomp__ScalarMapVector__iterator_t swig_types[68]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarSubMapVector__iterator_Stomp__ScalarSubMapVector__iterator_t swig_types[69]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarVector__iterator_Stomp__ScalarVector__iterator_t swig_types[70]
-#define SWIGTYPE_p_std__pairT_Stomp__SubMapVector__iterator_Stomp__SubMapVector__iterator_t swig_types[71]
-#define SWIGTYPE_p_std__pairT_Stomp__ThetaVector__iterator_Stomp__ThetaVector__iterator_t swig_types[72]
-#define SWIGTYPE_p_std__pairT_double_Stomp__TreePixel_p_t swig_types[73]
-#define SWIGTYPE_p_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t swig_types[74]
-#define SWIGTYPE_p_std__pairT_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_t swig_types[75]
-#define SWIGTYPE_p_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t swig_types[76]
-#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__TreePixel_p_t_std__vectorT_std__pairT_double_Stomp__TreePixel_p_t_std__allocatorT_std__pairT_double_Stomp__TreePixel_p_t_t_t_Stomp__NearestNeighborPixel_t swig_types[77]
-#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t swig_types[78]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t swig_types[79]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t swig_types[80]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[81]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[82]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[83]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[84]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[85]
-#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[86]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[87]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[88]
-#define SWIGTYPE_p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t swig_types[89]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[90]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[91]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[92]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[93]
-#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[94]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[95]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[96]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[97]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[98]
-#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[99]
-#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[100]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[101]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[102]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[103]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[104]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[105]
-#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[106]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[107]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[108]
-#define SWIGTYPE_p_swig__PySwigIterator swig_types[109]
-#define SWIGTYPE_p_unsigned_char swig_types[110]
-#define SWIGTYPE_p_unsigned_int swig_types[111]
-#define SWIGTYPE_p_unsigned_long_long swig_types[112]
-#define SWIGTYPE_p_unsigned_short swig_types[113]
-#define SWIGTYPE_p_value_type swig_types[114]
-static swig_type_info *swig_types[116];
-static swig_module_info swig_module = {swig_types, 115, 0, 0, 0, 0};
+#define SWIGTYPE_p_Stomp__BinVector__iterator swig_types[6]
+#define SWIGTYPE_p_Stomp__CircleBound swig_types[7]
+#define SWIGTYPE_p_Stomp__CircleVector__iterator swig_types[8]
+#define SWIGTYPE_p_Stomp__CosmoCoordinate swig_types[9]
+#define SWIGTYPE_p_Stomp__CosmoPtrVector__iterator swig_types[10]
+#define SWIGTYPE_p_Stomp__CosmoVector__iterator swig_types[11]
+#define SWIGTYPE_p_Stomp__Cosmology swig_types[12]
+#define SWIGTYPE_p_Stomp__FieldColumnDict__iterator swig_types[13]
+#define SWIGTYPE_p_Stomp__FieldDict__iterator swig_types[14]
+#define SWIGTYPE_p_Stomp__FootprintVector__iterator swig_types[15]
+#define SWIGTYPE_p_Stomp__GeometricBound swig_types[16]
+#define SWIGTYPE_p_Stomp__Histogram swig_types[17]
+#define SWIGTYPE_p_Stomp__HistogramBin swig_types[18]
+#define SWIGTYPE_p_Stomp__Map swig_types[19]
+#define SWIGTYPE_p_Stomp__NearestNeighborPixel swig_types[20]
+#define SWIGTYPE_p_Stomp__NearestNeighborPoint swig_types[21]
+#define SWIGTYPE_p_Stomp__Pixel swig_types[22]
+#define SWIGTYPE_p_Stomp__PixelPtrVector__iterator swig_types[23]
+#define SWIGTYPE_p_Stomp__PixelVector__iterator swig_types[24]
+#define SWIGTYPE_p_Stomp__PolygonBound swig_types[25]
+#define SWIGTYPE_p_Stomp__PolygonVector__iterator swig_types[26]
+#define SWIGTYPE_p_Stomp__RegionAreaDict__iterator swig_types[27]
+#define SWIGTYPE_p_Stomp__RegionDict__iterator swig_types[28]
+#define SWIGTYPE_p_Stomp__RegionMap swig_types[29]
+#define SWIGTYPE_p_Stomp__ResolutionDict__iterator swig_types[30]
+#define SWIGTYPE_p_Stomp__ScalarMap swig_types[31]
+#define SWIGTYPE_p_Stomp__ScalarMapVector__iterator swig_types[32]
+#define SWIGTYPE_p_Stomp__ScalarPixel swig_types[33]
+#define SWIGTYPE_p_Stomp__ScalarPtrVector__iterator swig_types[34]
+#define SWIGTYPE_p_Stomp__ScalarSubMap swig_types[35]
+#define SWIGTYPE_p_Stomp__ScalarSubMapVector__iterator swig_types[36]
+#define SWIGTYPE_p_Stomp__ScalarVector__iterator swig_types[37]
+#define SWIGTYPE_p_Stomp__Section swig_types[38]
+#define SWIGTYPE_p_Stomp__StompWatch swig_types[39]
+#define SWIGTYPE_p_Stomp__SubMap swig_types[40]
+#define SWIGTYPE_p_Stomp__SubMapVector__iterator swig_types[41]
+#define SWIGTYPE_p_Stomp__ThetaPtrVector__iterator swig_types[42]
+#define SWIGTYPE_p_Stomp__ThetaVector__iterator swig_types[43]
+#define SWIGTYPE_p_Stomp__TreeMap swig_types[44]
+#define SWIGTYPE_p_Stomp__TreeNeighbor swig_types[45]
+#define SWIGTYPE_p_Stomp__TreePixel swig_types[46]
+#define SWIGTYPE_p_Stomp__WAngularPtrVector__iterator swig_types[47]
+#define SWIGTYPE_p_Stomp__WAngularVector__iterator swig_types[48]
+#define SWIGTYPE_p_Stomp__WThetaVector__iterator swig_types[49]
+#define SWIGTYPE_p_Stomp__WedgeBound swig_types[50]
+#define SWIGTYPE_p_Stomp__WedgeVector__iterator swig_types[51]
+#define SWIGTYPE_p_Stomp__WeightedAngularCoordinate swig_types[52]
+#define SWIGTYPE_p_allocator_type swig_types[53]
+#define SWIGTYPE_p_char swig_types[54]
+#define SWIGTYPE_p_difference_type swig_types[55]
+#define SWIGTYPE_p_double swig_types[56]
+#define SWIGTYPE_p_int swig_types[57]
+#define SWIGTYPE_p_key_type swig_types[58]
+#define SWIGTYPE_p_long_long swig_types[59]
+#define SWIGTYPE_p_mapped_type swig_types[60]
+#define SWIGTYPE_p_p_PyObject swig_types[61]
+#define SWIGTYPE_p_short swig_types[62]
+#define SWIGTYPE_p_signed_char swig_types[63]
+#define SWIGTYPE_p_size_type swig_types[64]
+#define SWIGTYPE_p_std__invalid_argument swig_types[65]
+#define SWIGTYPE_p_std__lessT_std__string_t swig_types[66]
+#define SWIGTYPE_p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t swig_types[67]
+#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t swig_types[68]
+#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type swig_types[69]
+#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t swig_types[70]
+#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type swig_types[71]
+#define SWIGTYPE_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t swig_types[72]
+#define SWIGTYPE_p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t swig_types[73]
+#define SWIGTYPE_p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t swig_types[74]
+#define SWIGTYPE_p_std__pairT_Stomp__RegionAreaDict__iterator_Stomp__RegionAreaDict__iterator_t swig_types[75]
+#define SWIGTYPE_p_std__pairT_Stomp__RegionDict__iterator_Stomp__RegionDict__iterator_t swig_types[76]
+#define SWIGTYPE_p_std__pairT_Stomp__ResolutionDict__iterator_Stomp__ResolutionDict__iterator_t swig_types[77]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarMapVector__iterator_Stomp__ScalarMapVector__iterator_t swig_types[78]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarSubMapVector__iterator_Stomp__ScalarSubMapVector__iterator_t swig_types[79]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarVector__iterator_Stomp__ScalarVector__iterator_t swig_types[80]
+#define SWIGTYPE_p_std__pairT_Stomp__SubMapVector__iterator_Stomp__SubMapVector__iterator_t swig_types[81]
+#define SWIGTYPE_p_std__pairT_Stomp__ThetaVector__iterator_Stomp__ThetaVector__iterator_t swig_types[82]
+#define SWIGTYPE_p_std__pairT_double_Stomp__TreePixel_p_t swig_types[83]
+#define SWIGTYPE_p_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t swig_types[84]
+#define SWIGTYPE_p_std__pairT_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_t swig_types[85]
+#define SWIGTYPE_p_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t swig_types[86]
+#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__TreePixel_p_t_std__vectorT_std__pairT_double_Stomp__TreePixel_p_t_std__allocatorT_std__pairT_double_Stomp__TreePixel_p_t_t_t_Stomp__NearestNeighborPixel_t swig_types[87]
+#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t swig_types[88]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t swig_types[89]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t swig_types[90]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[91]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[92]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[93]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[94]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[95]
+#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[96]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[97]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[98]
+#define SWIGTYPE_p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t swig_types[99]
+#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t swig_types[100]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[101]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[102]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[103]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[104]
+#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[105]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[106]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[107]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[108]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[109]
+#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[110]
+#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[111]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[112]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[113]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[114]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[115]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[116]
+#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[117]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[118]
+#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[119]
+#define SWIGTYPE_p_swig__PySwigIterator swig_types[120]
+#define SWIGTYPE_p_unsigned_char swig_types[121]
+#define SWIGTYPE_p_unsigned_int swig_types[122]
+#define SWIGTYPE_p_unsigned_long_long swig_types[123]
+#define SWIGTYPE_p_unsigned_short swig_types[124]
+#define SWIGTYPE_p_value_type swig_types[125]
+static swig_type_info *swig_types[127];
+static swig_module_info swig_module = {swig_types, 126, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -4494,6 +4505,572 @@ SWIGINTERN void std_vector_Sl_Stomp_Pixel_Sg____setitem__(std::vector< Stomp::Pi
     }
 SWIGINTERN void std_vector_Sl_Stomp_Pixel_Sg__append(std::vector< Stomp::Pixel > *self,std::vector< Stomp::Pixel >::value_type const &x){
       self->push_back(x);
+    }
+
+SWIGINTERN int
+SWIG_AsVal_std_string (PyObject * obj, std::string *val)
+{
+  std::string* v = (std::string *) 0;
+  int res = SWIG_AsPtr_std_string (obj, &v);
+  if (!SWIG_IsOK(res)) return res;
+  if (v) {
+    if (val) *val = *v;
+    if (SWIG_IsNewObj(res)) {
+      delete v;
+      res = SWIG_DelNewMask(res);
+    }
+    return res;
+  }
+  return SWIG_ERROR;
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_FromCharPtrAndSize(const char* carray, size_t size)
+{
+  if (carray) {
+    if (size > INT_MAX) {
+      swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+      return pchar_descriptor ? 
+	SWIG_NewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
+    } else {
+      return PyString_FromStringAndSize(carray, static_cast< int >(size));
+    }
+  } else {
+    return SWIG_Py_Void();
+  }
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_std_string  (const std::string& s)
+{
+  if (s.size()) {
+    return SWIG_FromCharPtrAndSize(s.data(), s.size());
+  } else {
+    return SWIG_FromCharPtrAndSize(s.c_str(), 0);
+  }
+}
+
+
+namespace swig {
+  template <> struct traits<std::string > {
+    typedef value_category category;
+    static const char* type_name() { return"std::string"; }
+  };  
+  template <>  struct traits_asval<std::string > {   
+    typedef std::string value_type;
+    static int asval(PyObject *obj, value_type *val) { 
+      return SWIG_AsVal_std_string (obj, val);
+    }
+  };
+  template <>  struct traits_from<std::string > {
+    typedef std::string value_type;
+    static PyObject *from(const value_type& val) {
+      return SWIG_From_std_string  (val);
+    }
+  };
+}
+
+
+namespace swig {
+  template <> struct traits<double > {
+    typedef value_category category;
+    static const char* type_name() { return"double"; }
+  };  
+  template <>  struct traits_asval<double > {   
+    typedef double value_type;
+    static int asval(PyObject *obj, value_type *val) { 
+      return SWIG_AsVal_double (obj, val);
+    }
+  };
+  template <>  struct traits_from<double > {
+    typedef double value_type;
+    static PyObject *from(const value_type& val) {
+      return SWIG_From_double  (val);
+    }
+  };
+}
+
+
+  namespace swig {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    template <class T, class U >
+    struct traits_asptr<std::pair<T,U> >  {
+      typedef std::pair<T,U> value_type;
+
+      static int get_pair(PyObject* first, PyObject* second,
+			  std::pair<T,U> **val) 
+      {
+	if (val) {
+	  value_type *vp = (new std::pair<T,U>);
+	  T *pfirst = &(vp->first);
+	  int res1 = swig::asval((PyObject*)first, pfirst);
+	  if (!SWIG_IsOK(res1)) return res1;
+	  U *psecond = &(vp->second);
+	  int res2 = swig::asval((PyObject*)second, psecond);
+	  if (!SWIG_IsOK(res2)) return res2;
+	  *val = vp;
+	  return SWIG_AddNewMask(res1 > res2 ? res1 : res2);
+	} else {
+	  T *pfirst = 0;
+	  int res1 = swig::asval((PyObject*)first, pfirst);
+	  if (!SWIG_IsOK(res1)) return res1;
+	  U *psecond = 0;
+	  int res2 = swig::asval((PyObject*)second, psecond);
+	  if (!SWIG_IsOK(res2)) return res2;
+	  return res1 > res2 ? res1 : res2;
+	}	
+      }
+
+      static int asptr(PyObject *obj, std::pair<T,U> **val) {
+	int res = SWIG_ERROR;
+	if (PyTuple_Check(obj)) {
+	  if (PyTuple_GET_SIZE(obj) == 2) {
+	    res = get_pair(PyTuple_GET_ITEM(obj,0),PyTuple_GET_ITEM(obj,1), val);
+	  }
+	} else if (PySequence_Check(obj)) {
+	  if (PySequence_Size(obj) == 2) {
+	    swig::PyObject_var first = PySequence_GetItem(obj,0);
+	    swig::PyObject_var second = PySequence_GetItem(obj,1);
+	    res = get_pair(first, second, val);
+	  }
+	} else {
+	  value_type *p;
+	  res = SWIG_ConvertPtr(obj,(void**)&p,swig::type_info<value_type>(),0);
+	  if (SWIG_IsOK(res) && val)  *val = p;
+	}
+	return res;
+      }
+    };
+
+
+    template <class T, class U >
+    struct traits_from<std::pair<T,U> >   {
+      static PyObject *from(const std::pair<T,U>& val) {
+	PyObject* obj = PyTuple_New(2);
+	PyTuple_SetItem(obj,0,swig::from(val.first));
+	PyTuple_SetItem(obj,1,swig::from(val.second));
+	return obj;
+      }
+    };
+  }
+
+
+      namespace swig {
+	template <>  struct traits<std::pair< std::string, double > > {
+	  typedef pointer_category category;
+	  static const char* type_name() {
+	    return "std::pair<" "std::string" "," "double" " >";
+	  }
+	};
+      }
+    
+
+  namespace swig {
+    template <class PySeq, class K, class T >
+    inline void
+    assign(const PySeq& pyseq, std::map<K,T > *map) {
+      typedef typename std::map<K,T>::value_type value_type;
+      typename PySeq::const_iterator it = pyseq.begin();
+      for (;it != pyseq.end(); ++it) {
+	map->insert(value_type(it->first, it->second));
+      }
+    }
+
+    template <class K, class T>
+    struct traits_asptr<std::map<K,T> >  {
+      typedef std::map<K,T> map_type;
+      static int asptr(PyObject *obj, map_type **val) {
+	int res = SWIG_ERROR;
+	if (PyDict_Check(obj)) {
+	  PyObject_var items = PyObject_CallMethod(obj,(char *)"items",NULL);
+	  res = traits_asptr_stdseq<std::map<K,T>, std::pair<K, T> >::asptr(items, val);
+	} else {
+	  map_type *p;
+	  res = SWIG_ConvertPtr(obj,(void**)&p,swig::type_info<map_type>(),0);
+	  if (SWIG_IsOK(res) && val)  *val = p;
+	}
+	return res;
+      }      
+    };
+      
+    template <class K, class T >
+    struct traits_from<std::map<K,T> >  {
+      typedef std::map<K,T> map_type;
+      typedef typename map_type::const_iterator const_iterator;
+      typedef typename map_type::size_type size_type;
+            
+      static PyObject *from(const map_type& map) {
+	swig_type_info *desc = swig::type_info<map_type>();
+	if (desc && desc->clientdata) {
+	  return SWIG_NewPointerObj(new map_type(map), desc, SWIG_POINTER_OWN);
+	} else {
+	  size_type size = map.size();
+	  int pysize = (size <= (size_type) INT_MAX) ? (int) size : -1;
+	  if (pysize < 0) {
+	    SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+	    PyErr_SetString(PyExc_OverflowError,
+			    "map size not valid in python");
+	    SWIG_PYTHON_THREAD_END_BLOCK;
+	    return NULL;
+	  }
+	  PyObject *obj = PyDict_New();
+	  for (const_iterator i= map.begin(); i!= map.end(); ++i) {
+	    swig::PyObject_var key = swig::from(i->first);
+	    swig::PyObject_var val = swig::from(i->second);
+	    PyDict_SetItem(obj, key, val);
+	  }
+	  return obj;
+	}
+      }
+    };
+
+    template <class ValueType>
+    struct from_key_oper 
+    {
+      typedef const ValueType& argument_type;
+      typedef  PyObject *result_type;
+      result_type operator()(argument_type v) const
+      {
+	return swig::from(v.first);
+      }
+    };
+
+    template <class ValueType>
+    struct from_value_oper 
+    {
+      typedef const ValueType& argument_type;
+      typedef  PyObject *result_type;
+      result_type operator()(argument_type v) const
+      {
+	return swig::from(v.second);
+      }
+    };
+
+    template<class OutIterator, class FromOper, class ValueType = typename OutIterator::value_type>
+    struct PyMapIterator_T : PySwigIteratorClosed_T<OutIterator, ValueType, FromOper>
+    {
+      PyMapIterator_T(OutIterator curr, OutIterator first, OutIterator last, PyObject *seq)
+	: PySwigIteratorClosed_T<OutIterator,ValueType,FromOper>(curr, first, last, seq)
+      {
+      }
+    };
+
+
+    template<class OutIterator,
+	     class FromOper = from_key_oper<typename OutIterator::value_type> >
+    struct PyMapKeyIterator_T : PyMapIterator_T<OutIterator, FromOper>
+    {
+      PyMapKeyIterator_T(OutIterator curr, OutIterator first, OutIterator last, PyObject *seq)
+	: PyMapIterator_T<OutIterator, FromOper>(curr, first, last, seq)
+      {
+      }
+    };
+
+    template<typename OutIter>
+    inline PySwigIterator*
+    make_output_key_iterator(const OutIter& current, const OutIter& begin, const OutIter& end, PyObject *seq = 0)
+    {
+      return new PyMapKeyIterator_T<OutIter>(current, begin, end, seq);
+    }
+
+    template<class OutIterator,
+	     class FromOper = from_value_oper<typename OutIterator::value_type> >
+    struct PyMapValueIterator_T : PyMapIterator_T<OutIterator, FromOper>
+    {
+      PyMapValueIterator_T(OutIterator curr, OutIterator first, OutIterator last, PyObject *seq)
+	: PyMapIterator_T<OutIterator, FromOper>(curr, first, last, seq)
+      {
+      }
+    };
+    
+
+    template<typename OutIter>
+    inline PySwigIterator*
+    make_output_value_iterator(const OutIter& current, const OutIter& begin, const OutIter& end, PyObject *seq = 0)
+    {
+      return new PyMapValueIterator_T<OutIter>(current, begin, end, seq);
+    }
+  }
+
+
+      namespace swig {
+	template <>  struct traits<std::map<std::string, double, std::less< std::string >, std::allocator< std::pair< std::string const,double > > > > {
+	  typedef pointer_category category;
+	  static const char* type_name() {
+	    return "std::map<" "std::string" "," "double" "," "std::less< std::string >" "," "std::allocator< std::pair< std::string const,double > >" " >";
+	  }
+	};
+      }
+    
+SWIGINTERN swig::PySwigIterator *std_map_Sl_std_string_Sc_double_Sg__iterator(std::map< std::string,double > *self,PyObject **PYTHON_SELF){
+      return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
+    }
+SWIGINTERN bool std_map_Sl_std_string_Sc_double_Sg____nonzero__(std::map< std::string,double > const *self){
+      return !(self->empty());
+    }
+SWIGINTERN std::map< std::string,double >::size_type std_map_Sl_std_string_Sc_double_Sg____len__(std::map< std::string,double > const *self){
+      return self->size();
+    }
+SWIGINTERN std::map< std::string,double >::mapped_type std_map_Sl_std_string_Sc_double_Sg____getitem__(std::map< std::string,double > const *self,std::map< std::string,double >::key_type const &key){
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::const_iterator i = self->find(key);
+      if (i != self->end())
+	return i->second;
+      else
+	throw std::out_of_range("key not found");
+    }
+SWIGINTERN void std_map_Sl_std_string_Sc_double_Sg____delitem__(std::map< std::string,double > *self,std::map< std::string,double >::key_type const &key){
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::iterator i = self->find(key);
+      if (i != self->end())
+	self->erase(i);
+      else
+	throw std::out_of_range("key not found");
+    }
+SWIGINTERN bool std_map_Sl_std_string_Sc_double_Sg__has_key(std::map< std::string,double > const *self,std::map< std::string,double >::key_type const &key){
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::const_iterator i = self->find(key);
+      return i != self->end();
+    }
+SWIGINTERN PyObject *std_map_Sl_std_string_Sc_double_Sg__keys(std::map< std::string,double > *self){
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::size_type size = self->size();
+      int pysize = (size <= (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::size_type) INT_MAX) ? (int) size : -1;
+      if (pysize < 0) {
+	SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+	PyErr_SetString(PyExc_OverflowError,
+			"map size not valid in python");
+	SWIG_PYTHON_THREAD_END_BLOCK;
+	return NULL;
+      }
+      PyObject* keyList = PyList_New(pysize);
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::const_iterator i = self->begin();
+      for (int j = 0; j < pysize; ++i, ++j) {
+	PyList_SET_ITEM(keyList, j, swig::from(i->first));
+      }
+      return keyList;
+    }
+SWIGINTERN PyObject *std_map_Sl_std_string_Sc_double_Sg__values(std::map< std::string,double > *self){
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::size_type size = self->size();
+      int pysize = (size <= (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::size_type) INT_MAX) ? (int) size : -1;
+      if (pysize < 0) {
+	SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+	PyErr_SetString(PyExc_OverflowError,
+			"map size not valid in python");
+	SWIG_PYTHON_THREAD_END_BLOCK;
+	return NULL;
+      }
+      PyObject* valList = PyList_New(pysize);
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::const_iterator i = self->begin();
+      for (int j = 0; j < pysize; ++i, ++j) {
+	PyList_SET_ITEM(valList, j, swig::from(i->second));
+      }
+      return valList;
+    }
+SWIGINTERN PyObject *std_map_Sl_std_string_Sc_double_Sg__items(std::map< std::string,double > *self){
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::size_type size = self->size();
+      int pysize = (size <= (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::size_type) INT_MAX) ? (int) size : -1;
+      if (pysize < 0) {
+	SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+	PyErr_SetString(PyExc_OverflowError,
+			"map size not valid in python");
+	SWIG_PYTHON_THREAD_END_BLOCK;
+	return NULL;
+      }    
+      PyObject* itemList = PyList_New(pysize);
+      std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >::const_iterator i = self->begin();
+      for (int j = 0; j < pysize; ++i, ++j) {
+	PyList_SET_ITEM(itemList, j, swig::from(*i));
+      }
+      return itemList;
+    }
+SWIGINTERN bool std_map_Sl_std_string_Sc_double_Sg____contains__(std::map< std::string,double > *self,std::map< std::string,double >::key_type const &key){
+      return self->find(key) != self->end();
+    }
+SWIGINTERN swig::PySwigIterator *std_map_Sl_std_string_Sc_double_Sg__key_iterator(std::map< std::string,double > *self,PyObject **PYTHON_SELF){
+      return swig::make_output_key_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
+    }
+SWIGINTERN swig::PySwigIterator *std_map_Sl_std_string_Sc_double_Sg__value_iterator(std::map< std::string,double > *self,PyObject **PYTHON_SELF){
+      return swig::make_output_value_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
+    }
+SWIGINTERN void std_map_Sl_std_string_Sc_double_Sg____setitem__(std::map< std::string,double > *self,std::map< std::string,double >::key_type const &key,std::map< std::string,double >::mapped_type const &x){
+      (*self)[key] = x;
+    }
+
+namespace swig {
+  template <> struct traits<unsigned char > {
+    typedef value_category category;
+    static const char* type_name() { return"unsigned char"; }
+  };  
+  template <>  struct traits_asval<unsigned char > {   
+    typedef unsigned char value_type;
+    static int asval(PyObject *obj, value_type *val) { 
+      return SWIG_AsVal_unsigned_SS_char (obj, val);
+    }
+  };
+  template <>  struct traits_from<unsigned char > {
+    typedef unsigned char value_type;
+    static PyObject *from(const value_type& val) {
+      return SWIG_From_unsigned_SS_char  (val);
+    }
+  };
+}
+
+
+      namespace swig {
+	template <>  struct traits<std::pair< std::string, unsigned char > > {
+	  typedef pointer_category category;
+	  static const char* type_name() {
+	    return "std::pair<" "std::string" "," "unsigned char" " >";
+	  }
+	};
+      }
+    
+
+      namespace swig {
+	template <>  struct traits<std::map<std::string, unsigned char, std::less< std::string >, std::allocator< std::pair< std::string const,unsigned char > > > > {
+	  typedef pointer_category category;
+	  static const char* type_name() {
+	    return "std::map<" "std::string" "," "unsigned char" "," "std::less< std::string >" "," "std::allocator< std::pair< std::string const,unsigned char > >" " >";
+	  }
+	};
+      }
+    
+SWIGINTERN swig::PySwigIterator *std_map_Sl_std_string_Sc_uint8_t_Sg__iterator(std::map< std::string,uint8_t > *self,PyObject **PYTHON_SELF){
+      return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
+    }
+SWIGINTERN bool std_map_Sl_std_string_Sc_uint8_t_Sg____nonzero__(std::map< std::string,uint8_t > const *self){
+      return !(self->empty());
+    }
+SWIGINTERN std::map< std::string,unsigned char >::size_type std_map_Sl_std_string_Sc_uint8_t_Sg____len__(std::map< std::string,uint8_t > const *self){
+      return self->size();
+    }
+SWIGINTERN std::map< std::string,unsigned char >::mapped_type std_map_Sl_std_string_Sc_uint8_t_Sg____getitem__(std::map< std::string,uint8_t > const *self,std::map< std::string,unsigned char >::key_type const &key){
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::const_iterator i = self->find(key);
+      if (i != self->end())
+	return i->second;
+      else
+	throw std::out_of_range("key not found");
+    }
+SWIGINTERN void std_map_Sl_std_string_Sc_uint8_t_Sg____delitem__(std::map< std::string,uint8_t > *self,std::map< std::string,unsigned char >::key_type const &key){
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::iterator i = self->find(key);
+      if (i != self->end())
+	self->erase(i);
+      else
+	throw std::out_of_range("key not found");
+    }
+SWIGINTERN bool std_map_Sl_std_string_Sc_uint8_t_Sg__has_key(std::map< std::string,uint8_t > const *self,std::map< std::string,unsigned char >::key_type const &key){
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::const_iterator i = self->find(key);
+      return i != self->end();
+    }
+SWIGINTERN PyObject *std_map_Sl_std_string_Sc_uint8_t_Sg__keys(std::map< std::string,uint8_t > *self){
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::size_type size = self->size();
+      int pysize = (size <= (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::size_type) INT_MAX) ? (int) size : -1;
+      if (pysize < 0) {
+	SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+	PyErr_SetString(PyExc_OverflowError,
+			"map size not valid in python");
+	SWIG_PYTHON_THREAD_END_BLOCK;
+	return NULL;
+      }
+      PyObject* keyList = PyList_New(pysize);
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::const_iterator i = self->begin();
+      for (int j = 0; j < pysize; ++i, ++j) {
+	PyList_SET_ITEM(keyList, j, swig::from(i->first));
+      }
+      return keyList;
+    }
+SWIGINTERN PyObject *std_map_Sl_std_string_Sc_uint8_t_Sg__values(std::map< std::string,uint8_t > *self){
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::size_type size = self->size();
+      int pysize = (size <= (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::size_type) INT_MAX) ? (int) size : -1;
+      if (pysize < 0) {
+	SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+	PyErr_SetString(PyExc_OverflowError,
+			"map size not valid in python");
+	SWIG_PYTHON_THREAD_END_BLOCK;
+	return NULL;
+      }
+      PyObject* valList = PyList_New(pysize);
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::const_iterator i = self->begin();
+      for (int j = 0; j < pysize; ++i, ++j) {
+	PyList_SET_ITEM(valList, j, swig::from(i->second));
+      }
+      return valList;
+    }
+SWIGINTERN PyObject *std_map_Sl_std_string_Sc_uint8_t_Sg__items(std::map< std::string,uint8_t > *self){
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::size_type size = self->size();
+      int pysize = (size <= (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::size_type) INT_MAX) ? (int) size : -1;
+      if (pysize < 0) {
+	SWIG_PYTHON_THREAD_BEGIN_BLOCK;
+	PyErr_SetString(PyExc_OverflowError,
+			"map size not valid in python");
+	SWIG_PYTHON_THREAD_END_BLOCK;
+	return NULL;
+      }    
+      PyObject* itemList = PyList_New(pysize);
+      std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >::const_iterator i = self->begin();
+      for (int j = 0; j < pysize; ++i, ++j) {
+	PyList_SET_ITEM(itemList, j, swig::from(*i));
+      }
+      return itemList;
+    }
+SWIGINTERN bool std_map_Sl_std_string_Sc_uint8_t_Sg____contains__(std::map< std::string,uint8_t > *self,std::map< std::string,unsigned char >::key_type const &key){
+      return self->find(key) != self->end();
+    }
+SWIGINTERN swig::PySwigIterator *std_map_Sl_std_string_Sc_uint8_t_Sg__key_iterator(std::map< std::string,uint8_t > *self,PyObject **PYTHON_SELF){
+      return swig::make_output_key_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
+    }
+SWIGINTERN swig::PySwigIterator *std_map_Sl_std_string_Sc_uint8_t_Sg__value_iterator(std::map< std::string,uint8_t > *self,PyObject **PYTHON_SELF){
+      return swig::make_output_value_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
+    }
+SWIGINTERN void std_map_Sl_std_string_Sc_uint8_t_Sg____setitem__(std::map< std::string,uint8_t > *self,std::map< std::string,unsigned char >::key_type const &key,std::map< std::string,unsigned char >::mapped_type const &x){
+      (*self)[key] = x;
     }
 #ifdef __cplusplus
 extern "C" {
@@ -37163,6 +37740,1207 @@ SWIGINTERN PyObject *StompWatch_swigregister(PyObject *SWIGUNUSEDPARM(self), PyO
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_new_HistogramBin__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_HistogramBin")) SWIG_fail;
+  result = (Stomp::HistogramBin *)new Stomp::HistogramBin();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__HistogramBin, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_HistogramBin__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  Stomp::HistogramBin *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:new_HistogramBin",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_HistogramBin" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_HistogramBin" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (Stomp::HistogramBin *)new Stomp::HistogramBin(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__HistogramBin, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_HistogramBin(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_HistogramBin__SWIG_0(self, args);
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_new_HistogramBin__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_HistogramBin'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Stomp::HistogramBin()\n"
+    "    Stomp::HistogramBin(double,double)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_HistogramBin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_HistogramBin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_HistogramBin" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_SetBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:HistogramBin_SetBounds",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_SetBounds" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "HistogramBin_SetBounds" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "HistogramBin_SetBounds" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (arg1)->SetBounds(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_AddToBin__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:HistogramBin_AddToBin",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_AddToBin" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "HistogramBin_AddToBin" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "HistogramBin_AddToBin" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  result = (bool)(arg1)->AddToBin(arg2,arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_AddToBin__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:HistogramBin_AddToBin",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_AddToBin" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "HistogramBin_AddToBin" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (bool)(arg1)->AddToBin(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_AddToBin(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__HistogramBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_HistogramBin_AddToBin__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__HistogramBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_HistogramBin_AddToBin__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'HistogramBin_AddToBin'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    AddToBin(Stomp::HistogramBin *,double,double)\n"
+    "    AddToBin(Stomp::HistogramBin *,double)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinMinimum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinMinimum",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinMinimum" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinMinimum();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinMaximum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinMaximum",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinMaximum" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinMaximum();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinCenter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinCenter",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinCenter" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinCenter();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinLogCenter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinLogCenter",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinLogCenter" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinLogCenter();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinWeightedCenter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinWeightedCenter",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinWeightedCenter" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinWeightedCenter();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinAveragedCenter(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinAveragedCenter",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinAveragedCenter" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinAveragedCenter();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_WithinBin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:HistogramBin_WithinBin",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_WithinBin" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "HistogramBin_WithinBin" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (bool)(arg1)->WithinBin(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinWeight(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinWeight",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinWeight" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinWeight();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinItems(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinItems",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinItems" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (uint32_t)(arg1)->BinItems();
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HistogramBin_BinMeanWeight(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::HistogramBin *arg1 = (Stomp::HistogramBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:HistogramBin_BinMeanWeight",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HistogramBin_BinMeanWeight" "', argument " "1"" of type '" "Stomp::HistogramBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::HistogramBin * >(argp1);
+  result = (double)(arg1)->BinMeanWeight();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *HistogramBin_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Stomp__HistogramBin, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_Histogram__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_Histogram")) SWIG_fail;
+  result = (Stomp::Histogram *)new Stomp::Histogram();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__Histogram, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_Histogram__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  uint16_t arg3 ;
+  bool arg4 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  Stomp::Histogram *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_Histogram",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_Histogram" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  result = (Stomp::Histogram *)new Stomp::Histogram(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__Histogram, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_Histogram__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  uint16_t arg3 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  Stomp::Histogram *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:new_Histogram",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Histogram" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Histogram" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_Histogram" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  result = (Stomp::Histogram *)new Stomp::Histogram(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__Histogram, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_Histogram(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_Histogram__SWIG_0(self, args);
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_new_Histogram__SWIG_2(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_Histogram__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_Histogram'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Stomp::Histogram()\n"
+    "    Stomp::Histogram(double,double,uint16_t,bool)\n"
+    "    Stomp::Histogram(double,double,uint16_t)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_Histogram(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_Histogram",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Histogram" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_SetBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:Histogram_SetBounds",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_SetBounds" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram_SetBounds" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Histogram_SetBounds" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (arg1)->SetBounds(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_SetNBins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  uint16_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Histogram_SetNBins",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_SetNBins" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram_SetNBins" "', argument " "2"" of type '" "uint16_t""'");
+  } 
+  arg2 = static_cast< uint16_t >(val2);
+  (arg1)->SetNBins(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_SetLogBinning(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Histogram_SetLogBinning",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_SetLogBinning" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram_SetLogBinning" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  result = (bool)(arg1)->SetLogBinning(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_AssignBins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_AssignBins",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_AssignBins" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (bool)(arg1)->AssignBins();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_AddToBin__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:Histogram_AddToBin",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_AddToBin" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram_AddToBin" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Histogram_AddToBin" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  result = (bool)(arg1)->AddToBin(arg2,arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_AddToBin__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Histogram_AddToBin",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_AddToBin" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Histogram_AddToBin" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (bool)(arg1)->AddToBin(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_AddToBin(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Histogram, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_Histogram_AddToBin__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Histogram, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_Histogram_AddToBin__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Histogram_AddToBin'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    AddToBin(Stomp::Histogram *,double,double)\n"
+    "    AddToBin(Stomp::Histogram *,double)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_Begin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Stomp::BinIterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_Begin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_Begin" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (arg1)->Begin();
+  resultobj = SWIG_NewPointerObj((new Stomp::BinIterator(static_cast< const Stomp::BinIterator& >(result))), SWIGTYPE_p_Stomp__BinVector__iterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_End(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Stomp::BinIterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_End",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_End" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (arg1)->End();
+  resultobj = SWIG_NewPointerObj((new Stomp::BinIterator(static_cast< const Stomp::BinIterator& >(result))), SWIGTYPE_p_Stomp__BinVector__iterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_BoundMin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_BoundMin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_BoundMin" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (double)(arg1)->BoundMin();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_BoundMax(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_BoundMax",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_BoundMax" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (double)(arg1)->BoundMax();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_NBins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint16_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_NBins",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_NBins" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (uint16_t)(arg1)->NBins();
+  resultobj = SWIG_From_unsigned_SS_short(static_cast< unsigned short >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_LogBinning(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_LogBinning",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_LogBinning" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (bool)(arg1)->LogBinning();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_TotalItems(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_TotalItems",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_TotalItems" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (uint32_t)(arg1)->TotalItems();
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_TotalWeight(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_TotalWeight",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_TotalWeight" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (double)(arg1)->TotalWeight();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_MeanItemWeight(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_MeanItemWeight",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_MeanItemWeight" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (double)(arg1)->MeanItemWeight();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_MeanBinValue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_MeanBinValue",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_MeanBinValue" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (double)(arg1)->MeanBinValue();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram_MeanWeightedBinValue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram_MeanWeightedBinValue",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram_MeanWeightedBinValue" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (double)(arg1)->MeanWeightedBinValue();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *Histogram_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Stomp__Histogram, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_Tokenize__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
@@ -41897,268 +43675,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[7];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 2) {
-    int _v;
-    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_8(self, args);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_7(self, args);
-        }
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_1(self, args);
-          }
-        }
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_3(self, args);
-          }
-        }
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_6(self, args);
-          }
-        }
-      }
-    }
-  }
-  if (argc == 5) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            {
-              int res = SWIG_AsVal_int(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_0(self, args);
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 5) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            {
-              int res = SWIG_AsVal_int(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_2(self, args);
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 5) {
-    int _v;
-    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_5(self, args);
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 6) {
-    int _v;
-    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              {
-                int res = SWIG_AsVal_signed_SS_char(argv[5], NULL);
-                _v = SWIG_CheckState(res);
-              }
-              if (_v) {
-                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_4(self, args);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'WeightedAngularCoordinate_ToWAngularVector'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
-    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::WAngularVector &)\n"
-    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
-    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::WAngularVector &)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
-    "    Stomp::WeightedAngularCoordinate::ToWAngularVector(std::string const &,Stomp::WAngularVector &)\n");
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
@@ -42381,14 +43897,1141 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  int8_t arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  signed char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "7"" of type '" "int8_t""'");
+  } 
+  arg7 = static_cast< int8_t >(val7);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3,arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3,arg4,arg5);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_12(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_13(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[6];
+  PyObject *argv[8];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_8(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_13(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_7(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_3(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_12(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_6(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_2(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_5(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_signed_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_4(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_signed_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'WeightedAngularCoordinate_ToWAngularVector'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
+    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::WAngularVector &)\n"
+    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
+    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::WAngularVector &)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere)\n"
+    "    Stomp::WeightedAngularCoordinate::ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  uint8_t arg7 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,(std::string const &)*arg3,arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,(std::string const &)*arg3,arg4,arg5);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,(std::string const &)*arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,(std::string const &)*arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[8];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -42410,6 +45053,24 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_8(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
@@ -42419,6 +45080,30 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
         }
         if (_v) {
           return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_2(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_7(self, args);
+          }
         }
       }
     }
@@ -42477,6 +45162,114 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
       }
     }
   }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'WeightedAngularCoordinate_FromWAngularVector'.\n"
@@ -42484,7 +45277,12 @@ fail:
     "    FromWAngularVector(Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularCoordinate::Sphere)\n"
     "    FromWAngularVector(Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &)\n"
     "    FromWAngularVector(Stomp::WAngularVector &,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
-    "    Stomp::WeightedAngularCoordinate::FromWAngularVector(Stomp::WAngularVector &,std::string const &)\n");
+    "    FromWAngularVector(Stomp::WAngularVector &,std::string const &)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,uint8_t)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
+    "    Stomp::WeightedAngularCoordinate::FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &)\n");
   return NULL;
 }
 
@@ -56298,6 +59096,929 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  uint8_t arg4 ;
+  uint8_t arg5 ;
+  int8_t arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  unsigned char val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  signed char val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "uint8_t""'");
+  } 
+  arg4 = static_cast< uint8_t >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_signed_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "int8_t""'");
+  } 
+  arg6 = static_cast< int8_t >(val6);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,arg3,arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  uint8_t arg4 ;
+  uint8_t arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  unsigned char val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "uint8_t""'");
+  } 
+  arg4 = static_cast< uint8_t >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,arg3,arg4,arg5);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  uint8_t arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  unsigned char val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "uint8_t""'");
+  } 
+  arg4 = static_cast< uint8_t >(val4);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:TreeMap_Read",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:TreeMap_Read",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(arg1)->Read((std::string const &)*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  int8_t arg7 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  signed char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "TreeMap_Read" "', argument " "7"" of type '" "int8_t""'");
+  } 
+  arg7 = static_cast< int8_t >(val7);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3,arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  uint8_t arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3,arg4,arg5);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:TreeMap_Read",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[8];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_TreeMap_Read__SWIG_4(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_TreeMap_Read__SWIG_9(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_TreeMap_Read__SWIG_3(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_TreeMap_Read__SWIG_8(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_TreeMap_Read__SWIG_2(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_TreeMap_Read__SWIG_7(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_TreeMap_Read__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_TreeMap_Read__SWIG_6(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_signed_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_TreeMap_Read__SWIG_0(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_signed_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_TreeMap_Read__SWIG_5(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'TreeMap_Read'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
+    "    Read(Stomp::TreeMap *,std::string const &)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_TreeMap_Coverage__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
@@ -61930,6 +65651,2186 @@ SWIGINTERN PyObject *PixelVector_swigregister(PyObject *SWIGUNUSEDPARM(self), Py
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_new_FieldDict__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::less< std::string > *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_FieldDict",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__lessT_std__string_t,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_FieldDict" "', argument " "1"" of type '" "std::less< std::string > const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_FieldDict" "', argument " "1"" of type '" "std::less< std::string > const &""'"); 
+  }
+  arg1 = reinterpret_cast< std::less< std::string > * >(argp1);
+  result = (std::map< std::string,double > *)new std::map< std::string,double >((std::less< std::string > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  PyObject **arg2 = (PyObject **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  swig::PySwigIterator *result = 0 ;
+  
+  arg2 = &obj0;
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_iterator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_iterator" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (swig::PySwigIterator *)std_map_Sl_std_string_Sc_double_Sg__iterator(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict___nonzero__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict___nonzero__",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict___nonzero__" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (bool)std_map_Sl_std_string_Sc_double_Sg____nonzero__((std::map< std::string,double > const *)arg1);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict___len__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict___len__",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict___len__" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = std_map_Sl_std_string_Sc_double_Sg____len__((std::map< std::string,double > const *)arg1);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict___getitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,double >::mapped_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict___getitem__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict___getitem__" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict___getitem__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict___getitem__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  try {
+    result = (std::map< std::string,double >::mapped_type)std_map_Sl_std_string_Sc_double_Sg____getitem__((std::map< std::string,double > const *)arg1,(std::string const &)*arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict___delitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict___delitem__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict___delitem__" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict___delitem__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict___delitem__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  try {
+    std_map_Sl_std_string_Sc_double_Sg____delitem__(arg1,(std::string const &)*arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_has_key(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_has_key",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_has_key" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict_has_key" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict_has_key" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)std_map_Sl_std_string_Sc_double_Sg__has_key((std::map< std::string,double > const *)arg1,(std::string const &)*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_keys(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_keys",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_keys" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (PyObject *)std_map_Sl_std_string_Sc_double_Sg__keys(arg1);
+  resultobj = result;
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_values(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_values",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_values" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (PyObject *)std_map_Sl_std_string_Sc_double_Sg__values(arg1);
+  resultobj = result;
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_items(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_items",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_items" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (PyObject *)std_map_Sl_std_string_Sc_double_Sg__items(arg1);
+  resultobj = result;
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict___contains__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict___contains__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict___contains__" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict___contains__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict___contains__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)std_map_Sl_std_string_Sc_double_Sg____contains__(arg1,(std::string const &)*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_key_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  PyObject **arg2 = (PyObject **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  swig::PySwigIterator *result = 0 ;
+  
+  arg2 = &obj0;
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_key_iterator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_key_iterator" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (swig::PySwigIterator *)std_map_Sl_std_string_Sc_double_Sg__key_iterator(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_value_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  PyObject **arg2 = (PyObject **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  swig::PySwigIterator *result = 0 ;
+  
+  arg2 = &obj0;
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_value_iterator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_value_iterator" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (swig::PySwigIterator *)std_map_Sl_std_string_Sc_double_Sg__value_iterator(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict___setitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  std::map< std::string,double >::mapped_type *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  std::map< std::string,double >::mapped_type temp3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:FieldDict___setitem__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict___setitem__" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict___setitem__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict___setitem__" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "FieldDict___setitem__" "', argument " "3"" of type '" "std::map< std::string,double >::mapped_type""'");
+  } 
+  temp3 = static_cast< std::map< std::string,double >::mapped_type >(val3);
+  arg3 = &temp3;
+  try {
+    std_map_Sl_std_string_Sc_double_Sg____setitem__(arg1,(std::string const &)*arg2,(double const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_FieldDict__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_FieldDict")) SWIG_fail;
+  result = (std::map< std::string,double > *)new std::map< std::string,double >();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_FieldDict__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_FieldDict",&obj0)) SWIG_fail;
+  {
+    std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > > *ptr = (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > > *)0;
+    res1 = swig::asptr(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_FieldDict" "', argument " "1"" of type '" "std::map< std::string,double > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_FieldDict" "', argument " "1"" of type '" "std::map< std::string,double > const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  result = (std::map< std::string,double > *)new std::map< std::string,double >((std::map< std::string,double > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_FieldDict(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_FieldDict__SWIG_1(self, args);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_std__lessT_std__string_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_FieldDict__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_FieldDict__SWIG_2(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_FieldDict'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    std::map< std::string,double >(std::less< std::string > const &)\n"
+    "    std::map< std::string,double >()\n"
+    "    std::map< std::string,double >(std::map< std::string,double > const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_empty(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_empty",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_empty" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = (bool)((std::map< std::string,double > const *)arg1)->empty();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_size",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_size" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = ((std::map< std::string,double > const *)arg1)->size();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_clear",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_clear" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  (arg1)->clear();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_swap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double > *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_swap",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_swap" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict_swap" "', argument " "2"" of type '" "std::map< std::string,double > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict_swap" "', argument " "2"" of type '" "std::map< std::string,double > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::map< std::string,double > * >(argp2);
+  (arg1)->swap(*arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_get_allocator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SwigValueWrapper< std::allocator< std::pair< std::string const,double > > > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_get_allocator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_get_allocator" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = ((std::map< std::string,double > const *)arg1)->get_allocator();
+  resultobj = SWIG_NewPointerObj((new std::map< std::string,double >::allocator_type(static_cast< const std::map< std::string,double >::allocator_type& >(result))), SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_begin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double >::const_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_begin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_begin" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = ((std::map< std::string,double > const *)arg1)->begin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,double >::const_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_end(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double >::const_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_end",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_end" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = ((std::map< std::string,double > const *)arg1)->end();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,double >::const_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_rbegin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double >::const_reverse_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_rbegin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_rbegin" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = ((std::map< std::string,double > const *)arg1)->rbegin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,double >::const_reverse_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_rend(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,double >::const_reverse_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldDict_rend",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_rend" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  result = ((std::map< std::string,double > const *)arg1)->rend();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,double >::const_reverse_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,double >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_erase",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_erase" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict_erase" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict_erase" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->erase((std::map< std::string,double >::key_type const &)*arg2);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_count(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,double >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_count",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_count" "', argument " "1"" of type '" "std::map< std::string,double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict_count" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict_count" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = ((std::map< std::string,double > const *)arg1)->count((std::map< std::string,double >::key_type const &)*arg2);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::iterator arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_erase",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_erase" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldDict_erase" "', argument " "2"" of type '" "std::map< std::string,double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::map< std::string,double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::map< std::string,double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldDict_erase" "', argument " "2"" of type '" "std::map< std::string,double >::iterator""'");
+    }
+  }
+  (arg1)->erase(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_erase__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::iterator arg2 ;
+  std::map< std::string,double >::iterator arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:FieldDict_erase",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_erase" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldDict_erase" "', argument " "2"" of type '" "std::map< std::string,double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::map< std::string,double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::map< std::string,double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldDict_erase" "', argument " "2"" of type '" "std::map< std::string,double >::iterator""'");
+    }
+  }
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldDict_erase" "', argument " "3"" of type '" "std::map< std::string,double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::map< std::string,double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::map< std::string,double >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldDict_erase" "', argument " "3"" of type '" "std::map< std::string,double >::iterator""'");
+    }
+  }
+  (arg1)->erase(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_erase(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::map< std::string,double >::iterator > *>(iter) != 0));
+      if (_v) {
+        return _wrap_FieldDict_erase__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_FieldDict_erase__SWIG_0(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::map< std::string,double >::iterator > *>(iter) != 0));
+      if (_v) {
+        swig::PySwigIterator *iter = 0;
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::map< std::string,double >::iterator > *>(iter) != 0));
+        if (_v) {
+          return _wrap_FieldDict_erase__SWIG_2(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'FieldDict_erase'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    erase(std::map< std::string,double > *,std::map< std::string,double >::key_type const &)\n"
+    "    erase(std::map< std::string,double > *,std::map< std::string,double >::iterator)\n"
+    "    erase(std::map< std::string,double > *,std::map< std::string,double >::iterator,std::map< std::string,double >::iterator)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_find(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,double >::iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_find",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_find" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict_find" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict_find" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->find((std::map< std::string,double >::key_type const &)*arg2);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,double >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_lower_bound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,double >::iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_lower_bound",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_lower_bound" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict_lower_bound" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict_lower_bound" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->lower_bound((std::map< std::string,double >::key_type const &)*arg2);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,double >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldDict_upper_bound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  std::map< std::string,double >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,double >::iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldDict_upper_bound",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldDict_upper_bound" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldDict_upper_bound" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldDict_upper_bound" "', argument " "2"" of type '" "std::map< std::string,double >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->upper_bound((std::map< std::string,double >::key_type const &)*arg2);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,double >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_FieldDict(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,double > *arg1 = (std::map< std::string,double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_FieldDict",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_FieldDict" "', argument " "1"" of type '" "std::map< std::string,double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,double > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *FieldDict_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_FieldColumnDict__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::less< std::string > *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,uint8_t > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_FieldColumnDict",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__lessT_std__string_t,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_FieldColumnDict" "', argument " "1"" of type '" "std::less< std::string > const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_FieldColumnDict" "', argument " "1"" of type '" "std::less< std::string > const &""'"); 
+  }
+  arg1 = reinterpret_cast< std::less< std::string > * >(argp1);
+  result = (std::map< std::string,uint8_t > *)new std::map< std::string,uint8_t >((std::less< std::string > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  PyObject **arg2 = (PyObject **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  swig::PySwigIterator *result = 0 ;
+  
+  arg2 = &obj0;
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_iterator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_iterator" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (swig::PySwigIterator *)std_map_Sl_std_string_Sc_uint8_t_Sg__iterator(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict___nonzero__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict___nonzero__",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict___nonzero__" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (bool)std_map_Sl_std_string_Sc_uint8_t_Sg____nonzero__((std::map< std::string,unsigned char > const *)arg1);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict___len__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,unsigned char >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict___len__",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict___len__" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = std_map_Sl_std_string_Sc_uint8_t_Sg____len__((std::map< std::string,unsigned char > const *)arg1);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict___getitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,unsigned char >::mapped_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict___getitem__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict___getitem__" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict___getitem__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict___getitem__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  try {
+    result = (std::map< std::string,unsigned char >::mapped_type)std_map_Sl_std_string_Sc_uint8_t_Sg____getitem__((std::map< std::string,unsigned char > const *)arg1,(std::string const &)*arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_From_unsigned_SS_char(static_cast< unsigned char >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict___delitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict___delitem__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict___delitem__" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict___delitem__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict___delitem__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  try {
+    std_map_Sl_std_string_Sc_uint8_t_Sg____delitem__(arg1,(std::string const &)*arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_has_key(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_has_key",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_has_key" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict_has_key" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict_has_key" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)std_map_Sl_std_string_Sc_uint8_t_Sg__has_key((std::map< std::string,unsigned char > const *)arg1,(std::string const &)*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_keys(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_keys",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_keys" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (PyObject *)std_map_Sl_std_string_Sc_uint8_t_Sg__keys(arg1);
+  resultobj = result;
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_values(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_values",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_values" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (PyObject *)std_map_Sl_std_string_Sc_uint8_t_Sg__values(arg1);
+  resultobj = result;
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_items(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_items",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_items" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (PyObject *)std_map_Sl_std_string_Sc_uint8_t_Sg__items(arg1);
+  resultobj = result;
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict___contains__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict___contains__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict___contains__" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict___contains__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict___contains__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)std_map_Sl_std_string_Sc_uint8_t_Sg____contains__(arg1,(std::string const &)*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_key_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  PyObject **arg2 = (PyObject **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  swig::PySwigIterator *result = 0 ;
+  
+  arg2 = &obj0;
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_key_iterator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_key_iterator" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (swig::PySwigIterator *)std_map_Sl_std_string_Sc_uint8_t_Sg__key_iterator(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_value_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  PyObject **arg2 = (PyObject **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  swig::PySwigIterator *result = 0 ;
+  
+  arg2 = &obj0;
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_value_iterator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_value_iterator" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (swig::PySwigIterator *)std_map_Sl_std_string_Sc_uint8_t_Sg__value_iterator(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict___setitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  std::map< std::string,unsigned char >::mapped_type *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  std::map< std::string,unsigned char >::mapped_type temp3 ;
+  unsigned char val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:FieldColumnDict___setitem__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict___setitem__" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict___setitem__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict___setitem__" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_unsigned_SS_char(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "FieldColumnDict___setitem__" "', argument " "3"" of type '" "std::map< std::string,unsigned char >::mapped_type""'");
+  } 
+  temp3 = static_cast< std::map< std::string,unsigned char >::mapped_type >(val3);
+  arg3 = &temp3;
+  try {
+    std_map_Sl_std_string_Sc_uint8_t_Sg____setitem__(arg1,(std::string const &)*arg2,(unsigned char const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_FieldColumnDict__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_FieldColumnDict")) SWIG_fail;
+  result = (std::map< std::string,uint8_t > *)new std::map< std::string,uint8_t >();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_FieldColumnDict__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,uint8_t > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_FieldColumnDict",&obj0)) SWIG_fail;
+  {
+    std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > > *ptr = (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > > *)0;
+    res1 = swig::asptr(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_FieldColumnDict" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_FieldColumnDict" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  result = (std::map< std::string,uint8_t > *)new std::map< std::string,uint8_t >((std::map< std::string,uint8_t > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_FieldColumnDict(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_FieldColumnDict__SWIG_1(self, args);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_std__lessT_std__string_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_FieldColumnDict__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_FieldColumnDict__SWIG_2(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_FieldColumnDict'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    std::map< std::string,uint8_t >(std::less< std::string > const &)\n"
+    "    std::map< std::string,uint8_t >()\n"
+    "    std::map< std::string,uint8_t >(std::map< std::string,uint8_t > const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_empty(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_empty",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_empty" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = (bool)((std::map< std::string,uint8_t > const *)arg1)->empty();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::map< std::string,unsigned char >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_size",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_size" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = ((std::map< std::string,uint8_t > const *)arg1)->size();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_clear",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_clear" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  (arg1)->clear();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_swap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,uint8_t > *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_swap",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_swap" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict_swap" "', argument " "2"" of type '" "std::map< std::string,uint8_t > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict_swap" "', argument " "2"" of type '" "std::map< std::string,uint8_t > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp2);
+  (arg1)->swap(*arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_get_allocator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SwigValueWrapper< std::allocator< std::pair< std::string const,unsigned char > > > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_get_allocator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_get_allocator" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = ((std::map< std::string,uint8_t > const *)arg1)->get_allocator();
+  resultobj = SWIG_NewPointerObj((new std::map< std::string,unsigned char >::allocator_type(static_cast< const std::map< std::string,unsigned char >::allocator_type& >(result))), SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_begin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::const_iterator > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_begin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_begin" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = ((std::map< std::string,uint8_t > const *)arg1)->begin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,unsigned char >::const_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_end(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::const_iterator > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_end",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_end" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = ((std::map< std::string,uint8_t > const *)arg1)->end();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,unsigned char >::const_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_rbegin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::const_reverse_iterator > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_rbegin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_rbegin" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = ((std::map< std::string,uint8_t > const *)arg1)->rbegin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,unsigned char >::const_reverse_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_rend(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::const_reverse_iterator > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:FieldColumnDict_rend",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_rend" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  result = ((std::map< std::string,uint8_t > const *)arg1)->rend();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,unsigned char >::const_reverse_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,unsigned char >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_erase",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_erase" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict_erase" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict_erase" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->erase((std::map< std::string,unsigned char >::key_type const &)*arg2);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_count(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::map< std::string,unsigned char >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_count",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_count" "', argument " "1"" of type '" "std::map< std::string,uint8_t > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict_count" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict_count" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = ((std::map< std::string,uint8_t > const *)arg1)->count((std::map< std::string,unsigned char >::key_type const &)*arg2);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::iterator > arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_erase",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_erase" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldColumnDict_erase" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldColumnDict_erase" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::iterator""'");
+    }
+  }
+  (arg1)->erase(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_erase__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::iterator > arg2 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::iterator > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:FieldColumnDict_erase",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_erase" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldColumnDict_erase" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldColumnDict_erase" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::iterator""'");
+    }
+  }
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldColumnDict_erase" "', argument " "3"" of type '" "std::map< std::string,unsigned char >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "FieldColumnDict_erase" "', argument " "3"" of type '" "std::map< std::string,unsigned char >::iterator""'");
+    }
+  }
+  (arg1)->erase(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_erase(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *>(iter) != 0));
+      if (_v) {
+        return _wrap_FieldColumnDict_erase__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_FieldColumnDict_erase__SWIG_0(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::map<std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *>(iter) != 0));
+      if (_v) {
+        swig::PySwigIterator *iter = 0;
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::map< std::string,unsigned char >::iterator > *>(iter) != 0));
+        if (_v) {
+          return _wrap_FieldColumnDict_erase__SWIG_2(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'FieldColumnDict_erase'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    erase(std::map< std::string,uint8_t > *,std::map< std::string,unsigned char >::key_type const &)\n"
+    "    erase(std::map< std::string,uint8_t > *,std::map< std::string,unsigned char >::iterator)\n"
+    "    erase(std::map< std::string,uint8_t > *,std::map< std::string,unsigned char >::iterator,std::map< std::string,unsigned char >::iterator)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_find(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::iterator > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_find",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_find" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict_find" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict_find" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->find((std::map< std::string,unsigned char >::key_type const &)*arg2);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,unsigned char >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_lower_bound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::iterator > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_lower_bound",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_lower_bound" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict_lower_bound" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict_lower_bound" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->lower_bound((std::map< std::string,unsigned char >::key_type const &)*arg2);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,unsigned char >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_FieldColumnDict_upper_bound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  std::map< std::string,unsigned char >::key_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  SwigValueWrapper< std::map< std::string,unsigned char >::iterator > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:FieldColumnDict_upper_bound",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FieldColumnDict_upper_bound" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FieldColumnDict_upper_bound" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FieldColumnDict_upper_bound" "', argument " "2"" of type '" "std::map< std::string,unsigned char >::key_type const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (arg1)->upper_bound((std::map< std::string,unsigned char >::key_type const &)*arg2);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::map< std::string,unsigned char >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_FieldColumnDict(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::map< std::string,uint8_t > *arg1 = (std::map< std::string,uint8_t > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_FieldColumnDict",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_FieldColumnDict" "', argument " "1"" of type '" "std::map< std::string,uint8_t > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::map< std::string,uint8_t > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *FieldColumnDict_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_PySwigIterator", _wrap_delete_PySwigIterator, METH_VARARGS, NULL},
 	 { (char *)"PySwigIterator_value", _wrap_PySwigIterator_value, METH_VARARGS, NULL},
@@ -62449,6 +68350,40 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"StompWatch_ElapsedTime", _wrap_StompWatch_ElapsedTime, METH_VARARGS, NULL},
 	 { (char *)"delete_StompWatch", _wrap_delete_StompWatch, METH_VARARGS, NULL},
 	 { (char *)"StompWatch_swigregister", StompWatch_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_HistogramBin", _wrap_new_HistogramBin, METH_VARARGS, NULL},
+	 { (char *)"delete_HistogramBin", _wrap_delete_HistogramBin, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_SetBounds", _wrap_HistogramBin_SetBounds, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_AddToBin", _wrap_HistogramBin_AddToBin, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinMinimum", _wrap_HistogramBin_BinMinimum, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinMaximum", _wrap_HistogramBin_BinMaximum, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinCenter", _wrap_HistogramBin_BinCenter, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinLogCenter", _wrap_HistogramBin_BinLogCenter, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinWeightedCenter", _wrap_HistogramBin_BinWeightedCenter, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinAveragedCenter", _wrap_HistogramBin_BinAveragedCenter, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_WithinBin", _wrap_HistogramBin_WithinBin, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinWeight", _wrap_HistogramBin_BinWeight, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinItems", _wrap_HistogramBin_BinItems, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_BinMeanWeight", _wrap_HistogramBin_BinMeanWeight, METH_VARARGS, NULL},
+	 { (char *)"HistogramBin_swigregister", HistogramBin_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_Histogram", _wrap_new_Histogram, METH_VARARGS, NULL},
+	 { (char *)"delete_Histogram", _wrap_delete_Histogram, METH_VARARGS, NULL},
+	 { (char *)"Histogram_SetBounds", _wrap_Histogram_SetBounds, METH_VARARGS, NULL},
+	 { (char *)"Histogram_SetNBins", _wrap_Histogram_SetNBins, METH_VARARGS, NULL},
+	 { (char *)"Histogram_SetLogBinning", _wrap_Histogram_SetLogBinning, METH_VARARGS, NULL},
+	 { (char *)"Histogram_AssignBins", _wrap_Histogram_AssignBins, METH_VARARGS, NULL},
+	 { (char *)"Histogram_AddToBin", _wrap_Histogram_AddToBin, METH_VARARGS, NULL},
+	 { (char *)"Histogram_Begin", _wrap_Histogram_Begin, METH_VARARGS, NULL},
+	 { (char *)"Histogram_End", _wrap_Histogram_End, METH_VARARGS, NULL},
+	 { (char *)"Histogram_BoundMin", _wrap_Histogram_BoundMin, METH_VARARGS, NULL},
+	 { (char *)"Histogram_BoundMax", _wrap_Histogram_BoundMax, METH_VARARGS, NULL},
+	 { (char *)"Histogram_NBins", _wrap_Histogram_NBins, METH_VARARGS, NULL},
+	 { (char *)"Histogram_LogBinning", _wrap_Histogram_LogBinning, METH_VARARGS, NULL},
+	 { (char *)"Histogram_TotalItems", _wrap_Histogram_TotalItems, METH_VARARGS, NULL},
+	 { (char *)"Histogram_TotalWeight", _wrap_Histogram_TotalWeight, METH_VARARGS, NULL},
+	 { (char *)"Histogram_MeanItemWeight", _wrap_Histogram_MeanItemWeight, METH_VARARGS, NULL},
+	 { (char *)"Histogram_MeanBinValue", _wrap_Histogram_MeanBinValue, METH_VARARGS, NULL},
+	 { (char *)"Histogram_MeanWeightedBinValue", _wrap_Histogram_MeanWeightedBinValue, METH_VARARGS, NULL},
+	 { (char *)"Histogram_swigregister", Histogram_swigregister, METH_VARARGS, NULL},
 	 { (char *)"Tokenize", _wrap_Tokenize, METH_VARARGS, NULL},
 	 { (char *)"new_AngularCoordinate", _wrap_new_AngularCoordinate, METH_VARARGS, NULL},
 	 { (char *)"delete_AngularCoordinate", _wrap_delete_AngularCoordinate, METH_VARARGS, NULL},
@@ -62596,6 +68531,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"TreeMap_KNearestNeighborDistance", _wrap_TreeMap_KNearestNeighborDistance, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_NearestNeighborDistance", _wrap_TreeMap_NearestNeighborDistance, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_AddPoint", _wrap_TreeMap_AddPoint, METH_VARARGS, NULL},
+	 { (char *)"TreeMap_Read", _wrap_TreeMap_Read, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_Coverage", _wrap_TreeMap_Coverage, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_Covering", _wrap_TreeMap_Covering, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_FindUnmaskedFraction", _wrap_TreeMap_FindUnmaskedFraction, METH_VARARGS, NULL},
@@ -62723,6 +68659,66 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"PixelVector_capacity", _wrap_PixelVector_capacity, METH_VARARGS, NULL},
 	 { (char *)"delete_PixelVector", _wrap_delete_PixelVector, METH_VARARGS, NULL},
 	 { (char *)"PixelVector_swigregister", PixelVector_swigregister, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_iterator", _wrap_FieldDict_iterator, METH_VARARGS, NULL},
+	 { (char *)"FieldDict___nonzero__", _wrap_FieldDict___nonzero__, METH_VARARGS, NULL},
+	 { (char *)"FieldDict___len__", _wrap_FieldDict___len__, METH_VARARGS, NULL},
+	 { (char *)"FieldDict___getitem__", _wrap_FieldDict___getitem__, METH_VARARGS, NULL},
+	 { (char *)"FieldDict___delitem__", _wrap_FieldDict___delitem__, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_has_key", _wrap_FieldDict_has_key, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_keys", _wrap_FieldDict_keys, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_values", _wrap_FieldDict_values, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_items", _wrap_FieldDict_items, METH_VARARGS, NULL},
+	 { (char *)"FieldDict___contains__", _wrap_FieldDict___contains__, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_key_iterator", _wrap_FieldDict_key_iterator, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_value_iterator", _wrap_FieldDict_value_iterator, METH_VARARGS, NULL},
+	 { (char *)"FieldDict___setitem__", _wrap_FieldDict___setitem__, METH_VARARGS, NULL},
+	 { (char *)"new_FieldDict", _wrap_new_FieldDict, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_empty", _wrap_FieldDict_empty, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_size", _wrap_FieldDict_size, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_clear", _wrap_FieldDict_clear, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_swap", _wrap_FieldDict_swap, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_get_allocator", _wrap_FieldDict_get_allocator, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_begin", _wrap_FieldDict_begin, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_end", _wrap_FieldDict_end, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_rbegin", _wrap_FieldDict_rbegin, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_rend", _wrap_FieldDict_rend, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_count", _wrap_FieldDict_count, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_erase", _wrap_FieldDict_erase, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_find", _wrap_FieldDict_find, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_lower_bound", _wrap_FieldDict_lower_bound, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_upper_bound", _wrap_FieldDict_upper_bound, METH_VARARGS, NULL},
+	 { (char *)"delete_FieldDict", _wrap_delete_FieldDict, METH_VARARGS, NULL},
+	 { (char *)"FieldDict_swigregister", FieldDict_swigregister, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_iterator", _wrap_FieldColumnDict_iterator, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict___nonzero__", _wrap_FieldColumnDict___nonzero__, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict___len__", _wrap_FieldColumnDict___len__, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict___getitem__", _wrap_FieldColumnDict___getitem__, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict___delitem__", _wrap_FieldColumnDict___delitem__, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_has_key", _wrap_FieldColumnDict_has_key, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_keys", _wrap_FieldColumnDict_keys, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_values", _wrap_FieldColumnDict_values, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_items", _wrap_FieldColumnDict_items, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict___contains__", _wrap_FieldColumnDict___contains__, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_key_iterator", _wrap_FieldColumnDict_key_iterator, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_value_iterator", _wrap_FieldColumnDict_value_iterator, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict___setitem__", _wrap_FieldColumnDict___setitem__, METH_VARARGS, NULL},
+	 { (char *)"new_FieldColumnDict", _wrap_new_FieldColumnDict, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_empty", _wrap_FieldColumnDict_empty, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_size", _wrap_FieldColumnDict_size, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_clear", _wrap_FieldColumnDict_clear, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_swap", _wrap_FieldColumnDict_swap, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_get_allocator", _wrap_FieldColumnDict_get_allocator, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_begin", _wrap_FieldColumnDict_begin, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_end", _wrap_FieldColumnDict_end, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_rbegin", _wrap_FieldColumnDict_rbegin, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_rend", _wrap_FieldColumnDict_rend, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_count", _wrap_FieldColumnDict_count, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_erase", _wrap_FieldColumnDict_erase, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_find", _wrap_FieldColumnDict_find, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_lower_bound", _wrap_FieldColumnDict_lower_bound, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_upper_bound", _wrap_FieldColumnDict_upper_bound, METH_VARARGS, NULL},
+	 { (char *)"delete_FieldColumnDict", _wrap_delete_FieldColumnDict, METH_VARARGS, NULL},
+	 { (char *)"FieldColumnDict_swigregister", FieldColumnDict_swigregister, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -62768,15 +68764,19 @@ static swig_type_info _swigt__p_Stomp__AngularCorrelation = {"_p_Stomp__AngularC
 static swig_type_info _swigt__p_Stomp__AngularPtrVector__iterator = {"_p_Stomp__AngularPtrVector__iterator", "Stomp::AngularPtrVector::iterator *|Stomp::AngularPtrIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__AngularVector__iterator = {"_p_Stomp__AngularVector__iterator", "Stomp::AngularVector::iterator *|Stomp::AngularIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__BaseMap = {"_p_Stomp__BaseMap", "Stomp::BaseMap *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__BinVector__iterator = {"_p_Stomp__BinVector__iterator", "Stomp::BinVector::iterator *|Stomp::BinIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__CircleBound = {"_p_Stomp__CircleBound", "Stomp::CircleBound *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__CircleVector__iterator = {"_p_Stomp__CircleVector__iterator", "Stomp::CircleVector::iterator *|Stomp::CircleIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__CosmoCoordinate = {"_p_Stomp__CosmoCoordinate", "Stomp::CosmoCoordinate *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__CosmoPtrVector__iterator = {"_p_Stomp__CosmoPtrVector__iterator", "Stomp::CosmoPtrVector::iterator *|Stomp::CosmoPtrIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__CosmoVector__iterator = {"_p_Stomp__CosmoVector__iterator", "Stomp::CosmoVector::iterator *|Stomp::CosmoIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__Cosmology = {"_p_Stomp__Cosmology", "Stomp::Cosmology *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__FieldColumnDict__iterator = {"_p_Stomp__FieldColumnDict__iterator", "Stomp::FieldColumnDict::iterator *|Stomp::FieldColumnIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__FieldDict__iterator = {"_p_Stomp__FieldDict__iterator", "Stomp::FieldDict::iterator *|Stomp::FieldIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__FootprintVector__iterator = {"_p_Stomp__FootprintVector__iterator", "Stomp::FootprintVector::iterator *|Stomp::FootprintIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__GeometricBound = {"_p_Stomp__GeometricBound", "Stomp::GeometricBound *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__Histogram = {"_p_Stomp__Histogram", "Stomp::Histogram *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__HistogramBin = {"_p_Stomp__HistogramBin", "Stomp::HistogramBin *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__Map = {"_p_Stomp__Map", "Stomp::Map *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__NearestNeighborPixel = {"_p_Stomp__NearestNeighborPixel", "Stomp::NearestNeighborPixel *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__NearestNeighborPoint = {"_p_Stomp__NearestNeighborPoint", "Stomp::NearestNeighborPoint *", 0, 0, (void*)0, 0};
@@ -62816,14 +68816,20 @@ static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "intptr_t *|int *|int_least32_t *|int_fast32_t *|int32_t *|int_fast16_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_key_type = {"_p_key_type", "key_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_long = {"_p_long_long", "int_least64_t *|int_fast64_t *|int64_t *|long long *|intmax_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_mapped_type = {"_p_mapped_type", "mapped_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_PyObject = {"_p_p_PyObject", "PyObject **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_short = {"_p_short", "short *|int_least16_t *|int16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_signed_char = {"_p_signed_char", "signed char *|int_least8_t *|int_fast8_t *|int8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__lessT_std__string_t = {"_p_std__lessT_std__string_t", "std::less< std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t = {"_p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t", "std::map< short const,double,std::less< short const >,std::allocator< std::pair< short const const,double > > > *|Stomp::RegionAreaDict *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t = {"_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t", "std::map< std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > > *|Stomp::FieldDict *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t = {"_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t", "std::map< std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > > *|Stomp::FieldDict *|std::map< std::string,double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type = {"_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type", "std::map< std::string,double >::allocator_type *|std::allocator< std::pair< std::string const,double > > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t = {"_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t", "std::map< std::string,unsigned char > *|std::map< std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > > *|Stomp::FieldColumnDict *|std::map< std::string,uint8_t > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type = {"_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type", "std::allocator< std::pair< std::string const,unsigned char > > *|std::map< std::string,unsigned char >::allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t = {"_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t", "std::map< unsigned int const,short,std::less< unsigned int const >,std::allocator< std::pair< unsigned int const const,short > > > *|Stomp::RegionDict *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t = {"_p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t", "std::map< unsigned int const,unsigned int,std::less< unsigned int const >,std::allocator< std::pair< unsigned int const const,unsigned int > > > *|Stomp::ResolutionDict *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t = {"_p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t", "std::pair< Stomp::PixelVector::iterator,Stomp::PixelVector::iterator > *|Stomp::PixelPair *", 0, 0, (void*)0, 0};
@@ -62852,6 +68858,7 @@ static swig_type_info _swigt__p_std__vectorT_Stomp__CircleBound_std__allocatorT_
 static swig_type_info _swigt__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t = {"_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t", "std::vector< Stomp::CosmoCoordinate *,std::allocator< Stomp::CosmoCoordinate * > > *|Stomp::CosmoPtrVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t = {"_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t", "std::vector< Stomp::CosmoCoordinate,std::allocator< Stomp::CosmoCoordinate > > *|Stomp::CosmoVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t = {"_p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t", "std::vector< Stomp::Footprint,std::allocator< Stomp::Footprint > > *|Stomp::FootprintVector *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t = {"_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t", "std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > > *|Stomp::BinVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t = {"_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t", "std::vector< Stomp::Pixel *,std::allocator< Stomp::Pixel * > > *|Stomp::PixelPtrVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t = {"_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t", "std::vector< Stomp::Pixel,std::allocator< Stomp::Pixel > > *|Stomp::PixelVector *|std::vector< Stomp::Pixel > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type = {"_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type", "std::vector< Stomp::Pixel >::allocator_type *|std::allocator< Stomp::Pixel > *", 0, 0, (void*)0, 0};
@@ -62885,15 +68892,19 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Stomp__AngularPtrVector__iterator,
   &_swigt__p_Stomp__AngularVector__iterator,
   &_swigt__p_Stomp__BaseMap,
+  &_swigt__p_Stomp__BinVector__iterator,
   &_swigt__p_Stomp__CircleBound,
   &_swigt__p_Stomp__CircleVector__iterator,
   &_swigt__p_Stomp__CosmoCoordinate,
   &_swigt__p_Stomp__CosmoPtrVector__iterator,
   &_swigt__p_Stomp__CosmoVector__iterator,
   &_swigt__p_Stomp__Cosmology,
+  &_swigt__p_Stomp__FieldColumnDict__iterator,
   &_swigt__p_Stomp__FieldDict__iterator,
   &_swigt__p_Stomp__FootprintVector__iterator,
   &_swigt__p_Stomp__GeometricBound,
+  &_swigt__p_Stomp__Histogram,
+  &_swigt__p_Stomp__HistogramBin,
   &_swigt__p_Stomp__Map,
   &_swigt__p_Stomp__NearestNeighborPixel,
   &_swigt__p_Stomp__NearestNeighborPoint,
@@ -62933,14 +68944,20 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_difference_type,
   &_swigt__p_double,
   &_swigt__p_int,
+  &_swigt__p_key_type,
   &_swigt__p_long_long,
+  &_swigt__p_mapped_type,
   &_swigt__p_p_PyObject,
   &_swigt__p_short,
   &_swigt__p_signed_char,
   &_swigt__p_size_type,
   &_swigt__p_std__invalid_argument,
+  &_swigt__p_std__lessT_std__string_t,
   &_swigt__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t,
   &_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,
+  &_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type,
+  &_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,
+  &_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type,
   &_swigt__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t,
   &_swigt__p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t,
   &_swigt__p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t,
@@ -62969,6 +68986,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t,
   &_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,
   &_swigt__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t,
+  &_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t,
   &_swigt__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t,
   &_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t,
   &_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type,
@@ -63002,15 +69020,19 @@ static swig_cast_info _swigc__p_Stomp__AngularCorrelation[] = {  {&_swigt__p_Sto
 static swig_cast_info _swigc__p_Stomp__AngularPtrVector__iterator[] = {  {&_swigt__p_Stomp__AngularPtrVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__AngularVector__iterator[] = {  {&_swigt__p_Stomp__AngularVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__BaseMap[] = {  {&_swigt__p_Stomp__BaseMap, 0, 0, 0},  {&_swigt__p_Stomp__ScalarMap, _p_Stomp__ScalarMapTo_p_Stomp__BaseMap, 0, 0},  {&_swigt__p_Stomp__Map, _p_Stomp__MapTo_p_Stomp__BaseMap, 0, 0},  {&_swigt__p_Stomp__TreeMap, _p_Stomp__TreeMapTo_p_Stomp__BaseMap, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__BinVector__iterator[] = {  {&_swigt__p_Stomp__BinVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__CircleBound[] = {  {&_swigt__p_Stomp__CircleBound, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__CircleVector__iterator[] = {  {&_swigt__p_Stomp__CircleVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__CosmoCoordinate[] = {  {&_swigt__p_Stomp__CosmoCoordinate, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__CosmoPtrVector__iterator[] = {  {&_swigt__p_Stomp__CosmoPtrVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__CosmoVector__iterator[] = {  {&_swigt__p_Stomp__CosmoVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__Cosmology[] = {  {&_swigt__p_Stomp__Cosmology, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__FieldColumnDict__iterator[] = {  {&_swigt__p_Stomp__FieldColumnDict__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__FieldDict__iterator[] = {  {&_swigt__p_Stomp__FieldDict__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__FootprintVector__iterator[] = {  {&_swigt__p_Stomp__FootprintVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__GeometricBound[] = {  {&_swigt__p_Stomp__GeometricBound, 0, 0, 0},  {&_swigt__p_Stomp__PolygonBound, _p_Stomp__PolygonBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__WedgeBound, _p_Stomp__WedgeBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__CircleBound, _p_Stomp__CircleBoundTo_p_Stomp__GeometricBound, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__Histogram[] = {  {&_swigt__p_Stomp__Histogram, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__HistogramBin[] = {  {&_swigt__p_Stomp__HistogramBin, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__Map[] = {  {&_swigt__p_Stomp__Map, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__NearestNeighborPixel[] = {  {&_swigt__p_Stomp__NearestNeighborPixel, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__NearestNeighborPoint[] = {  {&_swigt__p_Stomp__NearestNeighborPoint, 0, 0, 0},{0, 0, 0, 0}};
@@ -63050,14 +69072,20 @@ static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_key_type[] = {  {&_swigt__p_key_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_mapped_type[] = {  {&_swigt__p_mapped_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_PyObject[] = {  {&_swigt__p_p_PyObject, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_signed_char[] = {  {&_swigt__p_signed_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__lessT_std__string_t[] = {  {&_swigt__p_std__lessT_std__string_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t[] = {  {&_swigt__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t[] = {  {&_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type[] = {  {&_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t[] = {  {&_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type[] = {  {&_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t[] = {  {&_swigt__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t[] = {  {&_swigt__p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t[] = {  {&_swigt__p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -63086,6 +69114,7 @@ static swig_cast_info _swigc__p_std__vectorT_Stomp__CircleBound_std__allocatorT_
 static swig_cast_info _swigc__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
@@ -63119,15 +69148,19 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Stomp__AngularPtrVector__iterator,
   _swigc__p_Stomp__AngularVector__iterator,
   _swigc__p_Stomp__BaseMap,
+  _swigc__p_Stomp__BinVector__iterator,
   _swigc__p_Stomp__CircleBound,
   _swigc__p_Stomp__CircleVector__iterator,
   _swigc__p_Stomp__CosmoCoordinate,
   _swigc__p_Stomp__CosmoPtrVector__iterator,
   _swigc__p_Stomp__CosmoVector__iterator,
   _swigc__p_Stomp__Cosmology,
+  _swigc__p_Stomp__FieldColumnDict__iterator,
   _swigc__p_Stomp__FieldDict__iterator,
   _swigc__p_Stomp__FootprintVector__iterator,
   _swigc__p_Stomp__GeometricBound,
+  _swigc__p_Stomp__Histogram,
+  _swigc__p_Stomp__HistogramBin,
   _swigc__p_Stomp__Map,
   _swigc__p_Stomp__NearestNeighborPixel,
   _swigc__p_Stomp__NearestNeighborPoint,
@@ -63167,14 +69200,20 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_difference_type,
   _swigc__p_double,
   _swigc__p_int,
+  _swigc__p_key_type,
   _swigc__p_long_long,
+  _swigc__p_mapped_type,
   _swigc__p_p_PyObject,
   _swigc__p_short,
   _swigc__p_signed_char,
   _swigc__p_size_type,
   _swigc__p_std__invalid_argument,
+  _swigc__p_std__lessT_std__string_t,
   _swigc__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t,
   _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,
+  _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type,
+  _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,
+  _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type,
   _swigc__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t,
   _swigc__p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t,
   _swigc__p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t,
@@ -63203,6 +69242,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t,
   _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,
   _swigc__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t,
+  _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t,
   _swigc__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t,
   _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t,
   _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type,
