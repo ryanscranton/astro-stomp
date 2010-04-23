@@ -176,6 +176,10 @@ double HistogramBin::BinWeight() {
   return total_weight_;
 }
 
+double HistogramBin::BinMeanWeight() {
+  return total_weight_/total_items_;
+}
+
 Histogram::Histogram() {
   hist_min_ = -1.0;
   hist_max_ = -1.0;
@@ -200,6 +204,39 @@ Histogram::~Histogram() {
   n_bins_ = 0;
   log_binning_ = false;
   bins_.clear();
+}
+
+void Histogram::SetBounds(double bin_min, double bin_max) {
+  hist_min_ = bin_min;
+  hist_max_ = bin_max;
+
+  if (n_bins_ > 0) AssignBins();
+}
+
+void Histogram::SetNBins(uint16_t n_bins) {
+  n_bins_ = n_bins;
+
+  if (n_bins_ > 0) AssignBins();
+}
+
+bool Histogram::SetLogBinning(bool log_binning) {
+  bool set_binning = false;
+
+  if (!log_binning) {
+    log_binning_ = false;
+    set_binning = true;
+  } else {
+    if (DoubleGT(hist_min_, 0.0) && DoubleGT(hist_max_, 0.0)) {
+      log_binning_ = true;
+      set_binning = true;
+    } else {
+      log_binning_ = false;
+    }
+  }
+
+  if (set_binning && n_bins_ > 0) AssignBins();
+
+  return set_binning;
 }
 
 bool Histogram::AssignBins() {

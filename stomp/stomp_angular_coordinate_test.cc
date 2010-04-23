@@ -460,6 +460,149 @@ void WeightedAngularCoordinateBasicTests() {
   std::cout << "\tAfter restoring Weight, Weight = " << ang.Weight() << "\n";
 }
 
+void WAngularVectorFileIOTests() {
+  // Check to make sure that our static methods for reading ASCII files into
+  // AngularVectors are working properly..
+  std::cout << "\n";
+  std::cout << "*************************************\n";
+  std::cout << "*** WAngularVector File I/O Check ***\n";
+  std::cout << "*************************************\n\n";
+
+  // Start by making some RA & DEC vectors.
+  std::vector<double> raVec, decVec, weightVec;
+
+  raVec.push_back(0.0);
+  raVec.push_back(20.0);
+  raVec.push_back(90.0);
+
+  decVec.push_back(0.0);
+  decVec.push_back(50.0);
+  decVec.push_back(-90.0);
+
+  weightVec.push_back(1.0);
+  weightVec.push_back(2.0);
+  weightVec.push_back(3.0);
+
+  // Now we'll write them to the simplest file to parse
+  std::string test_file = "WAngularVectorTest.dat";
+  std::ofstream test_file_str(test_file.c_str());
+
+  if (test_file_str.is_open()) {
+    for (uint8_t i=0;i<raVec.size();i++) {
+      test_file_str << raVec[i] << " " << decVec[i] <<
+	" " << weightVec[i] << "\n";
+    }
+  }
+
+  test_file_str.close();
+
+  // Now we attempt to read in those coordinates.
+  Stomp::AngularCoordinate::Sphere sphere =
+    Stomp::AngularCoordinate::Equatorial;
+  Stomp::WAngularVector w_ang;
+
+  if (Stomp::WeightedAngularCoordinate::ToWAngularVector(test_file, w_ang,
+							 sphere, 0, 1, 2)) {
+    std::cout << "Read " << test_file << " to WAngularVector...\n";
+  } else {
+    std::cout << "Failed to read " << test_file << " to WAngularVector...\n";
+  }
+
+  // Check to make sure that our coordinates were read in correctly.
+  std::cout << "Coordinate check:\n" <<
+    "\tFile coordinate\tWAngularVector\n" <<
+    "\t---------------\t--------------\n";
+  for (uint8_t i=0;i<raVec.size();i++) {
+    std::cout << "\t" <<
+      raVec[i] << "," << decVec[i] << "," << weightVec[i] << "\t\t" <<
+      w_ang[i].RA() << "," << w_ang[i].DEC() << "," <<
+      w_ang[i].Weight() << "\n";
+  }
+  std::cout << "\n";
+
+
+  // Now a trickier version where we've mixed up the coordinates and added
+  // some intervening columns.
+  std::ofstream test_file2_str(test_file.c_str());
+
+  if (test_file2_str.is_open()) {
+    for (uint8_t i=0;i<raVec.size();i++) {
+      test_file2_str << "0.0 0.0 " << decVec[i] << " 0.0 0.0 0.0 " <<
+	raVec[i] << " 0.0 0.0 0.0 " << weightVec[i] << " 0.0 0.0\n";
+    }
+  }
+
+  test_file2_str.close();
+
+  if (Stomp::WeightedAngularCoordinate::ToWAngularVector(test_file, w_ang,
+							 sphere, 6 , 2, 10)) {
+    std::cout << "Read " << test_file << " to WAngularVector...\n";
+  } else {
+    std::cout << "Failed to read " << test_file << " to WAngularVector...\n";
+  }
+
+  // Check to make sure that our coordinates were read in correctly.
+  std::cout << "Coordinate check:\n" <<
+    "\tFile coordinate\tWAngularVector\n" <<
+    "\t---------------\t--------------\n";
+  for (uint8_t i=0;i<raVec.size();i++) {
+    std::cout << "\t" <<
+      raVec[i] << "," << decVec[i] << "," << weightVec[i] << "\t\t" <<
+      w_ang[i].RA() << "," << w_ang[i].DEC() << "," <<
+      w_ang[i].Weight() << "\n";
+  }
+  std::cout << "\n";
+
+
+  // Finally, we add in the final wrinkle, bringing in the Field values.
+  std::ofstream test_file3_str(test_file.c_str());
+
+  if (test_file3_str.is_open()) {
+    for (uint8_t i=0;i<raVec.size();i++) {
+      test_file3_str << "1.0 2.0 " << decVec[i] << " 3.0 4.0 5.0 " <<
+	raVec[i] << " 6.0 7.0 8.0 " << weightVec[i] << " 9.0 10.0\n";
+    }
+  }
+
+  test_file3_str.close();
+
+  Stomp::FieldColumnDict field_names;
+  field_names["One"] = 0;
+  // field_names["Two"] = 1;
+  // field_names["Three"] = 3;
+  // field_names["Four"] = 4;
+  field_names["Five"] = 5;
+  // field_names["Six"] = 7;
+  // field_names["Seven"] = 8;
+  // field_names["Eight"] = 9;
+  field_names["Nine"] = 11;
+  // field_names["Ten"] = 12;
+
+  if (Stomp::WeightedAngularCoordinate::ToWAngularVector(test_file, w_ang,
+							 field_names, sphere,
+							 6 , 2, 10)) {
+    std::cout << "Read " << test_file << " to WAngularVector...\n";
+  } else {
+    std::cout << "Failed to read " << test_file << " to WAngularVector...\n";
+  }
+
+  // Check to make sure that our coordinates were read in correctly.
+  std::cout << "Coordinate check:\n" <<
+    "\tFile coordinate\tWAngularVector\n" <<
+    "\t---------------\t--------------\n";
+  for (uint8_t i=0;i<raVec.size();i++) {
+    std::cout << "\t" <<
+      raVec[i] << "," << decVec[i] << "," << weightVec[i] << "\t\t" <<
+      w_ang[i].RA() << "," << w_ang[i].DEC() << "," << w_ang[i].Weight() <<
+      ",Fields: ";
+    for (Stomp::FieldIterator iter=w_ang[i].FieldBegin();
+	 iter!=w_ang[i].FieldEnd();++iter) {
+      std::cout << iter->first << ":" << w_ang[i].Field(iter->first) << ", ";
+    }
+    std::cout << "\n";
+  }
+}
+
 // Define our command line flags
 DEFINE_bool(all_angular_coordinate_tests, false, "Run all class unit tests.");
 DEFINE_bool(angular_coordinate_basic_tests, false,
@@ -478,6 +621,8 @@ DEFINE_bool(angular_vector_file_io_tests, false,
             "Run AngularVector file I/O tests ");
 DEFINE_bool(weighted_angular_coordinate_basic_tests, false,
             "Run WeightedAngularCoordinate basic tests");
+DEFINE_bool(wangular_vector_file_io_tests, false,
+            "Run WAngularVector file I/O tests ");
 
 void AngularCoordinateUnitTests(bool run_all_tests) {
   void AngularCoordinateBasicTests();
@@ -488,6 +633,7 @@ void AngularCoordinateUnitTests(bool run_all_tests) {
   void AngularVectorIOTests();
   void AngularVectorFileIOTests();
   void WeightedAngularCoordinateBasicTests();
+  void WAngularVectorFileIOTests();
 
   if (run_all_tests) FLAGS_all_angular_coordinate_tests = true;
 
@@ -536,4 +682,10 @@ void AngularCoordinateUnitTests(bool run_all_tests) {
   if (FLAGS_all_angular_coordinate_tests ||
       FLAGS_weighted_angular_coordinate_basic_tests)
     WeightedAngularCoordinateBasicTests();
+
+  // Check that the methods to read ASCII files into WAngularVectors are
+  // working properly
+  if (FLAGS_all_angular_coordinate_tests ||
+      FLAGS_wangular_vector_file_io_tests)
+    WAngularVectorFileIOTests();
 }

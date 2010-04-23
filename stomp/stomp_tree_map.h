@@ -223,6 +223,21 @@ class TreeMap : public BaseMap {
   // point to the pixel.
   bool AddPoint(AngularCoordinate& ang, double object_weight = 1.0);
 
+  // Rather than adding points one by one, we can also take an input file and
+  // add those points to the tree.  We can do this with and without also adding
+  // Field values to each point from the input file.  If the weight column is
+  // not specified, then the Weight is set to unity for each point.  As with
+  // the ToWAngularVector methods in the WeightedAngularCoordinate class, the
+  // returned boolean indicates success or failure in adding all of the points.
+  bool Read(const std::string& input_file,
+	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+	    uint8_t theta_column = 0, uint8_t phi_column = 1,
+	    int8_t weight_column = -1);
+  bool Read(const std::string& input_file, FieldColumnDict& field_columns,
+	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+	    uint8_t theta_column = 0, uint8_t phi_column = 1,
+	    int8_t weight_column = -1);
+
   // Equivalent methods as their namesakes in the BaseMap class.
   virtual void Coverage(PixelVector& superpix,
 			uint32_t resolution = HPixResolution);

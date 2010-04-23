@@ -42,6 +42,9 @@ typedef AngularPtrVector::iterator AngularPtrIterator;
 typedef std::map<std::string, double> FieldDict;
 typedef FieldDict::iterator FieldIterator;
 
+typedef std::map<std::string, uint8_t> FieldColumnDict;
+typedef FieldColumnDict::iterator FieldColumnIterator;
+
 typedef std::vector<WeightedAngularCoordinate> WAngularVector;
 typedef WAngularVector::iterator WAngularIterator;
 typedef std::vector<WeightedAngularCoordinate *> WAngularPtrVector;
@@ -230,8 +233,14 @@ class WeightedAngularCoordinate : public AngularCoordinate {
   WeightedAngularCoordinate();
   WeightedAngularCoordinate(double theta, double phi,
 			    double weight, Sphere sphere = Survey);
+  WeightedAngularCoordinate(double theta, double phi,
+			    double weight, FieldDict& fields,
+			    Sphere sphere = Survey);
   WeightedAngularCoordinate(double unit_sphere_x, double unit_sphere_y,
 			    double unit_sphere_z, double weight);
+  WeightedAngularCoordinate(double unit_sphere_x, double unit_sphere_y,
+			    double unit_sphere_z, double weight,
+			    FieldDict& fields);
   ~WeightedAngularCoordinate();
 
   // There are two different ways of associating a weight value with the
@@ -296,8 +305,8 @@ class WeightedAngularCoordinate : public AngularCoordinate {
   static bool ToWAngularVector(const std::string& input_file,
 			       WAngularVector& w_ang,
 			       Sphere sphere = Equatorial,
-			       uint8_t theta_column = 1,
-			       uint8_t phi_column = 2,
+			       uint8_t theta_column = 0,
+			       uint8_t phi_column = 1,
 			       int8_t weight_column = -1);
   static bool FromWAngularVector(WAngularVector& w_ang,
 				 std::vector<double>& thetaVec,
@@ -307,6 +316,28 @@ class WeightedAngularCoordinate : public AngularCoordinate {
   static bool FromWAngularVector(WAngularVector& w_ang,
 				 const std::string& output_file,
 				 Sphere sphere = Equatorial);
+
+  // For WeightedAngularCoordinate instances that have Field values, we two
+  // additional methods for reading from and writing to ascii files.  In both
+  // cases the FieldColumnDict maps between Field name and column in the input
+  // or output file.  Missing columns or Fields will result in 0.0 values in
+  // the corresponding output.  If the columns assigned to field values
+  // overlap those given for the angular coordinates or weight, then the
+  // Field values will be output instead.
+  static bool ToWAngularVector(const std::string& input_file,
+			       WAngularVector& w_ang,
+			       FieldColumnDict& field_columns,
+			       Sphere sphere = Equatorial,
+			       uint8_t theta_column = 0,
+			       uint8_t phi_column = 1,
+			       int8_t weight_column = -1);
+  static bool FromWAngularVector(WAngularVector& w_ang,
+				 FieldColumnDict& field_columns,
+				 const std::string& output_file,
+				 Sphere sphere = Equatorial,
+				 uint8_t theta_column = 0,
+				 uint8_t phi_column = 1,
+				 uint8_t weight_column = 2);
 
   // We can also provide some wrapper methods for bulk adding of Field values
   // to WAngularVectors
@@ -373,9 +404,9 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
   static bool ToCosmoVector(const std::string& input_file,
 			    CosmoVector& z_ang,
 			    Sphere sphere = Equatorial,
-			    uint8_t theta_column = 1,
-			    uint8_t phi_column = 2,
-			    uint8_t redshift_column = 3,
+			    uint8_t theta_column = 0,
+			    uint8_t phi_column = 1,
+			    uint8_t redshift_column = 2,
 			    int8_t weight_column = -1);
   static bool FromCosmoVector(CosmoVector& z_ang,
 			      std::vector<double>& thetaVec,
