@@ -46,6 +46,9 @@ typedef AngularPtrVector::iterator AngularPtrIterator;
 typedef std::map<std::string, double> FieldDict;
 typedef FieldDict::iterator FieldIterator;
 
+typedef std::map<std::string, uint8_t> FieldColumnDict;
+typedef FieldColumnDict::iterator FieldColumnIterator;
+
 typedef std::vector<WeightedAngularCoordinate> WAngularVector;
 typedef WAngularVector::iterator WAngularIterator;
 typedef std::vector<WeightedAngularCoordinate *> WAngularPtrVector;
@@ -208,6 +211,20 @@ class WeightedAngularCoordinate : public AngularCoordinate {
   static bool FromWAngularVector(WAngularVector& w_ang,
 				 const std::string& output_file,
 				 Sphere sphere = Equatorial);
+  static bool ToWAngularVector(const std::string& input_file,
+			       WAngularVector& w_ang,
+			       FieldColumnDict& field_columns,
+			       Sphere sphere = Equatorial,
+			       uint8_t theta_column = 0,
+			       uint8_t phi_column = 1,
+			       int8_t weight_column = -1);
+  static bool FromWAngularVector(WAngularVector& w_ang,
+				 FieldColumnDict& field_columns,
+				 const std::string& output_file,
+				 Sphere sphere = Equatorial,
+				 uint8_t theta_column = 0,
+				 uint8_t phi_column = 1,
+				 uint8_t weight_column = 2);
   static bool AddField(WAngularVector& w_ang,
 		       const std::string& field_name,
 		       std::vector<double>& field_value);
@@ -541,6 +558,14 @@ class TreeMap : public BaseMap {
 				 uint16_t& nodes_visited);
   bool AddPoint(WeightedAngularCoordinate& w_ang);
   bool AddPoint(AngularCoordinate& ang, double object_weight = 1.0);
+  bool Read(const std::string& input_file,
+	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+	    uint8_t theta_column = 0, uint8_t phi_column = 1,
+	    int8_t weight_column = -1);
+  bool Read(const std::string& input_file, FieldColumnDict& field_columns,
+	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+	    uint8_t theta_column = 0, uint8_t phi_column = 1,
+	    int8_t weight_column = -1);
   virtual void Coverage(PixelVector& superpix,
 			uint32_t resolution = HPixResolution);
   bool Covering(Map& stomp_map, uint32_t maximum_pixels);
@@ -581,3 +606,5 @@ class TreeMap : public BaseMap {
 %template(AngularVector) std::vector<Stomp::AngularCoordinate>;
 %template(WAngularVector) std::vector<Stomp::WeightedAngularCoordinate>;
 %template(PixelVector) std::vector<Stomp::Pixel>;
+%template(FieldDict) std::map<std::string, double>;
+%template(FieldColumnDict) std::map<std::string, uint8_t>;

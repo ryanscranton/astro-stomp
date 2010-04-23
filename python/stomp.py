@@ -926,6 +926,64 @@ class StompWatch(_object):
 StompWatch_swigregister = _stomp.StompWatch_swigregister
 StompWatch_swigregister(StompWatch)
 
+class HistogramBin(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, HistogramBin, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, HistogramBin, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_HistogramBin(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_HistogramBin
+    __del__ = lambda self : None;
+    def SetBounds(*args): return _stomp.HistogramBin_SetBounds(*args)
+    def AddToBin(*args): return _stomp.HistogramBin_AddToBin(*args)
+    def BinMinimum(*args): return _stomp.HistogramBin_BinMinimum(*args)
+    def BinMaximum(*args): return _stomp.HistogramBin_BinMaximum(*args)
+    def BinCenter(*args): return _stomp.HistogramBin_BinCenter(*args)
+    def BinLogCenter(*args): return _stomp.HistogramBin_BinLogCenter(*args)
+    def BinWeightedCenter(*args): return _stomp.HistogramBin_BinWeightedCenter(*args)
+    def BinAveragedCenter(*args): return _stomp.HistogramBin_BinAveragedCenter(*args)
+    def WithinBin(*args): return _stomp.HistogramBin_WithinBin(*args)
+    def BinWeight(*args): return _stomp.HistogramBin_BinWeight(*args)
+    def BinItems(*args): return _stomp.HistogramBin_BinItems(*args)
+    def BinMeanWeight(*args): return _stomp.HistogramBin_BinMeanWeight(*args)
+HistogramBin_swigregister = _stomp.HistogramBin_swigregister
+HistogramBin_swigregister(HistogramBin)
+
+class Histogram(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Histogram, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Histogram, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_Histogram(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_Histogram
+    __del__ = lambda self : None;
+    def SetBounds(*args): return _stomp.Histogram_SetBounds(*args)
+    def SetNBins(*args): return _stomp.Histogram_SetNBins(*args)
+    def SetLogBinning(*args): return _stomp.Histogram_SetLogBinning(*args)
+    def AssignBins(*args): return _stomp.Histogram_AssignBins(*args)
+    def AddToBin(*args): return _stomp.Histogram_AddToBin(*args)
+    def Begin(*args): return _stomp.Histogram_Begin(*args)
+    def End(*args): return _stomp.Histogram_End(*args)
+    def BoundMin(*args): return _stomp.Histogram_BoundMin(*args)
+    def BoundMax(*args): return _stomp.Histogram_BoundMax(*args)
+    def NBins(*args): return _stomp.Histogram_NBins(*args)
+    def LogBinning(*args): return _stomp.Histogram_LogBinning(*args)
+    def TotalItems(*args): return _stomp.Histogram_TotalItems(*args)
+    def TotalWeight(*args): return _stomp.Histogram_TotalWeight(*args)
+    def MeanItemWeight(*args): return _stomp.Histogram_MeanItemWeight(*args)
+    def MeanBinValue(*args): return _stomp.Histogram_MeanBinValue(*args)
+    def MeanWeightedBinValue(*args): return _stomp.Histogram_MeanWeightedBinValue(*args)
+Histogram_swigregister = _stomp.Histogram_swigregister
+Histogram_swigregister(Histogram)
+
 class AngularCoordinate(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, AngularCoordinate, name, value)
@@ -1216,6 +1274,7 @@ class TreeMap(BaseMap):
     def KNearestNeighborDistance(*args): return _stomp.TreeMap_KNearestNeighborDistance(*args)
     def NearestNeighborDistance(*args): return _stomp.TreeMap_NearestNeighborDistance(*args)
     def AddPoint(*args): return _stomp.TreeMap_AddPoint(*args)
+    def Read(*args): return _stomp.TreeMap_Read(*args)
     def Coverage(*args): return _stomp.TreeMap_Coverage(*args)
     def Covering(*args): return _stomp.TreeMap_Covering(*args)
     def FindUnmaskedFraction(*args): return _stomp.TreeMap_FindUnmaskedFraction(*args)
@@ -1383,6 +1442,100 @@ class PixelVector(_object):
     __del__ = lambda self : None;
 PixelVector_swigregister = _stomp.PixelVector_swigregister
 PixelVector_swigregister(PixelVector)
+
+class FieldDict(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FieldDict, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, FieldDict, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.FieldDict_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.FieldDict___nonzero__(*args)
+    def __len__(*args): return _stomp.FieldDict___len__(*args)
+    def __getitem__(*args): return _stomp.FieldDict___getitem__(*args)
+    def __delitem__(*args): return _stomp.FieldDict___delitem__(*args)
+    def has_key(*args): return _stomp.FieldDict_has_key(*args)
+    def keys(*args): return _stomp.FieldDict_keys(*args)
+    def values(*args): return _stomp.FieldDict_values(*args)
+    def items(*args): return _stomp.FieldDict_items(*args)
+    def __contains__(*args): return _stomp.FieldDict___contains__(*args)
+    def key_iterator(*args): return _stomp.FieldDict_key_iterator(*args)
+    def value_iterator(*args): return _stomp.FieldDict_value_iterator(*args)
+    def __iter__(self): return self.key_iterator()
+    def iterkeys(self): return self.key_iterator()
+    def itervalues(self): return self.value_iterator()
+    def iteritems(self): return self.iterator()
+    def __setitem__(*args): return _stomp.FieldDict___setitem__(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_FieldDict(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def empty(*args): return _stomp.FieldDict_empty(*args)
+    def size(*args): return _stomp.FieldDict_size(*args)
+    def clear(*args): return _stomp.FieldDict_clear(*args)
+    def swap(*args): return _stomp.FieldDict_swap(*args)
+    def get_allocator(*args): return _stomp.FieldDict_get_allocator(*args)
+    def begin(*args): return _stomp.FieldDict_begin(*args)
+    def end(*args): return _stomp.FieldDict_end(*args)
+    def rbegin(*args): return _stomp.FieldDict_rbegin(*args)
+    def rend(*args): return _stomp.FieldDict_rend(*args)
+    def count(*args): return _stomp.FieldDict_count(*args)
+    def erase(*args): return _stomp.FieldDict_erase(*args)
+    def find(*args): return _stomp.FieldDict_find(*args)
+    def lower_bound(*args): return _stomp.FieldDict_lower_bound(*args)
+    def upper_bound(*args): return _stomp.FieldDict_upper_bound(*args)
+    __swig_destroy__ = _stomp.delete_FieldDict
+    __del__ = lambda self : None;
+FieldDict_swigregister = _stomp.FieldDict_swigregister
+FieldDict_swigregister(FieldDict)
+
+class FieldColumnDict(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FieldColumnDict, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, FieldColumnDict, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.FieldColumnDict_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.FieldColumnDict___nonzero__(*args)
+    def __len__(*args): return _stomp.FieldColumnDict___len__(*args)
+    def __getitem__(*args): return _stomp.FieldColumnDict___getitem__(*args)
+    def __delitem__(*args): return _stomp.FieldColumnDict___delitem__(*args)
+    def has_key(*args): return _stomp.FieldColumnDict_has_key(*args)
+    def keys(*args): return _stomp.FieldColumnDict_keys(*args)
+    def values(*args): return _stomp.FieldColumnDict_values(*args)
+    def items(*args): return _stomp.FieldColumnDict_items(*args)
+    def __contains__(*args): return _stomp.FieldColumnDict___contains__(*args)
+    def key_iterator(*args): return _stomp.FieldColumnDict_key_iterator(*args)
+    def value_iterator(*args): return _stomp.FieldColumnDict_value_iterator(*args)
+    def __iter__(self): return self.key_iterator()
+    def iterkeys(self): return self.key_iterator()
+    def itervalues(self): return self.value_iterator()
+    def iteritems(self): return self.iterator()
+    def __setitem__(*args): return _stomp.FieldColumnDict___setitem__(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_FieldColumnDict(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def empty(*args): return _stomp.FieldColumnDict_empty(*args)
+    def size(*args): return _stomp.FieldColumnDict_size(*args)
+    def clear(*args): return _stomp.FieldColumnDict_clear(*args)
+    def swap(*args): return _stomp.FieldColumnDict_swap(*args)
+    def get_allocator(*args): return _stomp.FieldColumnDict_get_allocator(*args)
+    def begin(*args): return _stomp.FieldColumnDict_begin(*args)
+    def end(*args): return _stomp.FieldColumnDict_end(*args)
+    def rbegin(*args): return _stomp.FieldColumnDict_rbegin(*args)
+    def rend(*args): return _stomp.FieldColumnDict_rend(*args)
+    def count(*args): return _stomp.FieldColumnDict_count(*args)
+    def erase(*args): return _stomp.FieldColumnDict_erase(*args)
+    def find(*args): return _stomp.FieldColumnDict_find(*args)
+    def lower_bound(*args): return _stomp.FieldColumnDict_lower_bound(*args)
+    def upper_bound(*args): return _stomp.FieldColumnDict_upper_bound(*args)
+    __swig_destroy__ = _stomp.delete_FieldColumnDict
+    __del__ = lambda self : None;
+FieldColumnDict_swigregister = _stomp.FieldColumnDict_swigregister
+FieldColumnDict_swigregister(FieldColumnDict)
 
 
 
