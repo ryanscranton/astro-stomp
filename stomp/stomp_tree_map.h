@@ -66,8 +66,21 @@ class TreeMap : public BaseMap {
   // pair counting in conjunction with a DensityMap that uses sub-regions.
   // The region resolution for that DensityMap must match the resolution
   // chosen for the base level of the TreeMap.
-  TreeMap(uint32_t resolution=HPixResolution,
-	  uint16_t maximum_points=50);
+  TreeMap(uint32_t resolution=HPixResolution, uint16_t maximum_points=50);
+
+  // Alternatively, we can make use of the Read method (see below) to
+  // populate our TreeMap during instantion, given an ascii file containing
+  // angular coordinate data.
+  TreeMap(const std::string& input_file,
+	  uint32_t resolution=HPixResolution, uint16_t maximum_points=50,
+	  AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+	  bool verbose = false, uint8_t theta_column = 0,
+	  uint8_t phi_column = 1, int8_t weight_column = -1);
+  TreeMap(const std::string& input_file, FieldColumnDict& field_columns,
+	  uint32_t resolution=HPixResolution, uint16_t maximum_points=50,
+	  AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+	  bool verbose = false, uint8_t theta_column = 0,
+	  uint8_t phi_column = 1, int8_t weight_column = -1);
   ~TreeMap();
 
   // The primary purpose of this class is to enable fast pair-finding for a
@@ -231,12 +244,12 @@ class TreeMap : public BaseMap {
   // returned boolean indicates success or failure in adding all of the points.
   bool Read(const std::string& input_file,
 	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
-	    uint8_t theta_column = 0, uint8_t phi_column = 1,
-	    int8_t weight_column = -1);
+	    bool verbose = false, uint8_t theta_column = 0,
+	    uint8_t phi_column = 1, int8_t weight_column = -1);
   bool Read(const std::string& input_file, FieldColumnDict& field_columns,
 	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
-	    uint8_t theta_column = 0, uint8_t phi_column = 1,
-	    int8_t weight_column = -1);
+	    bool verbose = false, uint8_t theta_column = 0,
+	    uint8_t phi_column = 1, int8_t weight_column = -1);
 
   // Equivalent methods as their namesakes in the BaseMap class.
   virtual void Coverage(PixelVector& superpix,
