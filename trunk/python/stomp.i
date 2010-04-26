@@ -460,6 +460,16 @@ class TreeMap : public BaseMap {
   friend class NearestNeighborPixel;
   TreeMap(uint32_t resolution=HPixResolution,
 	  uint16_t maximum_points=50);
+  TreeMap(const std::string& input_file,
+          uint32_t resolution=HPixResolution, uint16_t maximum_points=50,
+          AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+          bool verbose = false, uint8_t theta_column = 0,
+          uint8_t phi_column = 1, int8_t weight_column = -1);
+  TreeMap(const std::string& input_file, FieldColumnDict& field_columns,
+          uint32_t resolution=HPixResolution, uint16_t maximum_points=50,
+          AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+          bool verbose = false, uint8_t theta_column = 0,
+          uint8_t phi_column = 1, int8_t weight_column = -1);
   ~TreeMap();
 
   uint32_t FindPairs(AngularCoordinate& ang, AngularBin& theta);
@@ -560,12 +570,12 @@ class TreeMap : public BaseMap {
   bool AddPoint(AngularCoordinate& ang, double object_weight = 1.0);
   bool Read(const std::string& input_file,
 	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
-	    uint8_t theta_column = 0, uint8_t phi_column = 1,
-	    int8_t weight_column = -1);
+	    bool verbose = false, uint8_t theta_column = 0,
+	    uint8_t phi_column = 1, int8_t weight_column = -1);
   bool Read(const std::string& input_file, FieldColumnDict& field_columns,
 	    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
-	    uint8_t theta_column = 0, uint8_t phi_column = 1,
-	    int8_t weight_column = -1);
+	    bool verbose = false, uint8_t theta_column = 0,
+	    uint8_t phi_column = 1, int8_t weight_column = -1);
   virtual void Coverage(PixelVector& superpix,
 			uint32_t resolution = HPixResolution);
   bool Covering(Map& stomp_map, uint32_t maximum_pixels);

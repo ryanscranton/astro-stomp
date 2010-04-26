@@ -55197,14 +55197,1078 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  uint32_t arg2 ;
+  uint16_t arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  uint8_t arg6 ;
+  uint8_t arg7 ;
+  int8_t arg8 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  signed char val8 ;
+  int ecode8 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_TreeMap" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_TreeMap" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  ecode8 = SWIG_AsVal_signed_SS_char(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_TreeMap" "', argument " "8"" of type '" "int8_t""'");
+  } 
+  arg8 = static_cast< int8_t >(val8);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  uint32_t arg2 ;
+  uint16_t arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  uint8_t arg6 ;
+  uint8_t arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_TreeMap" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_TreeMap" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  uint32_t arg2 ;
+  uint16_t arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  uint8_t arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_TreeMap" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,arg2,arg3,arg4,arg5,arg6);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  uint32_t arg2 ;
+  uint16_t arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,arg2,arg3,arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  uint32_t arg2 ;
+  uint16_t arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,arg2,arg3,arg4);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  uint32_t arg2 ;
+  uint16_t arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned short val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:new_TreeMap",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint16_t""'");
+  } 
+  arg3 = static_cast< uint16_t >(val3);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  uint32_t arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:new_TreeMap",&obj0,&obj1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_TreeMap",&obj0)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint16_t arg4 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  uint8_t arg7 ;
+  uint8_t arg8 ;
+  int8_t arg9 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned short val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  unsigned char val8 ;
+  int ecode8 = 0 ;
+  signed char val9 ;
+  int ecode9 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  PyObject * obj8 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "uint16_t""'");
+  } 
+  arg4 = static_cast< uint16_t >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_TreeMap" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_TreeMap" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  ecode8 = SWIG_AsVal_unsigned_SS_char(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_TreeMap" "', argument " "8"" of type '" "uint8_t""'");
+  } 
+  arg8 = static_cast< uint8_t >(val8);
+  ecode9 = SWIG_AsVal_signed_SS_char(obj8, &val9);
+  if (!SWIG_IsOK(ecode9)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "new_TreeMap" "', argument " "9"" of type '" "int8_t""'");
+  } 
+  arg9 = static_cast< int8_t >(val9);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_12(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint16_t arg4 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  uint8_t arg7 ;
+  uint8_t arg8 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned short val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  unsigned char val8 ;
+  int ecode8 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "uint16_t""'");
+  } 
+  arg4 = static_cast< uint16_t >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_TreeMap" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_TreeMap" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  ecode8 = SWIG_AsVal_unsigned_SS_char(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "new_TreeMap" "', argument " "8"" of type '" "uint8_t""'");
+  } 
+  arg8 = static_cast< uint8_t >(val8);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_13(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint16_t arg4 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  uint8_t arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned short val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "uint16_t""'");
+  } 
+  arg4 = static_cast< uint16_t >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_TreeMap" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "new_TreeMap" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_14(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint16_t arg4 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned short val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "uint16_t""'");
+  } 
+  arg4 = static_cast< uint16_t >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_TreeMap" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_15(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint16_t arg4 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned short val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "uint16_t""'");
+  } 
+  arg4 = static_cast< uint16_t >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_TreeMap" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2,arg3,arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_16(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  uint32_t arg3 ;
+  uint16_t arg4 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned short val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_TreeMap",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_TreeMap" "', argument " "4"" of type '" "uint16_t""'");
+  } 
+  arg4 = static_cast< uint16_t >(val4);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2,arg3,arg4);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_17(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  uint32_t arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:new_TreeMap",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_TreeMap" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2,arg3);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TreeMap__SWIG_18(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  Stomp::TreeMap *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:new_TreeMap",&obj0,&obj1)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_TreeMap" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  result = (Stomp::TreeMap *)new Stomp::TreeMap((std::string const &)*arg1,*arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__TreeMap, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_TreeMap(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[3];
+  PyObject *argv[10];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 9); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
@@ -55218,6 +56282,14 @@ SWIGINTERN PyObject *_wrap_new_TreeMap(PyObject *self, PyObject *args) {
     }
     if (_v) {
       return _wrap_new_TreeMap__SWIG_1(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_TreeMap__SWIG_10(self, args);
     }
   }
   if (argc == 2) {
@@ -55236,13 +56308,525 @@ SWIGINTERN PyObject *_wrap_new_TreeMap(PyObject *self, PyObject *args) {
       }
     }
   }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_new_TreeMap__SWIG_18(self, args);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_new_TreeMap__SWIG_9(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_new_TreeMap__SWIG_17(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_new_TreeMap__SWIG_8(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_TreeMap__SWIG_16(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_TreeMap__SWIG_7(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_TreeMap__SWIG_15(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_TreeMap__SWIG_6(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_new_TreeMap__SWIG_14(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_new_TreeMap__SWIG_5(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_new_TreeMap__SWIG_13(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_new_TreeMap__SWIG_4(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_unsigned_SS_char(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    return _wrap_new_TreeMap__SWIG_12(self, args);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_signed_SS_char(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    return _wrap_new_TreeMap__SWIG_3(self, args);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 9) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_unsigned_SS_char(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    {
+                      int res = SWIG_AsVal_signed_SS_char(argv[8], NULL);
+                      _v = SWIG_CheckState(res);
+                    }
+                    if (_v) {
+                      return _wrap_new_TreeMap__SWIG_11(self, args);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_TreeMap'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    Stomp::TreeMap(uint32_t,uint16_t)\n"
     "    Stomp::TreeMap(uint32_t)\n"
-    "    Stomp::TreeMap()\n");
+    "    Stomp::TreeMap()\n"
+    "    Stomp::TreeMap(std::string const &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,int8_t)\n"
+    "    Stomp::TreeMap(std::string const &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    Stomp::TreeMap(std::string const &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    Stomp::TreeMap(std::string const &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool)\n"
+    "    Stomp::TreeMap(std::string const &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere)\n"
+    "    Stomp::TreeMap(std::string const &,uint32_t,uint16_t)\n"
+    "    Stomp::TreeMap(std::string const &,uint32_t)\n"
+    "    Stomp::TreeMap(std::string const &)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,int8_t)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere,bool)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &,uint32_t,uint16_t,Stomp::AngularCoordinate::Sphere)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &,uint32_t,uint16_t)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &,uint32_t)\n"
+    "    Stomp::TreeMap(std::string const &,Stomp::FieldColumnDict &)\n");
   return NULL;
 }
 
@@ -59101,19 +60685,102 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_0(PyObject *SWIGUNUSEDPARM(self), 
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
-  int8_t arg6 ;
+  uint8_t arg6 ;
+  int8_t arg7 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 = SWIG_OLDOBJ ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
-  signed char val6 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  signed char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "TreeMap_Read" "', argument " "7"" of type '" "int8_t""'");
+  } 
+  arg7 = static_cast< int8_t >(val7);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
   int ecode6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -59145,21 +60812,21 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_0(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
   } 
   arg5 = static_cast< uint8_t >(val5);
-  ecode6 = SWIG_AsVal_signed_SS_char(obj5, &val6);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "int8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "uint8_t""'");
   } 
-  arg6 = static_cast< int8_t >(val6);
+  arg6 = static_cast< uint8_t >(val6);
   result = (bool)(arg1)->Read((std::string const &)*arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res2)) delete arg2;
@@ -59170,19 +60837,19 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 = SWIG_OLDOBJ ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
@@ -59215,11 +60882,11 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
@@ -59235,18 +60902,18 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 = SWIG_OLDOBJ ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -59276,11 +60943,11 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_2(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   result = (bool)(arg1)->Read((std::string const &)*arg2,arg3,arg4);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res2)) delete arg2;
@@ -59291,7 +60958,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
@@ -59338,7 +61005,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
@@ -59376,15 +61043,16 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
   Stomp::FieldColumnDict *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   uint8_t arg6 ;
-  int8_t arg7 ;
+  uint8_t arg7 ;
+  int8_t arg8 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 = SWIG_OLDOBJ ;
@@ -59392,11 +61060,105 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_5(PyObject *SWIGUNUSEDPARM(self), 
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   unsigned char val6 ;
   int ecode6 = 0 ;
-  signed char val7 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  signed char val8 ;
+  int ecode8 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOO:TreeMap_Read",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_Read" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_Read" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "TreeMap_Read" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  ecode8 = SWIG_AsVal_signed_SS_char(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "TreeMap_Read" "', argument " "8"" of type '" "int8_t""'");
+  } 
+  arg8 = static_cast< int8_t >(val8);
+  result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3,arg4,arg5,arg6,arg7,arg8);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  uint8_t arg6 ;
+  uint8_t arg7 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
   int ecode7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -59437,21 +61199,21 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_5(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "uint8_t""'");
   } 
   arg6 = static_cast< uint8_t >(val6);
-  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "TreeMap_Read" "', argument " "7"" of type '" "int8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "TreeMap_Read" "', argument " "7"" of type '" "uint8_t""'");
   } 
-  arg7 = static_cast< int8_t >(val7);
+  arg7 = static_cast< uint8_t >(val7);
   result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res2)) delete arg2;
@@ -59462,13 +61224,13 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
   Stomp::FieldColumnDict *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   uint8_t arg6 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -59477,7 +61239,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_6(PyObject *SWIGUNUSEDPARM(self), 
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   unsigned char val6 ;
   int ecode6 = 0 ;
@@ -59519,11 +61281,11 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_6(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "TreeMap_Read" "', argument " "6"" of type '" "uint8_t""'");
@@ -59539,13 +61301,13 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
   Stomp::FieldColumnDict *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 = SWIG_OLDOBJ ;
@@ -59553,7 +61315,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_7(PyObject *SWIGUNUSEDPARM(self), 
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -59592,11 +61354,11 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_7(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "TreeMap_Read" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "TreeMap_Read" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   result = (bool)(arg1)->Read((std::string const &)*arg2,*arg3,arg4,arg5);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res2)) delete arg2;
@@ -59607,7 +61369,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
@@ -59666,7 +61428,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_TreeMap_Read__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
   std::string *arg2 = 0 ;
@@ -59718,12 +61480,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[8];
+  PyObject *argv[9];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 8); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -59735,7 +61497,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_TreeMap_Read__SWIG_4(self, args);
+        return _wrap_TreeMap_Read__SWIG_5(self, args);
       }
     }
   }
@@ -59752,7 +61514,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_TreeMap_Read__SWIG_9(self, args);
+          return _wrap_TreeMap_Read__SWIG_11(self, args);
         }
       }
     }
@@ -59771,7 +61533,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_TreeMap_Read__SWIG_3(self, args);
+          return _wrap_TreeMap_Read__SWIG_4(self, args);
         }
       }
     }
@@ -59794,7 +61556,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_TreeMap_Read__SWIG_8(self, args);
+            return _wrap_TreeMap_Read__SWIG_10(self, args);
           }
         }
       }
@@ -59815,11 +61577,11 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_TreeMap_Read__SWIG_2(self, args);
+            return _wrap_TreeMap_Read__SWIG_3(self, args);
           }
         }
       }
@@ -59844,11 +61606,11 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
           }
           if (_v) {
             {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              int res = SWIG_AsVal_bool(argv[4], NULL);
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_TreeMap_Read__SWIG_7(self, args);
+              return _wrap_TreeMap_Read__SWIG_9(self, args);
             }
           }
         }
@@ -59870,7 +61632,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -59879,7 +61641,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_TreeMap_Read__SWIG_1(self, args);
+              return _wrap_TreeMap_Read__SWIG_2(self, args);
             }
           }
         }
@@ -59901,6 +61663,43 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
         if (_v) {
           {
             int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_TreeMap_Read__SWIG_8(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -59914,44 +61713,7 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_TreeMap_Read__SWIG_6(self, args);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 6) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              {
-                int res = SWIG_AsVal_signed_SS_char(argv[5], NULL);
-                _v = SWIG_CheckState(res);
-              }
-              if (_v) {
-                return _wrap_TreeMap_Read__SWIG_0(self, args);
+                return _wrap_TreeMap_Read__SWIG_1(self, args);
               }
             }
           }
@@ -59978,6 +61740,49 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
           }
           if (_v) {
             {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_TreeMap_Read__SWIG_7(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
               int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
               _v = SWIG_CheckState(res);
             }
@@ -59992,7 +61797,55 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
                   _v = SWIG_CheckState(res);
                 }
                 if (_v) {
-                  return _wrap_TreeMap_Read__SWIG_5(self, args);
+                  return _wrap_TreeMap_Read__SWIG_0(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__TreeMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_signed_SS_char(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    return _wrap_TreeMap_Read__SWIG_6(self, args);
+                  }
                 }
               }
             }
@@ -60005,14 +61858,16 @@ SWIGINTERN PyObject *_wrap_TreeMap_Read(PyObject *self, PyObject *args) {
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'TreeMap_Read'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
-    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,int8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    Read(Stomp::TreeMap *,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
     "    Read(Stomp::TreeMap *,std::string const &)\n"
-    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
-    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,int8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere)\n"
     "    Read(Stomp::TreeMap *,std::string const &,Stomp::FieldColumnDict &)\n");
   return NULL;

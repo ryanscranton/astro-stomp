@@ -35,6 +35,38 @@ TreeMap::TreeMap(uint32_t input_resolution, uint16_t maximum_points) {
   ClearRegions();
 }
 
+TreeMap::TreeMap(const std::string& input_file, uint32_t input_resolution,
+		 uint16_t maximum_points, AngularCoordinate::Sphere sphere,
+		 bool verbose, uint8_t theta_column, uint8_t phi_column,
+		 int8_t weight_column) {
+  resolution_ = input_resolution;
+  maximum_points_ = maximum_points;
+  weight_ = 0.0;
+  point_count_ = 0;
+  modified_ = false;
+  area_ = 0.0;
+  ClearRegions();
+
+  Read(input_file, sphere, verbose, theta_column, phi_column, weight_column);
+}
+
+TreeMap::TreeMap(const std::string& input_file, FieldColumnDict& field_columns,
+		 uint32_t input_resolution, uint16_t maximum_points,
+		 AngularCoordinate::Sphere sphere, bool verbose,
+		 uint8_t theta_column, uint8_t phi_column,
+		 int8_t weight_column) {
+  resolution_ = input_resolution;
+  maximum_points_ = maximum_points;
+  weight_ = 0.0;
+  point_count_ = 0;
+  modified_ = false;
+  area_ = 0.0;
+  ClearRegions();
+
+  Read(input_file, field_columns, sphere, verbose,
+       theta_column, phi_column, weight_column);
+}
+
 TreeMap::~TreeMap() {
   Clear();
   resolution_ = 0;
@@ -777,19 +809,21 @@ bool TreeMap::AddPoint(AngularCoordinate& ang, double object_weight) {
 }
 
 bool TreeMap::Read(const std::string& input_file,
-		   AngularCoordinate::Sphere sphere,
+		   AngularCoordinate::Sphere sphere, bool verbose,
 		   uint8_t theta_column, uint8_t phi_column,
 		   int8_t weight_column) {
   bool io_success = false;
 
+  uint32_t n_lines = 0;
+  uint32_t check_lines = 128;
   if (theta_column != phi_column) {
     std::ifstream input_file_str(input_file.c_str());
 
-    uint32_t n_lines = 0;
     uint8_t weight_idx = static_cast<uint8_t>(weight_column);
 
     if (input_file_str) {
       io_success = true;
+      if (verbose) std::cout << "Reading from " << input_file << "...\n";
       while (!input_file_str.eof()) {
 	if (!input_file_str.eof()) {
 	  // This should read each line into a buffer, convert that buffer into
@@ -803,6 +837,10 @@ bool TreeMap::Read(const std::string& input_file,
 	  std::string line_string(line_buffer);
 	  Tokenize(line_string, line_elements);
 	  n_lines++;
+	  if (verbose && n_lines == check_lines) {
+	    std::cout << "\tRead " << check_lines << " lines...\n";
+	    check_lines *= 2;
+	  }
 
 	  if ((line_elements.size() > theta_column) &&
 	      (line_elements.size() > phi_column)) {
@@ -826,24 +864,30 @@ bool TreeMap::Read(const std::string& input_file,
     }
   }
 
+  if (verbose && io_success)
+    std::cout << "Read " << n_lines << " lines from " << input_file <<
+      "; loaded " << NPoints() << " into tree...\n";
+
   return io_success;
 }
 
 bool TreeMap::Read(const std::string& input_file,
 		   FieldColumnDict& field_columns,
-		   AngularCoordinate::Sphere sphere,
+		   AngularCoordinate::Sphere sphere, bool verbose,
 		   uint8_t theta_column, uint8_t phi_column,
 		   int8_t weight_column) {
   bool io_success = false;
 
+  uint32_t n_lines = 0;
+  uint32_t check_lines = 128;
   if (theta_column != phi_column) {
     std::ifstream input_file_str(input_file.c_str());
 
-    uint32_t n_lines = 0;
     uint8_t weight_idx = static_cast<uint8_t>(weight_column);
 
     if (input_file_str) {
       io_success = true;
+      if (verbose) std::cout << "Reading from " << input_file << "...\n";
       while (!input_file_str.eof()) {
 	if (!input_file_str.eof()) {
 	  // This should read each line into a buffer, convert that buffer into
@@ -857,7 +901,10 @@ bool TreeMap::Read(const std::string& input_file,
 	  std::string line_string(line_buffer);
 	  Tokenize(line_string, line_elements);
 	  n_lines++;
-
+	  if (verbose && n_lines == check_lines) {
+	    std::cout << "\tRead " << check_lines << " lines...\n";
+	    check_lines *= 2;
+	  }
 	  if ((line_elements.size() > theta_column) &&
 	      (line_elements.size() > phi_column)) {
 	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
@@ -889,6 +936,10 @@ bool TreeMap::Read(const std::string& input_file,
       std::cout << input_file << " does not exist!\n";
     }
   }
+
+  if (verbose && io_success)
+    std::cout << "Read " << n_lines << " lines from " << input_file <<
+      "; loaded " << NPoints() << " into tree...\n";
 
   return io_success;
 }
