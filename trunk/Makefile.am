@@ -6,9 +6,7 @@ AUTOMAKE_OPTIONS = foreign
 SUBDIRS = stomp examples
 
 #Distribute these directories:
-DIST_SUBDIRS = stomp examples
-
-exampledir = examples
+DIST_SUBDIRS = stomp
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = stomp-1.0.pc

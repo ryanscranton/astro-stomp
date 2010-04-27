@@ -772,6 +772,24 @@ double TreePixel::NearestNeighborDistance(AngularCoordinate& ang,
   return KNearestNeighborDistance(ang, 1, nodes_visited);
 }
 
+bool TreePixel::ClosestMatch(AngularCoordinate& ang, double max_distance,
+			     WeightedAngularCoordinate& match_ang) {
+  TreeNeighbor neighbors(ang, 1, max_distance);
+
+  _NeighborRecursion(ang, neighbors);
+
+  bool found_match = false;
+  if (neighbors.Neighbors() == neighbors.MaxNeighbors()) {
+    found_match = true;
+
+    WAngularVector neighbor_ang;
+    neighbors.NearestNeighbors(neighbor_ang, false);
+    match_ang = neighbor_ang[0];
+  }
+
+  return found_match;
+}
+
 void TreePixel::_NeighborRecursion(AngularCoordinate& ang,
 				   TreeNeighbor& neighbors) {
 
@@ -1195,7 +1213,7 @@ TreePtrIterator TreePixel::NodesEnd() {
 bool TreePixel::HasPoints() {
   return (ang_.empty() ? false : true);
 }
-  
+
 bool TreePixel::HasNodes() {
   return (subpix_.empty() ? false : true);
 }
@@ -1331,6 +1349,14 @@ TreeNeighbor::TreeNeighbor(AngularCoordinate& reference_ang,
   reference_ang_ = reference_ang;
   n_neighbors_ = n_neighbor;
   max_distance_ = 100.0;
+  n_nodes_visited_ = 0;
+}
+
+TreeNeighbor::TreeNeighbor(AngularCoordinate& reference_ang,
+			   uint8_t n_neighbor, double max_distance) {
+  reference_ang_ = reference_ang;
+  n_neighbors_ = n_neighbor;
+  max_distance_ = max_distance;
   n_nodes_visited_ = 0;
 }
 
