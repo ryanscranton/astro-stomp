@@ -215,6 +215,17 @@ class TreePixel : public Pixel {
   double NearestNeighborDistance(AngularCoordinate& ang,
 				 uint16_t& nodes_visited);
 
+  // Alternatively, we could be less interested in the nearest neighbor and
+  // more interested in finding a direct match to our input point.  The
+  // difference is subtle, but whereas NearestNeighbor will always return a
+  // point from our tree, ClosestMatch has an angular threshold, beyond which
+  // we're not interested in the nearest neighbor because it's not a match to
+  // our input point.  The returned boolean indicates whether the returned
+  // point is within the specified radius and the maximum distance is
+  // in degrees.
+  bool ClosestMatch(AngularCoordinate& ang, double max_distance,
+		    WeightedAngularCoordinate& match_ang);
+
   // For the recursion necessary to do the neighbor finding, we use this
   // internal method.
   void _NeighborRecursion(AngularCoordinate& ang, TreeNeighbor& neighbor);
@@ -388,6 +399,8 @@ class TreeNeighbor {
   friend class NearestNeighborPoint;
   TreeNeighbor(AngularCoordinate& reference_ang,
 	       uint8_t n_neighbors = 1);
+  TreeNeighbor(AngularCoordinate& reference_ang,
+	       uint8_t n_neighbors, double max_distance);
   ~TreeNeighbor();
 
   // Return a list of the nearest neighbors found so far.
