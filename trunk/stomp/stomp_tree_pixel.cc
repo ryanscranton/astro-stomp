@@ -779,7 +779,8 @@ bool TreePixel::ClosestMatch(AngularCoordinate& ang, double max_distance,
   _NeighborRecursion(ang, neighbors);
 
   bool found_match = false;
-  if (neighbors.Neighbors() == neighbors.MaxNeighbors()) {
+  if (neighbors.Neighbors() == neighbors.MaxNeighbors() &&
+      neighbors.MaxAngularDistance() < max_distance) {
     found_match = true;
 
     WAngularVector neighbor_ang;
@@ -1356,7 +1357,7 @@ TreeNeighbor::TreeNeighbor(AngularCoordinate& reference_ang,
 			   uint8_t n_neighbor, double max_distance) {
   reference_ang_ = reference_ang;
   n_neighbors_ = n_neighbor;
-  max_distance_ = max_distance;
+  max_distance_ = sin(DegToRad*max_distance)*sin(DegToRad*max_distance);
   n_nodes_visited_ = 0;
 }
 
@@ -1433,7 +1434,7 @@ double TreeNeighbor::MaxDistance() {
 
 double TreeNeighbor::MaxAngularDistance() {
   // Numerical precision can sometimes make the max_distance_ negative.
-  return Stomp::RadToDeg*asin(sqrt(fabs(max_distance_)));
+  return RadToDeg*asin(sqrt(fabs(max_distance_)));
 }
 
 uint16_t TreeNeighbor::NodesVisited() {

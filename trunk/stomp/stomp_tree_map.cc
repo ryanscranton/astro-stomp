@@ -696,6 +696,26 @@ double TreeMap::NearestNeighborDistance(AngularCoordinate& ang,
   return KNearestNeighborDistance(ang, 1, nodes_visited);
 }
 
+bool TreeMap::ClosestMatch(AngularCoordinate& ang,
+			   double max_distance,
+			   WeightedAngularCoordinate& match_ang) {
+  TreeNeighbor neighbors(ang, 1, max_distance);
+
+  _MatchRecursion(ang, neighbors);
+
+  bool found_match = false;
+  if (neighbors.Neighbors() == neighbors.MaxNeighbors() &&
+      neighbors.MaxAngularDistance() < max_distance) {
+    found_match = true;
+
+    WAngularVector neighbor_ang;
+    neighbors.NearestNeighbors(neighbor_ang, false);
+    match_ang = neighbor_ang[0];
+  }
+
+  return found_match;
+}
+
 void TreeMap::_NeighborRecursion(AngularCoordinate& ang,
 				 TreeNeighbor& neighbors) {
 
@@ -751,6 +771,54 @@ void TreeMap::_NeighborRecursion(AngularCoordinate& ang,
       pix_iter->_NeighborRecursion(ang, neighbors);
     }
     pix_queue.pop();
+  }
+}
+
+void TreeMap::_MatchRecursion(AngularCoordinate& ang,
+				 TreeNeighbor& neighbors) {
+
+  // First we need to find out if the input point is within our map area.
+  Pixel center_pix(ang, resolution_);
+  TreeDictIterator iter = tree_map_.find(center_pix.Pixnum());
+
+  // If a node containing this point exists, then start finding matches there.
+  if (iter != tree_map_.end())
+    tree_map_[center_pix.Pixnum()]->_NeighborRecursion(ang, neighbors);
+
+  // There's also a possibility that the matching point is just on the other
+  // side of a pixel boundary.  To see if that's possible, check the edge
+  // distance to our reference pixel.
+  double min_edge_distance, max_edge_distance;
+  center_pix.EdgeDistances(ang, min_edge_distance, max_edge_distance);
+  if (min_edge_distance < neighbors.MaxDistance()) {
+    // We're near enough to a boundary that we need to check the neighboring
+    // pixels.
+    PixelVector pix;
+    center_pix.BoundingRadius(ang, neighbors.MaxAngularDistance(), pix);
+
+    // Now we construct a priority queue so that we're searching the nodes
+    // closest to the input point first.
+    PixelQueue pix_queue;
+    for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
+      TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
+      if (iter != tree_map_.end() && !pix_iter->Contains(ang)) {
+	tree_map_[pix_iter->Pixnum()]->EdgeDistances(ang, min_edge_distance,
+						     max_edge_distance);
+	DistancePixelPair dist_pair(min_edge_distance,
+				    tree_map_[pix_iter->Pixnum()]);
+	pix_queue.push(dist_pair);
+      }
+    }
+
+    // And iterate over that queue to check for neighbors.
+    while (!pix_queue.empty()) {
+      double pix_distance = pix_queue.top().first;
+      TreePixel* pix_iter = pix_queue.top().second;
+      if (pix_distance < neighbors.MaxDistance()) {
+      pix_iter->_NeighborRecursion(ang, neighbors);
+      }
+      pix_queue.pop();
+    }
   }
 }
 

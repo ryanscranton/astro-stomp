@@ -544,6 +544,124 @@ void TreePixelNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
+void TreePixelMatchTests() {
+  // Checking closest match finding routines.
+  std::cout << "\n";
+  std::cout << "*************************************\n";
+  std::cout << "*** TreePixel Closest Match Tests ***\n";
+  std::cout << "*************************************\n";
+
+  Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
+  uint16_t n_points_per_node = 50;
+  uint32_t n_points = 50000;
+  Stomp::TreePixel tree_pix(ang, Stomp::HPixResolution,
+			    n_points_per_node);
+
+  Stomp::AngularVector angVec;
+  Stomp::WAngularVector w_angVec;
+  std::cout << "Adding " << n_points << "...\n";
+  tree_pix.GenerateRandomPoints(angVec, n_points);
+  for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
+    Stomp::WeightedAngularCoordinate tmp_ang(iter->Lambda(), iter->Eta(), 1.0,
+					     Stomp::AngularCoordinate::Survey);
+    w_angVec.push_back(tmp_ang);
+    if (!tree_pix.AddPoint(*iter))
+      std::cout << "\t\tFailed to add point: " <<
+	iter->RA() << ", " << iter->DEC() << "\n";
+  }
+
+  tree_pix.Ang(ang);
+
+  // Quick global accounting check.
+  std::cout << "\t" << tree_pix.NPoints() << " points added; " <<
+    1.0*tree_pix.NPoints()/tree_pix.Area() << " points/sq. degree.\n";
+
+  uint16_t n_test_points = 1000;
+  Stomp::AngularVector test_angVec;
+  tree_pix.GenerateRandomPoints(test_angVec, n_test_points);
+
+  // Now, we check the annulus finding.
+  Stomp::StompWatch stomp_watch;
+  Stomp::WeightedAngularCoordinate test_point;
+
+  double match_radius = 3.0;
+  std::cout <<
+    "\nFinding closest matches using " << n_test_points <<
+    " points in the tree and " << match_radius << " arcsecond radius...\n";
+  stomp_watch.StartTimer();
+  uint16_t n_match = 0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_pix.ClosestMatch(angVec[i], match_radius/3600.0, test_point))
+      n_match++;
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points << " points.\n" <<
+    "\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 0.5;
+  std::cout <<
+    "\nFinding closest matches using " << n_test_points <<
+    " points in the tree and " << match_radius << " arcsecond radius...\n";
+  stomp_watch.StartTimer();
+  n_match = 0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_pix.ClosestMatch(angVec[i], match_radius/3600.0, test_point))
+      n_match++;
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points << " points.\n" <<
+    "\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 3.0;
+  std::cout << "\nFinding matches using " << n_test_points <<
+    " points in the pixel with " << match_radius << " arcsecond radius...\n";
+  stomp_watch.StartTimer();
+  n_match = 0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_pix.ClosestMatch(test_angVec[i], match_radius/3600.0, test_point))
+      n_match++;
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points << " points.\n" <<
+    "\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 0.5;
+  std::cout << "\nFinding matches using " << n_test_points <<
+    " points in the pixel with " << match_radius << " arcsecond radius...\n";
+  stomp_watch.StartTimer();
+  n_match = 0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_pix.ClosestMatch(test_angVec[i], match_radius/3600.0, test_point))
+      n_match++;
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points << " points.\n" <<
+    "\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 3.0;
+  std::cout << "\nFinding matches using " << n_test_points <<
+    " points outside the pixel and " << match_radius <<
+    " arcsecond radius...\n";
+  for (uint16_t i=0;i<n_test_points;i++)
+    test_angVec[i].SetSurveyCoordinates(test_angVec[i].Lambda()-40.0,
+					test_angVec[i].Eta());
+
+  stomp_watch.StartTimer();
+  n_match = 0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_pix.ClosestMatch(test_angVec[i], match_radius/3600.0, test_point))
+      n_match++;
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points << " points.\n" <<
+    "\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
+}
+
 // Define our command line flags
 DEFINE_bool(all_tree_pixel_tests, false, "Run all class unit tests.");
 DEFINE_bool(tree_pixel_basic_tests, false, "Run TreePixel basic tests");
@@ -553,6 +671,8 @@ DEFINE_bool(tree_pixel_field_pair_tests, false,
             "Run TreePixel Field pair tests");
 DEFINE_bool(tree_pixel_neighbor_tests, false,
             "Run TreePixel nearest neighbor tests");
+DEFINE_bool(tree_pixel_match_tests, false,
+            "Run TreePixel closest match tests");
 
 void TreePixelUnitTests(bool run_all_tests) {
   void TreePixelBasicTests();
@@ -560,6 +680,7 @@ void TreePixelUnitTests(bool run_all_tests) {
   void TreePixelCoverageTests();
   void TreePixelFieldPairTests();
   void TreePixelNeighborTests();
+  void TreePixelMatchTests();
 
   if (run_all_tests) FLAGS_all_tree_pixel_tests = true;
 
@@ -583,4 +704,8 @@ void TreePixelUnitTests(bool run_all_tests) {
   // Checking nearest neighbor finding routines.
   if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_neighbor_tests)
     TreePixelNeighborTests();
+
+  // Checking closest match finding routines.
+  if (FLAGS_all_tree_pixel_tests || FLAGS_tree_pixel_match_tests)
+    TreePixelMatchTests();
 }

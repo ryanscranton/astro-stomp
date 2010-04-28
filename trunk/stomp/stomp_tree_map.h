@@ -215,10 +215,20 @@ class TreeMap : public BaseMap {
   double NearestNeighborDistance(AngularCoordinate& ang,
 				 uint16_t& nodes_visited);
 
+  // Analog of the ClosestMatch method in the TreePixel class, where we're only
+  // interested in the best match within a given search radius.  The input
+  // maximum radius is in degrees and the return boolean indicates whether an
+  // acceptable match was found.
+  bool ClosestMatch(AngularCoordinate& ang, double max_distance,
+		    WeightedAngularCoordinate& match_ang);
+
   // For the recursion necessary to do the neighbor finding, we use this
   // internal method.
   void _NeighborRecursion(AngularCoordinate& ang, TreeNeighbor& neighbor);
 
+  // For the recursion necessary to do the closest match finding, we use this
+  // internal method.
+  void _MatchRecursion(AngularCoordinate& ang, TreeNeighbor& neighbor);
 
   // Add a given point on the sphere to the map.
   bool AddPoint(WeightedAngularCoordinate* ang);
