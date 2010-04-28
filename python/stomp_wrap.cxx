@@ -53116,6 +53116,61 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_TreePixel_ClosestMatch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreePixel *arg1 = (Stomp::TreePixel *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  double arg3 ;
+  Stomp::WeightedAngularCoordinate *arg4 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:TreePixel_ClosestMatch",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreePixel, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreePixel_ClosestMatch" "', argument " "1"" of type '" "Stomp::TreePixel *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreePixel * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreePixel_ClosestMatch" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreePixel_ClosestMatch" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreePixel_ClosestMatch" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_Stomp__WeightedAngularCoordinate,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "TreePixel_ClosestMatch" "', argument " "4"" of type '" "Stomp::WeightedAngularCoordinate &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreePixel_ClosestMatch" "', argument " "4"" of type '" "Stomp::WeightedAngularCoordinate &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::WeightedAngularCoordinate * >(argp4);
+  result = (bool)(arg1)->ClosestMatch(*arg2,arg3,*arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_TreePixel_InitializeCorners(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::TreePixel *arg1 = (Stomp::TreePixel *) 0 ;
@@ -60494,6 +60549,61 @@ SWIGINTERN PyObject *_wrap_TreeMap_NearestNeighborDistance(PyObject *SWIGUNUSEDP
   arg3 = reinterpret_cast< uint16_t * >(argp3);
   result = (double)(arg1)->NearestNeighborDistance(*arg2,*arg3);
   resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TreeMap_ClosestMatch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::TreeMap *arg1 = (Stomp::TreeMap *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  double arg3 ;
+  Stomp::WeightedAngularCoordinate *arg4 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:TreeMap_ClosestMatch",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__TreeMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TreeMap_ClosestMatch" "', argument " "1"" of type '" "Stomp::TreeMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::TreeMap * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TreeMap_ClosestMatch" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_ClosestMatch" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "TreeMap_ClosestMatch" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_Stomp__WeightedAngularCoordinate,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "TreeMap_ClosestMatch" "', argument " "4"" of type '" "Stomp::WeightedAngularCoordinate &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "TreeMap_ClosestMatch" "', argument " "4"" of type '" "Stomp::WeightedAngularCoordinate &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::WeightedAngularCoordinate * >(argp4);
+  result = (bool)(arg1)->ClosestMatch(*arg2,arg3,*arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -70320,6 +70430,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"TreePixel_FindNearestNeighbor", _wrap_TreePixel_FindNearestNeighbor, METH_VARARGS, NULL},
 	 { (char *)"TreePixel_KNearestNeighborDistance", _wrap_TreePixel_KNearestNeighborDistance, METH_VARARGS, NULL},
 	 { (char *)"TreePixel_NearestNeighborDistance", _wrap_TreePixel_NearestNeighborDistance, METH_VARARGS, NULL},
+	 { (char *)"TreePixel_ClosestMatch", _wrap_TreePixel_ClosestMatch, METH_VARARGS, NULL},
 	 { (char *)"TreePixel_InitializeCorners", _wrap_TreePixel_InitializeCorners, METH_VARARGS, NULL},
 	 { (char *)"TreePixel_AddPoint", _wrap_TreePixel_AddPoint, METH_VARARGS, NULL},
 	 { (char *)"TreePixel_NPoints", _wrap_TreePixel_NPoints, METH_VARARGS, NULL},
@@ -70385,6 +70496,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"TreeMap_FindNearestNeighbor", _wrap_TreeMap_FindNearestNeighbor, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_KNearestNeighborDistance", _wrap_TreeMap_KNearestNeighborDistance, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_NearestNeighborDistance", _wrap_TreeMap_NearestNeighborDistance, METH_VARARGS, NULL},
+	 { (char *)"TreeMap_ClosestMatch", _wrap_TreeMap_ClosestMatch, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_AddPoint", _wrap_TreeMap_AddPoint, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_Read", _wrap_TreeMap_Read, METH_VARARGS, NULL},
 	 { (char *)"TreeMap_Coverage", _wrap_TreeMap_Coverage, METH_VARARGS, NULL},
