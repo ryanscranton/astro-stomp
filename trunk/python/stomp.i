@@ -381,6 +381,8 @@ class TreePixel : public Pixel {
 				  uint16_t& nodes_visited);
   double NearestNeighborDistance(AngularCoordinate& ang,
 				 uint16_t& nodes_visited);
+  bool ClosestMatch(AngularCoordinate& ang, double max_distance,
+		    WeightedAngularCoordinate& match_ang);
   void InitializeCorners();
   bool AddPoint(WeightedAngularCoordinate& w_ang);
   bool AddPoint(AngularCoordinate& ang, double object_weight = 1.0);
@@ -566,6 +568,8 @@ class TreeMap : public BaseMap {
 				  uint16_t& nodes_visited);
   double NearestNeighborDistance(AngularCoordinate& ang,
 				 uint16_t& nodes_visited);
+  bool ClosestMatch(AngularCoordinate& ang, double max_distance,
+		    WeightedAngularCoordinate& match_ang);
   bool AddPoint(WeightedAngularCoordinate& w_ang);
   bool AddPoint(AngularCoordinate& ang, double object_weight = 1.0);
   bool Read(const std::string& input_file,
