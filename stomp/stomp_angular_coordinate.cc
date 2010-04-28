@@ -24,45 +24,45 @@ AngularCoordinate::AngularCoordinate(double theta, double phi,
 				     Sphere sphere) {
   switch (sphere) {
   case Survey:
-    if (Stomp::DoubleGE(theta, 90.0)) theta = 90.0;
-    if (Stomp::DoubleLE(theta, -90.0)) theta = -90.0;
+    if (DoubleGE(theta, 90.0)) theta = 90.0;
+    if (DoubleLE(theta, -90.0)) theta = -90.0;
     if (phi > 180.0) phi -= 360.0;
     if (phi < -180.0) phi += 360.0;
 
-    theta *= Stomp::DegToRad;
-    phi *= Stomp::DegToRad;
+    theta *= DegToRad;
+    phi *= DegToRad;
 
     us_x_ = -1.0*sin(theta);
-    us_y_ = cos(theta)*cos(phi+Stomp::EtaPole);
-    us_z_ = cos(theta)*sin(phi+Stomp::EtaPole);
+    us_y_ = cos(theta)*cos(phi+EtaPole);
+    us_z_ = cos(theta)*sin(phi+EtaPole);
     break;
   case Equatorial:
-    if (Stomp::DoubleGE(phi, 90.0)) phi = 90.0;
-    if (Stomp::DoubleLE(phi, -90.0)) phi = -90.0;
+    if (DoubleGE(phi, 90.0)) phi = 90.0;
+    if (DoubleLE(phi, -90.0)) phi = -90.0;
     if (theta > 360.0) theta -= 360.0;
     if (theta < 0.0) theta += 360.0;
 
-    theta *= Stomp::DegToRad;
-    phi *= Stomp::DegToRad;
+    theta *= DegToRad;
+    phi *= DegToRad;
 
-    us_x_ = cos(theta-Stomp::Node)*cos(phi);
-    us_y_ = sin(theta-Stomp::Node)*cos(phi);
+    us_x_ = cos(theta-Node)*cos(phi);
+    us_y_ = sin(theta-Node)*cos(phi);
     us_z_ = sin(phi);
     break;
   case Galactic:
-    if (Stomp::DoubleGE(phi, 90.0)) phi = 90.0;
-    if (Stomp::DoubleLE(phi, -90.0)) phi = -90.0;
+    if (DoubleGE(phi, 90.0)) phi = 90.0;
+    if (DoubleLE(phi, -90.0)) phi = -90.0;
     if (theta > 360.0) theta -= 360.0;
     if (theta < 0.0) theta += 360.0;
 
     double ra, dec;
     GalacticToEquatorial(theta, phi, ra, dec);
 
-    ra *= Stomp::DegToRad;
-    dec *= Stomp::DegToRad;
+    ra *= DegToRad;
+    dec *= DegToRad;
 
-    us_x_ = cos(ra-Stomp::Node)*cos(dec);
-    us_y_ = sin(ra-Stomp::Node)*cos(dec);
+    us_x_ = cos(ra-Node)*cos(dec);
+    us_y_ = sin(ra-Node)*cos(dec);
     us_z_ = sin(dec);
     break;
   }
@@ -101,47 +101,47 @@ void AngularCoordinate::Set(double theta, double phi, Sphere sphere) {
 }
 
 void AngularCoordinate::SetSurveyCoordinates(double lambda, double eta) {
-  if (Stomp::DoubleGE(lambda, 90.0)) lambda = 90.0;
-  if (Stomp::DoubleLE(lambda, -90.0)) lambda = -90.0;
+  if (DoubleGE(lambda, 90.0)) lambda = 90.0;
+  if (DoubleLE(lambda, -90.0)) lambda = -90.0;
   if (eta > 180.0) eta -= 360.0;
   if (eta < -180.0) eta += 360.0;
 
-  eta *= Stomp::DegToRad;
-  lambda *= Stomp::DegToRad;
+  eta *= DegToRad;
+  lambda *= DegToRad;
 
   us_x_ = -1.0*sin(lambda);
-  us_y_ = cos(lambda)*cos(eta+Stomp::EtaPole);
-  us_z_ = cos(lambda)*sin(eta+Stomp::EtaPole);
+  us_y_ = cos(lambda)*cos(eta+EtaPole);
+  us_z_ = cos(lambda)*sin(eta+EtaPole);
 }
 
 void AngularCoordinate::SetEquatorialCoordinates(double ra, double dec) {
-  if (Stomp::DoubleGE(dec, 90.0)) dec = 90.0;
-  if (Stomp::DoubleLE(dec, -90.0)) dec = -90.0;
+  if (DoubleGE(dec, 90.0)) dec = 90.0;
+  if (DoubleLE(dec, -90.0)) dec = -90.0;
   if (ra > 360.0) ra -= 360.0;
   if (ra < 0.0) ra += 360.0;
 
-  ra *= Stomp::DegToRad;
-  dec *= Stomp::DegToRad;
+  ra *= DegToRad;
+  dec *= DegToRad;
 
-  us_x_ = cos(ra-Stomp::Node)*cos(dec);
-  us_y_ = sin(ra-Stomp::Node)*cos(dec);
+  us_x_ = cos(ra-Node)*cos(dec);
+  us_y_ = sin(ra-Node)*cos(dec);
   us_z_ = sin(dec);
 }
 
 void AngularCoordinate::SetGalacticCoordinates(double gal_lon, double gal_lat) {
-  if (Stomp::DoubleGE(gal_lat, 90.0)) gal_lat = 90.0;
-  if (Stomp::DoubleLE(gal_lat, -90.0)) gal_lat = -90.0;
+  if (DoubleGE(gal_lat, 90.0)) gal_lat = 90.0;
+  if (DoubleLE(gal_lat, -90.0)) gal_lat = -90.0;
   if (gal_lon > 360.0) gal_lon -= 360.0;
   if (gal_lon < 0.0) gal_lon += 360.0;
 
   double ra, dec;
   GalacticToEquatorial(gal_lon, gal_lat, ra, dec);
 
-  ra *= Stomp::DegToRad;
-  dec *= Stomp::DegToRad;
+  ra *= DegToRad;
+  dec *= DegToRad;
 
-  us_x_ = cos(ra-Stomp::Node)*cos(dec);
-  us_y_ = sin(ra-Stomp::Node)*cos(dec);
+  us_x_ = cos(ra-Node)*cos(dec);
+  us_y_ = sin(ra-Node)*cos(dec);
   us_z_ = sin(dec);
 }
 
@@ -181,23 +181,23 @@ void AngularCoordinate::SetUnitSphereCoordinates(double unit_sphere_x,
 }
 
 double AngularCoordinate::Lambda() {
-  return -1.0*asin(us_x_)*Stomp::RadToDeg;
+  return -1.0*asin(us_x_)*RadToDeg;
 }
 
 double AngularCoordinate::Eta() {
-  double eta = (atan2(us_z_, us_y_) - Stomp::EtaPole)*Stomp::RadToDeg;
-  return (Stomp::DoubleLT(eta, 180.0) && Stomp::DoubleGT(eta, -180.0) ? eta :
-	  (Stomp::DoubleGE(eta, 180) ? eta - 360.0 : eta + 360.0)) ;
+  double eta = (atan2(us_z_, us_y_) - EtaPole)*RadToDeg;
+  return (DoubleLT(eta, 180.0) && DoubleGT(eta, -180.0) ? eta :
+	  (DoubleGE(eta, 180) ? eta - 360.0 : eta + 360.0)) ;
 }
 
 double AngularCoordinate::RA() {
-  double ra = (atan2(us_y_, us_x_) + Stomp::Node)*Stomp::RadToDeg;
-  return (Stomp::DoubleLT(ra, 360.0) && Stomp::DoubleGT(ra, 0.0) ? ra :
-	  (Stomp::DoubleGE(ra, 360) ? ra - 360.0 : ra + 360.0)) ;
+  double ra = (atan2(us_y_, us_x_) + Node)*RadToDeg;
+  return (DoubleLT(ra, 360.0) && DoubleGT(ra, 0.0) ? ra :
+	  (DoubleGE(ra, 360) ? ra - 360.0 : ra + 360.0)) ;
 }
 
 double AngularCoordinate::DEC() {
-  return asin(us_z_)*Stomp::RadToDeg;
+  return asin(us_z_)*RadToDeg;
 }
 
 double AngularCoordinate::GalLon() {
@@ -230,16 +230,16 @@ double AngularCoordinate::UnitSphereX(Sphere sphere) {
   double theta = 0.0, phi = 0.0;
   switch (sphere) {
   case Survey:
-    theta = Eta()*Stomp::DegToRad;
-    phi = Lambda()*Stomp::DegToRad;
+    theta = Eta()*DegToRad;
+    phi = Lambda()*DegToRad;
     break;
   case Equatorial:
-    theta = RA()*Stomp::DegToRad;
-    phi = DEC()*Stomp::DegToRad;
+    theta = RA()*DegToRad;
+    phi = DEC()*DegToRad;
     break;
   case Galactic:
-    theta = GalLon()*Stomp::DegToRad;
-    phi = GalLat()*Stomp::DegToRad;
+    theta = GalLon()*DegToRad;
+    phi = GalLat()*DegToRad;
     break;
   }
   return cos(theta)*cos(phi);
@@ -249,16 +249,16 @@ double AngularCoordinate::UnitSphereY(Sphere sphere) {
   double theta = 0.0, phi = 0.0;
   switch (sphere) {
   case Survey:
-    theta = Eta()*Stomp::DegToRad;
-    phi = Lambda()*Stomp::DegToRad;
+    theta = Eta()*DegToRad;
+    phi = Lambda()*DegToRad;
     break;
   case Equatorial:
-    theta = RA()*Stomp::DegToRad;
-    phi = DEC()*Stomp::DegToRad;
+    theta = RA()*DegToRad;
+    phi = DEC()*DegToRad;
     break;
   case Galactic:
-    theta = GalLon()*Stomp::DegToRad;
-    phi = GalLat()*Stomp::DegToRad;
+    theta = GalLon()*DegToRad;
+    phi = GalLat()*DegToRad;
     break;
   }
   return sin(theta)*cos(phi);
@@ -268,26 +268,28 @@ double AngularCoordinate::UnitSphereZ(Sphere sphere) {
   double phi = 0.0;
   switch (sphere) {
   case Survey:
-    phi = Lambda()*Stomp::DegToRad;
+    phi = Lambda()*DegToRad;
     break;
   case Equatorial:
-    phi = DEC()*Stomp::DegToRad;
+    phi = DEC()*DegToRad;
     break;
   case Galactic:
-    phi = GalLat()*Stomp::DegToRad;
+    phi = GalLat()*DegToRad;
     break;
   }
   return sin(phi);
 }
 
 double AngularCoordinate::AngularDistance(AngularCoordinate& ang) {
-  return acos(us_x_*ang.UnitSphereX() + us_y_*ang.UnitSphereY() +
-	      us_z_*ang.UnitSphereZ())*Stomp::RadToDeg;
+  double cos_theta = (us_x_*ang.UnitSphereX() + us_y_*ang.UnitSphereY() +
+		      us_z_*ang.UnitSphereZ());
+  return RadToDeg*asin(sqrt(fabs(1.0 - cos_theta*cos_theta)));
 }
 
 double AngularCoordinate::AngularDistance(AngularCoordinate* ang) {
-  return acos(us_x_*ang->UnitSphereX() + us_y_*ang->UnitSphereY() +
-	      us_z_*ang->UnitSphereZ())*Stomp::RadToDeg;
+  double cos_theta = (us_x_*ang->UnitSphereX() + us_y_*ang->UnitSphereY() +
+		      us_z_*ang->UnitSphereZ());
+  return RadToDeg*asin(sqrt(fabs(1.0 - cos_theta*cos_theta)));
 }
 
 double AngularCoordinate::DotProduct(AngularCoordinate& ang) {
@@ -327,13 +329,13 @@ void AngularCoordinate::GreatCircle(AngularCoordinate& ang,
 }
 
 double AngularCoordinate::PositionAngle(AngularCoordinate& ang, Sphere sphere) {
-  double pos_angle = Stomp::RadToDeg*atan2(SinPositionAngle(ang, sphere),
+  double pos_angle = RadToDeg*atan2(SinPositionAngle(ang, sphere),
 					   CosPositionAngle(ang, sphere));
   return (DoubleGT(pos_angle, 0.0) ? pos_angle : pos_angle + 360.0);
 }
 
 double AngularCoordinate::PositionAngle(Pixel& pix, Sphere sphere) {
-  double pos_angle = Stomp::RadToDeg*atan2(SinPositionAngle(pix, sphere),
+  double pos_angle = RadToDeg*atan2(SinPositionAngle(pix, sphere),
 					   CosPositionAngle(pix, sphere));
   return (DoubleGT(pos_angle, 0.0) ? pos_angle : pos_angle + 360.0);
 }
@@ -344,25 +346,25 @@ double AngularCoordinate::CosPositionAngle(AngularCoordinate& ang,
   double ang_theta = 0.0, ang_phi = 0.0;
   switch (sphere) {
   case Survey:
-    theta = Eta()*Stomp::DegToRad;
-    phi = Lambda()*Stomp::DegToRad;
+    theta = Eta()*DegToRad;
+    phi = Lambda()*DegToRad;
 
-    ang_theta = ang.Eta()*Stomp::DegToRad;
-    ang_phi = ang.Lambda()*Stomp::DegToRad;
+    ang_theta = ang.Eta()*DegToRad;
+    ang_phi = ang.Lambda()*DegToRad;
     break;
   case Equatorial:
-    theta = RA()*Stomp::DegToRad;
-    phi = DEC()*Stomp::DegToRad;
+    theta = RA()*DegToRad;
+    phi = DEC()*DegToRad;
 
-    ang_theta = ang.RA()*Stomp::DegToRad;
-    ang_phi = ang.DEC()*Stomp::DegToRad;
+    ang_theta = ang.RA()*DegToRad;
+    ang_phi = ang.DEC()*DegToRad;
     break;
   case Galactic:
-    theta = GalLon()*Stomp::DegToRad;
-    phi = GalLat()*Stomp::DegToRad;
+    theta = GalLon()*DegToRad;
+    phi = GalLat()*DegToRad;
 
-    ang_theta = ang.GalLon()*Stomp::DegToRad;
-    ang_phi = ang.GalLat()*Stomp::DegToRad;
+    ang_theta = ang.GalLon()*DegToRad;
+    ang_phi = ang.GalLat()*DegToRad;
     break;
   }
 
@@ -374,25 +376,25 @@ double AngularCoordinate::CosPositionAngle(Pixel& pix, Sphere sphere) {
   double pix_theta = 0.0, pix_phi = 0.0;
   switch (sphere) {
   case Survey:
-    theta = Eta()*Stomp::DegToRad;
-    phi = Lambda()*Stomp::DegToRad;
+    theta = Eta()*DegToRad;
+    phi = Lambda()*DegToRad;
 
-    pix_theta = pix.Eta()*Stomp::DegToRad;
-    pix_phi = pix.Lambda()*Stomp::DegToRad;
+    pix_theta = pix.Eta()*DegToRad;
+    pix_phi = pix.Lambda()*DegToRad;
     break;
   case Equatorial:
-    theta = RA()*Stomp::DegToRad;
-    phi = DEC()*Stomp::DegToRad;
+    theta = RA()*DegToRad;
+    phi = DEC()*DegToRad;
 
-    pix_theta = pix.RA()*Stomp::DegToRad;
-    pix_phi = pix.DEC()*Stomp::DegToRad;
+    pix_theta = pix.RA()*DegToRad;
+    pix_phi = pix.DEC()*DegToRad;
     break;
   case Galactic:
-    theta = GalLon()*Stomp::DegToRad;
-    phi = GalLat()*Stomp::DegToRad;
+    theta = GalLon()*DegToRad;
+    phi = GalLat()*DegToRad;
 
-    pix_theta = pix.GalLon()*Stomp::DegToRad;
-    pix_phi = pix.GalLat()*Stomp::DegToRad;
+    pix_theta = pix.GalLon()*DegToRad;
+    pix_phi = pix.GalLat()*DegToRad;
     break;
   }
 
@@ -405,16 +407,16 @@ double AngularCoordinate::SinPositionAngle(AngularCoordinate& ang,
   double ang_theta = 0.0;
   switch (sphere) {
   case Survey:
-    theta = Eta()*Stomp::DegToRad;
-    ang_theta = ang.Eta()*Stomp::DegToRad;
+    theta = Eta()*DegToRad;
+    ang_theta = ang.Eta()*DegToRad;
     break;
   case Equatorial:
-    theta = RA()*Stomp::DegToRad;
-    ang_theta = ang.RA()*Stomp::DegToRad;
+    theta = RA()*DegToRad;
+    ang_theta = ang.RA()*DegToRad;
     break;
   case Galactic:
-    theta = GalLon()*Stomp::DegToRad;
-    ang_theta = ang.GalLon()*Stomp::DegToRad;
+    theta = GalLon()*DegToRad;
+    ang_theta = ang.GalLon()*DegToRad;
     break;
   }
 
@@ -426,16 +428,16 @@ double AngularCoordinate::SinPositionAngle(Pixel& pix, Sphere sphere) {
   double pix_theta = 0.0;
   switch (sphere) {
   case Survey:
-    theta = Eta()*Stomp::DegToRad;
-    pix_theta = pix.Eta()*Stomp::DegToRad;
+    theta = Eta()*DegToRad;
+    pix_theta = pix.Eta()*DegToRad;
     break;
   case Equatorial:
-    theta = RA()*Stomp::DegToRad;
-    pix_theta = pix.RA()*Stomp::DegToRad;
+    theta = RA()*DegToRad;
+    pix_theta = pix.RA()*DegToRad;
     break;
   case Galactic:
-    theta = GalLon()*Stomp::DegToRad;
-    pix_theta = pix.GalLon()*Stomp::DegToRad;
+    theta = GalLon()*DegToRad;
+    pix_theta = pix.GalLon()*DegToRad;
     break;
   }
 
@@ -525,51 +527,51 @@ void AngularCoordinate::SurveyToGalactic(double lambda, double eta,
 
 void AngularCoordinate::SurveyToEquatorial(double lambda, double eta,
                                            double& ra, double& dec) {
-  lambda *= Stomp::DegToRad;
-  eta *= Stomp::DegToRad;
+  lambda *= DegToRad;
+  eta *= DegToRad;
 
   double x = -1.0*sin(lambda);
-  double y = cos(lambda)*cos(eta+Stomp::EtaPole);
-  double z = cos(lambda)*sin(eta+Stomp::EtaPole);
+  double y = cos(lambda)*cos(eta+EtaPole);
+  double z = cos(lambda)*sin(eta+EtaPole);
 
-  ra = (atan2(y,x) + Stomp::Node)*Stomp::RadToDeg;
+  ra = (atan2(y,x) + Node)*RadToDeg;
   if (ra < 0.0) ra += 360.0;
   if (ra > 360.0) ra -= 360.0;
-  dec = asin(z)*Stomp::RadToDeg;
+  dec = asin(z)*RadToDeg;
 }
 
 void AngularCoordinate::SurveyToXYZ(double lambda, double eta,
                                     double& x, double& y, double& z) {
-  lambda *= Stomp::DegToRad;
-  eta *= Stomp::DegToRad;
+  lambda *= DegToRad;
+  eta *= DegToRad;
 
   x = -1.0*sin(lambda);
-  y = cos(lambda)*cos(eta+Stomp::EtaPole);
-  z = cos(lambda)*sin(eta+Stomp::EtaPole);
+  y = cos(lambda)*cos(eta+EtaPole);
+  z = cos(lambda)*sin(eta+EtaPole);
 }
 
 void AngularCoordinate::EquatorialToSurvey(double ra, double dec,
                                            double& lambda, double& eta) {
-  ra *= Stomp::DegToRad;
-  dec *= Stomp::DegToRad;
+  ra *= DegToRad;
+  dec *= DegToRad;
 
-  double x = cos(ra-Stomp::Node)*cos(dec);
-  double y = sin(ra-Stomp::Node)*cos(dec);
+  double x = cos(ra-Node)*cos(dec);
+  double y = sin(ra-Node)*cos(dec);
   double z = sin(dec);
 
-  lambda = -1.0*asin(x)*Stomp::RadToDeg;
-  eta = (atan2(z,y) - Stomp::EtaPole)*Stomp::RadToDeg;
+  lambda = -1.0*asin(x)*RadToDeg;
+  eta = (atan2(z,y) - EtaPole)*RadToDeg;
   if (eta < -180.0) eta += 360.0;
   if (eta > 180.0) eta -= 360.0;
 }
 
 void AngularCoordinate::EquatorialToXYZ(double ra, double dec,
                                         double& x, double& y, double& z) {
-  ra *= Stomp::DegToRad;
-  dec *= Stomp::DegToRad;
+  ra *= DegToRad;
+  dec *= DegToRad;
 
-  x = cos(ra-Stomp::Node)*cos(dec);
-  y = sin(ra-Stomp::Node)*cos(dec);
+  x = cos(ra-Node)*cos(dec);
+  y = sin(ra-Node)*cos(dec);
   z = sin(dec);
 }
 
@@ -580,8 +582,8 @@ void AngularCoordinate::EquatorialToGalactic(double ra, double dec,
   double ctheta = 0.45598377618;
   double g_phi = 4.9368292465;
 
-  double a = ra*Stomp::DegToRad - g_phi;
-  double b = dec*Stomp::DegToRad;
+  double a = ra*DegToRad - g_phi;
+  double b = dec*DegToRad;
 
   double sb = sin(b);
   double cb = cos(b);
@@ -590,11 +592,11 @@ void AngularCoordinate::EquatorialToGalactic(double ra, double dec,
   b = -1.0*stheta*cbsa + ctheta*sb;
   if (b > 1.0) b = 1.0;
 
-  double bo = asin(b)*Stomp::RadToDeg;
+  double bo = asin(b)*RadToDeg;
 
   a = atan2(ctheta*cbsa + stheta*sb,cb*cos(a));
 
-  double ao = (a+g_psi+4.0*Stomp::Pi)*Stomp::RadToDeg;
+  double ao = (a+g_psi+4.0*Pi)*RadToDeg;
 
   while (ao > 360.0) ao -= 360.0;
 
@@ -609,8 +611,8 @@ void AngularCoordinate::GalacticToEquatorial(double gal_lon, double gal_lat,
   double ctheta = 0.45598377618;
   double g_phi = 0.57477043300;
 
-  double a = gal_lon*Stomp::DegToRad - g_phi;
-  double b = gal_lat*Stomp::DegToRad;
+  double a = gal_lon*DegToRad - g_phi;
+  double b = gal_lat*DegToRad;
 
   double sb = sin(b);
   double cb = cos(b);
@@ -619,11 +621,11 @@ void AngularCoordinate::GalacticToEquatorial(double gal_lon, double gal_lat,
   b = -1.0*stheta*cbsa + ctheta*sb;
   if (b > 1.0) b = 1.0;
 
-  double bo = asin(b)*Stomp::RadToDeg;
+  double bo = asin(b)*RadToDeg;
 
   a = atan2(ctheta*cbsa + stheta*sb,cb*cos(a));
 
-  double ao = (a+g_psi+4.0*Stomp::Pi)*Stomp::RadToDeg;
+  double ao = (a+g_psi+4.0*Pi)*RadToDeg;
   while (ao > 360.0) ao -= 360.0;
 
   ra = ao;
@@ -634,11 +636,11 @@ void AngularCoordinate::GalacticToXYZ(double gal_lon, double gal_lat,
                                       double& x, double& y, double& z) {
   double ra, dec;
   GalacticToEquatorial(gal_lat, gal_lon, ra, dec);
-  ra *= Stomp::DegToRad;
-  dec *= Stomp::DegToRad;
+  ra *= DegToRad;
+  dec *= DegToRad;
 
-  x = cos(ra-Stomp::Node)*cos(dec);
-  y = sin(ra-Stomp::Node)*cos(dec);
+  x = cos(ra-Node)*cos(dec);
+  y = sin(ra-Node)*cos(dec);
   z = sin(dec);
 }
 

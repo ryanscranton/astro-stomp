@@ -743,6 +743,178 @@ void TreeMapNeighborTests() {
     "\n\t\tTime elapsed = " << stomp_watch.ElapsedTime()/n_test_points << "s\n";
 }
 
+void TreeMapMatchTests() {
+  // Checking closest match finding routines.
+  std::cout << "\n";
+  std::cout << "***********************************\n";
+  std::cout << "*** TreeMap Closest Match Tests ***\n";
+  std::cout << "***********************************\n";
+
+  Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
+  uint16_t n_points_per_node = 200;
+  // Make the map at a coarse resolution so that we can test the
+  // Coverage and NodeMap methods later on.
+  uint32_t resolution = 8;
+  Stomp::TreeMap tree_map(resolution, n_points_per_node);
+  std::cout << "Building Stomp::TreeMap at " << resolution <<
+    " resolution...\n";
+
+  // Now we generate a bunch of random points around our original point and
+  // attempt to add them to the Stomp::TreeMap.  We choose a large enough radius
+  // to make sure that we're adding points that are well outside of pixel that
+  // contained the initial point to make sure that we're properly adding new
+  // pixels as we ingest points.
+  double theta_bound = 5.0;
+  uint32_t annulus_resolution = 32;
+  Stomp::Pixel tmp_pix(ang, annulus_resolution);
+  Stomp::PixelVector annulus_pix;
+  tmp_pix.WithinRadius(theta_bound, annulus_pix);
+  Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
+
+  // Now we add a high number of points to the TreeMap to flesh out its bounds.
+  uint32_t n_points = 100000;
+  Stomp::AngularVector angVec;
+  Stomp::WAngularVector w_angVec;
+  std::cout << "Adding " << n_points << " points\n";
+  stomp_map->GenerateRandomPoints(angVec, n_points);
+
+  for (Stomp::AngularIterator iter=angVec.begin();iter!=angVec.end();++iter) {
+    Stomp::WeightedAngularCoordinate tmp_ang(iter->UnitSphereX(),
+					     iter->UnitSphereY(),
+					     iter->UnitSphereZ(), 1.0);
+    if (!tree_map.AddPoint(tmp_ang))
+      std::cout << "\t\tFailed to add point: " <<
+	iter->RA() << ", " << iter->DEC() << "\n";
+  }
+
+  // Quick global accounting check.
+  std::cout << "\t" << tree_map.NPoints() << " points added; " <<
+    1.0*tree_map.NPoints()/tree_map.Area() << " points/sq. degree.\n";
+  std::cout << "\t" << tree_map.BaseNodes() << " base nodes at " <<
+    tree_map.Resolution() << " resolution; " << tree_map.Nodes() <<
+    " total nodes.\n";
+
+  // Generate a smaller set of test points.
+  uint32_t n_test_points = 1000;
+  Stomp::AngularVector test_angVec;
+  stomp_map->GenerateRandomPoints(test_angVec, n_test_points);
+
+  // Now, we check the annulus finding.
+  Stomp::StompWatch stomp_watch;
+  Stomp::WeightedAngularCoordinate test_point;
+
+  double match_radius = 3.0;
+  std::cout <<
+    "\nFinding closest matches using " << n_test_points <<
+    " points in the tree and " << match_radius << " arcsecond radius...\n";
+  stomp_watch.StartTimer();
+  uint16_t n_match = 0;
+  double mean_distance = 0.0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_map.ClosestMatch(angVec[i], match_radius/3600.0, test_point)) {
+      n_match++;
+      mean_distance += angVec[i].AngularDistance(test_point);
+    }
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points <<
+    " points; Average distance = " << 3600.0*mean_distance/n_match <<
+    " arcseconds.\n" << "\tTime elapsed = " <<
+    stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 0.5;
+  std::cout <<
+    "\nFinding closest matches using " << n_test_points <<
+    " points in the tree and " << match_radius << " arcsecond radius..\n";
+  stomp_watch.StartTimer();
+  n_match = 0;
+  mean_distance = 0.0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_map.ClosestMatch(angVec[i], match_radius/3600.0, test_point)) {
+      n_match++;
+      mean_distance += angVec[i].AngularDistance(test_point);
+    }
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points <<
+    " points; Average distance = " << 3600.0*mean_distance/n_match <<
+    " arcseconds.\n" << "\tTime elapsed = " <<
+    stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 3.0;
+  std::cout << "\nFinding matches using " << n_test_points <<
+    " points in the pixel with " << match_radius << " arcsecond radius...\n";
+  stomp_watch.StartTimer();
+  n_match = 0;
+  mean_distance = 0.0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_map.ClosestMatch(test_angVec[i],
+			      match_radius/3600.0, test_point)) {
+      n_match++;
+      mean_distance += test_angVec[i].AngularDistance(test_point);
+      if (i < 5) {
+	std::cout << "(" << test_angVec[i].Lambda() <<
+	  "," << test_angVec[i].Eta() <<
+	  ") -> (" << test_point.Lambda() << "," << test_point.Eta() <<
+	  "): " << test_angVec[i].AngularDistance(test_point) << "\n";
+      }
+    }
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points <<
+    " points; Average distance = " << 3600.0*mean_distance/n_match <<
+    " arcseconds.\n" << "\tTime elapsed = " <<
+    stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 0.5;
+  std::cout << "\nFinding matches using " << n_test_points <<
+    " points in the pixel with " << match_radius << " arcsecond radius...\n";
+  stomp_watch.StartTimer();
+  n_match = 0;
+  mean_distance = 0.0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_map.ClosestMatch(test_angVec[i],
+			      match_radius/3600.0, test_point)) {
+      n_match++;
+      mean_distance += test_angVec[i].AngularDistance(test_point);
+    }
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points <<
+    " points; Average distance = " << 3600.0*mean_distance/n_match <<
+    " arcseconds.\n" << "\tTime elapsed = " <<
+    stomp_watch.ElapsedTime()/n_test_points << "s\n";
+
+  match_radius = 3.0;
+  std::cout << "\nFinding matches using " << n_test_points <<
+    " points outside the pixel and " << match_radius <<
+    " arcsecond radius...\n";
+  for (uint16_t i=0;i<n_test_points;i++)
+    test_angVec[i].SetSurveyCoordinates(test_angVec[i].Lambda()-40.0,
+					test_angVec[i].Eta());
+
+  stomp_watch.StartTimer();
+  n_match = 0;
+  mean_distance = 0.0;
+  for (uint16_t i=0;i<n_test_points;i++) {
+    if (tree_map.ClosestMatch(test_angVec[i],
+			      match_radius/3600.0, test_point)) {
+      n_match++;
+      mean_distance += test_angVec[i].AngularDistance(test_point);
+    }
+  }
+  stomp_watch.StopTimer();
+
+  std::cout << "\tFound " << n_match << "/" << n_test_points <<
+    " points; Average distance = " << 3600.0*mean_distance/n_match <<
+    " arcseconds.\n" << "\tTime elapsed = " <<
+    stomp_watch.ElapsedTime()/n_test_points << "s\n";
+}
+
 // Define our command line flags here so we can use these flags later.
 DEFINE_bool(all_tree_map_tests, false, "Run all class unit tests.");
 DEFINE_bool(tree_map_basic_tests, false, "Run TreeMap basic tests");
@@ -752,6 +924,8 @@ DEFINE_bool(tree_map_region_tests, false, "Run TreeMap region tests");
 DEFINE_bool(tree_map_field_pair_tests, false, "Run TreeMap field pair tests");
 DEFINE_bool(tree_map_neighbor_tests, false,
             "Run TreeMap nearest neighbor tests");
+DEFINE_bool(tree_map_match_tests, false,
+            "Run TreeMap closest match tests");
 
 void TreeMapUnitTests(bool run_all_tests) {
   void TreeMapBasicTests();
@@ -760,6 +934,7 @@ void TreeMapUnitTests(bool run_all_tests) {
   void TreeMapRegionTests();
   void TreeMapFieldPairTests();
   void TreeMapNeighborTests();
+  void TreeMapMatchTests();
 
   if (run_all_tests) FLAGS_all_tree_map_tests = true;
 
@@ -788,4 +963,8 @@ void TreeMapUnitTests(bool run_all_tests) {
   // Checking nearest neighbor routines.
   if (FLAGS_all_tree_map_tests || FLAGS_tree_map_neighbor_tests)
     TreeMapNeighborTests();
+
+  // Checking closest match routines.
+  if (FLAGS_all_tree_map_tests || FLAGS_tree_map_match_tests)
+    TreeMapMatchTests();
 }
