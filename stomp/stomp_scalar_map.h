@@ -272,7 +272,7 @@ class ScalarMap : public BaseMap {
   void AutoCorrelateWithRegions(ThetaIterator theta_iter);
 
   // Same as the auto-correlation methods, except the current map is
-  // cross-correlated with another DensityMap.  Only areas of overlap are
+  // cross-correlated with another ScalarMap.  Only areas of overlap are
   // considered in the cross-correlation.
   void CrossCorrelate(ScalarMap& scalar_map, AngularCorrelation& wtheta);
   void CrossCorrelate(ScalarMap& scalar_map, ThetaIterator theta_iter);
@@ -280,6 +280,16 @@ class ScalarMap : public BaseMap {
 				 AngularCorrelation& wtheta);
   void CrossCorrelateWithRegions(ScalarMap& scalar_map,
 				 ThetaIterator theta_iter);
+
+  // The previous methods all considered the correlations on a given angular
+  // scale or scales.  Occasionally, we just want to calculate the variance
+  // on the map or covariance between two maps.  If this done with regions,
+  // then we can also calculate the error on those quantities.
+  double Variance();
+  double Covariance(ScalarMap& scalar_map);
+  void Variance(double& variance, double& variance_error);
+  void Covariance(ScalarMap& scalar_map, double& covariance,
+		  double& covariance_error);
 
   // Meaningful, since all of the pixels in the map share a common resolution.
   uint32_t Resolution();

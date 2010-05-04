@@ -1470,6 +1470,11 @@ void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
     exit(1);
   }
 
+  if (NRegion() != scalar_map.NRegion()) {
+    std::cout << "Map regionation must match!  Exiting...\n";
+    exit(1);
+  }
+
   bool convert_back_to_raw = false;
   if (!converted_to_overdensity_) {
     ConvertToOverDensity();
@@ -1583,6 +1588,194 @@ void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
 	}
       }
     }
+  }
+
+  if (convert_back_to_raw) ConvertFromOverDensity();
+  if (convert_input_map_back_to_raw) scalar_map.ConvertFromOverDensity();
+}
+
+double ScalarMap::Variance() {
+  bool convert_back_to_raw = false;
+  if (!converted_to_overdensity_) {
+    ConvertToOverDensity();
+    convert_back_to_raw = true;
+  }
+
+  double variance = 0.0, variance_norm = 0.0;
+
+  for (ScalarIterator map_iter=pix_.begin();
+       map_iter!=pix_.end();++map_iter) {
+    variance +=
+      map_iter->Intensity()*map_iter->Weight()*
+      map_iter->Intensity()*map_iter->Weight();
+    variance_norm += map_iter->Weight()*map_iter->Weight();
+  }
+
+  if (convert_back_to_raw) ConvertFromOverDensity();
+
+  return (DoubleGT(variance_norm, 1.0e-10) ? variance/variance_norm : 0.0);
+}
+
+double ScalarMap::Covariance(ScalarMap& scalar_map) {
+  if (resolution_ != scalar_map.Resolution()) {
+    std::cout << "Map resolutions must match!  Exiting...\n";
+    exit(1);
+  }
+
+  bool convert_back_to_raw = false;
+  if (!converted_to_overdensity_) {
+    ConvertToOverDensity();
+    convert_back_to_raw = true;
+  }
+
+  bool convert_input_map_back_to_raw = false;
+  if (!scalar_map.IsOverDensityMap()) {
+    scalar_map.ConvertToOverDensity();
+    convert_input_map_back_to_raw = true;
+  }
+
+  ScalarIterator search_begin = pix_.begin();
+  double covariance = 0.0, covariance_norm = 0.0;
+
+  for (ScalarIterator map_iter=scalar_map.Begin();
+       map_iter!=scalar_map.End();++map_iter) {
+    ScalarPair iter = equal_range(search_begin, pix_.end(), *map_iter,
+				  Pixel::SuperPixelBasedOrder);
+    if (iter.first != iter.second) {
+      covariance +=
+	iter.first->Intensity()*iter.first->Weight()*
+	map_iter->Intensity()*map_iter->Weight();
+      covariance_norm += iter.first->Weight()*map_iter->Weight();
+    }
+    search_begin = iter.second;
+  }
+
+  if (convert_back_to_raw) ConvertFromOverDensity();
+  if (convert_input_map_back_to_raw) scalar_map.ConvertFromOverDensity();
+
+  return (DoubleGT(covariance_norm, 1.0e-10) ?
+	  covariance/covariance_norm : 0.0);
+}
+
+void ScalarMap::Variance(double& variance, double& variance_error) {
+  bool convert_back_to_raw = false;
+  if (!converted_to_overdensity_) {
+    ConvertToOverDensity();
+    convert_back_to_raw = true;
+  }
+
+  std::vector<double> region_variance, region_variance_norm;
+  region_variance.reserve(NRegion());
+  region_variance_norm.reserve(NRegion());
+
+  for (uint16_t i=0;i<NRegion();i++) {
+    region_variance.push_back(0.0);
+    region_variance_norm.push_back(0.0);
+  }
+
+  for (ScalarIterator map_iter=pix_.begin();
+       map_iter!=pix_.end();++map_iter) {
+    int16_t pix_region = Region(map_iter->SuperPix(RegionResolution()));
+    region_variance[pix_region] +=
+      map_iter->Intensity()*map_iter->Weight()*
+      map_iter->Intensity()*map_iter->Weight();
+    region_variance_norm[pix_region] += map_iter->Weight()*map_iter->Weight();
+  }
+
+  variance = 0.0;
+  variance_error = 0.0;
+  uint16_t n_region = 0;
+  for (uint16_t i=0;i<NRegion();i++) {
+    if (DoubleGT(region_variance_norm[i], 1.0e-10)) {
+      variance += region_variance[i]/region_variance_norm[i];
+      n_region++;
+    }
+  }
+
+  if (n_region > 0) {
+    variance /= n_region;
+    for (uint16_t i=0;i<NRegion();i++) {
+      if (DoubleGT(region_variance_norm[i], 1.0e-10)) {
+	variance_error +=
+	  (variance - region_variance[i]/region_variance_norm[i])*
+	  (variance - region_variance[i]/region_variance_norm[i]);
+      }
+    }
+    variance_error = sqrt(variance_error)/n_region;
+  }
+
+  if (convert_back_to_raw) ConvertFromOverDensity();
+}
+
+void ScalarMap::Covariance(ScalarMap& scalar_map, double& covariance,
+			   double& covariance_error) {
+  if (resolution_ != scalar_map.Resolution()) {
+    std::cout << "Map resolutions must match!  Exiting...\n";
+    exit(1);
+  }
+
+  if (NRegion() != scalar_map.NRegion()) {
+    std::cout << "Map regionation must match!  Exiting...\n";
+    exit(1);
+  }
+
+  bool convert_back_to_raw = false;
+  if (!converted_to_overdensity_) {
+    ConvertToOverDensity();
+    convert_back_to_raw = true;
+  }
+
+  bool convert_input_map_back_to_raw = false;
+  if (!scalar_map.IsOverDensityMap()) {
+    scalar_map.ConvertToOverDensity();
+    convert_input_map_back_to_raw = true;
+  }
+
+  std::vector<double> region_covariance, region_covariance_norm;
+  region_covariance.reserve(NRegion());
+  region_covariance_norm.reserve(NRegion());
+
+  for (uint16_t i=0;i<NRegion();i++) {
+    region_covariance.push_back(0.0);
+    region_covariance_norm.push_back(0.0);
+  }
+
+  ScalarIterator search_begin = pix_.begin();
+  for (ScalarIterator map_iter=scalar_map.Begin();
+       map_iter!=scalar_map.End();++map_iter) {
+    ScalarPair iter = equal_range(search_begin, pix_.end(), *map_iter,
+				  Pixel::SuperPixelBasedOrder);
+    if (iter.first != iter.second) {
+      int16_t pix_region = Region(map_iter->SuperPix(RegionResolution()));
+      region_covariance[pix_region] +=
+	iter.first->Intensity()*iter.first->Weight()*
+	map_iter->Intensity()*map_iter->Weight();
+      region_covariance_norm[pix_region] +=
+	iter.first->Weight()*map_iter->Weight();
+    }
+    search_begin = iter.second;
+  }
+
+  covariance = 0.0;
+  covariance_error = 0.0;
+  uint16_t n_region = 0;
+  for (uint16_t i=0;i<NRegion();i++) {
+    if (DoubleGT(region_covariance_norm[i], 1.0e-10)) {
+      covariance += region_covariance[i]/region_covariance_norm[i];
+      n_region++;
+    }
+  }
+
+  if (n_region > 0) {
+    covariance /= n_region;
+    for (uint16_t i=0;i<NRegion();i++) {
+      if (DoubleGT(region_covariance_norm[i], 1.0e-10)) {
+	covariance_error +=
+	  (covariance - region_covariance[i]/region_covariance_norm[i])*
+	  (covariance - region_covariance[i]/region_covariance_norm[i]);
+      }
+    }
+    covariance_error = sqrt(covariance_error)/n_region;
   }
 
   if (convert_back_to_raw) ConvertFromOverDensity();
