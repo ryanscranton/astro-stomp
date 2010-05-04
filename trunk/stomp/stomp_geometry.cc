@@ -496,6 +496,20 @@ bool LongitudeBound::FindAngularBounds() {
     break;
   }
 
+  // For large area bounds, the above methods occasionally fail, resulting in
+  // bound limits that are too small.  In those cases, we want to just take
+  // the entire sphere as our first guess.
+  double bound_area = 4.0*Pi*StradToDeg;
+  bound_area *= 0.5*(sin(lammin*DegToRad) - sin(lammin*DegToRad));
+  bound_area *= (etamax - etamin)/360.0;
+
+  if (bound_area < Area() && Area() > 2.0*Pi) {
+    lammin = -90.0;
+    lammax = 90.0;
+    etamin = -180.0;
+    etamax = 180.0;
+  }
+
   SetAngularBounds(lammin,lammax,etamin,etamax);
 
   return true;
@@ -613,6 +627,20 @@ bool LatitudeBound::FindAngularBounds() {
       if (ang.Eta() > etamax) etamax = ang.Eta();
     }
     break;
+  }
+
+  // For large area bounds, the above methods occasionally fail, resulting in
+  // bound limits that are too small.  In those cases, we want to just take
+  // the entire sphere as our first guess.
+  double bound_area = 4.0*Pi*StradToDeg;
+  bound_area *= 0.5*(sin(lammin*DegToRad) - sin(lammin*DegToRad));
+  bound_area *= (etamax - etamin)/360.0;
+
+  if (bound_area < Area() && Area() > 2.0*Pi) {
+    lammin = -90.0;
+    lammax = 90.0;
+    etamin = -180.0;
+    etamax = 180.0;
   }
 
   SetAngularBounds(lammin,lammax,etamin,etamax);
@@ -849,6 +877,20 @@ bool LatLonBound::FindAngularBounds() {
       if (ang.Eta() > etamax) etamax = ang.Eta();
     }
     break;
+  }
+
+  // For large area bounds, the above methods occasionally fail, resulting in
+  // bound limits that are too small.  In those cases, we want to just take
+  // the entire sphere as our first guess.
+  double bound_area = 4.0*Pi*StradToDeg;
+  bound_area *= 0.5*(sin(lammin*DegToRad) - sin(lammin*DegToRad));
+  bound_area *= (etamax - etamin)/360.0;
+
+  if (bound_area < Area() && Area() > 2.0*Pi) {
+    lammin = -90.0;
+    lammax = 90.0;
+    etamin = -180.0;
+    etamax = 180.0;
   }
 
   SetAngularBounds(lammin,lammax,etamin,etamax);
