@@ -2519,119 +2519,126 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_Stomp__Cosmology swig_types[12]
 #define SWIGTYPE_p_Stomp__FieldColumnDict__iterator swig_types[13]
 #define SWIGTYPE_p_Stomp__FieldDict__iterator swig_types[14]
-#define SWIGTYPE_p_Stomp__FootprintVector__iterator swig_types[15]
-#define SWIGTYPE_p_Stomp__GeometricBound swig_types[16]
-#define SWIGTYPE_p_Stomp__Histogram swig_types[17]
-#define SWIGTYPE_p_Stomp__HistogramBin swig_types[18]
-#define SWIGTYPE_p_Stomp__Map swig_types[19]
-#define SWIGTYPE_p_Stomp__NearestNeighborPixel swig_types[20]
-#define SWIGTYPE_p_Stomp__NearestNeighborPoint swig_types[21]
-#define SWIGTYPE_p_Stomp__Pixel swig_types[22]
-#define SWIGTYPE_p_Stomp__PixelPtrVector__iterator swig_types[23]
-#define SWIGTYPE_p_Stomp__PixelVector__iterator swig_types[24]
-#define SWIGTYPE_p_Stomp__PolygonBound swig_types[25]
-#define SWIGTYPE_p_Stomp__PolygonVector__iterator swig_types[26]
-#define SWIGTYPE_p_Stomp__RegionAreaDict__iterator swig_types[27]
-#define SWIGTYPE_p_Stomp__RegionDict__iterator swig_types[28]
-#define SWIGTYPE_p_Stomp__RegionMap swig_types[29]
-#define SWIGTYPE_p_Stomp__ResolutionDict__iterator swig_types[30]
-#define SWIGTYPE_p_Stomp__ScalarMap swig_types[31]
-#define SWIGTYPE_p_Stomp__ScalarMapVector__iterator swig_types[32]
-#define SWIGTYPE_p_Stomp__ScalarPixel swig_types[33]
-#define SWIGTYPE_p_Stomp__ScalarPtrVector__iterator swig_types[34]
-#define SWIGTYPE_p_Stomp__ScalarSubMap swig_types[35]
-#define SWIGTYPE_p_Stomp__ScalarSubMapVector__iterator swig_types[36]
-#define SWIGTYPE_p_Stomp__ScalarVector__iterator swig_types[37]
-#define SWIGTYPE_p_Stomp__Section swig_types[38]
-#define SWIGTYPE_p_Stomp__StompWatch swig_types[39]
-#define SWIGTYPE_p_Stomp__SubMap swig_types[40]
-#define SWIGTYPE_p_Stomp__SubMapVector__iterator swig_types[41]
-#define SWIGTYPE_p_Stomp__ThetaPtrVector__iterator swig_types[42]
-#define SWIGTYPE_p_Stomp__ThetaVector__iterator swig_types[43]
-#define SWIGTYPE_p_Stomp__TreeMap swig_types[44]
-#define SWIGTYPE_p_Stomp__TreeNeighbor swig_types[45]
-#define SWIGTYPE_p_Stomp__TreePixel swig_types[46]
-#define SWIGTYPE_p_Stomp__WAngularPtrVector__iterator swig_types[47]
-#define SWIGTYPE_p_Stomp__WAngularVector__iterator swig_types[48]
-#define SWIGTYPE_p_Stomp__WThetaVector__iterator swig_types[49]
-#define SWIGTYPE_p_Stomp__WedgeBound swig_types[50]
-#define SWIGTYPE_p_Stomp__WedgeVector__iterator swig_types[51]
-#define SWIGTYPE_p_Stomp__WeightedAngularCoordinate swig_types[52]
-#define SWIGTYPE_p_allocator_type swig_types[53]
-#define SWIGTYPE_p_char swig_types[54]
-#define SWIGTYPE_p_difference_type swig_types[55]
-#define SWIGTYPE_p_double swig_types[56]
-#define SWIGTYPE_p_int swig_types[57]
-#define SWIGTYPE_p_key_type swig_types[58]
-#define SWIGTYPE_p_long_long swig_types[59]
-#define SWIGTYPE_p_mapped_type swig_types[60]
-#define SWIGTYPE_p_p_PyObject swig_types[61]
-#define SWIGTYPE_p_short swig_types[62]
-#define SWIGTYPE_p_signed_char swig_types[63]
-#define SWIGTYPE_p_size_type swig_types[64]
-#define SWIGTYPE_p_std__invalid_argument swig_types[65]
-#define SWIGTYPE_p_std__lessT_std__string_t swig_types[66]
-#define SWIGTYPE_p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t swig_types[67]
-#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t swig_types[68]
-#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type swig_types[69]
-#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t swig_types[70]
-#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type swig_types[71]
-#define SWIGTYPE_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t swig_types[72]
-#define SWIGTYPE_p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t swig_types[73]
-#define SWIGTYPE_p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t swig_types[74]
-#define SWIGTYPE_p_std__pairT_Stomp__RegionAreaDict__iterator_Stomp__RegionAreaDict__iterator_t swig_types[75]
-#define SWIGTYPE_p_std__pairT_Stomp__RegionDict__iterator_Stomp__RegionDict__iterator_t swig_types[76]
-#define SWIGTYPE_p_std__pairT_Stomp__ResolutionDict__iterator_Stomp__ResolutionDict__iterator_t swig_types[77]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarMapVector__iterator_Stomp__ScalarMapVector__iterator_t swig_types[78]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarSubMapVector__iterator_Stomp__ScalarSubMapVector__iterator_t swig_types[79]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarVector__iterator_Stomp__ScalarVector__iterator_t swig_types[80]
-#define SWIGTYPE_p_std__pairT_Stomp__SubMapVector__iterator_Stomp__SubMapVector__iterator_t swig_types[81]
-#define SWIGTYPE_p_std__pairT_Stomp__ThetaVector__iterator_Stomp__ThetaVector__iterator_t swig_types[82]
-#define SWIGTYPE_p_std__pairT_double_Stomp__TreePixel_p_t swig_types[83]
-#define SWIGTYPE_p_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t swig_types[84]
-#define SWIGTYPE_p_std__pairT_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_t swig_types[85]
-#define SWIGTYPE_p_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t swig_types[86]
-#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__TreePixel_p_t_std__vectorT_std__pairT_double_Stomp__TreePixel_p_t_std__allocatorT_std__pairT_double_Stomp__TreePixel_p_t_t_t_Stomp__NearestNeighborPixel_t swig_types[87]
-#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t swig_types[88]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t swig_types[89]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t swig_types[90]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[91]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[92]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[93]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[94]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[95]
-#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[96]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[97]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[98]
-#define SWIGTYPE_p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t swig_types[99]
-#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t swig_types[100]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[101]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[102]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[103]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[104]
-#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[105]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[106]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[107]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[108]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[109]
-#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[110]
-#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[111]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[112]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[113]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[114]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[115]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[116]
-#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[117]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[118]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[119]
-#define SWIGTYPE_p_swig__PySwigIterator swig_types[120]
-#define SWIGTYPE_p_unsigned_char swig_types[121]
-#define SWIGTYPE_p_unsigned_int swig_types[122]
-#define SWIGTYPE_p_unsigned_long_long swig_types[123]
-#define SWIGTYPE_p_unsigned_short swig_types[124]
-#define SWIGTYPE_p_value_type swig_types[125]
-static swig_type_info *swig_types[127];
-static swig_module_info swig_module = {swig_types, 126, 0, 0, 0, 0};
+#define SWIGTYPE_p_Stomp__GeometricBound swig_types[15]
+#define SWIGTYPE_p_Stomp__Histogram swig_types[16]
+#define SWIGTYPE_p_Stomp__HistogramBin swig_types[17]
+#define SWIGTYPE_p_Stomp__LatLonBound swig_types[18]
+#define SWIGTYPE_p_Stomp__LatLonVector__iterator swig_types[19]
+#define SWIGTYPE_p_Stomp__LatitudeBound swig_types[20]
+#define SWIGTYPE_p_Stomp__LatitudeVector__iterator swig_types[21]
+#define SWIGTYPE_p_Stomp__LongitudeBound swig_types[22]
+#define SWIGTYPE_p_Stomp__LongitudeVector__iterator swig_types[23]
+#define SWIGTYPE_p_Stomp__Map swig_types[24]
+#define SWIGTYPE_p_Stomp__NearestNeighborPixel swig_types[25]
+#define SWIGTYPE_p_Stomp__NearestNeighborPoint swig_types[26]
+#define SWIGTYPE_p_Stomp__Pixel swig_types[27]
+#define SWIGTYPE_p_Stomp__PixelPtrVector__iterator swig_types[28]
+#define SWIGTYPE_p_Stomp__PixelVector__iterator swig_types[29]
+#define SWIGTYPE_p_Stomp__PolygonBound swig_types[30]
+#define SWIGTYPE_p_Stomp__PolygonVector__iterator swig_types[31]
+#define SWIGTYPE_p_Stomp__RegionAreaDict__iterator swig_types[32]
+#define SWIGTYPE_p_Stomp__RegionDict__iterator swig_types[33]
+#define SWIGTYPE_p_Stomp__RegionMap swig_types[34]
+#define SWIGTYPE_p_Stomp__ResolutionDict__iterator swig_types[35]
+#define SWIGTYPE_p_Stomp__ScalarMap swig_types[36]
+#define SWIGTYPE_p_Stomp__ScalarMapVector__iterator swig_types[37]
+#define SWIGTYPE_p_Stomp__ScalarPixel swig_types[38]
+#define SWIGTYPE_p_Stomp__ScalarPtrVector__iterator swig_types[39]
+#define SWIGTYPE_p_Stomp__ScalarSubMap swig_types[40]
+#define SWIGTYPE_p_Stomp__ScalarSubMapVector__iterator swig_types[41]
+#define SWIGTYPE_p_Stomp__ScalarVector__iterator swig_types[42]
+#define SWIGTYPE_p_Stomp__Section swig_types[43]
+#define SWIGTYPE_p_Stomp__StompWatch swig_types[44]
+#define SWIGTYPE_p_Stomp__SubMap swig_types[45]
+#define SWIGTYPE_p_Stomp__SubMapVector__iterator swig_types[46]
+#define SWIGTYPE_p_Stomp__ThetaPtrVector__iterator swig_types[47]
+#define SWIGTYPE_p_Stomp__ThetaVector__iterator swig_types[48]
+#define SWIGTYPE_p_Stomp__TreeMap swig_types[49]
+#define SWIGTYPE_p_Stomp__TreeNeighbor swig_types[50]
+#define SWIGTYPE_p_Stomp__TreePixel swig_types[51]
+#define SWIGTYPE_p_Stomp__WAngularPtrVector__iterator swig_types[52]
+#define SWIGTYPE_p_Stomp__WAngularVector__iterator swig_types[53]
+#define SWIGTYPE_p_Stomp__WThetaVector__iterator swig_types[54]
+#define SWIGTYPE_p_Stomp__WedgeBound swig_types[55]
+#define SWIGTYPE_p_Stomp__WedgeVector__iterator swig_types[56]
+#define SWIGTYPE_p_Stomp__WeightedAngularCoordinate swig_types[57]
+#define SWIGTYPE_p_allocator_type swig_types[58]
+#define SWIGTYPE_p_char swig_types[59]
+#define SWIGTYPE_p_difference_type swig_types[60]
+#define SWIGTYPE_p_double swig_types[61]
+#define SWIGTYPE_p_int swig_types[62]
+#define SWIGTYPE_p_key_type swig_types[63]
+#define SWIGTYPE_p_long_long swig_types[64]
+#define SWIGTYPE_p_mapped_type swig_types[65]
+#define SWIGTYPE_p_p_PyObject swig_types[66]
+#define SWIGTYPE_p_short swig_types[67]
+#define SWIGTYPE_p_signed_char swig_types[68]
+#define SWIGTYPE_p_size_type swig_types[69]
+#define SWIGTYPE_p_std__invalid_argument swig_types[70]
+#define SWIGTYPE_p_std__lessT_std__string_t swig_types[71]
+#define SWIGTYPE_p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t swig_types[72]
+#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t swig_types[73]
+#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type swig_types[74]
+#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t swig_types[75]
+#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type swig_types[76]
+#define SWIGTYPE_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t swig_types[77]
+#define SWIGTYPE_p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t swig_types[78]
+#define SWIGTYPE_p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t swig_types[79]
+#define SWIGTYPE_p_std__pairT_Stomp__RegionAreaDict__iterator_Stomp__RegionAreaDict__iterator_t swig_types[80]
+#define SWIGTYPE_p_std__pairT_Stomp__RegionDict__iterator_Stomp__RegionDict__iterator_t swig_types[81]
+#define SWIGTYPE_p_std__pairT_Stomp__ResolutionDict__iterator_Stomp__ResolutionDict__iterator_t swig_types[82]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarMapVector__iterator_Stomp__ScalarMapVector__iterator_t swig_types[83]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarSubMapVector__iterator_Stomp__ScalarSubMapVector__iterator_t swig_types[84]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarVector__iterator_Stomp__ScalarVector__iterator_t swig_types[85]
+#define SWIGTYPE_p_std__pairT_Stomp__SubMapVector__iterator_Stomp__SubMapVector__iterator_t swig_types[86]
+#define SWIGTYPE_p_std__pairT_Stomp__ThetaVector__iterator_Stomp__ThetaVector__iterator_t swig_types[87]
+#define SWIGTYPE_p_std__pairT_double_Stomp__TreePixel_p_t swig_types[88]
+#define SWIGTYPE_p_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t swig_types[89]
+#define SWIGTYPE_p_std__pairT_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_t swig_types[90]
+#define SWIGTYPE_p_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t swig_types[91]
+#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__TreePixel_p_t_std__vectorT_std__pairT_double_Stomp__TreePixel_p_t_std__allocatorT_std__pairT_double_Stomp__TreePixel_p_t_t_t_Stomp__NearestNeighborPixel_t swig_types[92]
+#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t swig_types[93]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t swig_types[94]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t swig_types[95]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[96]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[97]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[98]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[99]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[100]
+#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[101]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[102]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[103]
+#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t swig_types[104]
+#define SWIGTYPE_p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t swig_types[105]
+#define SWIGTYPE_p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t swig_types[106]
+#define SWIGTYPE_p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t swig_types[107]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[108]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[109]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[110]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[111]
+#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[112]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[113]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[114]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[115]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[116]
+#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[117]
+#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[118]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[119]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[120]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[121]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[122]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[123]
+#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[124]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[125]
+#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[126]
+#define SWIGTYPE_p_swig__PySwigIterator swig_types[127]
+#define SWIGTYPE_p_unsigned_char swig_types[128]
+#define SWIGTYPE_p_unsigned_int swig_types[129]
+#define SWIGTYPE_p_unsigned_long_long swig_types[130]
+#define SWIGTYPE_p_unsigned_short swig_types[131]
+#define SWIGTYPE_p_value_type swig_types[132]
+static swig_type_info *swig_types[134];
+static swig_module_info swig_module = {swig_types, 133, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -35285,6 +35292,270 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_ScalarMap_Variance__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::ScalarMap *arg1 = (Stomp::ScalarMap *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ScalarMap_Variance",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__ScalarMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ScalarMap_Variance" "', argument " "1"" of type '" "Stomp::ScalarMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::ScalarMap * >(argp1);
+  result = (double)(arg1)->Variance();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ScalarMap_Covariance__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::ScalarMap *arg1 = (Stomp::ScalarMap *) 0 ;
+  Stomp::ScalarMap *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ScalarMap_Covariance",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__ScalarMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ScalarMap_Covariance" "', argument " "1"" of type '" "Stomp::ScalarMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::ScalarMap * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__ScalarMap,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ScalarMap_Covariance" "', argument " "2"" of type '" "Stomp::ScalarMap &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Covariance" "', argument " "2"" of type '" "Stomp::ScalarMap &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::ScalarMap * >(argp2);
+  result = (double)(arg1)->Covariance(*arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ScalarMap_Variance__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::ScalarMap *arg1 = (Stomp::ScalarMap *) 0 ;
+  double *arg2 = 0 ;
+  double *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ScalarMap_Variance",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__ScalarMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ScalarMap_Variance" "', argument " "1"" of type '" "Stomp::ScalarMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::ScalarMap * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_double,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ScalarMap_Variance" "', argument " "2"" of type '" "double &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Variance" "', argument " "2"" of type '" "double &""'"); 
+  }
+  arg2 = reinterpret_cast< double * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ScalarMap_Variance" "', argument " "3"" of type '" "double &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Variance" "', argument " "3"" of type '" "double &""'"); 
+  }
+  arg3 = reinterpret_cast< double * >(argp3);
+  (arg1)->Variance(*arg2,*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ScalarMap_Variance(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_ScalarMap_Variance__SWIG_0(self, args);
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_double, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_double, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_ScalarMap_Variance__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'ScalarMap_Variance'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Variance(Stomp::ScalarMap *)\n"
+    "    Variance(Stomp::ScalarMap *,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ScalarMap_Covariance__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::ScalarMap *arg1 = (Stomp::ScalarMap *) 0 ;
+  Stomp::ScalarMap *arg2 = 0 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:ScalarMap_Covariance",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__ScalarMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ScalarMap_Covariance" "', argument " "1"" of type '" "Stomp::ScalarMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::ScalarMap * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__ScalarMap,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ScalarMap_Covariance" "', argument " "2"" of type '" "Stomp::ScalarMap &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Covariance" "', argument " "2"" of type '" "Stomp::ScalarMap &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::ScalarMap * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ScalarMap_Covariance" "', argument " "3"" of type '" "double &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Covariance" "', argument " "3"" of type '" "double &""'"); 
+  }
+  arg3 = reinterpret_cast< double * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "ScalarMap_Covariance" "', argument " "4"" of type '" "double &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Covariance" "', argument " "4"" of type '" "double &""'"); 
+  }
+  arg4 = reinterpret_cast< double * >(argp4);
+  (arg1)->Covariance(*arg2,*arg3,*arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ScalarMap_Covariance(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_ScalarMap_Covariance__SWIG_0(self, args);
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_double, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_double, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_ScalarMap_Covariance__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'ScalarMap_Covariance'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Covariance(Stomp::ScalarMap *,Stomp::ScalarMap &)\n"
+    "    Covariance(Stomp::ScalarMap *,Stomp::ScalarMap &,double &,double &)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_ScalarMap_Resolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::ScalarMap *arg1 = (Stomp::ScalarMap *) 0 ;
@@ -37168,6 +37439,462 @@ SWIGINTERN PyObject *PolygonBound_swigregister(PyObject *SWIGUNUSEDPARM(self), P
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_Stomp__PolygonBound, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_LongitudeBound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  Stomp::LongitudeBound *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:new_LongitudeBound",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LongitudeBound" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LongitudeBound" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LongitudeBound" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  result = (Stomp::LongitudeBound *)new Stomp::LongitudeBound(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__LongitudeBound, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_LongitudeBound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LongitudeBound *arg1 = (Stomp::LongitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_LongitudeBound",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LongitudeBound, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LongitudeBound" "', argument " "1"" of type '" "Stomp::LongitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LongitudeBound * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LongitudeBound_CheckPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LongitudeBound *arg1 = (Stomp::LongitudeBound *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:LongitudeBound_CheckPoint",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LongitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LongitudeBound_CheckPoint" "', argument " "1"" of type '" "Stomp::LongitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LongitudeBound * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LongitudeBound_CheckPoint" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LongitudeBound_CheckPoint" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  result = (bool)(arg1)->CheckPoint(*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LongitudeBound_FindAngularBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LongitudeBound *arg1 = (Stomp::LongitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LongitudeBound_FindAngularBounds",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LongitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LongitudeBound_FindAngularBounds" "', argument " "1"" of type '" "Stomp::LongitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LongitudeBound * >(argp1);
+  result = (bool)(arg1)->FindAngularBounds();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LongitudeBound_FindArea(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LongitudeBound *arg1 = (Stomp::LongitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LongitudeBound_FindArea",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LongitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LongitudeBound_FindArea" "', argument " "1"" of type '" "Stomp::LongitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LongitudeBound * >(argp1);
+  result = (bool)(arg1)->FindArea();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *LongitudeBound_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Stomp__LongitudeBound, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_LatitudeBound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  Stomp::LatitudeBound *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:new_LatitudeBound",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LatitudeBound" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LatitudeBound" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LatitudeBound" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  result = (Stomp::LatitudeBound *)new Stomp::LatitudeBound(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__LatitudeBound, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_LatitudeBound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatitudeBound *arg1 = (Stomp::LatitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_LatitudeBound",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatitudeBound, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LatitudeBound" "', argument " "1"" of type '" "Stomp::LatitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatitudeBound_CheckPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatitudeBound *arg1 = (Stomp::LatitudeBound *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:LatitudeBound_CheckPoint",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatitudeBound_CheckPoint" "', argument " "1"" of type '" "Stomp::LatitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LatitudeBound_CheckPoint" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LatitudeBound_CheckPoint" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  result = (bool)(arg1)->CheckPoint(*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatitudeBound_FindAngularBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatitudeBound *arg1 = (Stomp::LatitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatitudeBound_FindAngularBounds",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatitudeBound_FindAngularBounds" "', argument " "1"" of type '" "Stomp::LatitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
+  result = (bool)(arg1)->FindAngularBounds();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatitudeBound_FindArea(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatitudeBound *arg1 = (Stomp::LatitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatitudeBound_FindArea",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatitudeBound_FindArea" "', argument " "1"" of type '" "Stomp::LatitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
+  result = (bool)(arg1)->FindArea();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *LatitudeBound_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Stomp__LatitudeBound, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_LatLonBound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Stomp::LatLonBound *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_LatLonBound",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_LatLonBound" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_LatLonBound" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_LatLonBound" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_LatLonBound" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_LatLonBound" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  result = (Stomp::LatLonBound *)new Stomp::LatLonBound(arg1,arg2,arg3,arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__LatLonBound, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_LatLonBound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_LatLonBound",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_LatLonBound" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_CheckPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:LatLonBound_CheckPoint",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_CheckPoint" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LatLonBound_CheckPoint" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LatLonBound_CheckPoint" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  result = (bool)(arg1)->CheckPoint(*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_FindAngularBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatLonBound_FindAngularBounds",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_FindAngularBounds" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  result = (bool)(arg1)->FindAngularBounds();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_FindArea(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatLonBound_FindArea",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_FindArea" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  result = (bool)(arg1)->FindArea();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *LatLonBound_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_Stomp__LatLonBound, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -70236,6 +70963,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ScalarMap_AutoCorrelateWithRegions", _wrap_ScalarMap_AutoCorrelateWithRegions, METH_VARARGS, NULL},
 	 { (char *)"ScalarMap_CrossCorrelate", _wrap_ScalarMap_CrossCorrelate, METH_VARARGS, NULL},
 	 { (char *)"ScalarMap_CrossCorrelateWithRegions", _wrap_ScalarMap_CrossCorrelateWithRegions, METH_VARARGS, NULL},
+	 { (char *)"ScalarMap_Variance", _wrap_ScalarMap_Variance, METH_VARARGS, NULL},
+	 { (char *)"ScalarMap_Covariance", _wrap_ScalarMap_Covariance, METH_VARARGS, NULL},
 	 { (char *)"ScalarMap_Resolution", _wrap_ScalarMap_Resolution, METH_VARARGS, NULL},
 	 { (char *)"ScalarMap_Intensity", _wrap_ScalarMap_Intensity, METH_VARARGS, NULL},
 	 { (char *)"ScalarMap_NPoints", _wrap_ScalarMap_NPoints, METH_VARARGS, NULL},
@@ -70286,6 +71015,24 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"PolygonBound_FindAngularBounds", _wrap_PolygonBound_FindAngularBounds, METH_VARARGS, NULL},
 	 { (char *)"PolygonBound_FindArea", _wrap_PolygonBound_FindArea, METH_VARARGS, NULL},
 	 { (char *)"PolygonBound_swigregister", PolygonBound_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_LongitudeBound", _wrap_new_LongitudeBound, METH_VARARGS, NULL},
+	 { (char *)"delete_LongitudeBound", _wrap_delete_LongitudeBound, METH_VARARGS, NULL},
+	 { (char *)"LongitudeBound_CheckPoint", _wrap_LongitudeBound_CheckPoint, METH_VARARGS, NULL},
+	 { (char *)"LongitudeBound_FindAngularBounds", _wrap_LongitudeBound_FindAngularBounds, METH_VARARGS, NULL},
+	 { (char *)"LongitudeBound_FindArea", _wrap_LongitudeBound_FindArea, METH_VARARGS, NULL},
+	 { (char *)"LongitudeBound_swigregister", LongitudeBound_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_LatitudeBound", _wrap_new_LatitudeBound, METH_VARARGS, NULL},
+	 { (char *)"delete_LatitudeBound", _wrap_delete_LatitudeBound, METH_VARARGS, NULL},
+	 { (char *)"LatitudeBound_CheckPoint", _wrap_LatitudeBound_CheckPoint, METH_VARARGS, NULL},
+	 { (char *)"LatitudeBound_FindAngularBounds", _wrap_LatitudeBound_FindAngularBounds, METH_VARARGS, NULL},
+	 { (char *)"LatitudeBound_FindArea", _wrap_LatitudeBound_FindArea, METH_VARARGS, NULL},
+	 { (char *)"LatitudeBound_swigregister", LatitudeBound_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_LatLonBound", _wrap_new_LatLonBound, METH_VARARGS, NULL},
+	 { (char *)"delete_LatLonBound", _wrap_delete_LatLonBound, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_CheckPoint", _wrap_LatLonBound_CheckPoint, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_FindAngularBounds", _wrap_LatLonBound_FindAngularBounds, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_FindArea", _wrap_LatLonBound_FindArea, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_swigregister", LatLonBound_swigregister, METH_VARARGS, NULL},
 	 { (char *)"Cosmology_omega_m_get", _wrap_Cosmology_omega_m_get, METH_VARARGS, NULL},
 	 { (char *)"Cosmology_omega_m_set", _wrap_Cosmology_omega_m_set, METH_VARARGS, NULL},
 	 { (char *)"Cosmology_h_get", _wrap_Cosmology_h_get, METH_VARARGS, NULL},
@@ -70692,15 +71439,6 @@ static PyMethodDef SwigMethods[] = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static void *_p_Stomp__WeightedAngularCoordinateTo_p_Stomp__AngularCoordinate(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Stomp::AngularCoordinate *)  ((Stomp::WeightedAngularCoordinate *) x));
-}
-static void *_p_Stomp__CosmoCoordinateTo_p_Stomp__AngularCoordinate(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Stomp::AngularCoordinate *) (Stomp::WeightedAngularCoordinate *) ((Stomp::CosmoCoordinate *) x));
-}
-static void *_p_Stomp__CosmoCoordinateTo_p_Stomp__WeightedAngularCoordinate(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Stomp::WeightedAngularCoordinate *)  ((Stomp::CosmoCoordinate *) x));
-}
 static void *_p_Stomp__MapTo_p_Stomp__BaseMap(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Stomp::BaseMap *)  ((Stomp::Map *) x));
 }
@@ -70710,20 +71448,38 @@ static void *_p_Stomp__ScalarMapTo_p_Stomp__BaseMap(void *x, int *SWIGUNUSEDPARM
 static void *_p_Stomp__TreeMapTo_p_Stomp__BaseMap(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Stomp::BaseMap *)  ((Stomp::TreeMap *) x));
 }
-static void *_p_Stomp__ScalarPixelTo_p_Stomp__Pixel(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Stomp::Pixel *)  ((Stomp::ScalarPixel *) x));
+static void *_p_Stomp__CosmoCoordinateTo_p_Stomp__WeightedAngularCoordinate(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::WeightedAngularCoordinate *)  ((Stomp::CosmoCoordinate *) x));
 }
-static void *_p_Stomp__TreePixelTo_p_Stomp__Pixel(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((Stomp::Pixel *)  ((Stomp::TreePixel *) x));
+static void *_p_Stomp__WeightedAngularCoordinateTo_p_Stomp__AngularCoordinate(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::AngularCoordinate *)  ((Stomp::WeightedAngularCoordinate *) x));
+}
+static void *_p_Stomp__CosmoCoordinateTo_p_Stomp__AngularCoordinate(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::AngularCoordinate *) (Stomp::WeightedAngularCoordinate *) ((Stomp::CosmoCoordinate *) x));
 }
 static void *_p_Stomp__PolygonBoundTo_p_Stomp__GeometricBound(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Stomp::GeometricBound *)  ((Stomp::PolygonBound *) x));
+}
+static void *_p_Stomp__LatLonBoundTo_p_Stomp__GeometricBound(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::GeometricBound *)  ((Stomp::LatLonBound *) x));
 }
 static void *_p_Stomp__WedgeBoundTo_p_Stomp__GeometricBound(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Stomp::GeometricBound *)  ((Stomp::WedgeBound *) x));
 }
 static void *_p_Stomp__CircleBoundTo_p_Stomp__GeometricBound(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((Stomp::GeometricBound *)  ((Stomp::CircleBound *) x));
+}
+static void *_p_Stomp__LongitudeBoundTo_p_Stomp__GeometricBound(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::GeometricBound *)  ((Stomp::LongitudeBound *) x));
+}
+static void *_p_Stomp__LatitudeBoundTo_p_Stomp__GeometricBound(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::GeometricBound *)  ((Stomp::LatitudeBound *) x));
+}
+static void *_p_Stomp__ScalarPixelTo_p_Stomp__Pixel(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::Pixel *)  ((Stomp::ScalarPixel *) x));
+}
+static void *_p_Stomp__TreePixelTo_p_Stomp__Pixel(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((Stomp::Pixel *)  ((Stomp::TreePixel *) x));
 }
 static swig_type_info _swigt__p_Stomp__AngularBin = {"_p_Stomp__AngularBin", "Stomp::AngularBin *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__AngularCoordinate = {"_p_Stomp__AngularCoordinate", "Stomp::AngularCoordinate *", 0, 0, (void*)0, 0};
@@ -70740,10 +71496,15 @@ static swig_type_info _swigt__p_Stomp__CosmoVector__iterator = {"_p_Stomp__Cosmo
 static swig_type_info _swigt__p_Stomp__Cosmology = {"_p_Stomp__Cosmology", "Stomp::Cosmology *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__FieldColumnDict__iterator = {"_p_Stomp__FieldColumnDict__iterator", "Stomp::FieldColumnDict::iterator *|Stomp::FieldColumnIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__FieldDict__iterator = {"_p_Stomp__FieldDict__iterator", "Stomp::FieldDict::iterator *|Stomp::FieldIterator *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_Stomp__FootprintVector__iterator = {"_p_Stomp__FootprintVector__iterator", "Stomp::FootprintVector::iterator *|Stomp::FootprintIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__GeometricBound = {"_p_Stomp__GeometricBound", "Stomp::GeometricBound *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__Histogram = {"_p_Stomp__Histogram", "Stomp::Histogram *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__HistogramBin = {"_p_Stomp__HistogramBin", "Stomp::HistogramBin *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__LatLonBound = {"_p_Stomp__LatLonBound", "Stomp::LatLonBound *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__LatLonVector__iterator = {"_p_Stomp__LatLonVector__iterator", "Stomp::LatLonVector::iterator *|Stomp::LatLonIterator *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__LatitudeBound = {"_p_Stomp__LatitudeBound", "Stomp::LatitudeBound *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__LatitudeVector__iterator = {"_p_Stomp__LatitudeVector__iterator", "Stomp::LatitudeVector::iterator *|Stomp::LatitudeIterator *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__LongitudeBound = {"_p_Stomp__LongitudeBound", "Stomp::LongitudeBound *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Stomp__LongitudeVector__iterator = {"_p_Stomp__LongitudeVector__iterator", "Stomp::LongitudeVector::iterator *|Stomp::LongitudeIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__Map = {"_p_Stomp__Map", "Stomp::Map *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__NearestNeighborPixel = {"_p_Stomp__NearestNeighborPixel", "Stomp::NearestNeighborPixel *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Stomp__NearestNeighborPoint = {"_p_Stomp__NearestNeighborPoint", "Stomp::NearestNeighborPoint *", 0, 0, (void*)0, 0};
@@ -70824,8 +71585,10 @@ static swig_type_info _swigt__p_std__vectorT_Stomp__AngularCorrelation_std__allo
 static swig_type_info _swigt__p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t = {"_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t", "std::vector< Stomp::CircleBound,std::allocator< Stomp::CircleBound > > *|Stomp::CircleVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t = {"_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t", "std::vector< Stomp::CosmoCoordinate *,std::allocator< Stomp::CosmoCoordinate * > > *|Stomp::CosmoPtrVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t = {"_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t", "std::vector< Stomp::CosmoCoordinate,std::allocator< Stomp::CosmoCoordinate > > *|Stomp::CosmoVector *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t = {"_p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t", "std::vector< Stomp::Footprint,std::allocator< Stomp::Footprint > > *|Stomp::FootprintVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t = {"_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t", "std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > > *|Stomp::BinVector *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t = {"_p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t", "std::vector< Stomp::LatLonBound,std::allocator< Stomp::LatLonBound > > *|Stomp::LatLonVector *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t = {"_p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t", "std::vector< Stomp::LatitudeBound,std::allocator< Stomp::LatitudeBound > > *|Stomp::LatitudeVector *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t = {"_p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t", "std::vector< Stomp::LongitudeBound,std::allocator< Stomp::LongitudeBound > > *|Stomp::LongitudeVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t = {"_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t", "std::vector< Stomp::Pixel *,std::allocator< Stomp::Pixel * > > *|Stomp::PixelPtrVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t = {"_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t", "std::vector< Stomp::Pixel,std::allocator< Stomp::Pixel > > *|Stomp::PixelVector *|std::vector< Stomp::Pixel > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type = {"_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type", "std::vector< Stomp::Pixel >::allocator_type *|std::allocator< Stomp::Pixel > *", 0, 0, (void*)0, 0};
@@ -70868,10 +71631,15 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Stomp__Cosmology,
   &_swigt__p_Stomp__FieldColumnDict__iterator,
   &_swigt__p_Stomp__FieldDict__iterator,
-  &_swigt__p_Stomp__FootprintVector__iterator,
   &_swigt__p_Stomp__GeometricBound,
   &_swigt__p_Stomp__Histogram,
   &_swigt__p_Stomp__HistogramBin,
+  &_swigt__p_Stomp__LatLonBound,
+  &_swigt__p_Stomp__LatLonVector__iterator,
+  &_swigt__p_Stomp__LatitudeBound,
+  &_swigt__p_Stomp__LatitudeVector__iterator,
+  &_swigt__p_Stomp__LongitudeBound,
+  &_swigt__p_Stomp__LongitudeVector__iterator,
   &_swigt__p_Stomp__Map,
   &_swigt__p_Stomp__NearestNeighborPixel,
   &_swigt__p_Stomp__NearestNeighborPoint,
@@ -70952,8 +71720,10 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t,
   &_swigt__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t,
   &_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,
-  &_swigt__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t,
   &_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t,
+  &_swigt__p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t,
+  &_swigt__p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t,
+  &_swigt__p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t,
   &_swigt__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t,
   &_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t,
   &_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type,
@@ -70996,10 +71766,15 @@ static swig_cast_info _swigc__p_Stomp__CosmoVector__iterator[] = {  {&_swigt__p_
 static swig_cast_info _swigc__p_Stomp__Cosmology[] = {  {&_swigt__p_Stomp__Cosmology, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__FieldColumnDict__iterator[] = {  {&_swigt__p_Stomp__FieldColumnDict__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__FieldDict__iterator[] = {  {&_swigt__p_Stomp__FieldDict__iterator, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Stomp__FootprintVector__iterator[] = {  {&_swigt__p_Stomp__FootprintVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_Stomp__GeometricBound[] = {  {&_swigt__p_Stomp__GeometricBound, 0, 0, 0},  {&_swigt__p_Stomp__PolygonBound, _p_Stomp__PolygonBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__WedgeBound, _p_Stomp__WedgeBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__CircleBound, _p_Stomp__CircleBoundTo_p_Stomp__GeometricBound, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__GeometricBound[] = {  {&_swigt__p_Stomp__GeometricBound, 0, 0, 0},  {&_swigt__p_Stomp__PolygonBound, _p_Stomp__PolygonBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__LatLonBound, _p_Stomp__LatLonBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__WedgeBound, _p_Stomp__WedgeBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__CircleBound, _p_Stomp__CircleBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__LongitudeBound, _p_Stomp__LongitudeBoundTo_p_Stomp__GeometricBound, 0, 0},  {&_swigt__p_Stomp__LatitudeBound, _p_Stomp__LatitudeBoundTo_p_Stomp__GeometricBound, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__Histogram[] = {  {&_swigt__p_Stomp__Histogram, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__HistogramBin[] = {  {&_swigt__p_Stomp__HistogramBin, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__LatLonBound[] = {  {&_swigt__p_Stomp__LatLonBound, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__LatLonVector__iterator[] = {  {&_swigt__p_Stomp__LatLonVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__LatitudeBound[] = {  {&_swigt__p_Stomp__LatitudeBound, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__LatitudeVector__iterator[] = {  {&_swigt__p_Stomp__LatitudeVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__LongitudeBound[] = {  {&_swigt__p_Stomp__LongitudeBound, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Stomp__LongitudeVector__iterator[] = {  {&_swigt__p_Stomp__LongitudeVector__iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__Map[] = {  {&_swigt__p_Stomp__Map, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__NearestNeighborPixel[] = {  {&_swigt__p_Stomp__NearestNeighborPixel, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Stomp__NearestNeighborPoint[] = {  {&_swigt__p_Stomp__NearestNeighborPoint, 0, 0, 0},{0, 0, 0, 0}};
@@ -71080,12 +71855,14 @@ static swig_cast_info _swigc__p_std__vectorT_Stomp__AngularCorrelation_std__allo
 static swig_cast_info _swigc__p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type[] = {  {&_swigt__p_Stomp__ScalarPixel, _p_Stomp__ScalarPixelTo_p_Stomp__Pixel, 0, 0},  {&_swigt__p_Stomp__TreePixel, 0, 0, 0},  {&_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type, 0, 0, 0},  {&_swigt__p_Stomp__Pixel, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type[] = {  {&_swigt__p_Stomp__ScalarPixel, _p_Stomp__ScalarPixelTo_p_Stomp__Pixel, 0, 0},  {&_swigt__p_Stomp__TreePixel, _p_Stomp__TreePixelTo_p_Stomp__Pixel, 0, 0},  {&_swigt__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type, 0, 0, 0},  {&_swigt__p_Stomp__Pixel, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -71124,10 +71901,15 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Stomp__Cosmology,
   _swigc__p_Stomp__FieldColumnDict__iterator,
   _swigc__p_Stomp__FieldDict__iterator,
-  _swigc__p_Stomp__FootprintVector__iterator,
   _swigc__p_Stomp__GeometricBound,
   _swigc__p_Stomp__Histogram,
   _swigc__p_Stomp__HistogramBin,
+  _swigc__p_Stomp__LatLonBound,
+  _swigc__p_Stomp__LatLonVector__iterator,
+  _swigc__p_Stomp__LatitudeBound,
+  _swigc__p_Stomp__LatitudeVector__iterator,
+  _swigc__p_Stomp__LongitudeBound,
+  _swigc__p_Stomp__LongitudeVector__iterator,
   _swigc__p_Stomp__Map,
   _swigc__p_Stomp__NearestNeighborPixel,
   _swigc__p_Stomp__NearestNeighborPoint,
@@ -71208,8 +71990,10 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t,
   _swigc__p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t,
   _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,
-  _swigc__p_std__vectorT_Stomp__Footprint_std__allocatorT_Stomp__Footprint_t_t,
   _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t,
+  _swigc__p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t,
+  _swigc__p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t,
+  _swigc__p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t,
   _swigc__p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t,
   _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t,
   _swigc__p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type,

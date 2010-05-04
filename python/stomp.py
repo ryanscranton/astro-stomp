@@ -737,6 +737,8 @@ class ScalarMap(BaseMap):
     def AutoCorrelateWithRegions(*args): return _stomp.ScalarMap_AutoCorrelateWithRegions(*args)
     def CrossCorrelate(*args): return _stomp.ScalarMap_CrossCorrelate(*args)
     def CrossCorrelateWithRegions(*args): return _stomp.ScalarMap_CrossCorrelateWithRegions(*args)
+    def Variance(*args): return _stomp.ScalarMap_Variance(*args)
+    def Covariance(*args): return _stomp.ScalarMap_Covariance(*args)
     def Resolution(*args): return _stomp.ScalarMap_Resolution(*args)
     def Intensity(*args): return _stomp.ScalarMap_Intensity(*args)
     def NPoints(*args): return _stomp.ScalarMap_NPoints(*args)
@@ -842,6 +844,66 @@ class PolygonBound(GeometricBound):
     def FindArea(*args): return _stomp.PolygonBound_FindArea(*args)
 PolygonBound_swigregister = _stomp.PolygonBound_swigregister
 PolygonBound_swigregister(PolygonBound)
+
+class LongitudeBound(GeometricBound):
+    __swig_setmethods__ = {}
+    for _s in [GeometricBound]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, LongitudeBound, name, value)
+    __swig_getmethods__ = {}
+    for _s in [GeometricBound]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, LongitudeBound, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_LongitudeBound(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_LongitudeBound
+    __del__ = lambda self : None;
+    def CheckPoint(*args): return _stomp.LongitudeBound_CheckPoint(*args)
+    def FindAngularBounds(*args): return _stomp.LongitudeBound_FindAngularBounds(*args)
+    def FindArea(*args): return _stomp.LongitudeBound_FindArea(*args)
+LongitudeBound_swigregister = _stomp.LongitudeBound_swigregister
+LongitudeBound_swigregister(LongitudeBound)
+
+class LatitudeBound(GeometricBound):
+    __swig_setmethods__ = {}
+    for _s in [GeometricBound]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, LatitudeBound, name, value)
+    __swig_getmethods__ = {}
+    for _s in [GeometricBound]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, LatitudeBound, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_LatitudeBound(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_LatitudeBound
+    __del__ = lambda self : None;
+    def CheckPoint(*args): return _stomp.LatitudeBound_CheckPoint(*args)
+    def FindAngularBounds(*args): return _stomp.LatitudeBound_FindAngularBounds(*args)
+    def FindArea(*args): return _stomp.LatitudeBound_FindArea(*args)
+LatitudeBound_swigregister = _stomp.LatitudeBound_swigregister
+LatitudeBound_swigregister(LatitudeBound)
+
+class LatLonBound(GeometricBound):
+    __swig_setmethods__ = {}
+    for _s in [GeometricBound]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, LatLonBound, name, value)
+    __swig_getmethods__ = {}
+    for _s in [GeometricBound]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, LatLonBound, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_LatLonBound(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_LatLonBound
+    __del__ = lambda self : None;
+    def CheckPoint(*args): return _stomp.LatLonBound_CheckPoint(*args)
+    def FindAngularBounds(*args): return _stomp.LatLonBound_FindAngularBounds(*args)
+    def FindArea(*args): return _stomp.LatLonBound_FindArea(*args)
+LatLonBound_swigregister = _stomp.LatLonBound_swigregister
+LatLonBound_swigregister(LatLonBound)
 
 class Cosmology(_object):
     __swig_setmethods__ = {}
