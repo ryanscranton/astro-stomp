@@ -59,16 +59,20 @@ void GeometricBound::SetArea(double input_area) {
   area_ = input_area;
 }
 
-double GeometricBound::Area() {
-  return area_;
-}
-
 void GeometricBound::SetAngularBounds(double lammin, double lammax,
 				      double etamin, double etamax) {
   lammin_ = lammin;
   lammax_ = lammax;
   etamin_ = etamin;
   etamax_ = etamax;
+}
+
+void GeometricBound::SetContinuousBounds(bool continuous_bounds) {
+  continuous_bounds_ = continuous_bounds;
+}
+
+double GeometricBound::Area() {
+  return area_;
 }
 
 double GeometricBound::LambdaMin() {
@@ -87,11 +91,16 @@ double GeometricBound::EtaMax() {
   return etamax_;
 }
 
+bool GeometricBound::ContinuousBounds() {
+  return continuous_bounds_;
+}
+
 CircleBound::CircleBound(const AngularCoordinate& ang, double radius) {
   ang_ = ang;
   radius_ = radius;
   sin2radius_ = sin(radius*DegToRad)*sin(radius*DegToRad);
 
+  SetContinuousBounds(true);
   FindArea();
   FindAngularBounds();
 }
@@ -158,6 +167,7 @@ WedgeBound::WedgeBound(const AngularCoordinate& ang, double radius,
     position_angle_min_ = position_angle_max;
   }
   sphere_ = sphere;
+  SetContinuousBounds(true);
 
   FindArea();
   FindAngularBounds();
@@ -277,6 +287,7 @@ PolygonBound::PolygonBound(AngularVector& ang) {
     }
   }
 
+  SetContinuousBounds(true);
   FindArea();
   FindAngularBounds();
 }
@@ -352,13 +363,36 @@ bool PolygonBound::CheckPoint(AngularCoordinate& ang) {
 
 LongitudeBound::LongitudeBound(double min_longitude, double max_longitude,
 			       AngularCoordinate::Sphere sphere) {
-  if (min_longitude < max_longitude) {
-    min_longitude_ = min_longitude;
-    max_longitude_ = max_longitude;
+  // Cast the input values into AngularCoordinate objects to handle vagaries
+  // of signs and longitude bounds.
+  AngularCoordinate min_ang, max_ang;
+  switch (sphere) {
+  case AngularCoordinate::Survey:
+    min_ang.SetSurveyCoordinates(0.0, min_longitude);
+    max_ang.SetSurveyCoordinates(0.0, max_longitude);
+
+    min_longitude_ = min_ang.Eta();
+    max_longitude_ = max_ang.Eta();
+    break;
+  case AngularCoordinate::Equatorial:
+    min_ang.SetEquatorialCoordinates(min_longitude, 0.0);
+    max_ang.SetEquatorialCoordinates(max_longitude, 0.0);
+
+    min_longitude_ = min_ang.RA();
+    max_longitude_ = max_ang.RA();
+    break;
+  case AngularCoordinate::Galactic:
+    min_ang.SetGalacticCoordinates(min_longitude, 0.0);
+    max_ang.SetGalacticCoordinates(max_longitude, 0.0);
+
+    min_longitude_ = min_ang.GalLon();
+    max_longitude_ = max_ang.GalLon();
+    break;
+  }
+
+  if (min_longitude_ < max_longitude_) {
     continuous_longitude_ = true;
   } else {
-    min_longitude_ = max_longitude;
-    max_longitude_ = min_longitude;
     continuous_longitude_ = false;
   }
 
@@ -393,16 +427,16 @@ bool LongitudeBound::CheckPoint(AngularCoordinate& ang) {
   } else {
     switch(sphere_) {
     case AngularCoordinate::Survey:
-      if (DoubleGE(ang.Eta(), max_longitude_) &&
-	  DoubleLE(ang.Eta(), min_longitude_)) inside_bound = true;
+      if (DoubleGE(ang.Eta(), min_longitude_) ||
+	  DoubleLE(ang.Eta(), max_longitude_)) inside_bound = true;
       break;
     case AngularCoordinate::Equatorial:
-      if (DoubleGE(ang.RA(), max_longitude_) &&
-	  DoubleLE(ang.RA(), min_longitude_)) inside_bound = true;
+      if (DoubleGE(ang.RA(), min_longitude_) ||
+	  DoubleLE(ang.RA(), max_longitude_)) inside_bound = true;
       break;
     case AngularCoordinate::Galactic:
-      if (DoubleGE(ang.GalLon(), max_longitude_) &&
-	  DoubleLE(ang.GalLon(), min_longitude_)) inside_bound = true;
+      if (DoubleGE(ang.GalLon(), min_longitude_) ||
+	  DoubleLE(ang.GalLon(), max_longitude_)) inside_bound = true;
       break;
     }
   }
@@ -479,6 +513,18 @@ bool LongitudeBound::FindArea() {
   SetArea(bound_area);
 
   return true;
+}
+
+double LongitudeBound::LongitudeMin() {
+  return min_longitude_;
+}
+
+double LongitudeBound::LongitudeMax() {
+  return max_longitude_;
+}
+
+AngularCoordinate::Sphere LongitudeBound::Sphere() {
+  return sphere_;
 }
 
 LatitudeBound::LatitudeBound(double min_latitude, double max_latitude,
@@ -587,19 +633,54 @@ bool LatitudeBound::FindArea() {
   return true;
 }
 
+double LatitudeBound::LatitudeMin() {
+  return min_latitude_;
+}
+
+double LatitudeBound::LatitudeMax() {
+  return max_latitude_;
+}
+
+AngularCoordinate::Sphere LatitudeBound::Sphere() {
+  return sphere_;
+}
+
 LatLonBound::LatLonBound(double min_latitude, double max_latitude,
 			 double min_longitude, double max_longitude,
 			 AngularCoordinate::Sphere sphere) {
   min_latitude_ = min_latitude;
   max_latitude_ = max_latitude;
 
-  if (min_longitude < max_longitude) {
-    min_longitude_ = min_longitude;
-    max_longitude_ = max_longitude;
+  // Cast the input values into AngularCoordinate objects to handle vagaries
+  // of signs and longitude bounds.
+  AngularCoordinate min_ang, max_ang;
+  switch (sphere) {
+  case AngularCoordinate::Survey:
+    min_ang.SetSurveyCoordinates(0.0, min_longitude);
+    max_ang.SetSurveyCoordinates(0.0, max_longitude);
+
+    min_longitude_ = min_ang.Eta();
+    max_longitude_ = max_ang.Eta();
+    break;
+  case AngularCoordinate::Equatorial:
+    min_ang.SetEquatorialCoordinates(min_longitude, 0.0);
+    max_ang.SetEquatorialCoordinates(max_longitude, 0.0);
+
+    min_longitude_ = min_ang.RA();
+    max_longitude_ = max_ang.RA();
+    break;
+  case AngularCoordinate::Galactic:
+    min_ang.SetGalacticCoordinates(min_longitude, 0.0);
+    max_ang.SetGalacticCoordinates(max_longitude, 0.0);
+
+    min_longitude_ = min_ang.GalLon();
+    max_longitude_ = max_ang.GalLon();
+    break;
+  }
+
+  if (min_longitude_ < max_longitude_) {
     continuous_longitude_ = true;
   } else {
-    min_longitude_ = max_longitude;
-    max_longitude_ = min_longitude;
     continuous_longitude_ = false;
   }
 
@@ -633,6 +714,8 @@ bool LatLonBound::CheckPoint(AngularCoordinate& ang) {
   }
 
   if (inside_bound) {
+    inside_bound = false;
+
     if (continuous_longitude_) {
       switch(sphere_) {
       case AngularCoordinate::Survey:
@@ -651,16 +734,16 @@ bool LatLonBound::CheckPoint(AngularCoordinate& ang) {
     } else {
       switch(sphere_) {
       case AngularCoordinate::Survey:
-	if (DoubleGE(ang.Eta(), max_longitude_) &&
-	    DoubleLE(ang.Eta(), min_longitude_)) inside_bound = true;
+	if (DoubleGE(ang.Eta(), min_longitude_) ||
+	    DoubleLE(ang.Eta(), max_longitude_)) inside_bound = true;
 	break;
       case AngularCoordinate::Equatorial:
-	if (DoubleGE(ang.RA(), max_longitude_) &&
-	    DoubleLE(ang.RA(), min_longitude_)) inside_bound = true;
+	if (DoubleGE(ang.RA(), min_longitude_) ||
+	    DoubleLE(ang.RA(), max_longitude_)) inside_bound = true;
 	break;
       case AngularCoordinate::Galactic:
-	if (DoubleGE(ang.GalLon(), max_longitude_) &&
-	    DoubleLE(ang.GalLon(), min_longitude_)) inside_bound = true;
+	if (DoubleGE(ang.GalLon(), min_longitude_) ||
+	    DoubleLE(ang.GalLon(), max_longitude_)) inside_bound = true;
 	break;
       }
     }
@@ -684,6 +767,7 @@ bool LatLonBound::FindAngularBounds() {
     lammax = max_latitude_;
     etamin = min_longitude_;
     etamax = max_longitude_;
+    SetContinuousBounds(continuous_longitude_);
     break;
   case AngularCoordinate::Equatorial:
     for (uint16_t i=0;i<1000;i++) {
@@ -783,12 +867,32 @@ bool LatLonBound::FindArea() {
   if (continuous_longitude_) {
     bound_area *= (max_longitude_ - min_longitude_)/360.0;
   } else {
-    bound_area *= (360.0 - (min_longitude_ - max_longitude_))/360.0;
+    bound_area *= (360.0 - min_longitude_ + max_longitude_)/360.0;
   }
 
   SetArea(bound_area);
 
   return true;
+}
+
+double LatLonBound::LongitudeMin() {
+  return min_longitude_;
+}
+
+double LatLonBound::LongitudeMax() {
+  return max_longitude_;
+}
+
+double LatLonBound::LatitudeMin() {
+  return min_latitude_;
+}
+
+double LatLonBound::LatitudeMax() {
+  return max_latitude_;
+}
+
+AngularCoordinate::Sphere LatLonBound::Sphere() {
+  return sphere_;
 }
 
 } // end namespace Stomp

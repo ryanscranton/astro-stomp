@@ -82,19 +82,24 @@ class GeometricBound {
   virtual bool FindArea();
 
   // And some simple getters and setters for the values that determine the
-  // area and bounds.  We need the setters since these values will be stored in
-  // the base class.
+  // area and bounds as well as a boolean to indicate whether or not the eta
+  // bounds are continuous across the eta discontinuity.  We need the setters
+  // since these values will be stored in the base class.
   void SetArea(double input_area);
-  double Area();
   void SetAngularBounds(double lammin, double lammax,
 			double etamin, double etamax);
+  void SetContinuousBounds(bool continuous_bounds);
+
+  double Area();
   double LambdaMin();
   double LambdaMax();
   double EtaMin();
   double EtaMax();
+  bool ContinuousBounds();
 
  private:
   double area_, lammin_, lammax_, etamin_, etamax_;
+  bool continuous_bounds_;
 };
 
 class CircleBound : public GeometricBound {
@@ -169,6 +174,10 @@ class LongitudeBound : public GeometricBound {
   virtual bool FindAngularBounds();
   virtual bool FindArea();
 
+  double LongitudeMin();
+  double LongitudeMax();
+  AngularCoordinate::Sphere Sphere();
+
  private:
   double min_longitude_, max_longitude_;
   bool continuous_longitude_;
@@ -185,6 +194,10 @@ class LatitudeBound : public GeometricBound {
   virtual bool CheckPoint(AngularCoordinate& ang);
   virtual bool FindAngularBounds();
   virtual bool FindArea();
+
+  double LatitudeMin();
+  double LatitudeMax();
+  AngularCoordinate::Sphere Sphere();
 
  private:
   double min_latitude_, max_latitude_;
@@ -203,6 +216,12 @@ class LatLonBound : public GeometricBound {
   virtual bool CheckPoint(AngularCoordinate& ang);
   virtual bool FindAngularBounds();
   virtual bool FindArea();
+
+  double LongitudeMin();
+  double LongitudeMax();
+  double LatitudeMin();
+  double LatitudeMax();
+  AngularCoordinate::Sphere Sphere();
 
  private:
   double min_latitude_, max_latitude_, min_longitude_, max_longitude_;
