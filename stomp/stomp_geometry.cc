@@ -8,12 +8,16 @@
 // a way as to make the analysis of that data as algorithmically efficient as
 // possible.
 //
-// The GeometricBound class is intended to be an analytic description of a
-// particular region on the sky.  This is in contrast to pixelized *Map classes
-// where the area is approximated via some pixelization scheme.  GeometricBound
-// is an abstract class intended to represent the minimal functionality required
-// for all of the various derived classes in order for them to interface with
-// the rest of the library, particularly the Map object.
+// While the general principle of the library is to describe regions on the
+// sphere as collections of pixels, it can occasionally be useful to have a
+// simple geometric description of a region as well.  The GeometricBound class
+// and its derivatives fills this role.  Each GeometricBound instance must be
+// able to return its bounded area, its angular bounds (in survey coordinates)
+// and indicate whether an input point is inside or outside of its allowed
+// area.  For more complicated geometric tasks (like finding the intersection
+// of two bounds), the proper procedure would be to create Maps from the
+// GeometricBound objects (with the appropriate constructor) and perform those
+// operations on their pixelized counterparts.
 
 #include <stdint.h>
 #include <iostream>
@@ -344,6 +348,447 @@ bool PolygonBound::CheckPoint(AngularCoordinate& ang) {
   }
 
   return in_polygon;
+}
+
+LongitudeBound::LongitudeBound(double min_longitude, double max_longitude,
+			       AngularCoordinate::Sphere sphere) {
+  if (min_longitude < max_longitude) {
+    min_longitude_ = min_longitude;
+    max_longitude_ = max_longitude;
+    continuous_longitude_ = true;
+  } else {
+    min_longitude_ = max_longitude;
+    max_longitude_ = min_longitude;
+    continuous_longitude_ = false;
+  }
+
+  sphere_ = sphere;
+
+  FindArea();
+  FindAngularBounds();
+}
+
+LongitudeBound::~LongitudeBound() {
+  min_longitude_ = max_longitude_ = 0.0;
+}
+
+bool LongitudeBound::CheckPoint(AngularCoordinate& ang) {
+  bool inside_bound = false;
+
+  if (continuous_longitude_) {
+    switch(sphere_) {
+    case AngularCoordinate::Survey:
+      if (DoubleLE(ang.Eta(), max_longitude_) &&
+	  DoubleGE(ang.Eta(), min_longitude_)) inside_bound = true;
+      break;
+    case AngularCoordinate::Equatorial:
+      if (DoubleLE(ang.RA(), max_longitude_) &&
+	  DoubleGE(ang.RA(), min_longitude_)) inside_bound = true;
+      break;
+    case AngularCoordinate::Galactic:
+      if (DoubleLE(ang.GalLon(), max_longitude_) &&
+	  DoubleGE(ang.GalLon(), min_longitude_)) inside_bound = true;
+      break;
+    }
+  } else {
+    switch(sphere_) {
+    case AngularCoordinate::Survey:
+      if (DoubleGE(ang.Eta(), max_longitude_) &&
+	  DoubleLE(ang.Eta(), min_longitude_)) inside_bound = true;
+      break;
+    case AngularCoordinate::Equatorial:
+      if (DoubleGE(ang.RA(), max_longitude_) &&
+	  DoubleLE(ang.RA(), min_longitude_)) inside_bound = true;
+      break;
+    case AngularCoordinate::Galactic:
+      if (DoubleGE(ang.GalLon(), max_longitude_) &&
+	  DoubleLE(ang.GalLon(), min_longitude_)) inside_bound = true;
+      break;
+    }
+  }
+
+  return inside_bound;
+}
+
+bool LongitudeBound::FindAngularBounds() {
+  double lammin = 100.0, lammax = -100.0, etamin = 200.0, etamax = -200.0;
+  double lat_min = -90.0;
+  double lat_step = 180.0/1000.0;
+
+  switch(sphere_) {
+  case AngularCoordinate::Survey:
+    lammin = -90.0;
+    lammax = 90.0;
+    etamin = min_longitude_;
+    etamax = max_longitude_;
+    break;
+  case AngularCoordinate::Equatorial:
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(min_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(max_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+  case AngularCoordinate::Galactic:
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(min_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(max_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+  }
+
+  SetAngularBounds(lammin,lammax,etamin,etamax);
+
+  return true;
+}
+
+bool LongitudeBound::FindArea() {
+  double bound_area = 4.0*Pi*StradToDeg;  // start with the whole sphere
+
+  if (continuous_longitude_) {
+    bound_area *= (max_longitude_ - max_longitude_)/360.0;
+  } else {
+    bound_area *= (360.0 - (min_longitude_ - max_longitude_))/360.0;
+  }
+
+  SetArea(bound_area);
+
+  return true;
+}
+
+LatitudeBound::LatitudeBound(double min_latitude, double max_latitude,
+			       AngularCoordinate::Sphere sphere) {
+  min_latitude_ = min_latitude;
+  max_latitude_ = max_latitude;
+
+  sphere_ = sphere;
+
+  FindArea();
+  FindAngularBounds();
+}
+
+LatitudeBound::~LatitudeBound() {
+  min_latitude_ = max_latitude_ = 0.0;
+}
+
+bool LatitudeBound::CheckPoint(AngularCoordinate& ang) {
+  bool inside_bound = false;
+
+  switch(sphere_) {
+  case AngularCoordinate::Survey:
+    if (DoubleLE(ang.Lambda(), max_latitude_) &&
+	DoubleGE(ang.Lambda(), min_latitude_)) inside_bound = true;
+    break;
+  case AngularCoordinate::Equatorial:
+    if (DoubleLE(ang.DEC(), max_latitude_) &&
+	DoubleGE(ang.DEC(), min_latitude_)) inside_bound = true;
+    break;
+  case AngularCoordinate::Galactic:
+    if (DoubleLE(ang.GalLat(), max_latitude_) &&
+	DoubleGE(ang.GalLat(), min_latitude_)) inside_bound = true;
+    break;
+  }
+
+  return inside_bound;
+}
+
+bool LatitudeBound::FindAngularBounds() {
+  double lammin = 100.0, lammax = -100.0, etamin = 200.0, etamax = -200.0;
+  double lon_min = 0.0;
+  double lon_step = 360.0/1000.0;
+
+  switch(sphere_) {
+  case AngularCoordinate::Survey:
+    lammin = min_latitude_;
+    lammax = max_latitude_;
+    etamin = -180.0;
+    etamax = 180.0;
+    break;
+  case AngularCoordinate::Equatorial:
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, min_latitude_,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, max_latitude_,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+  case AngularCoordinate::Galactic:
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, min_latitude_,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, max_latitude_,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+  }
+
+  SetAngularBounds(lammin,lammax,etamin,etamax);
+
+  return true;
+}
+
+bool LatitudeBound::FindArea() {
+  double bound_area = 4.0*Pi*StradToDeg;  // start with the whole sphere
+
+  double z_min = sin(min_latitude_*DegToRad);
+  double z_max = sin(max_latitude_*DegToRad);
+
+  bound_area *= (z_max - z_min)/2.0;
+
+  SetArea(bound_area);
+
+  return true;
+}
+
+LatLonBound::LatLonBound(double min_latitude, double max_latitude,
+			 double min_longitude, double max_longitude,
+			 AngularCoordinate::Sphere sphere) {
+  min_latitude_ = min_latitude;
+  max_latitude_ = max_latitude;
+
+  if (min_longitude < max_longitude) {
+    min_longitude_ = min_longitude;
+    max_longitude_ = max_longitude;
+    continuous_longitude_ = true;
+  } else {
+    min_longitude_ = max_longitude;
+    max_longitude_ = min_longitude;
+    continuous_longitude_ = false;
+  }
+
+  sphere_ = sphere;
+
+  FindArea();
+  FindAngularBounds();
+}
+
+LatLonBound::~LatLonBound() {
+  min_longitude_ = max_longitude_ = 0.0;
+  min_latitude_ = max_latitude_ = 0.0;
+}
+
+bool LatLonBound::CheckPoint(AngularCoordinate& ang) {
+  bool inside_bound = false;
+
+  switch(sphere_) {
+  case AngularCoordinate::Survey:
+    if (DoubleLE(ang.Lambda(), max_latitude_) &&
+	DoubleGE(ang.Lambda(), min_latitude_)) inside_bound = true;
+    break;
+  case AngularCoordinate::Equatorial:
+    if (DoubleLE(ang.DEC(), max_latitude_) &&
+	DoubleGE(ang.DEC(), min_latitude_)) inside_bound = true;
+    break;
+  case AngularCoordinate::Galactic:
+    if (DoubleLE(ang.GalLat(), max_latitude_) &&
+	DoubleGE(ang.GalLat(), min_latitude_)) inside_bound = true;
+    break;
+  }
+
+  if (inside_bound) {
+    if (continuous_longitude_) {
+      switch(sphere_) {
+      case AngularCoordinate::Survey:
+	if (DoubleLE(ang.Eta(), max_longitude_) &&
+	    DoubleGE(ang.Eta(), min_longitude_)) inside_bound = true;
+	break;
+      case AngularCoordinate::Equatorial:
+	if (DoubleLE(ang.RA(), max_longitude_) &&
+	    DoubleGE(ang.RA(), min_longitude_)) inside_bound = true;
+	break;
+      case AngularCoordinate::Galactic:
+	if (DoubleLE(ang.GalLon(), max_longitude_) &&
+	    DoubleGE(ang.GalLon(), min_longitude_)) inside_bound = true;
+	break;
+      }
+    } else {
+      switch(sphere_) {
+      case AngularCoordinate::Survey:
+	if (DoubleGE(ang.Eta(), max_longitude_) &&
+	    DoubleLE(ang.Eta(), min_longitude_)) inside_bound = true;
+	break;
+      case AngularCoordinate::Equatorial:
+	if (DoubleGE(ang.RA(), max_longitude_) &&
+	    DoubleLE(ang.RA(), min_longitude_)) inside_bound = true;
+	break;
+      case AngularCoordinate::Galactic:
+	if (DoubleGE(ang.GalLon(), max_longitude_) &&
+	    DoubleLE(ang.GalLon(), min_longitude_)) inside_bound = true;
+	break;
+      }
+    }
+  }
+
+  return inside_bound;
+}
+
+bool LatLonBound::FindAngularBounds() {
+  double lammin = 100.0, lammax = -100.0, etamin = 200.0, etamax = -200.0;
+  double lat_min = min_latitude_;
+  double lat_step = (max_latitude_ - min_latitude_)/1000.0;
+  double lon_min = min_longitude_;
+  double lon_step = (max_longitude_ - min_longitude_)/1000.0;
+  if (!continuous_longitude_)
+    lon_step = (360.0 - (min_longitude_ - max_longitude_))/1000.0;
+
+  switch(sphere_) {
+  case AngularCoordinate::Survey:
+    lammin = min_latitude_;
+    lammax = max_latitude_;
+    etamin = min_longitude_;
+    etamax = max_longitude_;
+    break;
+  case AngularCoordinate::Equatorial:
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(min_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(max_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, min_latitude_,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, max_latitude_,
+			    AngularCoordinate::Equatorial);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+  case AngularCoordinate::Galactic:
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(min_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(max_longitude_, lat_min+lat_step*i,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+
+    double lon_min = min_longitude_;
+    double lon_step = (max_longitude_ - min_longitude_)/1000.0;
+    if (!continuous_longitude_)
+      lon_step = (360.0 - (min_longitude_ - max_longitude_))/1000.0;
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, min_latitude_,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+
+    for (uint16_t i=0;i<1000;i++) {
+      AngularCoordinate ang(lon_min+lon_step*i, max_latitude_,
+			    AngularCoordinate::Galactic);
+      if (ang.Lambda() < lammin) lammin = ang.Lambda();
+      if (ang.Lambda() > lammax) lammax = ang.Lambda();
+      if (ang.Eta() < etamin) etamin = ang.Eta();
+      if (ang.Eta() > etamax) etamax = ang.Eta();
+    }
+    break;
+  }
+
+  SetAngularBounds(lammin,lammax,etamin,etamax);
+
+  return true;
+}
+
+bool LatLonBound::FindArea() {
+  double bound_area = 4.0*Pi*StradToDeg;  // start with the whole sphere
+
+  double z_min = sin(min_latitude_*DegToRad);
+  double z_max = sin(max_latitude_*DegToRad);
+
+  bound_area *= (z_max - z_min)/2.0;
+
+  if (continuous_longitude_) {
+    bound_area *= (max_longitude_ - min_longitude_)/360.0;
+  } else {
+    bound_area *= (360.0 - (min_longitude_ - max_longitude_))/360.0;
+  }
+
+  SetArea(bound_area);
+
+  return true;
 }
 
 } // end namespace Stomp
