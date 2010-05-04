@@ -1825,8 +1825,8 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
   }
 
   // std::cout << "Pixelizing from level " <<
-  // static_cast<int>(starting_resolution_level) << " to " <<
-  // static_cast<int>(max_resolution_level) << "...\n";
+  //  static_cast<int>(starting_resolution_level) << " to " <<
+  //  static_cast<int>(max_resolution_level) << "...\n";
 
   uint32_t x_min, x_max, y_min, y_max;
   if (_FindXYBounds(starting_resolution_level, bound,
@@ -1988,6 +1988,11 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 		   bound.EtaMin(), bound.EtaMax(),
 		   x_min, x_max, y_min, y_max);
 
+  if ((bound.EtaMax() - bound.EtaMin() > 270.0) && bound.ContinuousBounds()) {
+    x_min = 0;
+    x_max = nx - 1;
+  }
+
   // std::cout << "Starting bounds:\n\tX: " << x_min << " - " << x_max <<
   // ", Y: " << y_min << " - " << y_max << "\n";
 
@@ -2000,15 +2005,16 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 
   uint8_t n_iter = 0;
   uint8_t max_iter = 20;
+  uint32_t nx_pix = 0;
+  if ((x_max < x_min) && (x_min > nx/2)) {
+    nx_pix = nx - x_min + x_max + 1;
+  } else {
+    nx_pix = x_max - x_min + 1;
+  }
+
   while (found_pixel && n_iter < max_iter) {
     found_pixel = false;
-    uint32_t y = y_max, nx_pix;
-
-    if ((x_max < x_min) && (x_min > nx/2)) {
-      nx_pix = nx - x_min + x_max + 1;
-    } else {
-      nx_pix = x_max - x_min + 1;
-    }
+    uint32_t y = y_max;
 
     for (uint32_t m=0,x=x_min;m<nx_pix;m++,x++) {
       if (x == nx) x = 0;
@@ -2045,13 +2051,7 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
   n_iter = 0;
   while (!boundary_failure && found_pixel && n_iter < max_iter) {
     found_pixel = false;
-    uint32_t y = y_min, nx_pix;
-
-    if ((x_max < x_min) && (x_min > nx/2)) {
-      nx_pix = nx - x_min + x_max + 1;
-    } else {
-      nx_pix = x_max - x_min + 1;
-    }
+    uint32_t y = y_min;
 
     for (uint32_t m=0,x=x_min;m<nx_pix;m++,x++) {
       if (x == nx) x = 0;
@@ -2084,7 +2084,8 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
   // Checking left border
   found_pixel = true;
   n_iter = 0;
-  while (!boundary_failure && found_pixel && n_iter < max_iter) {
+
+  while (!boundary_failure && found_pixel && n_iter < max_iter && nx_pix < nx) {
     found_pixel = false;
     uint32_t x = x_min;
 
@@ -2115,9 +2116,20 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
   // Checking right border
   found_pixel = true;
   n_iter = 0;
-  while (!boundary_failure && found_pixel && n_iter < max_iter) {
+  if ((x_max < x_min) && (x_min > nx/2)) {
+    nx_pix = nx - x_min + x_max + 1;
+  } else {
+    nx_pix = x_max - x_min + 1;
+  }
+  while (!boundary_failure && found_pixel && n_iter < max_iter && nx_pix < nx) {
     found_pixel = false;
     uint32_t x = x_max;
+
+    if ((x_max < x_min) && (x_min > nx/2)) {
+      nx_pix = nx - x_min + x_max + 1;
+    } else {
+      nx_pix = x_max - x_min + 1;
+    }
 
     for (uint32_t y=y_min;y<=y_max;y++) {
 

@@ -36700,28 +36700,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_GeometricBound_Area(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Stomp::GeometricBound *arg1 = (Stomp::GeometricBound *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  double result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:GeometricBound_Area",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__GeometricBound, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GeometricBound_Area" "', argument " "1"" of type '" "Stomp::GeometricBound *""'"); 
-  }
-  arg1 = reinterpret_cast< Stomp::GeometricBound * >(argp1);
-  result = (double)(arg1)->Area();
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_GeometricBound_SetAngularBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::GeometricBound *arg1 = (Stomp::GeometricBound *) 0 ;
@@ -36773,6 +36751,58 @@ SWIGINTERN PyObject *_wrap_GeometricBound_SetAngularBounds(PyObject *SWIGUNUSEDP
   arg5 = static_cast< double >(val5);
   (arg1)->SetAngularBounds(arg2,arg3,arg4,arg5);
   resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GeometricBound_SetContinuousBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::GeometricBound *arg1 = (Stomp::GeometricBound *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:GeometricBound_SetContinuousBounds",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__GeometricBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GeometricBound_SetContinuousBounds" "', argument " "1"" of type '" "Stomp::GeometricBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::GeometricBound * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GeometricBound_SetContinuousBounds" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->SetContinuousBounds(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GeometricBound_Area(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::GeometricBound *arg1 = (Stomp::GeometricBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:GeometricBound_Area",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__GeometricBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GeometricBound_Area" "', argument " "1"" of type '" "Stomp::GeometricBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::GeometricBound * >(argp1);
+  result = (double)(arg1)->Area();
+  resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
   return NULL;
@@ -36861,6 +36891,28 @@ SWIGINTERN PyObject *_wrap_GeometricBound_EtaMax(PyObject *SWIGUNUSEDPARM(self),
   arg1 = reinterpret_cast< Stomp::GeometricBound * >(argp1);
   result = (double)(arg1)->EtaMax();
   resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GeometricBound_ContinuousBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::GeometricBound *arg1 = (Stomp::GeometricBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:GeometricBound_ContinuousBounds",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__GeometricBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "GeometricBound_ContinuousBounds" "', argument " "1"" of type '" "Stomp::GeometricBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::GeometricBound * >(argp1);
+  result = (bool)(arg1)->ContinuousBounds();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -37581,6 +37633,72 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_LongitudeBound_LongitudeMin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LongitudeBound *arg1 = (Stomp::LongitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LongitudeBound_LongitudeMin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LongitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LongitudeBound_LongitudeMin" "', argument " "1"" of type '" "Stomp::LongitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LongitudeBound * >(argp1);
+  result = (double)(arg1)->LongitudeMin();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LongitudeBound_LongitudeMax(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LongitudeBound *arg1 = (Stomp::LongitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LongitudeBound_LongitudeMax",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LongitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LongitudeBound_LongitudeMax" "', argument " "1"" of type '" "Stomp::LongitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LongitudeBound * >(argp1);
+  result = (double)(arg1)->LongitudeMax();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LongitudeBound_Sphere(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LongitudeBound *arg1 = (Stomp::LongitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Stomp::AngularCoordinate::Sphere result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LongitudeBound_Sphere",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LongitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LongitudeBound_Sphere" "', argument " "1"" of type '" "Stomp::LongitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LongitudeBound * >(argp1);
+  result = (Stomp::AngularCoordinate::Sphere)(arg1)->Sphere();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *LongitudeBound_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -37721,6 +37839,72 @@ SWIGINTERN PyObject *_wrap_LatitudeBound_FindArea(PyObject *SWIGUNUSEDPARM(self)
   arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
   result = (bool)(arg1)->FindArea();
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatitudeBound_LatitudeMin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatitudeBound *arg1 = (Stomp::LatitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatitudeBound_LatitudeMin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatitudeBound_LatitudeMin" "', argument " "1"" of type '" "Stomp::LatitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
+  result = (double)(arg1)->LatitudeMin();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatitudeBound_LatitudeMax(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatitudeBound *arg1 = (Stomp::LatitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatitudeBound_LatitudeMax",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatitudeBound_LatitudeMax" "', argument " "1"" of type '" "Stomp::LatitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
+  result = (double)(arg1)->LatitudeMax();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatitudeBound_Sphere(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatitudeBound *arg1 = (Stomp::LatitudeBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Stomp::AngularCoordinate::Sphere result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatitudeBound_Sphere",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatitudeBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatitudeBound_Sphere" "', argument " "1"" of type '" "Stomp::LatitudeBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatitudeBound * >(argp1);
+  result = (Stomp::AngularCoordinate::Sphere)(arg1)->Sphere();
+  resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -37885,6 +38069,116 @@ SWIGINTERN PyObject *_wrap_LatLonBound_FindArea(PyObject *SWIGUNUSEDPARM(self), 
   arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
   result = (bool)(arg1)->FindArea();
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_LongitudeMin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatLonBound_LongitudeMin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_LongitudeMin" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  result = (double)(arg1)->LongitudeMin();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_LongitudeMax(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatLonBound_LongitudeMax",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_LongitudeMax" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  result = (double)(arg1)->LongitudeMax();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_LatitudeMin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatLonBound_LatitudeMin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_LatitudeMin" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  result = (double)(arg1)->LatitudeMin();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_LatitudeMax(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatLonBound_LatitudeMax",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_LatitudeMax" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  result = (double)(arg1)->LatitudeMax();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LatLonBound_Sphere(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::LatLonBound *arg1 = (Stomp::LatLonBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Stomp::AngularCoordinate::Sphere result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:LatLonBound_Sphere",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__LatLonBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LatLonBound_Sphere" "', argument " "1"" of type '" "Stomp::LatLonBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::LatLonBound * >(argp1);
+  result = (Stomp::AngularCoordinate::Sphere)(arg1)->Sphere();
+  resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -70990,12 +71284,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"GeometricBound_FindAngularBounds", _wrap_GeometricBound_FindAngularBounds, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_FindArea", _wrap_GeometricBound_FindArea, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_SetArea", _wrap_GeometricBound_SetArea, METH_VARARGS, NULL},
-	 { (char *)"GeometricBound_Area", _wrap_GeometricBound_Area, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_SetAngularBounds", _wrap_GeometricBound_SetAngularBounds, METH_VARARGS, NULL},
+	 { (char *)"GeometricBound_SetContinuousBounds", _wrap_GeometricBound_SetContinuousBounds, METH_VARARGS, NULL},
+	 { (char *)"GeometricBound_Area", _wrap_GeometricBound_Area, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_LambdaMin", _wrap_GeometricBound_LambdaMin, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_LambdaMax", _wrap_GeometricBound_LambdaMax, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_EtaMin", _wrap_GeometricBound_EtaMin, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_EtaMax", _wrap_GeometricBound_EtaMax, METH_VARARGS, NULL},
+	 { (char *)"GeometricBound_ContinuousBounds", _wrap_GeometricBound_ContinuousBounds, METH_VARARGS, NULL},
 	 { (char *)"GeometricBound_swigregister", GeometricBound_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_CircleBound", _wrap_new_CircleBound, METH_VARARGS, NULL},
 	 { (char *)"delete_CircleBound", _wrap_delete_CircleBound, METH_VARARGS, NULL},
@@ -71020,18 +71316,29 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"LongitudeBound_CheckPoint", _wrap_LongitudeBound_CheckPoint, METH_VARARGS, NULL},
 	 { (char *)"LongitudeBound_FindAngularBounds", _wrap_LongitudeBound_FindAngularBounds, METH_VARARGS, NULL},
 	 { (char *)"LongitudeBound_FindArea", _wrap_LongitudeBound_FindArea, METH_VARARGS, NULL},
+	 { (char *)"LongitudeBound_LongitudeMin", _wrap_LongitudeBound_LongitudeMin, METH_VARARGS, NULL},
+	 { (char *)"LongitudeBound_LongitudeMax", _wrap_LongitudeBound_LongitudeMax, METH_VARARGS, NULL},
+	 { (char *)"LongitudeBound_Sphere", _wrap_LongitudeBound_Sphere, METH_VARARGS, NULL},
 	 { (char *)"LongitudeBound_swigregister", LongitudeBound_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_LatitudeBound", _wrap_new_LatitudeBound, METH_VARARGS, NULL},
 	 { (char *)"delete_LatitudeBound", _wrap_delete_LatitudeBound, METH_VARARGS, NULL},
 	 { (char *)"LatitudeBound_CheckPoint", _wrap_LatitudeBound_CheckPoint, METH_VARARGS, NULL},
 	 { (char *)"LatitudeBound_FindAngularBounds", _wrap_LatitudeBound_FindAngularBounds, METH_VARARGS, NULL},
 	 { (char *)"LatitudeBound_FindArea", _wrap_LatitudeBound_FindArea, METH_VARARGS, NULL},
+	 { (char *)"LatitudeBound_LatitudeMin", _wrap_LatitudeBound_LatitudeMin, METH_VARARGS, NULL},
+	 { (char *)"LatitudeBound_LatitudeMax", _wrap_LatitudeBound_LatitudeMax, METH_VARARGS, NULL},
+	 { (char *)"LatitudeBound_Sphere", _wrap_LatitudeBound_Sphere, METH_VARARGS, NULL},
 	 { (char *)"LatitudeBound_swigregister", LatitudeBound_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_LatLonBound", _wrap_new_LatLonBound, METH_VARARGS, NULL},
 	 { (char *)"delete_LatLonBound", _wrap_delete_LatLonBound, METH_VARARGS, NULL},
 	 { (char *)"LatLonBound_CheckPoint", _wrap_LatLonBound_CheckPoint, METH_VARARGS, NULL},
 	 { (char *)"LatLonBound_FindAngularBounds", _wrap_LatLonBound_FindAngularBounds, METH_VARARGS, NULL},
 	 { (char *)"LatLonBound_FindArea", _wrap_LatLonBound_FindArea, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_LongitudeMin", _wrap_LatLonBound_LongitudeMin, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_LongitudeMax", _wrap_LatLonBound_LongitudeMax, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_LatitudeMin", _wrap_LatLonBound_LatitudeMin, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_LatitudeMax", _wrap_LatLonBound_LatitudeMax, METH_VARARGS, NULL},
+	 { (char *)"LatLonBound_Sphere", _wrap_LatLonBound_Sphere, METH_VARARGS, NULL},
 	 { (char *)"LatLonBound_swigregister", LatLonBound_swigregister, METH_VARARGS, NULL},
 	 { (char *)"Cosmology_omega_m_get", _wrap_Cosmology_omega_m_get, METH_VARARGS, NULL},
 	 { (char *)"Cosmology_omega_m_set", _wrap_Cosmology_omega_m_set, METH_VARARGS, NULL},

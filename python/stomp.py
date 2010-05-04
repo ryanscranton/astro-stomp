@@ -776,12 +776,14 @@ class GeometricBound(_object):
     def FindAngularBounds(*args): return _stomp.GeometricBound_FindAngularBounds(*args)
     def FindArea(*args): return _stomp.GeometricBound_FindArea(*args)
     def SetArea(*args): return _stomp.GeometricBound_SetArea(*args)
-    def Area(*args): return _stomp.GeometricBound_Area(*args)
     def SetAngularBounds(*args): return _stomp.GeometricBound_SetAngularBounds(*args)
+    def SetContinuousBounds(*args): return _stomp.GeometricBound_SetContinuousBounds(*args)
+    def Area(*args): return _stomp.GeometricBound_Area(*args)
     def LambdaMin(*args): return _stomp.GeometricBound_LambdaMin(*args)
     def LambdaMax(*args): return _stomp.GeometricBound_LambdaMax(*args)
     def EtaMin(*args): return _stomp.GeometricBound_EtaMin(*args)
     def EtaMax(*args): return _stomp.GeometricBound_EtaMax(*args)
+    def ContinuousBounds(*args): return _stomp.GeometricBound_ContinuousBounds(*args)
 GeometricBound_swigregister = _stomp.GeometricBound_swigregister
 GeometricBound_swigregister(GeometricBound)
 
@@ -862,6 +864,9 @@ class LongitudeBound(GeometricBound):
     def CheckPoint(*args): return _stomp.LongitudeBound_CheckPoint(*args)
     def FindAngularBounds(*args): return _stomp.LongitudeBound_FindAngularBounds(*args)
     def FindArea(*args): return _stomp.LongitudeBound_FindArea(*args)
+    def LongitudeMin(*args): return _stomp.LongitudeBound_LongitudeMin(*args)
+    def LongitudeMax(*args): return _stomp.LongitudeBound_LongitudeMax(*args)
+    def Sphere(*args): return _stomp.LongitudeBound_Sphere(*args)
 LongitudeBound_swigregister = _stomp.LongitudeBound_swigregister
 LongitudeBound_swigregister(LongitudeBound)
 
@@ -882,6 +887,9 @@ class LatitudeBound(GeometricBound):
     def CheckPoint(*args): return _stomp.LatitudeBound_CheckPoint(*args)
     def FindAngularBounds(*args): return _stomp.LatitudeBound_FindAngularBounds(*args)
     def FindArea(*args): return _stomp.LatitudeBound_FindArea(*args)
+    def LatitudeMin(*args): return _stomp.LatitudeBound_LatitudeMin(*args)
+    def LatitudeMax(*args): return _stomp.LatitudeBound_LatitudeMax(*args)
+    def Sphere(*args): return _stomp.LatitudeBound_Sphere(*args)
 LatitudeBound_swigregister = _stomp.LatitudeBound_swigregister
 LatitudeBound_swigregister(LatitudeBound)
 
@@ -902,6 +910,11 @@ class LatLonBound(GeometricBound):
     def CheckPoint(*args): return _stomp.LatLonBound_CheckPoint(*args)
     def FindAngularBounds(*args): return _stomp.LatLonBound_FindAngularBounds(*args)
     def FindArea(*args): return _stomp.LatLonBound_FindArea(*args)
+    def LongitudeMin(*args): return _stomp.LatLonBound_LongitudeMin(*args)
+    def LongitudeMax(*args): return _stomp.LatLonBound_LongitudeMax(*args)
+    def LatitudeMin(*args): return _stomp.LatLonBound_LatitudeMin(*args)
+    def LatitudeMax(*args): return _stomp.LatLonBound_LatitudeMax(*args)
+    def Sphere(*args): return _stomp.LatLonBound_Sphere(*args)
 LatLonBound_swigregister = _stomp.LatLonBound_swigregister
 LatLonBound_swigregister(LatLonBound)
 
