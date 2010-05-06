@@ -1908,9 +1908,44 @@ double RenderArea::_renderPixelArea() {
 }
 
 void RenderArea::_findRenderLevel(uint32_t target_pixels) {
+  double cartesian_area = _lonRange()*_latRange();
+
   render_level_ = Stomp::HPixLevel;
   for (uint8_t level=Stomp::HPixLevel+1;level<=Stomp::MaxPixelLevel;level++) {
-    if (stomp_map_[level]->Size() < target_pixels) {
+    uint32_t n_pixel = stomp_map_[level]->Size();
+
+    if (cartesian_area < 10000.0) {
+      n_pixel = 0;
+
+      Stomp::Map* level_map = stomp_map_[level];
+      for (Stomp::MapIterator iter=level_map->Begin();
+	   iter!=level_map->End();level_map->Iterate(&iter)) {
+	Stomp::PixelIterator pix = iter.second;      
+	double latitude, longitude;
+
+	switch (sphere_) {
+	case Stomp::AngularCoordinate::Survey:
+	  longitude = pix->Eta();
+	  latitude = pix->Lambda();
+	  break;
+	case Stomp::AngularCoordinate::Equatorial:
+	  longitude = pix->RA();
+	  latitude = pix->DEC();
+	  break;
+	case Stomp::AngularCoordinate::Galactic:
+	  longitude = pix->GalLon();
+	  latitude = pix->GalLat();
+	  break;
+	}
+
+	if (Stomp::DoubleLE(longitude, lonmax_) &&
+	    Stomp::DoubleGE(longitude, lonmin_) &&
+	    Stomp::DoubleLE(latitude, latmax_) &&
+	    Stomp::DoubleGE(latitude, latmin_)) n_pixel++;
+      }
+    }
+      
+    if (n_pixel < target_pixels) {
       render_level_ = level;
     } else {
       break;
