@@ -22,6 +22,11 @@
 %include std_map.i
 %include std_vector.i
 
+%include "typemaps.i"
+%apply double& INPUT { double& }
+%apply double& OUTPUT { double& }
+%apply uint32_t& INPUT { uint32_t& }
+
 // Need to add AngularCoordinate, WeightedAngularCoordinate, CosmoCoordinate
 // TreePixel and TreeMap manually to avoid some over-loading issues.
 
@@ -622,3 +627,4 @@ class TreeMap : public BaseMap {
 %template(PixelVector) std::vector<Stomp::Pixel>;
 %template(FieldDict) std::map<std::string, double>;
 %template(FieldColumnDict) std::map<std::string, uint8_t>;
+%template(DoubleVector) std::vector<double>;

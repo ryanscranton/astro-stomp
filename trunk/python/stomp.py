@@ -248,6 +248,7 @@ class Pixel(_object):
     def InvertWeight(*args): return _stomp.Pixel_InvertWeight(*args)
     def SetToSuperPix(*args): return _stomp.Pixel_SetToSuperPix(*args)
     def SetToLevel(*args): return _stomp.Pixel_SetToLevel(*args)
+    def SubPix(*args): return _stomp.Pixel_SubPix(*args)
     def FirstCohort(*args): return _stomp.Pixel_FirstCohort(*args)
     def Area(*args): return _stomp.Pixel_Area(*args)
     def Superpixnum(*args): return _stomp.Pixel_Superpixnum(*args)
@@ -331,8 +332,8 @@ class Pixel(_object):
     if _newclass:HPix2Pix = staticmethod(_stomp.Pixel_HPix2Pix)
     __swig_getmethods__["SuperPix"] = lambda x: _stomp.Pixel_SuperPix
     if _newclass:SuperPix = staticmethod(_stomp.Pixel_SuperPix)
-    __swig_getmethods__["SubPix"] = lambda x: _stomp.Pixel_SubPix
-    if _newclass:SubPix = staticmethod(_stomp.Pixel_SubPix)
+    __swig_getmethods__["SubPixels"] = lambda x: _stomp.Pixel_SubPixels
+    if _newclass:SubPixels = staticmethod(_stomp.Pixel_SubPixels)
     __swig_getmethods__["NextSubPix"] = lambda x: _stomp.Pixel_NextSubPix
     if _newclass:NextSubPix = staticmethod(_stomp.Pixel_NextSubPix)
     __swig_getmethods__["AreaIndex"] = lambda x: _stomp.Pixel_AreaIndex
@@ -400,7 +401,7 @@ Pixel_Pix2Ang = _stomp.Pixel_Pix2Ang
 Pixel_Pix2HPix = _stomp.Pixel_Pix2HPix
 Pixel_HPix2Pix = _stomp.Pixel_HPix2Pix
 Pixel_SuperPix = _stomp.Pixel_SuperPix
-Pixel_SubPix = _stomp.Pixel_SubPix
+Pixel_SubPixels = _stomp.Pixel_SubPixels
 Pixel_NextSubPix = _stomp.Pixel_NextSubPix
 Pixel_AreaIndex = _stomp.Pixel_AreaIndex
 Pixel_PixelBound = _stomp.Pixel_PixelBound
@@ -1613,6 +1614,52 @@ class FieldColumnDict(_object):
     __del__ = lambda self : None;
 FieldColumnDict_swigregister = _stomp.FieldColumnDict_swigregister
 FieldColumnDict_swigregister(FieldColumnDict)
+
+class DoubleVector(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleVector, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, DoubleVector, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.DoubleVector_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.DoubleVector___nonzero__(*args)
+    def __len__(*args): return _stomp.DoubleVector___len__(*args)
+    def pop(*args): return _stomp.DoubleVector_pop(*args)
+    def __getslice__(*args): return _stomp.DoubleVector___getslice__(*args)
+    def __setslice__(*args): return _stomp.DoubleVector___setslice__(*args)
+    def __delslice__(*args): return _stomp.DoubleVector___delslice__(*args)
+    def __delitem__(*args): return _stomp.DoubleVector___delitem__(*args)
+    def __getitem__(*args): return _stomp.DoubleVector___getitem__(*args)
+    def __setitem__(*args): return _stomp.DoubleVector___setitem__(*args)
+    def append(*args): return _stomp.DoubleVector_append(*args)
+    def empty(*args): return _stomp.DoubleVector_empty(*args)
+    def size(*args): return _stomp.DoubleVector_size(*args)
+    def clear(*args): return _stomp.DoubleVector_clear(*args)
+    def swap(*args): return _stomp.DoubleVector_swap(*args)
+    def get_allocator(*args): return _stomp.DoubleVector_get_allocator(*args)
+    def begin(*args): return _stomp.DoubleVector_begin(*args)
+    def end(*args): return _stomp.DoubleVector_end(*args)
+    def rbegin(*args): return _stomp.DoubleVector_rbegin(*args)
+    def rend(*args): return _stomp.DoubleVector_rend(*args)
+    def pop_back(*args): return _stomp.DoubleVector_pop_back(*args)
+    def erase(*args): return _stomp.DoubleVector_erase(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_DoubleVector(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _stomp.DoubleVector_push_back(*args)
+    def front(*args): return _stomp.DoubleVector_front(*args)
+    def back(*args): return _stomp.DoubleVector_back(*args)
+    def assign(*args): return _stomp.DoubleVector_assign(*args)
+    def resize(*args): return _stomp.DoubleVector_resize(*args)
+    def insert(*args): return _stomp.DoubleVector_insert(*args)
+    def reserve(*args): return _stomp.DoubleVector_reserve(*args)
+    def capacity(*args): return _stomp.DoubleVector_capacity(*args)
+    __swig_destroy__ = _stomp.delete_DoubleVector
+    __del__ = lambda self : None;
+DoubleVector_swigregister = _stomp.DoubleVector_swigregister
+DoubleVector_swigregister(DoubleVector)
 
 
 

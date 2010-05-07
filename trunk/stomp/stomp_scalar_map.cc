@@ -133,7 +133,7 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
   unmasked_fraction_minimum_ = min_unmasked_fraction;
   map_type_ = scalar_map_type;
 
-  if (use_map_weight_as_intensity && !(map_type_ != ScalarField)) {
+  if (use_map_weight_as_intensity && !(map_type_ == ScalarField)) {
     std::cout <<
       "WARNING: Converting MapType to ScalarField to sample " <<
       "input Map Weight\n";
@@ -172,8 +172,11 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
   area_ = 0.0;
   total_intensity_ = 0.0;
   total_points_ = 0;
-  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
+  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
     area_ += iter->Area()*iter->Weight();
+    total_intensity_ += iter->Intensity();
+    total_points_ += iter->NPoints();
+  }
 
   initialized_sub_map_ = _InitializeSubMap();
 }
