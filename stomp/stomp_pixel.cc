@@ -2139,10 +2139,10 @@ void Pixel::NextSubPix(uint32_t input_resolution, uint32_t input_pixnum,
   sub_pixnum4 = nx_hi*(2*j + 1) + 2*i + 1;
 }
 
-void Pixel::SubPix(uint32_t lo_resolution, uint32_t lo_pixnum,
-		   uint32_t hi_resolution, uint32_t& x_min,
-		   uint32_t& x_max, uint32_t& y_min,
-		   uint32_t& y_max) {
+void Pixel::SubPixels(uint32_t lo_resolution, uint32_t lo_pixnum,
+		      uint32_t hi_resolution, uint32_t& x_min,
+		      uint32_t& x_max, uint32_t& y_min,
+		      uint32_t& y_max) {
   uint32_t nx_hi = Nx0*hi_resolution;
   if (lo_resolution == hi_resolution) {
     y_min = lo_pixnum/nx_hi;

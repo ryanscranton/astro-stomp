@@ -372,10 +372,10 @@ class Pixel {
                        uint32_t& output_pixnum);
   static void SuperPix(uint32_t hi_resolution, uint32_t hi_pixnum,
                        uint32_t lo_resolution, uint32_t& lo_pixnum);
-  static void SubPix(uint32_t lo_resolution, uint32_t hi_pixnum,
-		     uint32_t hi_resolution, uint32_t& x_min,
-		     uint32_t& x_max, uint32_t& y_min,
-		     uint32_t& y_max);
+  static void SubPixels(uint32_t lo_resolution, uint32_t hi_pixnum,
+			uint32_t hi_resolution, uint32_t& x_min,
+			uint32_t& x_max, uint32_t& y_min,
+			uint32_t& y_max);
   static void NextSubPix(uint32_t input_resolution, uint32_t input_pixnum,
 			 uint32_t& sub_pixnum1,
 			 uint32_t& sub_pixnum2,

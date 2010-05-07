@@ -2579,66 +2579,69 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t swig_types[72]
 #define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t swig_types[73]
 #define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type swig_types[74]
-#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t swig_types[75]
-#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type swig_types[76]
-#define SWIGTYPE_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t swig_types[77]
-#define SWIGTYPE_p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t swig_types[78]
-#define SWIGTYPE_p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t swig_types[79]
-#define SWIGTYPE_p_std__pairT_Stomp__RegionAreaDict__iterator_Stomp__RegionAreaDict__iterator_t swig_types[80]
-#define SWIGTYPE_p_std__pairT_Stomp__RegionDict__iterator_Stomp__RegionDict__iterator_t swig_types[81]
-#define SWIGTYPE_p_std__pairT_Stomp__ResolutionDict__iterator_Stomp__ResolutionDict__iterator_t swig_types[82]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarMapVector__iterator_Stomp__ScalarMapVector__iterator_t swig_types[83]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarSubMapVector__iterator_Stomp__ScalarSubMapVector__iterator_t swig_types[84]
-#define SWIGTYPE_p_std__pairT_Stomp__ScalarVector__iterator_Stomp__ScalarVector__iterator_t swig_types[85]
-#define SWIGTYPE_p_std__pairT_Stomp__SubMapVector__iterator_Stomp__SubMapVector__iterator_t swig_types[86]
-#define SWIGTYPE_p_std__pairT_Stomp__ThetaVector__iterator_Stomp__ThetaVector__iterator_t swig_types[87]
-#define SWIGTYPE_p_std__pairT_double_Stomp__TreePixel_p_t swig_types[88]
-#define SWIGTYPE_p_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t swig_types[89]
-#define SWIGTYPE_p_std__pairT_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_t swig_types[90]
-#define SWIGTYPE_p_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t swig_types[91]
-#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__TreePixel_p_t_std__vectorT_std__pairT_double_Stomp__TreePixel_p_t_std__allocatorT_std__pairT_double_Stomp__TreePixel_p_t_t_t_Stomp__NearestNeighborPixel_t swig_types[92]
-#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t swig_types[93]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t swig_types[94]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t swig_types[95]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[96]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[97]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[98]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[99]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[100]
-#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[101]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[102]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[103]
-#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t swig_types[104]
-#define SWIGTYPE_p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t swig_types[105]
-#define SWIGTYPE_p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t swig_types[106]
-#define SWIGTYPE_p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t swig_types[107]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[108]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[109]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[110]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[111]
-#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[112]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[113]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[114]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[115]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[116]
-#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[117]
-#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[118]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[119]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[120]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[121]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[122]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[123]
-#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[124]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[125]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[126]
-#define SWIGTYPE_p_swig__PySwigIterator swig_types[127]
-#define SWIGTYPE_p_unsigned_char swig_types[128]
-#define SWIGTYPE_p_unsigned_int swig_types[129]
-#define SWIGTYPE_p_unsigned_long_long swig_types[130]
-#define SWIGTYPE_p_unsigned_short swig_types[131]
-#define SWIGTYPE_p_value_type swig_types[132]
-static swig_type_info *swig_types[134];
-static swig_module_info swig_module = {swig_types, 133, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type swig_types[75]
+#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t swig_types[76]
+#define SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type swig_types[77]
+#define SWIGTYPE_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t swig_types[78]
+#define SWIGTYPE_p_std__mapT_unsigned_int_const_unsigned_int_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_unsigned_int_t_t_t swig_types[79]
+#define SWIGTYPE_p_std__pairT_Stomp__PixelVector__iterator_Stomp__PixelVector__iterator_t swig_types[80]
+#define SWIGTYPE_p_std__pairT_Stomp__RegionAreaDict__iterator_Stomp__RegionAreaDict__iterator_t swig_types[81]
+#define SWIGTYPE_p_std__pairT_Stomp__RegionDict__iterator_Stomp__RegionDict__iterator_t swig_types[82]
+#define SWIGTYPE_p_std__pairT_Stomp__ResolutionDict__iterator_Stomp__ResolutionDict__iterator_t swig_types[83]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarMapVector__iterator_Stomp__ScalarMapVector__iterator_t swig_types[84]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarSubMapVector__iterator_Stomp__ScalarSubMapVector__iterator_t swig_types[85]
+#define SWIGTYPE_p_std__pairT_Stomp__ScalarVector__iterator_Stomp__ScalarVector__iterator_t swig_types[86]
+#define SWIGTYPE_p_std__pairT_Stomp__SubMapVector__iterator_Stomp__SubMapVector__iterator_t swig_types[87]
+#define SWIGTYPE_p_std__pairT_Stomp__ThetaVector__iterator_Stomp__ThetaVector__iterator_t swig_types[88]
+#define SWIGTYPE_p_std__pairT_double_Stomp__TreePixel_p_t swig_types[89]
+#define SWIGTYPE_p_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t swig_types[90]
+#define SWIGTYPE_p_std__pairT_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t_t swig_types[91]
+#define SWIGTYPE_p_std__pairT_unsigned_int_Stomp__PixelVector__iterator_t swig_types[92]
+#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__TreePixel_p_t_std__vectorT_std__pairT_double_Stomp__TreePixel_p_t_std__allocatorT_std__pairT_double_Stomp__TreePixel_p_t_t_t_Stomp__NearestNeighborPixel_t swig_types[93]
+#define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t swig_types[94]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t swig_types[95]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t swig_types[96]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[97]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[98]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[99]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[100]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[101]
+#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[102]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[103]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[104]
+#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t swig_types[105]
+#define SWIGTYPE_p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t swig_types[106]
+#define SWIGTYPE_p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t swig_types[107]
+#define SWIGTYPE_p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t swig_types[108]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[109]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[110]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[111]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[112]
+#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[113]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[114]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[115]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[116]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[117]
+#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[118]
+#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[119]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[120]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[121]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[122]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[123]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[124]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type swig_types[125]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type swig_types[126]
+#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[127]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[128]
+#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[129]
+#define SWIGTYPE_p_swig__PySwigIterator swig_types[130]
+#define SWIGTYPE_p_unsigned_char swig_types[131]
+#define SWIGTYPE_p_unsigned_int swig_types[132]
+#define SWIGTYPE_p_unsigned_long_long swig_types[133]
+#define SWIGTYPE_p_unsigned_short swig_types[134]
+#define SWIGTYPE_p_value_type swig_types[135]
+static swig_type_info *swig_types[137];
+static swig_module_info swig_module = {swig_types, 136, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -5078,6 +5081,53 @@ SWIGINTERN swig::PySwigIterator *std_map_Sl_std_string_Sc_uint8_t_Sg__value_iter
     }
 SWIGINTERN void std_map_Sl_std_string_Sc_uint8_t_Sg____setitem__(std::map< std::string,uint8_t > *self,std::map< std::string,unsigned char >::key_type const &key,std::map< std::string,unsigned char >::mapped_type const &x){
       (*self)[key] = x;
+    }
+
+      namespace swig {
+	template <>  struct traits<std::vector<double, std::allocator< double > > > {
+	  typedef pointer_category category;
+	  static const char* type_name() {
+	    return "std::vector<" "double" "," "std::allocator< double >" " >";
+	  }
+	};
+      }
+    
+SWIGINTERN swig::PySwigIterator *std_vector_Sl_double_Sg__iterator(std::vector< double > *self,PyObject **PYTHON_SELF){
+      return swig::make_output_iterator(self->begin(), self->begin(), self->end(), *PYTHON_SELF);
+    }
+SWIGINTERN bool std_vector_Sl_double_Sg____nonzero__(std::vector< double > const *self){
+      return !(self->empty());
+    }
+SWIGINTERN std::vector< double >::size_type std_vector_Sl_double_Sg____len__(std::vector< double > const *self){
+      return self->size();
+    }
+SWIGINTERN std::vector< double >::value_type std_vector_Sl_double_Sg__pop(std::vector< double > *self){
+      if (self->size() == 0)
+	throw std::out_of_range("pop from empty container");
+      std::vector<double,std::allocator< double > >::value_type x = self->back();
+      self->pop_back();
+      return x;
+    }
+SWIGINTERN std::vector< double,std::allocator< double > > *std_vector_Sl_double_Sg____getslice__(std::vector< double > *self,std::vector< double >::difference_type i,std::vector< double >::difference_type j){
+      return swig::getslice(self, i, j);
+    }
+SWIGINTERN void std_vector_Sl_double_Sg____setslice__(std::vector< double > *self,std::vector< double >::difference_type i,std::vector< double >::difference_type j,std::vector< double,std::allocator< double > > const &v){
+      swig::setslice(self, i, j, v);
+    }
+SWIGINTERN void std_vector_Sl_double_Sg____delslice__(std::vector< double > *self,std::vector< double >::difference_type i,std::vector< double >::difference_type j){
+      swig::delslice(self, i, j);
+    }
+SWIGINTERN void std_vector_Sl_double_Sg____delitem__(std::vector< double > *self,std::vector< double >::difference_type i){
+      self->erase(swig::getpos(self,i));
+    }
+SWIGINTERN std::vector< double >::value_type const &std_vector_Sl_double_Sg____getitem__(std::vector< double > const *self,std::vector< double >::difference_type i){
+      return *(swig::cgetpos(self, i));
+    }
+SWIGINTERN void std_vector_Sl_double_Sg____setitem__(std::vector< double > *self,std::vector< double >::difference_type i,std::vector< double >::value_type const &x){
+      *(swig::getpos(self,i)) = x;
+    }
+SWIGINTERN void std_vector_Sl_double_Sg__append(std::vector< double > *self,std::vector< double >::value_type const &x){
+      self->push_back(x);
     }
 #ifdef __cplusplus
 extern "C" {
@@ -13228,13 +13278,13 @@ SWIGINTERN PyObject *_wrap_Pixel_SubPix__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
   int res1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -13254,42 +13304,145 @@ SWIGINTERN PyObject *_wrap_Pixel_SubPix__SWIG_1(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_SubPix" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_SubPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_SubPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPix" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPix" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_SubPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_SubPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
   (arg1)->SubPix(arg2,*arg3,*arg4,*arg5,*arg6);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Pixel_SubPix(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[7];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_Pixel_SubPix__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_unsigned_SS_int(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_unsigned_SS_int(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
+            if (_v) {
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
+              _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
+              if (_v) {
+                return _wrap_Pixel_SubPix__SWIG_1(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Pixel_SubPix'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SubPix(Stomp::Pixel *,uint32_t,Stomp::PixelVector &)\n"
+    "    SubPix(Stomp::Pixel *,uint32_t,uint32_t &,uint32_t &,uint32_t &,uint32_t &)\n");
   return NULL;
 }
 
@@ -14486,13 +14639,13 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_0(PyObject *SWIGUNUSEDPARM(self)
   int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
   bool val7 ;
   int ecode7 = 0 ;
@@ -14515,38 +14668,46 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_0(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_XYBounds" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
   ecode7 = SWIG_AsVal_bool(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
     SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "bool""'");
@@ -14554,8 +14715,16 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_0(PyObject *SWIGUNUSEDPARM(self)
   arg7 = static_cast< bool >(val7);
   (arg1)->XYBounds(arg2,*arg3,*arg4,*arg5,*arg6,arg7);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return NULL;
 }
 
@@ -14572,13 +14741,13 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
   int res1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -14598,42 +14767,58 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_XYBounds" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
   (arg1)->XYBounds(arg2,*arg3,*arg4,*arg5,*arg6);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return NULL;
 }
 
@@ -14655,9 +14840,9 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_2(PyObject *SWIGUNUSEDPARM(self)
   int res3 = 0 ;
   void *argp4 = 0 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
   bool val7 ;
   int ecode7 = 0 ;
@@ -14696,22 +14881,26 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_2(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
   }
   arg4 = reinterpret_cast< std::vector< uint32_t,std::allocator< uint32_t > > * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
   ecode7 = SWIG_AsVal_bool(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
     SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "bool""'");
@@ -14719,8 +14908,12 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_2(PyObject *SWIGUNUSEDPARM(self)
   arg7 = static_cast< bool >(val7);
   (arg1)->XYBounds(arg2,*arg3,*arg4,*arg5,*arg6,arg7);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return NULL;
 }
 
@@ -14741,9 +14934,9 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_3(PyObject *SWIGUNUSEDPARM(self)
   int res3 = 0 ;
   void *argp4 = 0 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -14779,26 +14972,34 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_3(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
   }
   arg4 = reinterpret_cast< std::vector< uint32_t,std::allocator< uint32_t > > * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
   (arg1)->XYBounds(arg2,*arg3,*arg4,*arg5,*arg6);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return NULL;
 }
 
@@ -14819,13 +15020,13 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_4(PyObject *SWIGUNUSEDPARM(self)
   int res2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
   bool val8 ;
   int ecode8 = 0 ;
@@ -14857,38 +15058,46 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_4(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
   ecode8 = SWIG_AsVal_bool(obj7, &val8);
   if (!SWIG_IsOK(ecode8)) {
     SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "Pixel_XYBounds" "', argument " "8"" of type '" "bool""'");
@@ -14896,8 +15105,16 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_4(PyObject *SWIGUNUSEDPARM(self)
   arg8 = static_cast< bool >(val8);
   (arg1)->XYBounds(*arg2,arg3,*arg4,*arg5,*arg6,*arg7,arg8);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return NULL;
 }
 
@@ -14917,13 +15134,13 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_5(PyObject *SWIGUNUSEDPARM(self)
   int res2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -14952,42 +15169,58 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_5(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_XYBounds" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
   (arg1)->XYBounds(*arg2,arg3,*arg4,*arg5,*arg6,*arg7);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return NULL;
 }
 
@@ -15012,9 +15245,9 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_6(PyObject *SWIGUNUSEDPARM(self)
   int res4 = 0 ;
   void *argp5 = 0 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
   bool val8 ;
   int ecode8 = 0 ;
@@ -15062,22 +15295,26 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_6(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
   }
   arg5 = reinterpret_cast< std::vector< uint32_t,std::allocator< uint32_t > > * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
   ecode8 = SWIG_AsVal_bool(obj7, &val8);
   if (!SWIG_IsOK(ecode8)) {
     SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "Pixel_XYBounds" "', argument " "8"" of type '" "bool""'");
@@ -15085,8 +15322,12 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_6(PyObject *SWIGUNUSEDPARM(self)
   arg8 = static_cast< bool >(val8);
   (arg1)->XYBounds(*arg2,arg3,*arg4,*arg5,*arg6,*arg7,arg8);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return NULL;
 }
 
@@ -15110,9 +15351,9 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_7(PyObject *SWIGUNUSEDPARM(self)
   int res4 = 0 ;
   void *argp5 = 0 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -15157,26 +15398,34 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds__SWIG_7(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "5"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
   }
   arg5 = reinterpret_cast< std::vector< uint32_t,std::allocator< uint32_t > > * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
   (arg1)->XYBounds(*arg2,arg3,*arg4,*arg5,*arg6,*arg7);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return NULL;
 }
 
@@ -15203,22 +15452,28 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds(PyObject *self, PyObject *args) {
       }
       if (_v) {
         void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_unsigned_int, 0);
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
           void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
             _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
             if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
               _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
               if (_v) {
-                return _wrap_Pixel_XYBounds__SWIG_1(self, args);
+                return _wrap_Pixel_XYBounds__SWIG_3(self, args);
               }
             }
           }
@@ -15237,63 +15492,35 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds(PyObject *self, PyObject *args) {
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
+        void *ptr = 0;
+        int res = SWIG_AsVal_unsigned_SS_int(argv[2], 0);
         _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+        }
         if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
+          void *ptr = 0;
+          int res = SWIG_AsVal_unsigned_SS_int(argv[3], 0);
           _v = SWIG_CheckState(res);
-          if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
-            _v = SWIG_CheckState(res);
-            if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
-              _v = SWIG_CheckState(res);
-              if (_v) {
-                return _wrap_Pixel_XYBounds__SWIG_3(self, args);
-              }
-            }
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
           }
-        }
-      }
-    }
-  }
-  if (argc == 7) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_double(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
-          _v = SWIG_CheckState(res);
           if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
             _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
             if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
               _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
               if (_v) {
-                void *vptr = 0;
-                int res = SWIG_ConvertPtr(argv[6], &vptr, SWIGTYPE_p_unsigned_int, 0);
-                _v = SWIG_CheckState(res);
-                if (_v) {
-                  return _wrap_Pixel_XYBounds__SWIG_5(self, args);
-                }
+                return _wrap_Pixel_XYBounds__SWIG_1(self, args);
               }
             }
           }
@@ -15324,15 +15551,73 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds(PyObject *self, PyObject *args) {
             int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
             _v = SWIG_CheckState(res);
             if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
               _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
               if (_v) {
-                void *vptr = 0;
-                int res = SWIG_ConvertPtr(argv[6], &vptr, SWIGTYPE_p_unsigned_int, 0);
+                void *ptr = 0;
+                int res = SWIG_AsVal_unsigned_SS_int(argv[6], 0);
                 _v = SWIG_CheckState(res);
+                if (!_v) {
+                  _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[6],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+                }
                 if (_v) {
                   return _wrap_Pixel_XYBounds__SWIG_7(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_unsigned_SS_int(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
+            if (_v) {
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
+              _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
+              if (_v) {
+                void *ptr = 0;
+                int res = SWIG_AsVal_unsigned_SS_int(argv[6], 0);
+                _v = SWIG_CheckState(res);
+                if (!_v) {
+                  _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[6],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+                }
+                if (_v) {
+                  return _wrap_Pixel_XYBounds__SWIG_5(self, args);
                 }
               }
             }
@@ -15360,13 +15645,19 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds(PyObject *self, PyObject *args) {
           int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
             _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
             if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
               _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
               if (_v) {
                 {
                   int res = SWIG_AsVal_bool(argv[6], NULL);
@@ -15393,21 +15684,33 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds(PyObject *self, PyObject *args) {
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_unsigned_int, 0);
+        void *ptr = 0;
+        int res = SWIG_AsVal_unsigned_SS_int(argv[2], 0);
         _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+        }
         if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
+          void *ptr = 0;
+          int res = SWIG_AsVal_unsigned_SS_int(argv[3], 0);
           _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+          }
           if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
             _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
             if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
               _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
               if (_v) {
                 {
                   int res = SWIG_AsVal_bool(argv[6], NULL);
@@ -15446,13 +15749,19 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds(PyObject *self, PyObject *args) {
             int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
             _v = SWIG_CheckState(res);
             if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
               _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
               if (_v) {
-                void *vptr = 0;
-                int res = SWIG_ConvertPtr(argv[6], &vptr, SWIGTYPE_p_unsigned_int, 0);
+                void *ptr = 0;
+                int res = SWIG_AsVal_unsigned_SS_int(argv[6], 0);
                 _v = SWIG_CheckState(res);
+                if (!_v) {
+                  _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[6],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+                }
                 if (_v) {
                   {
                     int res = SWIG_AsVal_bool(argv[7], NULL);
@@ -15484,21 +15793,33 @@ SWIGINTERN PyObject *_wrap_Pixel_XYBounds(PyObject *self, PyObject *args) {
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
+          void *ptr = 0;
+          int res = SWIG_AsVal_unsigned_SS_int(argv[3], 0);
           _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+          }
           if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
             _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
             if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
+              void *ptr = 0;
+              int res = SWIG_AsVal_unsigned_SS_int(argv[5], 0);
               _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+              }
               if (_v) {
-                void *vptr = 0;
-                int res = SWIG_ConvertPtr(argv[6], &vptr, SWIGTYPE_p_unsigned_int, 0);
+                void *ptr = 0;
+                int res = SWIG_AsVal_unsigned_SS_int(argv[6], 0);
                 _v = SWIG_CheckState(res);
+                if (!_v) {
+                  _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[6],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+                }
                 if (_v) {
                   {
                     int res = SWIG_AsVal_bool(argv[7], NULL);
@@ -15708,17 +16029,17 @@ SWIGINTERN PyObject *_wrap_Pixel_EdgeDistances(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   bool result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Pixel_EdgeDistances",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Pixel_EdgeDistances",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Pixel, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Pixel_EdgeDistances" "', argument " "1"" of type '" "Stomp::Pixel *""'"); 
@@ -15732,24 +16053,20 @@ SWIGINTERN PyObject *_wrap_Pixel_EdgeDistances(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_EdgeDistances" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
   }
   arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_EdgeDistances" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_EdgeDistances" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_EdgeDistances" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_EdgeDistances" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   result = (bool)(arg1)->EdgeDistances(*arg2,*arg3,*arg4);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -18410,7 +18727,7 @@ SWIGINTERN PyObject *_wrap_Pixel_Ang2Pix(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int ecode1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -18430,18 +18747,22 @@ SWIGINTERN PyObject *_wrap_Pixel_Ang2Pix(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Ang2Pix" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
   }
   arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_Ang2Pix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_Ang2Pix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Ang2Pix" "', argument " "3"" of type '" "uint32_t &""'"); 
-  }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
   Stomp::Pixel::Ang2Pix(arg1,*arg2,*arg3);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
   return NULL;
 }
 
@@ -18498,9 +18819,9 @@ SWIGINTERN PyObject *_wrap_Pixel_Pix2HPix(PyObject *SWIGUNUSEDPARM(self), PyObje
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -18518,26 +18839,34 @@ SWIGINTERN PyObject *_wrap_Pixel_Pix2HPix(PyObject *SWIGUNUSEDPARM(self), PyObje
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_Pix2HPix" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_Pix2HPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_Pix2HPix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Pix2HPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_Pix2HPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_Pix2HPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Pix2HPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
   Stomp::Pixel::Pix2HPix(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
 }
 
@@ -18554,7 +18883,7 @@ SWIGINTERN PyObject *_wrap_Pixel_HPix2Pix(PyObject *SWIGUNUSEDPARM(self), PyObje
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -18577,18 +18906,22 @@ SWIGINTERN PyObject *_wrap_Pixel_HPix2Pix(PyObject *SWIGUNUSEDPARM(self), PyObje
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_HPix2Pix" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_HPix2Pix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_HPix2Pix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_HPix2Pix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
   Stomp::Pixel::HPix2Pix(arg1,arg2,arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
 }
 
@@ -18605,7 +18938,7 @@ SWIGINTERN PyObject *_wrap_Pixel_SuperPix__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -18628,18 +18961,22 @@ SWIGINTERN PyObject *_wrap_Pixel_SuperPix__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_SuperPix" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_SuperPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SuperPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SuperPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
   Stomp::Pixel::SuperPix(arg1,arg2,arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
 }
 
@@ -18686,9 +19023,12 @@ SWIGINTERN PyObject *_wrap_Pixel_SuperPix(PyObject *self, PyObject *args) {
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
+          void *ptr = 0;
+          int res = SWIG_AsVal_unsigned_SS_int(argv[3], 0);
           _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+          }
           if (_v) {
             return _wrap_Pixel_SuperPix__SWIG_1(self, args);
           }
@@ -18706,7 +19046,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Pixel_SubPix__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Pixel_SubPixels(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   uint32_t arg1 ;
   uint32_t arg2 ;
@@ -18721,13 +19061,13 @@ SWIGINTERN PyObject *_wrap_Pixel_SubPix__SWIG_2(PyObject *SWIGUNUSEDPARM(self), 
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -18737,176 +19077,74 @@ SWIGINTERN PyObject *_wrap_Pixel_SubPix__SWIG_2(PyObject *SWIGUNUSEDPARM(self), 
   PyObject * obj5 = 0 ;
   PyObject * obj6 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:Pixel_SubPix",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:Pixel_SubPixels",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_SubPix" "', argument " "1"" of type '" "uint32_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_SubPixels" "', argument " "1"" of type '" "uint32_t""'");
   } 
   arg1 = static_cast< uint32_t >(val1);
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_SubPix" "', argument " "2"" of type '" "uint32_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_SubPixels" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
   ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_SubPix" "', argument " "3"" of type '" "uint32_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_SubPixels" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_SubPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPixels" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPixels" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_SubPix" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPixels" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubPixels" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_SubPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_SubPix" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubPix" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
-  Stomp::Pixel::SubPix(arg1,arg2,arg3,*arg4,*arg5,*arg6,*arg7);
+  Stomp::Pixel::SubPixels(arg1,arg2,arg3,*arg4,*arg5,*arg6,*arg7);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return resultobj;
 fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Pixel_SubPix(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[8];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 3) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_Pixel_SubPix__SWIG_0(self, args);
-        }
-      }
-    }
-  }
-  if (argc == 6) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_unsigned_int, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
-            _v = SWIG_CheckState(res);
-            if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
-              _v = SWIG_CheckState(res);
-              if (_v) {
-                return _wrap_Pixel_SubPix__SWIG_1(self, args);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 7) {
-    int _v;
-    {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
-            _v = SWIG_CheckState(res);
-            if (_v) {
-              void *vptr = 0;
-              int res = SWIG_ConvertPtr(argv[5], &vptr, SWIGTYPE_p_unsigned_int, 0);
-              _v = SWIG_CheckState(res);
-              if (_v) {
-                void *vptr = 0;
-                int res = SWIG_ConvertPtr(argv[6], &vptr, SWIGTYPE_p_unsigned_int, 0);
-                _v = SWIG_CheckState(res);
-                if (_v) {
-                  return _wrap_Pixel_SubPix__SWIG_2(self, args);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Pixel_SubPix'.\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    SubPix(Stomp::Pixel *,uint32_t,Stomp::PixelVector &)\n"
-    "    SubPix(Stomp::Pixel *,uint32_t,uint32_t &,uint32_t &,uint32_t &,uint32_t &)\n"
-    "    Stomp::Pixel::SubPix(uint32_t,uint32_t,uint32_t,uint32_t &,uint32_t &,uint32_t &,uint32_t &)\n");
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return NULL;
 }
 
@@ -18923,13 +19161,13 @@ SWIGINTERN PyObject *_wrap_Pixel_NextSubPix(PyObject *SWIGUNUSEDPARM(self), PyOb
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -18949,42 +19187,58 @@ SWIGINTERN PyObject *_wrap_Pixel_NextSubPix(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_NextSubPix" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_NextSubPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubPix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_NextSubPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubPix" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubPix" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_NextSubPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_NextSubPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
   Stomp::Pixel::NextSubPix(arg1,arg2,*arg3,*arg4,*arg5,*arg6);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return NULL;
 }
 
@@ -19010,13 +19264,13 @@ SWIGINTERN PyObject *_wrap_Pixel_AreaIndex(PyObject *SWIGUNUSEDPARM(self), PyObj
   int ecode4 = 0 ;
   double val5 ;
   int ecode5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
-  void *argp8 = 0 ;
+  uint32_t temp8 ;
   int res8 = 0 ;
-  void *argp9 = 0 ;
+  uint32_t temp9 ;
   int res9 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19054,42 +19308,58 @@ SWIGINTERN PyObject *_wrap_Pixel_AreaIndex(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Pixel_AreaIndex" "', argument " "5"" of type '" "double""'");
   } 
   arg5 = static_cast< double >(val5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_AreaIndex" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_AreaIndex" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_AreaIndex" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_AreaIndex" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_AreaIndex" "', argument " "7"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res8 = SWIG_ConvertPtr(obj7,SWIG_as_voidptrptr(&arg8),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj7, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_AreaIndex" "', argument " "8"" of type '" "uint32_t""'");
+    }
+    temp8 = static_cast< uint32_t >(val);
+    arg8 = &temp8;
+    res8 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_AreaIndex" "', argument " "7"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res9 = SWIG_ConvertPtr(obj8,SWIG_as_voidptrptr(&arg9),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj8, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_AreaIndex" "', argument " "9"" of type '" "uint32_t""'");
+    }
+    temp9 = static_cast< uint32_t >(val);
+    arg9 = &temp9;
+    res9 = SWIG_AddTmpMask(ecode);
   }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
-  res8 = SWIG_ConvertPtr(obj7, &argp8, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res8)) {
-    SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "Pixel_AreaIndex" "', argument " "8"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp8) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_AreaIndex" "', argument " "8"" of type '" "uint32_t &""'"); 
-  }
-  arg8 = reinterpret_cast< uint32_t * >(argp8);
-  res9 = SWIG_ConvertPtr(obj8, &argp9, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res9)) {
-    SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "Pixel_AreaIndex" "', argument " "9"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp9) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_AreaIndex" "', argument " "9"" of type '" "uint32_t &""'"); 
-  }
-  arg9 = reinterpret_cast< uint32_t * >(argp9);
   Stomp::Pixel::AreaIndex(arg1,arg2,arg3,arg4,arg5,*arg6,*arg7,*arg8,*arg9);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
+  if (SWIG_IsNewObj(res9)) delete arg9;
   return NULL;
 }
 
@@ -19106,22 +19376,22 @@ SWIGINTERN PyObject *_wrap_Pixel_PixelBound(PyObject *SWIGUNUSEDPARM(self), PyOb
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  void *argp5 = 0 ;
-  int res5 = 0 ;
-  void *argp6 = 0 ;
-  int res6 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  double temp5 ;
+  int res5 = SWIG_TMPOBJ ;
+  double temp6 ;
+  int res6 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  PyObject * obj5 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Pixel_PixelBound",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  arg5 = &temp5;
+  arg6 = &temp6;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Pixel_PixelBound",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_PixelBound" "', argument " "1"" of type '" "uint32_t""'");
@@ -19132,40 +19402,32 @@ SWIGINTERN PyObject *_wrap_Pixel_PixelBound(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_PixelBound" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_PixelBound" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_PixelBound" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_PixelBound" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_PixelBound" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_PixelBound" "', argument " "5"" of type '" "double &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_PixelBound" "', argument " "5"" of type '" "double &""'"); 
-  }
-  arg5 = reinterpret_cast< double * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_PixelBound" "', argument " "6"" of type '" "double &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_PixelBound" "', argument " "6"" of type '" "double &""'"); 
-  }
-  arg6 = reinterpret_cast< double * >(argp6);
   Stomp::Pixel::PixelBound(arg1,arg2,*arg3,*arg4,*arg5,*arg6);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res5)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg5)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res5) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg5), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res6)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg6)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res6) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg6), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -19183,11 +19445,11 @@ SWIGINTERN PyObject *_wrap_Pixel_CohortPix__SWIG_1(PyObject *SWIGUNUSEDPARM(self
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19206,34 +19468,46 @@ SWIGINTERN PyObject *_wrap_Pixel_CohortPix__SWIG_1(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_CohortPix" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_CohortPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_CohortPix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_CohortPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_CohortPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_CohortPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_CohortPix" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_CohortPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_CohortPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_CohortPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
   Stomp::Pixel::CohortPix(arg1,arg2,*arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return NULL;
 }
 
@@ -19284,17 +19558,26 @@ SWIGINTERN PyObject *_wrap_Pixel_CohortPix(PyObject *self, PyObject *args) {
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_unsigned_int, 0);
+        void *ptr = 0;
+        int res = SWIG_AsVal_unsigned_SS_int(argv[2], 0);
         _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+        }
         if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_unsigned_int, 0);
+          void *ptr = 0;
+          int res = SWIG_AsVal_unsigned_SS_int(argv[3], 0);
           _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+          }
           if (_v) {
-            void *vptr = 0;
-            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_unsigned_int, 0);
+            void *ptr = 0;
+            int res = SWIG_AsVal_unsigned_SS_int(argv[4], 0);
             _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_unsigned_int,0))));
+            }
             if (_v) {
               return _wrap_Pixel_CohortPix__SWIG_1(self, args);
             }
@@ -19385,9 +19668,9 @@ SWIGINTERN PyObject *_wrap_Pixel_Ang2HPix(PyObject *SWIGUNUSEDPARM(self), PyObje
   int ecode1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19408,26 +19691,34 @@ SWIGINTERN PyObject *_wrap_Pixel_Ang2HPix(PyObject *SWIGUNUSEDPARM(self), PyObje
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Ang2HPix" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
   }
   arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_Ang2HPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_Ang2HPix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Ang2HPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_Ang2HPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_Ang2HPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Ang2HPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
   Stomp::Pixel::Ang2HPix(arg1,*arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
 }
 
@@ -19496,9 +19787,9 @@ SWIGINTERN PyObject *_wrap_Pixel_XY2HPix(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19522,26 +19813,34 @@ SWIGINTERN PyObject *_wrap_Pixel_XY2HPix(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_XY2HPix" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_XY2HPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XY2HPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XY2HPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XY2HPix" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_XY2HPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XY2HPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
   Stomp::Pixel::XY2HPix(arg1,arg2,arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return NULL;
 }
 
@@ -19559,9 +19858,9 @@ SWIGINTERN PyObject *_wrap_Pixel_HPix2XY(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19585,26 +19884,34 @@ SWIGINTERN PyObject *_wrap_Pixel_HPix2XY(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_HPix2XY" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_HPix2XY" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_HPix2XY" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_HPix2XY" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_HPix2XY" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_HPix2XY" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_HPix2XY" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
   Stomp::Pixel::HPix2XY(arg1,arg2,arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return NULL;
 }
 
@@ -19621,7 +19928,7 @@ SWIGINTERN PyObject *_wrap_Pixel_SuperHPix(PyObject *SWIGUNUSEDPARM(self), PyObj
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19644,18 +19951,22 @@ SWIGINTERN PyObject *_wrap_Pixel_SuperHPix(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_SuperHPix" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_SuperHPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SuperHPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SuperHPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
   Stomp::Pixel::SuperHPix(arg1,arg2,arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
 }
 
@@ -19672,13 +19983,13 @@ SWIGINTERN PyObject *_wrap_Pixel_NextSubHPix(PyObject *SWIGUNUSEDPARM(self), PyO
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19698,42 +20009,58 @@ SWIGINTERN PyObject *_wrap_Pixel_NextSubHPix(PyObject *SWIGUNUSEDPARM(self), PyO
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_NextSubHPix" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_NextSubHPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubHPix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubHPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubHPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_NextSubHPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubHPix" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubHPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_NextSubHPix" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_NextSubHPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubHPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_NextSubHPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_NextSubHPix" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
   Stomp::Pixel::NextSubHPix(arg1,arg2,*arg3,*arg4,*arg5,*arg6);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
   return NULL;
 }
 
@@ -19756,13 +20083,13 @@ SWIGINTERN PyObject *_wrap_Pixel_SubHPix(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int ecode3 = 0 ;
   unsigned int val4 ;
   int ecode4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
-  void *argp8 = 0 ;
+  uint32_t temp8 ;
   int res8 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19794,42 +20121,58 @@ SWIGINTERN PyObject *_wrap_Pixel_SubHPix(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Pixel_SubHPix" "', argument " "4"" of type '" "uint32_t""'");
   } 
   arg4 = static_cast< uint32_t >(val4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_SubHPix" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubHPix" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubHPix" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubHPix" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_SubHPix" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubHPix" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubHPix" "', argument " "6"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res8 = SWIG_ConvertPtr(obj7,SWIG_as_voidptrptr(&arg8),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj7, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_SubHPix" "', argument " "8"" of type '" "uint32_t""'");
+    }
+    temp8 = static_cast< uint32_t >(val);
+    arg8 = &temp8;
+    res8 = SWIG_AddTmpMask(ecode);
   }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_SubHPix" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubHPix" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
-  res8 = SWIG_ConvertPtr(obj7, &argp8, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res8)) {
-    SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "Pixel_SubHPix" "', argument " "8"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp8) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_SubHPix" "', argument " "8"" of type '" "uint32_t &""'"); 
-  }
-  arg8 = reinterpret_cast< uint32_t * >(argp8);
   Stomp::Pixel::SubHPix(arg1,arg2,arg3,arg4,*arg5,*arg6,*arg7,*arg8);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res8)) delete arg8;
   return NULL;
 }
 
@@ -19849,23 +20192,23 @@ SWIGINTERN PyObject *_wrap_Pixel_HPixelBound(PyObject *SWIGUNUSEDPARM(self), PyO
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  void *argp5 = 0 ;
-  int res5 = 0 ;
-  void *argp6 = 0 ;
-  int res6 = 0 ;
-  void *argp7 = 0 ;
-  int res7 = 0 ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  double temp5 ;
+  int res5 = SWIG_TMPOBJ ;
+  double temp6 ;
+  int res6 = SWIG_TMPOBJ ;
+  double temp7 ;
+  int res7 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  PyObject * obj5 = 0 ;
-  PyObject * obj6 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:Pixel_HPixelBound",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  arg4 = &temp4;
+  arg5 = &temp5;
+  arg6 = &temp6;
+  arg7 = &temp7;
+  if (!PyArg_ParseTuple(args,(char *)"OOO:Pixel_HPixelBound",&obj0,&obj1,&obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Pixel_HPixelBound" "', argument " "1"" of type '" "uint32_t""'");
@@ -19881,40 +20224,32 @@ SWIGINTERN PyObject *_wrap_Pixel_HPixelBound(PyObject *SWIGUNUSEDPARM(self), PyO
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_HPixelBound" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_HPixelBound" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_HPixelBound" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_HPixelBound" "', argument " "5"" of type '" "double &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_HPixelBound" "', argument " "5"" of type '" "double &""'"); 
-  }
-  arg5 = reinterpret_cast< double * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Pixel_HPixelBound" "', argument " "6"" of type '" "double &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_HPixelBound" "', argument " "6"" of type '" "double &""'"); 
-  }
-  arg6 = reinterpret_cast< double * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Pixel_HPixelBound" "', argument " "7"" of type '" "double &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_HPixelBound" "', argument " "7"" of type '" "double &""'"); 
-  }
-  arg7 = reinterpret_cast< double * >(argp7);
   Stomp::Pixel::HPixelBound(arg1,arg2,arg3,*arg4,*arg5,*arg6,*arg7);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res5)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg5)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res5) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg5), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res6)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg6)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res6) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg6), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res7)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg7)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res7) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg7), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -19932,11 +20267,11 @@ SWIGINTERN PyObject *_wrap_Pixel_CohortHPix(PyObject *SWIGUNUSEDPARM(self), PyOb
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -19955,34 +20290,46 @@ SWIGINTERN PyObject *_wrap_Pixel_CohortHPix(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_CohortHPix" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_CohortHPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_CohortHPix" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_CohortHPix" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_CohortHPix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_CohortHPix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_CohortHPix" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_CohortHPix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Pixel_CohortHPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_CohortHPix" "', argument " "5"" of type '" "uint32_t &""'"); 
-  }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
   Stomp::Pixel::CohortHPix(arg1,arg2,*arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
   return NULL;
 }
 
@@ -20070,7 +20417,7 @@ SWIGINTERN PyObject *_wrap_Pixel_XY2Pix(PyObject *SWIGUNUSEDPARM(self), PyObject
   int ecode2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -20093,18 +20440,22 @@ SWIGINTERN PyObject *_wrap_Pixel_XY2Pix(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Pixel_XY2Pix" "', argument " "3"" of type '" "uint32_t""'");
   } 
   arg3 = static_cast< uint32_t >(val3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_XY2Pix" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_XY2Pix" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_XY2Pix" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
   Stomp::Pixel::XY2Pix(arg1,arg2,arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
 }
 
@@ -20119,9 +20470,9 @@ SWIGINTERN PyObject *_wrap_Pixel_Pix2XY(PyObject *SWIGUNUSEDPARM(self), PyObject
   int ecode1 = 0 ;
   unsigned int val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
+  uint32_t temp3 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -20139,26 +20490,34 @@ SWIGINTERN PyObject *_wrap_Pixel_Pix2XY(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Pixel_Pix2XY" "', argument " "2"" of type '" "uint32_t""'");
   } 
   arg2 = static_cast< uint32_t >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Pixel_Pix2XY" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_Pix2XY" "', argument " "3"" of type '" "uint32_t""'");
+    }
+    temp3 = static_cast< uint32_t >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Pix2XY" "', argument " "3"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Pixel_Pix2XY" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  arg3 = reinterpret_cast< uint32_t * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Pixel_Pix2XY" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Pixel_Pix2XY" "', argument " "4"" of type '" "uint32_t &""'"); 
-  }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
   Stomp::Pixel::Pix2XY(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
   return NULL;
 }
 
@@ -24048,14 +24407,14 @@ SWIGINTERN PyObject *_wrap_SubMap_FindLocation(PyObject *SWIGUNUSEDPARM(self), P
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
   bool result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOO:SubMap_FindLocation",&obj0,&obj1,&obj2)) SWIG_fail;
+  arg3 = &temp3;
+  if (!PyArg_ParseTuple(args,(char *)"OO:SubMap_FindLocation",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__SubMap, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SubMap_FindLocation" "', argument " "1"" of type '" "Stomp::SubMap *""'"); 
@@ -24069,16 +24428,14 @@ SWIGINTERN PyObject *_wrap_SubMap_FindLocation(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SubMap_FindLocation" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
   }
   arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "SubMap_FindLocation" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SubMap_FindLocation" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
   result = (bool)(arg1)->FindLocation(*arg2,*arg3);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -25924,14 +26281,14 @@ SWIGINTERN PyObject *_wrap_Map_FindLocation__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
   bool result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOO:Map_FindLocation",&obj0,&obj1,&obj2)) SWIG_fail;
+  arg3 = &temp3;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Map_FindLocation",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Map, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Map_FindLocation" "', argument " "1"" of type '" "Stomp::Map *""'"); 
@@ -25945,16 +26302,14 @@ SWIGINTERN PyObject *_wrap_Map_FindLocation__SWIG_1(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_FindLocation" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
   }
   arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Map_FindLocation" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_FindLocation" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
   result = (bool)(arg1)->FindLocation(*arg2,*arg3);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -25963,12 +26318,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_Map_FindLocation(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[4];
+  PyObject *argv[3];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -25985,7 +26340,7 @@ SWIGINTERN PyObject *_wrap_Map_FindLocation(PyObject *self, PyObject *args) {
       }
     }
   }
-  if (argc == 3) {
+  if (argc == 2) {
     int _v;
     void *vptr = 0;
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
@@ -25995,12 +26350,7 @@ SWIGINTERN PyObject *_wrap_Map_FindLocation(PyObject *self, PyObject *args) {
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_double, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_Map_FindLocation__SWIG_1(self, args);
-        }
+        return _wrap_Map_FindLocation__SWIG_1(self, args);
       }
     }
   }
@@ -28699,13 +29049,13 @@ SWIGINTERN PyObject *_wrap_Map__FindXYBounds(PyObject *SWIGUNUSEDPARM(self), PyO
   int ecode2 = 0 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
-  void *argp4 = 0 ;
+  uint32_t temp4 ;
   int res4 = 0 ;
-  void *argp5 = 0 ;
+  uint32_t temp5 ;
   int res5 = 0 ;
-  void *argp6 = 0 ;
+  uint32_t temp6 ;
   int res6 = 0 ;
-  void *argp7 = 0 ;
+  uint32_t temp7 ;
   int res7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -28735,42 +29085,58 @@ SWIGINTERN PyObject *_wrap_Map__FindXYBounds(PyObject *SWIGUNUSEDPARM(self), PyO
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map__FindXYBounds" "', argument " "3"" of type '" "Stomp::GeometricBound &""'"); 
   }
   arg3 = reinterpret_cast< Stomp::GeometricBound * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Map__FindXYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Map__FindXYBounds" "', argument " "4"" of type '" "uint32_t""'");
+    }
+    temp4 = static_cast< uint32_t >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map__FindXYBounds" "', argument " "4"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Map__FindXYBounds" "', argument " "5"" of type '" "uint32_t""'");
+    }
+    temp5 = static_cast< uint32_t >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
   }
-  arg4 = reinterpret_cast< uint32_t * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Map__FindXYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Map__FindXYBounds" "', argument " "6"" of type '" "uint32_t""'");
+    }
+    temp6 = static_cast< uint32_t >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
   }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map__FindXYBounds" "', argument " "5"" of type '" "uint32_t &""'"); 
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_unsigned_int,0))))) {
+    unsigned int val;
+    int ecode = SWIG_AsVal_unsigned_SS_int(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "Map__FindXYBounds" "', argument " "7"" of type '" "uint32_t""'");
+    }
+    temp7 = static_cast< uint32_t >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
   }
-  arg5 = reinterpret_cast< uint32_t * >(argp5);
-  res6 = SWIG_ConvertPtr(obj5, &argp6, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res6)) {
-    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "Map__FindXYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp6) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map__FindXYBounds" "', argument " "6"" of type '" "uint32_t &""'"); 
-  }
-  arg6 = reinterpret_cast< uint32_t * >(argp6);
-  res7 = SWIG_ConvertPtr(obj6, &argp7, SWIGTYPE_p_unsigned_int,  0 );
-  if (!SWIG_IsOK(res7)) {
-    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "Map__FindXYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  if (!argp7) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map__FindXYBounds" "', argument " "7"" of type '" "uint32_t &""'"); 
-  }
-  arg7 = reinterpret_cast< uint32_t * >(argp7);
   result = (bool)(arg1)->_FindXYBounds(arg2,*arg3,*arg4,*arg5,*arg6,*arg7);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
   return NULL;
 }
 
@@ -35355,38 +35721,34 @@ SWIGINTERN PyObject *_wrap_ScalarMap_Variance__SWIG_1(PyObject *SWIGUNUSEDPARM(s
   double *arg3 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
+  double temp2 ;
+  int res2 = SWIG_TMPOBJ ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOO:ScalarMap_Variance",&obj0,&obj1,&obj2)) SWIG_fail;
+  arg2 = &temp2;
+  arg3 = &temp3;
+  if (!PyArg_ParseTuple(args,(char *)"O:ScalarMap_Variance",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__ScalarMap, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ScalarMap_Variance" "', argument " "1"" of type '" "Stomp::ScalarMap *""'"); 
   }
   arg1 = reinterpret_cast< Stomp::ScalarMap * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ScalarMap_Variance" "', argument " "2"" of type '" "double &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Variance" "', argument " "2"" of type '" "double &""'"); 
-  }
-  arg2 = reinterpret_cast< double * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ScalarMap_Variance" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Variance" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
   (arg1)->Variance(*arg2,*arg3);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -35395,12 +35757,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_ScalarMap_Variance(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[4];
+  PyObject *argv[2];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 1) {
@@ -35412,23 +35774,13 @@ SWIGINTERN PyObject *_wrap_ScalarMap_Variance(PyObject *self, PyObject *args) {
       return _wrap_ScalarMap_Variance__SWIG_0(self, args);
     }
   }
-  if (argc == 3) {
+  if (argc == 1) {
     int _v;
     void *vptr = 0;
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_double, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_double, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          return _wrap_ScalarMap_Variance__SWIG_1(self, args);
-        }
-      }
+      return _wrap_ScalarMap_Variance__SWIG_1(self, args);
     }
   }
   
@@ -35451,16 +35803,16 @@ SWIGINTERN PyObject *_wrap_ScalarMap_Covariance__SWIG_1(PyObject *SWIGUNUSEDPARM
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:ScalarMap_Covariance",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:ScalarMap_Covariance",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__ScalarMap, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ScalarMap_Covariance" "', argument " "1"" of type '" "Stomp::ScalarMap *""'"); 
@@ -35474,24 +35826,20 @@ SWIGINTERN PyObject *_wrap_ScalarMap_Covariance__SWIG_1(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Covariance" "', argument " "2"" of type '" "Stomp::ScalarMap &""'"); 
   }
   arg2 = reinterpret_cast< Stomp::ScalarMap * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ScalarMap_Covariance" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Covariance" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "ScalarMap_Covariance" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_Covariance" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   (arg1)->Covariance(*arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -35500,12 +35848,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_ScalarMap_Covariance(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[5];
+  PyObject *argv[3];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -35522,7 +35870,7 @@ SWIGINTERN PyObject *_wrap_ScalarMap_Covariance(PyObject *self, PyObject *args) 
       }
     }
   }
-  if (argc == 4) {
+  if (argc == 2) {
     int _v;
     void *vptr = 0;
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
@@ -35532,17 +35880,7 @@ SWIGINTERN PyObject *_wrap_ScalarMap_Covariance(PyObject *self, PyObject *args) 
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        void *vptr = 0;
-        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_double, 0);
-        _v = SWIG_CheckState(res);
-        if (_v) {
-          void *vptr = 0;
-          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_double, 0);
-          _v = SWIG_CheckState(res);
-          if (_v) {
-            return _wrap_ScalarMap_Covariance__SWIG_1(self, args);
-          }
-        }
+        return _wrap_ScalarMap_Covariance__SWIG_1(self, args);
       }
     }
   }
@@ -42160,16 +42498,16 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToGalactic(PyObject *SWIGUNUS
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_SurveyToGalactic",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_SurveyToGalactic",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "1"" of type '" "double""'");
@@ -42180,24 +42518,20 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToGalactic(PyObject *SWIGUNUS
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   Stomp::AngularCoordinate::SurveyToGalactic(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42214,16 +42548,16 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToEquatorial(PyObject *SWIGUN
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_SurveyToEquatorial",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_SurveyToEquatorial",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "1"" of type '" "double""'");
@@ -42234,24 +42568,20 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToEquatorial(PyObject *SWIGUN
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   Stomp::AngularCoordinate::SurveyToEquatorial(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42268,16 +42598,16 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToSurvey(PyObject *SWIGUN
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_EquatorialToSurvey",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_EquatorialToSurvey",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "1"" of type '" "double""'");
@@ -42288,24 +42618,20 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToSurvey(PyObject *SWIGUN
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   Stomp::AngularCoordinate::EquatorialToSurvey(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42322,16 +42648,16 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToGalactic(PyObject *SWIG
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_EquatorialToGalactic",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_EquatorialToGalactic",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "1"" of type '" "double""'");
@@ -42342,24 +42668,20 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToGalactic(PyObject *SWIG
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   Stomp::AngularCoordinate::EquatorialToGalactic(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42376,16 +42698,16 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToSurvey(PyObject *SWIGUNUS
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_GalacticToSurvey",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_GalacticToSurvey",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "1"" of type '" "double""'");
@@ -42396,24 +42718,20 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToSurvey(PyObject *SWIGUNUS
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   Stomp::AngularCoordinate::GalacticToSurvey(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42430,16 +42748,16 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToEquatorial(PyObject *SWIG
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_GalacticToEquatorial",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_GalacticToEquatorial",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "1"" of type '" "double""'");
@@ -42450,24 +42768,20 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToEquatorial(PyObject *SWIG
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
   Stomp::AngularCoordinate::GalacticToEquatorial(arg1,arg2,*arg3,*arg4);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42485,19 +42799,19 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToXYZ(PyObject *SWIGUNUSEDPAR
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  void *argp5 = 0 ;
-  int res5 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  double temp5 ;
+  int res5 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_SurveyToXYZ",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  arg5 = &temp5;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_SurveyToXYZ",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "1"" of type '" "double""'");
@@ -42508,32 +42822,26 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToXYZ(PyObject *SWIGUNUSEDPAR
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "5"" of type '" "double &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "5"" of type '" "double &""'"); 
-  }
-  arg5 = reinterpret_cast< double * >(argp5);
   Stomp::AngularCoordinate::SurveyToXYZ(arg1,arg2,*arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res5)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg5)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res5) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg5), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42551,19 +42859,19 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToXYZ(PyObject *SWIGUNUSE
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  void *argp5 = 0 ;
-  int res5 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  double temp5 ;
+  int res5 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_EquatorialToXYZ",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  arg5 = &temp5;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_EquatorialToXYZ",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "1"" of type '" "double""'");
@@ -42574,32 +42882,26 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToXYZ(PyObject *SWIGUNUSE
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "5"" of type '" "double &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "5"" of type '" "double &""'"); 
-  }
-  arg5 = reinterpret_cast< double * >(argp5);
   Stomp::AngularCoordinate::EquatorialToXYZ(arg1,arg2,*arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res5)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg5)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res5) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg5), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -42617,19 +42919,19 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToXYZ(PyObject *SWIGUNUSEDP
   int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  void *argp4 = 0 ;
-  int res4 = 0 ;
-  void *argp5 = 0 ;
-  int res5 = 0 ;
+  double temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  double temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  double temp5 ;
+  int res5 = SWIG_TMPOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_GalacticToXYZ",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  arg5 = &temp5;
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_GalacticToXYZ",&obj0,&obj1)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "1"" of type '" "double""'");
@@ -42640,32 +42942,26 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToXYZ(PyObject *SWIGUNUSEDP
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "2"" of type '" "double""'");
   } 
   arg2 = static_cast< double >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "3"" of type '" "double &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "3"" of type '" "double &""'"); 
-  }
-  arg3 = reinterpret_cast< double * >(argp3);
-  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "4"" of type '" "double &""'"); 
-  }
-  if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "4"" of type '" "double &""'"); 
-  }
-  arg4 = reinterpret_cast< double * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_double,  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "5"" of type '" "double &""'"); 
-  }
-  if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "5"" of type '" "double &""'"); 
-  }
-  arg5 = reinterpret_cast< double * >(argp5);
   Stomp::AngularCoordinate::GalacticToXYZ(arg1,arg2,*arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_double, new_flags));
+  }
+  if (SWIG_IsTmpObj(res5)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg5)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res5) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg5), SWIGTYPE_p_double, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -69053,6 +69349,12 @@ SWIGINTERN PyObject *_wrap_FieldDict___setitem__(PyObject *SWIGUNUSEDPARM(self),
   }
   
   resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type, new_flags));
+  }
   if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
@@ -70817,6 +71119,1488 @@ SWIGINTERN PyObject *FieldColumnDict_swigregister(PyObject *SWIGUNUSEDPARM(self)
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_DoubleVector_iterator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  PyObject **arg2 = (PyObject **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  swig::PySwigIterator *result = 0 ;
+  
+  arg2 = &obj0;
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_iterator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_iterator" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = (swig::PySwigIterator *)std_vector_Sl_double_Sg__iterator(arg1,arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_swig__PySwigIterator, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___nonzero__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector___nonzero__",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___nonzero__" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = (bool)std_vector_Sl_double_Sg____nonzero__((std::vector< double > const *)arg1);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___len__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector___len__",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___len__" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = std_vector_Sl_double_Sg____len__((std::vector< double > const *)arg1);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_pop(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::value_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_pop",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_pop" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  try {
+    result = (std::vector< double >::value_type)std_vector_Sl_double_Sg__pop(arg1);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___getslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::difference_type arg2 ;
+  std::vector< double >::difference_type arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  ptrdiff_t val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  std::vector< double,std::allocator< double > > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DoubleVector___getslice__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___getslice__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector___getslice__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::difference_type >(val2);
+  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector___getslice__" "', argument " "3"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg3 = static_cast< std::vector< double >::difference_type >(val3);
+  try {
+    result = (std::vector< double,std::allocator< double > > *)std_vector_Sl_double_Sg____getslice__(arg1,arg2,arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___setslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::difference_type arg2 ;
+  std::vector< double >::difference_type arg3 ;
+  std::vector< double,std::allocator< double > > *arg4 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  ptrdiff_t val3 ;
+  int ecode3 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:DoubleVector___setslice__",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___setslice__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector___setslice__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::difference_type >(val2);
+  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector___setslice__" "', argument " "3"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg3 = static_cast< std::vector< double >::difference_type >(val3);
+  {
+    std::vector<double,std::allocator< double > > *ptr = (std::vector<double,std::allocator< double > > *)0;
+    res4 = swig::asptr(obj3, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "DoubleVector___setslice__" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DoubleVector___setslice__" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  try {
+    std_vector_Sl_double_Sg____setslice__(arg1,arg2,arg3,(std::vector< double,std::allocator< double > > const &)*arg4);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  catch(std::invalid_argument &_e) {
+    SWIG_exception_fail(SWIG_ValueError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___delslice__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::difference_type arg2 ;
+  std::vector< double >::difference_type arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  ptrdiff_t val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DoubleVector___delslice__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___delslice__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector___delslice__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::difference_type >(val2);
+  ecode3 = SWIG_AsVal_ptrdiff_t(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector___delslice__" "', argument " "3"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg3 = static_cast< std::vector< double >::difference_type >(val3);
+  try {
+    std_vector_Sl_double_Sg____delslice__(arg1,arg2,arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___delitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::difference_type arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector___delitem__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___delitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector___delitem__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::difference_type >(val2);
+  try {
+    std_vector_Sl_double_Sg____delitem__(arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___getitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::difference_type arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::vector< double >::value_type *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector___getitem__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___getitem__" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector___getitem__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::difference_type >(val2);
+  try {
+    {
+      std::vector< double >::value_type const &_result_ref = std_vector_Sl_double_Sg____getitem__((std::vector< double > const *)arg1,arg2);
+      result = (std::vector< double >::value_type *) &_result_ref;
+    }
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_From_double(static_cast< double >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector___setitem__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::difference_type arg2 ;
+  std::vector< double >::value_type *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  ptrdiff_t val2 ;
+  int ecode2 = 0 ;
+  std::vector< double >::value_type temp3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DoubleVector___setitem__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector___setitem__" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_ptrdiff_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector___setitem__" "', argument " "2"" of type '" "std::vector< double >::difference_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::difference_type >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector___setitem__" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp3 = static_cast< std::vector< double >::value_type >(val3);
+  arg3 = &temp3;
+  try {
+    std_vector_Sl_double_Sg____setitem__(arg1,arg2,(double const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_exception_fail(SWIG_IndexError, (&_e)->what());
+  }
+  
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_append(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::value_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::vector< double >::value_type temp2 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector_append",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_append" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector_append" "', argument " "2"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp2 = static_cast< std::vector< double >::value_type >(val2);
+  arg2 = &temp2;
+  std_vector_Sl_double_Sg__append(arg1,(double const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DoubleVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_DoubleVector")) SWIG_fail;
+  result = (std::vector< double > *)new std::vector< double >();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DoubleVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  std::vector< double > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_DoubleVector",&obj0)) SWIG_fail;
+  {
+    std::vector<double,std::allocator< double > > *ptr = (std::vector<double,std::allocator< double > > *)0;
+    res1 = swig::asptr(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_DoubleVector" "', argument " "1"" of type '" "std::vector< double > const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_DoubleVector" "', argument " "1"" of type '" "std::vector< double > const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  result = (std::vector< double > *)new std::vector< double >((std::vector< double > const &)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_empty(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_empty",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_empty" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = (bool)((std::vector< double > const *)arg1)->empty();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_size",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_size" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = ((std::vector< double > const *)arg1)->size();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_clear(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_clear",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_clear" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  (arg1)->clear();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_swap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double > *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector_swap",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_swap" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DoubleVector_swap" "', argument " "2"" of type '" "std::vector< double > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DoubleVector_swap" "', argument " "2"" of type '" "std::vector< double > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double > * >(argp2);
+  (arg1)->swap(*arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_get_allocator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SwigValueWrapper< std::allocator< double > > result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_get_allocator",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_get_allocator" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = ((std::vector< double > const *)arg1)->get_allocator();
+  resultobj = SWIG_NewPointerObj((new std::vector< double >::allocator_type(static_cast< const std::vector< double >::allocator_type& >(result))), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_begin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::const_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_begin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_begin" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = ((std::vector< double > const *)arg1)->begin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< double >::const_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_end(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::const_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_end",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_end" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = ((std::vector< double > const *)arg1)->end();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< double >::const_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_rbegin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::const_reverse_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_rbegin",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_rbegin" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = ((std::vector< double > const *)arg1)->rbegin();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< double >::const_reverse_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_rend(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::const_reverse_iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_rend",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_rend" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = ((std::vector< double > const *)arg1)->rend();
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< double >::const_reverse_iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DoubleVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double >::size_type arg1 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:new_DoubleVector",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_DoubleVector" "', argument " "1"" of type '" "std::vector< double >::size_type""'");
+  } 
+  arg1 = static_cast< std::vector< double >::size_type >(val1);
+  result = (std::vector< double > *)new std::vector< double >(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_pop_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_pop_back",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_pop_back" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  (arg1)->pop_back();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_resize__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::size_type arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector_resize",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_resize" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector_resize" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::size_type >(val2);
+  (arg1)->resize(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_erase__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::iterator arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::vector< double >::iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector_erase",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_erase" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_erase" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::vector< double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_erase" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+    }
+  }
+  result = (arg1)->erase(arg2);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< double >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_erase__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::iterator arg2 ;
+  std::vector< double >::iterator arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  swig::PySwigIterator *iter3 = 0 ;
+  int res3 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  std::vector< double >::iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DoubleVector_erase",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_erase" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_erase" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::vector< double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_erase" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+    }
+  }
+  res3 = SWIG_ConvertPtr(obj2, SWIG_as_voidptrptr(&iter3), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res3) || !iter3) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_erase" "', argument " "3"" of type '" "std::vector< double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::vector< double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter3);
+    if (iter_t) {
+      arg3 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_erase" "', argument " "3"" of type '" "std::vector< double >::iterator""'");
+    }
+  }
+  result = (arg1)->erase(arg2,arg3);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< double >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_erase(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::vector<double,std::allocator< double > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter) != 0));
+      if (_v) {
+        return _wrap_DoubleVector_erase__SWIG_0(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::vector<double,std::allocator< double > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter) != 0));
+      if (_v) {
+        swig::PySwigIterator *iter = 0;
+        int res = SWIG_ConvertPtr(argv[2], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+        _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter) != 0));
+        if (_v) {
+          return _wrap_DoubleVector_erase__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'DoubleVector_erase'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    erase(std::vector< double > *,std::vector< double >::iterator)\n"
+    "    erase(std::vector< double > *,std::vector< double >::iterator,std::vector< double >::iterator)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DoubleVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double >::size_type arg1 ;
+  std::vector< double >::value_type *arg2 = 0 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  std::vector< double >::value_type temp2 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  std::vector< double > *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:new_DoubleVector",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_DoubleVector" "', argument " "1"" of type '" "std::vector< double >::size_type""'");
+  } 
+  arg1 = static_cast< std::vector< double >::size_type >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_DoubleVector" "', argument " "2"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp2 = static_cast< std::vector< double >::value_type >(val2);
+  arg2 = &temp2;
+  result = (std::vector< double > *)new std::vector< double >(arg1,(std::vector< double >::value_type const &)*arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_NEW |  0 );
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DoubleVector(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 0) {
+    return _wrap_new_DoubleVector__SWIG_0(self, args);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      return _wrap_new_DoubleVector__SWIG_2(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::vector<double,std::allocator< double > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_DoubleVector__SWIG_1(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_new_DoubleVector__SWIG_3(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_DoubleVector'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    std::vector< double >()\n"
+    "    std::vector< double >(std::vector< double > const &)\n"
+    "    std::vector< double >(std::vector< double >::size_type)\n"
+    "    std::vector< double >(std::vector< double >::size_type,std::vector< double >::value_type const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_push_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::value_type *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::vector< double >::value_type temp2 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector_push_back",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_push_back" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector_push_back" "', argument " "2"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp2 = static_cast< std::vector< double >::value_type >(val2);
+  arg2 = &temp2;
+  (arg1)->push_back((std::vector< double >::value_type const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_front(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::value_type *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_front",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_front" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  {
+    std::vector< double >::value_type const &_result_ref = ((std::vector< double > const *)arg1)->front();
+    result = (std::vector< double >::value_type *) &_result_ref;
+  }
+  resultobj = SWIG_From_double(static_cast< double >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_back(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::value_type *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_back",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_back" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  {
+    std::vector< double >::value_type const &_result_ref = ((std::vector< double > const *)arg1)->back();
+    result = (std::vector< double >::value_type *) &_result_ref;
+  }
+  resultobj = SWIG_From_double(static_cast< double >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_assign(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::size_type arg2 ;
+  std::vector< double >::value_type *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  std::vector< double >::value_type temp3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DoubleVector_assign",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_assign" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector_assign" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::size_type >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector_assign" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp3 = static_cast< std::vector< double >::value_type >(val3);
+  arg3 = &temp3;
+  (arg1)->assign(arg2,(std::vector< double >::value_type const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_resize__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::size_type arg2 ;
+  std::vector< double >::value_type *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  std::vector< double >::value_type temp3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DoubleVector_resize",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_resize" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector_resize" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::size_type >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector_resize" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp3 = static_cast< std::vector< double >::value_type >(val3);
+  arg3 = &temp3;
+  (arg1)->resize(arg2,(std::vector< double >::value_type const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_resize(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::vector<double,std::allocator< double > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_DoubleVector_resize__SWIG_0(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::vector<double,std::allocator< double > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_DoubleVector_resize__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'DoubleVector_resize'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    resize(std::vector< double > *,std::vector< double >::size_type)\n"
+    "    resize(std::vector< double > *,std::vector< double >::size_type,std::vector< double >::value_type const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_insert__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::iterator arg2 ;
+  std::vector< double >::value_type *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  std::vector< double >::value_type temp3 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  std::vector< double >::iterator result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:DoubleVector_insert",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_insert" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_insert" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::vector< double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_insert" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+    }
+  }
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector_insert" "', argument " "3"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp3 = static_cast< std::vector< double >::value_type >(val3);
+  arg3 = &temp3;
+  result = (arg1)->insert(arg2,(std::vector< double >::value_type const &)*arg3);
+  resultobj = SWIG_NewPointerObj(swig::make_output_iterator(static_cast< const std::vector< double >::iterator & >(result)),
+    swig::PySwigIterator::descriptor(),SWIG_POINTER_OWN);
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_insert__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::iterator arg2 ;
+  std::vector< double >::size_type arg3 ;
+  std::vector< double >::value_type *arg4 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  swig::PySwigIterator *iter2 = 0 ;
+  int res2 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  std::vector< double >::value_type temp4 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:DoubleVector_insert",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_insert" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, SWIG_as_voidptrptr(&iter2), swig::PySwigIterator::descriptor(), 0);
+  if (!SWIG_IsOK(res2) || !iter2) {
+    SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_insert" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+  } else {
+    swig::PySwigIterator_T<std::vector< double >::iterator > *iter_t = dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter2);
+    if (iter_t) {
+      arg2 = iter_t->get_current();
+    } else {
+      SWIG_exception_fail(SWIG_ArgError(SWIG_TypeError), "in method '" "DoubleVector_insert" "', argument " "2"" of type '" "std::vector< double >::iterator""'");
+    }
+  }
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DoubleVector_insert" "', argument " "3"" of type '" "std::vector< double >::size_type""'");
+  } 
+  arg3 = static_cast< std::vector< double >::size_type >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DoubleVector_insert" "', argument " "4"" of type '" "std::vector< double >::value_type""'");
+  } 
+  temp4 = static_cast< std::vector< double >::value_type >(val4);
+  arg4 = &temp4;
+  (arg1)->insert(arg2,arg3,(std::vector< double >::value_type const &)*arg4);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_double((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__value_type, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_insert(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::vector<double,std::allocator< double > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter) != 0));
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_DoubleVector_insert__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    int res = swig::asptr(argv[0], (std::vector<double,std::allocator< double > >**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      swig::PySwigIterator *iter = 0;
+      int res = SWIG_ConvertPtr(argv[1], SWIG_as_voidptrptr(&iter), swig::PySwigIterator::descriptor(), 0);
+      _v = (SWIG_IsOK(res) && iter && (dynamic_cast<swig::PySwigIterator_T<std::vector< double >::iterator > *>(iter) != 0));
+      if (_v) {
+        {
+          int res = SWIG_AsVal_size_t(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_DoubleVector_insert__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'DoubleVector_insert'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    insert(std::vector< double > *,std::vector< double >::iterator,std::vector< double >::value_type const &)\n"
+    "    insert(std::vector< double > *,std::vector< double >::iterator,std::vector< double >::size_type,std::vector< double >::value_type const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_reserve(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  std::vector< double >::size_type arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:DoubleVector_reserve",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_reserve" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DoubleVector_reserve" "', argument " "2"" of type '" "std::vector< double >::size_type""'");
+  } 
+  arg2 = static_cast< std::vector< double >::size_type >(val2);
+  (arg1)->reserve(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DoubleVector_capacity(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< double >::size_type result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DoubleVector_capacity",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DoubleVector_capacity" "', argument " "1"" of type '" "std::vector< double > const *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  result = ((std::vector< double > const *)arg1)->capacity();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_DoubleVector(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double > *arg1 = (std::vector< double > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_DoubleVector",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DoubleVector" "', argument " "1"" of type '" "std::vector< double > *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double > * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *DoubleVector_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_PySwigIterator", _wrap_delete_PySwigIterator, METH_VARARGS, NULL},
 	 { (char *)"PySwigIterator_value", _wrap_PySwigIterator_value, METH_VARARGS, NULL},
@@ -70947,6 +72731,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Pixel_InvertWeight", _wrap_Pixel_InvertWeight, METH_VARARGS, NULL},
 	 { (char *)"Pixel_SetToSuperPix", _wrap_Pixel_SetToSuperPix, METH_VARARGS, NULL},
 	 { (char *)"Pixel_SetToLevel", _wrap_Pixel_SetToLevel, METH_VARARGS, NULL},
+	 { (char *)"Pixel_SubPix", _wrap_Pixel_SubPix, METH_VARARGS, NULL},
 	 { (char *)"Pixel_FirstCohort", _wrap_Pixel_FirstCohort, METH_VARARGS, NULL},
 	 { (char *)"Pixel_Area", _wrap_Pixel_Area, METH_VARARGS, NULL},
 	 { (char *)"Pixel_Superpixnum", _wrap_Pixel_Superpixnum, METH_VARARGS, NULL},
@@ -71023,7 +72808,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Pixel_Pix2HPix", _wrap_Pixel_Pix2HPix, METH_VARARGS, NULL},
 	 { (char *)"Pixel_HPix2Pix", _wrap_Pixel_HPix2Pix, METH_VARARGS, NULL},
 	 { (char *)"Pixel_SuperPix", _wrap_Pixel_SuperPix, METH_VARARGS, NULL},
-	 { (char *)"Pixel_SubPix", _wrap_Pixel_SubPix, METH_VARARGS, NULL},
+	 { (char *)"Pixel_SubPixels", _wrap_Pixel_SubPixels, METH_VARARGS, NULL},
 	 { (char *)"Pixel_NextSubPix", _wrap_Pixel_NextSubPix, METH_VARARGS, NULL},
 	 { (char *)"Pixel_AreaIndex", _wrap_Pixel_AreaIndex, METH_VARARGS, NULL},
 	 { (char *)"Pixel_PixelBound", _wrap_Pixel_PixelBound, METH_VARARGS, NULL},
@@ -71740,6 +73525,39 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"FieldColumnDict_upper_bound", _wrap_FieldColumnDict_upper_bound, METH_VARARGS, NULL},
 	 { (char *)"delete_FieldColumnDict", _wrap_delete_FieldColumnDict, METH_VARARGS, NULL},
 	 { (char *)"FieldColumnDict_swigregister", FieldColumnDict_swigregister, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_iterator", _wrap_DoubleVector_iterator, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___nonzero__", _wrap_DoubleVector___nonzero__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___len__", _wrap_DoubleVector___len__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_pop", _wrap_DoubleVector_pop, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___getslice__", _wrap_DoubleVector___getslice__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___setslice__", _wrap_DoubleVector___setslice__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___delslice__", _wrap_DoubleVector___delslice__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___delitem__", _wrap_DoubleVector___delitem__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___getitem__", _wrap_DoubleVector___getitem__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector___setitem__", _wrap_DoubleVector___setitem__, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_append", _wrap_DoubleVector_append, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_empty", _wrap_DoubleVector_empty, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_size", _wrap_DoubleVector_size, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_clear", _wrap_DoubleVector_clear, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_swap", _wrap_DoubleVector_swap, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_get_allocator", _wrap_DoubleVector_get_allocator, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_begin", _wrap_DoubleVector_begin, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_end", _wrap_DoubleVector_end, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_rbegin", _wrap_DoubleVector_rbegin, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_rend", _wrap_DoubleVector_rend, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_pop_back", _wrap_DoubleVector_pop_back, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_erase", _wrap_DoubleVector_erase, METH_VARARGS, NULL},
+	 { (char *)"new_DoubleVector", _wrap_new_DoubleVector, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_push_back", _wrap_DoubleVector_push_back, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_front", _wrap_DoubleVector_front, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_back", _wrap_DoubleVector_back, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_assign", _wrap_DoubleVector_assign, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_resize", _wrap_DoubleVector_resize, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_insert", _wrap_DoubleVector_insert, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_reserve", _wrap_DoubleVector_reserve, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_capacity", _wrap_DoubleVector_capacity, METH_VARARGS, NULL},
+	 { (char *)"delete_DoubleVector", _wrap_delete_DoubleVector, METH_VARARGS, NULL},
+	 { (char *)"DoubleVector_swigregister", DoubleVector_swigregister, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -71863,6 +73681,7 @@ static swig_type_info _swigt__p_std__lessT_std__string_t = {"_p_std__lessT_std__
 static swig_type_info _swigt__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t = {"_p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t", "std::map< short const,double,std::less< short const >,std::allocator< std::pair< short const const,double > > > *|Stomp::RegionAreaDict *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t = {"_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t", "std::map< std::string,double,std::less< std::string >,std::allocator< std::pair< std::string const,double > > > *|Stomp::FieldDict *|std::map< std::string,double > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type = {"_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type", "std::map< std::string,double >::allocator_type *|std::allocator< std::pair< std::string const,double > > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type = {"_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type", "std::map< std::string,double >::mapped_type *|double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t = {"_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t", "std::map< std::string,unsigned char > *|std::map< std::string,unsigned char,std::less< std::string >,std::allocator< std::pair< std::string const,unsigned char > > > *|Stomp::FieldColumnDict *|std::map< std::string,uint8_t > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type = {"_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type", "std::allocator< std::pair< std::string const,unsigned char > > *|std::map< std::string,unsigned char >::allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t = {"_p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t", "std::map< unsigned int const,short,std::less< unsigned int const >,std::allocator< std::pair< unsigned int const const,short > > > *|Stomp::RegionDict *", 0, 0, (void*)0, 0};
@@ -71911,7 +73730,9 @@ static swig_type_info _swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_p_
 static swig_type_info _swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t = {"_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t", "std::vector< Stomp::WeightedAngularCoordinate > *|std::vector< Stomp::WeightedAngularCoordinate,std::allocator< Stomp::WeightedAngularCoordinate > > *|Stomp::WAngularVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type = {"_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type", "std::allocator< Stomp::WeightedAngularCoordinate > *|std::vector< Stomp::WeightedAngularCoordinate >::allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type = {"_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type", "Stomp::WeightedAngularCoordinate *|std::vector< Stomp::WeightedAngularCoordinate >::value_type *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_double_std__allocatorT_double_t_t = {"_p_std__vectorT_double_std__allocatorT_double_t_t", "std::vector< double,std::allocator< double > > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_double_std__allocatorT_double_t_t = {"_p_std__vectorT_double_std__allocatorT_double_t_t", "std::vector< double,std::allocator< double > > *|std::vector< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type = {"_p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type", "std::vector< double >::allocator_type *|std::allocator< double > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_double_std__allocatorT_double_t_t__value_type = {"_p_std__vectorT_double_std__allocatorT_double_t_t__value_type", "std::vector< double >::value_type *|double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t = {"_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t", "std::vector< int8_t,std::allocator< int8_t > > *|std::vector< signed char,std::allocator< signed char > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t = {"_p_std__vectorT_std__string_std__allocatorT_std__string_t_t", "std::vector< std::string,std::allocator< std::string > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t = {"_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t", "std::vector< uint32_t,std::allocator< uint32_t > > *|std::vector< unsigned int,std::allocator< unsigned int > > *", 0, 0, (void*)0, 0};
@@ -71998,6 +73819,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t,
   &_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,
   &_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type,
+  &_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type,
   &_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,
   &_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type,
   &_swigt__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t,
@@ -72047,6 +73869,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type,
   &_swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type,
   &_swigt__p_std__vectorT_double_std__allocatorT_double_t_t,
+  &_swigt__p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type,
+  &_swigt__p_std__vectorT_double_std__allocatorT_double_t_t__value_type,
   &_swigt__p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t,
   &_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   &_swigt__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t,
@@ -72119,7 +73943,7 @@ static swig_cast_info _swigc__p_Stomp__WeightedAngularCoordinate[] = {  {&_swigt
 static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},  {&_swigt__p_std__vectorT_double_std__allocatorT_double_t_t__value_type, 0, 0, 0},  {&_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_key_type[] = {  {&_swigt__p_key_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long_long[] = {  {&_swigt__p_long_long, 0, 0, 0},{0, 0, 0, 0}};
@@ -72133,6 +73957,7 @@ static swig_cast_info _swigc__p_std__lessT_std__string_t[] = {  {&_swigt__p_std_
 static swig_cast_info _swigc__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t[] = {  {&_swigt__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t[] = {  {&_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type[] = {  {&_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type[] = {  {&_swigt__p_double, 0, 0, 0},  {&_swigt__p_std__vectorT_double_std__allocatorT_double_t_t__value_type, 0, 0, 0},  {&_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t[] = {  {&_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type[] = {  {&_swigt__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t[] = {  {&_swigt__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -72182,6 +74007,8 @@ static swig_cast_info _swigc__p_std__vectorT_Stomp__WeightedAngularCoordinate_st
 static swig_cast_info _swigc__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type[] = {  {&_swigt__p_Stomp__WeightedAngularCoordinate, 0, 0, 0},  {&_swigt__p_Stomp__CosmoCoordinate, _p_Stomp__CosmoCoordinateTo_p_Stomp__WeightedAngularCoordinate, 0, 0},  {&_swigt__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_double_std__allocatorT_double_t_t[] = {  {&_swigt__p_std__vectorT_double_std__allocatorT_double_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_double_std__allocatorT_double_t_t__value_type[] = {  {&_swigt__p_std__vectorT_double_std__allocatorT_double_t_t__value_type, 0, 0, 0},  {&_swigt__p_double, 0, 0, 0},  {&_swigt__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t[] = {  {&_swigt__p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t[] = {  {&_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t[] = {  {&_swigt__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -72268,6 +74095,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__mapT_short_const_double_std__lessT_short_const_t_std__allocatorT_std__pairT_short_const_const_double_t_t_t,
   _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,
   _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__allocator_type,
+  _swigc__p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t__mapped_type,
   _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,
   _swigc__p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t__allocator_type,
   _swigc__p_std__mapT_unsigned_int_const_short_std__lessT_unsigned_int_const_t_std__allocatorT_std__pairT_unsigned_int_const_const_short_t_t_t,
@@ -72317,6 +74145,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type,
   _swigc__p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type,
   _swigc__p_std__vectorT_double_std__allocatorT_double_t_t,
+  _swigc__p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type,
+  _swigc__p_std__vectorT_double_std__allocatorT_double_t_t__value_type,
   _swigc__p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t,
   _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   _swigc__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t,
