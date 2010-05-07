@@ -815,7 +815,6 @@ bool LatLonBound::FindAngularBounds() {
       if (ang.Eta() < etamin) etamin = ang.Eta();
       if (ang.Eta() > etamax) etamax = ang.Eta();
     }
-    break;
 
     for (uint16_t i=0;i<1000;i++) {
       AngularCoordinate ang(lon_min+lon_step*i, min_latitude_,
@@ -853,12 +852,7 @@ bool LatLonBound::FindAngularBounds() {
       if (ang.Eta() < etamin) etamin = ang.Eta();
       if (ang.Eta() > etamax) etamax = ang.Eta();
     }
-    break;
 
-    double lon_min = min_longitude_;
-    double lon_step = (max_longitude_ - min_longitude_)/1000.0;
-    if (!continuous_longitude_)
-      lon_step = (360.0 - (min_longitude_ - max_longitude_))/1000.0;
     for (uint16_t i=0;i<1000;i++) {
       AngularCoordinate ang(lon_min+lon_step*i, min_latitude_,
 			    AngularCoordinate::Galactic);

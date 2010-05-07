@@ -86,9 +86,7 @@ int main(int argc, char **argv) {
     galaxy_file >> theta >> phi;
     Stomp::AngularCoordinate tmp_ang(theta, phi, coord);
 
-    if (stomp_map->FindLocation(tmp_ang)) {
-      scalar_map->AddToMap(tmp_ang);
-    }
+    if (stomp_map->Contains(tmp_ang)) scalar_map->AddToMap(tmp_ang);
 
     n_galaxy++;
   }

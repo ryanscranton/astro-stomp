@@ -22,9 +22,9 @@
 %include std_map.i
 %include std_vector.i
 
-%include "typemaps.i"
+%include typemaps.i
 %apply double& INPUT { double& }
-%apply double& OUTPUT { double& }
+#%apply double *OUTPUT { double& }
 %apply uint32_t& INPUT { uint32_t& }
 
 // Need to add AngularCoordinate, WeightedAngularCoordinate, CosmoCoordinate

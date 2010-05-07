@@ -1071,18 +1071,6 @@ void Map::AddPixel(Pixel& pix) {
   pixel_count_[pix.Resolution()]++;
 }
 
-bool Map::FindLocation(AngularCoordinate& ang) {
-  bool keep = false;
-  double weight;
-
-  uint32_t k;
-  Pixel::Ang2Pix(HPixResolution, ang, k);
-
-  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
-
-  return keep;
-}
-
 bool Map::FindLocation(AngularCoordinate& ang, double& weight) {
   bool keep = false;
 
@@ -1104,6 +1092,18 @@ double Map::FindLocationWeight(AngularCoordinate& ang) {
   if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
 
   return weight;
+}
+
+bool Map::Contains(AngularCoordinate& ang) {
+  bool keep = false;
+  double weight;
+
+  uint32_t k;
+  Pixel::Ang2Pix(HPixResolution, ang, k);
+
+  if (sub_map_[k].Initialized()) keep = sub_map_[k].FindLocation(ang, weight);
+
+  return keep;
 }
 
 bool Map::Contains(Pixel& pix) {
