@@ -166,12 +166,9 @@ class Map : public BaseMap {
 
   // Simple call to determine if a point is within the current Map
   // instance.  Returns true if the point is within the map; false, otherwise.
-  bool FindLocation(AngularCoordinate& ang);
-
-  // An variation on FindLocation that also assigns a value to the input
-  // "weight" reference variable.  If the location is within the Map, then
-  // the weight of value of the map is stored in the "weight" variable.  If
-  // not, then the value in "weight" is meaningless.
+  // If the location is within the Map, then the weight of value of the map
+  // is stored in the "weight" variable.  If not, then the value in "weight"
+  // is meaningless.
   bool FindLocation(AngularCoordinate& ang, double& weight);
 
   // Another variation on FindLocation, this is mostly in place for the Python
@@ -184,6 +181,7 @@ class Map : public BaseMap {
   // Later on, we'll have more sophisticated indicators as to whether these
   // areas are fully, partially or not contained in our Map, but for now we only
   // consider the question of full containment.
+  bool Contains(AngularCoordinate& ang);
   bool Contains(Pixel& pix);
   bool Contains(Map& stomp_map);
 

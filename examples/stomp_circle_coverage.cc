@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
 
       // Figure out the first bit of our bitmask by checking that the position
       // is inside our map.
-      if (stomp_map->FindLocation(ang)) idx += INSIDE_MAP;
+      if (stomp_map->Contains(ang)) idx += INSIDE_MAP;
 
       // Now we assemble a Map for each of the quadrants and see if they are
       // inside our reference Map.

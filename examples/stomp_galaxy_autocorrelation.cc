@@ -68,8 +68,8 @@ int main(int argc, char **argv) {
     Stomp::WeightedAngularCoordinate tmp_ang(lambda, eta, prob,
 					     Stomp::AngularCoordinate::Survey);
 
-    if (stomp_map->FindLocation(tmp_ang) &&
-	(tmp_ang.Weight() > 0.2)) galaxy.push_back(tmp_ang);
+    if (stomp_map->Contains(tmp_ang) && (tmp_ang.Weight() > 0.2))
+      galaxy.push_back(tmp_ang);
     n_galaxy++;
   }
   galaxy_file.close();

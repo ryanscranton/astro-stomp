@@ -740,6 +740,8 @@ class ScalarMap(BaseMap):
     def CrossCorrelateWithRegions(*args): return _stomp.ScalarMap_CrossCorrelateWithRegions(*args)
     def Variance(*args): return _stomp.ScalarMap_Variance(*args)
     def Covariance(*args): return _stomp.ScalarMap_Covariance(*args)
+    def VarianceWithErrors(*args): return _stomp.ScalarMap_VarianceWithErrors(*args)
+    def CovarianceWithErrors(*args): return _stomp.ScalarMap_CovarianceWithErrors(*args)
     def Resolution(*args): return _stomp.ScalarMap_Resolution(*args)
     def Intensity(*args): return _stomp.ScalarMap_Intensity(*args)
     def NPoints(*args): return _stomp.ScalarMap_NPoints(*args)

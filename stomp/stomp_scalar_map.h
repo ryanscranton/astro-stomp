@@ -287,9 +287,9 @@ class ScalarMap : public BaseMap {
   // then we can also calculate the error on those quantities.
   double Variance();
   double Covariance(ScalarMap& scalar_map);
-  void Variance(double& variance, double& variance_error);
-  void Covariance(ScalarMap& scalar_map, double& covariance,
-		  double& covariance_error);
+  void VarianceWithErrors(double& variance, double& variance_error);
+  void CovarianceWithErrors(ScalarMap& scalar_map, double& covariance,
+			    double& covariance_error);
 
   // Meaningful, since all of the pixels in the map share a common resolution.
   uint32_t Resolution();

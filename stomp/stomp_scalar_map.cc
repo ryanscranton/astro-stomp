@@ -1660,7 +1660,7 @@ double ScalarMap::Covariance(ScalarMap& scalar_map) {
 	  covariance/covariance_norm : 0.0);
 }
 
-void ScalarMap::Variance(double& variance, double& variance_error) {
+void ScalarMap::VarianceWithErrors(double& variance, double& variance_error) {
   bool convert_back_to_raw = false;
   if (!converted_to_overdensity_) {
     ConvertToOverDensity();
@@ -1710,8 +1710,8 @@ void ScalarMap::Variance(double& variance, double& variance_error) {
   if (convert_back_to_raw) ConvertFromOverDensity();
 }
 
-void ScalarMap::Covariance(ScalarMap& scalar_map, double& covariance,
-			   double& covariance_error) {
+void ScalarMap::CovarianceWithErrors(ScalarMap& scalar_map, double& covariance,
+				     double& covariance_error) {
   if (resolution_ != scalar_map.Resolution()) {
     std::cout << "Map resolutions must match!  Exiting...\n";
     exit(1);

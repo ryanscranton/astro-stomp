@@ -933,7 +933,7 @@ bool TreeMap::Read(const std::string& input_file,
   }
 
   if (verbose && io_success)
-    std::cout << "Read " << n_lines << " lines from " << input_file <<
+    std::cout << "Read " << n_lines-1 << " lines from " << input_file <<
       "; loaded " << NPoints() << " into tree...\n";
 
   return io_success;
@@ -1006,7 +1006,7 @@ bool TreeMap::Read(const std::string& input_file,
   }
 
   if (verbose && io_success)
-    std::cout << "Read " << n_lines << " lines from " << input_file <<
+    std::cout << "Read " << n_lines-1 << " lines from " << input_file <<
       "; loaded " << NPoints() << " into tree...\n";
 
   return io_success;

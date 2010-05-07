@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
 
 	if ((prob >= FLAGS_prob_min) && (prob <= FLAGS_prob_max) &&
 	    (mag >= FLAGS_mag_min) && (mag <= FLAGS_mag_max) &&
-	    (stomp_map->FindLocation(tmp_ang))) galaxy.push_back(tmp_ang);
+	    (stomp_map->Contains(tmp_ang))) galaxy.push_back(tmp_ang);
 	n_galaxy++;
       }
     }
