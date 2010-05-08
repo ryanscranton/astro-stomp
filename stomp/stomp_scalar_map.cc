@@ -587,7 +587,8 @@ bool ScalarMap::AddToMap(Pixel& pix) {
   return added_pixel;
 }
 
-void ScalarMap::Coverage(PixelVector& superpix, uint32_t resolution) {
+void ScalarMap::Coverage(PixelVector& superpix, uint32_t resolution,
+			 bool calculate_fraction) {
   if (!superpix.empty()) superpix.clear();
 
   if (resolution > resolution_) {
@@ -625,7 +626,11 @@ void ScalarMap::Coverage(PixelVector& superpix, uint32_t resolution) {
 	  // calculations to find the unmasked fraction.
 	  int8_t unmasked_status = FindUnmaskedStatus(*iter);
 	  if (unmasked_status != 0) {
-	    iter->SetWeight(FindUnmaskedFraction(*iter));
+	    if (calculate_fraction) {
+	      iter->SetWeight(FindUnmaskedFraction(*iter));
+	    } else {
+	      iter->SetWeight(1.0);
+	    }
 	    superpix.push_back(*iter);
 	  }
 	}

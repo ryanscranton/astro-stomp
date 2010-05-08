@@ -1332,7 +1332,8 @@ void Map::FindMatchingPixels(PixelVector& pix, PixelVector& match_pix,
   }
 }
 
-void Map::Coverage(PixelVector& superpix, uint32_t resolution) {
+void Map::Coverage(PixelVector& superpix, uint32_t resolution,
+		   bool calculate_fraction) {
   if (!superpix.empty()) superpix.clear();
 
   if (resolution == HPixResolution) {
@@ -1366,7 +1367,11 @@ void Map::Coverage(PixelVector& superpix, uint32_t resolution) {
 	    if (unmasked_status == 1) {
 	      iter->SetWeight(1.0);
 	    } else {
-	      iter->SetWeight(FindUnmaskedFraction(*iter));
+	      if (calculate_fraction) {
+		iter->SetWeight(FindUnmaskedFraction(*iter));
+	      } else {
+		iter->SetWeight(1.0);
+	      }
 	    }
 	    superpix.push_back(*iter);
 	  }

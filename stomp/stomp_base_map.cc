@@ -339,7 +339,8 @@ BaseMap::~BaseMap() {
   ClearRegions();
 }
 
-void BaseMap::Coverage(PixelVector& superpix, uint32_t resolution) {
+void BaseMap::Coverage(PixelVector& superpix, uint32_t resolution,
+		       bool calculate_fraction) {
   superpix.clear();
 }
 

@@ -144,7 +144,8 @@ class BaseMap {
   // overall BaseMap geometry.  See the Map class for more thorough
   // documentation of each of these methods.
   virtual void Coverage(PixelVector& superpix,
-			uint32_t resolution = HPixResolution);
+			uint32_t resolution = HPixResolution,
+			bool calculate_fraction = true);
   virtual double FindUnmaskedFraction(Pixel& pix);
   virtual int8_t FindUnmaskedStatus(Pixel& pix);
 

@@ -198,7 +198,8 @@ class ScalarMap : public BaseMap {
   // pixels, but values indicating that the pixel is within the map don't
   // necessarily mean the same as they do for the Map class.
   virtual void Coverage(PixelVector& superpix,
-			uint32_t resolution = HPixResolution);
+			uint32_t resolution = HPixResolution,
+			bool calculate_fraction = true);
   bool Covering(Map& stomp_map, uint32_t maximum_pixels);
   virtual double FindUnmaskedFraction(Pixel& pix);
   virtual int8_t FindUnmaskedStatus(Pixel& pix);

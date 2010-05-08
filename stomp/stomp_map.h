@@ -238,7 +238,8 @@ class Map : public BaseMap {
   // the pixels will reflect the fraction of the pixel that is within the
   // current map.
   virtual void Coverage(PixelVector& superpix,
-			uint32_t resolution = Stomp::HPixResolution);
+			uint32_t resolution = Stomp::HPixResolution,
+			bool calculate_fraction = true);
 
   // Instead of a set of vectors at the same resolution, we may want to
   // generate a lower resolution version of our current map where the needs of
