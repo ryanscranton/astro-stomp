@@ -1916,33 +1916,22 @@ void RenderArea::_findRenderLevel(uint32_t target_pixels) {
 
     if (cartesian_area < 10000.0) {
       n_pixel = 0;
+      double frac_pixel = 0.0;
 
       Stomp::Map* level_map = stomp_map_[level];
-      for (Stomp::MapIterator iter=level_map->Begin();
-	   iter!=level_map->End();level_map->Iterate(&iter)) {
-	Stomp::PixelIterator pix = iter.second;      
-	double latitude, longitude;
-
-	switch (sphere_) {
-	case Stomp::AngularCoordinate::Survey:
-	  longitude = pix->Eta();
-	  latitude = pix->Lambda();
-	  break;
-	case Stomp::AngularCoordinate::Equatorial:
-	  longitude = pix->RA();
-	  latitude = pix->DEC();
-	  break;
-	case Stomp::AngularCoordinate::Galactic:
-	  longitude = pix->GalLon();
-	  latitude = pix->GalLat();
-	  break;
-	}
-
-	if (Stomp::DoubleLE(longitude, lonmax_) &&
-	    Stomp::DoubleGE(longitude, lonmin_) &&
-	    Stomp::DoubleLE(latitude, latmax_) &&
-	    Stomp::DoubleGE(latitude, latmin_)) n_pixel++;
+      Stomp::LatLonBound bounds(latmin_, latmax_, lonmin_, lonmax_, sphere_);
+      Stomp::PixelVector superpix;
+      level_map->Coverage(superpix, Stomp::HPixResolution, false);
+      for (Stomp::PixelIterator iter=superpix.begin();
+	   iter!=superpix.end();++iter) {
+	// _ScorePixel should give us an estimate of the fraction of the
+	// superpixel that's within the viewer bounds.
+	frac_pixel +=
+	  -1.0*level_map->_ScorePixel(bounds, *iter)*
+	  level_map->Size(iter->Superpixnum());
+	  
       }
+      n_pixel = static_cast<uint32_t>(frac_pixel);
     }
       
     if (n_pixel < target_pixels) {

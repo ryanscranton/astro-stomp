@@ -1012,7 +1012,8 @@ bool TreeMap::Read(const std::string& input_file,
   return io_success;
 }
 
-void TreeMap::Coverage(PixelVector& superpix, uint32_t resolution) {
+void TreeMap::Coverage(PixelVector& superpix, uint32_t resolution,
+		       bool calculate_fraction) {
   if (!superpix.empty()) superpix.clear();
 
   if (resolution > resolution_) {
@@ -1054,7 +1055,7 @@ void TreeMap::Coverage(PixelVector& superpix, uint32_t resolution) {
 	   iter!=tmp_map.end();++iter) {
 	Pixel pix(iter->second->PixelX(), iter->second->PixelY(),
 		  iter->second->Resolution(), 1.0);
-	pix.SetWeight(FindUnmaskedFraction(pix));
+	if (calculate_fraction) pix.SetWeight(FindUnmaskedFraction(pix));
 	superpix.push_back(pix);
 	delete iter->second;
       }
@@ -1075,7 +1076,11 @@ void TreeMap::Coverage(PixelVector& superpix, uint32_t resolution) {
 	  // calculations to find the unmasked fraction.
 	  int8_t unmasked_status = FindUnmaskedStatus(*sub_iter);
 	  if (unmasked_status != 0) {
-	    sub_iter->SetWeight(FindUnmaskedFraction(*sub_iter));
+	    if (calculate_fraction) {
+	      sub_iter->SetWeight(FindUnmaskedFraction(*sub_iter));
+	    } else {
+	      sub_iter->SetWeight(1.0);
+	    }
 	    superpix.push_back(*sub_iter);
 	  }
 	}

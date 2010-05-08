@@ -263,7 +263,8 @@ class TreeMap : public BaseMap {
 
   // Equivalent methods as their namesakes in the BaseMap class.
   virtual void Coverage(PixelVector& superpix,
-			uint32_t resolution = HPixResolution);
+			uint32_t resolution = HPixResolution,
+			bool calculate_fraction = true);
   bool Covering(Map& stomp_map, uint32_t maximum_pixels);
   virtual double FindUnmaskedFraction(Pixel& pix);
   virtual int8_t FindUnmaskedStatus(Pixel& pix);
