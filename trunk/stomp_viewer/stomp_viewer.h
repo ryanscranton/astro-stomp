@@ -145,6 +145,13 @@ class StompViewer : public QMainWindow {
   void showPointsToggled();
   void filterPointsToggled();
 
+  // MOUSE TRACKING SLOTS
+  //
+  // When the mouse is over the RenderArea widget, we convert its position into
+  // coordinates for display.  This slot is tied to the newMousePosition signal
+  // that RenderArea emits when the mouse moves.
+  void getMousePosition();
+
  private:
   void setupMapIOGroup();
   void setupMapCoordinatesGroup();
@@ -175,6 +182,11 @@ class StompViewer : public QMainWindow {
   QAction *actionAutoCoordinate;
   QAction *actionZoomIn;
   QAction *actionZoomOut;
+  QGroupBox *mouseCoordGroup;
+  QLabel *lonLabel;
+  QLabel *lonCoordLabel;
+  QLabel *latLabel;
+  QLabel *latCoordLabel;
 
   QGroupBox *mapWeightGroup;
   QLineEdit *mapWeightMinLineEdit;
