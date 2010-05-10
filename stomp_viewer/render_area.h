@@ -8,10 +8,10 @@
 // a way as to make the analysis of that data as algorithmically efficient as
 // possible.
 //
-// This header file contains two classes used for generating images from input
-// Stomp::Maps and Stomp::AngularCoordinates.  Palette translates between the
-// weights for each of these objects and a color palette and RenderArea does
-// the work of creating the images.
+// This header file contains the RenderArea class.  This QWidget derivative acts
+// as the canvas for displaying all of the Stomp::Map and Stomp::WAngularVector
+// data.  It also handles communication between its element objects and the
+// StompViewer class.
 
 #ifndef RENDERAREA_H
 #define RENDERAREA_H
@@ -23,41 +23,16 @@
 #include <QPolygonF>
 #include <QMouseEvent>
 #include <stomp.h>
+#include "palette.h"
+#include "render_geometry.h"
+#include "render_thread.h"
+#include "reader_thread.h"
 
-class QColor;
 class Palette;
+class RenderGeometry;
+class RenderMapThread;
+class ReadMapThread;
 class RenderArea;
-
-class Palette {
- public:
-  enum PaletteType {
-    BlueTemperature,
-    GreenTemperature,
-    RedTemperature,
-    GrayScale,
-    InverseGrayScale,
-    Rainbow,
-    InverseRainbow
-  };
-  Palette();
-  Palette(PaletteType palette);
-  ~Palette();
-  void Initialize(PaletteType palette);
-  void InitializeBlueTemperature();
-  void InitializeGreenTemperature();
-  void InitializeRedTemperature();
-  void InitializeGrayScale();
-  void InitializeInverseGrayScale();
-  void InitializeRainbow();
-  void InitializeInverseRainbow();
-  QColor Color(double weight);
-  std::string CurrentPalette();
-  PaletteType CurrentPaletteType();
-
- private:
-  PaletteType palette_type_;
-  std::vector<QColor> rgb_;
-};
 
 class RenderArea : public QWidget {
   Q_OBJECT
@@ -67,8 +42,8 @@ class RenderArea : public QWidget {
 
   QSize minimumSizeHint() const;
   QSize sizeHint() const;
-  double weightMin();
-  double weightMax();
+  double mapWeightMin();
+  double mapWeightMax();
   double pointsWeightMin();
   double pointsWeightMax();
   double longitudeMin();
@@ -82,6 +57,8 @@ class RenderArea : public QWidget {
   bool displayingGrid();
   bool displayingPoints();
   bool filteringPoints();
+  double mouseLongitude();
+  double mouseLatitude();
 
  public slots:
   // We're storing the map image in a QPixmap so that paint events will be
@@ -89,14 +66,40 @@ class RenderArea : public QWidget {
   // we need to update the underlying map image.
   void updatePixmap(bool send_update_call = true);
 
+  // Our new map image is created via a separate thread call.  This slot is
+  // used by the thread to signal that the new image is ready to be displayed.
+  void newMapImage(const QImage& new_map_image);
+
+  // Same pair of methods to process changes to the points pixmap.
+  void updatePoints(bool send_update_call = true);
+  void newPointsImage(const QImage& new_points_image);
+
   // Likewise, if we alter the image, then we need to re-draw the QPixmap that
   // contains the coordinate grid and the one that contains any points that have
   // been loaded.
-  void updatePoints(bool send_update_call = true);
   void updateGrid(bool send_update_call = true);
 
-  // Read in a new map.  Return true if the operation was successful.
+  // Read in a new map.  This will launch the Map reader thread, contingent on
+  // us verifying that the named file exists.  If so, we launch the thread and
+  // return true.
   bool readNewMap(QString& file_name);
+
+  // The Map reader thread reads in the file indicated by the argument to
+  // readMapFile.  After doing so, it emits a signal indicating that the base
+  // resolution Map is ready.  That signal is tied to this slot, which stores
+  // the pointer, finds the Map bounds, updates the status and
+  // starts the Map rendering thread to show the base Map.
+  void newBaseMap(Stomp::Map* base_map);
+
+  // After reading in the Map, the reader thread starts constructing the
+  // softened Maps.  This takes some time (hence the separate thread), but
+  // will make for quicker rendering once they're available.  This slot is tied
+  // to this process.
+  void newSoftenedMap(uint8_t level, Stomp::Map* softened_map);
+
+  // While the softening is happening, the reader thread will alert us of the
+  // progress via this slot.
+  void readerProgress(int progress);
 
   // Read in a new set of points.  Return true if the operation was successful.
   bool readNewPointsFile(QString& file_name,
@@ -104,7 +107,6 @@ class RenderArea : public QWidget {
 			 bool weighted_points);
 
   // Remove either the current Map or set of points.
-  void clearMap();
   void clearPoints();
 
   // Write the current rendered image to a PNG file.  Return true on success.
@@ -121,11 +123,11 @@ class RenderArea : public QWidget {
   // can manually set the allowed weight range for our color mapping.  Any
   // weights outside of that range will be treated as equal to the corresponding
   // bound values.
-  void setWeightRange(double weight_min, double weight_max);
+  void setMapWeightRange(double weight_min, double weight_max);
   void setPointsWeightRange(double weight_min, double weight_max);
 
   // Add a palette to our object to scale between weight and RGB color.
-  void setPalette(Palette::PaletteType palette_type);
+  void setMapPalette(Palette::PaletteType palette_type);
   void setPointsPalette(Palette::PaletteType palette_type);
 
   // In case we don't want to have our plotting area stretch all the way
@@ -145,17 +147,8 @@ class RenderArea : public QWidget {
   void setImageBounds(double lonmin, double lonmax,
 		      double latmin, double latmax,
 		      Stomp::AngularCoordinate::Sphere sphere);
-  void setSurveyBounds(double lammin, double lammax,
-		       double etamin, double etamax);
-  void setEquatorialBounds(double ramin, double ramax,
-			   double decmin, double decmax);
-  void setGalacticBounds(double lonmin, double lonmax,
-			 double latmin, double latmax);
   void setFullSky(bool full_sky);
   void setCoordinateSystem(Stomp::AngularCoordinate::Sphere sphere);
-  void useSurveyCoordinates();
-  void useEquatorialCoordinates();
-  void useGalacticCoordinates();
 
   // In order to help navigate the map presented, we have zoom in and zoom out
   // functionality (default is x2 zoom).
@@ -197,6 +190,9 @@ class RenderArea : public QWidget {
 
  signals:
   void newMapParameters();
+  void newMousePosition();
+  void newStatus(const QString& message, int timeout);
+  void progressUpdate(int new_progress);
 
  protected:
   // paintEvent is an over-ridden method from the QWidget class that we use to
@@ -207,9 +203,18 @@ class RenderArea : public QWidget {
   // paintEvent re-draws each time it's called.
   void paintEvent(QPaintEvent *event);
 
+  // We enable mouse tracking in the constructor.  If the mouse is in the
+  // RenderArea widget's area, then we convert the mouse position into
+  // coordinates based on the Sphere we're plotting.
+  void mouseMoveEvent(QMouseEvent *event);
+
   // Another over-ridden QWidget method.  By default, double-clicking on our
   // rendered area zooms in on the location clicked by a factor of 2.
   void mouseDoubleClickEvent(QMouseEvent *event);
+
+  // We need to keep our RenderGeometry object sync'd up with the size of our
+  // RenderArea object, so we need to catch this event.
+  void resizeEvent(QResizeEvent *event);
 
   // These methods handle both the double click zoom and the zoom functionality
   // allowed by the zoom slot.
@@ -220,7 +225,6 @@ class RenderArea : public QWidget {
 
   // When we do need to change the Map/Points/Grid QPixmaps, these methods
   // are called.
-  bool paintMap(QPaintDevice *device);
   bool paintPoints(QPaintDevice *device);
   bool paintGrid(QPaintDevice *device);
 
@@ -243,98 +247,38 @@ class RenderArea : public QWidget {
   void _findNewImageBounds(Stomp::WAngularVector& ang);
   void _findNewMaxResolution(Stomp::Map* stomp_map);
 
-  // For _checkBounds, we have no initial idea of what the coordinate bounds
-  // are or should be.  Hence, it will handle cases under the assumption of
-  // maximum ignorance.  For _enforceBounds, we know we have lon-lat values that
-  // are valid, we just need to check against possible double precision errors
-  // on the edges of our spherical bounds.
-  void _checkBounds();
-  void _enforceBounds(double& lon, double& lat);
-
-  // When rendering the pixels, we have a few cases to consider.  If a pixel is
-  // so small that rendering it would cover just a few pixels in our QPixmap,
-  // we're better off just putting a point there than spending time drawing the
-  // full polygon.  If the pixel is big enough to be rendered, but wraps past
-  // the longitude disontinuity, then we have to draw both halves separately.
-  // Finally, there's just the simple case of taking a pixel and turning it into
-  // a polygon.
-  void _pixelToPoint(uint32_t pixel_x, uint32_t pixel_y,
-		     uint32_t resolution, QPointF& point);
-  void _pixelToPolygon(uint32_t pixel_x, uint32_t pixel_y,
-		       uint32_t resolution, QPolygonF& polygon);
-  void _splitPixelToPolygons(uint32_t pixel_x, uint32_t pixel_y,
-			     uint32_t resolution, QPolygonF& left_polygon,
-			     QPolygonF& right_polygon);
-
-  // AngularCoordinates are simply turned into QPointFs.
-  bool _angToPoint(Stomp::WeightedAngularCoordinate& w_ang, QPointF& point);
-
-  // Four methods for going back and forth between angular space and QPixmap
-  // XY pixel-space.
-  qreal _lonToX(double longitude);
-  qreal _latToY(double latitude);
-  double _xToLon(qreal pixel_x);
-  double _yToLat(qreal pixel_y);
-
-  // Thanks to the longitude discontinuity and the fact that the longitude spans
-  // for our various coordinate systems aren't the same, it's easier to put
-  // these values into functions rather than re-calculating them in various
-  // methods.
-  double _lonRange();
-  double _latRange();
-  double _lonCenter();
-  double _latCenter();
-
-  // Translate between Cartesian and Aitoff-Hammer projections.
-  void _cartesianToAitoff(double& longitude, double& latitude);
-
-  // Given an input weight, return a value between [0,1) that we can use to
-  // select the appropriate Pallete color.
-  double _normalizeWeight(double weight);
-  double _normalizePointsWeight(double weight);
-
-  // Based on the current display bounds, figure out the area of a QPixmap
-  // pixel.  Any Pixels with areas smaller than that should be rendered with
-  // _pixelToPoint instead of _pixelToPolygon
-  double _renderPixelArea();
-
   // Based on the current display bounds, find the version of the input map
   // that contains a reasonable number of Pixels for rendering.
   void _findRenderLevel(uint32_t target_pixels = 100000);
 
-  // Since our set of Maps is complicated (and may contain duplicate pointers),
-  // we need to be careful when deleting them so we don't free a pointer twice.
-  void _clearMaps();
-
  private:
   bool antialiased_;
-  Palette palette_, points_palette_;
-  QPixmap *pixmap_;
-  QPixmap *points_pixmap_;
+  Palette map_palette_, points_palette_;
+  RenderGeometry geom_;
+  RenderMapThread render_map_thread_;
+  RenderPointsThread render_points_thread_;
+  ReadMapThread read_map_thread_;
+  QPixmap map_pixmap_;
+  QPixmap points_pixmap_;
   QPixmap *grid_pixmap_;
   QColor background_color_;
   std::map<uint8_t, Stomp::Map*> stomp_map_;
+  Stomp::Map* base_map_;
   bool good_map_;
+  bool good_soften_;
   Stomp::WAngularVector ang_;
   bool good_points_;
-  uint16_t buffer_top_, buffer_bottom_, buffer_left_, buffer_right_;
   bool fill_;
-  double lonmin_, lonmax_, latmin_, latmax_;
-  bool full_sky_;
-  Stomp::AngularCoordinate::Sphere sphere_;
-  bool continuous_longitude_;
-  bool aitoff_projection_;
-  double weight_min_, weight_max_;
-  double points_weight_min_, points_weight_max_;
+  double mouse_lon_, mouse_lat_;
   uint32_t max_resolution_;
   uint8_t render_level_;
   bool auto_update_;
   double *tick_divisions_;
-  uint16_t major_tick_length_, minor_tick_length_;
-  uint16_t tick_precision_, minor_ticks_per_major_, n_tick_divisions_;
+  uint32_t major_tick_length_, minor_tick_length_;
+  uint32_t tick_precision_, minor_ticks_per_major_, n_tick_divisions_;
   bool show_coordinates_;
   bool show_grid_;
   bool show_points_, filter_points_;
 };
 
- #endif
+#endif

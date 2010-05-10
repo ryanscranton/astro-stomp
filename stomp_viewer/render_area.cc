@@ -1,155 +1,39 @@
 #include <QtGui>
 #include "render_area.h"
 
-Palette::Palette() {
-  Initialize(BlueTemperature);
-}
-
-Palette::Palette(PaletteType palette_type) {
-  Initialize(palette_type);
-}
-
-Palette::~Palette() {
-  rgb_.clear();
-}
-
-void Palette::Initialize(PaletteType palette_type) {
-  if (rgb_.empty()) rgb_.reserve(256);
-  palette_type_ = palette_type;
-
-  switch (palette_type_) {
-  case BlueTemperature:
-    InitializeBlueTemperature();
-    break;
-  case GreenTemperature:
-    InitializeGreenTemperature();
-    break;
-  case RedTemperature:
-    InitializeRedTemperature();
-    break;
-  case GrayScale:
-    InitializeGrayScale();
-    break;
-  case InverseGrayScale:
-    InitializeInverseGrayScale();
-    break;
-  case Rainbow:
-    InitializeRainbow();
-    break;
-  case InverseRainbow:
-    InitializeInverseRainbow();
-    break;
-  }
-}
-
-void Palette::InitializeBlueTemperature() {
-  for (uint16_t i=0;i<256;i++) rgb_[i] = QColor(0, 0, i);
-}
-
-void Palette::InitializeGreenTemperature() {
-  for (uint16_t i=0;i<256;i++) rgb_[i] = QColor(0, i, 0);
-}
-
-void Palette::InitializeRedTemperature() {
-  for (uint16_t i=0;i<256;i++) rgb_[i] = QColor(i, 0, 0);
-}
-
-void Palette::InitializeGrayScale() {
-  for (uint16_t i=0;i<256;i++) rgb_[i] = QColor(i, i, i);
-}
-
-void Palette::InitializeInverseGrayScale() {
-  for (uint16_t i=0;i<256;i++) rgb_[i] = QColor(255 - i, 255 - i, 255 - i);
-}
-
-void Palette::InitializeRainbow() {
-  double step = 300.0/255.0;
-  for (uint16_t i=0;i<256;i++) {
-    QColor qcolor;
-    qcolor.setHsv(static_cast<int>(step*i), 255, 255);
-    rgb_[i] = qcolor;
-  }
-}
-
-void Palette::InitializeInverseRainbow() {
-  double step = 300.0/255.0;
-  for (uint16_t i=0;i<256;i++) {
-    QColor qcolor;
-    qcolor.setHsv(static_cast<int>(300.0 - step*i), 255, 255);
-    rgb_[i] = qcolor;
-  }
-}
-
-QColor Palette::Color(double weight) {
-  int i = static_cast<int>(256.0*weight);
-  if (i < 0) i = 0;
-  if (i > 255) i = 255;
-  return rgb_[i];
-}
-
-std::string Palette::CurrentPalette() {
-  std::string current_palette;
-
-  switch (palette_type_) {
-  case BlueTemperature:
-    current_palette = "BlueTemperature";
-    break;
-  case GreenTemperature:
-    current_palette = "GreenTemperature";
-    break;
-  case RedTemperature:
-    current_palette = "RedTemperature";
-    break;
-  case GrayScale:
-    current_palette = "GrayScale";
-    break;
-  case InverseGrayScale:
-    current_palette = "InverseGrayScale";
-    break;
-  case Rainbow:
-    current_palette = "Rainbow";
-    break;
-  case InverseRainbow:
-    current_palette = "InverseRainbow";
-    break;
-  }
-  return current_palette;
-}
-Palette::PaletteType Palette::CurrentPaletteType() {
-  return palette_type_;
-}
-
 RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
   antialiased_ = false;
   auto_update_ = false;
 
   setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  setMouseTracking(true);
 
-  palette_ = Palette();
-  points_palette_ = Palette();
+  map_palette_.setWeightRange(0.0, 1.0);
 
-  Stomp::PixelVector pix;
-  double dweight = 1.0/(4*Stomp::MaxSuperpixnum);
-  for (uint32_t k=0;k<4*Stomp::MaxSuperpixnum;k++)
-    pix.push_back(Stomp::Pixel(8, k, k*dweight));
-  Stomp::Map* base_map = new Stomp::Map(pix);
+  points_palette_.setWeightRange(0.0, 1.0);
 
-  for (uint8_t level=Stomp::HPixLevel;level<=Stomp::MaxPixelLevel;level++)
-    stomp_map_[level] = base_map;
-  good_map_ = true;
+  /*  Stomp::PixelVector pix;
+      double dweight = 1.0/(4*Stomp::MaxSuperpixnum);
+      for (uint32_t k=0;k<4*Stomp::MaxSuperpixnum;k++)
+      pix.push_back(Stomp::Pixel(8, k, k*dweight));
+      Stomp::Map* base_map = new Stomp::Map(pix);
+
+      for (uint8_t level=Stomp::HPixLevel;level<=Stomp::MaxPixelLevel;level++)
+      stomp_map_[level] = base_map;
+  */
+  good_map_ = false;
+  good_soften_ = true;
   good_points_ = false;
 
-  buffer_top_ = buffer_bottom_ = buffer_left_ = buffer_right_ = 0;
   fill_ = false;
 
-  sphere_ = Stomp::AngularCoordinate::Equatorial;
+  geom_.setImageBounds(0.0, 360.0, -90.0, 90.0,
+		       Stomp::AngularCoordinate::Equatorial);
+  geom_.setHeight(height());
+  geom_.setWidth(width());
+
   setFullSky(false);
   useAitoffProjection(false);
-
-  weight_min_ = 0.0;
-  weight_max_ = 1.0;
-  points_weight_min_ = 0.0;
-  points_weight_max_ = 0.0;
 
   max_resolution_ = Stomp::HPixResolution;
 
@@ -157,8 +41,22 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
   setAutoFillBackground(true);
 
   background_color_ = Qt::white;
-  pixmap_ = new QPixmap(width(), height());
-  pixmap_->fill(background_color_);
+  map_pixmap_ = QPixmap(width(), height());
+  map_pixmap_.fill(background_color_);
+
+  qRegisterMetaType<QImage>("QImage");
+  connect(&render_map_thread_, SIGNAL(renderedImage(QImage)),
+	  this, SLOT(newMapImage(QImage)));
+  connect(&render_points_thread_, SIGNAL(renderedImage(QImage)),
+	  this, SLOT(newPointsImage(QImage)));
+
+  qRegisterMetaType<uint8_t>("uint8_t");
+  connect(&read_map_thread_, SIGNAL(newBaseMap(Stomp::Map*)),
+	  this, SLOT(newBaseMap(Stomp::Map*)));
+  connect(&read_map_thread_, SIGNAL(newSoftenedMap(uint8_t, Stomp::Map*)),
+	  this, SLOT(newSoftenedMap(uint8_t, Stomp::Map*)));
+  connect(&read_map_thread_, SIGNAL(readerProgress(int)),
+	  this, SLOT(readerProgress(int)));
 
   show_grid_ = false;
   show_coordinates_ = false;
@@ -167,37 +65,28 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
 
   show_points_ = false;
   filter_points_ = false;
-  points_pixmap_ = new QPixmap(width(), height());
-  points_pixmap_->fill(Qt::transparent);
+  points_pixmap_ = QPixmap(width(), height());
+  points_pixmap_.fill(Qt::transparent);
 
-  n_tick_divisions_ = 21;
+  n_tick_divisions_ = 27;
   tick_divisions_ = new double[n_tick_divisions_];
-  tick_divisions_[0] = 0.00001;
-  tick_divisions_[1] = 0.00002;
-  tick_divisions_[2] = 0.00005;
-  tick_divisions_[3] = 0.0001;
-  tick_divisions_[4] = 0.0002;
-  tick_divisions_[5] = 0.0005;
-  tick_divisions_[6] = 0.001;
-  tick_divisions_[7] = 0.002;
-  tick_divisions_[8] = 0.005;
-  tick_divisions_[9] = 0.01;
-  tick_divisions_[10] = 0.02;
-  tick_divisions_[11] = 0.05;
-  tick_divisions_[12] = 0.1;
-  tick_divisions_[13] = 0.2;
-  tick_divisions_[14] = 0.5;
-  tick_divisions_[15] = 1.0;
-  tick_divisions_[16] = 2.0;
-  tick_divisions_[17] = 5.0;
-  tick_divisions_[18] = 10.0;
-  tick_divisions_[19] = 15.0;
-  tick_divisions_[20] = 30.0;
+  for (int i=0, scale=1;i<8;i++, scale*=10) {
+    tick_divisions_[3*i + 0] = 0.0000001*scale;
+    tick_divisions_[3*i + 1] = 0.0000002*scale;
+    tick_divisions_[3*i + 2] = 0.0000005*scale;
+  }
+  tick_divisions_[24] = 10.0;
+  tick_divisions_[25] = 15.0;
+  tick_divisions_[26] = 30.0;
 
   major_tick_length_ = 0;
   minor_tick_length_ = 0;
   tick_precision_ = 4;
   minor_ticks_per_major_ = 4;
+
+#ifndef QT_NO_CURSOR
+  setCursor(Qt::CrossCursor);
+#endif
 }
 
 QSize RenderArea::minimumSizeHint() const {
@@ -208,36 +97,36 @@ QSize RenderArea::sizeHint() const {
   return QSize(1024, 512);
 }
 
-double RenderArea::weightMin() {
-  return weight_min_;
+double RenderArea::mapWeightMin() {
+  return map_palette_.weightMin();
 }
 
-double RenderArea::weightMax() {
-  return weight_max_;
+double RenderArea::mapWeightMax() {
+  return map_palette_.weightMax();
 }
 
 double RenderArea::pointsWeightMin() {
-  return points_weight_min_;
+  return points_palette_.weightMin();
 }
 
 double RenderArea::pointsWeightMax() {
-  return points_weight_max_;
+  return points_palette_.weightMax();
 }
 
 double RenderArea::longitudeMin() {
-  return lonmin_;
+  return geom_.longitudeMin();
 }
 
 double RenderArea::longitudeMax() {
-  return lonmax_;
+  return geom_.longitudeMax();
 }
 
 double RenderArea::latitudeMin() {
-  return latmin_;
+  return geom_.latitudeMin();
 }
 
 double RenderArea::latitudeMax() {
-  return latmax_;
+  return geom_.latitudeMax();
 }
 
 uint32_t RenderArea::maxResolution() {
@@ -249,7 +138,7 @@ bool RenderArea::autoUpdating() {
 }
 
 bool RenderArea::fullSky() {
-  return full_sky_;
+  return geom_.fullSky();
 }
 
 bool RenderArea::displayingCoordinates() {
@@ -268,26 +157,57 @@ bool RenderArea::filteringPoints() {
   return filter_points_;
 }
 
+double RenderArea::mouseLongitude() {
+  return mouse_lon_;
+}
+
+double RenderArea::mouseLatitude() {
+  return mouse_lat_;
+}
+
 void RenderArea::updatePixmap(bool send_update_call) {
-  delete pixmap_;
+  if (good_map_) {
+    Stomp::Map* render_map = base_map_;
 
-  pixmap_ = new QPixmap(size());
-  pixmap_->fill(background_color_);
+    if (good_soften_) {
+      _findRenderLevel();
+      render_map = stomp_map_[render_level_];
+    }
 
-  paintMap(pixmap_);
+    render_map_thread_.renderMap(render_map, geom_, map_palette_,
+				 max_resolution_, antialiased_, fill_);
+  } else {
+    map_pixmap_ = QPixmap(width(), height());
+    map_pixmap_.fill(background_color_);
+  }
+
   updatePoints(false);
   updateGrid(false);
   if (send_update_call) update();
 }
 
+void RenderArea::newMapImage(const QImage& map_image) {
+  map_pixmap_ = QPixmap::fromImage(map_image);
+
+  update();
+}
+
 void RenderArea::updatePoints(bool send_update_call) {
-  delete points_pixmap_;
+  if (good_points_) {
+    render_points_thread_.renderPoints(&ang_, geom_, points_palette_,
+				       antialiased_);
+  } else {
+    points_pixmap_ = QPixmap(width(), height());
+    points_pixmap_.fill(Qt::transparent);
+  }
 
-  points_pixmap_ = new QPixmap(size());
-  points_pixmap_->fill(Qt::transparent);
-
-  paintPoints(points_pixmap_);
   if (send_update_call) update();
+}
+
+void RenderArea::newPointsImage(const QImage& points_image) {
+  points_pixmap_ = QPixmap::fromImage(points_image);
+
+  update();
 }
 
 void RenderArea::updateGrid(bool send_update_call) {
@@ -301,50 +221,48 @@ void RenderArea::updateGrid(bool send_update_call) {
 }
 
 bool RenderArea::readNewMap(QString& input_file) {
-  _clearMaps();
-
   std::string stl_input_file = std::string(input_file.toLatin1());
-  Stomp::Map* base_map = new Stomp::Map(stl_input_file);
+  bool file_exists = false;
+  std::ifstream test_file(stl_input_file.c_str());
 
-  good_map_ = !base_map->Empty();
+  good_map_ = false;
+  good_soften_ = false;
 
+  if (test_file) {
+    file_exists = true;
+    test_file.close();
+    read_map_thread_.readMap(stl_input_file);
+  }
+
+  return file_exists;
+}
+
+void RenderArea::newBaseMap(Stomp::Map* base_map) {
+  base_map_ = base_map;
+
+  good_map_ = !base_map_->Empty();
   if (good_map_) {
+    emit newStatus("Read base map.  Preparing derived maps...", 0);
     _findNewWeightBounds(base_map);
     _findNewImageBounds(base_map);
     _findNewMaxResolution(base_map);
     emit newMapParameters();
-
-
-    // Now, we iterate over our possible resolution values for rendering
-    // the Map.  If the resolution limit is higher than the maximum resolution
-    // of the basic Map, then we put assign a copy of the pointer to
-    // that resolution.
-    for (uint8_t level=Stomp::MaxPixelLevel;level>=Stomp::HPixLevel;level--) {
-      uint32_t resolution = 1 << level;
-      if (resolution >= max_resolution_) {
-	stomp_map_[level] = base_map;
-      } else {
-	// For the lower resolution versions of the map, we create softened
-	// versions of the map.  We can do this progressively, so that the
-	// computation is faster than resampling from the basic Map every time.
-	Stomp::Map* soft_map = new Stomp::Map();
-
-	stomp_map_[level+1]->Soften(*soft_map, resolution, true);
-	stomp_map_[level] = soft_map;
-      }
-    }
-
-    // When we render the map for the first time, we want to plot enough pixels
-    // to give a good idea of what the map looks like, but avoid spending
-    // several minutes rendering small pixels that won't actually show up.
-    // To balance this out, we choose an intial rendering resolution where
-    // the total number of pixels is a few thousand.
-    _findRenderLevel(8000);
-
     updatePixmap();
   }
+}
 
-  return good_map_;
+void RenderArea::newSoftenedMap(uint8_t level, Stomp::Map* softened_map) {
+  stomp_map_[level] = softened_map;
+
+  if (level == Stomp::HPixLevel) {
+    good_soften_ = true;
+    emit newStatus("Done with all derived maps.", 0);
+    updatePixmap();
+  }
+}
+
+void RenderArea::readerProgress(int progress) {
+  emit progressUpdate(progress);
 }
 
 bool RenderArea::readNewPointsFile(QString& input_file,
@@ -387,20 +305,22 @@ bool RenderArea::readNewPointsFile(QString& input_file,
   return good_points_;
 }
 
-void RenderArea::clearMap() {
-  _clearMaps();
-  updatePixmap();
-}
-
 void RenderArea::clearPoints() {
   ang_.clear();
   updatePoints();
 }
 
 bool RenderArea::writeToPng(QString& output_file) {
-  if (size() != pixmap_->size()) updatePixmap();
+  if (size() != map_pixmap_.size()) updatePixmap();
 
-  bool painted_map = pixmap_->save(output_file);
+  QPixmap* output_pixmap = new QPixmap(width(), height());
+
+  QPainter painter(output_pixmap);
+  painter.drawPixmap(0, 0, map_pixmap_);
+  if (show_points_) painter.drawPixmap(0, 0, points_pixmap_);
+  if (show_grid_ || show_coordinates_) painter.drawPixmap(0, 0, *grid_pixmap_);
+
+  bool painted_map = output_pixmap->save(output_file);
 
   return painted_map;
 }
@@ -414,179 +334,107 @@ void RenderArea::setAutoUpdate(bool auto_update) {
   this->auto_update_ = auto_update;
 }
 
-void RenderArea::setWeightRange(double weight_min, double weight_max) {
-  this->weight_min_ = weight_min;
-  this->weight_max_ = weight_max;
+void RenderArea::setMapWeightRange(double weight_min, double weight_max) {
+  this->map_palette_.setWeightRange(weight_min, weight_max);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setPointsWeightRange(double weight_min, double weight_max) {
-  this->points_weight_min_ = weight_min;
-  this->points_weight_max_ = weight_max;
+  this->points_palette_.setWeightRange(weight_min, weight_max);
   if (auto_update_) updatePixmap();
 }
 
-void RenderArea::setPalette(Palette::PaletteType palette_type) {
-  this->palette_.Initialize(palette_type);
+void RenderArea::setMapPalette(Palette::PaletteType palette_type) {
+  this->map_palette_.initialize(palette_type);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setPointsPalette(Palette::PaletteType palette_type) {
-  this->points_palette_.Initialize(palette_type);
+  this->points_palette_.initialize(palette_type);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setVerticalBuffer(uint16_t buffer_pixels) {
-  buffer_top_ = buffer_pixels;
-  buffer_bottom_ = buffer_pixels;
+  geom_.setVerticalBuffer(buffer_pixels);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setHorizontalBuffer(uint16_t buffer_pixels) {
-  buffer_left_ = buffer_pixels;
-  buffer_right_ = buffer_pixels;
+  geom_.setHorizontalBuffer(buffer_pixels);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setTopBuffer(uint16_t buffer_pixels) {
-  buffer_top_ = buffer_pixels;
+  geom_.setTopBuffer(buffer_pixels);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setBottomBuffer(uint16_t buffer_pixels) {
-  buffer_bottom_ = buffer_pixels;
+  geom_.setBottomBuffer(buffer_pixels);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setLeftBuffer(uint16_t buffer_pixels) {
-  buffer_left_ = buffer_pixels;
+  geom_.setLeftBuffer(buffer_pixels);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setRightBuffer(uint16_t buffer_pixels) {
-  buffer_right_ = buffer_pixels;
+  geom_.setRightBuffer(buffer_pixels);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setImageBounds(double lonmin, double lonmax,
 				double latmin, double latmax) {
-  latmin_ = latmin;
-  latmax_ = latmax;
-  lonmin_ = lonmin;
-  lonmax_ = lonmax;
-  _checkBounds();
+  geom_.setImageBounds(lonmin, lonmax, latmin, latmax);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setImageBounds(double lonmin, double lonmax,
 				double latmin, double latmax,
 				Stomp::AngularCoordinate::Sphere sphere) {
-  latmin_ = latmin;
-  latmax_ = latmax;
-  lonmin_ = lonmin;
-  lonmax_ = lonmax;
-  sphere_ = sphere;
-  _checkBounds();
-  if (auto_update_) updatePixmap();
-}
-
-void RenderArea::setSurveyBounds(double lammin, double lammax,
-				 double etamin, double etamax) {
-  latmin_ = lammin;
-  latmax_ = lammax;
-  lonmin_ = etamin;
-  lonmax_ = etamax;
-  sphere_ = Stomp::AngularCoordinate::Survey;
-  _checkBounds();
-  if (auto_update_) updatePixmap();
-}
-
-void RenderArea::setEquatorialBounds(double ramin, double ramax,
-				     double decmin, double decmax) {
-  latmin_ = decmin;
-  latmax_ = decmax;
-  lonmin_ = ramin;
-  lonmax_ = ramax;
-  sphere_ = Stomp::AngularCoordinate::Equatorial;
-  _checkBounds();
-  if (auto_update_) updatePixmap();
-}
-
-void RenderArea::setGalacticBounds(double lonmin, double lonmax,
-				   double latmin, double latmax) {
-  latmin_ = latmin;
-  latmax_ = latmax;
-  lonmin_ = lonmin;
-  lonmax_ = lonmax;
-  sphere_ = Stomp::AngularCoordinate::Galactic;
-  _checkBounds();
+  geom_.setImageBounds(lonmin, lonmax, latmin, latmax, sphere);
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::setFullSky(bool full_sky) {
-  if (full_sky) {
-    latmin_ = -90.0;
-    latmax_ = 90.0;
-    if (sphere_ == Stomp::AngularCoordinate::Survey) {
-      lonmin_ = -180.0;
-      lonmax_ = 180.0;
-    } else {
-      lonmin_ = 0.0;
-      lonmax_ = 360.0;
-    }
-    full_sky_ = true;
-    continuous_longitude_ = true;
-    if (auto_update_) updatePixmap();
-  } else {
-    full_sky_ = false;
-  }
+  geom_.setFullSky(full_sky);
+  if (full_sky && auto_update_) updatePixmap();
 }
 
 void RenderArea::setCoordinateSystem(Stomp::AngularCoordinate::Sphere sphere) {
-  sphere_ = sphere;
-  if (full_sky_) {
+  geom_.setCoordinateSystem(sphere);
+  if (geom_.fullSky()) {
     setFullSky(true);
   } else {
-    _findNewImageBounds(stomp_map_[Stomp::HPixResolution]);
+    if (good_map_) {
+      if (!good_soften_) {
+	_findNewImageBounds(base_map_);
+      } else {
+	_findNewImageBounds(stomp_map_[Stomp::HPixResolution]);
+      }
+    } else {
+      setFullSky(true);
+      setFullSky(false);
+    }
   }
-  if (auto_update_) updatePixmap();
-}
-
-void RenderArea::useSurveyCoordinates() {
-  sphere_ = Stomp::AngularCoordinate::Survey;
-  setFullSky(full_sky_);
-  _checkBounds();
-  if (auto_update_) updatePixmap();
-}
-
-void RenderArea::useEquatorialCoordinates() {
-  sphere_ = Stomp::AngularCoordinate::Equatorial;
-  setFullSky(full_sky_);
-  _checkBounds();
-  if (auto_update_) updatePixmap();
-}
-
-void RenderArea::useGalacticCoordinates() {
-  sphere_ = Stomp::AngularCoordinate::Galactic;
-  setFullSky(full_sky_);
-  _checkBounds();
   if (auto_update_) updatePixmap();
 }
 
 void RenderArea::zoomIn() {
-  zoomIn(_lonCenter(), _latCenter());
+  zoomIn(geom_.lonCenter(), geom_.latCenter());
 }
 
 void RenderArea::zoomOut() {
-  zoomOut(_lonCenter(), _latCenter());
+  zoomOut(geom_.lonCenter(), geom_.latCenter());
 }
 
 void RenderArea::zoomIn(double zoom_factor) {
-  zoomIn(_lonCenter(), _latCenter(), zoom_factor);
+  zoomIn(geom_.lonCenter(), geom_.latCenter(), zoom_factor);
 }
 
 void RenderArea::zoomOut(double zoom_factor) {
-  zoomOut(_lonCenter(), _latCenter(), zoom_factor);
+  zoomOut(geom_.lonCenter(), geom_.latCenter(), zoom_factor);
 }
 
 void RenderArea::fillPolygons(bool fill_polygons) {
@@ -595,7 +443,7 @@ void RenderArea::fillPolygons(bool fill_polygons) {
 }
 
 void RenderArea::useAitoffProjection(bool aitoff_projection) {
-  aitoff_projection_ = aitoff_projection;
+  geom_.useAitoffProjection(aitoff_projection);
   if (auto_update_) updatePixmap();
 }
 
@@ -630,19 +478,35 @@ void RenderArea::setRenderResolution(uint32_t resolution) {
 }
 
 void RenderArea::paintEvent(QPaintEvent * /* event */) {
-  if (size() != pixmap_->size()) updatePixmap(false);
+  if (size() != map_pixmap_.size()) updatePixmap(false);
+  if (size() != points_pixmap_.size()) updatePoints(false);
 
   QPainter painter(this);
-  painter.drawPixmap(0, 0, *pixmap_);
-  if (show_points_) painter.drawPixmap(0, 0, *points_pixmap_);
+  painter.drawPixmap(0, 0, map_pixmap_);
+  if (show_points_) painter.drawPixmap(0, 0, points_pixmap_);
   if (show_grid_ || show_coordinates_) painter.drawPixmap(0, 0, *grid_pixmap_);
+}
+
+void RenderArea::mouseMoveEvent(QMouseEvent *event) {
+  QPointF mouse_position = event->posF();
+
+  if ((mouse_position.x() < width()) && (mouse_position.x() > 0) &&
+      (mouse_position.y() < height()) && (mouse_position.y() > 0)) {
+    mouse_lon_ = geom_.xToLon(mouse_position.x());
+    mouse_lat_ = geom_.yToLat(mouse_position.y());
+    emit newMousePosition();
+  }
 }
 
 void RenderArea::mouseDoubleClickEvent(QMouseEvent *event) {
   QPointF new_center = event->posF();
 
-  if (!aitoff_projection_)
-    zoomIn(_xToLon(new_center.x()), _yToLat(new_center.y()));
+  if (!geom_.aitoffProjection())
+    zoomIn(geom_.xToLon(new_center.x()), geom_.yToLat(new_center.y()));
+}
+
+void RenderArea::resizeEvent(QResizeEvent *event) {
+  geom_.setSize(event->size());
 }
 
 void RenderArea::zoomIn(double new_longitude_center,
@@ -650,17 +514,13 @@ void RenderArea::zoomIn(double new_longitude_center,
 			double zoom_factor) {
   // After zooming in, the longitude range (2*lon_span), should decrease by
   // 1/zoom_factor.
-  double lon_span = 0.5*_lonRange()/zoom_factor;
+  double lon_span = 0.5*geom_.lonRange()/zoom_factor;
+  double lat_span = 0.5*geom_.latRange()/zoom_factor;
 
-  lonmin_ = new_longitude_center - lon_span;
-  lonmax_ = new_longitude_center + lon_span;
-
-  double lat_span = 0.5*_latRange()/zoom_factor;
-
-  latmin_ = new_latitude_center - lat_span;
-  latmax_ = new_latitude_center + lat_span;
-
-  _checkBounds();
+  geom_.setImageBounds(new_longitude_center - lon_span,
+		       new_longitude_center + lon_span,
+		       new_latitude_center - lat_span,
+		       new_latitude_center + lat_span);
 
   updatePixmap();
 
@@ -672,18 +532,17 @@ void RenderArea::zoomOut(double new_longitude_center,
 			 double zoom_factor) {
   // After zooming out, the longitude range (2*lon_span), should increase by
   // zoom_factor.
-  double lon_span = 0.5*_lonRange()*zoom_factor;
-  double lat_span = 0.5*_latRange()*zoom_factor;
+  double lon_span = 0.5*geom_.lonRange()*zoom_factor;
+  double lat_span = 0.5*geom_.latRange()*zoom_factor;
 
   if (Stomp::DoubleLE(lon_span, 180.0) &&
       Stomp::DoubleLE(lat_span, 90.0)) {
     // Provided that zooming out won't max out either of our coordinates, we
     // can safely increase each range.
-    lonmin_ = new_longitude_center - lon_span;
-    lonmax_ = new_longitude_center + lon_span;
-
-    latmin_ = new_latitude_center - lat_span;
-    latmax_ = new_latitude_center + lat_span;
+    geom_.setImageBounds(new_longitude_center - lon_span,
+			 new_longitude_center + lon_span,
+			 new_latitude_center - lat_span,
+			 new_latitude_center + lat_span);
   } else {
     if (Stomp::DoubleGE(lon_span, 180.0) &&
 	Stomp::DoubleGE(lat_span, 90.0)) {
@@ -694,101 +553,34 @@ void RenderArea::zoomOut(double new_longitude_center,
     } else {
       // Otherwise, we increase if we can or set to the maximum allowed range
       // if we can't.
+      double lonmin = geom_.longitudeMin(), lonmax = geom_.longitudeMax();
+      double latmin = geom_.latitudeMin(), latmax = geom_.latitudeMax();
       if (Stomp::DoubleLE(lon_span, 180.0)) {
-	lonmin_ = new_longitude_center - lon_span;
-	lonmax_ = new_longitude_center + lon_span;
+	lonmin = new_longitude_center - lon_span;
+	lonmax = new_longitude_center + lon_span;
       } else {
-	if (sphere_ == Stomp::AngularCoordinate::Survey) {
-	  lonmin_ = -180.0;
-	  lonmax_ = 180.0;
+	if (geom_.sphere() == Stomp::AngularCoordinate::Survey) {
+	  lonmin = -180.0;
+	  lonmax = 180.0;
 	} else {
-	  lonmin_ = 0.0;
-	  lonmax_ = 360.0;
+	  lonmin = 0.0;
+	  lonmax = 360.0;
 	}
       }
       if (Stomp::DoubleLE(lat_span, 90.0)) {
-	latmin_ = new_latitude_center - lat_span;
-	latmax_ = new_latitude_center + lat_span;
+	latmin = new_latitude_center - lat_span;
+	latmax = new_latitude_center + lat_span;
       } else {
-	latmin_ = -90.0;
-	latmax_ = 90.0;
+	latmin = -90.0;
+	latmax = 90.0;
       }
+      geom_.setImageBounds(lonmin, lonmax, latmin, latmax);
     }
   }
-
-  _checkBounds();
 
   updatePixmap();
 
   emit newMapParameters();
-}
-
-bool RenderArea::paintMap(QPaintDevice *device) {
-  QPainter painter;
-
-  bool accessed_device = painter.begin(device);
-
-  if (accessed_device) {
-    if (antialiased_) {
-      painter.setRenderHint(QPainter::Antialiasing, true);
-      painter.translate(+0.5, +0.5);
-    }
-
-    if (!stomp_map_.empty()) {
-      double render_pixel_area = _renderPixelArea();
-      _findRenderLevel();
-      Stomp::Map* render_map = stomp_map_[render_level_];
-
-      for (Stomp::MapIterator iter=render_map->Begin();
-	   iter!=render_map->End();render_map->Iterate(&iter)) {
-	Stomp::PixelIterator pix = iter.second;
-	if (pix->Resolution() <= max_resolution_ &&
-	    (full_sky_ || pix->IntersectsBounds(lonmin_, lonmax_,
-						latmin_, latmax_, sphere_))) {
-	  QBrush pixel_brush =
-	    QBrush(palette_.Color(_normalizeWeight(pix->Weight())));
-	  painter.setBrush(pixel_brush);
-	  painter.setPen(QPen(pixel_brush, 0));
-
-	  if (pix->Area() < render_pixel_area) {
-	    // If the pixel is so small that displaying it wouldn't cover at
-	    // least a single pixel, we just use a single QPointF.
-	    QPointF point;
-	    _pixelToPoint(pix->PixelX(), pix->PixelY(), pix->Resolution(),
-			  point);
-	    painter.drawPoint(point);
-	  } else {
-	    if (pix->ContinuousBounds(sphere_)) {
-	      QPolygonF polygon;
-	      _pixelToPolygon(pix->PixelX(), pix->PixelY(),
-			      pix->Resolution(), polygon);
-	      if (fill_) {
-		painter.drawConvexPolygon(polygon);
-	      } else {
-		painter.drawPolyline(polygon);
-	      }
-	    } else {
-	      QPolygonF left_polygon;
-	      QPolygonF right_polygon;
-	      _splitPixelToPolygons(pix->PixelX(), pix->PixelY(),
-				    pix->Resolution(), left_polygon,
-				    right_polygon);
-	      if (fill_) {
-		painter.drawConvexPolygon(left_polygon);
-		painter.drawConvexPolygon(right_polygon);
-	      } else {
-		painter.drawPolyline(left_polygon);
-		painter.drawPolyline(right_polygon);
-	      }
-	    }
-	  }
-	}
-      }
-    }
-    accessed_device = painter.end();
-  }
-
-  return accessed_device;
 }
 
 bool RenderArea::paintPoints(QPaintDevice *device) {
@@ -805,10 +597,8 @@ bool RenderArea::paintPoints(QPaintDevice *device) {
     if (!ang_.empty()) {
       for (uint32_t i=0;i<ang_.size();i++) {
 	QPointF point;
-	if (_angToPoint(ang_[i], point)) {
-	  QBrush pixel_brush =
-	    QBrush(points_palette_.
-		   Color(_normalizePointsWeight(ang_[i].Weight())));
+	if (geom_.angToPoint(ang_[i], point)) {
+	  QBrush pixel_brush = QBrush(points_palette_.color(ang_[i].Weight()));
 	  painter.setBrush(pixel_brush);
 	  painter.setPen(QPen(pixel_brush, 0));
 	  painter.drawPoint(point);
@@ -835,7 +625,7 @@ bool RenderArea::paintGrid(QPaintDevice *device) {
     QString lon_label;
     QString lat_label;
 
-    switch (sphere_) {
+    switch (geom_.sphere()) {
     case Stomp::AngularCoordinate::Survey:
       lon_label = "Eta";
       lat_label = "Lambda";
@@ -858,13 +648,13 @@ bool RenderArea::paintGrid(QPaintDevice *device) {
     major_tick_length_ = 2*minor_tick_length_;
     minor_ticks_per_major_ = 4;
 
-    uint16_t lon_tick_idx = 0;
-    uint16_t n_lon_ticks =
-      static_cast<int>((lonmax_ - lonmin_)/tick_divisions_[lon_tick_idx]);
+    uint32_t lon_tick_idx = 0;
+    uint32_t n_lon_ticks =
+      static_cast<uint32_t>(geom_.lonRange()/tick_divisions_[lon_tick_idx]);
     while ((n_lon_ticks > 10) && (lon_tick_idx < n_tick_divisions_ - 1)) {
       lon_tick_idx++;
       n_lon_ticks =
-	static_cast<int>((lonmax_ - lonmin_)/tick_divisions_[lon_tick_idx]);
+	static_cast<uint32_t>(geom_.lonRange()/tick_divisions_[lon_tick_idx]);
     }
     double lon_tick_step =
       tick_divisions_[lon_tick_idx]/(minor_ticks_per_major_ + 1.0);
@@ -880,15 +670,15 @@ bool RenderArea::paintGrid(QPaintDevice *device) {
       tick_precision_ = 0;
 
     double lon = -180.0;
-    uint16_t major_tick_counter = minor_ticks_per_major_;
+    uint32_t major_tick_counter = minor_ticks_per_major_;
     while (Stomp::DoubleLE(lon, 360.0)) {
-      if (Stomp::DoubleGE(lon, lonmin_) &&
-	  Stomp::DoubleLE(lon, lonmax_)) {
+      if (Stomp::DoubleGE(lon, geom_.longitudeMin()) &&
+	  Stomp::DoubleLE(lon, geom_.longitudeMax())) {
 	if (major_tick_counter == minor_ticks_per_major_) {
 	  if (show_coordinates_) {
 	    _drawLonTick(&painter, lon, true);
-	    if (!Stomp::DoubleEQ(lon, lonmin_) &&
-		!Stomp::DoubleEQ(lon, lonmax_))
+	    if (!Stomp::DoubleEQ(lon, geom_.longitudeMin()) &&
+		!Stomp::DoubleEQ(lon, geom_.longitudeMax()))
 	      _drawLonTickLabel(&painter, lon);
 	  }
 	  if (show_grid_) _drawLonGrid(&painter, lon);
@@ -905,13 +695,13 @@ bool RenderArea::paintGrid(QPaintDevice *device) {
     }
     if (show_coordinates_) _drawLonLabel(&painter, lon_label);
 
-    uint16_t lat_tick_idx = 0;
-    uint16_t n_lat_ticks =
-      static_cast<int>((latmax_ - latmin_)/tick_divisions_[lat_tick_idx]);
+    uint32_t lat_tick_idx = 0;
+    uint32_t n_lat_ticks =
+      static_cast<uint32_t>(geom_.latRange()/tick_divisions_[lat_tick_idx]);
     while ((n_lat_ticks > 10) && (lat_tick_idx < n_tick_divisions_ - 1)) {
       lat_tick_idx++;
       n_lat_ticks =
-	static_cast<int>((latmax_ - latmin_)/tick_divisions_[lat_tick_idx]);
+	static_cast<uint32_t>(geom_.latRange()/tick_divisions_[lat_tick_idx]);
     }
     double lat_tick_step =
       tick_divisions_[lat_tick_idx]/(minor_ticks_per_major_ + 1.0);
@@ -929,13 +719,13 @@ bool RenderArea::paintGrid(QPaintDevice *device) {
     double lat = -90.0;
     major_tick_counter = minor_ticks_per_major_;
     while (Stomp::DoubleLE(lat, 90.0)) {
-      if (Stomp::DoubleGE(lat, latmin_) &&
-	  Stomp::DoubleLE(lat, latmax_)) {
+      if (Stomp::DoubleGE(lat, geom_.latitudeMin()) &&
+	  Stomp::DoubleLE(lat, geom_.latitudeMax())) {
 	if (major_tick_counter == minor_ticks_per_major_) {
 	  if (show_coordinates_) {
 	    _drawLatTick(&painter, lat, true);
-	    if (!Stomp::DoubleEQ(lat, latmin_) &&
-		!Stomp::DoubleEQ(lat, latmax_))
+	    if (!Stomp::DoubleEQ(lat, geom_.latitudeMin()) &&
+		!Stomp::DoubleEQ(lat, geom_.latitudeMax()))
 	      _drawLatTickLabel(&painter, lat);
 	  }
 	  if (show_grid_) _drawLatGrid(&painter, lat);
@@ -963,14 +753,14 @@ void RenderArea::_drawLonTick(QPainter *painter, double longitude,
   uint16_t tick_length = minor_tick_length_;
   if (major_tick) tick_length = major_tick_length_;
 
-  QPointF lower_point = QPointF(_lonToX(longitude),
+  QPointF lower_point = QPointF(geom_.lonToX(longitude),
 				static_cast<qreal>(height() - 1));
-  QPointF upper_point = QPointF(_lonToX(longitude),
+  QPointF upper_point = QPointF(geom_.lonToX(longitude),
 				static_cast<qreal>(height() - 1 - tick_length));
   painter->drawLine(QLineF(lower_point, upper_point));
 
-  lower_point = QPointF(_lonToX(longitude), 0.0);
-  upper_point = QPointF(_lonToX(longitude), static_cast<qreal>(tick_length));
+  lower_point = QPointF(geom_.lonToX(longitude), 0.0);
+  upper_point = QPointF(geom_.lonToX(longitude), static_cast<qreal>(tick_length));
   painter->drawLine(QLineF(lower_point, upper_point));
 }
 
@@ -981,10 +771,10 @@ void RenderArea::_drawLonTickLabel(QPainter* painter, double longitude) {
 
   // Center the box above the tick with a 1 pixel gap between the two.
   QPointF upper_left =
-    QPointF(_lonToX(longitude) - 0.5*label_width,
+    QPointF(geom_.lonToX(longitude) - 0.5*label_width,
 	    static_cast<qreal>(height() - 2 - 2*label_height));
   QPointF lower_right =
-    QPointF(_lonToX(longitude) + 0.5*label_width,
+    QPointF(geom_.lonToX(longitude) + 0.5*label_width,
 	    static_cast<qreal>(height() - 2 - label_height));
   painter->drawText(QRectF(upper_left, lower_right),
 		    Qt::AlignCenter | Qt::TextDontClip,
@@ -996,14 +786,14 @@ void RenderArea::_drawLatTick(QPainter *painter, double latitude,
   uint16_t tick_length = minor_tick_length_;
   if (major_tick) tick_length = major_tick_length_;
 
-  QPointF left_point = QPointF(0.0, _latToY(latitude));
+  QPointF left_point = QPointF(0.0, geom_.latToY(latitude));
   QPointF right_point = QPointF(static_cast<qreal>(tick_length),
-				_latToY(latitude));
+				geom_.latToY(latitude));
   painter->drawLine(QLineF(left_point, right_point));
 
-  left_point = QPointF(static_cast<qreal>(width() - 1), _latToY(latitude));
+  left_point = QPointF(static_cast<qreal>(width() - 1), geom_.latToY(latitude));
   right_point = QPointF(static_cast<qreal>(width()- 1 - tick_length),
-			_latToY(latitude));
+			geom_.latToY(latitude));
   painter->drawLine(QLineF(left_point, right_point));
 }
 
@@ -1016,7 +806,7 @@ void RenderArea::_drawLatTickLabel(QPainter *painter, double latitude) {
   // coordinate system tweaking.  After this translation and rotation, the
   // origin should be one pixel above the tick mark.
   painter->save();
-  painter->translate(2*major_tick_length_ + 1.0, _latToY(latitude));
+  painter->translate(2*major_tick_length_ + 1.0, geom_.latToY(latitude));
   painter->rotate(90.0);
 
   // Now we draw the text in native coordinates
@@ -1036,13 +826,13 @@ void RenderArea::_drawLonLabel(QPainter* painter, QString& label) {
   qreal label_height = static_cast<qreal>(2.0*major_tick_length_);
 
   // Center the box above the tick with a 1 pixel gap between the two.
-  double longitude = 0.5*(lonmin_ + lonmax_);
+  double longitude = geom_.lonCenter();
   QPointF upper_left =
-    QPointF(_lonToX(longitude) - 0.5*label_width,
+    QPointF(geom_.lonToX(longitude) - 0.5*label_width,
 	    static_cast<qreal>(height() - 2 -
 			       label_height - 2*major_tick_length_));
   QPointF lower_right =
-    QPointF(_lonToX(longitude) + 0.5*label_width,
+    QPointF(geom_.lonToX(longitude) + 0.5*label_width,
 	    static_cast<qreal>(height() - 2 - 2*major_tick_length_));
   painter->drawText(QRectF(upper_left, lower_right), Qt::AlignCenter, label);
 }
@@ -1055,9 +845,9 @@ void RenderArea::_drawLatLabel(QPainter* painter, QString& label) {
   // In order to draw the text rotated properly, we need to do a bit of
   // coordinate system tweaking.  After this translation and rotation, the
   // origin should be one pixel above the tick mark.
-  double latitude = 0.5*(latmin_ + latmax_);
+  double latitude = geom_.latCenter();
   painter->save();
-  painter->translate(4.0*major_tick_length_ + 2.0, _latToY(latitude));
+  painter->translate(4.0*major_tick_length_ + 2.0, geom_.latToY(latitude));
   painter->rotate(90.0);
 
   // Now we draw the text in native coordinates
@@ -1076,12 +866,12 @@ void RenderArea::_drawLonGrid(QPainter* painter, double longitude) {
   double input_longitude = longitude;
 
   uint16_t n_steps = 50;
-  double lat_step = (latmax_ - latmin_)/n_steps;
+  double lat_step = geom_.latRange()/n_steps;
   for (uint16_t i=0;i<=n_steps;i++){
-    double latitude = latmin_ + i*lat_step;
-    _enforceBounds(longitude, latitude);
-    if (aitoff_projection_) _cartesianToAitoff(longitude, latitude);
-    poly_line << QPointF(_lonToX(longitude), _latToY(latitude));
+    double latitude = geom_.latitudeMin() + i*lat_step;
+    geom_.enforceBounds(longitude, latitude);
+    if (geom_.aitoffProjection()) geom_.cartesianToAitoff(longitude, latitude);
+    poly_line << QPointF(geom_.lonToX(longitude), geom_.latToY(latitude));
     longitude = input_longitude;
   }
 
@@ -1098,12 +888,12 @@ void RenderArea::_drawLatGrid(QPainter* painter, double latitude) {
   double input_latitude = latitude;
 
   uint16_t n_steps = 50;
-  double lon_step = (lonmax_ - lonmin_)/n_steps;
+  double lon_step = geom_.lonRange()/n_steps;
   for (uint16_t i=0;i<=n_steps;i++){
-    double longitude = lonmin_ + i*lon_step;
-    _enforceBounds(longitude, latitude);
-    if (aitoff_projection_) _cartesianToAitoff(longitude, latitude);
-    poly_line << QPointF(_lonToX(longitude), _latToY(latitude));
+    double longitude = geom_.longitudeMin() + i*lon_step;
+    geom_.enforceBounds(longitude, latitude);
+    if (geom_.aitoffProjection()) geom_.cartesianToAitoff(longitude, latitude);
+    poly_line << QPointF(geom_.lonToX(longitude), geom_.latToY(latitude));
     latitude = input_latitude;
   }
 
@@ -1115,7 +905,7 @@ void RenderArea::_drawLatGrid(QPainter* painter, double latitude) {
 }
 
 void RenderArea::_findNewWeightBounds(Stomp::Map* stomp_map) {
-  setWeightRange(stomp_map->MinWeight(), stomp_map->MaxWeight());
+  setMapWeightRange(stomp_map->MinWeight(), stomp_map->MaxWeight());
 }
 
 void RenderArea::_findNewWeightBounds(Stomp::WAngularVector& ang) {
@@ -1132,10 +922,8 @@ void RenderArea::_findNewWeightBounds(Stomp::WAngularVector& ang) {
 
 void RenderArea::_findNewImageBounds(Stomp::Map* stomp_map) {
   if (!stomp_map->Empty()) {
-    lonmax_ = -200.0;
-    lonmin_ = 400.0;
-    latmax_ = -200.0;
-    latmin_ = 200.0;
+    double lonmax = -200.0, lonmin = 400.0;
+    double latmax = -200.0, latmin = 200.0;
 
     Stomp::PixelVector pix;
     if (stomp_map->Area() < Stomp::HPixArea) {
@@ -1146,7 +934,7 @@ void RenderArea::_findNewImageBounds(Stomp::Map* stomp_map) {
     } else {
       // Otherwise, we'll get the Coverage pixels for the Map and use those
       // to work out our bounds.
-      stomp_map->Coverage(pix);
+      stomp_map->Coverage(pix, Stomp::HPixResolution, false);
     }
 
     // quick check against the possibility that we've got a full-sky map
@@ -1157,7 +945,7 @@ void RenderArea::_findNewImageBounds(Stomp::Map* stomp_map) {
       for (Stomp::PixelIterator iter=pix.begin();iter!=pix.end();++iter) {
 	double lon = 0.0, lat = 0.0;
 	double buffer = sqrt(iter->Area());
-	switch (sphere_) {
+	switch (geom_.sphere()) {
 	case Stomp::AngularCoordinate::Survey:
 	  lon = iter->Eta();
 	  lat = iter->Lambda();
@@ -1171,13 +959,14 @@ void RenderArea::_findNewImageBounds(Stomp::Map* stomp_map) {
 	  lat = iter->GalLat();
 	  break;
 	}
-	if (lon + buffer > lonmax_) lonmax_ = lon + buffer;
-	if (lon - buffer < lonmin_) lonmin_ = lon - buffer;
-	if (lat + buffer > latmax_) latmax_ = lat + buffer;
-	if (lat - buffer < latmin_) latmin_ = lat - buffer;
+	if (lon + buffer > lonmax) lonmax = lon + buffer;
+	if (lon - buffer < lonmin) lonmin = lon - buffer;
+	if (lat + buffer > latmax) latmax = lat + buffer;
+	if (lat - buffer < latmin) latmin = lat - buffer;
       }
-      _enforceBounds(lonmax_, latmax_);
-      _enforceBounds(lonmin_, latmin_);
+      geom_.enforceBounds(lonmax, latmax);
+      geom_.enforceBounds(lonmin, latmin);
+      geom_.setImageBounds(lonmin, lonmax, latmin, latmax);
     }
   } else {
     setFullSky(true);
@@ -1188,7 +977,7 @@ void RenderArea::_findNewImageBounds(Stomp::Map* stomp_map) {
 void RenderArea::_findNewImageBounds(Stomp::WAngularVector& ang) {
   double latitude, longitude;
 
-  switch (sphere_) {
+  switch (geom_.sphere()) {
   case Stomp::AngularCoordinate::Survey:
     longitude = ang[0].Eta();
     latitude = ang[0].Lambda();
@@ -1203,13 +992,11 @@ void RenderArea::_findNewImageBounds(Stomp::WAngularVector& ang) {
     break;
   }
 
-  lonmin_ = longitude;
-  lonmax_ = longitude;
-  latmin_ = latitude;
-  latmax_ = latitude;
+  double lonmin = longitude, lonmax = longitude;
+  double latmin = latitude, latmax = latitude;
 
   for (uint32_t i=1;i<ang.size();i++) {
-    switch (sphere_) {
+    switch (geom_.sphere()) {
     case Stomp::AngularCoordinate::Survey:
       longitude = ang[i].Eta();
       latitude = ang[i].Lambda();
@@ -1224,691 +1011,21 @@ void RenderArea::_findNewImageBounds(Stomp::WAngularVector& ang) {
       break;
     }
 
-    if (lonmin_ > longitude) lonmin_ = longitude;
-    if (lonmax_ < longitude) lonmax_ = longitude;
-    if (latmin_ > latitude) latmin_ = latitude;
-    if (latmax_ < latitude) latmax_ = latitude;
+    if (lonmin > longitude) lonmin = longitude;
+    if (lonmax < longitude) lonmax = longitude;
+    if (latmin > latitude) latmin = latitude;
+    if (latmax < latitude) latmax = latitude;
   }
+
+  geom_.setImageBounds(lonmin, lonmax, latmin, latmax);
 }
 
 void RenderArea::_findNewMaxResolution(Stomp::Map* stomp_map) {
   setMaxResolution(stomp_map->MaxResolution());
 }
 
-void RenderArea::_checkBounds() {
-  continuous_longitude_ = true;
-  if (Stomp::DoubleLT(latmin_, -90.0)) latmin_ = -90.0;
-  if (Stomp::DoubleGT(latmax_, 90.0)) latmax_ = 90.0;
-  if (sphere_ == Stomp::AngularCoordinate::Survey) {
-    if (Stomp::DoubleLT(lonmin_, -180.0) ||
-	Stomp::DoubleGT(lonmax_, 180.0)) continuous_longitude_ = false;
-    while (Stomp::DoubleLT(lonmin_, -180.0)) lonmin_ += 360.0;
-    while (Stomp::DoubleGT(lonmax_, 180.0)) lonmax_ -= 360.0;
-  } else {
-    if (Stomp::DoubleLT(lonmin_, 0.0) ||
-	Stomp::DoubleGT(lonmax_, 360.0)) continuous_longitude_ = false;
-    while (Stomp::DoubleLT(lonmin_, 0.0)) lonmin_ += 360.0;
-    while (Stomp::DoubleGT(lonmax_, 360.0)) lonmax_ -= 360.0;
-  }
-  if (Stomp::DoubleGT(lonmin_, lonmax_)) continuous_longitude_ = false;
-}
-
-void RenderArea::_enforceBounds(double& lon, double& lat) {
-  if (Stomp::DoubleGE(lat, 90.0)) lat = 90.0 - 0.0000001;
-  if (Stomp::DoubleLE(lat, -90.0)) lat = -90.0 + 0.0000001;
-
-  if (sphere_ == Stomp::AngularCoordinate::Survey) {
-    if (Stomp::DoubleGE(lon, 180.0)) lon = 180.0 - 0.0000001;
-    if (Stomp::DoubleLE(lon, -180.0)) lon = -180.0 + 0.0000001;
-  } else {
-    if (Stomp::DoubleGE(lon, 360.0)) lon = 360.0 - 0.0000001;
-    if (Stomp::DoubleLE(lon, 0.0)) lon = 0.0 + 0.0000001;
-  }
-}
-
-void RenderArea::_pixelToPoint(uint32_t pixel_x, uint32_t pixel_y,
-			       uint32_t resolution, QPointF& point) {
-  uint32_t nx = resolution*Stomp::Nx0;
-  uint32_t ny = resolution*Stomp::Ny0;
-
-  double lat_center =
-    90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+0.5)/ny);
-  double lon_center =
-    Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.5))/nx +
-    Stomp::EtaOffSet;
-  if (Stomp::DoubleGT(lon_center, 180.0)) lon_center -= 360.0;
-  if (Stomp::DoubleLT(lon_center, -180.0)) lon_center += 360.0;
-
-  double tmp_lon, tmp_lat;
-
-  switch (sphere_) {
-  case Stomp::AngularCoordinate::Survey:
-    break;
-  case Stomp::AngularCoordinate::Equatorial:
-    Stomp::AngularCoordinate::SurveyToEquatorial(lat_center, lon_center,
-						 tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  case Stomp::AngularCoordinate::Galactic:
-    Stomp::AngularCoordinate::SurveyToGalactic(lat_center, lon_center,
-					       tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  }
-
-  _enforceBounds(lon_center, lat_center);
-
-  if (aitoff_projection_) _cartesianToAitoff(lon_center, lat_center);
-
-  point.setX(_lonToX(lon_center));
-  point.setY(_latToY(lat_center));
-}
-
-void RenderArea::_pixelToPolygon(uint32_t pixel_x, uint32_t pixel_y,
-				 uint32_t resolution, QPolygonF& polygon) {
-  if (!polygon.empty()) polygon.clear();
-
-  uint32_t ratio = max_resolution_/resolution;
-
-  uint32_t nx = resolution*Stomp::Nx0;
-  uint32_t ny = resolution*Stomp::Ny0;
-
-  double lat_center =
-    90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+0.5)/ny);
-  double lon_center =
-    Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.5))/nx +
-    Stomp::EtaOffSet;
-  if (Stomp::DoubleGT(lon_center, 180.0)) lon_center -= 360.0;
-  if (Stomp::DoubleLT(lon_center, -180.0)) lon_center += 360.0;
-
-  double min_lon = 0.00000001;
-  double mid_lon = 180.0;
-  double max_lon = 359.99999999;
-  double tmp_lon, tmp_lat;
-
-  switch (sphere_) {
-  case Stomp::AngularCoordinate::Survey:
-    min_lon = -179.99999999;
-    mid_lon = 0.0;
-    max_lon = 179.99999999;
-    break;
-  case Stomp::AngularCoordinate::Equatorial:
-    Stomp::AngularCoordinate::SurveyToEquatorial(lat_center, lon_center,
-						 tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  case Stomp::AngularCoordinate::Galactic:
-    Stomp::AngularCoordinate::SurveyToGalactic(lat_center, lon_center,
-					       tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  }
-
-  // pixel bottom edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat = 90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0)/ny);
-    double lon =
-      Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+1.0*m/ratio))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0000001)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0000001)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    if ((lon_center > max_lon - 2.0) && (lon < mid_lon)) lon = max_lon;
-    if ((lon_center < min_lon + 2.0) && (lon > mid_lon)) lon = min_lon;
-    _enforceBounds(lon, lat);
-
-    if (aitoff_projection_) _cartesianToAitoff(lon, lat);
-    polygon << QPointF(_lonToX(lon), _latToY(lat));
-  }
-
-  // pixel right edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat = 90.0 -
-      Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0*(ratio-m)/ratio)/ny);
-    double lon =
-      Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+1.0))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0000001)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0000001)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    if ((lon_center > max_lon - 2.0) && (lon < mid_lon)) lon = max_lon;
-    if ((lon_center < min_lon + 2.0) && (lon > mid_lon)) lon = min_lon;
-    _enforceBounds(lon, lat);
-
-    if (aitoff_projection_) _cartesianToAitoff(lon, lat);
-    polygon << QPointF(_lonToX(lon), _latToY(lat));
-  }
-
-  // pixel top edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat =
-      90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+0.0)/ny);
-    double lon = Stomp::RadToDeg*
-      (2.0*Stomp::Pi*(pixel_x+1.0*(ratio-m)/ratio))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0000001)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0000001)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    if ((lon_center > max_lon - 2.0) && (lon < mid_lon)) lon = max_lon;
-    if ((lon_center < min_lon + 2.0) && (lon > mid_lon)) lon = min_lon;
-    _enforceBounds(lon, lat);
-
-    if (aitoff_projection_) _cartesianToAitoff(lon, lat);
-    polygon << QPointF(_lonToX(lon), _latToY(lat));
-  }
-
-  // pixel left edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat =
-      90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0*m/ratio)/ny);
-    double lon =
-      Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.0))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0000001)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0000001)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    if ((lon_center > max_lon - 2.0) && (lon < mid_lon)) lon = max_lon;
-    if ((lon_center < min_lon + 2.0) && (lon > mid_lon)) lon = min_lon;
-    _enforceBounds(lon, lat);
-
-    if (aitoff_projection_) _cartesianToAitoff(lon, lat);
-    polygon << QPointF(_lonToX(lon), _latToY(lat));
-  }
-
-  // repeat first point to close the polygon
-  double lat =
-    90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0)/ny);
-  double lon =
-    Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.0))/nx +
-    Stomp::EtaOffSet;
-  if (Stomp::DoubleGT(lon, 180.0000001)) lon -= 360.0;
-  if (Stomp::DoubleLT(lon, -180.0000001)) lon += 360.0;
-
-  if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-    Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-    lon = tmp_lon;
-    lat = tmp_lat;
-  }
-  if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-    Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-    lon = tmp_lon;
-    lat = tmp_lat;
-  }
-
-  if ((lon_center > max_lon - 2.0) && (lon < mid_lon)) lon = max_lon;
-  if ((lon_center < min_lon + 2.0) && (lon > mid_lon)) lon = min_lon;
-  _enforceBounds(lon, lat);
-
-  if (aitoff_projection_) _cartesianToAitoff(lon, lat);
-  polygon << QPointF(_lonToX(lon), _latToY(lat));
-}
-
-void RenderArea::_splitPixelToPolygons(uint32_t pixel_x, uint32_t pixel_y,
-				       uint32_t resolution,
-				       QPolygonF& left_polygon,
-				       QPolygonF& right_polygon) {
-  if (!left_polygon.empty()) left_polygon.clear();
-  if (!right_polygon.empty()) right_polygon.clear();
-
-  uint32_t ratio = max_resolution_/resolution;
-
-  uint32_t nx = resolution*Stomp::Nx0;
-  uint32_t ny = resolution*Stomp::Ny0;
-
-  double lat_center =
-    90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+0.5)/ny);
-  double lon_center =
-    Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.5))/nx +
-    Stomp::EtaOffSet;
-  if (Stomp::DoubleGT(lon_center, 180.0)) lon_center -= 360.0;
-  if (Stomp::DoubleLT(lon_center, -180.0)) lon_center += 360.0;
-
-  double min_lon = 0.000001;
-  double mid_lon = 180.0;
-  double max_lon = 359.999999;
-  double tmp_lon, tmp_lat;
-
-  switch (sphere_) {
-  case Stomp::AngularCoordinate::Survey:
-    min_lon = -179.99999999;
-    mid_lon = 0.0;
-    max_lon = 179.99999999;
-    break;
-  case Stomp::AngularCoordinate::Equatorial:
-    Stomp::AngularCoordinate::SurveyToEquatorial(lat_center, lon_center,
-						 tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  case Stomp::AngularCoordinate::Galactic:
-    Stomp::AngularCoordinate::SurveyToGalactic(lat_center, lon_center,
-					       tmp_lon, tmp_lat);
-    lon_center = tmp_lon;
-    lat_center = tmp_lat;
-    break;
-  }
-
-  // pixel bottom edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat = 90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0)/ny);
-    double lon =
-      Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+1.0*m/ratio))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    double left_lon = lon;
-    double right_lon = lon;
-    if (lon > mid_lon) {
-      left_lon = min_lon;
-    } else {
-      right_lon = max_lon;
-    }
-    _enforceBounds(left_lon, lat);
-    _enforceBounds(right_lon, lat);
-    if (aitoff_projection_) {
-      _cartesianToAitoff(left_lon, lat);
-      _cartesianToAitoff(right_lon, lat);
-    }
-
-    left_polygon << QPointF(_lonToX(left_lon), _latToY(lat));
-    right_polygon << QPointF(_lonToX(right_lon), _latToY(lat));
-  }
-
-  // pixel right edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat = 90.0 -
-      Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0*(ratio-m)/ratio)/ny);
-    double lon =
-      Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+1.0))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    double left_lon = lon;
-    double right_lon = lon;
-    if (lon > mid_lon) {
-      left_lon = min_lon;
-    } else {
-      right_lon = max_lon;
-    }
-    _enforceBounds(left_lon, lat);
-    _enforceBounds(right_lon, lat);
-    if (aitoff_projection_) {
-      _cartesianToAitoff(left_lon, lat);
-      _cartesianToAitoff(right_lon, lat);
-    }
-
-    left_polygon << QPointF(_lonToX(left_lon), _latToY(lat));
-    right_polygon << QPointF(_lonToX(right_lon), _latToY(lat));
-  }
-
-  // pixel top edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat =
-      90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+0.0)/ny);
-    double lon = Stomp::RadToDeg*
-      (2.0*Stomp::Pi*(pixel_x+1.0*(ratio-m)/ratio))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    double left_lon = lon;
-    double right_lon = lon;
-    if (lon > mid_lon) {
-      left_lon = min_lon;
-    } else {
-      right_lon = max_lon;
-    }
-    _enforceBounds(left_lon, lat);
-    _enforceBounds(right_lon, lat);
-    if (aitoff_projection_) {
-      _cartesianToAitoff(left_lon, lat);
-      _cartesianToAitoff(right_lon, lat);
-    }
-
-    left_polygon << QPointF(_lonToX(left_lon), _latToY(lat));
-    right_polygon << QPointF(_lonToX(right_lon), _latToY(lat));
-  }
-
-  // pixel left edge
-  for (uint32_t m=0;m<ratio;m++) {
-    double lat =
-      90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0*m/ratio)/ny);
-    double lon =
-      Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.0))/nx +
-      Stomp::EtaOffSet;
-    if (Stomp::DoubleGT(lon, 180.0)) lon -= 360.0;
-    if (Stomp::DoubleLT(lon, -180.0)) lon += 360.0;
-
-    if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-      Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-    if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-      Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-      lon = tmp_lon;
-      lat = tmp_lat;
-    }
-
-    double left_lon = lon;
-    double right_lon = lon;
-    if (lon > mid_lon) {
-      left_lon = min_lon;
-    } else {
-      right_lon = max_lon;
-    }
-    _enforceBounds(left_lon, lat);
-    _enforceBounds(right_lon, lat);
-    if (aitoff_projection_) {
-      _cartesianToAitoff(left_lon, lat);
-      _cartesianToAitoff(right_lon, lat);
-    }
-
-    left_polygon << QPointF(_lonToX(left_lon), _latToY(lat));
-    right_polygon << QPointF(_lonToX(right_lon), _latToY(lat));
-  }
-
-  // repeat first point to close the polygon
-  double lat =
-    90.0 - Stomp::RadToDeg*acos(1.0-2.0*(pixel_y+1.0)/ny);
-  double lon =
-    Stomp::RadToDeg*(2.0*Stomp::Pi*(pixel_x+0.0))/nx +
-    Stomp::EtaOffSet;
-  if (Stomp::DoubleGT(lon, 180.0)) lon -= 360.0;
-  if (Stomp::DoubleLT(lon, -180.0)) lon += 360.0;
-
-  if (sphere_ == Stomp::AngularCoordinate::Equatorial) {
-    Stomp::AngularCoordinate::SurveyToEquatorial(lat, lon, tmp_lon, tmp_lat);
-    lon = tmp_lon;
-    lat = tmp_lat;
-  }
-  if (sphere_ == Stomp::AngularCoordinate::Galactic) {
-    Stomp::AngularCoordinate::SurveyToGalactic(lat, lon, tmp_lon, tmp_lat);
-    lon = tmp_lon;
-    lat = tmp_lat;
-  }
-
-  double left_lon = lon;
-  double right_lon = lon;
-  if (lon > mid_lon) {
-    left_lon = min_lon;
-  } else {
-    right_lon = max_lon;
-  }
-  _enforceBounds(left_lon, lat);
-  _enforceBounds(right_lon, lat);
-  if (aitoff_projection_) {
-    _cartesianToAitoff(left_lon, lat);
-    _cartesianToAitoff(right_lon, lat);
-  }
-
-  left_polygon << QPointF(_lonToX(left_lon), _latToY(lat));
-  right_polygon << QPointF(_lonToX(right_lon), _latToY(lat));
-}
-
-bool RenderArea::_angToPoint(Stomp::WeightedAngularCoordinate& ang,
-			     QPointF& point) {
-  double latitude, longitude;
-
-  switch (sphere_) {
-  case Stomp::AngularCoordinate::Survey:
-    longitude = ang.Eta();
-    latitude = ang.Lambda();
-    break;
-  case Stomp::AngularCoordinate::Equatorial:
-    longitude = ang.RA();
-    latitude = ang.DEC();
-    break;
-  case Stomp::AngularCoordinate::Galactic:
-    longitude = ang.GalLon();
-    latitude = ang.GalLat();
-    break;
-  }
-
-  bool inside_bounds = false;
-
-  if (Stomp::DoubleLE(longitude, lonmax_) &&
-      Stomp::DoubleGE(longitude, lonmin_) &&
-      Stomp::DoubleLE(latitude, latmax_) &&
-      Stomp::DoubleGE(latitude, latmin_)) {
-    inside_bounds = true;
-
-    if (aitoff_projection_) _cartesianToAitoff(longitude, latitude);
-
-    point.setX(_lonToX(longitude));
-    point.setY(_latToY(latitude));
-  }
-
-  return inside_bounds;
-}
-
-qreal RenderArea::_lonToX(double longitude) {
-  double n_pixel = static_cast<double>(width() - buffer_left_ - buffer_right_);
-  double range = longitude - lonmin_;
-
-  if (!continuous_longitude_) {
-    range = 360.0 - lonmin_ + longitude;
-    if (sphere_ == Stomp::AngularCoordinate::Survey) {
-      if (Stomp::DoubleLT(longitude, lonmin_))
-	range = lonmin_ - longitude;
-    } else {
-      if (Stomp::DoubleGT(longitude, lonmin_))
-	range = longitude - lonmin_;
-    }
-  }
-
-  double pixel_x = range*n_pixel/_lonRange();
-  if (Stomp::DoubleLT(pixel_x, 0.0)) pixel_x = 0.0;
-  if (Stomp::DoubleGE(pixel_x, n_pixel))
-    pixel_x = n_pixel;
-
-  return static_cast<qreal>(pixel_x + buffer_left_);
-}
-
-double RenderArea::_xToLon(qreal pixel_x) {
-  double n_pixel = static_cast<double>(width() - buffer_left_ - buffer_right_);
-  pixel_x -= static_cast<qreal>(buffer_left_);
-
-  double range = static_cast<double>(_lonRange()*(pixel_x/n_pixel));
-
-  double longitude = range + lonmin_;
-  if (!continuous_longitude_) {
-    longitude = lonmax_ + range;
-    if (sphere_ == Stomp::AngularCoordinate::Survey) {
-      if (Stomp::DoubleGE(longitude, 180.0)) longitude -= 360.0;
-    } else {
-      if (Stomp::DoubleGE(longitude, 360.0)) longitude -= 360.0;
-    }
-  }
-
-  return longitude;
-}
-
-qreal RenderArea::_latToY(double latitude) {
-  double n_pixel = static_cast<double>(height() - buffer_top_ - buffer_bottom_);
-  double range = latmax_ - latitude;
-
-  double pixel_y = range*n_pixel/_latRange();
-  if (Stomp::DoubleLT(pixel_y, 0.0)) pixel_y = 0.0;
-  if (Stomp::DoubleGE(pixel_y, n_pixel)) pixel_y = n_pixel;
-
-  return static_cast<qreal>(pixel_y + buffer_top_);
-}
-
-double RenderArea::_yToLat(qreal pixel_y) {
-  double n_pixel = static_cast<double>(height() - buffer_top_ - buffer_bottom_);
-  pixel_y -= static_cast<qreal>(buffer_top_);
-
-  double range = static_cast<double>(_latRange()*(pixel_y/n_pixel));
-  double latitude = latmax_ - range;
-
-  if (Stomp::DoubleLE(latitude, latmin_)) latitude = latmin_;
-  if (Stomp::DoubleGE(latitude, latmax_)) latitude = latmax_;
-
-  return latitude;
-}
-
-double RenderArea::_lonRange() {
-  return (continuous_longitude_ ? lonmax_ - lonmin_ :
-	  360.0 - lonmin_ + lonmax_);
-}
-
-double RenderArea::_latRange() {
-  return latmax_ - latmin_;
-}
-
-double RenderArea::_lonCenter() {
-  double lon_center = 0.5*(lonmin_ + lonmax_);
-  if (!continuous_longitude_) {
-    lon_center = lonmax_ + 0.5*_lonRange();
-    if (sphere_ == Stomp::AngularCoordinate::Survey) {
-      if (Stomp::DoubleGE(lon_center, 180.0)) lon_center -= 360.0;
-    } else {
-      if (Stomp::DoubleGE(lon_center, 360.0)) lon_center -= 360.0;
-    }
-  }
-
-  return lon_center;
-}
-
-double RenderArea::_latCenter() {
-  return 0.5*(latmin_ + latmax_);
-}
-
-void RenderArea::_cartesianToAitoff(double& longitude, double& latitude) {
-  double sa = longitude;
-  if ((sphere_ == Stomp::AngularCoordinate::Equatorial) ||
-      (sphere_ == Stomp::AngularCoordinate::Galactic)) {
-    /*    if (Stomp::DoubleLT(longitude, 180.0)) {
-	  sa = longitude + 180.0;
-	  } else {
-	  sa = longitude - 180.0;
-	  } */
-    // if (Stomp::DoubleGE(sa, 180.0)) sa -= 360.0;
-    sa -= 180.0;
-  }
-  double alpha2 = sa*Stomp::DegToRad/2.0;
-  double delta = latitude*Stomp::DegToRad;
-  double r2 = sqrt(2.0);
-  double f = 2.0*r2/Stomp::Pi;
-
-  double cdec = cos(delta);
-  double denom = sqrt(1.0 + cdec*cos(alpha2))*(f*Stomp::DegToRad);
-
-  longitude = cdec*sin(alpha2)*2.0*r2/denom;
-  if ((sphere_ == Stomp::AngularCoordinate::Equatorial) ||
-      (sphere_ == Stomp::AngularCoordinate::Galactic)) longitude += 180.0;
-  latitude = sin(delta)*r2/denom;
-}
-
-double RenderArea::_normalizeWeight(double weight) {
-  if (Stomp::DoubleGE(weight, weight_max_)) weight = weight_max_;
-  if (Stomp::DoubleLE(weight, weight_min_)) weight = weight_min_;
-  return (weight - weight_min_)/(weight_max_ - weight_min_);
-}
-
-double RenderArea::_normalizePointsWeight(double weight) {
-  if (Stomp::DoubleGE(weight, points_weight_max_)) weight = points_weight_max_;
-  if (Stomp::DoubleLE(weight, points_weight_min_)) weight = points_weight_min_;
-  return
-    (weight - points_weight_min_)/(points_weight_max_ - points_weight_min_);
-}
-
-double RenderArea::_renderPixelArea() {
-  double n_pixel =
-    static_cast<double>((width() - buffer_left_ - buffer_right_)*
-			(height() - buffer_top_ - buffer_bottom_));
-
-  double cartesian_area = _lonRange()*_latRange();
-
-  return cartesian_area/n_pixel;
-}
-
 void RenderArea::_findRenderLevel(uint32_t target_pixels) {
-  double cartesian_area = _lonRange()*_latRange();
+  double cartesian_area = geom_.lonRange()*geom_.latRange();
 
   render_level_ = Stomp::HPixLevel;
   for (uint8_t level=Stomp::HPixLevel+1;level<=Stomp::MaxPixelLevel;level++) {
@@ -1919,7 +1036,9 @@ void RenderArea::_findRenderLevel(uint32_t target_pixels) {
       double frac_pixel = 0.0;
 
       Stomp::Map* level_map = stomp_map_[level];
-      Stomp::LatLonBound bounds(latmin_, latmax_, lonmin_, lonmax_, sphere_);
+      Stomp::LatLonBound bounds(geom_.latitudeMin(), geom_.latitudeMax(),
+				geom_.longitudeMin(), geom_.longitudeMax(),
+				geom_.sphere());
       Stomp::PixelVector superpix;
       level_map->Coverage(superpix, Stomp::HPixResolution, false);
       for (Stomp::PixelIterator iter=superpix.begin();
@@ -1929,27 +1048,14 @@ void RenderArea::_findRenderLevel(uint32_t target_pixels) {
 	frac_pixel +=
 	  -1.0*level_map->_ScorePixel(bounds, *iter)*
 	  level_map->Size(iter->Superpixnum());
-	  
       }
       n_pixel = static_cast<uint32_t>(frac_pixel);
     }
-      
     if (n_pixel < target_pixels) {
       render_level_ = level;
     } else {
       break;
     }
   }
-}
-
-void RenderArea::_clearMaps() {
-  delete stomp_map_[Stomp::MaxPixelLevel];
-  for (uint8_t level=Stomp::MaxPixelLevel-1;level>=Stomp::HPixLevel;level--) {
-    if (stomp_map_[level] != stomp_map_[level+1])
-      delete stomp_map_[level];
-  }
-
-  stomp_map_.clear();
-  good_map_ = false;
 }
 

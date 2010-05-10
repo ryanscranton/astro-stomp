@@ -15,9 +15,10 @@ const int32_t IdRole = Qt::UserRole;
 StompViewer::StompViewer(const QMap<QString, QSize> &customSizeHints,
                          QWidget *parent, Qt::WindowFlags flags) :
   QMainWindow(parent, flags) {
-  renderArea = new RenderArea;
+  renderArea = new RenderArea(this);
+
   renderArea->setImageBounds(-180.0, 180.0, -90.0, 90.0);
-  renderArea->setWeightRange(0.0, 1.0);
+  renderArea->setMapWeightRange(0.0, 1.0);
 
   scrollArea = new QScrollArea;
   scrollArea->setBackgroundRole(QPalette::Dark);
@@ -59,7 +60,17 @@ StompViewer::StompViewer(const QMap<QString, QSize> &customSizeHints,
   renderDimensionsChanged();
 
   setWindowTitle(tr("Stomp Map Viewer"));
+  QProgressBar* progressBar = new QProgressBar(statusBar());
+  progressBar->setOrientation(Qt::Horizontal);
+  progressBar->setRange(0, 15);
+  progressBar->setValue(0);
+  statusBar()->addPermanentWidget(progressBar);
   statusBar()->showMessage(tr("Ready"));
+
+  connect(renderArea, SIGNAL(newStatus(const QString&, int)),
+	  statusBar(), SLOT(showMessage(const QString&, int)));
+  connect(renderArea, SIGNAL(progressUpdate(int)),
+	  progressBar, SLOT(setValue(int)));
 }
 
 void StompViewer::setupMapIOGroup() {
@@ -112,6 +123,13 @@ void StompViewer::setupMapIOGroup() {
 	  this, SLOT(launchPointsWindow()));
   tool_bar->addAction(actionLaunchPointsWindow);
   menu->addAction(actionLaunchPointsWindow);
+
+  menu->addSeparator();
+
+  QAction *exitAction = new QAction(tr("&Quit"), this);
+  exitAction->setShortcut(Qt::CTRL + Qt::Key_Q);
+  connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+  menu->addAction(exitAction);
 
   // Connect any updates to the renderArea to a reset of the displayed map
   // parameters.
@@ -223,6 +241,26 @@ void StompViewer::setupMapCoordinatesGroup() {
   latGroup->setLayout(latLayout);
   tool_bar->addWidget(latGroup);
 
+  lonLabel = new QLabel(tr("Eta: "));
+  lonCoordLabel = new QLabel(tr(" -- "));
+  latLabel = new QLabel(tr("Lambda: "));
+  latCoordLabel = new QLabel(tr(" --  "));
+
+  mouseCoordGroup = new QGroupBox(tool_bar);
+  mouseCoordGroup->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  mouseCoordGroup->setTitle(tr("Coordinates"));
+  mouseCoordGroup->setMaximumWidth(200);
+  QGridLayout *mouseCoordLayout = new QGridLayout(mouseCoordGroup);
+  mouseCoordLayout->addWidget(lonLabel, 0, 0, Qt::AlignVCenter | Qt::AlignLeft);
+  mouseCoordLayout->addWidget(lonCoordLabel, 0, 1,
+			      Qt::AlignVCenter | Qt::AlignHCenter);
+  mouseCoordLayout->addWidget(latLabel, 1, 0, Qt::AlignVCenter | Qt::AlignLeft);
+  mouseCoordLayout->addWidget(latCoordLabel, 1, 1,
+			      Qt::AlignVCenter | Qt::AlignHCenter);
+  tool_bar->addWidget(mouseCoordGroup);
+
+  connect(renderArea, SIGNAL(newMousePosition()),
+	  this, SLOT(getMousePosition()));
 }
 
 void StompViewer::setupMapAppearanceGroup() {
@@ -507,13 +545,13 @@ void StompViewer::inputMapDialog() {
     statusBar()->showMessage(QString("Reading %1").arg(fileName));
     if (renderArea->readNewMap(fileName)) {
       if (fileName.contains("/")) {
-	statusBar()->showMessage(QString("Loaded %1").
+	statusBar()->showMessage(QString("Loading %1").
 				 arg(fileName.section("/", -1)));
 	setWindowTitle(tr("Stomp Map Viewer: ")+
 		       QString(QString("%1").
 			       arg(fileName.section("/", -1))));
       } else {
-	statusBar()->showMessage(QString("Loaded %1").arg(fileName));
+	statusBar()->showMessage(QString("Loading %1").arg(fileName));
 	setWindowTitle(tr("Stomp Map Viewer: ")+
 		       QString(QString("%1").arg(fileName)));
       }
@@ -568,6 +606,22 @@ void StompViewer::coordinateSystemChanged() {
 				       coordinateComboBox->currentIndex(),
 				       IdRole).toInt());
   renderArea->setCoordinateSystem(sphere);
+
+  switch (sphere) {
+  case Stomp::AngularCoordinate::Survey:
+    lonLabel->setText(QString(tr("Eta: ")));
+    latLabel->setText(QString(tr("Lambda: ")));
+    break;
+  case Stomp::AngularCoordinate::Equatorial:
+    lonLabel->setText(QString(tr("RA: ")));
+    latLabel->setText(QString(tr("DEC: ")));
+    break;
+  case Stomp::AngularCoordinate::Galactic:
+    lonLabel->setText(QString(tr("GalLon: ")));
+    latLabel->setText(QString(tr("GalLat: ")));
+    break;
+  }
+
   coordinateBoundsChanged();
 }
 
@@ -608,7 +662,7 @@ void StompViewer::mapPaletteChanged() {
     Palette::PaletteType(mapPaletteComboBox->itemData(
 			   mapPaletteComboBox->currentIndex(),
 			   IdRole).toInt());
-  renderArea->setPalette(palette_type);
+  renderArea->setMapPalette(palette_type);
 }
 
 void StompViewer::resolutionChanged() {
@@ -620,7 +674,7 @@ void StompViewer::resolutionChanged() {
 
 void StompViewer::newMapWeightMin() {
   double weight_min = mapWeightMinLineEdit->text().toDouble();
-  double weight_max = renderArea->weightMax();
+  double weight_max = renderArea->mapWeightMax();
 
   if (weight_min > weight_max) {
     double tmp_weight = weight_min;
@@ -629,13 +683,13 @@ void StompViewer::newMapWeightMin() {
     weight_max = tmp_weight;
   }
 
-  renderArea->setWeightRange(weight_min, weight_max);
+  renderArea->setMapWeightRange(weight_min, weight_max);
   mapWeightRangeChanged();
 }
 
 void StompViewer::newMapWeightMax() {
   double weight_max = mapWeightMaxLineEdit->text().toDouble();
-  double weight_min = renderArea->weightMin();
+  double weight_min = renderArea->mapWeightMin();
 
   if (weight_min > weight_max) {
     double tmp_weight = weight_min;
@@ -644,13 +698,13 @@ void StompViewer::newMapWeightMax() {
     weight_max = tmp_weight;
   }
 
-  renderArea->setWeightRange(weight_min, weight_max);
+  renderArea->setMapWeightRange(weight_min, weight_max);
   mapWeightRangeChanged();
 }
 
 void StompViewer::mapWeightRangeChanged() {
-  mapWeightMinLineEdit->setText(QString("%1").arg(renderArea->weightMin()));
-  mapWeightMaxLineEdit->setText(QString("%1").arg(renderArea->weightMax()));
+  mapWeightMinLineEdit->setText(QString("%1").arg(renderArea->mapWeightMin()));
+  mapWeightMaxLineEdit->setText(QString("%1").arg(renderArea->mapWeightMax()));
 }
 
 void StompViewer::pointsWeightRangeChanged() {
@@ -757,11 +811,11 @@ void StompViewer::getNewMapParameters() {
 }
 
 void StompViewer::getNewWeightRange() {
-  double weight_min = renderArea->weightMin();
-  double weight_max = renderArea->weightMax();
+  double weight_min = renderArea->mapWeightMin();
+  double weight_max = renderArea->mapWeightMax();
 
   if (Stomp::DoubleEQ(weight_min, weight_max)) {
-    renderArea->setWeightRange(0.0, weight_max);
+    renderArea->setMapWeightRange(0.0, weight_max);
   }
   mapWeightRangeChanged();
 
@@ -891,4 +945,11 @@ void StompViewer::filterPointsToggled() {
   renderArea->setFilterPoints(filterPointsCheckBox->isChecked());
 
   renderArea->updatePoints();
+}
+
+void StompViewer::getMousePosition() {
+  lonCoordLabel->setText(QString("%1").arg(renderArea->mouseLongitude(),
+					   8, 'f', 6, 0));
+  latCoordLabel->setText(QString("%1").arg(renderArea->mouseLatitude(),
+					   8, 'f', 6, 0));
 }

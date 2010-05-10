@@ -9,7 +9,7 @@ INCLUDEPATH += .
 CONFIG += debug
 
 # Input
-HEADERS += render_area.h stomp_viewer.h
-SOURCES += main.cc render_area.cc stomp_viewer.cc
+HEADERS += render_area.h stomp_viewer.h render_geometry.h palette.h render_thread.h reader_thread.h
+SOURCES += main.cc render_area.cc stomp_viewer.cc render_geometry.cc palette.cc render_thread.cc reader_thread.cc
 RESOURCES += stomp_viewer.qrc
 LIBS += -lm -lstomp
