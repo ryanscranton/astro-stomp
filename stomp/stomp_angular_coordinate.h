@@ -33,6 +33,7 @@ class Pixel;  // class declaration in stomp_pixel.h
 class AngularCoordinate;
 class WeightedAngularCoordinate;
 class CosmoCoordinate;
+class IndexedAngularCoordinate;
 
 typedef std::vector<AngularCoordinate> AngularVector;
 typedef AngularVector::iterator AngularIterator;
@@ -54,6 +55,11 @@ typedef std::vector<CosmoCoordinate> CosmoVector;
 typedef CosmoVector::iterator CosmoIterator;
 typedef std::vector<CosmoCoordinate *> CosmoPtrVector;
 typedef CosmoPtrVector::iterator CosmoPtrIterator;
+
+typedef std::vector<IndexedAngularCoordinate> IAngularVector;
+typedef IAngularVector::iterator IAngularIterator;
+typedef std::vector<IndexedAngularCoordinate *> IAngularPtrVector;
+typedef IAngularPtrVector::iterator IAngularPtrIterator;
 
 class AngularCoordinate {
   // Our generic class for handling angular positions.  The idea is that
@@ -420,6 +426,54 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
 
  private:
   double redshift_;
+};
+
+class IndexedAngularCoordinate : public AngularCoordinate {
+  // Sub-class of AngularCoordinate where we attach an index value to the
+  // position on the sphere.  The mathematics of what we would do with an
+  // index value versus the floating point values in WeightedAngularCoordinate
+  // necessitate a separate derived class for integers.
+
+ public:
+  IndexedAngularCoordinate();
+  IndexedAngularCoordinate(double theta, double phi,
+			   uint32_t index, Sphere sphere = Survey);
+  IndexedAngularCoordinate(double unit_sphere_x, double unit_sphere_y,
+			    double unit_sphere_z, uint32_t index);
+  ~IndexedAngularCoordinate();
+
+  void SetIndex(uint32_t index);
+  uint32_t Index();
+
+  // Static methods for I/O to and from IndexedVectors.  For the input method
+  // using a file, a negative value for the weight column results in the line
+  // number being used as the index.  Likewise for the vector-based methods.
+  static bool ToIAngularVector(std::vector<double>& thetaVec,
+			       std::vector<double>& phiVec,
+			       std::vector<uint32_t>& indexVec,
+			       IAngularVector& i_ang,
+			       Sphere sphere = Equatorial);
+  static bool ToIAngularVector(std::vector<double>& thetaVec,
+			       std::vector<double>& phiVec,
+			       IAngularVector& i_ang,
+			       Sphere sphere = Equatorial);
+  static bool ToIAngularVector(const std::string& input_file,
+			       IAngularVector& i_ang,
+			       Sphere sphere = Equatorial,
+			       uint8_t theta_column = 0,
+			       uint8_t phi_column = 1,
+			       int8_t index_column = -1);
+  static bool FromIAngularVector(IAngularVector& i_ang,
+				 std::vector<double>& thetaVec,
+				 std::vector<double>& phiVec,
+				 std::vector<uint32_t>& indexVec,
+				 Sphere sphere = Equatorial);
+  static bool FromIAngularVector(IAngularVector& i_ang,
+				 const std::string& output_file,
+				 Sphere sphere = Equatorial);
+
+ private:
+  uint32_t index_;
 };
 
 } // end namespace Stomp

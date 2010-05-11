@@ -1435,6 +1435,7 @@ bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
 
   theta.reserve(z_ang.size());
   phi.reserve(z_ang.size());
+  redshift.reserve(z_ang.size());
   weight.reserve(z_ang.size());
 
   bool io_success = false;
@@ -1484,6 +1485,214 @@ bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
 	break;
       }
       output_file_str << iter->Redshift() << " " << iter->Weight() << "\n";
+    }
+    output_file_str.close();
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+IndexedAngularCoordinate::IndexedAngularCoordinate() {
+  index_ = 0.0;
+}
+
+IndexedAngularCoordinate::IndexedAngularCoordinate(double theta,
+						   double phi,
+						   uint32_t index,
+						   Sphere sphere) {
+  switch (sphere) {
+  case Survey:
+    SetSurveyCoordinates(theta, phi);
+    break;
+  case Equatorial:
+    SetEquatorialCoordinates(theta, phi);
+    break;
+  case Galactic:
+    SetGalacticCoordinates(theta, phi);
+    break;
+  }
+
+  index_ = index;
+}
+
+IndexedAngularCoordinate::IndexedAngularCoordinate(double unit_sphere_x,
+						   double unit_sphere_y,
+						   double unit_sphere_z,
+						   uint32_t index) {
+  SetUnitSphereCoordinates(unit_sphere_x, unit_sphere_y, unit_sphere_z);
+
+  index_ = index;
+}
+
+IndexedAngularCoordinate::~IndexedAngularCoordinate() {
+  index_ = 0.0;
+}
+
+void IndexedAngularCoordinate::SetIndex(uint32_t index) {
+  index_ = index;
+}
+
+uint32_t IndexedAngularCoordinate::Index() {
+  return index_;
+}
+
+bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
+						std::vector<double>& phiVec,
+						std::vector<uint32_t>& indexVec,
+						IAngularVector& i_ang,
+						Sphere sphere) {
+  bool io_success = false;
+
+  if ((thetaVec.size() == phiVec.size()) &&
+      (thetaVec.size() == indexVec.size())) {
+    if (!i_ang.empty()) i_ang.clear();
+
+    i_ang.reserve(thetaVec.size());
+
+    for (uint32_t i=0;i<thetaVec.size();i++)
+      i_ang.push_back(IndexedAngularCoordinate(thetaVec[i], phiVec[i],
+					indexVec[i], sphere));
+
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
+						std::vector<double>& phiVec,
+						IAngularVector& i_ang,
+						Sphere sphere) {
+  bool io_success = false;
+
+  if (thetaVec.size() == phiVec.size()) {
+    if (!i_ang.empty()) i_ang.clear();
+
+    i_ang.reserve(thetaVec.size());
+
+    for (uint32_t i=0;i<thetaVec.size();i++)
+      i_ang.push_back(IndexedAngularCoordinate(thetaVec[i], phiVec[i],
+					       i, sphere));
+
+    io_success = true;
+  }
+
+  return io_success;
+}
+
+bool IndexedAngularCoordinate::ToIAngularVector(const std::string& input_file,
+						IAngularVector& i_ang,
+						Sphere sphere,
+						uint8_t theta_column,
+						uint8_t phi_column,
+						int8_t index_column) {
+
+  if (!i_ang.empty()) i_ang.clear();
+  bool io_success = false;
+
+  if (theta_column != phi_column) {
+    std::ifstream input_file_str(input_file.c_str());
+
+    uint32_t n_lines = 0;
+    uint8_t index_idx = static_cast<uint8_t>(index_column);
+
+    if (input_file_str) {
+      while (!input_file_str.eof()) {
+	if (!input_file_str.eof()) {
+	  // This should read each line into a buffer, convert that buffer into
+	  // a string and then break that string into a vector of strings.  We
+	  // should then be able to access theta and phi by converting the
+	  // appropriate elements of that vector to doubles.
+	  char line_buffer[1000];
+	  std::vector<std::string> line_elements;
+
+	  input_file_str.getline(line_buffer, 1000);
+	  std::string line_string(line_buffer);
+	  Tokenize(line_string, line_elements);
+
+	  if ((line_elements.size() > theta_column) &&
+	      (line_elements.size() > phi_column)) {
+	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
+	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
+	    uint32_t index = n_lines;
+	    if ((index_column > -1) &&
+		(line_elements.size() > index_idx))
+	      index =
+		static_cast<uint32_t>(strtoul(line_elements[index_idx].c_str(),
+					      NULL, 10));
+	    i_ang.push_back(IndexedAngularCoordinate(theta, phi,
+						     index, sphere));
+	  }
+	  n_lines++;
+	}
+      }
+      input_file_str.close();
+      io_success = true;
+    }
+  }
+
+  return io_success;
+}
+
+bool IndexedAngularCoordinate::FromIAngularVector(IAngularVector& i_ang,
+						  std::vector<double>& theta,
+						  std::vector<double>& phi,
+						  std::vector<uint32_t>& index,
+						  Sphere sphere) {
+  if (!theta.empty()) theta.clear();
+  if (!phi.empty()) phi.clear();
+  if (!index.empty()) index.clear();
+
+  theta.reserve(i_ang.size());
+  phi.reserve(i_ang.size());
+  index.reserve(i_ang.size());
+
+  bool io_success = false;
+
+  for (IAngularIterator iter=i_ang.begin();iter!=i_ang.end();++iter) {
+    index.push_back(iter->Index());
+    switch (sphere) {
+    case Survey:
+      theta.push_back(iter->Lambda());
+      phi.push_back(iter->Eta());
+      break;
+    case Equatorial:
+      theta.push_back(iter->RA());
+      phi.push_back(iter->DEC());
+    break;
+    case Galactic:
+      theta.push_back(iter->GalLon());
+      phi.push_back(iter->GalLat());
+      break;
+    }
+  }
+
+  if (theta.size() == i_ang.size()) io_success = true;
+
+  return io_success;
+}
+
+bool IndexedAngularCoordinate::FromIAngularVector(
+  IAngularVector& i_ang, const std::string& output_file, Sphere sphere) {
+  std::ofstream output_file_str(output_file.c_str());
+
+  bool io_success = false;
+
+  if (output_file_str.is_open()) {
+    for (IAngularIterator iter=i_ang.begin();iter!=i_ang.end();++iter) {
+      switch (sphere) {
+      case Survey:
+	output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	break;
+      case Equatorial:
+	output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	break;
+      case Galactic:
+	output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	break;
+      }
+      output_file_str << iter->Index() << "\n";
     }
     output_file_str.close();
     io_success = true;
