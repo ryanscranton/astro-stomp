@@ -23,10 +23,12 @@
 #include <stomp/stomp_pixel.h>
 #include <stomp/stomp_scalar_pixel.h>
 #include <stomp/stomp_tree_pixel.h>
+#include <stomp/stomp_itree_pixel.h>
 #include <stomp/stomp_base_map.h>
 #include <stomp/stomp_map.h>
 #include <stomp/stomp_scalar_map.h>
 #include <stomp/stomp_tree_map.h>
+#include <stomp/stomp_itree_map.h>
 #include <stomp/stomp_geometry.h>
 #include <stomp/stomp_util.h>
 
