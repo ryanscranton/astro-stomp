@@ -285,6 +285,18 @@ void IndexedTreePixel::_PointPtrs(IAngularPtrVector& i_ang) {
   }
 }
 
+uint16_t IndexedTreePixel::FindKNearestNeighbors(AngularCoordinate& ang,
+						 uint8_t n_neighbors,
+						 IAngularVector& neighbor_ang) {
+  IndexedTreeNeighbor neighbors(ang, n_neighbors);
+
+  _NeighborRecursion(ang, neighbors);
+
+  neighbors.NearestNeighbors(neighbor_ang, false);
+
+  return neighbors.NodesVisited();
+}
+
 uint16_t IndexedTreePixel::FindNearestNeighbor(
   AngularCoordinate& ang, IndexedAngularCoordinate& neighbor_ang) {
 
