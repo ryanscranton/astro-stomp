@@ -7,10 +7,12 @@
 #include "../stomp/stomp_pixel.h"
 #include "../stomp/stomp_scalar_pixel.h"
 #include "../stomp/stomp_tree_pixel.h"
+#include "../stomp/stomp_itree_pixel.h"
 #include "../stomp/stomp_base_map.h"
 #include "../stomp/stomp_map.h"
 #include "../stomp/stomp_scalar_map.h"
 #include "../stomp/stomp_tree_map.h"
+#include "../stomp/stomp_itree_map.h"
 #include "../stomp/stomp_geometry.h"
 #include "../stomp/stomp_util.h"
 %}
@@ -38,10 +40,15 @@ class AngularCorrelation;   // class definition in stomp_angular_correlation.h
 class AngularCoordinate;
 class WeightedAngularCoordinate;
 class CosmoCoordinate;
+class IndexedAngularCoordinate;
 class TreePixel;
+class IndexedTreePixel;
 class TreeNeighbor;
+class IndexedTreeNeighbor;
 class NearestNeighborPixel;
+class NearestNeighborIndexedPixel;
 class NearestNeighborPoint;
+class NearestNeighborIndexedPoint;
 
 typedef std::vector<AngularCoordinate> AngularVector;
 typedef AngularVector::iterator AngularIterator;
@@ -64,14 +71,31 @@ typedef CosmoVector::iterator CosmoIterator;
 typedef std::vector<CosmoCoordinate *> CosmoPtrVector;
 typedef CosmoPtrVector::iterator CosmoPtrIterator;
 
+typedef std::vector<IndexedAngularCoordinate> IAngularVector;
+typedef IAngularVector::iterator IAngularIterator;
+typedef std::vector<IndexedAngularCoordinate *> IAngularPtrVector;
+typedef IAngularPtrVector::iterator IAngularPtrIterator;
+
 typedef std::pair<double, TreePixel*> DistancePixelPair;
 typedef std::priority_queue<DistancePixelPair,
   std::vector<DistancePixelPair>, NearestNeighborPixel> PixelQueue;
 
+typedef std::pair<double, IndexedTreePixel*> DistanceIPixelPair;
+typedef std::priority_queue<DistanceIPixelPair,
+  std::vector<DistanceIPixelPair>, NearestNeighborIndexedPixel> IPixelQueue;
+
 typedef std::pair<double, WeightedAngularCoordinate*> DistancePointPair;
 typedef std::priority_queue<DistancePointPair,
   std::vector<DistancePointPair>, NearestNeighborPoint> PointQueue;
-}
+
+typedef std::pair<double, IndexedAngularCoordinate*> DistanceIPointPair;
+typedef std::priority_queue<DistanceIPointPair,
+  std::vector<DistanceIPointPair>, NearestNeighborIndexedPoint> IPointQueue;
+
+typedef std::vector<uint32_t> IndexVector;
+typedef IndexVector::iterator IndexIterator;
+
+} # end namespace Stomp
 
 %include "../stomp/stomp_core.h"
 %include "../stomp/stomp_angular_bin.h"
@@ -281,6 +305,42 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
 			      Sphere sphere = Equatorial);
 };
 
+class IndexedAngularCoordinate : public AngularCoordinate {
+ public:
+  IndexedAngularCoordinate();
+  IndexedAngularCoordinate(double theta, double phi,
+                           uint32_t index, Sphere sphere = Survey);
+  IndexedAngularCoordinate(double unit_sphere_x, double unit_sphere_y,
+                            double unit_sphere_z, uint32_t index);
+  ~IndexedAngularCoordinate();
+
+  void SetIndex(uint32_t index);
+  uint32_t Index();
+  static bool ToIAngularVector(std::vector<double>& thetaVec,
+                               std::vector<double>& phiVec,
+                               std::vector<uint32_t>& indexVec,
+                               IAngularVector& i_ang,
+                               Sphere sphere = Equatorial);
+  static bool ToIAngularVector(std::vector<double>& thetaVec,
+                               std::vector<double>& phiVec,
+                               IAngularVector& i_ang,
+                               Sphere sphere = Equatorial);
+  static bool ToIAngularVector(const std::string& input_file,
+                               IAngularVector& i_ang,
+                               Sphere sphere = Equatorial,
+                               uint8_t theta_column = 0,
+                               uint8_t phi_column = 1,
+                               int8_t index_column = -1);
+  static bool FromIAngularVector(IAngularVector& i_ang,
+                                 std::vector<double>& thetaVec,
+                                 std::vector<double>& phiVec,
+                                 std::vector<uint32_t>& indexVec,
+                                 Sphere sphere = Equatorial);
+  static bool FromIAngularVector(IAngularVector& i_ang,
+                                 const std::string& output_file,
+                                 Sphere sphere = Equatorial);
+};
+
 class TreePixel : public Pixel {
  public:
   friend class NearestNeighborPixel;
@@ -399,7 +459,6 @@ class TreePixel : public Pixel {
   void Points(WAngularVector& w_ang);
   void Points(WAngularVector& w_ang, Pixel& pix);
   uint16_t Nodes();
-  void _AddSubNodes(uint16_t& n_nodes);
   void AddToWeight(double weight);
   double FieldTotal(const std::string& field_name);
   double FieldTotal(const std::string& field_name, Pixel& pix);
@@ -456,6 +515,112 @@ class TreeNeighbor {
   uint8_t Neighbors();
   uint8_t MaxNeighbors();
   bool TestPoint(WeightedAngularCoordinate* test_ang);
+  double MaxDistance();
+  double MaxAngularDistance();
+  uint16_t NodesVisited();
+  void AddNode();
+};
+
+class IndexedTreePixel : public Pixel {
+ public:
+  friend class NearestNeighborIndexedPixel;
+  IndexedTreePixel();
+  IndexedTreePixel(const uint32_t resolution, const uint32_t pixnum,
+                   const uint16_t maximum_points=200);
+  IndexedTreePixel(AngularCoordinate& ang, const uint32_t resolution,
+                   const uint16_t maximum_points=200);
+  IndexedTreePixel(const uint32_t x, const uint32_t y,
+                   const uint32_t resolution,
+                   const uint16_t maximum_points=200);
+  virtual ~IndexedTreePixel();
+
+  void FindPairs(AngularCoordinate& ang, AngularBin& theta,
+                 IAngularVector& i_angVec);
+  void FindPairs(AngularCoordinate& ang, AngularBin& theta,
+                 IndexVector& pair_indices);
+  void FindPairs(AngularCoordinate& ang,
+                 double theta_min, double theta_max,
+                 IAngularVector& i_angVec);
+  void FindPairs(AngularCoordinate& ang,
+                 double theta_min, double theta_max,
+                 IndexVector& pair_indices);
+  void FindPairs(AngularCoordinate& ang, double theta_max,
+                 IAngularVector& pair_indices);
+  void FindPairs(AngularCoordinate& ang, double theta_max,
+                 IndexVector& pair_indices);
+  uint16_t FindKNearestNeighbors(AngularCoordinate& ang, uint8_t n_neighbors,
+                                 IAngularVector& neighbors_ang);
+
+  uint16_t FindNearestNeighbor(AngularCoordinate& ang,
+                               IndexedAngularCoordinate& neighbor_ang);
+  double KNearestNeighborDistance(AngularCoordinate& ang, uint8_t n_neighbors,
+                                  uint16_t& nodes_visited);
+  double NearestNeighborDistance(AngularCoordinate& ang,
+                                 uint16_t& nodes_visited);
+  bool ClosestMatch(AngularCoordinate& ang, double max_distance,
+                    IndexedAngularCoordinate& match_ang);
+  void InitializeCorners();
+  bool AddPoint(IndexedAngularCoordinate& w_ang);
+  bool AddPoint(AngularCoordinate& ang, uint32_t index);
+  uint32_t NPoints();
+  uint32_t NPoints(Pixel& pix);
+  void Indices(Pixel& pix, IndexVector& indices);
+  double Coverage();
+  double Coverage(Pixel& pix);
+  void Points(IAngularVector& i_ang);
+  void Points(IAngularVector& i_ang, Pixel& pix);
+  uint16_t Nodes();
+  void SetPixelCapacity(uint16_t maximum_points);
+  uint16_t PixelCapacity();
+  bool HasPoints();
+  bool HasNodes();
+  void Clear();
+  virtual double UnitSphereX();
+  virtual double UnitSphereY();
+  virtual double UnitSphereZ();
+  virtual double UnitSphereX_UL();
+  virtual double UnitSphereY_UL();
+  virtual double UnitSphereZ_UL();
+  virtual double UnitSphereX_UR();
+  virtual double UnitSphereY_UR();
+  virtual double UnitSphereZ_UR();
+  virtual double UnitSphereX_LL();
+  virtual double UnitSphereY_LL();
+  virtual double UnitSphereZ_LL();
+  virtual double UnitSphereX_LR();
+  virtual double UnitSphereY_LR();
+  virtual double UnitSphereZ_LR();
+  virtual void WithinAnnulus(AngularBin& theta, PixelVector& pix,
+                             bool check_full_pixel);
+};
+
+class NearestNeighborIndexedPixel {
+ public:
+  int operator()(const DistanceIPixelPair& x, const DistanceIPixelPair& y) {
+    return x.first > y.first;
+  }
+};
+
+class NearestNeighborIndexedPoint {
+ public:
+  int operator()(const DistanceIPointPair& x, const DistanceIPointPair& y) {
+    return x.first < y.first;
+  }
+};
+
+class IndexedTreeNeighbor {
+ public:
+  friend class NearestNeighborIndexedPoint;
+  IndexedTreeNeighbor(AngularCoordinate& reference_ang,
+               uint8_t n_neighbors = 1);
+  IndexedTreeNeighbor(AngularCoordinate& reference_ang,
+               uint8_t n_neighbors, double max_distance);
+  ~IndexedTreeNeighbor();
+
+  void NearestNeighbors(IAngularVector& i_ang, bool save_neighbors = true);
+  uint8_t Neighbors();
+  uint8_t MaxNeighbors();
+  bool TestPoint(IndexedAngularCoordinate* test_ang);
   double MaxDistance();
   double MaxAngularDistance();
   uint16_t NodesVisited();
@@ -620,11 +785,87 @@ class TreeMap : public BaseMap {
   virtual void Clear();
 };
 
+
+class IndexedTreeMap : public BaseMap {
+ public:
+  friend class NearestNeighborPixel;
+  IndexedTreeMap(uint32_t resolution=HPixResolution,
+                 uint16_t maximum_points=50);
+  IndexedTreeMap(
+    const std::string& input_file,
+    uint32_t resolution=HPixResolution, uint16_t maximum_points=50,
+    AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+    bool verbose = false, uint8_t theta_column = 0,
+    uint8_t phi_column = 1, int8_t index_column = -1);
+  ~IndexedTreeMap();
+
+  void FindPairs(AngularCoordinate& ang, AngularBin& theta,
+                 IAngularVector& i_angVec);
+  void FindPairs(AngularCoordinate& ang, AngularBin& theta,
+                 IndexVector& pair_indices);
+  void FindPairs(AngularCoordinate& ang,
+                 double theta_min, double theta_max,
+                 IAngularVector& i_angVec);
+  void FindPairs(AngularCoordinate& ang,
+                 double theta_min, double theta_max,
+                 IndexVector& pair_indices);
+  void FindPairs(AngularCoordinate& ang, double theta_max,
+                 IAngularVector& pair_indices);
+  void FindPairs(AngularCoordinate& ang, double theta_max,
+                 IndexVector& pair_indices);
+  uint16_t FindKNearestNeighbors(AngularCoordinate& ang, uint8_t n_neighbors,
+                                 IAngularVector& neighbors_ang);
+  uint16_t FindNearestNeighbor(AngularCoordinate& ang,
+                               IndexedAngularCoordinate& neighbor_ang);
+  double KNearestNeighborDistance(AngularCoordinate& ang, uint8_t n_neighbors,
+                                  uint16_t& nodes_visited);
+  double NearestNeighborDistance(AngularCoordinate& ang,
+                                 uint16_t& nodes_visited);
+  bool ClosestMatch(AngularCoordinate& ang, double max_distance,
+                    IndexedAngularCoordinate& match_ang);
+  bool AddPoint(IndexedAngularCoordinate& i_ang);
+  bool AddPoint(AngularCoordinate& ang, uint32_t index);
+  bool Read(const std::string& input_file,
+            AngularCoordinate::Sphere sphere = AngularCoordinate::Equatorial,
+            bool verbose = false, uint8_t theta_column = 0,
+            uint8_t phi_column = 1, int8_t index_column = -1);
+  virtual void Coverage(PixelVector& superpix,
+                        uint32_t resolution = HPixResolution,
+                        bool calculate_fraction = true);
+  bool Covering(Map& stomp_map, uint32_t maximum_pixels);
+  virtual double FindUnmaskedFraction(Pixel& pix);
+  virtual int8_t FindUnmaskedStatus(Pixel& pix);
+  void NodeMap(Map& stomp_map);
+  uint32_t Resolution();
+  uint16_t PixelCapacity();
+  void SetResolution(uint32_t resolution);
+  void SetPixelCapacity(int pixel_capacity);
+  uint32_t NPoints(uint32_t k = MaxPixnum);
+  uint32_t NPoints(Pixel& pix);
+  void Points(IAngularVector& i_ang);
+  void Points(IAngularVector& i_ang, Pixel& pix);
+  void Indices(Pixel& pix, IndexVector& indices);
+  uint16_t BaseNodes();
+  uint16_t Nodes();
+  virtual uint32_t Size();
+  virtual double Area();
+  void CalculateArea();
+  virtual uint32_t MinResolution();
+  virtual uint32_t MaxResolution();
+  virtual uint8_t MinLevel();
+  virtual uint8_t MaxLevel();
+  virtual bool Empty();
+  virtual void Clear();
+};
+
 } // end namespace Stomp
 
 %template(AngularVector) std::vector<Stomp::AngularCoordinate>;
 %template(WAngularVector) std::vector<Stomp::WeightedAngularCoordinate>;
+%template(CosmoVector) std::vector<Stomp::CosmoCoordinate>;
+%template(IAngularVector) std::vector<Stomp::IndexedAngularCoordinate>;
 %template(PixelVector) std::vector<Stomp::Pixel>;
 %template(FieldDict) std::map<std::string, double>;
 %template(FieldColumnDict) std::map<std::string, uint8_t>;
 %template(DoubleVector) std::vector<double>;
+%template(IndexVector) std::vector<uint32_t>;

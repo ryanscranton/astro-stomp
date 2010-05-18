@@ -66,10 +66,10 @@ class TestStompAngularCoordinate(unittest.TestCase):
         ang_b = stomp.AngularCoordinate(1.0, 0.0,
                                         stomp.AngularCoordinate.Equatorial)
         self.assertAlmostEqual(ang_a.PositionAngle(ang_b), 90.0)
-        self.assertAlmostEqual(ang_b.PositionAngle(ang_a), -90.0)
+        self.assertAlmostEqual(ang_b.PositionAngle(ang_a), 270.0)
 
         ang_b.SetEquatorialCoordinates(0.0, 1.0)
-        self.assertAlmostEqual(ang_a.PositionAngle(ang_b), 00.0)
+        self.assertAlmostEqual(ang_a.PositionAngle(ang_b), 0.0)
         self.assertAlmostEqual(ang_b.PositionAngle(ang_a), 180.0)
 
 
