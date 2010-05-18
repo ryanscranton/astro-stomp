@@ -1213,6 +1213,31 @@ CosmoCoordinate_swigregister(CosmoCoordinate)
 CosmoCoordinate_ToCosmoVector = _stomp.CosmoCoordinate_ToCosmoVector
 CosmoCoordinate_FromCosmoVector = _stomp.CosmoCoordinate_FromCosmoVector
 
+class IndexedAngularCoordinate(AngularCoordinate):
+    __swig_setmethods__ = {}
+    for _s in [AngularCoordinate]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, IndexedAngularCoordinate, name, value)
+    __swig_getmethods__ = {}
+    for _s in [AngularCoordinate]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, IndexedAngularCoordinate, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_IndexedAngularCoordinate(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_IndexedAngularCoordinate
+    __del__ = lambda self : None;
+    def SetIndex(*args): return _stomp.IndexedAngularCoordinate_SetIndex(*args)
+    def Index(*args): return _stomp.IndexedAngularCoordinate_Index(*args)
+    __swig_getmethods__["ToIAngularVector"] = lambda x: _stomp.IndexedAngularCoordinate_ToIAngularVector
+    if _newclass:ToIAngularVector = staticmethod(_stomp.IndexedAngularCoordinate_ToIAngularVector)
+    __swig_getmethods__["FromIAngularVector"] = lambda x: _stomp.IndexedAngularCoordinate_FromIAngularVector
+    if _newclass:FromIAngularVector = staticmethod(_stomp.IndexedAngularCoordinate_FromIAngularVector)
+IndexedAngularCoordinate_swigregister = _stomp.IndexedAngularCoordinate_swigregister
+IndexedAngularCoordinate_swigregister(IndexedAngularCoordinate)
+IndexedAngularCoordinate_ToIAngularVector = _stomp.IndexedAngularCoordinate_ToIAngularVector
+IndexedAngularCoordinate_FromIAngularVector = _stomp.IndexedAngularCoordinate_FromIAngularVector
+
 class TreePixel(Pixel):
     __swig_setmethods__ = {}
     for _s in [Pixel]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -1244,7 +1269,6 @@ class TreePixel(Pixel):
     def Coverage(*args): return _stomp.TreePixel_Coverage(*args)
     def Points(*args): return _stomp.TreePixel_Points(*args)
     def Nodes(*args): return _stomp.TreePixel_Nodes(*args)
-    def _AddSubNodes(*args): return _stomp.TreePixel__AddSubNodes(*args)
     def AddToWeight(*args): return _stomp.TreePixel_AddToWeight(*args)
     def FieldTotal(*args): return _stomp.TreePixel_FieldTotal(*args)
     def AddToField(*args): return _stomp.TreePixel_AddToField(*args)
@@ -1330,6 +1354,112 @@ class TreeNeighbor(_object):
 TreeNeighbor_swigregister = _stomp.TreeNeighbor_swigregister
 TreeNeighbor_swigregister(TreeNeighbor)
 
+class IndexedTreePixel(Pixel):
+    __swig_setmethods__ = {}
+    for _s in [Pixel]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, IndexedTreePixel, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Pixel]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, IndexedTreePixel, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_IndexedTreePixel(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_IndexedTreePixel
+    __del__ = lambda self : None;
+    def FindPairs(*args): return _stomp.IndexedTreePixel_FindPairs(*args)
+    def FindKNearestNeighbors(*args): return _stomp.IndexedTreePixel_FindKNearestNeighbors(*args)
+    def FindNearestNeighbor(*args): return _stomp.IndexedTreePixel_FindNearestNeighbor(*args)
+    def KNearestNeighborDistance(*args): return _stomp.IndexedTreePixel_KNearestNeighborDistance(*args)
+    def NearestNeighborDistance(*args): return _stomp.IndexedTreePixel_NearestNeighborDistance(*args)
+    def ClosestMatch(*args): return _stomp.IndexedTreePixel_ClosestMatch(*args)
+    def InitializeCorners(*args): return _stomp.IndexedTreePixel_InitializeCorners(*args)
+    def AddPoint(*args): return _stomp.IndexedTreePixel_AddPoint(*args)
+    def NPoints(*args): return _stomp.IndexedTreePixel_NPoints(*args)
+    def Indices(*args): return _stomp.IndexedTreePixel_Indices(*args)
+    def Coverage(*args): return _stomp.IndexedTreePixel_Coverage(*args)
+    def Points(*args): return _stomp.IndexedTreePixel_Points(*args)
+    def Nodes(*args): return _stomp.IndexedTreePixel_Nodes(*args)
+    def SetPixelCapacity(*args): return _stomp.IndexedTreePixel_SetPixelCapacity(*args)
+    def PixelCapacity(*args): return _stomp.IndexedTreePixel_PixelCapacity(*args)
+    def HasPoints(*args): return _stomp.IndexedTreePixel_HasPoints(*args)
+    def HasNodes(*args): return _stomp.IndexedTreePixel_HasNodes(*args)
+    def Clear(*args): return _stomp.IndexedTreePixel_Clear(*args)
+    def UnitSphereX(*args): return _stomp.IndexedTreePixel_UnitSphereX(*args)
+    def UnitSphereY(*args): return _stomp.IndexedTreePixel_UnitSphereY(*args)
+    def UnitSphereZ(*args): return _stomp.IndexedTreePixel_UnitSphereZ(*args)
+    def UnitSphereX_UL(*args): return _stomp.IndexedTreePixel_UnitSphereX_UL(*args)
+    def UnitSphereY_UL(*args): return _stomp.IndexedTreePixel_UnitSphereY_UL(*args)
+    def UnitSphereZ_UL(*args): return _stomp.IndexedTreePixel_UnitSphereZ_UL(*args)
+    def UnitSphereX_UR(*args): return _stomp.IndexedTreePixel_UnitSphereX_UR(*args)
+    def UnitSphereY_UR(*args): return _stomp.IndexedTreePixel_UnitSphereY_UR(*args)
+    def UnitSphereZ_UR(*args): return _stomp.IndexedTreePixel_UnitSphereZ_UR(*args)
+    def UnitSphereX_LL(*args): return _stomp.IndexedTreePixel_UnitSphereX_LL(*args)
+    def UnitSphereY_LL(*args): return _stomp.IndexedTreePixel_UnitSphereY_LL(*args)
+    def UnitSphereZ_LL(*args): return _stomp.IndexedTreePixel_UnitSphereZ_LL(*args)
+    def UnitSphereX_LR(*args): return _stomp.IndexedTreePixel_UnitSphereX_LR(*args)
+    def UnitSphereY_LR(*args): return _stomp.IndexedTreePixel_UnitSphereY_LR(*args)
+    def UnitSphereZ_LR(*args): return _stomp.IndexedTreePixel_UnitSphereZ_LR(*args)
+    def WithinAnnulus(*args): return _stomp.IndexedTreePixel_WithinAnnulus(*args)
+IndexedTreePixel_swigregister = _stomp.IndexedTreePixel_swigregister
+IndexedTreePixel_swigregister(IndexedTreePixel)
+
+class NearestNeighborIndexedPixel(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, NearestNeighborIndexedPixel, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, NearestNeighborIndexedPixel, name)
+    __repr__ = _swig_repr
+    def __call__(*args): return _stomp.NearestNeighborIndexedPixel___call__(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_NearestNeighborIndexedPixel(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_NearestNeighborIndexedPixel
+    __del__ = lambda self : None;
+NearestNeighborIndexedPixel_swigregister = _stomp.NearestNeighborIndexedPixel_swigregister
+NearestNeighborIndexedPixel_swigregister(NearestNeighborIndexedPixel)
+
+class NearestNeighborIndexedPoint(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, NearestNeighborIndexedPoint, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, NearestNeighborIndexedPoint, name)
+    __repr__ = _swig_repr
+    def __call__(*args): return _stomp.NearestNeighborIndexedPoint___call__(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_NearestNeighborIndexedPoint(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_NearestNeighborIndexedPoint
+    __del__ = lambda self : None;
+NearestNeighborIndexedPoint_swigregister = _stomp.NearestNeighborIndexedPoint_swigregister
+NearestNeighborIndexedPoint_swigregister(NearestNeighborIndexedPoint)
+
+class IndexedTreeNeighbor(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, IndexedTreeNeighbor, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, IndexedTreeNeighbor, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_IndexedTreeNeighbor(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_IndexedTreeNeighbor
+    __del__ = lambda self : None;
+    def NearestNeighbors(*args): return _stomp.IndexedTreeNeighbor_NearestNeighbors(*args)
+    def Neighbors(*args): return _stomp.IndexedTreeNeighbor_Neighbors(*args)
+    def MaxNeighbors(*args): return _stomp.IndexedTreeNeighbor_MaxNeighbors(*args)
+    def TestPoint(*args): return _stomp.IndexedTreeNeighbor_TestPoint(*args)
+    def MaxDistance(*args): return _stomp.IndexedTreeNeighbor_MaxDistance(*args)
+    def MaxAngularDistance(*args): return _stomp.IndexedTreeNeighbor_MaxAngularDistance(*args)
+    def NodesVisited(*args): return _stomp.IndexedTreeNeighbor_NodesVisited(*args)
+    def AddNode(*args): return _stomp.IndexedTreeNeighbor_AddNode(*args)
+IndexedTreeNeighbor_swigregister = _stomp.IndexedTreeNeighbor_swigregister
+IndexedTreeNeighbor_swigregister(IndexedTreeNeighbor)
+
 class TreeMap(BaseMap):
     __swig_setmethods__ = {}
     for _s in [BaseMap]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -1384,6 +1514,54 @@ class TreeMap(BaseMap):
     def Clear(*args): return _stomp.TreeMap_Clear(*args)
 TreeMap_swigregister = _stomp.TreeMap_swigregister
 TreeMap_swigregister(TreeMap)
+
+class IndexedTreeMap(BaseMap):
+    __swig_setmethods__ = {}
+    for _s in [BaseMap]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, IndexedTreeMap, name, value)
+    __swig_getmethods__ = {}
+    for _s in [BaseMap]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, IndexedTreeMap, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_IndexedTreeMap(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_IndexedTreeMap
+    __del__ = lambda self : None;
+    def FindPairs(*args): return _stomp.IndexedTreeMap_FindPairs(*args)
+    def FindKNearestNeighbors(*args): return _stomp.IndexedTreeMap_FindKNearestNeighbors(*args)
+    def FindNearestNeighbor(*args): return _stomp.IndexedTreeMap_FindNearestNeighbor(*args)
+    def KNearestNeighborDistance(*args): return _stomp.IndexedTreeMap_KNearestNeighborDistance(*args)
+    def NearestNeighborDistance(*args): return _stomp.IndexedTreeMap_NearestNeighborDistance(*args)
+    def ClosestMatch(*args): return _stomp.IndexedTreeMap_ClosestMatch(*args)
+    def AddPoint(*args): return _stomp.IndexedTreeMap_AddPoint(*args)
+    def Read(*args): return _stomp.IndexedTreeMap_Read(*args)
+    def Coverage(*args): return _stomp.IndexedTreeMap_Coverage(*args)
+    def Covering(*args): return _stomp.IndexedTreeMap_Covering(*args)
+    def FindUnmaskedFraction(*args): return _stomp.IndexedTreeMap_FindUnmaskedFraction(*args)
+    def FindUnmaskedStatus(*args): return _stomp.IndexedTreeMap_FindUnmaskedStatus(*args)
+    def NodeMap(*args): return _stomp.IndexedTreeMap_NodeMap(*args)
+    def Resolution(*args): return _stomp.IndexedTreeMap_Resolution(*args)
+    def PixelCapacity(*args): return _stomp.IndexedTreeMap_PixelCapacity(*args)
+    def SetResolution(*args): return _stomp.IndexedTreeMap_SetResolution(*args)
+    def SetPixelCapacity(*args): return _stomp.IndexedTreeMap_SetPixelCapacity(*args)
+    def NPoints(*args): return _stomp.IndexedTreeMap_NPoints(*args)
+    def Points(*args): return _stomp.IndexedTreeMap_Points(*args)
+    def Indices(*args): return _stomp.IndexedTreeMap_Indices(*args)
+    def BaseNodes(*args): return _stomp.IndexedTreeMap_BaseNodes(*args)
+    def Nodes(*args): return _stomp.IndexedTreeMap_Nodes(*args)
+    def Size(*args): return _stomp.IndexedTreeMap_Size(*args)
+    def Area(*args): return _stomp.IndexedTreeMap_Area(*args)
+    def CalculateArea(*args): return _stomp.IndexedTreeMap_CalculateArea(*args)
+    def MinResolution(*args): return _stomp.IndexedTreeMap_MinResolution(*args)
+    def MaxResolution(*args): return _stomp.IndexedTreeMap_MaxResolution(*args)
+    def MinLevel(*args): return _stomp.IndexedTreeMap_MinLevel(*args)
+    def MaxLevel(*args): return _stomp.IndexedTreeMap_MaxLevel(*args)
+    def Empty(*args): return _stomp.IndexedTreeMap_Empty(*args)
+    def Clear(*args): return _stomp.IndexedTreeMap_Clear(*args)
+IndexedTreeMap_swigregister = _stomp.IndexedTreeMap_swigregister
+IndexedTreeMap_swigregister(IndexedTreeMap)
 
 class AngularVector(_object):
     __swig_setmethods__ = {}
@@ -1476,6 +1654,98 @@ class WAngularVector(_object):
     __del__ = lambda self : None;
 WAngularVector_swigregister = _stomp.WAngularVector_swigregister
 WAngularVector_swigregister(WAngularVector)
+
+class CosmoVector(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CosmoVector, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, CosmoVector, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.CosmoVector_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.CosmoVector___nonzero__(*args)
+    def __len__(*args): return _stomp.CosmoVector___len__(*args)
+    def pop(*args): return _stomp.CosmoVector_pop(*args)
+    def __getslice__(*args): return _stomp.CosmoVector___getslice__(*args)
+    def __setslice__(*args): return _stomp.CosmoVector___setslice__(*args)
+    def __delslice__(*args): return _stomp.CosmoVector___delslice__(*args)
+    def __delitem__(*args): return _stomp.CosmoVector___delitem__(*args)
+    def __getitem__(*args): return _stomp.CosmoVector___getitem__(*args)
+    def __setitem__(*args): return _stomp.CosmoVector___setitem__(*args)
+    def append(*args): return _stomp.CosmoVector_append(*args)
+    def empty(*args): return _stomp.CosmoVector_empty(*args)
+    def size(*args): return _stomp.CosmoVector_size(*args)
+    def clear(*args): return _stomp.CosmoVector_clear(*args)
+    def swap(*args): return _stomp.CosmoVector_swap(*args)
+    def get_allocator(*args): return _stomp.CosmoVector_get_allocator(*args)
+    def begin(*args): return _stomp.CosmoVector_begin(*args)
+    def end(*args): return _stomp.CosmoVector_end(*args)
+    def rbegin(*args): return _stomp.CosmoVector_rbegin(*args)
+    def rend(*args): return _stomp.CosmoVector_rend(*args)
+    def pop_back(*args): return _stomp.CosmoVector_pop_back(*args)
+    def erase(*args): return _stomp.CosmoVector_erase(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_CosmoVector(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _stomp.CosmoVector_push_back(*args)
+    def front(*args): return _stomp.CosmoVector_front(*args)
+    def back(*args): return _stomp.CosmoVector_back(*args)
+    def assign(*args): return _stomp.CosmoVector_assign(*args)
+    def resize(*args): return _stomp.CosmoVector_resize(*args)
+    def insert(*args): return _stomp.CosmoVector_insert(*args)
+    def reserve(*args): return _stomp.CosmoVector_reserve(*args)
+    def capacity(*args): return _stomp.CosmoVector_capacity(*args)
+    __swig_destroy__ = _stomp.delete_CosmoVector
+    __del__ = lambda self : None;
+CosmoVector_swigregister = _stomp.CosmoVector_swigregister
+CosmoVector_swigregister(CosmoVector)
+
+class IAngularVector(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, IAngularVector, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, IAngularVector, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.IAngularVector_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.IAngularVector___nonzero__(*args)
+    def __len__(*args): return _stomp.IAngularVector___len__(*args)
+    def pop(*args): return _stomp.IAngularVector_pop(*args)
+    def __getslice__(*args): return _stomp.IAngularVector___getslice__(*args)
+    def __setslice__(*args): return _stomp.IAngularVector___setslice__(*args)
+    def __delslice__(*args): return _stomp.IAngularVector___delslice__(*args)
+    def __delitem__(*args): return _stomp.IAngularVector___delitem__(*args)
+    def __getitem__(*args): return _stomp.IAngularVector___getitem__(*args)
+    def __setitem__(*args): return _stomp.IAngularVector___setitem__(*args)
+    def append(*args): return _stomp.IAngularVector_append(*args)
+    def empty(*args): return _stomp.IAngularVector_empty(*args)
+    def size(*args): return _stomp.IAngularVector_size(*args)
+    def clear(*args): return _stomp.IAngularVector_clear(*args)
+    def swap(*args): return _stomp.IAngularVector_swap(*args)
+    def get_allocator(*args): return _stomp.IAngularVector_get_allocator(*args)
+    def begin(*args): return _stomp.IAngularVector_begin(*args)
+    def end(*args): return _stomp.IAngularVector_end(*args)
+    def rbegin(*args): return _stomp.IAngularVector_rbegin(*args)
+    def rend(*args): return _stomp.IAngularVector_rend(*args)
+    def pop_back(*args): return _stomp.IAngularVector_pop_back(*args)
+    def erase(*args): return _stomp.IAngularVector_erase(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_IAngularVector(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _stomp.IAngularVector_push_back(*args)
+    def front(*args): return _stomp.IAngularVector_front(*args)
+    def back(*args): return _stomp.IAngularVector_back(*args)
+    def assign(*args): return _stomp.IAngularVector_assign(*args)
+    def resize(*args): return _stomp.IAngularVector_resize(*args)
+    def insert(*args): return _stomp.IAngularVector_insert(*args)
+    def reserve(*args): return _stomp.IAngularVector_reserve(*args)
+    def capacity(*args): return _stomp.IAngularVector_capacity(*args)
+    __swig_destroy__ = _stomp.delete_IAngularVector
+    __del__ = lambda self : None;
+IAngularVector_swigregister = _stomp.IAngularVector_swigregister
+IAngularVector_swigregister(IAngularVector)
 
 class PixelVector(_object):
     __swig_setmethods__ = {}
@@ -1662,6 +1932,52 @@ class DoubleVector(_object):
     __del__ = lambda self : None;
 DoubleVector_swigregister = _stomp.DoubleVector_swigregister
 DoubleVector_swigregister(DoubleVector)
+
+class IndexVector(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, IndexVector, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, IndexVector, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.IndexVector_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.IndexVector___nonzero__(*args)
+    def __len__(*args): return _stomp.IndexVector___len__(*args)
+    def pop(*args): return _stomp.IndexVector_pop(*args)
+    def __getslice__(*args): return _stomp.IndexVector___getslice__(*args)
+    def __setslice__(*args): return _stomp.IndexVector___setslice__(*args)
+    def __delslice__(*args): return _stomp.IndexVector___delslice__(*args)
+    def __delitem__(*args): return _stomp.IndexVector___delitem__(*args)
+    def __getitem__(*args): return _stomp.IndexVector___getitem__(*args)
+    def __setitem__(*args): return _stomp.IndexVector___setitem__(*args)
+    def append(*args): return _stomp.IndexVector_append(*args)
+    def empty(*args): return _stomp.IndexVector_empty(*args)
+    def size(*args): return _stomp.IndexVector_size(*args)
+    def clear(*args): return _stomp.IndexVector_clear(*args)
+    def swap(*args): return _stomp.IndexVector_swap(*args)
+    def get_allocator(*args): return _stomp.IndexVector_get_allocator(*args)
+    def begin(*args): return _stomp.IndexVector_begin(*args)
+    def end(*args): return _stomp.IndexVector_end(*args)
+    def rbegin(*args): return _stomp.IndexVector_rbegin(*args)
+    def rend(*args): return _stomp.IndexVector_rend(*args)
+    def pop_back(*args): return _stomp.IndexVector_pop_back(*args)
+    def erase(*args): return _stomp.IndexVector_erase(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_IndexVector(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _stomp.IndexVector_push_back(*args)
+    def front(*args): return _stomp.IndexVector_front(*args)
+    def back(*args): return _stomp.IndexVector_back(*args)
+    def assign(*args): return _stomp.IndexVector_assign(*args)
+    def resize(*args): return _stomp.IndexVector_resize(*args)
+    def insert(*args): return _stomp.IndexVector_insert(*args)
+    def reserve(*args): return _stomp.IndexVector_reserve(*args)
+    def capacity(*args): return _stomp.IndexVector_capacity(*args)
+    __swig_destroy__ = _stomp.delete_IndexVector
+    __del__ = lambda self : None;
+IndexVector_swigregister = _stomp.IndexVector_swigregister
+IndexVector_swigregister(IndexVector)
 
 
 
