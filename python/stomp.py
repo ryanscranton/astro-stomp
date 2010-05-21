@@ -205,6 +205,7 @@ class AngularCorrelation(_object):
     def FindPixelCrossCorrelation(*args): return _stomp.AngularCorrelation_FindPixelCrossCorrelation(*args)
     def FindPairAutoCorrelation(*args): return _stomp.AngularCorrelation_FindPairAutoCorrelation(*args)
     def FindPairCrossCorrelation(*args): return _stomp.AngularCorrelation_FindPairCrossCorrelation(*args)
+    def Write(*args): return _stomp.AngularCorrelation_Write(*args)
     def ThetaMin(*args): return _stomp.AngularCorrelation_ThetaMin(*args)
     def ThetaMax(*args): return _stomp.AngularCorrelation_ThetaMax(*args)
     def Sin2ThetaMin(*args): return _stomp.AngularCorrelation_Sin2ThetaMin(*args)

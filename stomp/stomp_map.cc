@@ -1614,7 +1614,8 @@ void Map::GenerateRandomPoints(AngularVector& ang, uint32_t n_point,
   }
 }
 
-void Map::GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang) {
+void Map::GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
+			       bool filter_input_points) {
   if (!ang.empty()) ang.clear();
   ang.reserve(input_ang.size());
 
@@ -1626,25 +1627,28 @@ void Map::GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang) {
 
   WeightedAngularCoordinate tmp_ang;
   for (uint32_t m=0;m<input_ang.size();m++) {
-    bool keep = false;
-    double lambda, eta, z, map_weight;
-    uint32_t n,k;
+    if (!filter_input_points ||
+	(filter_input_points && Contains(input_ang[m]))) {
+      bool keep = false;
+      double lambda, eta, z, map_weight;
+      uint32_t n,k;
 
-    while (!keep) {
-      n = mtrand.randInt(superpix.size()-1);
-      k = superpix[n].Superpixnum();
+      while (!keep) {
+	n = mtrand.randInt(superpix.size()-1);
+	k = superpix[n].Superpixnum();
 
-      z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
-					   sub_map_[k].ZMin());
-      lambda = asin(z)*RadToDeg;
-      eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
-					       sub_map_[k].EtaMin());
-      tmp_ang.SetSurveyCoordinates(lambda,eta);
+	z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
+					     sub_map_[k].ZMin());
+	lambda = asin(z)*RadToDeg;
+	eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
+						 sub_map_[k].EtaMin());
+	tmp_ang.SetSurveyCoordinates(lambda,eta);
 
-      keep = sub_map_[k].FindLocation(tmp_ang, map_weight);
+	keep = sub_map_[k].FindLocation(tmp_ang, map_weight);
+      }
+      tmp_ang.SetWeight(input_ang[m].Weight());
+      ang.push_back(tmp_ang);
     }
-    tmp_ang.SetWeight(input_ang[m].Weight());
-    ang.push_back(tmp_ang);
   }
 }
 

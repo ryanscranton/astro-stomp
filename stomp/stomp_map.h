@@ -307,8 +307,10 @@ class Map : public BaseMap {
   // vector of WeightedAngularCoordinate objects where we want to randomize
   // the positions or a vector of weights that need random angular positions
   // to go along with them.  In either case, the number of random positions
-  // is taken from the size of the input vector.
-  void GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang);
+  // is taken from the size of the input vector (or the number of input points
+  // within the current Map if the filter flag is set to true).
+  void GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
+			    bool filter_input_points = false);
   void GenerateRandomPoints(WAngularVector& ang, std::vector<double>& weights);
 
   // The book-end to the initialization method that takes an ASCII filename

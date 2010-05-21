@@ -3238,36 +3238,6 @@ SWIG_AsVal_unsigned_SS_short (PyObject * obj, unsigned short *val)
 }
 
 
-SWIGINTERN int
-SWIG_AsVal_int (PyObject * obj, int *val)
-{
-  long v;
-  int res = SWIG_AsVal_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v < INT_MIN || v > INT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< int >(v);
-    }
-  }  
-  return res;
-}
-
-
-SWIGINTERNINLINE PyObject *
-SWIG_From_signed_SS_char  (signed char value)
-{    
-  return SWIG_From_long  (value);
-}
-
-
-SWIGINTERNINLINE PyObject *
-SWIG_From_unsigned_SS_short  (unsigned short value)
-{    
-  return SWIG_From_unsigned_SS_long  (value);
-}
-
-
 SWIGINTERN swig_type_info*
 SWIG_pchar_descriptor(void)
 {
@@ -3361,6 +3331,36 @@ SWIG_AsPtr_std_string (PyObject * obj, std::string **val)
     }
   }
   return SWIG_ERROR;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_int (PyObject * obj, int *val)
+{
+  long v;
+  int res = SWIG_AsVal_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < INT_MIN || v > INT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< int >(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_signed_SS_char  (signed char value)
+{    
+  return SWIG_From_long  (value);
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_unsigned_SS_short  (unsigned short value)
+{    
+  return SWIG_From_unsigned_SS_long  (value);
 }
 
 
@@ -11699,6 +11699,44 @@ fail:
     "  Possible C/C++ prototypes are:\n"
     "    FindPairCrossCorrelation(Stomp::AngularCorrelation *,Stomp::Map &,Stomp::WAngularVector &,Stomp::WAngularVector &,uint8_t)\n"
     "    FindPairCrossCorrelation(Stomp::AngularCorrelation *,Stomp::Map &,Stomp::WAngularVector &,Stomp::WAngularVector &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCorrelation_Write(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  std::string *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCorrelation_Write",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation_Write" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCorrelation_Write" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCorrelation_Write" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  result = (bool)(arg1)->Write((std::string const &)*arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -28541,6 +28579,60 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints__SWIG_3(PyObject *SWIGUNUSED
   Stomp::Map *arg1 = (Stomp::Map *) 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   Stomp::WAngularVector *arg3 = 0 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:Map_GenerateRandomPoints",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Map, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Map_GenerateRandomPoints" "', argument " "1"" of type '" "Stomp::Map *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Map * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Map_GenerateRandomPoints" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_GenerateRandomPoints" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Map_GenerateRandomPoints" "', argument " "3"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_GenerateRandomPoints" "', argument " "3"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::WAngularVector * >(argp3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Map_GenerateRandomPoints" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  (arg1)->GenerateRandomPoints(*arg2,*arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Map *arg1 = (Stomp::Map *) 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::WAngularVector *arg3 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -28581,7 +28673,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::Map *arg1 = (Stomp::Map *) 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
@@ -28684,7 +28776,7 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints(PyObject *self, PyObject *ar
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_Map_GenerateRandomPoints__SWIG_3(self, args);
+          return _wrap_Map_GenerateRandomPoints__SWIG_4(self, args);
         }
       }
     }
@@ -28703,7 +28795,7 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints(PyObject *self, PyObject *ar
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_Map_GenerateRandomPoints__SWIG_4(self, args);
+          return _wrap_Map_GenerateRandomPoints__SWIG_5(self, args);
         }
       }
     }
@@ -28734,6 +28826,31 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints(PyObject *self, PyObject *ar
       }
     }
   }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_Map_GenerateRandomPoints__SWIG_3(self, args);
+          }
+        }
+      }
+    }
+  }
   
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Map_GenerateRandomPoints'.\n"
@@ -28741,6 +28858,7 @@ fail:
     "    GenerateRandomPoints(Stomp::Map *,Stomp::AngularVector &,uint32_t,bool)\n"
     "    GenerateRandomPoints(Stomp::Map *,Stomp::AngularVector &,uint32_t)\n"
     "    GenerateRandomPoints(Stomp::Map *,Stomp::AngularVector &)\n"
+    "    GenerateRandomPoints(Stomp::Map *,Stomp::WAngularVector &,Stomp::WAngularVector &,bool)\n"
     "    GenerateRandomPoints(Stomp::Map *,Stomp::WAngularVector &,Stomp::WAngularVector &)\n"
     "    GenerateRandomPoints(Stomp::Map *,Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &)\n");
   return NULL;
@@ -85185,6 +85303,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AngularCorrelation_FindPixelCrossCorrelation", _wrap_AngularCorrelation_FindPixelCrossCorrelation, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindPairAutoCorrelation", _wrap_AngularCorrelation_FindPairAutoCorrelation, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindPairCrossCorrelation", _wrap_AngularCorrelation_FindPairCrossCorrelation, METH_VARARGS, NULL},
+	 { (char *)"AngularCorrelation_Write", _wrap_AngularCorrelation_Write, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_ThetaMin", _wrap_AngularCorrelation_ThetaMin, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_ThetaMax", _wrap_AngularCorrelation_ThetaMax, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_Sin2ThetaMin", _wrap_AngularCorrelation_Sin2ThetaMin, METH_VARARGS, NULL},

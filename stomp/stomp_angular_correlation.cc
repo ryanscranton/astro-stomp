@@ -244,18 +244,32 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
 
 void AngularCorrelation::FindPixelAutoCorrelation(Map& stomp_map,
 						  WAngularVector& galaxy) {
+
+  std::cout << "Initialing ScalarMap at " << max_resolution_ << "...\n";
   ScalarMap* scalar_map = new ScalarMap(stomp_map, max_resolution_,
 					ScalarMap::DensityField);
   if (stomp_map.NRegion() > 0) {
+    std::cout << "Intializing regions...\n";
     scalar_map->InitializeRegions(stomp_map);
   }
 
-  uint32_t n_galaxy = 0;
-  for (WAngularIterator iter=galaxy.begin();iter!=galaxy.end();++iter)
-    if (scalar_map->AddToMap(*iter)) n_galaxy++;
-  if (n_galaxy != galaxy.size())
-    std::cout << "WARNING: Failed to place " << galaxy.size() - n_galaxy <<
-      "/" << galaxy.size() << " objects into map.\n";
+  std::cout << "Adding points to ScalarMap...\n";
+  uint32_t n_filtered = 0;
+  uint32_t n_kept = 0;
+  for (WAngularIterator iter=galaxy.begin();iter!=galaxy.end();++iter) {
+    if (stomp_map.Contains(*iter)) {
+      n_filtered++;
+      if (scalar_map->AddToMap(*iter)) n_kept++;
+    }
+  }
+
+  if (n_filtered != galaxy.size())
+    std::cout << "WARNING: " << galaxy.size() - n_filtered <<
+      "/" << galaxy.size() << " objects not within input Map.\n";
+
+  if (n_filtered != n_kept)
+    std::cout << "WARNING: Failed to place " << n_filtered - n_kept <<
+      "/" << n_filtered << " filtered objects into ScalarMap.\n";
 
   FindPixelAutoCorrelation(*scalar_map);
 
@@ -304,19 +318,37 @@ void AngularCorrelation::FindPixelCrossCorrelation(Map& stomp_map,
     scalar_map_b->InitializeRegions(stomp_map);
   }
 
-  uint32_t n_galaxy = 0;
-  for (WAngularIterator iter=galaxy_a.begin();iter!=galaxy_a.end();++iter)
-    if (scalar_map_a->AddToMap(*iter)) n_galaxy++;
-  if (n_galaxy != galaxy_a.size())
-    std::cout << "WARNING: Failed to place " << galaxy_a.size() - n_galaxy <<
-      "/" << galaxy_a.size() << " objects into map.\n";
+  uint32_t n_filtered = 0;
+  uint32_t n_kept = 0;
+  for (WAngularIterator iter=galaxy_a.begin();iter!=galaxy_a.end();++iter) {
+    if (stomp_map.Contains(*iter)) {
+      n_filtered++;
+      if (scalar_map_a->AddToMap(*iter)) n_kept++;
+    }
+  }
 
-  n_galaxy = 0;
-  for (WAngularIterator iter=galaxy_b.begin();iter!=galaxy_b.end();++iter)
-    if (scalar_map_b->AddToMap(*iter)) n_galaxy++;
-  if (n_galaxy != galaxy_b.size())
-    std::cout << "WARNING: Failed to place " << galaxy_b.size() - n_galaxy <<
-      "/" << galaxy_b.size() << " objects into map.\n";
+  if (n_filtered != galaxy_a.size())
+    std::cout << "WARNING: " << galaxy_a.size() - n_filtered <<
+      "/" << galaxy_a.size() << " objects not within input Map.\n";
+  if (n_filtered != n_kept)
+    std::cout << "WARNING: Failed to place " << n_filtered - n_kept <<
+      "/" << n_filtered << " filtered objects into ScalarMap.\n";
+
+  n_filtered = 0;
+  n_kept = 0;
+  for (WAngularIterator iter=galaxy_b.begin();iter!=galaxy_b.end();++iter) {
+    if (stomp_map.Contains(*iter)) {
+      n_filtered++;
+      if (scalar_map_b->AddToMap(*iter)) n_kept++;
+    }
+  }
+
+  if (n_filtered != galaxy_b.size())
+    std::cout << "WARNING: " << galaxy_b.size() - n_filtered <<
+      "/" << galaxy_b.size() << " objects not within input Map.\n";
+  if (n_filtered != n_kept)
+    std::cout << "WARNING: Failed to place " << n_filtered - n_kept <<
+      "/" << n_filtered << " filtered objects into ScalarMap.\n";
 
   FindPixelCrossCorrelation(*scalar_map_a, *scalar_map_b);
 
@@ -367,12 +399,21 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
 						 uint8_t random_iterations) {
   TreeMap* galaxy_tree = new TreeMap(min_resolution_, 200);
 
+  uint32_t n_kept = 0;
+  uint32_t n_fail = 0;
   for (WAngularIterator iter=galaxy.begin();iter!=galaxy.end();++iter) {
-    if (!galaxy_tree->AddPoint(*iter)) {
-      std::cout << "Failed to add point: " << iter->Lambda() << ", " <<
-	iter->Eta() << "\n";
+    if (stomp_map.Contains(*iter)) {
+      n_kept++;
+      if (!galaxy_tree->AddPoint(*iter)) {
+	std::cout << "Failed to add point: " << iter->Lambda() << ", " <<
+	  iter->Eta() << "\n";
+	n_fail++;
+      }
     }
   }
+  std::cout << n_kept - n_fail << "/" << galaxy.size() <<
+    " objects added to tree;" << n_fail << " failed adds...\n";
+
 
   if (stomp_map.NRegion() > 0) {
     if (!galaxy_tree->InitializeRegions(stomp_map)) {
@@ -404,11 +445,12 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
   }
 
   for (uint8_t rand_iter=0;rand_iter<random_iterations;rand_iter++) {
-    std::cout << "\tRandom iteration " << rand_iter << "...\n";
+    std::cout << "\tRandom iteration " <<
+      static_cast<int>(rand_iter) << "...\n";
 
     // Generate set of random points based on the input galaxy file and map.
     WAngularVector random_galaxy;
-    stomp_map.GenerateRandomPoints(random_galaxy, galaxy);
+    stomp_map.GenerateRandomPoints(random_galaxy, galaxy, true);
 
     // Create the TreeMap from those random points.
     TreeMap* random_tree = new TreeMap(min_resolution_, 200);
@@ -467,12 +509,20 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
 						  uint8_t random_iterations) {
   TreeMap* galaxy_tree_a = new TreeMap(min_resolution_, 200);
 
+  uint32_t n_kept = 0;
+  uint32_t n_fail = 0;
   for (WAngularIterator iter=galaxy_a.begin();iter!=galaxy_a.end();++iter) {
-    if (!galaxy_tree_a->AddPoint(*iter)) {
-      std::cout << "Failed to add point: " << iter->Lambda() << ", " <<
-	iter->Eta() << "\n";
+    if (stomp_map.Contains(*iter)) {
+      n_kept++;
+      if (!galaxy_tree_a->AddPoint(*iter)) {
+	std::cout << "Failed to add point: " << iter->Lambda() << ", " <<
+	  iter->Eta() << "\n";
+	n_fail++;
+      }
     }
   }
+  std::cout << n_kept - n_fail << "/" << galaxy_a.size() <<
+    " objects added to tree;" << n_fail << " failed adds...\n";
 
   if (stomp_map.NRegion() > 0) {
     if (!galaxy_tree_a->InitializeRegions(stomp_map)) {
@@ -506,10 +556,10 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
 
   for (uint8_t rand_iter=0;rand_iter<random_iterations;rand_iter++) {
     WAngularVector random_galaxy_a;
-    stomp_map.GenerateRandomPoints(random_galaxy_a, galaxy_a);
+    stomp_map.GenerateRandomPoints(random_galaxy_a, galaxy_a, true);
 
     WAngularVector random_galaxy_b;
-    stomp_map.GenerateRandomPoints(random_galaxy_b, galaxy_b);
+    stomp_map.GenerateRandomPoints(random_galaxy_b, galaxy_b, true);
 
     // Galaxy-Random
     for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
@@ -570,6 +620,30 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     iter->RescaleRandGal(1.0*random_iterations);
     iter->RescaleRandRand(1.0*random_iterations);
   }
+}
+
+bool AngularCorrelation::Write(const std::string& output_file_name) {
+  bool wrote_file = false;
+
+  std::ofstream output_file(output_file_name.c_str());
+
+  if (output_file.is_open()) {
+    wrote_file = true;
+
+    for (ThetaIterator iter=Begin();iter!=End();++iter) {
+      if (iter->NRegion()) {
+	output_file << std::setprecision(6) << iter->Theta() << " " <<
+	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
+      } else {
+	output_file << std::setprecision(6) << iter->Theta() << " " <<
+	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
+      }
+    }
+
+    output_file.close();
+  }
+
+  return wrote_file;
 }
 
 double AngularCorrelation::ThetaMin(uint32_t resolution) {
