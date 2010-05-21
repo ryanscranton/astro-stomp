@@ -134,6 +134,8 @@ class AngularBin(_object):
     def Wtheta(*args): return _stomp.AngularBin_Wtheta(*args)
     def WthetaError(*args): return _stomp.AngularBin_WthetaError(*args)
     def WeightedCrossCorrelation(*args): return _stomp.AngularBin_WeightedCrossCorrelation(*args)
+    def PixelWtheta(*args): return _stomp.AngularBin_PixelWtheta(*args)
+    def PixelWeight(*args): return _stomp.AngularBin_PixelWeight(*args)
     def Weight(*args): return _stomp.AngularBin_Weight(*args)
     def Counter(*args): return _stomp.AngularBin_Counter(*args)
     def GalGal(*args): return _stomp.AngularBin_GalGal(*args)

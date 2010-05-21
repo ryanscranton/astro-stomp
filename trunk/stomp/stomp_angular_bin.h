@@ -155,6 +155,10 @@ class AngularBin {
   double Wtheta(int16_t region = -1);
   double WthetaError(int16_t region = -1);
   double WeightedCrossCorrelation(int16_t region = -1);
+
+  // The getters for our data fields.
+  double PixelWtheta(int16_t region = -1);
+  double PixelWeight(int16_t region = -1);
   double Weight(int16_t region = -1);
   uint32_t Counter(int16_t region = -1);
   double GalGal(int16_t region = -1);

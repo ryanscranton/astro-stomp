@@ -390,6 +390,16 @@ double AngularBin::WeightedCrossCorrelation(int16_t region) {
 	   weight_region_[region]/counter_region_[region] : -1.0));
 }
 
+double AngularBin::PixelWtheta(int16_t region) {
+  return (region == -1 ? pixel_wtheta_ :
+	  (region < n_region_ ? pixel_wtheta_region_[region] : -1.0));
+}
+
+double AngularBin::PixelWeight(int16_t region) {
+  return (region == -1 ? pixel_weight_ :
+	  (region < n_region_ ? pixel_weight_region_[region] : -1.0));
+}
+
 double AngularBin::Weight(int16_t region) {
   return (region == -1 ? weight_ :
 	  (region < n_region_ ? weight_region_[region] : -1.0));
