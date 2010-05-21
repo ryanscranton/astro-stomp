@@ -120,6 +120,16 @@ class AngularCorrelation {
 				WAngularVector& galaxy_b,
 				uint8_t random_iterations = 1);
 
+  // Once we're done calculating our correlation function, we can write it out
+  // to an ASCII file.  The output format will be
+  //
+  //   THETA   W(THETA)   dW(THETA)
+  //
+  // where THETA is the angular scale in degrees and dW(THETA) is the jack-knife
+  // error based on regionating the data.  If the angular correlation has been
+  // calculated without regions, then this column will be omitted.
+  bool Write(const std::string& output_file_name);
+
   // Now, some accessor methods for finding the angular range of the bins
   // with a given resolution attached to them (the default value returns the
   // results for all angular bins; for pair-based bins, resolution = -1).
