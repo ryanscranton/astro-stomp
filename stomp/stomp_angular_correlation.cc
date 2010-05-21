@@ -299,6 +299,8 @@ void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& stomp_map) {
 	  sub_scalar_map->Resolution() << "...\n";
 	sub_scalar_map->AutoCorrelateWithRegions(iter);
       } else {
+	std::cout << "\tAuto-correlating at " <<
+	  sub_scalar_map->Resolution() << "...\n";
 	sub_scalar_map->AutoCorrelate(iter);
       }
     }
@@ -309,11 +311,13 @@ void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& stomp_map) {
 void AngularCorrelation::FindPixelCrossCorrelation(Map& stomp_map,
 						   WAngularVector& galaxy_a,
 						   WAngularVector& galaxy_b) {
+  std::cout << "Initialing ScalarMaps at " << max_resolution_ << "...\n";
   ScalarMap* scalar_map_a = new ScalarMap(stomp_map, max_resolution_,
 					  ScalarMap::DensityField);
   ScalarMap* scalar_map_b = new ScalarMap(stomp_map, max_resolution_,
 					  ScalarMap::DensityField);
   if (stomp_map.NRegion() > 0) {
+    std::cout << "Intializing regions...\n";
     scalar_map_a->InitializeRegions(stomp_map);
     scalar_map_b->InitializeRegions(stomp_map);
   }
@@ -384,8 +388,12 @@ void AngularCorrelation::FindPixelCrossCorrelation(ScalarMap& map_a,
 
     for (ThetaIterator iter=Begin(resolution);iter!=End(resolution);++iter) {
       if (map_a.NRegion() > 0) {
+	std::cout << "\tCross-correlating with regions at " <<
+	  sub_map_a->Resolution() << "...\n";
 	sub_map_a->CrossCorrelateWithRegions(*sub_map_b, iter);
       } else {
+	std::cout << "\tCross-correlating at " <<
+	  sub_map_a->Resolution() << "...\n";
 	sub_map_a->CrossCorrelate(*sub_map_b, iter);
       }
     }
@@ -532,6 +540,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
   }
 
   // Galaxy-galaxy
+  std::cout << "\tGalaxy-galaxy pairs...\n";
   for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
     if (stomp_map.NRegion() > 0) {
       galaxy_tree_a->FindWeightedPairsWithRegions(galaxy_b, *iter);
@@ -555,6 +564,8 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
   }
 
   for (uint8_t rand_iter=0;rand_iter<random_iterations;rand_iter++) {
+    std::cout << "\tRandom iteration " <<
+      static_cast<int>(rand_iter) << "...\n";
     WAngularVector random_galaxy_a;
     stomp_map.GenerateRandomPoints(random_galaxy_a, galaxy_a, true);
 
@@ -635,8 +646,16 @@ bool AngularCorrelation::Write(const std::string& output_file_name) {
 	output_file << std::setprecision(6) << iter->Theta() << " " <<
 	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
       } else {
-	output_file << std::setprecision(6) << iter->Theta() << " " <<
-	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
+	if (iter->Resolution() == 0) {
+	  output_file << std::setprecision(6) << iter->Theta() << " " <<
+	    iter->Wtheta()  << " " << iter->GalGal() << " " <<
+	    iter->GalRand() << " " << iter->RandGal() << " " <<
+	    iter->RandRand() << "\n";
+	} else {
+	  output_file << std::setprecision(6) << iter->Theta() << " " <<
+	    iter->Wtheta()  << " " << iter->PixelWtheta() << " " <<
+	    iter->PixelWeight() << "\n";
+	}
       }
     }
 

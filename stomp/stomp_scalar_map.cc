@@ -1410,7 +1410,7 @@ void ScalarMap::CrossCorrelate(ScalarMap& scalar_map,
 
 	if (sub_map_[k].Initialized()) {
 	  if (Pixel::SuperPixelBasedOrder(*sub_map_[k].Begin(),
-					       tmp_left) ||
+					  tmp_left) ||
 	      Pixel::PixelMatch(*sub_map_[k].Begin(),tmp_left)) {
 	    iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(), tmp_left,
 			       Pixel::SuperPixelBasedOrder);
@@ -1472,7 +1472,7 @@ void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
 }
 
 void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
-					   ThetaIterator theta_iter) {
+					  ThetaIterator theta_iter) {
   if (resolution_ != scalar_map.Resolution()) {
     std::cout << "Map resolutions must match!  Exiting...\n";
     exit(1);

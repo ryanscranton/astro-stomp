@@ -8557,6 +8557,200 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularBin_PixelWtheta__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  int16_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularBin_PixelWtheta",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_PixelWtheta" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularBin_PixelWtheta" "', argument " "2"" of type '" "int16_t""'");
+  } 
+  arg2 = static_cast< int16_t >(val2);
+  result = (double)(arg1)->PixelWtheta(arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_PixelWtheta__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularBin_PixelWtheta",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_PixelWtheta" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  result = (double)(arg1)->PixelWtheta();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_PixelWtheta(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AngularBin_PixelWtheta__SWIG_1(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_short(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AngularBin_PixelWtheta__SWIG_0(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularBin_PixelWtheta'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    PixelWtheta(Stomp::AngularBin *,int16_t)\n"
+    "    PixelWtheta(Stomp::AngularBin *)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_PixelWeight__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  int16_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularBin_PixelWeight",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_PixelWeight" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularBin_PixelWeight" "', argument " "2"" of type '" "int16_t""'");
+  } 
+  arg2 = static_cast< int16_t >(val2);
+  result = (double)(arg1)->PixelWeight(arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_PixelWeight__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularBin_PixelWeight",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_PixelWeight" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  result = (double)(arg1)->PixelWeight();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_PixelWeight(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AngularBin_PixelWeight__SWIG_1(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_short(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AngularBin_PixelWeight__SWIG_0(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularBin_PixelWeight'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    PixelWeight(Stomp::AngularBin *,int16_t)\n"
+    "    PixelWeight(Stomp::AngularBin *)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularBin_Weight__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
@@ -85270,6 +85464,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AngularBin_Wtheta", _wrap_AngularBin_Wtheta, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_WthetaError", _wrap_AngularBin_WthetaError, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_WeightedCrossCorrelation", _wrap_AngularBin_WeightedCrossCorrelation, METH_VARARGS, NULL},
+	 { (char *)"AngularBin_PixelWtheta", _wrap_AngularBin_PixelWtheta, METH_VARARGS, NULL},
+	 { (char *)"AngularBin_PixelWeight", _wrap_AngularBin_PixelWeight, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_Weight", _wrap_AngularBin_Weight, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_Counter", _wrap_AngularBin_Counter, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_GalGal", _wrap_AngularBin_GalGal, METH_VARARGS, NULL},
