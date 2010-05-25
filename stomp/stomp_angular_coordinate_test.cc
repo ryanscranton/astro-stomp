@@ -502,7 +502,8 @@ void WAngularVectorFileIOTests() {
   Stomp::WAngularVector w_ang;
 
   if (Stomp::WeightedAngularCoordinate::ToWAngularVector(test_file, w_ang,
-							 sphere, 0, 1, 2)) {
+							 sphere, false,
+							 0, 1, 2)) {
     std::cout << "Read " << test_file << " to WAngularVector...\n";
   } else {
     std::cout << "Failed to read " << test_file << " to WAngularVector...\n";
@@ -535,7 +536,8 @@ void WAngularVectorFileIOTests() {
   test_file2_str.close();
 
   if (Stomp::WeightedAngularCoordinate::ToWAngularVector(test_file, w_ang,
-							 sphere, 6 , 2, 10)) {
+							 sphere, false,
+							 6 , 2, 10)) {
     std::cout << "Read " << test_file << " to WAngularVector...\n";
   } else {
     std::cout << "Failed to read " << test_file << " to WAngularVector...\n";
@@ -580,7 +582,7 @@ void WAngularVectorFileIOTests() {
 
   if (Stomp::WeightedAngularCoordinate::ToWAngularVector(test_file, w_ang,
 							 field_names, sphere,
-							 6 , 2, 10)) {
+							 false, 6 , 2, 10)) {
     std::cout << "Read " << test_file << " to WAngularVector...\n";
   } else {
     std::cout << "Failed to read " << test_file << " to WAngularVector...\n";
