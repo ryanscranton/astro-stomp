@@ -2613,53 +2613,55 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t swig_types[106]
 #define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t swig_types[107]
 #define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t swig_types[108]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[109]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[110]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[111]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[112]
-#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[113]
-#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[114]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[115]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[116]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type swig_types[117]
-#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type swig_types[118]
-#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t swig_types[119]
-#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t swig_types[120]
-#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t swig_types[121]
-#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type swig_types[122]
-#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__value_type swig_types[123]
-#define SWIGTYPE_p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t swig_types[124]
-#define SWIGTYPE_p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t swig_types[125]
-#define SWIGTYPE_p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t swig_types[126]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[127]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[128]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[129]
-#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[130]
-#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[131]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[132]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[133]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[134]
-#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[135]
-#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[136]
-#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[137]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[138]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[139]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[140]
-#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[141]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[142]
-#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type swig_types[143]
-#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[144]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[145]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[146]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t__allocator_type swig_types[147]
-#define SWIGTYPE_p_swig__PySwigIterator swig_types[148]
-#define SWIGTYPE_p_unsigned_char swig_types[149]
-#define SWIGTYPE_p_unsigned_int swig_types[150]
-#define SWIGTYPE_p_unsigned_long_long swig_types[151]
-#define SWIGTYPE_p_unsigned_short swig_types[152]
-#define SWIGTYPE_p_value_type swig_types[153]
-static swig_type_info *swig_types[155];
-static swig_module_info swig_module = {swig_types, 154, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator swig_types[109]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t swig_types[110]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t swig_types[111]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type swig_types[112]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__value_type swig_types[113]
+#define SWIGTYPE_p_std__vectorT_Stomp__AngularCorrelation_std__allocatorT_Stomp__AngularCorrelation_t_t swig_types[114]
+#define SWIGTYPE_p_std__vectorT_Stomp__CircleBound_std__allocatorT_Stomp__CircleBound_t_t swig_types[115]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_p_std__allocatorT_Stomp__CosmoCoordinate_p_t_t swig_types[116]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t swig_types[117]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type swig_types[118]
+#define SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type swig_types[119]
+#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t swig_types[120]
+#define SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator swig_types[121]
+#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t swig_types[122]
+#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t swig_types[123]
+#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type swig_types[124]
+#define SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__value_type swig_types[125]
+#define SWIGTYPE_p_std__vectorT_Stomp__LatLonBound_std__allocatorT_Stomp__LatLonBound_t_t swig_types[126]
+#define SWIGTYPE_p_std__vectorT_Stomp__LatitudeBound_std__allocatorT_Stomp__LatitudeBound_t_t swig_types[127]
+#define SWIGTYPE_p_std__vectorT_Stomp__LongitudeBound_std__allocatorT_Stomp__LongitudeBound_t_t swig_types[128]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_p_std__allocatorT_Stomp__Pixel_p_t_t swig_types[129]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t swig_types[130]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__allocator_type swig_types[131]
+#define SWIGTYPE_p_std__vectorT_Stomp__Pixel_std__allocatorT_Stomp__Pixel_t_t__value_type swig_types[132]
+#define SWIGTYPE_p_std__vectorT_Stomp__PolygonBound_std__allocatorT_Stomp__PolygonBound_t_t swig_types[133]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarMap_std__allocatorT_Stomp__ScalarMap_t_t swig_types[134]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_p_std__allocatorT_Stomp__ScalarPixel_p_t_t swig_types[135]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarPixel_std__allocatorT_Stomp__ScalarPixel_t_t swig_types[136]
+#define SWIGTYPE_p_std__vectorT_Stomp__ScalarSubMap_std__allocatorT_Stomp__ScalarSubMap_t_t swig_types[137]
+#define SWIGTYPE_p_std__vectorT_Stomp__SubMap_std__allocatorT_Stomp__SubMap_t_t swig_types[138]
+#define SWIGTYPE_p_std__vectorT_Stomp__WedgeBound_std__allocatorT_Stomp__WedgeBound_t_t swig_types[139]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_p_std__allocatorT_Stomp__WeightedAngularCoordinate_p_t_t swig_types[140]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t swig_types[141]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__allocator_type swig_types[142]
+#define SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t__value_type swig_types[143]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t swig_types[144]
+#define SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t__allocator_type swig_types[145]
+#define SWIGTYPE_p_std__vectorT_signed_char_std__allocatorT_signed_char_t_t swig_types[146]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[147]
+#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[148]
+#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t__allocator_type swig_types[149]
+#define SWIGTYPE_p_swig__PySwigIterator swig_types[150]
+#define SWIGTYPE_p_unsigned_char swig_types[151]
+#define SWIGTYPE_p_unsigned_int swig_types[152]
+#define SWIGTYPE_p_unsigned_long_long swig_types[153]
+#define SWIGTYPE_p_unsigned_short swig_types[154]
+#define SWIGTYPE_p_value_type swig_types[155]
+static swig_type_info *swig_types[157];
+static swig_module_info swig_module = {swig_types, 156, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3333,6 +3335,17 @@ SWIG_AsPtr_std_string (PyObject * obj, std::string **val)
   return SWIG_ERROR;
 }
 
+SWIGINTERN std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *Stomp_AngularCorrelation__begin_Bins(Stomp::AngularCorrelation *self){
+    return new std::vector<Stomp::AngularBin>::const_iterator( (self)->Begin() );
+}
+SWIGINTERN Stomp::AngularBin const *Stomp_AngularCorrelation__deref_Bins(Stomp::AngularCorrelation *self,std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator const *iter){
+    // if at the end, return NULL
+    if (*iter == (self)->End() ) {
+        return NULL;
+    }
+    // otherwise, return the POINTER to the dereferenced iterator
+    return &(**iter);
+}
 
 SWIGINTERN int
 SWIG_AsVal_int (PyObject * obj, int *val)
@@ -3370,6 +3383,17 @@ SWIG_From_int  (int value)
   return SWIG_From_long  (value);
 }
 
+SWIGINTERN std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *Stomp_Histogram__begin_Bins(Stomp::Histogram *self){
+    return new std::vector<Stomp::HistogramBin>::const_iterator( (self)->Begin() );
+}
+SWIGINTERN Stomp::HistogramBin const *Stomp_Histogram__deref_Bins(Stomp::Histogram *self,std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator const *iter){
+    // if at the end, return NULL
+    if (*iter == (self)->End() ) {
+        return NULL;
+    }
+    // otherwise, return the POINTER to the dereferenced iterator
+    return &(**iter);
+}
 
 SWIGINTERN int
 SWIG_AsVal_signed_SS_char (PyObject * obj, signed char *val)
@@ -5326,6 +5350,18 @@ SWIGINTERN void std_vector_Sl_uint32_t_Sg____setitem__(std::vector< uint32_t > *
 SWIGINTERN void std_vector_Sl_uint32_t_Sg__append(std::vector< uint32_t > *self,std::vector< unsigned int >::value_type const &x){
       self->push_back(x);
     }
+
+void _iter_incr( std::vector<Stomp::AngularBin>::const_iterator* iter )
+{
+    ++(*iter);
+}
+
+
+void _iter_incr( std::vector<Stomp::HistogramBin>::const_iterator* iter )
+{
+    ++(*iter);
+}
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -12739,6 +12775,59 @@ SWIGINTERN PyObject *_wrap_AngularCorrelation_MaxResolution(PyObject *SWIGUNUSED
   arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
   result = (uint32_t)(arg1)->MaxResolution();
   resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCorrelation__begin_Bins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCorrelation__begin_Bins",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation__begin_Bins" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  result = (std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *)Stomp_AngularCorrelation__begin_Bins(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCorrelation__deref_Bins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *arg2 = (std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  Stomp::AngularBin *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCorrelation__deref_Bins",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation__deref_Bins" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCorrelation__deref_Bins" "', argument " "2"" of type '" "std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator const *""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator * >(argp2);
+  result = (Stomp::AngularBin *)Stomp_AngularCorrelation__deref_Bins(arg1,(std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator const *)arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -41013,6 +41102,59 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Histogram__begin_Bins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Histogram__begin_Bins",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram__begin_Bins" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  result = (std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *)Stomp_Histogram__begin_Bins(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Histogram__deref_Bins(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Histogram *arg1 = (Stomp::Histogram *) 0 ;
+  std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *arg2 = (std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  Stomp::HistogramBin *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Histogram__deref_Bins",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Histogram, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Histogram__deref_Bins" "', argument " "1"" of type '" "Stomp::Histogram *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Histogram * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Histogram__deref_Bins" "', argument " "2"" of type '" "std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator const *""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator * >(argp2);
+  result = (Stomp::HistogramBin *)Stomp_Histogram__deref_Bins(arg1,(std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator const *)arg2);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__HistogramBin, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *Histogram_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -41171,6 +41313,55 @@ SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_0(PyObject *SWIGUNUSEDPAR
   double arg1 ;
   double arg2 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  Stomp::AngularCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_AngularCoordinate",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_AngularCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_AngularCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_AngularCoordinate" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_AngularCoordinate" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  result = (Stomp::AngularCoordinate *)new Stomp::AngularCoordinate(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__AngularCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -41206,7 +41397,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -41237,7 +41428,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double val1 ;
@@ -41259,7 +41450,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *result = 0 ;
   
@@ -41272,7 +41463,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_AngularCoordinate__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -41314,16 +41505,16 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_AngularCoordinate(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[4];
+  PyObject *argv[5];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
-    return _wrap_new_AngularCoordinate__SWIG_3(self, args);
+    return _wrap_new_AngularCoordinate__SWIG_4(self, args);
   }
   if (argc == 1) {
     int _v;
@@ -41332,7 +41523,7 @@ SWIGINTERN PyObject *_wrap_new_AngularCoordinate(PyObject *self, PyObject *args)
       _v = SWIG_CheckState(res);
     }
     if (_v) {
-      return _wrap_new_AngularCoordinate__SWIG_2(self, args);
+      return _wrap_new_AngularCoordinate__SWIG_3(self, args);
     }
   }
   if (argc == 2) {
@@ -41347,7 +41538,7 @@ SWIGINTERN PyObject *_wrap_new_AngularCoordinate(PyObject *self, PyObject *args)
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_new_AngularCoordinate__SWIG_1(self, args);
+        return _wrap_new_AngularCoordinate__SWIG_2(self, args);
       }
     }
   }
@@ -41368,7 +41559,7 @@ SWIGINTERN PyObject *_wrap_new_AngularCoordinate(PyObject *self, PyObject *args)
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_new_AngularCoordinate__SWIG_0(self, args);
+          return _wrap_new_AngularCoordinate__SWIG_1(self, args);
         }
       }
     }
@@ -41390,7 +41581,35 @@ SWIGINTERN PyObject *_wrap_new_AngularCoordinate(PyObject *self, PyObject *args)
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_new_AngularCoordinate__SWIG_4(self, args);
+          return _wrap_new_AngularCoordinate__SWIG_5(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_new_AngularCoordinate__SWIG_0(self, args);
+          }
         }
       }
     }
@@ -41399,6 +41618,7 @@ SWIGINTERN PyObject *_wrap_new_AngularCoordinate(PyObject *self, PyObject *args)
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_AngularCoordinate'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    Stomp::AngularCoordinate(double,double,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    Stomp::AngularCoordinate(double,double,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::AngularCoordinate(double,double)\n"
     "    Stomp::AngularCoordinate(double)\n"
@@ -41429,7 +41649,55 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_SetSurveyCoordinates(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetSurveyCoordinates__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_SetSurveyCoordinates",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_SetSurveyCoordinates" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SetSurveyCoordinates" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_SetSurveyCoordinates" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_SetSurveyCoordinates" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  (arg1)->SetSurveyCoordinates(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetSurveyCoordinates__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   double arg2 ;
@@ -41468,7 +41736,123 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_SetEquatorialCoordinates(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetSurveyCoordinates(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_AngularCoordinate_SetSurveyCoordinates__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_SetSurveyCoordinates__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_SetSurveyCoordinates'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetSurveyCoordinates(Stomp::AngularCoordinate *,double,double,bool)\n"
+    "    SetSurveyCoordinates(Stomp::AngularCoordinate *,double,double)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetEquatorialCoordinates__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_SetEquatorialCoordinates",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_SetEquatorialCoordinates" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SetEquatorialCoordinates" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_SetEquatorialCoordinates" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_SetEquatorialCoordinates" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  (arg1)->SetEquatorialCoordinates(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetEquatorialCoordinates__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   double arg2 ;
@@ -41507,7 +41891,123 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_SetGalacticCoordinates(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetEquatorialCoordinates(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_AngularCoordinate_SetEquatorialCoordinates__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_SetEquatorialCoordinates__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_SetEquatorialCoordinates'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetEquatorialCoordinates(Stomp::AngularCoordinate *,double,double,bool)\n"
+    "    SetEquatorialCoordinates(Stomp::AngularCoordinate *,double,double)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetGalacticCoordinates__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_SetGalacticCoordinates",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_SetGalacticCoordinates" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SetGalacticCoordinates" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_SetGalacticCoordinates" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_SetGalacticCoordinates" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  (arg1)->SetGalacticCoordinates(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetGalacticCoordinates__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   double arg2 ;
@@ -41542,6 +42042,74 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_SetGalacticCoordinates(PyObject *SW
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SetGalacticCoordinates(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_AngularCoordinate_SetGalacticCoordinates__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_SetGalacticCoordinates__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_SetGalacticCoordinates'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetGalacticCoordinates(Stomp::AngularCoordinate *,double,double,bool)\n"
+    "    SetGalacticCoordinates(Stomp::AngularCoordinate *,double,double)\n");
   return NULL;
 }
 
@@ -41731,7 +42299,64 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_Set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_Set__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_Set",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_Set" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_Set" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_Set" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_Set" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_Set" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  (arg1)->Set(arg2,arg3,arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_Set__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   double arg2 ;
@@ -41779,6 +42404,86 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularCoordinate_Set(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_Set__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_Set__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_Set'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Set(Stomp::AngularCoordinate *,double,double,Stomp::AngularCoordinate::Sphere,bool)\n"
+    "    Set(Stomp::AngularCoordinate *,double,double,Stomp::AngularCoordinate::Sphere)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularCoordinate_Lambda(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
@@ -41816,6 +42521,50 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_Eta(PyObject *SWIGUNUSEDPARM(self),
   }
   arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
   result = (double)(arg1)->Eta();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_LambdaRadians(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCoordinate_LambdaRadians",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_LambdaRadians" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  result = (double)(arg1)->LambdaRadians();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EtaRadians(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCoordinate_EtaRadians",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_EtaRadians" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  result = (double)(arg1)->EtaRadians();
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -41867,6 +42616,50 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularCoordinate_RARadians(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCoordinate_RARadians",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_RARadians" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  result = (double)(arg1)->RARadians();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_DECRadians(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCoordinate_DECRadians",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_DECRadians" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  result = (double)(arg1)->DECRadians();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularCoordinate_GalLon(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
@@ -41911,7 +42704,51 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereX(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalLonRadians(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCoordinate_GalLonRadians",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_GalLonRadians" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  result = (double)(arg1)->GalLonRadians();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalLatRadians(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCoordinate_GalLatRadians",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_GalLatRadians" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  result = (double)(arg1)->GalLatRadians();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereX__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   void *argp1 = 0 ;
@@ -41933,7 +42770,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereY(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereY__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   void *argp1 = 0 ;
@@ -41955,7 +42792,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereZ__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   void *argp1 = 0 ;
@@ -41973,6 +42810,231 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereZ(PyObject *SWIGUNUSEDPAR
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereX__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  Stomp::AngularCoordinate::Sphere arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_UnitSphereX",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_UnitSphereX" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_UnitSphereX" "', argument " "2"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg2 = static_cast< Stomp::AngularCoordinate::Sphere >(val2);
+  result = (double)(arg1)->UnitSphereX(arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereX(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AngularCoordinate_UnitSphereX__SWIG_0(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AngularCoordinate_UnitSphereX__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_UnitSphereX'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    UnitSphereX(Stomp::AngularCoordinate *)\n"
+    "    UnitSphereX(Stomp::AngularCoordinate *,Stomp::AngularCoordinate::Sphere)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereY__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  Stomp::AngularCoordinate::Sphere arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_UnitSphereY",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_UnitSphereY" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_UnitSphereY" "', argument " "2"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg2 = static_cast< Stomp::AngularCoordinate::Sphere >(val2);
+  result = (double)(arg1)->UnitSphereY(arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereY(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AngularCoordinate_UnitSphereY__SWIG_0(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AngularCoordinate_UnitSphereY__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_UnitSphereY'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    UnitSphereY(Stomp::AngularCoordinate *)\n"
+    "    UnitSphereY(Stomp::AngularCoordinate *,Stomp::AngularCoordinate::Sphere)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereZ__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  Stomp::AngularCoordinate::Sphere arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_UnitSphereZ",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_UnitSphereZ" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_UnitSphereZ" "', argument " "2"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg2 = static_cast< Stomp::AngularCoordinate::Sphere >(val2);
+  result = (double)(arg1)->UnitSphereZ(arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_UnitSphereZ(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[3];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AngularCoordinate_UnitSphereZ__SWIG_0(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AngularCoordinate_UnitSphereZ__SWIG_1(self, args);
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_UnitSphereZ'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    UnitSphereZ(Stomp::AngularCoordinate *)\n"
+    "    UnitSphereZ(Stomp::AngularCoordinate *,Stomp::AngularCoordinate::Sphere)\n");
   return NULL;
 }
 
@@ -42045,7 +43107,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_CrossProduct(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_CrossProduct__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   Stomp::AngularCoordinate *arg2 = 0 ;
@@ -42088,7 +43150,95 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_GreatCircle(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_CrossProduct__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  Stomp::AngularCoordinate result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCoordinate_CrossProduct",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_CrossProduct" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCoordinate_CrossProduct" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_CrossProduct" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  result = (arg1)->CrossProduct(*arg2);
+  resultobj = SWIG_NewPointerObj((new Stomp::AngularCoordinate(static_cast< const Stomp::AngularCoordinate& >(result))), SWIGTYPE_p_Stomp__AngularCoordinate, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_CrossProduct(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_AngularCoordinate_CrossProduct__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_AngularCoordinate_CrossProduct__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_CrossProduct'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    CrossProduct(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,Stomp::AngularCoordinate::Sphere)\n"
+    "    CrossProduct(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GreatCircle__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
   Stomp::AngularCoordinate *arg2 = 0 ;
@@ -42138,6 +43288,115 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_GreatCircle(PyObject *SWIGUNUSEDPAR
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GreatCircle__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  Stomp::AngularCoordinate *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:AngularCoordinate_GreatCircle",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_GreatCircle" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCoordinate_GreatCircle" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GreatCircle" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_GreatCircle" "', argument " "3"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_GreatCircle" "', argument " "3"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::AngularCoordinate * >(argp3);
+  (arg1)->GreatCircle(*arg2,*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GreatCircle(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          return _wrap_AngularCoordinate_GreatCircle__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_GreatCircle__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_GreatCircle'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GreatCircle(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,Stomp::AngularCoordinate &,Stomp::AngularCoordinate::Sphere)\n"
+    "    GreatCircle(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,Stomp::AngularCoordinate &)\n");
   return NULL;
 }
 
@@ -43084,14 +44343,113 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularCoordinate_Rotate__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCoordinate *arg1 = (Stomp::AngularCoordinate *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  double arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  double *arg5 = 0 ;
+  double *arg6 = 0 ;
+  double *arg7 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  double temp5 ;
+  int res5 = 0 ;
+  double temp6 ;
+  int res6 = 0 ;
+  double temp7 ;
+  int res7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:AngularCoordinate_Rotate",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCoordinate, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_Rotate" "', argument " "1"" of type '" "Stomp::AngularCoordinate *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCoordinate * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCoordinate_Rotate" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_Rotate" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_Rotate" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_Rotate" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_Rotate" "', argument " "5"" of type '" "double""'");
+    }
+    temp5 = static_cast< double >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res6 = SWIG_ConvertPtr(obj5,SWIG_as_voidptrptr(&arg6),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj5, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_Rotate" "', argument " "6"" of type '" "double""'");
+    }
+    temp6 = static_cast< double >(val);
+    arg6 = &temp6;
+    res6 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res7 = SWIG_ConvertPtr(obj6,SWIG_as_voidptrptr(&arg7),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj6, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_Rotate" "', argument " "7"" of type '" "double""'");
+    }
+    temp7 = static_cast< double >(val);
+    arg7 = &temp7;
+    res7 = SWIG_AddTmpMask(ecode);
+  }
+  (arg1)->Rotate(*arg2,arg3,arg4,*arg5,*arg6,*arg7);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  if (SWIG_IsNewObj(res6)) delete arg6;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularCoordinate_Rotate(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[6];
+  PyObject *argv[8];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 3) {
@@ -43196,6 +44554,56 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_Rotate(PyObject *self, PyObject *ar
       }
     }
   }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_double(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+            }
+            if (_v) {
+              void *ptr = 0;
+              int res = SWIG_AsVal_double(argv[5], 0);
+              _v = SWIG_CheckState(res);
+              if (!_v) {
+                _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[5],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+              }
+              if (_v) {
+                void *ptr = 0;
+                int res = SWIG_AsVal_double(argv[6], 0);
+                _v = SWIG_CheckState(res);
+                if (!_v) {
+                  _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[6],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+                }
+                if (_v) {
+                  return _wrap_AngularCoordinate_Rotate__SWIG_4(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_Rotate'.\n"
@@ -43203,12 +44611,84 @@ fail:
     "    Rotate(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,double,Stomp::AngularCoordinate::Sphere)\n"
     "    Rotate(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,double)\n"
     "    Rotate(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,double,Stomp::AngularCoordinate &,Stomp::AngularCoordinate::Sphere)\n"
-    "    Rotate(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,double,Stomp::AngularCoordinate &)\n");
+    "    Rotate(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,double,Stomp::AngularCoordinate &)\n"
+    "    Rotate(Stomp::AngularCoordinate *,Stomp::AngularCoordinate &,double,Stomp::AngularCoordinate::Sphere,double &,double &,double &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToGalactic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToGalactic__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_SurveyToGalactic",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_SurveyToGalactic" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  Stomp::AngularCoordinate::SurveyToGalactic(arg1,arg2,*arg3,*arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToGalactic__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43270,7 +44750,168 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToEquatorial(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToGalactic(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_SurveyToGalactic__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_SurveyToGalactic__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_SurveyToGalactic'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SurveyToGalactic(double,double,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::SurveyToGalactic(double,double,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToEquatorial__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_SurveyToEquatorial",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_SurveyToEquatorial" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  Stomp::AngularCoordinate::SurveyToEquatorial(arg1,arg2,*arg3,*arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToEquatorial__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43332,7 +44973,168 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToSurvey(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToEquatorial(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_SurveyToEquatorial__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_SurveyToEquatorial__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_SurveyToEquatorial'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SurveyToEquatorial(double,double,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::SurveyToEquatorial(double,double,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToSurvey__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_EquatorialToSurvey",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_EquatorialToSurvey" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  Stomp::AngularCoordinate::EquatorialToSurvey(arg1,arg2,*arg3,*arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToSurvey__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43394,7 +45196,168 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToGalactic(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToSurvey(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_EquatorialToSurvey__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_EquatorialToSurvey__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_EquatorialToSurvey'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    EquatorialToSurvey(double,double,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::EquatorialToSurvey(double,double,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToGalactic__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_EquatorialToGalactic",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_EquatorialToGalactic" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  Stomp::AngularCoordinate::EquatorialToGalactic(arg1,arg2,*arg3,*arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToGalactic__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43456,7 +45419,168 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToSurvey(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToGalactic(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_EquatorialToGalactic__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_EquatorialToGalactic__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_EquatorialToGalactic'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    EquatorialToGalactic(double,double,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::EquatorialToGalactic(double,double,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToSurvey__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_GalacticToSurvey",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_GalacticToSurvey" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  Stomp::AngularCoordinate::GalacticToSurvey(arg1,arg2,*arg3,*arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToSurvey__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43518,7 +45642,168 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToEquatorial(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToSurvey(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_GalacticToSurvey__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_GalacticToSurvey__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_GalacticToSurvey'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GalacticToSurvey(double,double,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::GalacticToSurvey(double,double,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToEquatorial__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_GalacticToEquatorial",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_GalacticToEquatorial" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  Stomp::AngularCoordinate::GalacticToEquatorial(arg1,arg2,*arg3,*arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToEquatorial__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43580,7 +45865,184 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToXYZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToEquatorial(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_GalacticToEquatorial__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_GalacticToEquatorial__SWIG_0(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_GalacticToEquatorial'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GalacticToEquatorial(double,double,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::GalacticToEquatorial(double,double,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToXYZ__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  double *arg5 = 0 ;
+  bool arg6 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  double temp5 ;
+  int res5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:AngularCoordinate_SurveyToXYZ",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "5"" of type '" "double""'");
+    }
+    temp5 = static_cast< double >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
+  }
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "AngularCoordinate_SurveyToXYZ" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  Stomp::AngularCoordinate::SurveyToXYZ(arg1,arg2,*arg3,*arg4,*arg5,arg6);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToXYZ__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43658,7 +46120,200 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToXYZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_SurveyToXYZ(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[7];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_double(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_SurveyToXYZ__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_double(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_AngularCoordinate_SurveyToXYZ__SWIG_0(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_SurveyToXYZ'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SurveyToXYZ(double,double,double &,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::SurveyToXYZ(double,double,double &,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToXYZ__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  double *arg5 = 0 ;
+  bool arg6 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  double temp5 ;
+  int res5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:AngularCoordinate_EquatorialToXYZ",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "5"" of type '" "double""'");
+    }
+    temp5 = static_cast< double >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
+  }
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "AngularCoordinate_EquatorialToXYZ" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  Stomp::AngularCoordinate::EquatorialToXYZ(arg1,arg2,*arg3,*arg4,*arg5,arg6);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToXYZ__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43736,7 +46391,200 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToXYZ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_EquatorialToXYZ(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[7];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_double(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_EquatorialToXYZ__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_double(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_AngularCoordinate_EquatorialToXYZ__SWIG_0(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_EquatorialToXYZ'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    EquatorialToXYZ(double,double,double &,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::EquatorialToXYZ(double,double,double &,double &,double &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToXYZ__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = 0 ;
+  double *arg4 = 0 ;
+  double *arg5 = 0 ;
+  bool arg6 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double temp3 ;
+  int res3 = 0 ;
+  double temp4 ;
+  int res4 = 0 ;
+  double temp5 ;
+  int res5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:AngularCoordinate_GalacticToXYZ",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  if (!(SWIG_IsOK((res3 = SWIG_ConvertPtr(obj2,SWIG_as_voidptrptr(&arg3),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj2, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "3"" of type '" "double""'");
+    }
+    temp3 = static_cast< double >(val);
+    arg3 = &temp3;
+    res3 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res4 = SWIG_ConvertPtr(obj3,SWIG_as_voidptrptr(&arg4),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj3, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "4"" of type '" "double""'");
+    }
+    temp4 = static_cast< double >(val);
+    arg4 = &temp4;
+    res4 = SWIG_AddTmpMask(ecode);
+  }
+  if (!(SWIG_IsOK((res5 = SWIG_ConvertPtr(obj4,SWIG_as_voidptrptr(&arg5),SWIGTYPE_p_double,0))))) {
+    double val;
+    int ecode = SWIG_AsVal_double(obj4, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "5"" of type '" "double""'");
+    }
+    temp5 = static_cast< double >(val);
+    arg5 = &temp5;
+    res5 = SWIG_AddTmpMask(ecode);
+  }
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "AngularCoordinate_GalacticToXYZ" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  Stomp::AngularCoordinate::GalacticToXYZ(arg1,arg2,*arg3,*arg4,*arg5,arg6);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  if (SWIG_IsNewObj(res5)) delete arg5;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToXYZ__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -43814,6 +46662,112 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularCoordinate_GalacticToXYZ(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[7];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_double(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_GalacticToXYZ__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        void *ptr = 0;
+        int res = SWIG_AsVal_double(argv[2], 0);
+        _v = SWIG_CheckState(res);
+        if (!_v) {
+          _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[2],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+        }
+        if (_v) {
+          void *ptr = 0;
+          int res = SWIG_AsVal_double(argv[3], 0);
+          _v = SWIG_CheckState(res);
+          if (!_v) {
+            _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[3],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+          }
+          if (_v) {
+            void *ptr = 0;
+            int res = SWIG_AsVal_double(argv[4], 0);
+            _v = SWIG_CheckState(res);
+            if (!_v) {
+              _v = (SWIG_IsOK((res = SWIG_ConvertPtr(argv[4],SWIG_as_voidptrptr(&ptr),SWIGTYPE_p_double,0))));
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_AngularCoordinate_GalacticToXYZ__SWIG_0(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_GalacticToXYZ'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GalacticToXYZ(double,double,double &,double &,double &,bool)\n"
+    "    Stomp::AngularCoordinate::GalacticToXYZ(double,double,double &,double &,double &)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularCoordinate_EtaMultiplier(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -43886,6 +46840,73 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_0(PyObject *S
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
   Stomp::AngularVector *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_ToAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_ToAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_ToAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "3"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_ToAngularVector" "', argument " "3"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::AngularVector * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  result = (bool)Stomp::AngularCoordinate::ToAngularVector(*arg1,*arg2,*arg3,arg4,arg5);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double,std::allocator< double > > *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  Stomp::AngularVector *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -43938,7 +46959,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -43987,19 +47008,96 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::AngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:AngularCoordinate_ToAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_ToAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "2"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_ToAngularVector" "', argument " "2"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularVector * >(argp2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  result = (bool)Stomp::AngularCoordinate::ToAngularVector((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::AngularVector *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
   uint8_t arg5 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
@@ -44035,11 +47133,11 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_2(PyObject *S
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "5"" of type '" "uint8_t""'");
@@ -44055,18 +47153,18 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::AngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -44099,11 +47197,11 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_3(PyObject *S
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_ToAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   result = (bool)Stomp::AngularCoordinate::ToAngularVector((std::string const &)*arg1,*arg2,arg3,arg4);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -44114,7 +47212,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::AngularVector *arg2 = 0 ;
@@ -44164,7 +47262,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::AngularVector *arg2 = 0 ;
@@ -44207,12 +47305,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[6];
+  PyObject *argv[7];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -44224,7 +47322,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_AngularCoordinate_ToAngularVector__SWIG_5(self, args);
+        return _wrap_AngularCoordinate_ToAngularVector__SWIG_7(self, args);
       }
     }
   }
@@ -44242,7 +47340,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_AngularCoordinate_ToAngularVector__SWIG_1(self, args);
+          return _wrap_AngularCoordinate_ToAngularVector__SWIG_2(self, args);
         }
       }
     }
@@ -44261,7 +47359,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_AngularCoordinate_ToAngularVector__SWIG_4(self, args);
+          return _wrap_AngularCoordinate_ToAngularVector__SWIG_6(self, args);
         }
       }
     }
@@ -44285,7 +47383,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_AngularCoordinate_ToAngularVector__SWIG_0(self, args);
+            return _wrap_AngularCoordinate_ToAngularVector__SWIG_1(self, args);
           }
         }
       }
@@ -44306,11 +47404,42 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_AngularCoordinate_ToAngularVector__SWIG_3(self, args);
+            return _wrap_AngularCoordinate_ToAngularVector__SWIG_5(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_ToAngularVector__SWIG_0(self, args);
+            }
           }
         }
       }
@@ -44331,7 +47460,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -44340,7 +47469,44 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_AngularCoordinate_ToAngularVector__SWIG_2(self, args);
+              return _wrap_AngularCoordinate_ToAngularVector__SWIG_4(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_AngularCoordinate_ToAngularVector__SWIG_3(self, args);
+              }
             }
           }
         }
@@ -44351,10 +47517,12 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_ToAngularVector(PyObject *self, PyO
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_ToAngularVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    ToAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularVector &)\n"
-    "    ToAngularVector(std::string const &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    ToAngularVector(std::string const &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    ToAngularVector(std::string const &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    ToAngularVector(std::string const &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    ToAngularVector(std::string const &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToAngularVector(std::string const &,Stomp::AngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::AngularCoordinate::ToAngularVector(std::string const &,Stomp::AngularVector &)\n");
   return NULL;
@@ -44362,6 +47530,73 @@ fail:
 
 
 SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularVector *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:AngularCoordinate_FromAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "1"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_FromAngularVector" "', argument " "1"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_FromAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_FromAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  result = (bool)Stomp::AngularCoordinate::FromAngularVector(*arg1,*arg2,*arg3,arg4,arg5);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -44419,7 +47654,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -44468,7 +47703,66 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularVector *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularCoordinate_FromAngularVector",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "1"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_FromAngularVector" "', argument " "1"" of type '" "Stomp::AngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularVector * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AngularCoordinate_FromAngularVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularCoordinate_FromAngularVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  result = (bool)Stomp::AngularCoordinate::FromAngularVector(*arg1,(std::string const &)*arg2,arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -44518,7 +47812,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -44561,12 +47855,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[5];
+  PyObject *argv[6];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -44578,7 +47872,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector(PyObject *self, P
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_AngularCoordinate_FromAngularVector__SWIG_3(self, args);
+        return _wrap_AngularCoordinate_FromAngularVector__SWIG_5(self, args);
       }
     }
   }
@@ -44596,7 +47890,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector(PyObject *self, P
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_AngularCoordinate_FromAngularVector__SWIG_1(self, args);
+          return _wrap_AngularCoordinate_FromAngularVector__SWIG_2(self, args);
         }
       }
     }
@@ -44615,7 +47909,7 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector(PyObject *self, P
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_AngularCoordinate_FromAngularVector__SWIG_2(self, args);
+          return _wrap_AngularCoordinate_FromAngularVector__SWIG_4(self, args);
         }
       }
     }
@@ -44639,7 +47933,63 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector(PyObject *self, P
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_AngularCoordinate_FromAngularVector__SWIG_0(self, args);
+            return _wrap_AngularCoordinate_FromAngularVector__SWIG_1(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_AngularCoordinate_FromAngularVector__SWIG_3(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_AngularCoordinate_FromAngularVector__SWIG_0(self, args);
+            }
           }
         }
       }
@@ -44649,8 +47999,10 @@ SWIGINTERN PyObject *_wrap_AngularCoordinate_FromAngularVector(PyObject *self, P
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCoordinate_FromAngularVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    FromAngularVector(Stomp::AngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromAngularVector(Stomp::AngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularCoordinate::Sphere)\n"
     "    FromAngularVector(Stomp::AngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &)\n"
+    "    FromAngularVector(Stomp::AngularVector &,std::string const &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromAngularVector(Stomp::AngularVector &,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::AngularCoordinate::FromAngularVector(Stomp::AngularVector &,std::string const &)\n");
   return NULL;
@@ -44678,6 +48030,64 @@ fail:
 
 
 SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Stomp::WeightedAngularCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_WeightedAngularCoordinate",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_WeightedAngularCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WeightedAngularCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WeightedAngularCoordinate" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_WeightedAngularCoordinate" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  result = (Stomp::WeightedAngularCoordinate *)new Stomp::WeightedAngularCoordinate(arg1,arg2,arg3,arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__WeightedAngularCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -44726,7 +48136,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -44766,7 +48176,190 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  Stomp::FieldDict *arg4 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  Stomp::WeightedAngularCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:new_WeightedAngularCoordinate",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_WeightedAngularCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WeightedAngularCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WeightedAngularCoordinate" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::FieldDict * >(argp4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_WeightedAngularCoordinate" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_WeightedAngularCoordinate" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (Stomp::WeightedAngularCoordinate *)new Stomp::WeightedAngularCoordinate(arg1,arg2,arg3,*arg4,arg5,arg6);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__WeightedAngularCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  Stomp::FieldDict *arg4 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Stomp::WeightedAngularCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_WeightedAngularCoordinate",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_WeightedAngularCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WeightedAngularCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WeightedAngularCoordinate" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::FieldDict * >(argp4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_WeightedAngularCoordinate" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  result = (Stomp::WeightedAngularCoordinate *)new Stomp::WeightedAngularCoordinate(arg1,arg2,arg3,*arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__WeightedAngularCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  Stomp::FieldDict *arg4 = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  Stomp::WeightedAngularCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:new_WeightedAngularCoordinate",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_WeightedAngularCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WeightedAngularCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WeightedAngularCoordinate" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::FieldDict * >(argp4);
+  result = (Stomp::WeightedAngularCoordinate *)new Stomp::WeightedAngularCoordinate(arg1,arg2,arg3,*arg4);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__WeightedAngularCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -44815,14 +48408,75 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  Stomp::FieldDict *arg5 = 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Stomp::WeightedAngularCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_WeightedAngularCoordinate",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_WeightedAngularCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_WeightedAngularCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_WeightedAngularCoordinate" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_WeightedAngularCoordinate" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t,  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "new_WeightedAngularCoordinate" "', argument " "5"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  if (!argp5) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_WeightedAngularCoordinate" "', argument " "5"" of type '" "Stomp::FieldDict &""'"); 
+  }
+  arg5 = reinterpret_cast< Stomp::FieldDict * >(argp5);
+  result = (Stomp::WeightedAngularCoordinate *)new Stomp::WeightedAngularCoordinate(arg1,arg2,arg3,arg4,*arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__WeightedAngularCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[5];
+  PyObject *argv[7];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
@@ -44845,7 +48499,34 @@ SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate(PyObject *self, PyObjec
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_new_WeightedAngularCoordinate__SWIG_2(self, args);
+          return _wrap_new_WeightedAngularCoordinate__SWIG_3(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_new_WeightedAngularCoordinate__SWIG_6(self, args);
+          }
         }
       }
     }
@@ -44872,7 +48553,7 @@ SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate(PyObject *self, PyObjec
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_new_WeightedAngularCoordinate__SWIG_1(self, args);
+            return _wrap_new_WeightedAngularCoordinate__SWIG_2(self, args);
           }
         }
       }
@@ -44900,7 +48581,146 @@ SWIGINTERN PyObject *_wrap_new_WeightedAngularCoordinate(PyObject *self, PyObjec
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_new_WeightedAngularCoordinate__SWIG_3(self, args);
+            return _wrap_new_WeightedAngularCoordinate__SWIG_7(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_WeightedAngularCoordinate__SWIG_5(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_WeightedAngularCoordinate__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            void *vptr = 0;
+            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0);
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              return _wrap_new_WeightedAngularCoordinate__SWIG_8(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__mapT_std__string_double_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_double_t_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_new_WeightedAngularCoordinate__SWIG_4(self, args);
+              }
+            }
           }
         }
       }
@@ -44911,9 +48731,14 @@ fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_WeightedAngularCoordinate'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    Stomp::WeightedAngularCoordinate()\n"
+    "    Stomp::WeightedAngularCoordinate(double,double,double,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    Stomp::WeightedAngularCoordinate(double,double,double,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::WeightedAngularCoordinate(double,double,double)\n"
-    "    Stomp::WeightedAngularCoordinate(double,double,double,double)\n");
+    "    Stomp::WeightedAngularCoordinate(double,double,double,Stomp::FieldDict &,Stomp::AngularCoordinate::Sphere,bool)\n"
+    "    Stomp::WeightedAngularCoordinate(double,double,double,Stomp::FieldDict &,Stomp::AngularCoordinate::Sphere)\n"
+    "    Stomp::WeightedAngularCoordinate(double,double,double,Stomp::FieldDict &)\n"
+    "    Stomp::WeightedAngularCoordinate(double,double,double,double)\n"
+    "    Stomp::WeightedAngularCoordinate(double,double,double,double,Stomp::FieldDict &)\n");
   return NULL;
 }
 
@@ -45152,50 +48977,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FieldBegin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Stomp::WeightedAngularCoordinate *arg1 = (Stomp::WeightedAngularCoordinate *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  Stomp::FieldIterator result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:WeightedAngularCoordinate_FieldBegin",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__WeightedAngularCoordinate, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FieldBegin" "', argument " "1"" of type '" "Stomp::WeightedAngularCoordinate *""'"); 
-  }
-  arg1 = reinterpret_cast< Stomp::WeightedAngularCoordinate * >(argp1);
-  result = (arg1)->FieldBegin();
-  resultobj = SWIG_NewPointerObj((new Stomp::FieldIterator(static_cast< const Stomp::FieldIterator& >(result))), SWIGTYPE_p_Stomp__FieldDict__iterator, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FieldEnd(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Stomp::WeightedAngularCoordinate *arg1 = (Stomp::WeightedAngularCoordinate *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  Stomp::FieldIterator result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:WeightedAngularCoordinate_FieldEnd",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__WeightedAngularCoordinate, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FieldEnd" "', argument " "1"" of type '" "Stomp::WeightedAngularCoordinate *""'"); 
-  }
-  arg1 = reinterpret_cast< Stomp::WeightedAngularCoordinate * >(argp1);
-  result = (arg1)->FieldEnd();
-  resultobj = SWIG_NewPointerObj((new Stomp::FieldIterator(static_cast< const Stomp::FieldIterator& >(result))), SWIGTYPE_p_Stomp__FieldDict__iterator, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_CopyFields(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WeightedAngularCoordinate *arg1 = (Stomp::WeightedAngularCoordinate *) 0 ;
@@ -45294,6 +49075,85 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_0(Py
   std::vector< double,std::allocator< double > > *arg3 = 0 ;
   Stomp::WAngularVector *arg4 = 0 ;
   Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::WAngularVector * >(argp4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector(*arg1,*arg2,*arg3,*arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double,std::allocator< double > > *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  Stomp::WAngularVector *arg4 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -45357,7 +49217,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -45418,7 +49278,83 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double,std::allocator< double > > *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  double arg3 ;
+  Stomp::WAngularVector *arg4 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::WAngularVector * >(argp4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector(*arg1,*arg2,arg3,*arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -45485,7 +49421,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -45543,24 +49479,110 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
-  int8_t arg6 ;
+  uint8_t arg6 ;
+  int8_t arg7 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
-  signed char val6 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  signed char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "7"" of type '" "int8_t""'");
+  } 
+  arg7 = static_cast< int8_t >(val7);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
   int ecode6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -45595,21 +49617,21 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_4(Py
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
   } 
   arg5 = static_cast< uint8_t >(val5);
-  ecode6 = SWIG_AsVal_signed_SS_char(obj5, &val6);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "int8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
   } 
-  arg6 = static_cast< int8_t >(val6);
+  arg6 = static_cast< uint8_t >(val6);
   result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -45620,19 +49642,19 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
@@ -45668,11 +49690,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_5(Py
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
@@ -45688,18 +49710,18 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -45732,11 +49754,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_6(Py
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,arg3,arg4);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -45747,7 +49769,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
@@ -45797,7 +49819,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
@@ -45839,6 +49861,85 @@ fail:
 
 
 SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  std::vector< double,std::allocator< double > > *arg4 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg4 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,*arg3,*arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -45908,7 +50009,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -45969,7 +50070,66 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,(std::string const &)*arg2,arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -46019,7 +50179,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -46060,15 +50220,16 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_12(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   Stomp::FieldColumnDict *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   uint8_t arg6 ;
-  int8_t arg7 ;
+  uint8_t arg7 ;
+  int8_t arg8 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
@@ -46076,11 +50237,108 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(Py
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   unsigned char val6 ;
   int ecode6 = 0 ;
-  signed char val7 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  signed char val8 ;
+  int ecode8 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOO:WeightedAngularCoordinate_ToWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "3"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::FieldColumnDict * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  ecode8 = SWIG_AsVal_signed_SS_char(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "8"" of type '" "int8_t""'");
+  } 
+  arg8 = static_cast< int8_t >(val8);
+  result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3,arg4,arg5,arg6,arg7,arg8);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_13(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  Stomp::FieldColumnDict *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  uint8_t arg6 ;
+  uint8_t arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
   int ecode7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -46124,21 +50382,21 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(Py
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
   } 
   arg6 = static_cast< uint8_t >(val6);
-  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "7"" of type '" "int8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "7"" of type '" "uint8_t""'");
   } 
-  arg7 = static_cast< int8_t >(val7);
+  arg7 = static_cast< uint8_t >(val7);
   result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -46149,13 +50407,13 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_14(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   Stomp::FieldColumnDict *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   uint8_t arg6 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
@@ -46164,7 +50422,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(P
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   unsigned char val6 ;
   int ecode6 = 0 ;
@@ -46209,11 +50467,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(P
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
@@ -46229,13 +50487,13 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_15(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   Stomp::FieldColumnDict *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
@@ -46243,7 +50501,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(P
   int res3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -46285,11 +50543,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(P
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_ToWAngularVector" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   result = (bool)Stomp::WeightedAngularCoordinate::ToWAngularVector((std::string const &)*arg1,*arg2,*arg3,arg4,arg5);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -46300,7 +50558,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_12(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_16(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
@@ -46362,7 +50620,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_13(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_17(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
@@ -46417,12 +50675,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[8];
+  PyObject *argv[9];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 8); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -46434,7 +50692,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_8(self, args);
+        return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(self, args);
       }
     }
   }
@@ -46451,7 +50709,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_13(self, args);
+          return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_17(self, args);
         }
       }
     }
@@ -46470,7 +50728,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_7(self, args);
+          return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(self, args);
         }
       }
     }
@@ -46493,7 +50751,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
           int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_1(self, args);
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_2(self, args);
           }
         }
       }
@@ -46518,7 +50776,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
           int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_3(self, args);
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_5(self, args);
           }
         }
       }
@@ -46542,7 +50800,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_12(self, args);
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_16(self, args);
           }
         }
       }
@@ -46563,11 +50821,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_6(self, args);
+            return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(self, args);
           }
         }
       }
@@ -46596,7 +50854,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_0(self, args);
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_1(self, args);
             }
           }
         }
@@ -46627,7 +50885,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_2(self, args);
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_4(self, args);
             }
           }
         }
@@ -46653,11 +50911,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
           }
           if (_v) {
             {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              int res = SWIG_AsVal_bool(argv[4], NULL);
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_11(self, args);
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_15(self, args);
             }
           }
         }
@@ -46679,7 +50937,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -46688,7 +50946,80 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_5(self, args);
+              return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_8(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_0(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_3(self, args);
+              }
             }
           }
         }
@@ -46710,6 +51041,43 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
         if (_v) {
           {
             int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_14(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -46723,44 +51091,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_10(self, args);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  if (argc == 6) {
-    int _v;
-    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        {
-          int res = SWIG_AsVal_int(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
-              _v = SWIG_CheckState(res);
-            }
-            if (_v) {
-              {
-                int res = SWIG_AsVal_signed_SS_char(argv[5], NULL);
-                _v = SWIG_CheckState(res);
-              }
-              if (_v) {
-                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_4(self, args);
+                return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_7(self, args);
               }
             }
           }
@@ -46787,6 +51118,49 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
           }
           if (_v) {
             {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_13(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
               int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
               _v = SWIG_CheckState(res);
             }
@@ -46801,7 +51175,55 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
                   _v = SWIG_CheckState(res);
                 }
                 if (_v) {
-                  return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_9(self, args);
+                  return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_6(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_signed_SS_char(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    return _wrap_WeightedAngularCoordinate_ToWAngularVector__SWIG_12(self, args);
+                  }
                 }
               }
             }
@@ -46814,31 +51236,133 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_ToWAngularVector(PyObject *
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'WeightedAngularCoordinate_ToWAngularVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::WAngularVector &)\n"
+    "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToWAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::WAngularVector &)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,int8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToWAngularVector(std::string const &,Stomp::WAngularVector &)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,int8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::WeightedAngularCoordinate::ToWAngularVector(std::string const &,Stomp::WAngularVector &,Stomp::FieldColumnDict &)\n");
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   Stomp::FieldColumnDict *arg2 = 0 ;
   std::string *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
+  uint8_t arg6 ;
+  uint8_t arg7 ;
+  uint8_t arg8 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  unsigned char val8 ;
+  int ecode8 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOO:WeightedAngularCoordinate_FromWAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "1"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::WAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "2"" of type '" "Stomp::FieldColumnDict &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::FieldColumnDict * >(argp2);
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  ecode8 = SWIG_AsVal_unsigned_SS_char(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "8"" of type '" "uint8_t""'");
+  } 
+  arg8 = static_cast< uint8_t >(val8);
+  result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,(std::string const &)*arg3,arg4,arg5,arg6,arg7,arg8);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::WAngularVector *arg1 = 0 ;
+  Stomp::FieldColumnDict *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
   uint8_t arg6 ;
   uint8_t arg7 ;
   void *argp1 = 0 ;
@@ -46848,7 +51372,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(
   int res3 = SWIG_OLDOBJ ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   unsigned char val6 ;
   int ecode6 = 0 ;
@@ -46896,11 +51420,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
@@ -46921,13 +51445,13 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   Stomp::FieldColumnDict *arg2 = 0 ;
   std::string *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   uint8_t arg6 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -46936,7 +51460,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(
   int res3 = SWIG_OLDOBJ ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   unsigned char val6 ;
   int ecode6 = 0 ;
@@ -46981,11 +51505,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "6"" of type '" "uint8_t""'");
@@ -47001,13 +51525,13 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   Stomp::FieldColumnDict *arg2 = 0 ;
   std::string *arg3 = 0 ;
   Stomp::AngularCoordinate::Sphere arg4 ;
-  uint8_t arg5 ;
+  bool arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -47015,7 +51539,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(
   int res3 = SWIG_OLDOBJ ;
   int val4 ;
   int ecode4 = 0 ;
-  unsigned char val5 ;
+  bool val5 ;
   int ecode5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -47057,11 +51581,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
-  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "WeightedAngularCoordinate_FromWAngularVector" "', argument " "5"" of type '" "bool""'");
   } 
-  arg5 = static_cast< uint8_t >(val5);
+  arg5 = static_cast< bool >(val5);
   result = (bool)Stomp::WeightedAngularCoordinate::FromWAngularVector(*arg1,*arg2,(std::string const &)*arg3,arg4,arg5);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res3)) delete arg3;
@@ -47072,7 +51596,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   Stomp::FieldColumnDict *arg2 = 0 ;
@@ -47134,7 +51658,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::WAngularVector *arg1 = 0 ;
   Stomp::FieldColumnDict *arg2 = 0 ;
@@ -47189,12 +51713,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[8];
+  PyObject *argv[9];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 8); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -47206,7 +51730,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_3(self, args);
+        return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(self, args);
       }
     }
   }
@@ -47223,7 +51747,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
         int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_8(self, args);
+          return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_11(self, args);
         }
       }
     }
@@ -47242,7 +51766,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_2(self, args);
+          return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(self, args);
         }
       }
     }
@@ -47265,7 +51789,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_7(self, args);
+            return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_10(self, args);
           }
         }
       }
@@ -47289,7 +51813,32 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
           int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_1(self, args);
+            return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_2(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_3(self, args);
           }
         }
       }
@@ -47318,7 +51867,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_0(self, args);
+              return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_1(self, args);
             }
           }
         }
@@ -47344,11 +51893,11 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
           }
           if (_v) {
             {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              int res = SWIG_AsVal_bool(argv[4], NULL);
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(self, args);
+              return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_9(self, args);
             }
           }
         }
@@ -47374,7 +51923,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
           }
           if (_v) {
             {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              int res = SWIG_AsVal_bool(argv[4], NULL);
               _v = SWIG_CheckState(res);
             }
             if (_v) {
@@ -47383,7 +51932,43 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_5(self, args);
+                return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_8(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_0(self, args);
               }
             }
           }
@@ -47410,7 +51995,7 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
           }
           if (_v) {
             {
-              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              int res = SWIG_AsVal_bool(argv[4], NULL);
               _v = SWIG_CheckState(res);
             }
             if (_v) {
@@ -47424,7 +52009,55 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
                   _v = SWIG_CheckState(res);
                 }
                 if (_v) {
-                  return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_4(self, args);
+                  return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_7(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__mapT_std__string_unsigned_char_std__lessT_std__string_t_std__allocatorT_std__pairT_std__string_const_unsigned_char_t_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        int res = SWIG_AsPtr_std_string(argv[2], (std::string**)(0));
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_unsigned_SS_char(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    return _wrap_WeightedAngularCoordinate_FromWAngularVector__SWIG_6(self, args);
+                  }
                 }
               }
             }
@@ -47437,13 +52070,16 @@ SWIGINTERN PyObject *_wrap_WeightedAngularCoordinate_FromWAngularVector(PyObject
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'WeightedAngularCoordinate_FromWAngularVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromWAngularVector(Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularCoordinate::Sphere)\n"
     "    FromWAngularVector(Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,std::string const &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromWAngularVector(Stomp::WAngularVector &,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
     "    FromWAngularVector(Stomp::WAngularVector &,std::string const &)\n"
-    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,uint8_t)\n"
-    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,uint8_t)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::WeightedAngularCoordinate::FromWAngularVector(Stomp::WAngularVector &,Stomp::FieldColumnDict &,std::string const &)\n");
   return NULL;
@@ -47530,6 +52166,73 @@ SWIGINTERN PyObject *_wrap_new_CosmoCoordinate__SWIG_1(PyObject *SWIGUNUSEDPARM(
   double arg3 ;
   double arg4 ;
   Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  Stomp::CosmoCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:new_CosmoCoordinate",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_CosmoCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_CosmoCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_CosmoCoordinate" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_CosmoCoordinate" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_CosmoCoordinate" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "new_CosmoCoordinate" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (Stomp::CosmoCoordinate *)new Stomp::CosmoCoordinate(arg1,arg2,arg3,arg4,arg5,arg6);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__CosmoCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_CosmoCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double arg4 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -47581,7 +52284,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_CosmoCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_CosmoCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -47630,7 +52333,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_CosmoCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_CosmoCoordinate__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -47690,12 +52393,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_CosmoCoordinate(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[6];
+  PyObject *argv[7];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
@@ -47723,7 +52426,7 @@ SWIGINTERN PyObject *_wrap_new_CosmoCoordinate(PyObject *self, PyObject *args) {
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_new_CosmoCoordinate__SWIG_2(self, args);
+            return _wrap_new_CosmoCoordinate__SWIG_3(self, args);
           }
         }
       }
@@ -47756,7 +52459,7 @@ SWIGINTERN PyObject *_wrap_new_CosmoCoordinate(PyObject *self, PyObject *args) {
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_new_CosmoCoordinate__SWIG_1(self, args);
+              return _wrap_new_CosmoCoordinate__SWIG_2(self, args);
             }
           }
         }
@@ -47790,7 +52493,47 @@ SWIGINTERN PyObject *_wrap_new_CosmoCoordinate(PyObject *self, PyObject *args) {
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_new_CosmoCoordinate__SWIG_3(self, args);
+              return _wrap_new_CosmoCoordinate__SWIG_4(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_new_CosmoCoordinate__SWIG_1(self, args);
+              }
             }
           }
         }
@@ -47802,6 +52545,7 @@ fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_CosmoCoordinate'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    Stomp::CosmoCoordinate()\n"
+    "    Stomp::CosmoCoordinate(double,double,double,double,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    Stomp::CosmoCoordinate(double,double,double,double,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::CosmoCoordinate(double,double,double,double)\n"
     "    Stomp::CosmoCoordinate(double,double,double,double,double)\n");
@@ -48024,6 +52768,97 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_0(PyObject *SWIGU
   std::vector< double,std::allocator< double > > *arg4 = 0 ;
   Stomp::CosmoVector *arg5 = 0 ;
   Stomp::AngularCoordinate::Sphere arg6 ;
+  bool arg7 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  int val6 ;
+  int ecode6 = 0 ;
+  bool val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:CosmoCoordinate_ToCosmoVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg4 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  if (!argp5) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  arg5 = reinterpret_cast< Stomp::CosmoVector * >(argp5);
+  ecode6 = SWIG_AsVal_int(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "6"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg6 = static_cast< Stomp::AngularCoordinate::Sphere >(val6);
+  ecode7 = SWIG_AsVal_bool(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "7"" of type '" "bool""'");
+  } 
+  arg7 = static_cast< bool >(val7);
+  result = (bool)Stomp::CosmoCoordinate::ToCosmoVector(*arg1,*arg2,*arg3,*arg4,*arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double,std::allocator< double > > *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  std::vector< double,std::allocator< double > > *arg4 = 0 ;
+  Stomp::CosmoVector *arg5 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg6 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -48098,7 +52933,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -48171,7 +53006,95 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double,std::allocator< double > > *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  double arg4 ;
+  Stomp::CosmoVector *arg5 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg6 ;
+  bool arg7 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  double val4 ;
+  int ecode4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  int val6 ;
+  int ecode6 = 0 ;
+  bool val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:CosmoCoordinate_ToCosmoVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  if (!argp5) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  arg5 = reinterpret_cast< Stomp::CosmoVector * >(argp5);
+  ecode6 = SWIG_AsVal_int(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "6"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg6 = static_cast< Stomp::AngularCoordinate::Sphere >(val6);
+  ecode7 = SWIG_AsVal_bool(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "7"" of type '" "bool""'");
+  } 
+  arg7 = static_cast< bool >(val7);
+  result = (bool)Stomp::CosmoCoordinate::ToCosmoVector(*arg1,*arg2,*arg3,arg4,*arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -48250,7 +53173,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -48320,27 +53243,122 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::CosmoVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
   uint8_t arg6 ;
-  int8_t arg7 ;
+  uint8_t arg7 ;
+  int8_t arg8 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
   unsigned char val6 ;
   int ecode6 = 0 ;
-  signed char val7 ;
+  unsigned char val7 ;
+  int ecode7 = 0 ;
+  signed char val8 ;
+  int ecode8 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOO:CosmoCoordinate_ToCosmoVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "2"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "2"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::CosmoVector * >(argp2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "7"" of type '" "uint8_t""'");
+  } 
+  arg7 = static_cast< uint8_t >(val7);
+  ecode8 = SWIG_AsVal_signed_SS_char(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "8"" of type '" "int8_t""'");
+  } 
+  arg8 = static_cast< int8_t >(val8);
+  result = (bool)Stomp::CosmoCoordinate::ToCosmoVector((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::CosmoVector *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  uint8_t arg7 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  unsigned char val7 ;
   int ecode7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -48376,11 +53394,11 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_4(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "uint8_t""'");
@@ -48391,11 +53409,11 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_4(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "6"" of type '" "uint8_t""'");
   } 
   arg6 = static_cast< uint8_t >(val6);
-  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  ecode7 = SWIG_AsVal_unsigned_SS_char(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "7"" of type '" "int8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "7"" of type '" "uint8_t""'");
   } 
-  arg7 = static_cast< int8_t >(val7);
+  arg7 = static_cast< uint8_t >(val7);
   result = (bool)Stomp::CosmoCoordinate::ToCosmoVector((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -48406,12 +53424,12 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::CosmoVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
   uint8_t arg6 ;
   int res1 = SWIG_OLDOBJ ;
@@ -48419,7 +53437,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_5(PyObject *SWIGU
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
@@ -48458,11 +53476,11 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_5(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "uint8_t""'");
@@ -48483,19 +53501,19 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::CosmoVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
@@ -48531,11 +53549,11 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_6(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "5"" of type '" "uint8_t""'");
@@ -48551,18 +53569,18 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::CosmoVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -48595,11 +53613,11 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_7(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_ToCosmoVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   result = (bool)Stomp::CosmoCoordinate::ToCosmoVector((std::string const &)*arg1,*arg2,arg3,arg4);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -48610,7 +53628,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::CosmoVector *arg2 = 0 ;
@@ -48660,7 +53678,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector__SWIG_12(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::CosmoVector *arg2 = 0 ;
@@ -48703,12 +53721,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[8];
+  PyObject *argv[9];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 8); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -48720,7 +53738,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_9(self, args);
+        return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_12(self, args);
       }
     }
   }
@@ -48738,7 +53756,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_8(self, args);
+          return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_11(self, args);
         }
       }
     }
@@ -48758,11 +53776,11 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_7(self, args);
+            return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_10(self, args);
           }
         }
       }
@@ -48790,7 +53808,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
             int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
             _v = SWIG_CheckState(res);
             if (_v) {
-              return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_1(self, args);
+              return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_2(self, args);
             }
           }
         }
@@ -48820,7 +53838,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
             int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
             _v = SWIG_CheckState(res);
             if (_v) {
-              return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_3(self, args);
+              return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_5(self, args);
             }
           }
         }
@@ -48842,7 +53860,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -48851,7 +53869,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_6(self, args);
+              return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_9(self, args);
             }
           }
         }
@@ -48885,7 +53903,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_0(self, args);
+                return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_1(self, args);
               }
             }
           }
@@ -48921,7 +53939,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_2(self, args);
+                return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_4(self, args);
               }
             }
           }
@@ -48944,7 +53962,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -48958,7 +53976,90 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_5(self, args);
+                return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_8(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            void *vptr = 0;
+            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              {
+                int res = SWIG_AsVal_int(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_bool(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_0(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_double(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            void *vptr = 0;
+            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              {
+                int res = SWIG_AsVal_int(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_bool(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_3(self, args);
+                }
               }
             }
           }
@@ -48981,7 +54082,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -48996,11 +54097,60 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
               }
               if (_v) {
                 {
-                  int res = SWIG_AsVal_signed_SS_char(argv[6], NULL);
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
                   _v = SWIG_CheckState(res);
                 }
                 if (_v) {
-                  return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_4(self, args);
+                  return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_7(self, args);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_unsigned_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  {
+                    int res = SWIG_AsVal_signed_SS_char(argv[7], NULL);
+                    _v = SWIG_CheckState(res);
+                  }
+                  if (_v) {
+                    return _wrap_CosmoCoordinate_ToCosmoVector__SWIG_6(self, args);
+                  }
                 }
               }
             }
@@ -49013,14 +54163,17 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_ToCosmoVector(PyObject *self, PyObjec
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'CosmoCoordinate_ToCosmoVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    ToCosmoVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToCosmoVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToCosmoVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::CosmoVector &)\n"
+    "    ToCosmoVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToCosmoVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToCosmoVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,double,Stomp::CosmoVector &)\n"
-    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,uint8_t,int8_t)\n"
-    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,uint8_t)\n"
-    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,uint8_t,int8_t)\n"
+    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,uint8_t)\n"
+    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToCosmoVector(std::string const &,Stomp::CosmoVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::CosmoCoordinate::ToCosmoVector(std::string const &,Stomp::CosmoVector &)\n");
   return NULL;
@@ -49028,6 +54181,97 @@ fail:
 
 
 SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::CosmoVector *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  std::vector< double,std::allocator< double > > *arg4 = 0 ;
+  std::vector< double,std::allocator< double > > *arg5 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg6 ;
+  bool arg7 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  int val6 ;
+  int ecode6 = 0 ;
+  bool val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:CosmoCoordinate_FromCosmoVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "1"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "1"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::CosmoVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "4"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg4 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp5) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "5"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg5 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp5);
+  ecode6 = SWIG_AsVal_int(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "6"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg6 = static_cast< Stomp::AngularCoordinate::Sphere >(val6);
+  ecode7 = SWIG_AsVal_bool(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "7"" of type '" "bool""'");
+  } 
+  arg7 = static_cast< bool >(val7);
+  result = (bool)Stomp::CosmoCoordinate::FromCosmoVector(*arg1,*arg2,*arg3,*arg4,*arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::CosmoVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -49109,7 +54353,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::CosmoVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -49182,7 +54426,66 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::CosmoVector *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:CosmoCoordinate_FromCosmoVector",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "1"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "1"" of type '" "Stomp::CosmoVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::CosmoVector * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "CosmoCoordinate_FromCosmoVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  result = (bool)Stomp::CosmoCoordinate::FromCosmoVector(*arg1,(std::string const &)*arg2,arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::CosmoVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -49232,7 +54535,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::CosmoVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -49275,12 +54578,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[7];
+  PyObject *argv[8];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -49292,7 +54595,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector(PyObject *self, PyObj
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_3(self, args);
+        return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_5(self, args);
       }
     }
   }
@@ -49310,7 +54613,32 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector(PyObject *self, PyObj
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_2(self, args);
+          return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_4(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_3(self, args);
+          }
         }
       }
     }
@@ -49337,7 +54665,7 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector(PyObject *self, PyObj
             int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
             _v = SWIG_CheckState(res);
             if (_v) {
-              return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_1(self, args);
+              return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_2(self, args);
             }
           }
         }
@@ -49371,7 +54699,48 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector(PyObject *self, PyObj
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_0(self, args);
+                return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_1(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            void *vptr = 0;
+            int res = SWIG_ConvertPtr(argv[4], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+            _v = SWIG_CheckState(res);
+            if (_v) {
+              {
+                int res = SWIG_AsVal_int(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_bool(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_CosmoCoordinate_FromCosmoVector__SWIG_0(self, args);
+                }
               }
             }
           }
@@ -49383,8 +54752,10 @@ SWIGINTERN PyObject *_wrap_CosmoCoordinate_FromCosmoVector(PyObject *self, PyObj
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'CosmoCoordinate_FromCosmoVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    FromCosmoVector(Stomp::CosmoVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromCosmoVector(Stomp::CosmoVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::AngularCoordinate::Sphere)\n"
     "    FromCosmoVector(Stomp::CosmoVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &)\n"
+    "    FromCosmoVector(Stomp::CosmoVector &,std::string const &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromCosmoVector(Stomp::CosmoVector &,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::CosmoCoordinate::FromCosmoVector(Stomp::CosmoVector &,std::string const &)\n");
   return NULL;
@@ -49412,6 +54783,64 @@ fail:
 
 
 SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  uint32_t arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  Stomp::IndexedAngularCoordinate *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:new_IndexedAngularCoordinate",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_IndexedAngularCoordinate" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_IndexedAngularCoordinate" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_IndexedAngularCoordinate" "', argument " "3"" of type '" "uint32_t""'");
+  } 
+  arg3 = static_cast< uint32_t >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "new_IndexedAngularCoordinate" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "new_IndexedAngularCoordinate" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  result = (Stomp::IndexedAngularCoordinate *)new Stomp::IndexedAngularCoordinate(arg1,arg2,arg3,arg4,arg5);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Stomp__IndexedAngularCoordinate, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -49460,7 +54889,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -49500,7 +54929,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double arg2 ;
@@ -49551,12 +54980,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[5];
+  PyObject *argv[6];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 0) {
@@ -49579,7 +55008,7 @@ SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate(PyObject *self, PyObject
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_new_IndexedAngularCoordinate__SWIG_2(self, args);
+          return _wrap_new_IndexedAngularCoordinate__SWIG_3(self, args);
         }
       }
     }
@@ -49606,7 +55035,7 @@ SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate(PyObject *self, PyObject
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_new_IndexedAngularCoordinate__SWIG_1(self, args);
+            return _wrap_new_IndexedAngularCoordinate__SWIG_2(self, args);
           }
         }
       }
@@ -49634,7 +55063,41 @@ SWIGINTERN PyObject *_wrap_new_IndexedAngularCoordinate(PyObject *self, PyObject
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_new_IndexedAngularCoordinate__SWIG_3(self, args);
+            return _wrap_new_IndexedAngularCoordinate__SWIG_4(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      int res = SWIG_AsVal_double(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_new_IndexedAngularCoordinate__SWIG_1(self, args);
+            }
           }
         }
       }
@@ -49645,6 +55108,7 @@ fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'new_IndexedAngularCoordinate'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    Stomp::IndexedAngularCoordinate()\n"
+    "    Stomp::IndexedAngularCoordinate(double,double,uint32_t,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    Stomp::IndexedAngularCoordinate(double,double,uint32_t,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::IndexedAngularCoordinate(double,double,uint32_t)\n"
     "    Stomp::IndexedAngularCoordinate(double,double,double,uint32_t)\n");
@@ -49732,6 +55196,85 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_0(PyO
   std::vector< uint32_t,std::allocator< uint32_t > > *arg3 = 0 ;
   Stomp::IAngularVector *arg4 = 0 ;
   Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:IndexedAngularCoordinate_ToIAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< uint32_t,std::allocator< uint32_t > > * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  arg4 = reinterpret_cast< Stomp::IAngularVector * >(argp4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (bool)Stomp::IndexedAngularCoordinate::ToIAngularVector(*arg1,*arg2,*arg3,*arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double,std::allocator< double > > *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< uint32_t,std::allocator< uint32_t > > *arg3 = 0 ;
+  Stomp::IAngularVector *arg4 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -49795,7 +55338,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -49856,7 +55399,74 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< double,std::allocator< double > > *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  Stomp::IAngularVector *arg3 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  bool arg5 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:IndexedAngularCoordinate_ToIAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "1"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  arg3 = reinterpret_cast< Stomp::IAngularVector * >(argp3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  result = (bool)Stomp::IndexedAngularCoordinate::ToIAngularVector(*arg1,*arg2,*arg3,arg4,arg5);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -49914,7 +55524,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< double,std::allocator< double > > *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -49963,24 +55573,110 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::IAngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
-  int8_t arg6 ;
+  uint8_t arg6 ;
+  int8_t arg7 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
-  signed char val6 ;
+  unsigned char val6 ;
+  int ecode6 = 0 ;
+  signed char val7 ;
+  int ecode7 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:IndexedAngularCoordinate_ToIAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "2"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "2"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::IAngularVector * >(argp2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "5"" of type '" "uint8_t""'");
+  } 
+  arg5 = static_cast< uint8_t >(val5);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "6"" of type '" "uint8_t""'");
+  } 
+  arg6 = static_cast< uint8_t >(val6);
+  ecode7 = SWIG_AsVal_signed_SS_char(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "7"" of type '" "int8_t""'");
+  } 
+  arg7 = static_cast< int8_t >(val7);
+  result = (bool)Stomp::IndexedAngularCoordinate::ToIAngularVector((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6,arg7);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  Stomp::IAngularVector *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  uint8_t arg5 ;
+  uint8_t arg6 ;
+  int res1 = SWIG_OLDOBJ ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  unsigned char val5 ;
+  int ecode5 = 0 ;
+  unsigned char val6 ;
   int ecode6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -50015,21 +55711,21 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_4(PyO
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "5"" of type '" "uint8_t""'");
   } 
   arg5 = static_cast< uint8_t >(val5);
-  ecode6 = SWIG_AsVal_signed_SS_char(obj5, &val6);
+  ecode6 = SWIG_AsVal_unsigned_SS_char(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "6"" of type '" "int8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "6"" of type '" "uint8_t""'");
   } 
-  arg6 = static_cast< int8_t >(val6);
+  arg6 = static_cast< uint8_t >(val6);
   result = (bool)Stomp::IndexedAngularCoordinate::ToIAngularVector((std::string const &)*arg1,*arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -50040,19 +55736,19 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::IAngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   uint8_t arg5 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   unsigned char val5 ;
   int ecode5 = 0 ;
@@ -50088,11 +55784,11 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_5(PyO
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   ecode5 = SWIG_AsVal_unsigned_SS_char(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "5"" of type '" "uint8_t""'");
@@ -50108,18 +55804,18 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_9(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::IAngularVector *arg2 = 0 ;
   Stomp::AngularCoordinate::Sphere arg3 ;
-  uint8_t arg4 ;
+  bool arg4 ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
-  unsigned char val4 ;
+  bool val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -50152,11 +55848,11 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_6(PyO
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
   } 
   arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_char(obj3, &val4);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "uint8_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_ToIAngularVector" "', argument " "4"" of type '" "bool""'");
   } 
-  arg4 = static_cast< uint8_t >(val4);
+  arg4 = static_cast< bool >(val4);
   result = (bool)Stomp::IndexedAngularCoordinate::ToIAngularVector((std::string const &)*arg1,*arg2,arg3,arg4);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
@@ -50167,7 +55863,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_10(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::IAngularVector *arg2 = 0 ;
@@ -50217,7 +55913,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_11(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   Stomp::IAngularVector *arg2 = 0 ;
@@ -50260,12 +55956,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[7];
+  PyObject *argv[8];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 7); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -50277,7 +55973,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
       int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_8(self, args);
+        return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_11(self, args);
       }
     }
   }
@@ -50295,7 +55991,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_3(self, args);
+          return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_5(self, args);
         }
       }
     }
@@ -50314,7 +56010,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_7(self, args);
+          return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_10(self, args);
         }
       }
     }
@@ -50338,7 +56034,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_2(self, args);
+            return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_4(self, args);
           }
         }
       }
@@ -50362,7 +56058,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
           int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_1(self, args);
+            return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_2(self, args);
           }
         }
       }
@@ -50383,11 +56079,11 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
-            return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_6(self, args);
+            return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_9(self, args);
           }
         }
       }
@@ -50416,7 +56112,38 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_0(self, args);
+              return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_3(self, args);
             }
           }
         }
@@ -50438,7 +56165,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -50447,7 +56174,43 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_5(self, args);
+              return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_8(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_0(self, args);
+              }
             }
           }
         }
@@ -50469,7 +56232,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
         }
         if (_v) {
           {
-            int res = SWIG_AsVal_unsigned_SS_char(argv[3], NULL);
+            int res = SWIG_AsVal_bool(argv[3], NULL);
             _v = SWIG_CheckState(res);
           }
           if (_v) {
@@ -50479,11 +56242,54 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
             }
             if (_v) {
               {
-                int res = SWIG_AsVal_signed_SS_char(argv[5], NULL);
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
                 _v = SWIG_CheckState(res);
               }
               if (_v) {
-                return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_4(self, args);
+                return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_7(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    int res = SWIG_AsPtr_std_string(argv[0], (std::string**)(0));
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_unsigned_SS_char(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_unsigned_SS_char(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                {
+                  int res = SWIG_AsVal_signed_SS_char(argv[6], NULL);
+                  _v = SWIG_CheckState(res);
+                }
+                if (_v) {
+                  return _wrap_IndexedAngularCoordinate_ToIAngularVector__SWIG_6(self, args);
+                }
               }
             }
           }
@@ -50495,13 +56301,16 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_ToIAngularVector(PyObject *s
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'IndexedAngularCoordinate_ToIAngularVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    ToIAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< uint32_t,std::allocator< uint32_t > > &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToIAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< uint32_t,std::allocator< uint32_t > > &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToIAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< uint32_t,std::allocator< uint32_t > > &,Stomp::IAngularVector &)\n"
+    "    ToIAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToIAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    ToIAngularVector(std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,Stomp::IAngularVector &)\n"
-    "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t,int8_t)\n"
-    "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t,uint8_t)\n"
-    "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,uint8_t)\n"
+    "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t,int8_t)\n"
+    "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t,uint8_t)\n"
+    "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,bool,uint8_t)\n"
+    "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    ToIAngularVector(std::string const &,Stomp::IAngularVector &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::IndexedAngularCoordinate::ToIAngularVector(std::string const &,Stomp::IAngularVector &)\n");
   return NULL;
@@ -50509,6 +56318,85 @@ fail:
 
 
 SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::IAngularVector *arg1 = 0 ;
+  std::vector< double,std::allocator< double > > *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  std::vector< uint32_t,std::allocator< uint32_t > > *arg4 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg5 ;
+  bool arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:IndexedAngularCoordinate_FromIAngularVector",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "1"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "1"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::IAngularVector * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "2"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg2 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "4"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
+  }
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "4"" of type '" "std::vector< uint32_t,std::allocator< uint32_t > > &""'"); 
+  }
+  arg4 = reinterpret_cast< std::vector< uint32_t,std::allocator< uint32_t > > * >(argp4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "5"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg5 = static_cast< Stomp::AngularCoordinate::Sphere >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  result = (bool)Stomp::IndexedAngularCoordinate::FromIAngularVector(*arg1,*arg2,*arg3,*arg4,arg5,arg6);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::IAngularVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -50578,7 +56466,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::IAngularVector *arg1 = 0 ;
   std::vector< double,std::allocator< double > > *arg2 = 0 ;
@@ -50639,7 +56527,66 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::IAngularVector *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  Stomp::AngularCoordinate::Sphere arg3 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  int val3 ;
+  int ecode3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:IndexedAngularCoordinate_FromIAngularVector",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "1"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "1"" of type '" "Stomp::IAngularVector &""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::IAngularVector * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "3"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg3 = static_cast< Stomp::AngularCoordinate::Sphere >(val3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "IndexedAngularCoordinate_FromIAngularVector" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  result = (bool)Stomp::IndexedAngularCoordinate::FromIAngularVector(*arg1,(std::string const &)*arg2,arg3,arg4);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::IAngularVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -50689,7 +56636,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::IAngularVector *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -50732,12 +56679,12 @@ fail:
 
 SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector(PyObject *self, PyObject *args) {
   int argc;
-  PyObject *argv[6];
+  PyObject *argv[7];
   int ii;
   
   if (!PyTuple_Check(args)) SWIG_fail;
   argc = (int)PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
   }
   if (argc == 2) {
@@ -50749,7 +56696,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector(PyObject 
       int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_3(self, args);
+        return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_5(self, args);
       }
     }
   }
@@ -50767,7 +56714,7 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector(PyObject 
           _v = SWIG_CheckState(res);
         }
         if (_v) {
-          return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_2(self, args);
+          return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_4(self, args);
         }
       }
     }
@@ -50790,7 +56737,32 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector(PyObject 
           int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
           _v = SWIG_CheckState(res);
           if (_v) {
-            return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_1(self, args);
+            return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_2(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_AsPtr_std_string(argv[1], (std::string**)(0));
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_int(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_3(self, args);
           }
         }
       }
@@ -50819,7 +56791,43 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector(PyObject 
               _v = SWIG_CheckState(res);
             }
             if (_v) {
-              return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_0(self, args);
+              return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          void *vptr = 0;
+          int res = SWIG_ConvertPtr(argv[3], &vptr, SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0);
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            {
+              int res = SWIG_AsVal_int(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_IndexedAngularCoordinate_FromIAngularVector__SWIG_0(self, args);
+              }
             }
           }
         }
@@ -50830,8 +56838,10 @@ SWIGINTERN PyObject *_wrap_IndexedAngularCoordinate_FromIAngularVector(PyObject 
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'IndexedAngularCoordinate_FromIAngularVector'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    FromIAngularVector(Stomp::IAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< uint32_t,std::allocator< uint32_t > > &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromIAngularVector(Stomp::IAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< uint32_t,std::allocator< uint32_t > > &,Stomp::AngularCoordinate::Sphere)\n"
     "    FromIAngularVector(Stomp::IAngularVector &,std::vector< double,std::allocator< double > > &,std::vector< double,std::allocator< double > > &,std::vector< uint32_t,std::allocator< uint32_t > > &)\n"
+    "    FromIAngularVector(Stomp::IAngularVector &,std::string const &,Stomp::AngularCoordinate::Sphere,bool)\n"
     "    FromIAngularVector(Stomp::IAngularVector &,std::string const &,Stomp::AngularCoordinate::Sphere)\n"
     "    Stomp::IndexedAngularCoordinate::FromIAngularVector(Stomp::IAngularVector &,std::string const &)\n");
   return NULL;
@@ -85398,6 +91408,86 @@ SWIGINTERN PyObject *IndexVector_swigregister(PyObject *SWIGUNUSEDPARM(self), Py
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap__iter_incr__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *arg1 = (std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:_iter_incr",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_iter_incr" "', argument " "1"" of type '" "std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator * >(argp1);
+  _iter_incr(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__iter_incr__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *arg1 = (std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:_iter_incr",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "_iter_incr" "', argument " "1"" of type '" "std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *""'"); 
+  }
+  arg1 = reinterpret_cast< std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator * >(argp1);
+  _iter_incr(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap__iter_incr(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__iter_incr__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap__iter_incr__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function '_iter_incr'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    _iter_incr(std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *)\n"
+    "    _iter_incr(std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *)\n");
+  return NULL;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"delete_PySwigIterator", _wrap_delete_PySwigIterator, METH_VARARGS, NULL},
 	 { (char *)"PySwigIterator_value", _wrap_PySwigIterator_value, METH_VARARGS, NULL},
@@ -85511,6 +91601,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AngularCorrelation_NBins", _wrap_AngularCorrelation_NBins, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_MinResolution", _wrap_AngularCorrelation_MinResolution, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_MaxResolution", _wrap_AngularCorrelation_MaxResolution, METH_VARARGS, NULL},
+	 { (char *)"AngularCorrelation__begin_Bins", _wrap_AngularCorrelation__begin_Bins, METH_VARARGS, NULL},
+	 { (char *)"AngularCorrelation__deref_Bins", _wrap_AngularCorrelation__deref_Bins, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_swigregister", AngularCorrelation_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_Pixel", _wrap_new_Pixel, METH_VARARGS, NULL},
 	 { (char *)"delete_Pixel", _wrap_delete_Pixel, METH_VARARGS, NULL},
@@ -85989,6 +92081,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Histogram_MeanItemWeight", _wrap_Histogram_MeanItemWeight, METH_VARARGS, NULL},
 	 { (char *)"Histogram_MeanBinValue", _wrap_Histogram_MeanBinValue, METH_VARARGS, NULL},
 	 { (char *)"Histogram_MeanWeightedBinValue", _wrap_Histogram_MeanWeightedBinValue, METH_VARARGS, NULL},
+	 { (char *)"Histogram__begin_Bins", _wrap_Histogram__begin_Bins, METH_VARARGS, NULL},
+	 { (char *)"Histogram__deref_Bins", _wrap_Histogram__deref_Bins, METH_VARARGS, NULL},
 	 { (char *)"Histogram_swigregister", Histogram_swigregister, METH_VARARGS, NULL},
 	 { (char *)"Tokenize", _wrap_Tokenize, METH_VARARGS, NULL},
 	 { (char *)"new_AngularCoordinate", _wrap_new_AngularCoordinate, METH_VARARGS, NULL},
@@ -86000,10 +92094,16 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AngularCoordinate_Set", _wrap_AngularCoordinate_Set, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_Lambda", _wrap_AngularCoordinate_Lambda, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_Eta", _wrap_AngularCoordinate_Eta, METH_VARARGS, NULL},
+	 { (char *)"AngularCoordinate_LambdaRadians", _wrap_AngularCoordinate_LambdaRadians, METH_VARARGS, NULL},
+	 { (char *)"AngularCoordinate_EtaRadians", _wrap_AngularCoordinate_EtaRadians, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_RA", _wrap_AngularCoordinate_RA, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_DEC", _wrap_AngularCoordinate_DEC, METH_VARARGS, NULL},
+	 { (char *)"AngularCoordinate_RARadians", _wrap_AngularCoordinate_RARadians, METH_VARARGS, NULL},
+	 { (char *)"AngularCoordinate_DECRadians", _wrap_AngularCoordinate_DECRadians, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_GalLon", _wrap_AngularCoordinate_GalLon, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_GalLat", _wrap_AngularCoordinate_GalLat, METH_VARARGS, NULL},
+	 { (char *)"AngularCoordinate_GalLonRadians", _wrap_AngularCoordinate_GalLonRadians, METH_VARARGS, NULL},
+	 { (char *)"AngularCoordinate_GalLatRadians", _wrap_AngularCoordinate_GalLatRadians, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_UnitSphereX", _wrap_AngularCoordinate_UnitSphereX, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_UnitSphereY", _wrap_AngularCoordinate_UnitSphereY, METH_VARARGS, NULL},
 	 { (char *)"AngularCoordinate_UnitSphereZ", _wrap_AngularCoordinate_UnitSphereZ, METH_VARARGS, NULL},
@@ -86039,8 +92139,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"WeightedAngularCoordinate_NFields", _wrap_WeightedAngularCoordinate_NFields, METH_VARARGS, NULL},
 	 { (char *)"WeightedAngularCoordinate_HasFields", _wrap_WeightedAngularCoordinate_HasFields, METH_VARARGS, NULL},
 	 { (char *)"WeightedAngularCoordinate_FieldNames", _wrap_WeightedAngularCoordinate_FieldNames, METH_VARARGS, NULL},
-	 { (char *)"WeightedAngularCoordinate_FieldBegin", _wrap_WeightedAngularCoordinate_FieldBegin, METH_VARARGS, NULL},
-	 { (char *)"WeightedAngularCoordinate_FieldEnd", _wrap_WeightedAngularCoordinate_FieldEnd, METH_VARARGS, NULL},
 	 { (char *)"WeightedAngularCoordinate_CopyFields", _wrap_WeightedAngularCoordinate_CopyFields, METH_VARARGS, NULL},
 	 { (char *)"WeightedAngularCoordinate_CopyFieldToWeight", _wrap_WeightedAngularCoordinate_CopyFieldToWeight, METH_VARARGS, NULL},
 	 { (char *)"WeightedAngularCoordinate_RestoreOriginalWeight", _wrap_WeightedAngularCoordinate_RestoreOriginalWeight, METH_VARARGS, NULL},
@@ -86555,6 +92653,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"IndexVector_capacity", _wrap_IndexVector_capacity, METH_VARARGS, NULL},
 	 { (char *)"delete_IndexVector", _wrap_delete_IndexVector, METH_VARARGS, NULL},
 	 { (char *)"IndexVector_swigregister", IndexVector_swigregister, METH_VARARGS, NULL},
+	 { (char *)"_iter_incr", _wrap__iter_incr, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -86721,6 +92820,7 @@ static swig_type_info _swigt__p_std__priority_queueT_std__pairT_double_Stomp__Tr
 static swig_type_info _swigt__p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t = {"_p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t", "Stomp::PointQueue *|std::priority_queue< std::pair< double,Stomp::WeightedAngularCoordinate * >,std::vector< std::pair< double,Stomp::WeightedAngularCoordinate * >,std::allocator< std::pair< double,Stomp::WeightedAngularCoordinate * > > >,Stomp::NearestNeighborPoint > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t = {"_p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t", "std::vector< Stomp::AngularBin *,std::allocator< Stomp::AngularBin * > > *|Stomp::ThetaPtrVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t = {"_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t", "std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > > *|Stomp::ThetaVector *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator = {"_p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator", "std::vector< Stomp::AngularBin,std::allocator< Stomp::AngularBin > >::const_iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t = {"_p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t", "std::vector< Stomp::AngularCoordinate *,std::allocator< Stomp::AngularCoordinate * > > *|Stomp::AngularPtrVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t = {"_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t", "std::vector< Stomp::AngularCoordinate > *|std::vector< Stomp::AngularCoordinate,std::allocator< Stomp::AngularCoordinate > > *|Stomp::AngularVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type = {"_p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type", "std::allocator< Stomp::AngularCoordinate > *|std::vector< Stomp::AngularCoordinate >::allocator_type *", 0, 0, (void*)0, 0};
@@ -86732,6 +92832,7 @@ static swig_type_info _swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocat
 static swig_type_info _swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type = {"_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type", "std::allocator< Stomp::CosmoCoordinate > *|std::vector< Stomp::CosmoCoordinate >::allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type = {"_p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type", "Stomp::CosmoCoordinate *|std::vector< Stomp::CosmoCoordinate >::value_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t = {"_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t", "std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > > *|Stomp::BinVector *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator = {"_p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator", "std::vector< Stomp::HistogramBin,std::allocator< Stomp::HistogramBin > >::const_iterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t = {"_p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t", "std::vector< Stomp::IndexedAngularCoordinate *,std::allocator< Stomp::IndexedAngularCoordinate * > > *|Stomp::IAngularPtrVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t = {"_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t", "std::vector< Stomp::IndexedAngularCoordinate > *|std::vector< Stomp::IndexedAngularCoordinate,std::allocator< Stomp::IndexedAngularCoordinate > > *|Stomp::IAngularVector *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type = {"_p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type", "std::vector< Stomp::IndexedAngularCoordinate >::allocator_type *|std::allocator< Stomp::IndexedAngularCoordinate > *", 0, 0, (void*)0, 0};
@@ -86877,6 +92978,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t,
   &_swigt__p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t,
   &_swigt__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t,
+  &_swigt__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator,
   &_swigt__p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t,
   &_swigt__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t,
   &_swigt__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type,
@@ -86888,6 +92990,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type,
   &_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type,
   &_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t,
+  &_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator,
   &_swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t,
   &_swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t,
   &_swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type,
@@ -87033,6 +93136,7 @@ static swig_cast_info _swigc__p_std__priority_queueT_std__pairT_double_Stomp__Tr
 static swig_cast_info _swigc__p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t[] = {  {&_swigt__p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator[] = {  {&_swigt__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
@@ -87044,6 +93148,7 @@ static swig_cast_info _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocat
 static swig_cast_info _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type[] = {  {&_swigt__p_Stomp__CosmoCoordinate, 0, 0, 0},  {&_swigt__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator[] = {  {&_swigt__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t[] = {  {&_swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
@@ -87189,6 +93294,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__priority_queueT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__vectorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_std__allocatorT_std__pairT_double_Stomp__WeightedAngularCoordinate_p_t_t_t_Stomp__NearestNeighborPoint_t,
   _swigc__p_std__vectorT_Stomp__AngularBin_p_std__allocatorT_Stomp__AngularBin_p_t_t,
   _swigc__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t,
+  _swigc__p_std__vectorT_Stomp__AngularBin_std__allocatorT_Stomp__AngularBin_t_t__const_iterator,
   _swigc__p_std__vectorT_Stomp__AngularCoordinate_p_std__allocatorT_Stomp__AngularCoordinate_p_t_t,
   _swigc__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t,
   _swigc__p_std__vectorT_Stomp__AngularCoordinate_std__allocatorT_Stomp__AngularCoordinate_t_t__allocator_type,
@@ -87200,6 +93306,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__allocator_type,
   _swigc__p_std__vectorT_Stomp__CosmoCoordinate_std__allocatorT_Stomp__CosmoCoordinate_t_t__value_type,
   _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t,
+  _swigc__p_std__vectorT_Stomp__HistogramBin_std__allocatorT_Stomp__HistogramBin_t_t__const_iterator,
   _swigc__p_std__vectorT_Stomp__IndexedAngularCoordinate_p_std__allocatorT_Stomp__IndexedAngularCoordinate_p_t_t,
   _swigc__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t,
   _swigc__p_std__vectorT_Stomp__IndexedAngularCoordinate_std__allocatorT_Stomp__IndexedAngularCoordinate_t_t__allocator_type,

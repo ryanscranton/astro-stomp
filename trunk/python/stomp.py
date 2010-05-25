@@ -76,6 +76,23 @@ class PySwigIterator(_object):
 PySwigIterator_swigregister = _stomp.PySwigIterator_swigregister
 PySwigIterator_swigregister(PySwigIterator)
 
+class GenericIterator:
+    def __init__(self, begin_iter_method, deref_method, incr_method):
+        self.it = begin_iter_method()
+        self.incr   = incr_method
+        self.deref  = deref_method
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        obj = self.deref( self.it )
+        if obj is not None:
+            self.incr( self.it )
+            return obj
+        else:
+            raise StopIteration
+
 DoubleLT = _stomp.DoubleLT
 DoubleLE = _stomp.DoubleLE
 DoubleGT = _stomp.DoubleGT
@@ -219,6 +236,16 @@ class AngularCorrelation(_object):
     def NBins(*args): return _stomp.AngularCorrelation_NBins(*args)
     def MinResolution(*args): return _stomp.AngularCorrelation_MinResolution(*args)
     def MaxResolution(*args): return _stomp.AngularCorrelation_MaxResolution(*args)
+    def Bins(self):
+        "Returns an iterator for Bins."
+        return GenericIterator(
+                self._begin_Bins,
+                self._deref_Bins,
+                _iter_incr
+                 )
+
+    def _begin_Bins(*args): return _stomp.AngularCorrelation__begin_Bins(*args)
+    def _deref_Bins(*args): return _stomp.AngularCorrelation__deref_Bins(*args)
 AngularCorrelation_swigregister = _stomp.AngularCorrelation_swigregister
 AngularCorrelation_swigregister(AngularCorrelation)
 
@@ -1062,6 +1089,16 @@ class Histogram(_object):
     def MeanItemWeight(*args): return _stomp.Histogram_MeanItemWeight(*args)
     def MeanBinValue(*args): return _stomp.Histogram_MeanBinValue(*args)
     def MeanWeightedBinValue(*args): return _stomp.Histogram_MeanWeightedBinValue(*args)
+    def Bins(self):
+        "Returns an iterator for Bins."
+        return GenericIterator(
+                self._begin_Bins,
+                self._deref_Bins,
+                _iter_incr
+                 )
+
+    def _begin_Bins(*args): return _stomp.Histogram__begin_Bins(*args)
+    def _deref_Bins(*args): return _stomp.Histogram__deref_Bins(*args)
 Histogram_swigregister = _stomp.Histogram_swigregister
 Histogram_swigregister(Histogram)
 
@@ -1087,10 +1124,16 @@ class AngularCoordinate(_object):
     def Set(*args): return _stomp.AngularCoordinate_Set(*args)
     def Lambda(*args): return _stomp.AngularCoordinate_Lambda(*args)
     def Eta(*args): return _stomp.AngularCoordinate_Eta(*args)
+    def LambdaRadians(*args): return _stomp.AngularCoordinate_LambdaRadians(*args)
+    def EtaRadians(*args): return _stomp.AngularCoordinate_EtaRadians(*args)
     def RA(*args): return _stomp.AngularCoordinate_RA(*args)
     def DEC(*args): return _stomp.AngularCoordinate_DEC(*args)
+    def RARadians(*args): return _stomp.AngularCoordinate_RARadians(*args)
+    def DECRadians(*args): return _stomp.AngularCoordinate_DECRadians(*args)
     def GalLon(*args): return _stomp.AngularCoordinate_GalLon(*args)
     def GalLat(*args): return _stomp.AngularCoordinate_GalLat(*args)
+    def GalLonRadians(*args): return _stomp.AngularCoordinate_GalLonRadians(*args)
+    def GalLatRadians(*args): return _stomp.AngularCoordinate_GalLatRadians(*args)
     def UnitSphereX(*args): return _stomp.AngularCoordinate_UnitSphereX(*args)
     def UnitSphereY(*args): return _stomp.AngularCoordinate_UnitSphereY(*args)
     def UnitSphereZ(*args): return _stomp.AngularCoordinate_UnitSphereZ(*args)
@@ -1169,8 +1212,6 @@ class WeightedAngularCoordinate(AngularCoordinate):
     def NFields(*args): return _stomp.WeightedAngularCoordinate_NFields(*args)
     def HasFields(*args): return _stomp.WeightedAngularCoordinate_HasFields(*args)
     def FieldNames(*args): return _stomp.WeightedAngularCoordinate_FieldNames(*args)
-    def FieldBegin(*args): return _stomp.WeightedAngularCoordinate_FieldBegin(*args)
-    def FieldEnd(*args): return _stomp.WeightedAngularCoordinate_FieldEnd(*args)
     def CopyFields(*args): return _stomp.WeightedAngularCoordinate_CopyFields(*args)
     def CopyFieldToWeight(*args): return _stomp.WeightedAngularCoordinate_CopyFieldToWeight(*args)
     def RestoreOriginalWeight(*args): return _stomp.WeightedAngularCoordinate_RestoreOriginalWeight(*args)
@@ -1983,4 +2024,5 @@ IndexVector_swigregister = _stomp.IndexVector_swigregister
 IndexVector_swigregister(IndexVector)
 
 
+_iter_incr = _stomp._iter_incr
 
