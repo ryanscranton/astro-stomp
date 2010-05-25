@@ -695,7 +695,7 @@ void MapRegionTests() {
   std::cout << "Total map area: " << stomp_map->Area() << "\n";
   std::cout << "Region " << center_region << " area: " <<
     region_map.Area() << "\n";
-  if (region_map.FindLocation(ang)) {
+  if (region_map.Contains(ang)) {
     std::cout << "\tAnd the Stomp::Map from that region contains " <<
       "the center point.  Good.\n";
   } else {
@@ -706,7 +706,7 @@ void MapRegionTests() {
   stomp_map->RegionExcludedMap(center_region, excluded_region_map);
   std::cout << "Region " << center_region << " excluded area: " <<
     excluded_region_map.Area() << "\n";
-  if (excluded_region_map.FindLocation(ang)) {
+  if (excluded_region_map.Contains(ang)) {
     std::cout << "\tThis is bad; the center point shouldn't be in this map.\n";
   } else {
     std::cout <<

@@ -33,7 +33,7 @@ AngularCoordinate::AngularCoordinate(double theta, double phi,
   switch (sphere) {
   case Survey:
     if (DoubleGE(theta, half_pi)) theta = half_pi;
-    if (DoubleLE(theta, half_pi)) theta = -half_pi;
+    if (DoubleLE(theta, -half_pi)) theta = -half_pi;
     if (phi > Pi) phi -= two_pi;
     if (phi < -Pi) phi += two_pi;
 

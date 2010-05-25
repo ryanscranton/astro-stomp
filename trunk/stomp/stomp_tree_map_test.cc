@@ -161,7 +161,7 @@ void TreeMapPairTests() {
   // maximum.
   double scale_factor = 1.0;
   ang.SetSurveyCoordinates(lambda+scale_factor*theta_radius,eta);
-  while (stomp_map->FindLocation(ang)) {
+  while (stomp_map->Contains(ang)) {
     scale_factor += 0.1;
     ang.SetSurveyCoordinates(lambda+scale_factor*theta_radius,eta);
   }
@@ -179,7 +179,7 @@ void TreeMapPairTests() {
   // Now, a location close to the right edge of the circle.
   scale_factor = 1.0;
   ang.SetSurveyCoordinates(lambda,eta+scale_factor*theta_radius);
-  while (stomp_map->FindLocation(ang)) {
+  while (stomp_map->Contains(ang)) {
     scale_factor += 0.1;
     ang.SetSurveyCoordinates(lambda,eta+scale_factor*theta_radius);
   }
