@@ -74,7 +74,7 @@ class AngularCoordinate {
     Galactic
   };
   AngularCoordinate(double theta = 0.0, double phi = 0.0,
-                    Sphere sphere = Survey);
+                    Sphere sphere = Survey, bool radians = false);
   AngularCoordinate(double unit_sphere_x, double unit_sphere_y,
                     double unit_sphere_z);
   ~AngularCoordinate();
@@ -83,28 +83,35 @@ class AngularCoordinate {
   // of the supported angular coordinate systems.  Calling these methods resets
   // any other previous values that the AngularCoordinate instance may have
   // had.
-  void SetSurveyCoordinates(double lambda, double eta);
-  void SetEquatorialCoordinates(double ra, double dec);
-  void SetGalacticCoordinates(double gal_lon, double gal_lat);
+  void SetSurveyCoordinates(double lambda, double eta, bool radians = false);
+  void SetEquatorialCoordinates(double ra, double dec, bool radians = false);
+  void SetGalacticCoordinates(double gal_lon, double gal_lat,
+			      bool radians = false);
   void SetUnitSphereCoordinates(double unit_sphere_x, double unit_sphere_y,
 				double unit_sphere_z);
   void SetUnitSphereCoordinates(double unit_sphere_x, double unit_sphere_y,
 				double unit_sphere_z, Sphere sphere);
   // set by Sphere type, more scriptable from python
-  void Set(double theta, double phi, Sphere sphere);
+  void Set(double theta, double phi, Sphere sphere, bool radians = false);
 
   // The basic methods for extracting each of the angular coordinate values.
   // Survey coordinates.
   double Lambda();
   double Eta();
+  double LambdaRadians();
+  double EtaRadians();
 
   // Equatorial coordinates
   double RA();
   double DEC();
+  double RARadians();
+  double DECRadians();
 
   // Galactic coordinates
   double GalLon();
   double GalLat();
+  double GalLonRadians();
+  double GalLatRadians();
 
   // And the associated methods for doing the same with the unit sphere
   // Cartesian coordinates.
@@ -173,23 +180,32 @@ class AngularCoordinate {
   // Static methods for when users want to switch between coordinate systems
   // without instantiating the class.
   static void SurveyToGalactic(double lambda, double eta,
-                               double& gal_lon, double& gal_lat);
+                               double& gal_lon, double& gal_lat,
+			       bool radians = false);
   static void SurveyToEquatorial(double lambda, double eta,
-                                 double& ra, double& dec);
+                                 double& ra, double& dec,
+				 bool radians = false);
   static void EquatorialToSurvey(double ra, double dec,
-                                 double& lambda, double& eta);
+                                 double& lambda, double& eta,
+				 bool radians = false);
   static void EquatorialToGalactic(double ra, double dec,
-                                   double& gal_lon, double& gal_lat);
+                                   double& gal_lon, double& gal_lat,
+				   bool radians = false);
   static void GalacticToSurvey(double gal_lon, double gal_lat,
-                               double& lambda, double& eta);
+                               double& lambda, double& eta,
+			       bool radians = false);
   static void GalacticToEquatorial(double gal_lon, double gal_lat,
-                                   double& ra, double& dec);
+                                   double& ra, double& dec,
+				   bool radians = false);
   static void SurveyToXYZ(double lambda, double eta,
-			  double& x, double& y, double& z);
+			  double& x, double& y, double& z,
+			  bool radians = false);
   static void EquatorialToXYZ(double ra, double dec,
-			      double& x, double& y, double& z);
+			      double& x, double& y, double& z,
+			      bool radians = false);
   static void GalacticToXYZ(double gal_lon, double gal_lat,
-			    double& x, double& y, double& z);
+			    double& x, double& y, double& z,
+			    bool radians = false);
 
   // This is a bit more obscure.  The idea here is that, when you want to find
   // the pixel bounds that subtend a given angular scale about a point on the
@@ -213,19 +229,23 @@ class AngularCoordinate {
   static bool ToAngularVector(std::vector<double>& thetaVec,
 			      std::vector<double>& phiVec,
 			      AngularVector& ang,
-			      Sphere sphere = Equatorial);
+			      Sphere sphere = Equatorial,
+			      bool radians = false);
   static bool ToAngularVector(const std::string& input_file,
 			      AngularVector& ang,
 			      Sphere sphere = Equatorial,
+			      bool radians = false,
 			      uint8_t theta_column = 0,
 			      uint8_t phi_column = 1);
   static bool FromAngularVector(AngularVector& ang,
 				std::vector<double>& thetaVec,
 				std::vector<double>& phiVec,
-				Sphere sphere = Equatorial);
+				Sphere sphere = Equatorial,
+				bool radians = false);
   static bool FromAngularVector(AngularVector& ang,
 				const std::string& output_file,
-				Sphere sphere = Equatorial);
+				Sphere sphere = Equatorial,
+				bool radians = false);
 
  private:
   double us_x_, us_y_, us_z_;
@@ -238,10 +258,12 @@ class WeightedAngularCoordinate : public AngularCoordinate {
  public:
   WeightedAngularCoordinate();
   WeightedAngularCoordinate(double theta, double phi,
-			    double weight, Sphere sphere = Survey);
+			    double weight, Sphere sphere = Survey,
+			    bool radians = false);
   WeightedAngularCoordinate(double theta, double phi,
 			    double weight, FieldDict& fields,
-			    Sphere sphere = Survey);
+			    Sphere sphere = Survey,
+			    bool radians = false);
   WeightedAngularCoordinate(double unit_sphere_x, double unit_sphere_y,
 			    double unit_sphere_z, double weight);
   WeightedAngularCoordinate(double unit_sphere_x, double unit_sphere_y,
@@ -302,15 +324,18 @@ class WeightedAngularCoordinate : public AngularCoordinate {
 			       std::vector<double>& phiVec,
 			       std::vector<double>& weightVec,
 			       WAngularVector& w_ang,
-			       Sphere sphere = Equatorial);
+			       Sphere sphere = Equatorial,
+			       bool radians = false);
   static bool ToWAngularVector(std::vector<double>& thetaVec,
 			       std::vector<double>& phiVec,
 			       double weight,
 			       WAngularVector& w_ang,
-			       Sphere sphere = Equatorial);
+			       Sphere sphere = Equatorial,
+			       bool radians = false);
   static bool ToWAngularVector(const std::string& input_file,
 			       WAngularVector& w_ang,
 			       Sphere sphere = Equatorial,
+			       bool radians = false,
 			       uint8_t theta_column = 0,
 			       uint8_t phi_column = 1,
 			       int8_t weight_column = -1);
@@ -318,12 +343,14 @@ class WeightedAngularCoordinate : public AngularCoordinate {
 				 std::vector<double>& thetaVec,
 				 std::vector<double>& phiVec,
 				 std::vector<double>& weightVec,
-				 Sphere sphere = Equatorial);
+				 Sphere sphere = Equatorial,
+				 bool radians = false);
   static bool FromWAngularVector(WAngularVector& w_ang,
 				 const std::string& output_file,
-				 Sphere sphere = Equatorial);
+				 Sphere sphere = Equatorial,
+				 bool radians = false);
 
-  // For WeightedAngularCoordinate instances that have Field values, we two
+  // For WeightedAngularCoordinate instances that have Field values, we have two
   // additional methods for reading from and writing to ascii files.  In both
   // cases the FieldColumnDict maps between Field name and column in the input
   // or output file.  Missing columns or Fields will result in 0.0 values in
@@ -334,6 +361,7 @@ class WeightedAngularCoordinate : public AngularCoordinate {
 			       WAngularVector& w_ang,
 			       FieldColumnDict& field_columns,
 			       Sphere sphere = Equatorial,
+			       bool radians = false,
 			       uint8_t theta_column = 0,
 			       uint8_t phi_column = 1,
 			       int8_t weight_column = -1);
@@ -341,6 +369,7 @@ class WeightedAngularCoordinate : public AngularCoordinate {
 				 FieldColumnDict& field_columns,
 				 const std::string& output_file,
 				 Sphere sphere = Equatorial,
+				 bool radians = false,
 				 uint8_t theta_column = 0,
 				 uint8_t phi_column = 1,
 				 uint8_t weight_column = 2);
@@ -364,7 +393,7 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
  public:
   CosmoCoordinate();
   CosmoCoordinate(double theta, double phi, double redshift,
-		  double weight, Sphere sphere = Survey);
+		  double weight, Sphere sphere = Survey, bool radians = false);
   CosmoCoordinate(double unit_sphere_x, double unit_sphere_y,
 		  double unit_sphere_z, double redshift, double weight);
   ~CosmoCoordinate();
@@ -400,16 +429,19 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
 			    std::vector<double>& redshiftVec,
 			    std::vector<double>& weightVec,
 			    CosmoVector& z_ang,
-			    Sphere sphere = Equatorial);
+			    Sphere sphere = Equatorial,
+			    bool radians = false);
   static bool ToCosmoVector(std::vector<double>& thetaVec,
 			    std::vector<double>& phiVec,
 			    std::vector<double>& redshiftVec,
 			    double weight,
 			    CosmoVector& z_ang,
-			    Sphere sphere = Equatorial);
+			    Sphere sphere = Equatorial,
+			    bool radians = false);
   static bool ToCosmoVector(const std::string& input_file,
 			    CosmoVector& z_ang,
 			    Sphere sphere = Equatorial,
+			    bool radians = false,
 			    uint8_t theta_column = 0,
 			    uint8_t phi_column = 1,
 			    uint8_t redshift_column = 2,
@@ -419,10 +451,12 @@ class CosmoCoordinate : public WeightedAngularCoordinate {
 			      std::vector<double>& phiVec,
 			      std::vector<double>& redshiftVec,
 			      std::vector<double>& weightVec,
-			      Sphere sphere = Equatorial);
+			      Sphere sphere = Equatorial,
+			      bool radians = false);
   static bool FromCosmoVector(CosmoVector& z_ang,
 			      const std::string& output_file,
-			      Sphere sphere = Equatorial);
+			      Sphere sphere = Equatorial,
+			      bool radians = false);
 
  private:
   double redshift_;
@@ -437,7 +471,8 @@ class IndexedAngularCoordinate : public AngularCoordinate {
  public:
   IndexedAngularCoordinate();
   IndexedAngularCoordinate(double theta, double phi,
-			   uint32_t index, Sphere sphere = Survey);
+			   uint32_t index, Sphere sphere = Survey,
+			   bool radians = false);
   IndexedAngularCoordinate(double unit_sphere_x, double unit_sphere_y,
 			    double unit_sphere_z, uint32_t index);
   ~IndexedAngularCoordinate();
@@ -452,14 +487,17 @@ class IndexedAngularCoordinate : public AngularCoordinate {
 			       std::vector<double>& phiVec,
 			       std::vector<uint32_t>& indexVec,
 			       IAngularVector& i_ang,
-			       Sphere sphere = Equatorial);
+			       Sphere sphere = Equatorial,
+			       bool radians = false);
   static bool ToIAngularVector(std::vector<double>& thetaVec,
 			       std::vector<double>& phiVec,
 			       IAngularVector& i_ang,
-			       Sphere sphere = Equatorial);
+			       Sphere sphere = Equatorial,
+			       bool radians = false);
   static bool ToIAngularVector(const std::string& input_file,
 			       IAngularVector& i_ang,
 			       Sphere sphere = Equatorial,
+			       bool radians = false,
 			       uint8_t theta_column = 0,
 			       uint8_t phi_column = 1,
 			       int8_t index_column = -1);
@@ -467,10 +505,12 @@ class IndexedAngularCoordinate : public AngularCoordinate {
 				 std::vector<double>& thetaVec,
 				 std::vector<double>& phiVec,
 				 std::vector<uint32_t>& indexVec,
-				 Sphere sphere = Equatorial);
+				 Sphere sphere = Equatorial,
+				 bool radians = false);
   static bool FromIAngularVector(IAngularVector& i_ang,
 				 const std::string& output_file,
-				 Sphere sphere = Equatorial);
+				 Sphere sphere = Equatorial,
+				 bool radians = false);
 
  private:
   uint32_t index_;
