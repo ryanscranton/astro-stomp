@@ -400,7 +400,8 @@ void AngularVectorFileIOTests() {
 
   test_file2_str.close();
 
-  if (Stomp::AngularCoordinate::ToAngularVector(test_file, ang, sphere, 6 ,2)) {
+  if (Stomp::AngularCoordinate::ToAngularVector(test_file, ang,
+						sphere, false, 6 , 2)) {
     std::cout << "\tRead " << test_file << " to AngularVector...\n\n";
   } else {
     std::cout << "\tFailed to read " << test_file << " to AngularVector...\n\n";

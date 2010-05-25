@@ -27,11 +27,15 @@
 #include <vector>
 #include <algorithm>
 #include "stomp_angular_coordinate.h"
+#include "stomp_angular_bin.h"
 
 namespace Stomp {
 
+class AngularCoordinate;  // class declaration in stomp_angular_coordinate.h
+class AngularBin;         // class declaration in stomp_angular_bin.h
 class GeometricBound;
 class CircleBound;
+class AnnulusBound;
 class WedgeBound;
 class PolygonBound;
 class LongitudeBound;
@@ -40,6 +44,9 @@ class LatLonBound;
 
 typedef std::vector<CircleBound> CircleVector;
 typedef CircleVector::iterator CircleIterator;
+
+typedef std::vector<AnnulusBound> AnnulusVector;
+typedef AnnulusVector::iterator AnnulusIterator;
 
 typedef std::vector<WedgeBound> WedgeVector;
 typedef WedgeVector::iterator WedgeIterator;
@@ -108,15 +115,35 @@ class CircleBound : public GeometricBound {
   // angular position.
 
  public:
-  CircleBound(const AngularCoordinate& ang, double radius);
+  CircleBound(const AngularCoordinate& center_point, double radius);
   virtual ~CircleBound();
   virtual bool CheckPoint(AngularCoordinate& ang);
   virtual bool FindAngularBounds();
   virtual bool FindArea();
 
  private:
-  AngularCoordinate ang_;
-  double radius_, sin2radius_;
+  AngularCoordinate center_point_;
+  double radius_, costhetamin_;
+};
+
+
+class AnnulusBound : public GeometricBound {
+  // Similar to the CircleBound, but for an annulus.  In order to keep things
+  // simple, we require the circles to share a common center point.
+
+ public:
+  AnnulusBound(const AngularCoordinate& center_point, double min_radius,
+	       double max_radius);
+  AnnulusBound(const AngularCoordinate& center_point,
+	       AngularBin& angular_bin);
+  virtual ~AnnulusBound();
+  virtual bool CheckPoint(AngularCoordinate& ang);
+  virtual bool FindAngularBounds();
+  virtual bool FindArea();
+
+ private:
+  AngularCoordinate center_point_;
+  double max_radius_, min_radius_, costhetamin_, costhetamax_;
 };
 
 

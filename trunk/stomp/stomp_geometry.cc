@@ -95,10 +95,11 @@ bool GeometricBound::ContinuousBounds() {
   return continuous_bounds_;
 }
 
-CircleBound::CircleBound(const AngularCoordinate& ang, double radius) {
-  ang_ = ang;
+CircleBound::CircleBound(const AngularCoordinate& center_point,
+			 double radius) {
+  center_point_ = center_point;
   radius_ = radius;
-  sin2radius_ = sin(radius*DegToRad)*sin(radius*DegToRad);
+  costhetamin_ = cos(radius*DegToRad);
 
   SetContinuousBounds(true);
   FindArea();
@@ -106,26 +107,26 @@ CircleBound::CircleBound(const AngularCoordinate& ang, double radius) {
 }
 
 CircleBound::~CircleBound() {
-  radius_ = sin2radius_ = 0.0;
+  radius_ = costhetamin_ = 0.0;
 }
 
 bool CircleBound::FindAngularBounds() {
 
-  double lammin = ang_.Lambda() - radius_;
+  double lammin = center_point_.Lambda() - radius_;
   if (DoubleLE(lammin, -90.0)) lammin = -90.0;
 
-  double lammax = ang_.Lambda() + radius_;
+  double lammax = center_point_.Lambda() + radius_;
   if (DoubleGE(lammax, 90.0)) lammax = 90.0;
 
   // double eta_multiplier =
   // AngularCoordinate::EtaMultiplier(0.5*(lammax+lammin));
   double eta_multiplier = 1.0;
 
-  double etamin = ang_.Eta() - radius_*eta_multiplier;
+  double etamin = center_point_.Eta() - radius_*eta_multiplier;
   if (DoubleGT(etamin, 180.0)) etamin -= 360.0;
   if (DoubleLT(etamin, -180.0)) etamin += 360.0;
 
-  double etamax = ang_.Eta() + radius_*eta_multiplier;
+  double etamax = center_point_.Eta() + radius_*eta_multiplier;
   if (DoubleGT(etamax, 180.0)) etamax -= 360.0;
   if (DoubleLT(etamax, -180.0)) etamax += 360.0;
 
@@ -135,22 +136,87 @@ bool CircleBound::FindAngularBounds() {
 }
 
 bool CircleBound::FindArea() {
-  SetArea((1.0 -
-           cos(radius_*DegToRad))*2.0*Pi*StradToDeg);
+  SetArea((1.0 - costhetamin_)*2.0*Pi*StradToDeg);
   return true;
 }
 
 bool CircleBound::CheckPoint(AngularCoordinate& ang) {
-  bool within_bound = false;
+  return (DoubleGE(center_point_.DotProduct(ang), costhetamin_) ? true : false);
+}
 
-  double costheta =
-      ang.UnitSphereX()*ang_.UnitSphereX() +
-      ang.UnitSphereY()*ang_.UnitSphereY() +
-      ang.UnitSphereZ()*ang_.UnitSphereZ();
+AnnulusBound::AnnulusBound(const AngularCoordinate& center_point,
+			   double min_radius, double max_radius) {
+  center_point_ = center_point;
 
-  if (DoubleLE(1.0-costheta*costheta, sin2radius_)) within_bound = true;
+  if (min_radius > max_radius) {
+    min_radius_ = max_radius;
+    max_radius_ = min_radius;
+  } else {
+    min_radius_ = min_radius;
+    max_radius_ = max_radius;
+  }
 
-  return within_bound;
+  costhetamax_ = cos(min_radius_*DegToRad);
+  costhetamin_ = cos(max_radius_*DegToRad);
+
+  SetContinuousBounds(true);
+  FindArea();
+  FindAngularBounds();
+}
+
+AnnulusBound::AnnulusBound(const AngularCoordinate& center_point,
+			   AngularBin& angular_bin) {
+  center_point_ = center_point;
+
+  min_radius_ = angular_bin.ThetaMin();
+  max_radius_ = angular_bin.ThetaMax();
+
+  costhetamax_ = cos(min_radius_*DegToRad);
+  costhetamin_ = cos(max_radius_*DegToRad);
+
+  SetContinuousBounds(true);
+  FindArea();
+  FindAngularBounds();
+}
+
+AnnulusBound::~AnnulusBound() {
+  min_radius_ = max_radius_ = 0.0;
+  costhetamin_ = costhetamax_ = 1.0;
+}
+
+bool AnnulusBound::FindAngularBounds() {
+
+  double lammin = center_point_.Lambda() - max_radius_;
+  if (DoubleLE(lammin, -90.0)) lammin = -90.0;
+
+  double lammax = center_point_.Lambda() + max_radius_;
+  if (DoubleGE(lammax, 90.0)) lammax = 90.0;
+
+  // double eta_multiplier =
+  // AngularCoordinate::EtaMultiplier(0.5*(lammax+lammin));
+  double eta_multiplier = 1.0;
+
+  double etamin = center_point_.Eta() - max_radius_*eta_multiplier;
+  if (DoubleGT(etamin, 180.0)) etamin -= 360.0;
+  if (DoubleLT(etamin, -180.0)) etamin += 360.0;
+
+  double etamax = center_point_.Eta() + max_radius_*eta_multiplier;
+  if (DoubleGT(etamax, 180.0)) etamax -= 360.0;
+  if (DoubleLT(etamax, -180.0)) etamax += 360.0;
+
+  SetAngularBounds(lammin,lammax,etamin,etamax);
+
+  return true;
+}
+
+bool AnnulusBound::FindArea() {
+  SetArea((costhetamax_ - costhetamin_)*2.0*Pi*StradToDeg);
+  return true;
+}
+
+bool AnnulusBound::CheckPoint(AngularCoordinate& ang) {
+  return (DoubleLE(center_point_.DotProduct(ang), costhetamax_) &&
+	  DoubleGE(center_point_.DotProduct(ang), costhetamin_) ? true : false);
 }
 
 WedgeBound::WedgeBound(const AngularCoordinate& ang, double radius,

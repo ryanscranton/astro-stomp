@@ -39,6 +39,53 @@ void CircleBoundTests() {
   }
 }
 
+void AnnulusBoundTests() {
+  // Testing the AnnulusBound class
+  std::cout << "\n";
+  std::cout << "**************************\n";
+  std::cout << "*** AnnulusBound Tests ***\n";
+  std::cout << "**************************\n";
+  Stomp::AngularCoordinate ang(20.0, 0.0, Stomp::AngularCoordinate::Survey);
+  double min_radius = 0.5;
+  double max_radius = 1.0;
+
+  Stomp::AnnulusBound annulus(ang, min_radius, max_radius);
+  std::cout << "Annulus Area: " << annulus.Area() << " (" <<
+    (cos(min_radius*Stomp::DegToRad) - cos(max_radius*Stomp::DegToRad))*
+    2.0*Stomp::Pi*Stomp::StradToDeg << ")\n";
+
+  Stomp::AngularBin angular_bin(min_radius, max_radius);
+  Stomp::AnnulusBound alt_annulus(ang, angular_bin);
+  std::cout << "Alternate constructor annulus Area: " <<
+    annulus.Area() << " (" <<
+    (cos(min_radius*Stomp::DegToRad) - cos(max_radius*Stomp::DegToRad))*
+    2.0*Stomp::Pi*Stomp::StradToDeg << ")\n";
+  
+  std::cout << "Bounds:\n" << "\tLambda: " << annulus.LambdaMin() << " - " <<
+    annulus.LambdaMax() << ", Eta: " << annulus.EtaMin() << " - " <<
+    annulus.EtaMax() << "\n";
+
+  if (annulus.CheckPoint(ang)) {
+    std::cout << "Bad: CheckPoint at the center returns as true\n";
+  } else {
+    std::cout << "Good: CheckPoint at the center returns as false\n";
+  }
+
+  ang.SetSurveyCoordinates(ang.Lambda()+0.5*(min_radius+max_radius), ang.Eta());
+  if (annulus.CheckPoint(ang)) {
+    std::cout << "Good: CheckPoint inside the bound returns as true\n";
+  } else {
+    std::cout << "Bad: CheckPoint inside the bound returns as false\n";
+  }
+
+  ang.SetSurveyCoordinates(ang.Lambda()+2.0*max_radius, ang.Eta());
+  if (annulus.CheckPoint(ang)) {
+    std::cout << "Bad: CheckPoint outside the bound returns as true\n";
+  } else {
+    std::cout << "Good: CheckPoint outside the bound returns as false\n";
+  }
+}
+
 void WedgeBoundTests() {
   // Testing the WedgeBound class
   std::cout << "\n";
@@ -183,11 +230,13 @@ void PolygonBoundTests() {
 // Define our command line flags
 DEFINE_bool(all_geometry_tests, false, "Run all class unit tests.");
 DEFINE_bool(circle_bound_tests, false, "Run CircleBound tests");
+DEFINE_bool(annulus_bound_tests, false, "Run AnnulusBound tests");
 DEFINE_bool(wedge_bound_tests, false, "Run WedgeBound tests");
 DEFINE_bool(polygon_bound_tests, false, "Run PolygonBound tests");
 
 void GeometryUnitTests(bool run_all_tests) {
   void CircleBoundTests();
+  void AnnulusBoundTests();
   void WedgeBoundTests();
   void PolygonBoundTests();
 
@@ -196,6 +245,10 @@ void GeometryUnitTests(bool run_all_tests) {
   // Check the CircleBound class.
   if (FLAGS_all_geometry_tests || FLAGS_circle_bound_tests)
     CircleBoundTests();
+
+  // Check the AnnulusBound class.
+  if (FLAGS_all_geometry_tests || FLAGS_annulus_bound_tests)
+    AnnulusBoundTests();
 
   // Check the WedgeBound class.
   if (FLAGS_all_geometry_tests || FLAGS_wedge_bound_tests)
