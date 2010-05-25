@@ -21,45 +21,44 @@
 namespace Stomp {
 
 AngularCoordinate::AngularCoordinate(double theta, double phi,
-				     Sphere sphere) {
-  switch (sphere) {
-  case Survey:
-    if (DoubleGE(theta, 90.0)) theta = 90.0;
-    if (DoubleLE(theta, -90.0)) theta = -90.0;
-    if (phi > 180.0) phi -= 360.0;
-    if (phi < -180.0) phi += 360.0;
-
+				     Sphere sphere, bool radians) {
+  if (!radians) {
     theta *= DegToRad;
     phi *= DegToRad;
+  }
+
+  double half_pi = 0.5*Pi;
+  double two_pi = 2.0*Pi;
+
+  switch (sphere) {
+  case Survey:
+    if (DoubleGE(theta, half_pi)) theta = half_pi;
+    if (DoubleLE(theta, half_pi)) theta = -half_pi;
+    if (phi > Pi) phi -= two_pi;
+    if (phi < -Pi) phi += two_pi;
 
     us_x_ = -1.0*sin(theta);
     us_y_ = cos(theta)*cos(phi+EtaPole);
     us_z_ = cos(theta)*sin(phi+EtaPole);
     break;
   case Equatorial:
-    if (DoubleGE(phi, 90.0)) phi = 90.0;
-    if (DoubleLE(phi, -90.0)) phi = -90.0;
-    if (theta > 360.0) theta -= 360.0;
-    if (theta < 0.0) theta += 360.0;
-
-    theta *= DegToRad;
-    phi *= DegToRad;
+    if (DoubleGE(phi, half_pi)) phi = half_pi;
+    if (DoubleLE(phi, -half_pi)) phi = -half_pi;
+    if (theta > two_pi) theta -= two_pi;
+    if (theta < 0.0) theta += two_pi;
 
     us_x_ = cos(theta-Node)*cos(phi);
     us_y_ = sin(theta-Node)*cos(phi);
     us_z_ = sin(phi);
     break;
   case Galactic:
-    if (DoubleGE(phi, 90.0)) phi = 90.0;
-    if (DoubleLE(phi, -90.0)) phi = -90.0;
-    if (theta > 360.0) theta -= 360.0;
-    if (theta < 0.0) theta += 360.0;
+    if (DoubleGE(phi, half_pi)) phi = half_pi;
+    if (DoubleLE(phi, -half_pi)) phi = -half_pi;
+    if (theta > two_pi) theta -= two_pi;
+    if (theta < 0.0) theta += two_pi;
 
     double ra, dec;
-    GalacticToEquatorial(theta, phi, ra, dec);
-
-    ra *= DegToRad;
-    dec *= DegToRad;
+    GalacticToEquatorial(theta, phi, ra, dec, true);  // input/output in radians
 
     us_x_ = cos(ra-Node)*cos(dec);
     us_y_ = sin(ra-Node)*cos(dec);
@@ -86,59 +85,78 @@ AngularCoordinate::~AngularCoordinate() {
   us_z_ = 0.0;
 }
 
-void AngularCoordinate::Set(double theta, double phi, Sphere sphere) {
+void AngularCoordinate::Set(double theta, double phi, Sphere sphere,
+			    bool radians) {
   switch (sphere) {
   case Survey:
-    SetSurveyCoordinates(theta, phi);
+    SetSurveyCoordinates(theta, phi, radians);
     break;
   case Equatorial:
-    SetEquatorialCoordinates(theta, phi);
+    SetEquatorialCoordinates(theta, phi, radians);
     break;
   case Galactic:
-    SetGalacticCoordinates(theta, phi);
+    SetGalacticCoordinates(theta, phi, radians);
     break;
   }
 }
 
-void AngularCoordinate::SetSurveyCoordinates(double lambda, double eta) {
-  if (DoubleGE(lambda, 90.0)) lambda = 90.0;
-  if (DoubleLE(lambda, -90.0)) lambda = -90.0;
-  if (eta > 180.0) eta -= 360.0;
-  if (eta < -180.0) eta += 360.0;
+void AngularCoordinate::SetSurveyCoordinates(double lambda, double eta,
+					     bool radians) {
+  if (!radians) {
+    eta *= DegToRad;
+    lambda *= DegToRad;
+  }
 
-  eta *= DegToRad;
-  lambda *= DegToRad;
+  double half_pi = 0.5*Pi;
+  double two_pi = 2.0*Pi;
+
+  if (DoubleGE(lambda, half_pi)) lambda = half_pi;
+  if (DoubleLE(lambda, -half_pi)) lambda = -half_pi;
+  if (eta > Pi) eta -= two_pi;
+  if (eta < -Pi) eta += two_pi;
 
   us_x_ = -1.0*sin(lambda);
   us_y_ = cos(lambda)*cos(eta+EtaPole);
   us_z_ = cos(lambda)*sin(eta+EtaPole);
 }
 
-void AngularCoordinate::SetEquatorialCoordinates(double ra, double dec) {
-  if (DoubleGE(dec, 90.0)) dec = 90.0;
-  if (DoubleLE(dec, -90.0)) dec = -90.0;
-  if (ra > 360.0) ra -= 360.0;
-  if (ra < 0.0) ra += 360.0;
+void AngularCoordinate::SetEquatorialCoordinates(double ra, double dec,
+						 bool radians) {
+  if (!radians) {
+    ra *= DegToRad;
+    dec *= DegToRad;
+  }
 
-  ra *= DegToRad;
-  dec *= DegToRad;
+  double half_pi = 0.5*Pi;
+  double two_pi = 2.0*Pi;
+
+  if (DoubleGE(dec, half_pi)) dec = half_pi;
+  if (DoubleLE(dec, -half_pi)) dec = -half_pi;
+  if (ra > two_pi) ra -= two_pi;
+  if (ra < 0.0) ra += two_pi;
 
   us_x_ = cos(ra-Node)*cos(dec);
   us_y_ = sin(ra-Node)*cos(dec);
   us_z_ = sin(dec);
 }
 
-void AngularCoordinate::SetGalacticCoordinates(double gal_lon, double gal_lat) {
-  if (DoubleGE(gal_lat, 90.0)) gal_lat = 90.0;
-  if (DoubleLE(gal_lat, -90.0)) gal_lat = -90.0;
-  if (gal_lon > 360.0) gal_lon -= 360.0;
-  if (gal_lon < 0.0) gal_lon += 360.0;
+void AngularCoordinate::SetGalacticCoordinates(double gal_lon, double gal_lat,
+					       bool radians) {
+  if (!radians) {
+    gal_lon *= DegToRad;
+    gal_lat *= DegToRad;
+  }
+
+  double half_pi = 0.5*Pi;
+  double two_pi = 2.0*Pi;
+
+  if (DoubleGE(gal_lat, half_pi)) gal_lat = half_pi;
+  if (DoubleLE(gal_lat, -half_pi)) gal_lat = -half_pi;
+  if (gal_lon > two_pi) gal_lon -= two_pi;
+  if (gal_lon < 0.0) gal_lon += two_pi;
 
   double ra, dec;
-  GalacticToEquatorial(gal_lon, gal_lat, ra, dec);
-
-  ra *= DegToRad;
-  dec *= DegToRad;
+  GalacticToEquatorial(gal_lon, gal_lat, ra, dec, true); // I/O in radians
 
   us_x_ = cos(ra-Node)*cos(dec);
   us_y_ = sin(ra-Node)*cos(dec);
@@ -164,40 +182,56 @@ void AngularCoordinate::SetUnitSphereCoordinates(double unit_sphere_x,
   double r_norm = 1.0/sqrt(unit_sphere_x*unit_sphere_x +
 			   unit_sphere_y*unit_sphere_y +
 			   unit_sphere_z*unit_sphere_z);
-  double phi = asin(unit_sphere_z*r_norm)*RadToDeg;
-  double theta = atan2(unit_sphere_y*r_norm, unit_sphere_x*r_norm)*RadToDeg;
+  double phi = asin(unit_sphere_z*r_norm);
+  double theta = atan2(unit_sphere_y*r_norm, unit_sphere_x*r_norm);
 
   switch (sphere) {
   case Survey:
-    SetSurveyCoordinates(phi, theta);
+    SetSurveyCoordinates(phi, theta, true);
     break;
   case Equatorial:
-    SetEquatorialCoordinates(theta, phi);
+    SetEquatorialCoordinates(theta, phi, true);
     break;
   case Galactic:
-    SetGalacticCoordinates(theta, phi);
+    SetGalacticCoordinates(theta, phi, true);
     break;
   }
 }
 
 double AngularCoordinate::Lambda() {
-  return -1.0*asin(us_x_)*RadToDeg;
+  return LambdaRadians()*RadToDeg;
 }
 
 double AngularCoordinate::Eta() {
-  double eta = (atan2(us_z_, us_y_) - EtaPole)*RadToDeg;
-  return (DoubleLT(eta, 180.0) && DoubleGT(eta, -180.0) ? eta :
-	  (DoubleGE(eta, 180) ? eta - 360.0 : eta + 360.0)) ;
+  return EtaRadians()*RadToDeg;
+}
+
+double AngularCoordinate::LambdaRadians() {
+  return -1.0*asin(us_x_);
+}
+
+double AngularCoordinate::EtaRadians() {
+  double eta = (atan2(us_z_, us_y_) - EtaPole);
+  return (DoubleLT(eta, Pi) && DoubleGT(eta, -Pi) ? eta :
+	  (DoubleGE(eta, Pi) ? eta - 2.0*Pi : eta + 2.0*Pi)) ;
 }
 
 double AngularCoordinate::RA() {
-  double ra = (atan2(us_y_, us_x_) + Node)*RadToDeg;
-  return (DoubleLT(ra, 360.0) && DoubleGT(ra, 0.0) ? ra :
-	  (DoubleGE(ra, 360) ? ra - 360.0 : ra + 360.0)) ;
+  return RARadians()*RadToDeg;
 }
 
 double AngularCoordinate::DEC() {
-  return asin(us_z_)*RadToDeg;
+  return DECRadians()*RadToDeg;
+}
+
+double AngularCoordinate::RARadians() {
+  double ra = (atan2(us_y_, us_x_) + Node);
+  return (DoubleLT(ra, 2.0*Pi) && DoubleGT(ra, 0.0) ? ra :
+	  (DoubleGE(ra, 2.0*Pi) ? ra - 2.0*Pi : ra + 2.0*Pi)) ;
+}
+
+double AngularCoordinate::DECRadians() {
+  return asin(us_z_);
 }
 
 double AngularCoordinate::GalLon() {
@@ -210,6 +244,20 @@ double AngularCoordinate::GalLon() {
 double AngularCoordinate::GalLat() {
   double gal_lon, gal_lat;
   EquatorialToGalactic(RA(), DEC(), gal_lon, gal_lat);
+
+  return gal_lat;
+}
+
+double AngularCoordinate::GalLonRadians() {
+  double gal_lon, gal_lat;
+  EquatorialToGalactic(RARadians(), DECRadians(), gal_lon, gal_lat, true);
+
+  return gal_lon;
+}
+
+double AngularCoordinate::GalLatRadians() {
+  double gal_lon, gal_lat;
+  EquatorialToGalactic(RARadians(), DECRadians(), gal_lon, gal_lat, true);
 
   return gal_lat;
 }
@@ -508,42 +556,71 @@ void AngularCoordinate::Rotate(AngularCoordinate& fixed_ang,
 }
 
 void AngularCoordinate::GalacticToSurvey(double gal_lon, double gal_lat,
-                                         double& lambda, double& eta) {
+                                         double& lambda, double& eta,
+					 bool radians) {
+  if (!radians) {
+    gal_lon *= DegToRad;
+    gal_lat *= DegToRad;
+  }
   double ra, dec;
 
-  GalacticToEquatorial(gal_lon,gal_lat,ra,dec);
-  EquatorialToSurvey(ra,dec,lambda,eta);
+  GalacticToEquatorial(gal_lon, gal_lat, ra, dec, true);
+  EquatorialToSurvey(ra, dec, lambda, eta, true);
+
+  if (!radians) {
+    lambda *= RadToDeg;
+    eta *= RadToDeg;
+  }
 }
 
 void AngularCoordinate::SurveyToGalactic(double lambda, double eta,
-                                         double& gal_lon, double& gal_lat) {
-  double ra, dec;
+                                         double& gal_lon, double& gal_lat,
+					 bool radians) {
+  if (!radians) {
+    lambda *= DegToRad;
+    eta *= DegToRad;
+  }
 
-  SurveyToEquatorial(lambda, eta, ra, dec);
-  EquatorialToGalactic(ra,dec, gal_lon, gal_lat);
-  if (gal_lon < 0.0) gal_lon += 360.0;
-  if (gal_lon > 360.0) gal_lon -= 360.0;
+  double ra, dec;
+  SurveyToEquatorial(lambda, eta, ra, dec, true);
+  EquatorialToGalactic(ra, dec, gal_lon, gal_lat, true);
+
+  if (!radians) {
+    gal_lon *= RadToDeg;
+    gal_lat *= RadToDeg;
+  }
 }
 
 void AngularCoordinate::SurveyToEquatorial(double lambda, double eta,
-                                           double& ra, double& dec) {
-  lambda *= DegToRad;
-  eta *= DegToRad;
+                                           double& ra, double& dec,
+					   bool radians) {
+  if (!radians) {
+    lambda *= DegToRad;
+    eta *= DegToRad;
+  }
 
   double x = -1.0*sin(lambda);
   double y = cos(lambda)*cos(eta+EtaPole);
   double z = cos(lambda)*sin(eta+EtaPole);
 
-  ra = (atan2(y,x) + Node)*RadToDeg;
-  if (ra < 0.0) ra += 360.0;
-  if (ra > 360.0) ra -= 360.0;
-  dec = asin(z)*RadToDeg;
+  ra = (atan2(y,x) + Node);
+  if (ra < 0.0) ra += 2.0*Pi;
+  if (ra > 2.0*Pi) ra -= 2.0*Pi;
+  dec = asin(z);
+
+  if (!radians) {
+    ra *= RadToDeg;
+    dec *= RadToDeg;
+  }
 }
 
 void AngularCoordinate::SurveyToXYZ(double lambda, double eta,
-                                    double& x, double& y, double& z) {
-  lambda *= DegToRad;
-  eta *= DegToRad;
+                                    double& x, double& y, double& z,
+				    bool radians) {
+  if (!radians) {
+    lambda *= DegToRad;
+    eta *= DegToRad;
+  }
 
   x = -1.0*sin(lambda);
   y = cos(lambda)*cos(eta+EtaPole);
@@ -551,24 +628,35 @@ void AngularCoordinate::SurveyToXYZ(double lambda, double eta,
 }
 
 void AngularCoordinate::EquatorialToSurvey(double ra, double dec,
-                                           double& lambda, double& eta) {
-  ra *= DegToRad;
-  dec *= DegToRad;
+                                           double& lambda, double& eta,
+					   bool radians) {
+  if (!radians) {
+    ra *= DegToRad;
+    dec *= DegToRad;
+  }
 
   double x = cos(ra-Node)*cos(dec);
   double y = sin(ra-Node)*cos(dec);
   double z = sin(dec);
 
-  lambda = -1.0*asin(x)*RadToDeg;
-  eta = (atan2(z,y) - EtaPole)*RadToDeg;
-  if (eta < -180.0) eta += 360.0;
-  if (eta > 180.0) eta -= 360.0;
+  lambda = -1.0*asin(x);
+  eta = (atan2(z,y) - EtaPole);
+  if (eta < -Pi) eta += 2.0*Pi;
+  if (eta > Pi) eta -= 2.0*Pi;
+
+  if (!radians) {
+    lambda *= RadToDeg;
+    eta *= RadToDeg;
+  }
 }
 
 void AngularCoordinate::EquatorialToXYZ(double ra, double dec,
-                                        double& x, double& y, double& z) {
-  ra *= DegToRad;
-  dec *= DegToRad;
+                                        double& x, double& y, double& z,
+					bool radians) {
+  if (!radians) {
+    ra *= DegToRad;
+    dec *= DegToRad;
+  }
 
   x = cos(ra-Node)*cos(dec);
   y = sin(ra-Node)*cos(dec);
@@ -576,14 +664,20 @@ void AngularCoordinate::EquatorialToXYZ(double ra, double dec,
 }
 
 void AngularCoordinate::EquatorialToGalactic(double ra, double dec,
-                                             double& gal_lon, double& gal_lat) {
+                                             double& gal_lon, double& gal_lat,
+					     bool radians) {
+  if (!radians) {
+    ra *= DegToRad;
+    dec *= DegToRad;
+  }
+
   double g_psi = 0.57477043300;
   double stheta = 0.88998808748;
   double ctheta = 0.45598377618;
   double g_phi = 4.9368292465;
 
-  double a = ra*DegToRad - g_phi;
-  double b = dec*DegToRad;
+  double a = ra - g_phi;
+  double b = dec;
 
   double sb = sin(b);
   double cb = cos(b);
@@ -592,27 +686,41 @@ void AngularCoordinate::EquatorialToGalactic(double ra, double dec,
   b = -1.0*stheta*cbsa + ctheta*sb;
   if (b > 1.0) b = 1.0;
 
-  double bo = asin(b)*RadToDeg;
+  double bo = asin(b);
 
-  a = atan2(ctheta*cbsa + stheta*sb,cb*cos(a));
+  a = atan2(ctheta*cbsa + stheta*sb, cb*cos(a));
 
-  double ao = (a+g_psi+4.0*Pi)*RadToDeg;
+  double ao = (a+g_psi+4.0*Pi);
 
-  while (ao > 360.0) ao -= 360.0;
+  while (ao > 2.0*Pi) ao -= 2.0*Pi;
 
   gal_lon = ao;
+  if (gal_lon < 0.0) gal_lon += 2.0*Pi;
+  if (gal_lon > 2.0*Pi) gal_lon -= 2.0*Pi;
+
   gal_lat = bo;
+
+  if (!radians) {
+    gal_lon *= RadToDeg;
+    gal_lat *= RadToDeg;
+  }
 }
 
 void AngularCoordinate::GalacticToEquatorial(double gal_lon, double gal_lat,
-                                             double& ra, double& dec) {
+                                             double& ra, double& dec,
+					     bool radians) {
+  if (!radians) {
+    gal_lon *= DegToRad;
+    gal_lat *= DegToRad;
+  }
+
   double g_psi = 4.9368292465;
   double stheta = -0.88998808748;
   double ctheta = 0.45598377618;
   double g_phi = 0.57477043300;
 
-  double a = gal_lon*DegToRad - g_phi;
-  double b = gal_lat*DegToRad;
+  double a = gal_lon - g_phi;
+  double b = gal_lat;
 
   double sb = sin(b);
   double cb = cos(b);
@@ -621,23 +729,32 @@ void AngularCoordinate::GalacticToEquatorial(double gal_lon, double gal_lat,
   b = -1.0*stheta*cbsa + ctheta*sb;
   if (b > 1.0) b = 1.0;
 
-  double bo = asin(b)*RadToDeg;
+  double bo = asin(b);
 
   a = atan2(ctheta*cbsa + stheta*sb,cb*cos(a));
 
-  double ao = (a+g_psi+4.0*Pi)*RadToDeg;
-  while (ao > 360.0) ao -= 360.0;
+  double ao = (a+g_psi+4.0*Pi);
+  while (ao > 2.0*Pi) ao -= 2.0*Pi;
 
   ra = ao;
   dec = bo;
+
+  if (!radians) {
+    ra *= RadToDeg;
+    dec *= RadToDeg;
+  }
 }
 
 void AngularCoordinate::GalacticToXYZ(double gal_lon, double gal_lat,
-                                      double& x, double& y, double& z) {
+                                      double& x, double& y, double& z,
+				      bool radians) {
+  if (!radians) {
+    gal_lon *= DegToRad;
+    gal_lat *= DegToRad;
+  }
+
   double ra, dec;
-  GalacticToEquatorial(gal_lat, gal_lon, ra, dec);
-  ra *= DegToRad;
-  dec *= DegToRad;
+  GalacticToEquatorial(gal_lon, gal_lat, ra, dec, true);
 
   x = cos(ra-Node)*cos(dec);
   y = sin(ra-Node)*cos(dec);
@@ -662,7 +779,7 @@ double AngularCoordinate::GalLonMultiplier(double glat) {
 bool AngularCoordinate::ToAngularVector(std::vector<double>& thetaVec,
 					std::vector<double>& phiVec,
 					AngularVector& ang,
-					Sphere sphere) {
+					Sphere sphere, bool radians) {
   bool io_success = false;
 
   if (thetaVec.size() == phiVec.size()) {
@@ -671,7 +788,7 @@ bool AngularCoordinate::ToAngularVector(std::vector<double>& thetaVec,
     ang.reserve(thetaVec.size());
 
     for (uint32_t i=0;i<thetaVec.size();i++)
-      ang.push_back(AngularCoordinate(thetaVec[i], phiVec[i], sphere));
+      ang.push_back(AngularCoordinate(thetaVec[i], phiVec[i], sphere, radians));
 
     io_success = true;
   }
@@ -682,6 +799,7 @@ bool AngularCoordinate::ToAngularVector(std::vector<double>& thetaVec,
 bool AngularCoordinate::ToAngularVector(const std::string& input_file,
 					AngularVector& ang,
 					Sphere sphere,
+					bool radians,
 					uint8_t theta_column,
 					uint8_t phi_column) {
   if (!ang.empty()) ang.clear();
@@ -711,7 +829,7 @@ bool AngularCoordinate::ToAngularVector(const std::string& input_file,
 	      (line_elements.size() > phi_column)) {
 	    double theta = strtod(line_elements[theta_column].c_str(), NULL);
 	    double phi = strtod(line_elements[phi_column].c_str(), NULL);
-	    ang.push_back(AngularCoordinate(theta, phi, sphere));
+	    ang.push_back(AngularCoordinate(theta, phi, sphere, radians));
 	  }
 	}
       }
@@ -728,7 +846,7 @@ bool AngularCoordinate::ToAngularVector(const std::string& input_file,
 bool AngularCoordinate::FromAngularVector(AngularVector& ang,
 					  std::vector<double>& thetaVec,
 					  std::vector<double>& phiVec,
-					  Sphere sphere) {
+					  Sphere sphere, bool radians) {
   if (!thetaVec.empty()) thetaVec.clear();
   if (!phiVec.empty()) phiVec.clear();
 
@@ -740,16 +858,31 @@ bool AngularCoordinate::FromAngularVector(AngularVector& ang,
   for (AngularIterator iter=ang.begin();iter!=ang.end();++iter) {
     switch (sphere) {
     case Survey:
-      thetaVec.push_back(iter->Lambda());
-      phiVec.push_back(iter->Eta());
+      if (radians) {
+	thetaVec.push_back(iter->Lambda());
+	phiVec.push_back(iter->Eta());
+      } else {
+	thetaVec.push_back(iter->LambdaRadians());
+	phiVec.push_back(iter->EtaRadians());
+      }
       break;
     case Equatorial:
-      thetaVec.push_back(iter->RA());
-      phiVec.push_back(iter->DEC());
+      if (radians) {
+	thetaVec.push_back(iter->RARadians());
+	phiVec.push_back(iter->DECRadians());
+      } else {
+	thetaVec.push_back(iter->RA());
+	phiVec.push_back(iter->DEC());
+      }
     break;
     case Galactic:
-      thetaVec.push_back(iter->GalLon());
-      phiVec.push_back(iter->GalLat());
+      if (radians) {
+	thetaVec.push_back(iter->GalLonRadians());
+	phiVec.push_back(iter->GalLatRadians());
+      } else {
+	thetaVec.push_back(iter->GalLon());
+	phiVec.push_back(iter->GalLat());
+      }
       break;
     }
   }
@@ -761,7 +894,7 @@ bool AngularCoordinate::FromAngularVector(AngularVector& ang,
 
 bool AngularCoordinate::FromAngularVector(AngularVector& ang,
 					  const std::string& output_file,
-					  Sphere sphere) {
+					  Sphere sphere, bool radians) {
   std::ofstream output_file_str(output_file.c_str());
 
   bool io_success = false;
@@ -770,13 +903,28 @@ bool AngularCoordinate::FromAngularVector(AngularVector& ang,
     for (AngularIterator iter=ang.begin();iter!=ang.end();++iter) {
       switch (sphere) {
       case Survey:
-	output_file_str << iter->Lambda() << " " << iter->Eta() << "\n";
+	if (radians) {
+	  output_file_str << iter->LambdaRadians() <<
+	    " " << iter->EtaRadians() << "\n";
+	} else {
+	  output_file_str << iter->Lambda() << " " << iter->Eta() << "\n";
+	}
 	break;
       case Equatorial:
-	output_file_str << iter->RA() << " " << iter->DEC() << "\n";
+	if (radians) {
+	  output_file_str << iter->RARadians() <<
+	    " " << iter->DECRadians() << "\n";
+	} else {
+	  output_file_str << iter->RA() << " " << iter->DEC() << "\n";
+	}
 	break;
       case Galactic:
-	output_file_str << iter->GalLon() << " " << iter->GalLat() << "\n";
+	if (radians) {
+	  output_file_str << iter->GalLonRadians() <<
+	    " " << iter->GalLatRadians() << "\n";
+	} else {
+	  output_file_str << iter->GalLon() << " " << iter->GalLat() << "\n";
+	}
 	break;
       }
     }
@@ -794,16 +942,17 @@ WeightedAngularCoordinate::WeightedAngularCoordinate() {
 WeightedAngularCoordinate::WeightedAngularCoordinate(double theta,
 						     double phi,
 						     double weight,
-						     Sphere sphere) {
+						     Sphere sphere,
+						     bool radians) {
   switch (sphere) {
   case Survey:
-    SetSurveyCoordinates(theta, phi);
+    SetSurveyCoordinates(theta, phi, radians);
     break;
   case Equatorial:
-    SetEquatorialCoordinates(theta, phi);
+    SetEquatorialCoordinates(theta, phi, radians);
     break;
   case Galactic:
-    SetGalacticCoordinates(theta, phi);
+    SetGalacticCoordinates(theta, phi, radians);
     break;
   }
 
@@ -814,16 +963,17 @@ WeightedAngularCoordinate::WeightedAngularCoordinate(double theta,
 						     double phi,
 						     double weight,
 						     FieldDict& fields,
-						     Sphere sphere) {
+						     Sphere sphere,
+						     bool radians) {
   switch (sphere) {
   case Survey:
-    SetSurveyCoordinates(theta, phi);
+    SetSurveyCoordinates(theta, phi, radians);
     break;
   case Equatorial:
-    SetEquatorialCoordinates(theta, phi);
+    SetEquatorialCoordinates(theta, phi, radians);
     break;
   case Galactic:
-    SetGalacticCoordinates(theta, phi);
+    SetGalacticCoordinates(theta, phi, radians);
     break;
   }
 
@@ -937,7 +1087,8 @@ bool WeightedAngularCoordinate::ToWAngularVector(std::vector<double>& thetaVec,
 						 std::vector<double>& phiVec,
 						 std::vector<double>& weightVec,
 						 WAngularVector& w_ang,
-						 Sphere sphere) {
+						 Sphere sphere,
+						 bool radians) {
   bool io_success = false;
 
   if ((thetaVec.size() == phiVec.size()) &&
@@ -948,7 +1099,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(std::vector<double>& thetaVec,
 
     for (uint32_t i=0;i<thetaVec.size();i++)
       w_ang.push_back(WeightedAngularCoordinate(thetaVec[i], phiVec[i],
-						weightVec[i], sphere));
+						weightVec[i], sphere, radians));
 
     io_success = true;
   }
@@ -960,7 +1111,8 @@ bool WeightedAngularCoordinate::ToWAngularVector(std::vector<double>& thetaVec,
 						 std::vector<double>& phiVec,
 						 double weight,
 						 WAngularVector& w_ang,
-						 Sphere sphere) {
+						 Sphere sphere,
+						 bool radians) {
   bool io_success = false;
 
   if (thetaVec.size() == phiVec.size()) {
@@ -970,7 +1122,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(std::vector<double>& thetaVec,
 
     for (uint32_t i=0;i<thetaVec.size();i++)
       w_ang.push_back(WeightedAngularCoordinate(thetaVec[i], phiVec[i],
-						weight, sphere));
+						weight, sphere, radians));
 
     io_success = true;
   }
@@ -981,6 +1133,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(std::vector<double>& thetaVec,
 bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
 						 WAngularVector& w_ang,
 						 Sphere sphere,
+						 bool radians,
 						 uint8_t theta_column,
 						 uint8_t phi_column,
 						 int8_t weight_column) {
@@ -1017,8 +1170,8 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
 	    if ((weight_column > -1) &&
 		(line_elements.size() > weight_idx))
 	      weight = strtod(line_elements[weight_idx].c_str(), NULL);
-	    w_ang.push_back(WeightedAngularCoordinate(theta, phi,
-						      weight, sphere));
+	    w_ang.push_back(WeightedAngularCoordinate(theta, phi, weight,
+						      sphere, radians));
 	  }
 	}
       }
@@ -1036,7 +1189,8 @@ bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
 						   std::vector<double>& theta,
 						   std::vector<double>& phi,
 						   std::vector<double>& weight,
-						   Sphere sphere) {
+						   Sphere sphere,
+						   bool radians) {
   if (!theta.empty()) theta.clear();
   if (!phi.empty()) phi.clear();
   if (!weight.empty()) weight.clear();
@@ -1051,16 +1205,31 @@ bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
     weight.push_back(iter->Weight());
     switch (sphere) {
     case Survey:
-      theta.push_back(iter->Lambda());
-      phi.push_back(iter->Eta());
+      if (radians) {
+	theta.push_back(iter->LambdaRadians());
+	phi.push_back(iter->EtaRadians());
+      } else {
+	theta.push_back(iter->Lambda());
+	phi.push_back(iter->Eta());
+      }
       break;
     case Equatorial:
-      theta.push_back(iter->RA());
-      phi.push_back(iter->DEC());
+      if (radians) {
+	theta.push_back(iter->RARadians());
+	phi.push_back(iter->DECRadians());
+      } else {
+	theta.push_back(iter->RA());
+	phi.push_back(iter->DEC());
+      }
     break;
     case Galactic:
-      theta.push_back(iter->GalLon());
-      phi.push_back(iter->GalLat());
+      if (radians) {
+	theta.push_back(iter->GalLonRadians());
+	phi.push_back(iter->GalLatRadians());
+      } else {
+	theta.push_back(iter->GalLon());
+	phi.push_back(iter->GalLat());
+      }
       break;
     }
   }
@@ -1072,7 +1241,8 @@ bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
 
 bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
 						   const std::string& out_file,
-						   Sphere sphere) {
+						   Sphere sphere,
+						   bool radians) {
   std::ofstream output_file_str(out_file.c_str());
 
   bool io_success = false;
@@ -1081,13 +1251,28 @@ bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
     for (WAngularIterator iter=w_ang.begin();iter!=w_ang.end();++iter) {
       switch (sphere) {
       case Survey:
-	output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	if (radians) {
+	  output_file_str << iter->LambdaRadians() <<
+	    " " << iter->EtaRadians() << " ";
+	} else {
+	  output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	}
 	break;
       case Equatorial:
-	output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	if (radians) {
+	  output_file_str << iter->RARadians() <<
+	    " " << iter->DECRadians() << " ";
+	} else {
+	  output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	}
 	break;
       case Galactic:
-	output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	if (radians) {
+	  output_file_str << iter->GalLonRadians() <<
+	    " " << iter->GalLatRadians() << " ";
+	} else {
+	  output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	}
 	break;
       }
       output_file_str << iter->Weight() << "\n";
@@ -1103,6 +1288,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
 						 WAngularVector& w_ang,
 						 FieldColumnDict& field_columns,
 						 Sphere sphere,
+						 bool radians,
 						 uint8_t theta_column,
 						 uint8_t phi_column,
 						 int8_t weight_column) {
@@ -1152,7 +1338,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
 	    }
 
 	    w_ang.push_back(WeightedAngularCoordinate(theta, phi, weight,
-						      fields, sphere));
+						      fields, sphere, radians));
 	  }
 	}
       }
@@ -1170,6 +1356,7 @@ bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
 						   FieldColumnDict& field_names,
 						   const std::string& out_file,
 						   Sphere sphere,
+						   bool radians,
 						   uint8_t theta_column,
 						   uint8_t phi_column,
 						   uint8_t weight_column) {
@@ -1195,16 +1382,31 @@ bool WeightedAngularCoordinate::FromWAngularVector(WAngularVector& w_ang,
       for (uint8_t i=0;i<max_column;i++) column_values[i] = 0.0;
       switch (sphere) {
       case Survey:
-	column_values[theta_column] = iter->Lambda();
-	column_values[phi_column] = iter->Eta();
+	if (radians) {
+	  column_values[theta_column] = iter->LambdaRadians();
+	  column_values[phi_column] = iter->EtaRadians();
+	} else {
+	  column_values[theta_column] = iter->Lambda();
+	  column_values[phi_column] = iter->Eta();
+	}
 	break;
       case Equatorial:
-	column_values[theta_column] = iter->RA();
-	column_values[phi_column] = iter->DEC();
+	if (radians) {
+	  column_values[theta_column] = iter->RARadians();
+	  column_values[phi_column] = iter->DECRadians();
+	} else {
+	  column_values[theta_column] = iter->RA();
+	  column_values[phi_column] = iter->DEC();
+	}
 	break;
       case Galactic:
-	column_values[theta_column] = iter->GalLon();
-	column_values[phi_column] = iter->GalLat();
+	if (radians) {
+	  column_values[theta_column] = iter->GalLonRadians();
+	  column_values[phi_column] = iter->GalLatRadians();
+	} else {
+	  column_values[theta_column] = iter->GalLon();
+	  column_values[phi_column] = iter->GalLat();
+	}
 	break;
       }
       column_values[weight_column] = iter->Weight();
@@ -1243,16 +1445,16 @@ CosmoCoordinate::CosmoCoordinate() {
 }
 
 CosmoCoordinate::CosmoCoordinate(double theta, double phi, double redshift,
-				 double weight, Sphere sphere) {
+				 double weight, Sphere sphere, bool radians) {
   switch (sphere) {
   case Survey:
-    SetSurveyCoordinates(theta, phi);
+    SetSurveyCoordinates(theta, phi, radians);
     break;
   case Equatorial:
-    SetEquatorialCoordinates(theta, phi);
+    SetEquatorialCoordinates(theta, phi, radians);
     break;
   case Galactic:
-    SetGalacticCoordinates(theta, phi);
+    SetGalacticCoordinates(theta, phi, radians);
     break;
   }
 
@@ -1322,7 +1524,7 @@ bool CosmoCoordinate::ToCosmoVector(std::vector<double>& thetaVec,
 				    std::vector<double>& redshiftVec,
 				    std::vector<double>& weightVec,
 				    CosmoVector& z_ang,
-				    Sphere sphere) {
+				    Sphere sphere, bool radians) {
   bool io_success = false;
 
   if ((thetaVec.size() == phiVec.size()) &&
@@ -1334,7 +1536,7 @@ bool CosmoCoordinate::ToCosmoVector(std::vector<double>& thetaVec,
 
     for (uint32_t i=0;i<thetaVec.size();i++)
       z_ang.push_back(CosmoCoordinate(thetaVec[i], phiVec[i], redshiftVec[i],
-				      weightVec[i], sphere));
+				      weightVec[i], sphere, radians));
 
     io_success = true;
   }
@@ -1347,7 +1549,7 @@ bool CosmoCoordinate::ToCosmoVector(std::vector<double>& thetaVec,
 				    std::vector<double>& redshiftVec,
 				    double weight,
 				    CosmoVector& z_ang,
-				    Sphere sphere) {
+				    Sphere sphere, bool radians) {
   bool io_success = false;
 
   if ((thetaVec.size() == phiVec.size()) &&
@@ -1358,7 +1560,7 @@ bool CosmoCoordinate::ToCosmoVector(std::vector<double>& thetaVec,
 
     for (uint32_t i=0;i<thetaVec.size();i++)
       z_ang.push_back(CosmoCoordinate(thetaVec[i], phiVec[i], redshiftVec[i],
-				      weight, sphere));
+				      weight, sphere, radians));
 
     io_success = true;
   }
@@ -1369,6 +1571,7 @@ bool CosmoCoordinate::ToCosmoVector(std::vector<double>& thetaVec,
 bool CosmoCoordinate::ToCosmoVector(const std::string& input_file,
 				    CosmoVector& z_ang,
 				    Sphere sphere,
+				    bool radians,
 				    uint8_t theta_column,
 				    uint8_t phi_column,
 				    uint8_t redshift_column,
@@ -1410,7 +1613,7 @@ bool CosmoCoordinate::ToCosmoVector(const std::string& input_file,
 		(line_elements.size() > weight_idx))
 	      weight = strtod(line_elements[weight_idx].c_str(), NULL);
 	    z_ang.push_back(CosmoCoordinate(theta, phi, redshift,
-					    weight, sphere));
+					    weight, sphere, radians));
 	  }
 	}
       }
@@ -1427,7 +1630,7 @@ bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
 				      std::vector<double>& phi,
 				      std::vector<double>& redshift,
 				      std::vector<double>& weight,
-				      Sphere sphere) {
+				      Sphere sphere, bool radians) {
   if (!theta.empty()) theta.clear();
   if (!phi.empty()) phi.clear();
   if (!redshift.empty()) redshift.clear();
@@ -1445,16 +1648,31 @@ bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
     weight.push_back(iter->Weight());
     switch (sphere) {
     case Survey:
-      theta.push_back(iter->Lambda());
-      phi.push_back(iter->Eta());
+      if (radians) {
+	theta.push_back(iter->LambdaRadians());
+	phi.push_back(iter->EtaRadians());
+      } else {
+	theta.push_back(iter->Lambda());
+	phi.push_back(iter->Eta());
+      }
       break;
     case Equatorial:
-      theta.push_back(iter->RA());
-      phi.push_back(iter->DEC());
+      if (radians) {
+	theta.push_back(iter->RARadians());
+	phi.push_back(iter->DECRadians());
+      } else {
+	theta.push_back(iter->RA());
+	phi.push_back(iter->DEC());
+      }
     break;
     case Galactic:
-      theta.push_back(iter->GalLon());
-      phi.push_back(iter->GalLat());
+      if (radians) {
+	theta.push_back(iter->GalLonRadians());
+	phi.push_back(iter->GalLatRadians());
+      } else {
+	theta.push_back(iter->GalLon());
+	phi.push_back(iter->GalLat());
+      }
       break;
     }
   }
@@ -1466,7 +1684,7 @@ bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
 
 bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
 				      const std::string& output_file,
-				      Sphere sphere) {
+				      Sphere sphere, bool radians) {
   std::ofstream output_file_str(output_file.c_str());
 
   bool io_success = false;
@@ -1475,13 +1693,28 @@ bool CosmoCoordinate::FromCosmoVector(CosmoVector& z_ang,
     for (CosmoIterator iter=z_ang.begin();iter!=z_ang.end();++iter) {
       switch (sphere) {
       case Survey:
-	output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	if (radians) {
+	  output_file_str << iter->LambdaRadians() <<
+	    " " << iter->EtaRadians() << " ";
+	} else {
+	  output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	}
 	break;
       case Equatorial:
-	output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	if (radians) {
+	  output_file_str << iter->RARadians() <<
+	    " " << iter->DECRadians() << " ";
+	} else {
+	  output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	}
 	break;
       case Galactic:
-	output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	if (radians) {
+	  output_file_str << iter->GalLonRadians() <<
+	    " " << iter->GalLatRadians() << " ";
+	} else {
+	  output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	}
 	break;
       }
       output_file_str << iter->Redshift() << " " << iter->Weight() << "\n";
@@ -1500,16 +1733,17 @@ IndexedAngularCoordinate::IndexedAngularCoordinate() {
 IndexedAngularCoordinate::IndexedAngularCoordinate(double theta,
 						   double phi,
 						   uint32_t index,
-						   Sphere sphere) {
+						   Sphere sphere,
+						   bool radians) {
   switch (sphere) {
   case Survey:
-    SetSurveyCoordinates(theta, phi);
+    SetSurveyCoordinates(theta, phi, radians);
     break;
   case Equatorial:
-    SetEquatorialCoordinates(theta, phi);
+    SetEquatorialCoordinates(theta, phi, radians);
     break;
   case Galactic:
-    SetGalacticCoordinates(theta, phi);
+    SetGalacticCoordinates(theta, phi, radians);
     break;
   }
 
@@ -1541,7 +1775,7 @@ bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
 						std::vector<double>& phiVec,
 						std::vector<uint32_t>& indexVec,
 						IAngularVector& i_ang,
-						Sphere sphere) {
+						Sphere sphere, bool radians) {
   bool io_success = false;
 
   if ((thetaVec.size() == phiVec.size()) &&
@@ -1552,7 +1786,7 @@ bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
 
     for (uint32_t i=0;i<thetaVec.size();i++)
       i_ang.push_back(IndexedAngularCoordinate(thetaVec[i], phiVec[i],
-					indexVec[i], sphere));
+					       indexVec[i], sphere, radians));
 
     io_success = true;
   }
@@ -1563,7 +1797,7 @@ bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
 bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
 						std::vector<double>& phiVec,
 						IAngularVector& i_ang,
-						Sphere sphere) {
+						Sphere sphere, bool radians) {
   bool io_success = false;
 
   if (thetaVec.size() == phiVec.size()) {
@@ -1573,7 +1807,7 @@ bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
 
     for (uint32_t i=0;i<thetaVec.size();i++)
       i_ang.push_back(IndexedAngularCoordinate(thetaVec[i], phiVec[i],
-					       i, sphere));
+					       i, sphere, radians));
 
     io_success = true;
   }
@@ -1584,6 +1818,7 @@ bool IndexedAngularCoordinate::ToIAngularVector(std::vector<double>& thetaVec,
 bool IndexedAngularCoordinate::ToIAngularVector(const std::string& input_file,
 						IAngularVector& i_ang,
 						Sphere sphere,
+						bool radians,
 						uint8_t theta_column,
 						uint8_t phi_column,
 						int8_t index_column) {
@@ -1621,8 +1856,8 @@ bool IndexedAngularCoordinate::ToIAngularVector(const std::string& input_file,
 	      index =
 		static_cast<uint32_t>(strtoul(line_elements[index_idx].c_str(),
 					      NULL, 10));
-	    i_ang.push_back(IndexedAngularCoordinate(theta, phi,
-						     index, sphere));
+	    i_ang.push_back(IndexedAngularCoordinate(theta, phi, index,
+						     sphere, radians));
 	  }
 	  n_lines++;
 	}
@@ -1639,7 +1874,7 @@ bool IndexedAngularCoordinate::FromIAngularVector(IAngularVector& i_ang,
 						  std::vector<double>& theta,
 						  std::vector<double>& phi,
 						  std::vector<uint32_t>& index,
-						  Sphere sphere) {
+						  Sphere sphere, bool radians) {
   if (!theta.empty()) theta.clear();
   if (!phi.empty()) phi.clear();
   if (!index.empty()) index.clear();
@@ -1654,16 +1889,31 @@ bool IndexedAngularCoordinate::FromIAngularVector(IAngularVector& i_ang,
     index.push_back(iter->Index());
     switch (sphere) {
     case Survey:
-      theta.push_back(iter->Lambda());
-      phi.push_back(iter->Eta());
+      if (radians) {
+	theta.push_back(iter->LambdaRadians());
+	phi.push_back(iter->EtaRadians());
+      } else {
+	theta.push_back(iter->Lambda());
+	phi.push_back(iter->Eta());
+      }
       break;
     case Equatorial:
-      theta.push_back(iter->RA());
-      phi.push_back(iter->DEC());
+      if (radians) {
+	theta.push_back(iter->RARadians());
+	phi.push_back(iter->DECRadians());
+      } else {
+	theta.push_back(iter->RA());
+	phi.push_back(iter->DEC());
+      }
     break;
     case Galactic:
-      theta.push_back(iter->GalLon());
-      phi.push_back(iter->GalLat());
+      if (radians) {
+	theta.push_back(iter->GalLonRadians());
+	phi.push_back(iter->GalLatRadians());
+      } else {
+	theta.push_back(iter->GalLon());
+	phi.push_back(iter->GalLat());
+      }
       break;
     }
   }
@@ -1674,7 +1924,8 @@ bool IndexedAngularCoordinate::FromIAngularVector(IAngularVector& i_ang,
 }
 
 bool IndexedAngularCoordinate::FromIAngularVector(
-  IAngularVector& i_ang, const std::string& output_file, Sphere sphere) {
+  IAngularVector& i_ang, const std::string& output_file, Sphere sphere,
+  bool radians) {
   std::ofstream output_file_str(output_file.c_str());
 
   bool io_success = false;
@@ -1683,13 +1934,28 @@ bool IndexedAngularCoordinate::FromIAngularVector(
     for (IAngularIterator iter=i_ang.begin();iter!=i_ang.end();++iter) {
       switch (sphere) {
       case Survey:
-	output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	if (radians) {
+	  output_file_str << iter->LambdaRadians() <<
+	    " " << iter->EtaRadians() << " ";
+	} else {
+	  output_file_str << iter->Lambda() << " " << iter->Eta() << " ";
+	}
 	break;
       case Equatorial:
-	output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	if (radians) {
+	  output_file_str << iter->RARadians() <<
+	    " " << iter->DECRadians() << " ";
+	} else {
+	  output_file_str << iter->RA() << " " << iter->DEC() << " ";
+	}
 	break;
       case Galactic:
-	output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	if (radians) {
+	  output_file_str << iter->GalLonRadians() <<
+	    " " << iter->GalLatRadians() << " ";
+	} else {
+	  output_file_str << iter->GalLon() << " " << iter->GalLat() << " ";
+	}
 	break;
       }
       output_file_str << iter->Index() << "\n";
