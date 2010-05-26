@@ -840,6 +840,26 @@ class CircleBound(GeometricBound):
 CircleBound_swigregister = _stomp.CircleBound_swigregister
 CircleBound_swigregister(CircleBound)
 
+class AnnulusBound(GeometricBound):
+    __swig_setmethods__ = {}
+    for _s in [GeometricBound]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, AnnulusBound, name, value)
+    __swig_getmethods__ = {}
+    for _s in [GeometricBound]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, AnnulusBound, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_AnnulusBound(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_AnnulusBound
+    __del__ = lambda self : None;
+    def CheckPoint(*args): return _stomp.AnnulusBound_CheckPoint(*args)
+    def FindAngularBounds(*args): return _stomp.AnnulusBound_FindAngularBounds(*args)
+    def FindArea(*args): return _stomp.AnnulusBound_FindArea(*args)
+AnnulusBound_swigregister = _stomp.AnnulusBound_swigregister
+AnnulusBound_swigregister(AnnulusBound)
+
 class WedgeBound(GeometricBound):
     __swig_setmethods__ = {}
     for _s in [GeometricBound]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
