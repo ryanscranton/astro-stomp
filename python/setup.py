@@ -5,8 +5,31 @@ setup.py file for STOMP library
 """
 
 import sys, os
+import subprocess
 
 from distutils.core import setup, Extension
+
+# make sure we compile in the python-specific
+# methods to the stomp classes
+
+addflags='-DWITH_PYTHON'
+if 'CPPFLAGS' in os.environ:
+    os.environ['CPPFLAGS'] +=  ' ' +addflags
+else:
+    os.environ['CPPFLAGS'] = addflags
+
+# also try to add numpy support
+try:
+    import numpy
+    include_dirs=[numpy.get_include()]
+    addflags='-DWITH_NUMPY'
+    os.environ['CPPFLAGS'] +=  ' ' +addflags
+    depends=['NumpyVector.h']
+except:
+    sys.stdout.write("Numpy not found, not building with numpy support\n")
+    include_dirs=[]
+    depends=[]
+
 
 
 # create the ups table
@@ -27,6 +50,7 @@ tablefile.close()
 
 
 stomp_module = Extension("_stomp",
+                         depends=depends,
                          sources=["../stomp/stomp_core.cc",
                                   "../stomp/stomp_angular_bin.cc",
                                   "../stomp/stomp_angular_coordinate.cc",
@@ -59,4 +83,4 @@ possible.
        data_files=[('ups',['ups/stomp.table'])],
        ext_modules = [stomp_module],
        py_modules = ["stomp"],
-       )
+       include_dirs=include_dirs)

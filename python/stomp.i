@@ -17,6 +17,13 @@
 #include "../stomp/stomp_util.h"
 %}
 
+// catch these types of exceptions in python exceptions
+%typemap(throws) const char * %{
+    PyErr_SetString(PyExc_RuntimeError, $1);
+    SWIG_fail;
+%}
+
+
 %include stdint.i
 %include stl.i
 %include std_string.i
@@ -123,6 +130,7 @@ class AngularCoordinate {
   AngularCoordinate(double unit_sphere_x, double unit_sphere_y,
                     double unit_sphere_z);
   ~AngularCoordinate();
+
   void SetSurveyCoordinates(double lambda, double eta, bool radians = false);
   void SetEquatorialCoordinates(double ra, double dec, bool radians = false);
   void SetGalacticCoordinates(double gal_lon, double gal_lat,
