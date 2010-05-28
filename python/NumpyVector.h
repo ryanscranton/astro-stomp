@@ -533,45 +533,6 @@ void NumpyVector<T>::init_type_info() {
         tname = typeid(uint64_t).name();
         mNumpyIdMap[tname] = NPY_UINT64;
 
-        /*
-        // This is the hard part: dealing with the standard names
-        tname = typeid(int).name();
-        switch (sizeof(int)) {
-            case 1: 
-                mNumpyIdMap[tname] = NPY_INT8;
-                break;
-            case 2: 
-                mNumpyIdMap[tname] = NPY_INT16;
-                break;
-            case 4: 
-                mNumpyIdMap[tname] = NPY_INT32;
-                break;
-            case 8: 
-                mNumpyIdMap[tname] = NPY_INT64;
-                break;
-            default:
-                throw "int does not have size 1,2,4,8";
-        }
-        // This is the hard part: dealing with the standard names
-        tname = typeid(unsigned int).name();
-        switch (sizeof(unsigned int)) {
-            case 1: 
-                mNumpyIdMap[tname] = NPY_UINT8;
-                break;
-            case 2: 
-                mNumpyIdMap[tname] = NPY_UINT16;
-                break;
-            case 4: 
-                mNumpyIdMap[tname] = NPY_UINT32;
-                break;
-            case 8: 
-                mNumpyIdMap[tname] = NPY_UINT64;
-                break;
-            default:
-                throw "unsigned int does not have size 1,2,4,8";
-        }
-
-        */
 
     }
 }
