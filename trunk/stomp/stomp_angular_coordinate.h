@@ -21,6 +21,7 @@
 #include <math.h>
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <fstream>
 #include <string>
@@ -78,6 +79,9 @@ class AngularCoordinate {
   AngularCoordinate(double unit_sphere_x, double unit_sphere_y,
                     double unit_sphere_z);
   ~AngularCoordinate();
+
+  // Convert a string version of the system to the Sphere numerical id
+  static Sphere SystemFromString(const std::string& system) throw (const char* );
 
   // These three methods let you explicitly set the angular coordinate in one
   // of the supported angular coordinate systems.  Calling these methods resets

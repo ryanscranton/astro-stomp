@@ -884,6 +884,9 @@ Map::Map() {
 
   begin_ = MapIterator(0, sub_map_[0].Begin());
   end_ = begin_;
+#ifdef WITH_NUMPY
+  //import_array();
+#endif
 }
 
 Map::Map(PixelVector& pix, bool force_resolve) {
@@ -930,10 +933,17 @@ Map::Map(PixelVector& pix, bool force_resolve) {
       }
     }
   }
+
+#ifdef WITH_NUMPY
+  //import_array();
+#endif
 }
 
 Map::Map(const std::string& InputFile, bool hpixel_format, bool weighted_map) {
   Read(InputFile, hpixel_format, weighted_map);
+#ifdef WITH_NUMPY
+  //import_array();
+#endif
 }
 
 Map::Map(GeometricBound& bound, double weight, uint32_t max_resolution,
@@ -945,6 +955,9 @@ Map::Map(GeometricBound& bound, double weight, uint32_t max_resolution,
   } else {
     if (verbose) std::cout << "Pixelization failed.\n";
   }
+#ifdef WITH_NUMPY
+  //import_array();
+#endif
 }
 
 Map::~Map() {
@@ -1614,6 +1627,149 @@ void Map::GenerateRandomPoints(AngularVector& ang, uint32_t n_point,
   }
 }
 
+#ifdef WITH_NUMPY
+// This version returns numerical python arrays in a tuple
+// note use_weighted_sampling is optional, default false
+
+// This is the generic version taking a string for the system
+PyObject* Map::GenerateRandomPoints(
+        uint32_t n_point, 
+        const std::string& system,
+        bool use_weighted_sampling) throw (const char*)  {
+
+    Stomp::AngularCoordinate::Sphere 
+        sys = Stomp::AngularCoordinate::SystemFromString(system);
+    return GenerateRandomPoints(n_point,sys,use_weighted_sampling);
+}
+
+
+// This is the generic version taking a Sphere id for the system
+PyObject* Map::GenerateRandomPoints(
+        uint32_t n_point, 
+        Stomp::AngularCoordinate::Sphere systemid,
+        bool use_weighted_sampling) throw (const char*)  {
+
+    //NumpyVector<npy_int32> tmp(n_point);
+    //tmp[0] = 3;
+    //NumpyVector<npy_int64> tmp2(n_point);
+    //tmp2[0] = 3;
+    //NumpyVector<float> tmp3(n_point);
+    //tmp3[0] = 3;
+    //std::cout<<"tmp[0] = "<<tmp[0]<<"\n";fflush(stdout);
+    //std::cout<<"tmp2[0] = "<<tmp2[0]<<"\n";fflush(stdout);
+    //std::cout<<"tmp3[0] = "<<tmp3[0]<<"\n";fflush(stdout);
+
+    std::stringstream err;
+    // Make the output numpy arrays
+    NumpyVector<double> x1(n_point);
+    NumpyVector<double> x2(n_point);
+
+    double minimum_probability = -0.0001;
+    double probability_slope = 0.0;
+
+    if (use_weighted_sampling) {
+        if (max_weight_ - min_weight_ < 0.0001) {
+            use_weighted_sampling = false;
+        } else {
+            minimum_probability = 1.0/(max_weight_ - min_weight_ + 1.0);
+            probability_slope =
+                (1.0 - minimum_probability)/(max_weight_ - min_weight_);
+        }
+    }
+
+    PixelVector superpix;
+    Coverage(superpix);
+
+    MTRand mtrand;
+    mtrand.seed();
+
+    for (uint32_t m=0;m<n_point;m++) {
+        bool keep = false;
+        double lambda, eta, z, weight, probability_limit;
+        AngularCoordinate tmp_ang(0.0,0.0);
+        uint32_t n,k;
+
+        while (!keep) {
+            n = mtrand.randInt(superpix.size()-1);
+            k = superpix[n].Superpixnum();
+
+            z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
+                    sub_map_[k].ZMin());
+            lambda = asin(z)*RadToDeg;
+            eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
+                    sub_map_[k].EtaMin());
+            tmp_ang.SetSurveyCoordinates(lambda,eta);
+
+            keep = sub_map_[k].FindLocation(tmp_ang,weight);
+
+            if (use_weighted_sampling && keep) {
+                probability_limit =
+                    minimum_probability + (weight - min_weight_)*probability_slope;
+                if (mtrand.rand(1.0) > probability_limit) keep = false;
+            }
+        }
+
+        switch (systemid) {
+            case Stomp::AngularCoordinate::Survey:
+                x1[m] = lambda;
+                x2[m] = eta;
+                break;
+            case Stomp::AngularCoordinate::Equatorial:
+                x1[m] = tmp_ang.RA();
+                x2[m] = tmp_ang.DEC();
+                break;
+            case Stomp::AngularCoordinate::Galactic:
+                x1[m] = tmp_ang.GalLon();
+                x2[m] = tmp_ang.GalLat();
+                break;
+            default:
+                err<<"Bad system id: "<<systemid;
+                throw err.str().c_str();
+        }
+    }
+
+    PyObject* output_tuple = PyTuple_New(2);
+    PyTuple_SetItem(output_tuple, 0, x1.getref());
+    PyTuple_SetItem(output_tuple, 1, x2.getref());
+
+    return output_tuple;
+}
+
+
+// These are wrappers for the more generic function above
+PyObject* Map::GenerateRandomEq(
+        uint32_t n_point, 
+        bool use_weighted_sampling) throw (const char*)  {
+
+    return GenerateRandomPoints(
+            n_point,
+            Stomp::AngularCoordinate::Equatorial,
+            use_weighted_sampling);
+}
+PyObject* Map::GenerateRandomSurvey(
+        uint32_t n_point, 
+        bool use_weighted_sampling) throw (const char*)  {
+
+    return GenerateRandomPoints(
+            n_point,
+            Stomp::AngularCoordinate::Survey,
+            use_weighted_sampling);
+}
+PyObject* Map::GenerateRandomGal(
+        uint32_t n_point, 
+        bool use_weighted_sampling) throw (const char*)  {
+
+    return GenerateRandomPoints(
+            n_point,
+            Stomp::AngularCoordinate::Galactic,
+            use_weighted_sampling);
+}
+
+#endif
+
+
+
+
 void Map::GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
 			       bool filter_input_points) {
   if (!ang.empty()) ang.clear();
@@ -1686,6 +1842,9 @@ void Map::GenerateRandomPoints(WAngularVector& ang,
     ang.push_back(tmp_ang);
   }
 }
+
+
+
 
 bool Map::Write(const std::string& OutputFile, bool hpixel_format,
 		bool weighted_map) {

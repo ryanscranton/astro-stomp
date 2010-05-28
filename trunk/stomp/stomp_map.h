@@ -21,6 +21,7 @@
 
 #include <stdint.h>
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <fstream>
 #include <math.h>
@@ -31,6 +32,16 @@
 #include "stomp_angular_coordinate.h"
 #include "stomp_pixel.h"
 #include "stomp_base_map.h"
+
+// ESS: Add support for python
+#ifdef WITH_PYTHON
+#include <Python.h>
+#endif
+// ESS: Support numpy if it is available
+#ifdef WITH_NUMPY
+#include "numpy/arrayobject.h"
+#include "../python/NumpyVector.h"
+#endif
 
 namespace Stomp {
 
@@ -303,6 +314,8 @@ class Map : public BaseMap {
                             uint32_t n_point = 1,
                             bool use_weighted_sampling = false);
 
+
+
   // Instead of a fixed number of random positions, we may have either a
   // vector of WeightedAngularCoordinate objects where we want to randomize
   // the positions or a vector of weights that need random angular positions
@@ -312,6 +325,33 @@ class Map : public BaseMap {
   void GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
 			    bool filter_input_points = false);
   void GenerateRandomPoints(WAngularVector& ang, std::vector<double>& weights);
+
+
+  // This version returns numerical python arrays in a tuple
+  // Requires python and numpy support
+#ifdef WITH_NUMPY
+  // This is the generic function
+  PyObject* GenerateRandomPoints(
+        uint32_t n_point, 
+        Stomp::AngularCoordinate::Sphere systemid,
+        bool use_weighted_sampling=false) throw (const char*);
+  // overloaded for string system name
+  PyObject* GenerateRandomPoints(
+        uint32_t n_point, 
+        const std::string& system,
+        bool use_weighted_sampling=false) throw (const char*);
+
+  PyObject* GenerateRandomEq(
+          uint32_t n_point, 
+          bool use_weighted_sampling = false) throw (const char*);
+  PyObject* GenerateRandomSurvey(
+          uint32_t n_point, 
+          bool use_weighted_sampling = false) throw (const char*);
+  PyObject* GenerateRandomGal(
+          uint32_t n_point, 
+          bool use_weighted_sampling = false) throw (const char*);
+
+#endif
 
   // The book-end to the initialization method that takes an ASCII filename
   // as an argument, this method writes the current map to an ASCII file using

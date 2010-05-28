@@ -85,6 +85,27 @@ AngularCoordinate::~AngularCoordinate() {
   us_z_ = 0.0;
 }
 
+
+Stomp::AngularCoordinate::Sphere AngularCoordinate::SystemFromString(
+        const std::string& system) throw (const char* ) {
+
+    Stomp::AngularCoordinate::Sphere 
+        sys=Stomp::AngularCoordinate::Survey;
+	if (system == "eq" || system == "equatorial") {
+		sys = Stomp::AngularCoordinate::Equatorial;
+	} else if (system == "sdss" || system == "survey") {
+		sys = Stomp::AngularCoordinate::Survey;
+	} else if (system == "gal" || system == "galactic") {
+		sys = Stomp::AngularCoordinate::Galactic;
+	} else {
+        std::stringstream err;
+		err<<"bad coord system indicator '"<<system<<"'";
+		throw err.str().c_str();
+	}
+    return sys;
+}
+
+
 void AngularCoordinate::Set(double theta, double phi, Sphere sphere,
 			    bool radians) {
   switch (sphere) {
