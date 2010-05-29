@@ -339,39 +339,29 @@ class Map : public BaseMap {
 			    bool filter_input_points = false);
   void GenerateRandomPoints(WAngularVector& ang, std::vector<double>& weights);
 
-
   // This version returns numerical python arrays in a tuple
   // Requires python and numpy support
 #ifdef WITH_NUMPY
   // This is the generic function
-  PyObject* GenerateRandomPoints(uint32_t n_point, 
-      Stomp::AngularCoordinate::Sphere systemid,
-        bool use_weighted_sampling=false) throw (const char*);
+  PyObject* GenerateRandomPoints(uint32_t n_point,
+				 Stomp::AngularCoordinate::Sphere systemid,
+				 bool use_weighted_sampling=false)
+    throw (const char*);
   // overloaded for string system name
   PyObject* GenerateRandomPoints(uint32_t n_point, const std::string& system,
-        bool use_weighted_sampling=false) throw (const char*);
-
-  PyObject* GenerateRandomEq(uint32_t n_point, 
-          bool use_weighted_sampling = false) throw (const char*);
-  PyObject* GenerateRandomSurvey(uint32_t n_point, 
-          bool use_weighted_sampling = false) throw (const char*);
-  PyObject* GenerateRandomGal(uint32_t n_point, 
-          bool use_weighted_sampling = false) throw (const char*);
-
-  // flags for contained and quadrant checks
-  // Doesn't work with swig, using defines above for now
-  /*
-  static int INSIDE_MAP;
-  static int FIRST_QUADRANT_OK;
-  static int SECOND_QUADRANT_OK;
-  static int THIRD_QUADRANT_OK;
-  static int FOURTH_QUADRANT_OK;
-  */
-
+				 bool use_weighted_sampling=false)
+    throw (const char*);
+  PyObject* GenerateRandomEq(uint32_t n_point,
+			     bool use_weighted_sampling = false)
+    throw (const char*);
+  PyObject* GenerateRandomSurvey(uint32_t n_point,
+				 bool use_weighted_sampling = false)
+    throw (const char*);
+  PyObject* GenerateRandomGal(uint32_t n_point,
+			      bool use_weighted_sampling = false)
+    throw (const char*);
   PyObject* Contains(PyObject* x1obj,PyObject* x2obj,const std::string& system,
       PyObject* radobj=NULL) throw (const char* );
-
-
 #endif
 
   // Check four quadrants using a monte carlo technique
@@ -382,6 +372,20 @@ class Map : public BaseMap {
   bool QuadrantContainedMC(AngularCoordinate& ang, double radius,
           int quadrant) throw (const char*);
 
+  // Depending on our precision requirements, it can occasionally be faster to
+  // use Monte Carlo sampling to find out if a given region is within our Map.
+  // The first method takes a GeometricBound object and a size resolution (in
+  // square degrees) and returns a boolean indicating whether or not the input
+  // object is wholely contained in the map.  The precision value is the
+  // probability that we would miss an hole of area_resolution in our sampling.
+  bool Contains(GeometricBound& bound, double area_resolution = 0.5,
+		double precision = 0.01);
+
+  // Alternatively, we can attempt to estimate the fraction of the bound object
+  // that is within our Map, under the same sampling limitations.
+  double FindUnmaskedFraction(GeometricBound& bound,
+			      double area_resolution = 0.5,
+			      double precision = 0.01);
 
   // The book-end to the initialization method that takes an ASCII filename
   // as an argument, this method writes the current map to an ASCII file using

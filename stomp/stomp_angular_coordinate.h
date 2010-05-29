@@ -80,9 +80,10 @@ class AngularCoordinate {
                     double unit_sphere_z);
   ~AngularCoordinate();
 
-  // Convert a string version of the system to the Sphere numerical id
 #ifdef WITH_NUMPY
-  static Sphere SystemFromString(const std::string& system) throw (const char* );
+  // Convert a string version of the coordinate system to Sphere; python-only.
+  static Sphere SystemFromString(const std::string& system)
+    throw (const char* );
 #endif
 
   // These three methods let you explicitly set the angular coordinate in one

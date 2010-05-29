@@ -28,6 +28,7 @@
 #include <algorithm>
 #include "stomp_angular_coordinate.h"
 #include "stomp_angular_bin.h"
+#include "MersenneTwister.h"
 
 namespace Stomp {
 
@@ -104,9 +105,18 @@ class GeometricBound {
   double EtaMax();
   bool ContinuousBounds();
 
+  // We can add a bit more functionality to the class even with the limited
+  // amount of information we have.  In particular, we can generate random
+  // points within the bound.  This requires a bit more data, but it will enable
+  // us to use monte carlo methods for those cases where that's more efficient
+  // than pixelization.
+  void GenerateRandomPoint(AngularCoordinate& ang);
+  void GenerateRandomPoints(AngularVector& angVec, uint32_t n_rand);
+
  private:
-  double area_, lammin_, lammax_, etamin_, etamax_;
-  bool continuous_bounds_;
+  MTRand mtrand_;
+  double area_, lammin_, lammax_, etamin_, etamax_, z_min_, z_max_;
+  bool continuous_bounds_, set_bounds_;
 };
 
 class CircleBound : public GeometricBound {
@@ -152,7 +162,7 @@ class WedgeBound : public GeometricBound {
   // circle, we only pixelize a wedge from the circle.  The position angle
   // values and radius should be specified in degrees.
  public:
-  WedgeBound(const AngularCoordinate& ang, double radius,
+  WedgeBound(const AngularCoordinate& center_point, double radius,
 	     double position_angle_min, double position_angle_max,
 	     AngularCoordinate::Sphere sphere = AngularCoordinate::Survey);
   virtual ~WedgeBound();
@@ -161,8 +171,8 @@ class WedgeBound : public GeometricBound {
   virtual bool FindArea();
 
  private:
-  AngularCoordinate ang_;
-  double radius_, sin2radius_, position_angle_min_, position_angle_max_;
+  AngularCoordinate center_point_;
+  double radius_, costhetamin_, position_angle_min_, position_angle_max_;
   AngularCoordinate::Sphere sphere_;
 };
 

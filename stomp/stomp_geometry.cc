@@ -28,6 +28,8 @@
 namespace Stomp {
 
 GeometricBound::GeometricBound() {
+  set_bounds_ = false;
+  mtrand_.seed();
   FindArea();
   FindAngularBounds();
 }
@@ -43,11 +45,7 @@ bool GeometricBound::CheckPoint(AngularCoordinate& ang) {
 }
 
 bool GeometricBound::FindAngularBounds() {
-  lammin_ = -90.0;
-  lammax_ = 90.0;
-  etamin_ = -180.0;
-  etamax_ = 180.0;
-
+  SetAngularBounds(-90.0, 90.0, -180.0, 180.0);
   return true;
 }
 
@@ -65,6 +63,10 @@ void GeometricBound::SetAngularBounds(double lammin, double lammax,
   lammax_ = lammax;
   etamin_ = etamin;
   etamax_ = etamax;
+
+  z_min_ = cos(DegToRad*lammin_);
+  z_max_ = cos(DegToRad*lammax_);
+  set_bounds_ = true;
 }
 
 void GeometricBound::SetContinuousBounds(bool continuous_bounds) {
@@ -93,6 +95,41 @@ double GeometricBound::EtaMax() {
 
 bool GeometricBound::ContinuousBounds() {
   return continuous_bounds_;
+}
+
+void GeometricBound::GenerateRandomPoint(AngularCoordinate& ang) {
+  bool keep = false;
+
+  while (!keep) {
+    double z = z_min_ + mtrand_.rand(z_max_ - z_min_);
+    double lambda = asin(z)*RadToDeg;
+    double eta = etamin_ + mtrand_.rand(etamax_ - etamin_);
+    ang.SetSurveyCoordinates(lambda, eta);
+
+    if (CheckPoint(ang)) keep = true;
+  }
+
+}
+
+void GeometricBound::GenerateRandomPoints(AngularVector& angVec,
+					  uint32_t n_rand) {
+  if (!angVec.empty()) angVec.clear();
+  angVec.reserve(n_rand);
+
+  bool keep = false;
+  AngularCoordinate tmp_ang(0.0,0.0);
+
+  for (uint32_t i=0;i<n_rand;i++) {
+    while (!keep) {
+      double z = z_min_ + mtrand_.rand(z_max_ - z_min_);
+      double lambda = asin(z)*RadToDeg;
+      double eta = etamin_ + mtrand_.rand(etamax_ - etamin_);
+
+      tmp_ang.SetSurveyCoordinates(lambda, eta);
+      if (CheckPoint(tmp_ang)) keep = true;
+    }
+    angVec.push_back(tmp_ang);
+  }
 }
 
 CircleBound::CircleBound(const AngularCoordinate& center_point,
@@ -219,12 +256,12 @@ bool AnnulusBound::CheckPoint(AngularCoordinate& ang) {
 	  DoubleGE(center_point_.DotProduct(ang), costhetamin_) ? true : false);
 }
 
-WedgeBound::WedgeBound(const AngularCoordinate& ang, double radius,
+WedgeBound::WedgeBound(const AngularCoordinate& center_point, double radius,
 		       double position_angle_min, double position_angle_max,
 		       AngularCoordinate::Sphere sphere) {
-  ang_ = ang;
+  center_point_ = center_point;
   radius_ = radius;
-  sin2radius_ = sin(radius*DegToRad)*sin(radius*DegToRad);
+  costhetamin_ = cos(radius*DegToRad);
   if (DoubleLT(position_angle_min, position_angle_max)) {
     position_angle_max_ = position_angle_max;
     position_angle_min_ = position_angle_min;
@@ -240,7 +277,8 @@ WedgeBound::WedgeBound(const AngularCoordinate& ang, double radius,
 }
 
 WedgeBound::~WedgeBound() {
-  radius_ = sin2radius_ = position_angle_min_ = position_angle_max_ = 0.0;
+  radius_ = position_angle_min_ = position_angle_max_ = 0.0;
+  costhetamin_ = 1.0;
 }
 
 bool WedgeBound::FindAngularBounds() {
@@ -249,27 +287,30 @@ bool WedgeBound::FindAngularBounds() {
 
   switch (sphere_) {
   case AngularCoordinate::Survey:
-    start_ang.SetSurveyCoordinates(ang_.Lambda()+radius_, ang_.Eta());
+    start_ang.SetSurveyCoordinates(center_point_.Lambda()+radius_,
+				   center_point_.Eta());
     break;
   case AngularCoordinate::Equatorial:
-    start_ang.SetEquatorialCoordinates(ang_.RA(), ang_.DEC()+radius_);
+    start_ang.SetEquatorialCoordinates(center_point_.RA(),
+				       center_point_.DEC()+radius_);
     break;
   case AngularCoordinate::Galactic:
-    start_ang.SetGalacticCoordinates(ang_.GalLon(), ang_.GalLat()+radius_);
+    start_ang.SetGalacticCoordinates(center_point_.GalLon(),
+				     center_point_.GalLat()+radius_);
     break;
   }
 
-  double lammin = ang_.Lambda(), lammax = ang_.Lambda();
-  double etamin = ang_.Eta(), etamax = ang_.Eta();
+  double lammin = center_point_.Lambda(), lammax = center_point_.Lambda();
+  double etamin = center_point_.Eta(), etamax = center_point_.Eta();
 
   AngularCoordinate rotate_ang;
-  start_ang.Rotate(ang_, position_angle_min_, rotate_ang, sphere_);
+  start_ang.Rotate(center_point_, position_angle_min_, rotate_ang, sphere_);
   if (DoubleLT(rotate_ang.Lambda(), lammin)) lammin = rotate_ang.Lambda();
   if (DoubleGT(rotate_ang.Lambda(), lammax)) lammax = rotate_ang.Lambda();
   if (DoubleLT(rotate_ang.Eta(), etamin)) etamin = rotate_ang.Eta();
   if (DoubleGT(rotate_ang.Eta(), etamax)) etamax = rotate_ang.Eta();
 
-  start_ang.Rotate(ang_, position_angle_max_, rotate_ang, sphere_);
+  start_ang.Rotate(center_point_, position_angle_max_, rotate_ang, sphere_);
   if (DoubleLT(rotate_ang.Lambda(), lammin)) lammin = rotate_ang.Lambda();
   if (DoubleGT(rotate_ang.Lambda(), lammax)) lammax = rotate_ang.Lambda();
   if (DoubleLT(rotate_ang.Eta(), etamin)) etamin = rotate_ang.Eta();
@@ -286,8 +327,7 @@ bool WedgeBound::FindAngularBounds() {
 }
 
 bool WedgeBound::FindArea() {
-  double circle_area =
-    (1.0 - cos(radius_*DegToRad))*2.0*Pi*StradToDeg;
+  double circle_area = (1.0 - cos(radius_*DegToRad))*2.0*Pi*StradToDeg;
   SetArea(circle_area*(position_angle_max_ - position_angle_min_)/360.0);
   return true;
 }
@@ -295,13 +335,8 @@ bool WedgeBound::FindArea() {
 bool WedgeBound::CheckPoint(AngularCoordinate& ang) {
   bool within_bound = false;
 
-  double costheta =
-    ang.UnitSphereX()*ang_.UnitSphereX() +
-    ang.UnitSphereY()*ang_.UnitSphereY() +
-    ang.UnitSphereZ()*ang_.UnitSphereZ();
-
-  if (DoubleLE(1.0-costheta*costheta, sin2radius_)) {
-    double position_angle = ang_.PositionAngle(ang, sphere_);
+  if (DoubleGE(center_point_.DotProduct(ang), costhetamin_)) {
+    double position_angle = center_point_.PositionAngle(ang, sphere_);
     if (DoubleGE(position_angle, position_angle_min_) &&
 	DoubleLE(position_angle, position_angle_max_))
       within_bound = true;

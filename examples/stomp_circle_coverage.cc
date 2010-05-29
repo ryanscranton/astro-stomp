@@ -59,13 +59,6 @@ int main(int argc, char **argv) {
   std::cout << "Read map from " << FLAGS_map_file << "; initial area: " <<
     stomp_map->Area() << " sq. deg.\n";
 
-  // Define our bit mask values
-  unsigned long INSIDE_MAP = 1 << 0;
-  unsigned long FIRST_QUADRANT = 1 << 1;  // 0 <= position_angle < 90
-  unsigned long SECOND_QUADRANT = 1 << 2;  // 90 <= position_angle < 180
-  unsigned long THIRD_QUADRANT = 1 << 3;  // 180 <= position_angle < 270
-  unsigned long FOURTH_QUADRANT = 1 << 4;  // 270 <= position_angle < 360
-
   // Now we scan through our input file and assemble our bitmask for each point.
   std::cout << "Parsing " << FLAGS_input_file << "...\n";
   std::ifstream input_file(FLAGS_input_file.c_str());
@@ -84,6 +77,13 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
+  // Define our bit mask values
+  unsigned long inside_map = 1 << 0;
+  unsigned long first_quadrant = 1 << 1;  // 0 <= position_angle < 90
+  unsigned long second_quadrant = 1 << 2;  // 90 <= position_angle < 180
+  unsigned long third_quadrant = 1 << 3;  // 180 <= position_angle < 270
+  unsigned long fourth_quadrant = 1 << 4;  // 270 <= position_angle < 360
+
   int n_circle = 0;
   int check = 100;
   while (!input_file.eof()) {
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
 
       // Figure out the first bit of our bitmask by checking that the position
       // is inside our map.
-      if (stomp_map->Contains(ang)) idx += INSIDE_MAP;
+      if (stomp_map->Contains(ang)) idx += inside_map;
 
       // Now we assemble a Map for each of the quadrants and see if they are
       // inside our reference Map.
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 	Stomp::Map* wedge_map =
 	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
 
-	if (stomp_map->Contains(*wedge_map)) idx += FIRST_QUADRANT;
+	if (stomp_map->Contains(*wedge_map)) idx += first_quadrant;
 
 	delete wedge_map;
       }
@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
 	Stomp::Map* wedge_map =
 	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
 
-	if (stomp_map->Contains(*wedge_map)) idx += SECOND_QUADRANT;
+	if (stomp_map->Contains(*wedge_map)) idx += second_quadrant;
 
 	delete wedge_map;
       }
@@ -127,7 +127,7 @@ int main(int argc, char **argv) {
 	Stomp::Map* wedge_map =
 	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
 
-	if (stomp_map->Contains(*wedge_map)) idx += THIRD_QUADRANT;
+	if (stomp_map->Contains(*wedge_map)) idx += third_quadrant;
 
 	delete wedge_map;
       }
@@ -137,7 +137,7 @@ int main(int argc, char **argv) {
 	Stomp::Map* wedge_map =
 	  new Stomp::Map(wedge_bound, 1.0, max_resolution);
 
-	if (stomp_map->Contains(*wedge_map)) idx += FOURTH_QUADRANT;
+	if (stomp_map->Contains(*wedge_map)) idx += fourth_quadrant;
 
 	delete wedge_map;
       }
