@@ -1616,25 +1616,26 @@ void Map::GenerateRandomPoints(AngularVector& ang, uint32_t n_point,
   }
 }
 
-#ifdef WITH_NUMPY
+#ifdef WITH_NUMPY  // begin python-only code
 // This version returns numerical python arrays in a tuple
 // note use_weighted_sampling is optional, default false
 
 // This is the generic version taking a string for the system
 PyObject* Map::GenerateRandomPoints(uint32_t n_point, const std::string& system,
-    bool use_weighted_sampling) throw (const char*)  {
-
-  Stomp::AngularCoordinate::Sphere 
-    sys = Stomp::AngularCoordinate::SystemFromString(system);
+				    bool use_weighted_sampling)
+  throw (const char*)  {
+  Stomp::AngularCoordinate::Sphere sys =
+    Stomp::AngularCoordinate::SystemFromString(system);
   return GenerateRandomPoints(n_point,sys,use_weighted_sampling);
 }
 
-
 // This is the generic version taking a Sphere id for the system
-PyObject* Map::GenerateRandomPoints(uint32_t n_point, 
-    Stomp::AngularCoordinate::Sphere systemid, 
-    bool use_weighted_sampling) throw (const char*)  {
-  
+PyObject* Map::GenerateRandomPoints(uint32_t n_point,
+				    Stomp::AngularCoordinate::Sphere systemid,
+				    bool use_weighted_sampling)
+  throw (const char*)  {
+  double minimum_probability = -0.0001;
+  double probability_slope = 0.0;
   std::stringstream err;
   // Make the output numpy arrays
   NumpyVector<double> x1(n_point);
@@ -1669,38 +1670,38 @@ PyObject* Map::GenerateRandomPoints(uint32_t n_point,
       n = mtrand.randInt(superpix.size()-1);
       k = superpix[n].Superpixnum();
 
-      z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
-          sub_map_[k].ZMin());
+      z = sub_map_[k].ZMin() +
+	mtrand.rand(sub_map_[k].ZMax() - sub_map_[k].ZMin());
       lambda = asin(z)*RadToDeg;
-      eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
-          sub_map_[k].EtaMin());
+      eta = sub_map_[k].EtaMin() +
+	mtrand.rand(sub_map_[k].EtaMax() - sub_map_[k].EtaMin());
       tmp_ang.SetSurveyCoordinates(lambda,eta);
 
       keep = sub_map_[k].FindLocation(tmp_ang,weight);
 
       if (use_weighted_sampling && keep) {
-        probability_limit =
-          minimum_probability + (weight - min_weight_)*probability_slope;
-        if (mtrand.rand(1.0) > probability_limit) keep = false;
+	probability_limit =
+	  minimum_probability + (weight - min_weight_)*probability_slope;
+	if (mtrand.rand(1.0) > probability_limit) keep = false;
       }
     }
 
     switch (systemid) {
-      case Stomp::AngularCoordinate::Survey:
-        x1[m] = lambda;
-        x2[m] = eta;
-        break;
-      case Stomp::AngularCoordinate::Equatorial:
-        x1[m] = tmp_ang.RA();
-        x2[m] = tmp_ang.DEC();
-        break;
-      case Stomp::AngularCoordinate::Galactic:
-        x1[m] = tmp_ang.GalLon();
-        x2[m] = tmp_ang.GalLat();
-        break;
-      default:
-        err<<"Bad system id: "<<systemid;
-        throw err.str().c_str();
+    case Stomp::AngularCoordinate::Survey:
+      x1[m] = lambda;
+      x2[m] = eta;
+      break;
+    case Stomp::AngularCoordinate::Equatorial:
+      x1[m] = tmp_ang.RA();
+      x2[m] = tmp_ang.DEC();
+      break;
+    case Stomp::AngularCoordinate::Galactic:
+      x1[m] = tmp_ang.GalLon();
+      x2[m] = tmp_ang.GalLat();
+      break;
+    default:
+      err << "Bad system id: " << systemid;
+      throw err.str().c_str();
     }
   }
 
@@ -1711,34 +1712,30 @@ PyObject* Map::GenerateRandomPoints(uint32_t n_point,
   return output_tuple;
 }
 
-
 // These are wrappers for the more generic function above
-PyObject* Map::GenerateRandomEq(uint32_t n_point, 
-    bool use_weighted_sampling) throw (const char*)  {
-
+PyObject* Map::GenerateRandomEq(uint32_t n_point, bool use_weighted_sampling)
+  throw (const char*)  {
   return GenerateRandomPoints(n_point, Stomp::AngularCoordinate::Equatorial,
-      use_weighted_sampling);
+			      use_weighted_sampling);
 }
-PyObject* Map::GenerateRandomSurvey(uint32_t n_point, 
-    bool use_weighted_sampling) throw (const char*)  {
-
+PyObject* Map::GenerateRandomSurvey(uint32_t n_point,
+				    bool use_weighted_sampling)
+  throw (const char*)  {
   return GenerateRandomPoints(n_point, Stomp::AngularCoordinate::Survey,
-      use_weighted_sampling);
+			      use_weighted_sampling);
 }
-PyObject* Map::GenerateRandomGal(uint32_t n_point, 
-    bool use_weighted_sampling) throw (const char*)  {
-
+PyObject* Map::GenerateRandomGal(uint32_t n_point, bool use_weighted_sampling)
+  throw (const char*)  {
   return GenerateRandomPoints(n_point, Stomp::AngularCoordinate::Galactic,
-      use_weighted_sampling);
+			      use_weighted_sampling);
 }
 
-
-PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj, 
-    const std::string& system, PyObject* radobj) throw (const char* ) {
-
+PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
+			const std::string& system, PyObject* radobj)
+  throw (const char* ) {
   // convert the string system indicator to a Sphere id
-  Stomp::AngularCoordinate::Sphere 
-    sys = Stomp::AngularCoordinate::SystemFromString(system);
+  Stomp::AngularCoordinate::Sphere sys =
+    Stomp::AngularCoordinate::SystemFromString(system);
 
   // Get numpy arrays objects.   No copy made as long as the type and byte
   // order is correct.
@@ -1754,7 +1751,7 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
     rad.init(radobj);
     nrad = rad.size();
     if (nrad != 1 && nrad != x1.size()) {
-      throw "radius must be same length as coordinates or lenght 1";
+      throw "radius must be same length as coordinates or length 1";
     }
     thisrad = rad[0];
     // seed the random number generator.  Distinctive to
@@ -1773,22 +1770,21 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
 
       // If radii were sent, we will do the quadrant check
       if (nrad > 0) {
-        if (nrad > 1) {
-          thisrad = rad[i];
-        }
-        maskflags[i] |= QuadrantsContainedMC(ang,thisrad,sys);
+	if (nrad > 1) {
+	  thisrad = rad[i];
+	}
+	maskflags[i] |= QuadrantsContainedMC(ang,thisrad,sys);
       }
     }
   }
   return maskflags.getref();
 }
 
+#endif  // end python-only code
 
-#endif
-
-// Check four quadrants using a monte carlo technique
 int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
-    Stomp::AngularCoordinate::Sphere coord_system) throw (const char*) {
+			      Stomp::AngularCoordinate::Sphere coord_system)
+  throw (const char*) {
   int maskflags=0;
   if (QuadrantContainedMC(ang,radius,0)) {
     maskflags |= FIRST_QUADRANT_OK;
@@ -1806,48 +1802,38 @@ int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
 }
 
 bool Map::QuadrantContainedMC(AngularCoordinate& ang, double radius,
-    int quadrant) throw (const char*) {
-
+			      int quadrant) throw (const char*) {
+  // These tune the test accuracy
   //
-  // These tune how accurate the test is
-  // Should make these configurable
-  //
-
-  // Minimum size we want to resolve in square degrees. This can be pretty
+  // Minimum size we want to resolve in square degrees This can be pretty
   // big since we are only worried about edges and big holes.  0.05
   // corresponds to half a field
   static double amin=0.05;
+
+  // probability a randomly generated point will *not*
+  // fall within our smallest area amin
+  double A = Pi*radius*radius/4.0;
+  double pmiss = 1. - amin/A;
 
   // Probability of missing amin sized region?  The number of points used
   // goes as the log of this
   static double pmax=0.01;
 
-  // the above require 649 points for a 3 degree radius
-  // the above require 7231 points for a 10 degree radius
-
-
-  // probability a given random point generated within our test area could miss
-  // a hole of size amin
-  double A = M_PI*radius*radius/4.0;
-  double pmiss = 1. - amin/A;
-
-  int nrand=0;
-  if(pmiss > 1.e-10) {
-
-    // how many points do we need in order for the probability of missing a
-    // hole of size amin to be pmax?
-    //      We need n such that (1-amin/a)^n = pmiss^n = pmax
+  uint32_t nrand=0;
+  if (pmiss > 1.e-10) {
+    // how many points do we need in order for the
+    // probability of missing the hole to be pmax?
+    //      We need n such that (1-amin/a)^n = pmax
     double tmp = log10(pmax)/log10(pmiss);
     if (tmp < 20) tmp = 20;
     if (tmp > 20000) tmp = 20000;
     nrand = lround(tmp);
   } else {
-    // we reach here often because the search area is very 
+    // we reach here often because the search area is very
     // close to or smaller than our minimum resolvable area
     // We don't want nrand to be less than say 20
     nrand = 20;
   }
-  //std::cout<<"nrand: "<<nrand<<"\n";
 
   // get test the point as clambda,ceta
   double clambda = ang.Lambda();
@@ -1859,26 +1845,24 @@ bool Map::QuadrantContainedMC(AngularCoordinate& ang, double radius,
   // use clambda,ceta coords
   Stomp::AngularCoordinate::Sphere sys= Stomp::AngularCoordinate::Survey;
   AngularCoordinate tmp_ang;
-  for (int i=0; i<nrand; i++) {
-    _GenerateRandLamEtaQuadrant(clambda, ceta, radius, quadrant, rand_clambda,
-        rand_ceta);
+  bool quadrant_inside = true;
+  for (uint32_t i=0; i<nrand; i++) {
+    _GenerateRandLamEtaQuadrant(clambda, ceta, radius, quadrant,
+				rand_clambda, rand_ceta);
     tmp_ang.Set(rand_clambda,rand_ceta,sys);
-    if ( !Contains(tmp_ang) ) {
-      return false;
-    } 
+    if (!Contains(tmp_ang)) {
+      quadrant_inside = false;
+      break;
+    }
   }
 
-  return true;
-
+  return quadrant_inside;
 }
 
-
-// Generate a random point in the requested quadrant
-void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta, double R,
-    int quadrant, double& rand_lambda, double& rand_eta) throw (const char*)
-
-{
-
+void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta,
+				      double R, int quadrant,
+				      double& rand_lambda, double& rand_eta)
+  throw (const char*) {
   // this is crazy slow
   //MTRand mtrand;
   //mtrand.seed();
@@ -1897,14 +1881,14 @@ void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta, double R,
   // generate uniformly in R^2
   // random [0,1)
   //rand_r = mtrand.randExc();
-  rand_r = 
+  rand_r =
     ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
   rand_r = sqrt(rand_r)*R*DegToRad;
 
   // generate theta uniformly from [min_theta,min_theta+90)
   min_theta = quadrant*M_PI/2.;
 
-  rand_psi = 
+  rand_psi =
     ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
   //rand_psi = mtrand.randExc();
   rand_psi = M_PI/2.*rand_psi + min_theta;
@@ -1939,30 +1923,91 @@ void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta, double R,
 
   switch(quadrant)
   {
-    case 0: 
+    case 0:
       phi2 = phi + Dphi;
       break;
-    case 1: 
+    case 1:
       phi2 = phi + Dphi;
       break;
-    case 2: 
+    case 2:
       phi2 = phi - Dphi;
       break;
-    case 3: 
+    case 3:
       phi2 = phi - Dphi;
       break;
-    default: 
-      err<<"Error: quadrant is undefined: "<<quadrant;
+    default:
+      err << "Error: quadrant is undefined: " << quadrant;
       throw err.str().c_str();
   }
 
   rand_lambda = 90.0 - RadToDeg*theta2;
   rand_eta    = RadToDeg*phi2 - 180.0;
-
 }
 
+bool Map::Contains(GeometricBound& bound, double area_resolution,
+		   double precision) {
+  double miss_prob = 1.0 - area_resolution/bound.Area();
 
+  uint32_t n_rand = 0;
+  if (miss_prob > 1.e-10) {
+    // how many points do we need in order for the
+    // probability of missing the hole to be pmax?
+    //      We need n such that (1-amin/a)^n = pmax
+    double points_estimate = log10(precision)/log10(miss_prob);
+    if (points_estimate < 20.0) points_estimate = 20.1;
+    if (points_estimate > 20000.0)
+      points_estimate = 20000.1;  // cap at 20000 random points
+    n_rand = static_cast<uint32_t>(points_estimate);
+  } else {
+    // we reach here often because the search area is very
+    // close to or smaller than our minimum resolvable area
+    // We don't want nrand to be less than say 20
+    n_rand = 20;
+  }
 
+  AngularCoordinate tmp_ang;
+  bool bound_inside = true;
+  for (uint32_t i=0;i<n_rand;i++) {
+    bound.GenerateRandomPoint(tmp_ang);
+    if (!Contains(tmp_ang)) {
+      bound_inside = false;
+      break;
+    }
+  }
+
+  return bound_inside;
+}
+
+double Map::FindUnmaskedFraction(GeometricBound& bound, double area_resolution,
+				 double precision) {
+  double miss_prob = 1.0 - area_resolution/bound.Area();
+
+  uint32_t n_rand = 0;
+  if (miss_prob > 1.e-10) {
+    // how many points do we need in order for the
+    // probability of missing the hole to be pmax?
+    //      We need n such that (1-amin/a)^n = pmax
+    double points_estimate = log10(precision)/log10(miss_prob);
+    if (points_estimate < 20.0) points_estimate = 20.1;
+    if (points_estimate > 20000.0)
+      points_estimate = 20000.1;  // cap at 20000 random points
+    n_rand = static_cast<uint32_t>(points_estimate);
+  } else {
+    // we reach here often because the search area is very
+    // close to or smaller than our minimum resolvable area
+    // We don't want nrand to be less than say 20
+    n_rand = 20;
+  }
+
+  AngularCoordinate tmp_ang;
+  uint32_t n_inside = 0;
+  for (uint32_t i=0;i<n_rand;i++) {
+    bound.GenerateRandomPoint(tmp_ang);
+    if (Contains(tmp_ang)) n_inside++;
+  }
+
+  return static_cast<double>(n_inside)/static_cast<double>(n_rand);
+}
 
 void Map::GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
 			       bool filter_input_points) {

@@ -33,8 +33,11 @@ Pixel::Pixel(const uint32_t input_resolution,
 	     const double input_weight) {
   if ((input_resolution < HPixResolution) ||
       (input_resolution%2 != 0) ||
-      (input_resolution > MaxPixelResolution))
-    std::cout << "Invalid resolution value.\n ";
+      (input_resolution > MaxPixelResolution)) {
+    std::cout << "Invalid resolution value: " <<
+      static_cast<int>(input_resolution) << "\n ";
+    exit(2);
+  }
 
   if (input_pixnum > MaxPixnum)
     std::cout << "Invalid pixel index value.\n ";
@@ -52,7 +55,8 @@ Pixel::Pixel(const uint32_t input_x,
   if ((input_resolution < HPixResolution) ||
       (input_resolution%2 != 0) ||
       (input_resolution > MaxPixelResolution)) {
-    std::cout << "Invalid resolution value: " << input_resolution << ".\n";
+    std::cout << "Invalid resolution value: " <<
+      static_cast<int>(input_resolution) << ".\n";
     exit(2);
   }
 
@@ -74,7 +78,8 @@ Pixel::Pixel(AngularCoordinate& ang, const uint32_t input_resolution,
   if ((input_resolution < HPixResolution) ||
       (input_resolution % 2 != 0) ||
       (input_resolution > MaxPixelResolution)) {
-    std::cout << "Invalid resolution value: " << input_resolution << ".\n";
+    std::cout << "Invalid resolution value: " <<
+      static_cast<int>(input_resolution) << ".\n";
     exit(2);
   }
 
