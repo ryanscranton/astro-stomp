@@ -26825,65 +26825,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Map_Contains(PyObject *self, PyObject *args) {
-  int argc;
-  PyObject *argv[3];
-  int ii;
-  
-  if (!PyTuple_Check(args)) SWIG_fail;
-  argc = PyObject_Length(args);
-  for (ii = 0; (ii < argc) && (ii < 2); ii++) {
-    argv[ii] = PyTuple_GET_ITEM(args,ii);
-  }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_Map_Contains__SWIG_0(self, args);
-      }
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_Map_Contains__SWIG_1(self, args);
-      }
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__Map, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_Map_Contains__SWIG_2(self, args);
-      }
-    }
-  }
-  
-fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Map_Contains'.\n  Possible C/C++ prototypes are:\n    Contains(Stomp::AngularCoordinate &)\n    Contains(Stomp::Pixel &)\n    Contains(Stomp::Map &)\n");
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Map_FindUnmaskedFraction__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::Map *arg1 = (Stomp::Map *) 0 ;
@@ -29581,6 +29522,333 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomGal(PyObject *self, PyObject *args)
   
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Map_GenerateRandomGal'.\n  Possible C/C++ prototypes are:\n    GenerateRandomGal(uint32_t,bool)\n    GenerateRandomGal(uint32_t)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Map_Contains__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Map *arg1 = (Stomp::Map *) 0 ;
+  PyObject *arg2 = (PyObject *) 0 ;
+  PyObject *arg3 = (PyObject *) 0 ;
+  std::string *arg4 = 0 ;
+  PyObject *arg5 = (PyObject *) 0 ;
+  PyObject *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:Map_Contains",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Map, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Map_Contains" "', argument " "1"" of type '" "Stomp::Map *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Map * >(argp1);
+  arg2 = obj1;
+  arg3 = obj2;
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(obj3, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Map_Contains" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_Contains" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  arg5 = obj4;
+  try {
+    result = (PyObject *)(arg1)->Contains(arg2,arg3,(std::string const &)*arg4,arg5);
+  }
+  catch(char const *_e) {
+    PyErr_SetString(PyExc_RuntimeError, _e);
+    SWIG_fail;
+    
+  }
+  
+  resultobj = result;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Map_Contains__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Map *arg1 = (Stomp::Map *) 0 ;
+  PyObject *arg2 = (PyObject *) 0 ;
+  PyObject *arg3 = (PyObject *) 0 ;
+  std::string *arg4 = 0 ;
+  PyObject *result = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res4 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:Map_Contains",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Map, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Map_Contains" "', argument " "1"" of type '" "Stomp::Map *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Map * >(argp1);
+  arg2 = obj1;
+  arg3 = obj2;
+  {
+    std::string *ptr = (std::string *)0;
+    res4 = SWIG_AsPtr_std_string(obj3, &ptr);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Map_Contains" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_Contains" "', argument " "4"" of type '" "std::string const &""'"); 
+    }
+    arg4 = ptr;
+  }
+  try {
+    result = (PyObject *)(arg1)->Contains(arg2,arg3,(std::string const &)*arg4);
+  }
+  catch(char const *_e) {
+    PyErr_SetString(PyExc_RuntimeError, _e);
+    SWIG_fail;
+    
+  }
+  
+  resultobj = result;
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res4)) delete arg4;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Map_Contains(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[6];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 5); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__AngularCoordinate, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_Map_Contains__SWIG_0(self, args);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__Pixel, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_Map_Contains__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_Map_Contains__SWIG_2(self, args);
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      _v = (argv[1] != 0);
+      if (_v) {
+        _v = (argv[2] != 0);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            return _wrap_Map_Contains__SWIG_4(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      _v = (argv[1] != 0);
+      if (_v) {
+        _v = (argv[2] != 0);
+        if (_v) {
+          int res = SWIG_AsPtr_std_string(argv[3], (std::string**)(0));
+          _v = SWIG_CheckState(res);
+          if (_v) {
+            _v = (argv[4] != 0);
+            if (_v) {
+              return _wrap_Map_Contains__SWIG_3(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Map_Contains'.\n  Possible C/C++ prototypes are:\n    Contains(Stomp::AngularCoordinate &)\n    Contains(Stomp::Pixel &)\n    Contains(Stomp::Map &)\n    Contains(PyObject *,PyObject *,std::string const &,PyObject *)\n    Contains(PyObject *,PyObject *,std::string const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Map_QuadrantsContainedMC(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Map *arg1 = (Stomp::Map *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  double arg3 ;
+  Stomp::AngularCoordinate::Sphere arg4 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:Map_QuadrantsContainedMC",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Map, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Map_QuadrantsContainedMC" "', argument " "1"" of type '" "Stomp::Map *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Map * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Map_QuadrantsContainedMC" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_QuadrantsContainedMC" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Map_QuadrantsContainedMC" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Map_QuadrantsContainedMC" "', argument " "4"" of type '" "Stomp::AngularCoordinate::Sphere""'");
+  } 
+  arg4 = static_cast< Stomp::AngularCoordinate::Sphere >(val4);
+  try {
+    result = (int)(arg1)->QuadrantsContainedMC(*arg2,arg3,arg4);
+  }
+  catch(char const *_e) {
+    PyErr_SetString(PyExc_RuntimeError, _e);
+    SWIG_fail;
+    
+  }
+  
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Map_QuadrantContainedMC(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Map *arg1 = (Stomp::Map *) 0 ;
+  Stomp::AngularCoordinate *arg2 = 0 ;
+  double arg3 ;
+  int arg4 ;
+  bool result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:Map_QuadrantContainedMC",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Map, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Map_QuadrantContainedMC" "', argument " "1"" of type '" "Stomp::Map *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Map * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__AngularCoordinate,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Map_QuadrantContainedMC" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_QuadrantContainedMC" "', argument " "2"" of type '" "Stomp::AngularCoordinate &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::AngularCoordinate * >(argp2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Map_QuadrantContainedMC" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Map_QuadrantContainedMC" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  try {
+    result = (bool)(arg1)->QuadrantContainedMC(*arg2,arg3,arg4);
+  }
+  catch(char const *_e) {
+    PyErr_SetString(PyExc_RuntimeError, _e);
+    SWIG_fail;
+    
+  }
+  
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
   return NULL;
 }
 
@@ -94227,7 +94495,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Map_AddPixel", _wrap_Map_AddPixel, METH_VARARGS, NULL},
 	 { (char *)"Map_FindLocation", _wrap_Map_FindLocation, METH_VARARGS, NULL},
 	 { (char *)"Map_FindLocationWeight", _wrap_Map_FindLocationWeight, METH_VARARGS, NULL},
-	 { (char *)"Map_Contains", _wrap_Map_Contains, METH_VARARGS, NULL},
 	 { (char *)"Map_FindUnmaskedFraction", _wrap_Map_FindUnmaskedFraction, METH_VARARGS, NULL},
 	 { (char *)"Map_FindUnmaskedStatus", _wrap_Map_FindUnmaskedStatus, METH_VARARGS, NULL},
 	 { (char *)"Map_FindAverageWeight", _wrap_Map_FindAverageWeight, METH_VARARGS, NULL},
@@ -94244,6 +94511,9 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Map_GenerateRandomEq", _wrap_Map_GenerateRandomEq, METH_VARARGS, NULL},
 	 { (char *)"Map_GenerateRandomSurvey", _wrap_Map_GenerateRandomSurvey, METH_VARARGS, NULL},
 	 { (char *)"Map_GenerateRandomGal", _wrap_Map_GenerateRandomGal, METH_VARARGS, NULL},
+	 { (char *)"Map_Contains", _wrap_Map_Contains, METH_VARARGS, NULL},
+	 { (char *)"Map_QuadrantsContainedMC", _wrap_Map_QuadrantsContainedMC, METH_VARARGS, NULL},
+	 { (char *)"Map_QuadrantContainedMC", _wrap_Map_QuadrantContainedMC, METH_VARARGS, NULL},
 	 { (char *)"Map_Write", _wrap_Map_Write, METH_VARARGS, NULL},
 	 { (char *)"Map_Read", _wrap_Map_Read, METH_VARARGS, NULL},
 	 { (char *)"Map_PixelizeBound", _wrap_Map_PixelizeBound, METH_VARARGS, NULL},
@@ -96287,6 +96557,11 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"HPixArea",HPixArea_get, HPixArea_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"MaxPixnum",MaxPixnum_get, MaxPixnum_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"MaxSuperpixnum",MaxSuperpixnum_get, MaxSuperpixnum_set);
+  SWIG_Python_SetConstant(d, "INSIDE_MAP",SWIG_From_int(static_cast< int >(1)));
+  SWIG_Python_SetConstant(d, "FIRST_QUADRANT_OK",SWIG_From_int(static_cast< int >(2)));
+  SWIG_Python_SetConstant(d, "SECOND_QUADRANT_OK",SWIG_From_int(static_cast< int >(4)));
+  SWIG_Python_SetConstant(d, "THIRD_QUADRANT_OK",SWIG_From_int(static_cast< int >(8)));
+  SWIG_Python_SetConstant(d, "FOURTH_QUADRANT_OK",SWIG_From_int(static_cast< int >(16)));
   SWIG_Python_SetConstant(d, "ScalarMap_ScalarField",SWIG_From_int(static_cast< int >(Stomp::ScalarMap::ScalarField)));
   SWIG_Python_SetConstant(d, "ScalarMap_DensityField",SWIG_From_int(static_cast< int >(Stomp::ScalarMap::DensityField)));
   SWIG_Python_SetConstant(d, "ScalarMap_SampledField",SWIG_From_int(static_cast< int >(Stomp::ScalarMap::SampledField)));

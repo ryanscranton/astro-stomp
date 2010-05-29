@@ -33,6 +33,11 @@
 #include "stomp_pixel.h"
 #include "stomp_base_map.h"
 
+// For rand()
+#include <cstdlib>
+// for time
+#include <ctime>
+
 // ESS: Add support for python
 #ifdef WITH_PYTHON
 #include <Python.h>
@@ -44,6 +49,14 @@
 #endif
 
 namespace Stomp {
+
+// want to make these member variables but
+// problems with swig
+#define INSIDE_MAP  1
+#define FIRST_QUADRANT_OK 2
+#define SECOND_QUADRANT_OK 4
+#define THIRD_QUADRANT_OK 8
+#define FOURTH_QUADRANT_OK 16
 
 class AngularCoordinate;  // class declaration in stomp_angular_coordinate.h
 class Pixel;              // class declaration in stomp_pixel.h
@@ -351,7 +364,37 @@ class Map : public BaseMap {
           uint32_t n_point, 
           bool use_weighted_sampling = false) throw (const char*);
 
+  // flags for contained and quadrant checks
+  // Doesn't work with swig, using defines above for now
+  /*
+  static int INSIDE_MAP;
+  static int FIRST_QUADRANT_OK;
+  static int SECOND_QUADRANT_OK;
+  static int THIRD_QUADRANT_OK;
+  static int FOURTH_QUADRANT_OK;
+  */
+
+  PyObject* Contains(
+          PyObject* x1obj, 
+          PyObject* x2obj, 
+          const std::string& system,
+          PyObject* radobj=NULL) throw (const char* );
+
+
 #endif
+
+  // Check four quadrants using a monte carlo technique
+  int QuadrantsContainedMC(
+          AngularCoordinate& ang, 
+          double radius,
+          Stomp::AngularCoordinate::Sphere coord_system) throw (const char*);
+
+  // check a single quadrant
+  bool QuadrantContainedMC(
+          AngularCoordinate& ang,
+          double radius,
+          int quadrant) throw (const char*);
+
 
   // The book-end to the initialization method that takes an ASCII filename
   // as an argument, this method writes the current map to an ASCII file using
@@ -491,6 +534,17 @@ class Map : public BaseMap {
 
 
 private:
+
+  void _GenerateRandLamEtaQuadrant(
+          double lambda, 
+          double eta, 
+          double R,             /* in degrees */
+          int quadrant, 
+          double& rand_lambda, 
+          double& rand_eta) throw (const char*);
+
+
+
   SubMapVector sub_map_;
   MapIterator begin_, end_;
   double area_, min_weight_, max_weight_;
@@ -499,6 +553,16 @@ private:
   ResolutionDict pixel_count_;
 };
 
+/*
+#ifdef WITH_NUMPY
+// Static 
+int Map::INSIDE_MAP = 1;
+int Map::FIRST_QUADRANT_OK=2;
+int Map::SECOND_QUADRANT_OK=4;
+int Map::THIRD_QUADRANT_OK=8;
+int Map::FOURTH_QUADRANT_OK=16;
+#endif
+*/
 } // end namespace Stomp
 
 #endif

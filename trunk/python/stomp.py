@@ -572,6 +572,11 @@ class BaseMap(_object):
 BaseMap_swigregister = _stomp.BaseMap_swigregister
 BaseMap_swigregister(BaseMap)
 
+INSIDE_MAP = _stomp.INSIDE_MAP
+FIRST_QUADRANT_OK = _stomp.FIRST_QUADRANT_OK
+SECOND_QUADRANT_OK = _stomp.SECOND_QUADRANT_OK
+THIRD_QUADRANT_OK = _stomp.THIRD_QUADRANT_OK
+FOURTH_QUADRANT_OK = _stomp.FOURTH_QUADRANT_OK
 class SubMap(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, SubMap, name, value)
@@ -646,7 +651,6 @@ class Map(BaseMap):
     def AddPixel(*args): return _stomp.Map_AddPixel(*args)
     def FindLocation(*args): return _stomp.Map_FindLocation(*args)
     def FindLocationWeight(*args): return _stomp.Map_FindLocationWeight(*args)
-    def Contains(*args): return _stomp.Map_Contains(*args)
     def FindUnmaskedFraction(*args): return _stomp.Map_FindUnmaskedFraction(*args)
     def FindUnmaskedStatus(*args): return _stomp.Map_FindUnmaskedStatus(*args)
     def FindAverageWeight(*args): return _stomp.Map_FindAverageWeight(*args)
@@ -663,6 +667,9 @@ class Map(BaseMap):
     def GenerateRandomEq(*args): return _stomp.Map_GenerateRandomEq(*args)
     def GenerateRandomSurvey(*args): return _stomp.Map_GenerateRandomSurvey(*args)
     def GenerateRandomGal(*args): return _stomp.Map_GenerateRandomGal(*args)
+    def Contains(*args): return _stomp.Map_Contains(*args)
+    def QuadrantsContainedMC(*args): return _stomp.Map_QuadrantsContainedMC(*args)
+    def QuadrantContainedMC(*args): return _stomp.Map_QuadrantContainedMC(*args)
     def Write(*args): return _stomp.Map_Write(*args)
     def Read(*args): return _stomp.Map_Read(*args)
     def PixelizeBound(*args): return _stomp.Map_PixelizeBound(*args)
