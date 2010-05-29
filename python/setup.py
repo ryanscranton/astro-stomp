@@ -41,6 +41,7 @@ if not os.path.exists('ups'):
     os.mkdir('ups')
 tablefile=open('ups/stomp.table','w')
 tab="""
+setupOptional("gflags")
 envPrepend(PYTHONPATH,${PRODUCT_DIR}/%s)
 envPrepend(PYTHONPATH,${PRODUCT_DIR}/%s)
 """ % (d1,d2)
