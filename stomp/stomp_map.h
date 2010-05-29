@@ -344,24 +344,18 @@ class Map : public BaseMap {
   // Requires python and numpy support
 #ifdef WITH_NUMPY
   // This is the generic function
-  PyObject* GenerateRandomPoints(
-        uint32_t n_point, 
-        Stomp::AngularCoordinate::Sphere systemid,
+  PyObject* GenerateRandomPoints(uint32_t n_point, 
+      Stomp::AngularCoordinate::Sphere systemid,
         bool use_weighted_sampling=false) throw (const char*);
   // overloaded for string system name
-  PyObject* GenerateRandomPoints(
-        uint32_t n_point, 
-        const std::string& system,
+  PyObject* GenerateRandomPoints(uint32_t n_point, const std::string& system,
         bool use_weighted_sampling=false) throw (const char*);
 
-  PyObject* GenerateRandomEq(
-          uint32_t n_point, 
+  PyObject* GenerateRandomEq(uint32_t n_point, 
           bool use_weighted_sampling = false) throw (const char*);
-  PyObject* GenerateRandomSurvey(
-          uint32_t n_point, 
+  PyObject* GenerateRandomSurvey(uint32_t n_point, 
           bool use_weighted_sampling = false) throw (const char*);
-  PyObject* GenerateRandomGal(
-          uint32_t n_point, 
+  PyObject* GenerateRandomGal(uint32_t n_point, 
           bool use_weighted_sampling = false) throw (const char*);
 
   // flags for contained and quadrant checks
@@ -374,25 +368,18 @@ class Map : public BaseMap {
   static int FOURTH_QUADRANT_OK;
   */
 
-  PyObject* Contains(
-          PyObject* x1obj, 
-          PyObject* x2obj, 
-          const std::string& system,
-          PyObject* radobj=NULL) throw (const char* );
+  PyObject* Contains(PyObject* x1obj,PyObject* x2obj,const std::string& system,
+      PyObject* radobj=NULL) throw (const char* );
 
 
 #endif
 
   // Check four quadrants using a monte carlo technique
-  int QuadrantsContainedMC(
-          AngularCoordinate& ang, 
-          double radius,
+  int QuadrantsContainedMC(AngularCoordinate& ang, double radius,
           Stomp::AngularCoordinate::Sphere coord_system) throw (const char*);
 
   // check a single quadrant
-  bool QuadrantContainedMC(
-          AngularCoordinate& ang,
-          double radius,
+  bool QuadrantContainedMC(AngularCoordinate& ang, double radius,
           int quadrant) throw (const char*);
 
 
@@ -535,13 +522,9 @@ class Map : public BaseMap {
 
 private:
 
-  void _GenerateRandLamEtaQuadrant(
-          double lambda, 
-          double eta, 
-          double R,             /* in degrees */
-          int quadrant, 
-          double& rand_lambda, 
-          double& rand_eta) throw (const char*);
+  void _GenerateRandLamEtaQuadrant(double lambda,double eta, double R,
+      int quadrant, double& rand_lambda, 
+      double& rand_eta) throw (const char*);
 
 
 
