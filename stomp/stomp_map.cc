@@ -1765,7 +1765,253 @@ PyObject* Map::GenerateRandomGal(
             use_weighted_sampling);
 }
 
+
+PyObject* Map::Contains(
+        PyObject* x1obj, 
+        PyObject* x2obj, 
+        const std::string& system,
+        PyObject* radobj            // optional
+        ) throw (const char* ) {
+
+    // convert the string system indicator to a Sphere id
+    Stomp::AngularCoordinate::Sphere 
+        sys = Stomp::AngularCoordinate::SystemFromString(system);
+
+    // Get numpy arrays objects.   No copy made as long as the type and byte
+    // order is correct.
+    NumpyVector<double> x1(x1obj);
+    NumpyVector<double> x2(x2obj);
+    if (x1.size() != x2.size()) {
+        throw "coordinates must be same size";
+    }
+    NumpyVector<double> rad;
+    npy_intp nrad=0;
+    double thisrad=-1;
+    if (radobj != NULL) {
+        rad.init(radobj);
+        nrad = rad.size();
+        if (nrad != 1 && nrad != x1.size()) {
+            throw "radius must be same length as coordinates or lenght 1";
+        }
+        thisrad = rad[0];
+        // seed the random number generator.  Distinctive to
+        // one second
+        std::srand ( std::time(NULL) );
+    }
+
+    //std::cout<<"n x1: "<<x1.size()<<"\n";
+    //std::cout<<"nrad: "<<nrad<<"\n";
+    NumpyVector<npy_int8> maskflags(x1.size());
+
+    Stomp::AngularCoordinate ang;
+    for (npy_intp i=0; i<x1.size(); i++) {
+        ang.Set(x1[i], x2[i], sys);
+        if (Contains(ang)) {
+            //maskflags[i] |= Map::INSIDE_MAP;
+            maskflags[i] |= INSIDE_MAP;
+
+            // If radii were sent, we will do the quadrant check
+            if (nrad > 0) {
+                if (nrad > 1) {
+                    thisrad = rad[i];
+                }
+                maskflags[i] |= QuadrantsContainedMC(ang,thisrad,sys);
+            }
+        }
+    }
+    return maskflags.getref();
+}
+
+
 #endif
+
+// Check four quadrants using a monte carlo technique
+int Map::QuadrantsContainedMC(
+        AngularCoordinate& ang, 
+        double radius,
+        Stomp::AngularCoordinate::Sphere coord_system) throw (const char*) {
+    int maskflags=0;
+    if (QuadrantContainedMC(ang,radius,0)) {
+        maskflags |= FIRST_QUADRANT_OK;
+    }
+    if (QuadrantContainedMC(ang,radius,1)) {
+        maskflags |= SECOND_QUADRANT_OK;
+    }
+    if (QuadrantContainedMC(ang,radius,2)) {
+        maskflags |= THIRD_QUADRANT_OK;
+    }
+    if (QuadrantContainedMC(ang,radius,3)) {
+        maskflags |= FOURTH_QUADRANT_OK;
+    }
+    return maskflags;
+}
+
+bool Map::QuadrantContainedMC(
+        AngularCoordinate& ang,
+        double radius,
+        int quadrant) throw (const char*) {
+
+    //
+    // These tune how accurate the test is
+    //
+    
+    // Minimum size we want to resolve in square degrees This can be pretty
+    // big since we are only worried about edges and big holes.  0.05
+    // corresponds to half a field
+    
+    static double amin=0.05;
+
+    // Probability of missing amin sized region?  The number of points used
+    // goes as the log of this
+    static double pmax=0.01;
+
+    // the above use 649 points for a 3 degree circle
+    // the above use 7231 points for a 10 degree circle
+
+    // probability a randomly generated point will *not*
+    // fall within our smallest area amin
+    double A = M_PI*radius*radius/4.0;
+    double pmiss = 1. - amin/A;
+
+    npy_intp nrand=0;
+    if(pmiss > 1.e-10) {
+        // how many points do we need in order for the
+        // probability of missing the hole to be pmax?
+        //      We need n such that (1-amin/a)^n = pmax
+        double tmp = log10(pmax)/log10(pmiss);
+        if (tmp < 20) tmp = 20;
+        if (tmp > 20000) tmp = 20000;
+        nrand = lround(tmp);
+    } else {
+        // we reach here often because the search area is very 
+        // close to or smaller than our minimum resolvable area
+        // We don't want nrand to be less than say 20
+        nrand = 20;
+    }
+    //std::cout<<"nrand: "<<nrand<<"\n";
+
+    // get test the point as clambda,ceta
+    double clambda = ang.Lambda();
+    double ceta = ang.Eta();
+
+    double rand_clambda=0;
+    double rand_ceta=0;
+
+    // use clambda,ceta coords
+    Stomp::AngularCoordinate::Sphere 
+        sys= Stomp::AngularCoordinate::Survey;
+    AngularCoordinate tmp_ang;
+    for (npy_intp i=0; i<nrand; i++) {
+        _GenerateRandLamEtaQuadrant(
+                clambda,
+                ceta,
+                radius,
+                quadrant,
+                rand_clambda,
+                rand_ceta);
+        tmp_ang.Set(rand_clambda,rand_ceta,sys);
+        if ( !Contains(tmp_ang) ) {
+            return false;
+        } 
+    }
+
+    return true;
+
+}
+
+
+// Generate a random point in the requested quadrant
+void Map::_GenerateRandLamEtaQuadrant(
+        double lambda, 
+        double eta, 
+        double R,             // in degrees
+        int quadrant, 
+        double& rand_lambda, 
+        double& rand_eta) throw (const char*)
+
+{
+
+    // this is crazy slow
+    //MTRand mtrand;
+    //mtrand.seed();
+
+    std::stringstream err;
+    double cospsi;
+    double theta,phi,sintheta,costheta,sinphi,cosphi;
+    double theta2,costheta2,sintheta2;
+    double phi2;
+    double Dphi,cosDphi;
+    double sinr,cosr;
+    double min_theta;
+
+    double rand_r, rand_psi;
+
+    // generate uniformly in R^2
+    // random [0,1)
+    //rand_r = mtrand.randExc();
+    rand_r = 
+        ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
+    rand_r = sqrt(rand_r)*R*DegToRad;
+
+    // generate theta uniformly from [min_theta,min_theta+90)
+    min_theta = quadrant*M_PI/2.;
+
+    rand_psi = 
+        ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
+    //rand_psi = mtrand.randExc();
+    rand_psi = M_PI/2.*rand_psi + min_theta;
+
+    cospsi = cos(rand_psi);
+
+
+    // [0,180]
+    theta = (90.0 - lambda)*DegToRad;
+    // [0,360]
+    phi   = (eta + 180.0)*DegToRad;
+
+    sintheta = sin(theta);
+    costheta = cos(theta);
+    sinphi = sin(phi);
+    cosphi = cos(phi);
+
+    sinr = sin(rand_r);
+    cosr = cos(rand_r);
+
+    costheta2 = costheta*cosr + sintheta*sinr*cospsi;
+    if (costheta2 < -1.) costheta2 = -1.;
+    if (costheta2 >  1.) costheta2 =  1.;
+    theta2 = acos(costheta2);
+    sintheta2 = sin(theta2);
+
+    cosDphi = (cosr - costheta*costheta2)/(sintheta*sintheta2);
+
+    if (cosDphi < -1.) cosDphi = -1.;
+    if (cosDphi >  1.) cosDphi =  1.;
+    Dphi = acos(cosDphi);
+
+    switch(quadrant)
+    {
+        case 0: 
+            phi2 = phi + Dphi;
+            break;
+        case 1: 
+            phi2 = phi + Dphi;
+            break;
+        case 2: 
+            phi2 = phi - Dphi;
+            break;
+        case 3: 
+            phi2 = phi - Dphi;
+            break;
+        default: 
+            err<<"Error: quadrant is undefined: "<<quadrant;
+            throw err.str().c_str();
+    }
+
+    rand_lambda = 90.0 - RadToDeg*theta2;
+    rand_eta    = RadToDeg*phi2 - 180.0;
+
+}
 
 
 
