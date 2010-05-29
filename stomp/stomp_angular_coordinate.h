@@ -81,7 +81,9 @@ class AngularCoordinate {
   ~AngularCoordinate();
 
   // Convert a string version of the system to the Sphere numerical id
+#ifdef WITH_NUMPY
   static Sphere SystemFromString(const std::string& system) throw (const char* );
+#endif
 
   // These three methods let you explicitly set the angular coordinate in one
   // of the supported angular coordinate systems.  Calling these methods resets
