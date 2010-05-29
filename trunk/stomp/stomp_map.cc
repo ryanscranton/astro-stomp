@@ -1,6 +1,7 @@
 // Copyright 2010  All Rights Reserved.
 // Author: ryan.scranton@gmail.com (Ryan Scranton)
-
+// vim: set et ts=2 sw=2:
+//
 // STOMP is a set of libraries for doing astrostatistical analysis on the
 // celestial sphere.  The goal is to enable descriptions of arbitrary regions
 // on the sky which may or may not encode futher spatial information (galaxy
@@ -884,9 +885,6 @@ Map::Map() {
 
   begin_ = MapIterator(0, sub_map_[0].Begin());
   end_ = begin_;
-#ifdef WITH_NUMPY
-  //import_array();
-#endif
 }
 
 Map::Map(PixelVector& pix, bool force_resolve) {
@@ -934,16 +932,10 @@ Map::Map(PixelVector& pix, bool force_resolve) {
     }
   }
 
-#ifdef WITH_NUMPY
-  //import_array();
-#endif
 }
 
 Map::Map(const std::string& InputFile, bool hpixel_format, bool weighted_map) {
   Read(InputFile, hpixel_format, weighted_map);
-#ifdef WITH_NUMPY
-  //import_array();
-#endif
 }
 
 Map::Map(GeometricBound& bound, double weight, uint32_t max_resolution,
@@ -955,9 +947,6 @@ Map::Map(GeometricBound& bound, double weight, uint32_t max_resolution,
   } else {
     if (verbose) std::cout << "Pixelization failed.\n";
   }
-#ifdef WITH_NUMPY
-  //import_array();
-#endif
 }
 
 Map::~Map() {
@@ -1632,384 +1621,343 @@ void Map::GenerateRandomPoints(AngularVector& ang, uint32_t n_point,
 // note use_weighted_sampling is optional, default false
 
 // This is the generic version taking a string for the system
-PyObject* Map::GenerateRandomPoints(
-        uint32_t n_point, 
-        const std::string& system,
-        bool use_weighted_sampling) throw (const char*)  {
+PyObject* Map::GenerateRandomPoints(uint32_t n_point, const std::string& system,
+    bool use_weighted_sampling) throw (const char*)  {
 
-    Stomp::AngularCoordinate::Sphere 
-        sys = Stomp::AngularCoordinate::SystemFromString(system);
-    return GenerateRandomPoints(n_point,sys,use_weighted_sampling);
+  Stomp::AngularCoordinate::Sphere 
+    sys = Stomp::AngularCoordinate::SystemFromString(system);
+  return GenerateRandomPoints(n_point,sys,use_weighted_sampling);
 }
 
 
 // This is the generic version taking a Sphere id for the system
-PyObject* Map::GenerateRandomPoints(
-        uint32_t n_point, 
-        Stomp::AngularCoordinate::Sphere systemid,
-        bool use_weighted_sampling) throw (const char*)  {
+PyObject* Map::GenerateRandomPoints(uint32_t n_point, 
+    Stomp::AngularCoordinate::Sphere systemid, 
+    bool use_weighted_sampling) throw (const char*)  {
+  
+  std::stringstream err;
+  // Make the output numpy arrays
+  NumpyVector<double> x1(n_point);
+  NumpyVector<double> x2(n_point);
 
-    //NumpyVector<npy_int32> tmp(n_point);
-    //tmp[0] = 3;
-    //NumpyVector<npy_int64> tmp2(n_point);
-    //tmp2[0] = 3;
-    //NumpyVector<float> tmp3(n_point);
-    //tmp3[0] = 3;
-    //std::cout<<"tmp[0] = "<<tmp[0]<<"\n";fflush(stdout);
-    //std::cout<<"tmp2[0] = "<<tmp2[0]<<"\n";fflush(stdout);
-    //std::cout<<"tmp3[0] = "<<tmp3[0]<<"\n";fflush(stdout);
+  double minimum_probability = -0.0001;
+  double probability_slope = 0.0;
 
-    std::stringstream err;
-    // Make the output numpy arrays
-    NumpyVector<double> x1(n_point);
-    NumpyVector<double> x2(n_point);
+  if (use_weighted_sampling) {
+    if (max_weight_ - min_weight_ < 0.0001) {
+      use_weighted_sampling = false;
+    } else {
+      minimum_probability = 1.0/(max_weight_ - min_weight_ + 1.0);
+      probability_slope =
+        (1.0 - minimum_probability)/(max_weight_ - min_weight_);
+    }
+  }
 
-    double minimum_probability = -0.0001;
-    double probability_slope = 0.0;
+  PixelVector superpix;
+  Coverage(superpix);
 
-    if (use_weighted_sampling) {
-        if (max_weight_ - min_weight_ < 0.0001) {
-            use_weighted_sampling = false;
-        } else {
-            minimum_probability = 1.0/(max_weight_ - min_weight_ + 1.0);
-            probability_slope =
-                (1.0 - minimum_probability)/(max_weight_ - min_weight_);
-        }
+  MTRand mtrand;
+  mtrand.seed();
+
+  for (uint32_t m=0;m<n_point;m++) {
+    bool keep = false;
+    double lambda, eta, z, weight, probability_limit;
+    AngularCoordinate tmp_ang(0.0,0.0);
+    uint32_t n,k;
+
+    while (!keep) {
+      n = mtrand.randInt(superpix.size()-1);
+      k = superpix[n].Superpixnum();
+
+      z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
+          sub_map_[k].ZMin());
+      lambda = asin(z)*RadToDeg;
+      eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
+          sub_map_[k].EtaMin());
+      tmp_ang.SetSurveyCoordinates(lambda,eta);
+
+      keep = sub_map_[k].FindLocation(tmp_ang,weight);
+
+      if (use_weighted_sampling && keep) {
+        probability_limit =
+          minimum_probability + (weight - min_weight_)*probability_slope;
+        if (mtrand.rand(1.0) > probability_limit) keep = false;
+      }
     }
 
-    PixelVector superpix;
-    Coverage(superpix);
-
-    MTRand mtrand;
-    mtrand.seed();
-
-    for (uint32_t m=0;m<n_point;m++) {
-        bool keep = false;
-        double lambda, eta, z, weight, probability_limit;
-        AngularCoordinate tmp_ang(0.0,0.0);
-        uint32_t n,k;
-
-        while (!keep) {
-            n = mtrand.randInt(superpix.size()-1);
-            k = superpix[n].Superpixnum();
-
-            z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
-                    sub_map_[k].ZMin());
-            lambda = asin(z)*RadToDeg;
-            eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
-                    sub_map_[k].EtaMin());
-            tmp_ang.SetSurveyCoordinates(lambda,eta);
-
-            keep = sub_map_[k].FindLocation(tmp_ang,weight);
-
-            if (use_weighted_sampling && keep) {
-                probability_limit =
-                    minimum_probability + (weight - min_weight_)*probability_slope;
-                if (mtrand.rand(1.0) > probability_limit) keep = false;
-            }
-        }
-
-        switch (systemid) {
-            case Stomp::AngularCoordinate::Survey:
-                x1[m] = lambda;
-                x2[m] = eta;
-                break;
-            case Stomp::AngularCoordinate::Equatorial:
-                x1[m] = tmp_ang.RA();
-                x2[m] = tmp_ang.DEC();
-                break;
-            case Stomp::AngularCoordinate::Galactic:
-                x1[m] = tmp_ang.GalLon();
-                x2[m] = tmp_ang.GalLat();
-                break;
-            default:
-                err<<"Bad system id: "<<systemid;
-                throw err.str().c_str();
-        }
+    switch (systemid) {
+      case Stomp::AngularCoordinate::Survey:
+        x1[m] = lambda;
+        x2[m] = eta;
+        break;
+      case Stomp::AngularCoordinate::Equatorial:
+        x1[m] = tmp_ang.RA();
+        x2[m] = tmp_ang.DEC();
+        break;
+      case Stomp::AngularCoordinate::Galactic:
+        x1[m] = tmp_ang.GalLon();
+        x2[m] = tmp_ang.GalLat();
+        break;
+      default:
+        err<<"Bad system id: "<<systemid;
+        throw err.str().c_str();
     }
+  }
 
-    PyObject* output_tuple = PyTuple_New(2);
-    PyTuple_SetItem(output_tuple, 0, x1.getref());
-    PyTuple_SetItem(output_tuple, 1, x2.getref());
+  PyObject* output_tuple = PyTuple_New(2);
+  PyTuple_SetItem(output_tuple, 0, x1.getref());
+  PyTuple_SetItem(output_tuple, 1, x2.getref());
 
-    return output_tuple;
+  return output_tuple;
 }
 
 
 // These are wrappers for the more generic function above
-PyObject* Map::GenerateRandomEq(
-        uint32_t n_point, 
-        bool use_weighted_sampling) throw (const char*)  {
+PyObject* Map::GenerateRandomEq(uint32_t n_point, 
+    bool use_weighted_sampling) throw (const char*)  {
 
-    return GenerateRandomPoints(
-            n_point,
-            Stomp::AngularCoordinate::Equatorial,
-            use_weighted_sampling);
+  return GenerateRandomPoints(n_point, Stomp::AngularCoordinate::Equatorial,
+      use_weighted_sampling);
 }
-PyObject* Map::GenerateRandomSurvey(
-        uint32_t n_point, 
-        bool use_weighted_sampling) throw (const char*)  {
+PyObject* Map::GenerateRandomSurvey(uint32_t n_point, 
+    bool use_weighted_sampling) throw (const char*)  {
 
-    return GenerateRandomPoints(
-            n_point,
-            Stomp::AngularCoordinate::Survey,
-            use_weighted_sampling);
+  return GenerateRandomPoints(n_point, Stomp::AngularCoordinate::Survey,
+      use_weighted_sampling);
 }
-PyObject* Map::GenerateRandomGal(
-        uint32_t n_point, 
-        bool use_weighted_sampling) throw (const char*)  {
+PyObject* Map::GenerateRandomGal(uint32_t n_point, 
+    bool use_weighted_sampling) throw (const char*)  {
 
-    return GenerateRandomPoints(
-            n_point,
-            Stomp::AngularCoordinate::Galactic,
-            use_weighted_sampling);
+  return GenerateRandomPoints(n_point, Stomp::AngularCoordinate::Galactic,
+      use_weighted_sampling);
 }
 
 
-PyObject* Map::Contains(
-        PyObject* x1obj, 
-        PyObject* x2obj, 
-        const std::string& system,
-        PyObject* radobj            // optional
-        ) throw (const char* ) {
+PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj, 
+    const std::string& system, PyObject* radobj) throw (const char* ) {
 
-    // convert the string system indicator to a Sphere id
-    Stomp::AngularCoordinate::Sphere 
-        sys = Stomp::AngularCoordinate::SystemFromString(system);
+  // convert the string system indicator to a Sphere id
+  Stomp::AngularCoordinate::Sphere 
+    sys = Stomp::AngularCoordinate::SystemFromString(system);
 
-    // Get numpy arrays objects.   No copy made as long as the type and byte
-    // order is correct.
-    NumpyVector<double> x1(x1obj);
-    NumpyVector<double> x2(x2obj);
-    if (x1.size() != x2.size()) {
-        throw "coordinates must be same size";
+  // Get numpy arrays objects.   No copy made as long as the type and byte
+  // order is correct.
+  NumpyVector<double> x1(x1obj);
+  NumpyVector<double> x2(x2obj);
+  if (x1.size() != x2.size()) {
+    throw "coordinates must be same size";
+  }
+  NumpyVector<double> rad;
+  npy_intp nrad=0;
+  double thisrad=-1;
+  if (radobj != NULL) {
+    rad.init(radobj);
+    nrad = rad.size();
+    if (nrad != 1 && nrad != x1.size()) {
+      throw "radius must be same length as coordinates or lenght 1";
     }
-    NumpyVector<double> rad;
-    npy_intp nrad=0;
-    double thisrad=-1;
-    if (radobj != NULL) {
-        rad.init(radobj);
-        nrad = rad.size();
-        if (nrad != 1 && nrad != x1.size()) {
-            throw "radius must be same length as coordinates or lenght 1";
+    thisrad = rad[0];
+    // seed the random number generator.  Distinctive to
+    // one second
+    std::srand ( std::time(NULL) );
+  }
+
+  NumpyVector<npy_int8> maskflags(x1.size());
+
+  Stomp::AngularCoordinate ang;
+  for (npy_intp i=0; i<x1.size(); i++) {
+    ang.Set(x1[i], x2[i], sys);
+    if (Contains(ang)) {
+      //maskflags[i] |= Map::INSIDE_MAP;
+      maskflags[i] |= INSIDE_MAP;
+
+      // If radii were sent, we will do the quadrant check
+      if (nrad > 0) {
+        if (nrad > 1) {
+          thisrad = rad[i];
         }
-        thisrad = rad[0];
-        // seed the random number generator.  Distinctive to
-        // one second
-        std::srand ( std::time(NULL) );
+        maskflags[i] |= QuadrantsContainedMC(ang,thisrad,sys);
+      }
     }
-
-    //std::cout<<"n x1: "<<x1.size()<<"\n";
-    //std::cout<<"nrad: "<<nrad<<"\n";
-    NumpyVector<npy_int8> maskflags(x1.size());
-
-    Stomp::AngularCoordinate ang;
-    for (npy_intp i=0; i<x1.size(); i++) {
-        ang.Set(x1[i], x2[i], sys);
-        if (Contains(ang)) {
-            //maskflags[i] |= Map::INSIDE_MAP;
-            maskflags[i] |= INSIDE_MAP;
-
-            // If radii were sent, we will do the quadrant check
-            if (nrad > 0) {
-                if (nrad > 1) {
-                    thisrad = rad[i];
-                }
-                maskflags[i] |= QuadrantsContainedMC(ang,thisrad,sys);
-            }
-        }
-    }
-    return maskflags.getref();
+  }
+  return maskflags.getref();
 }
 
 
 #endif
 
 // Check four quadrants using a monte carlo technique
-int Map::QuadrantsContainedMC(
-        AngularCoordinate& ang, 
-        double radius,
-        Stomp::AngularCoordinate::Sphere coord_system) throw (const char*) {
-    int maskflags=0;
-    if (QuadrantContainedMC(ang,radius,0)) {
-        maskflags |= FIRST_QUADRANT_OK;
-    }
-    if (QuadrantContainedMC(ang,radius,1)) {
-        maskflags |= SECOND_QUADRANT_OK;
-    }
-    if (QuadrantContainedMC(ang,radius,2)) {
-        maskflags |= THIRD_QUADRANT_OK;
-    }
-    if (QuadrantContainedMC(ang,radius,3)) {
-        maskflags |= FOURTH_QUADRANT_OK;
-    }
-    return maskflags;
+int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
+    Stomp::AngularCoordinate::Sphere coord_system) throw (const char*) {
+  int maskflags=0;
+  if (QuadrantContainedMC(ang,radius,0)) {
+    maskflags |= FIRST_QUADRANT_OK;
+  }
+  if (QuadrantContainedMC(ang,radius,1)) {
+    maskflags |= SECOND_QUADRANT_OK;
+  }
+  if (QuadrantContainedMC(ang,radius,2)) {
+    maskflags |= THIRD_QUADRANT_OK;
+  }
+  if (QuadrantContainedMC(ang,radius,3)) {
+    maskflags |= FOURTH_QUADRANT_OK;
+  }
+  return maskflags;
 }
 
-bool Map::QuadrantContainedMC(
-        AngularCoordinate& ang,
-        double radius,
-        int quadrant) throw (const char*) {
+bool Map::QuadrantContainedMC(AngularCoordinate& ang, double radius,
+    int quadrant) throw (const char*) {
 
-    //
-    // These tune how accurate the test is
-    //
-    
-    // Minimum size we want to resolve in square degrees This can be pretty
-    // big since we are only worried about edges and big holes.  0.05
-    // corresponds to half a field
-    
-    static double amin=0.05;
+  //
+  // These tune how accurate the test is
+  // Should make these configurable
+  //
 
-    // Probability of missing amin sized region?  The number of points used
-    // goes as the log of this
-    static double pmax=0.01;
+  // Minimum size we want to resolve in square degrees. This can be pretty
+  // big since we are only worried about edges and big holes.  0.05
+  // corresponds to half a field
+  static double amin=0.05;
 
-    // the above use 649 points for a 3 degree circle
-    // the above use 7231 points for a 10 degree circle
+  // Probability of missing amin sized region?  The number of points used
+  // goes as the log of this
+  static double pmax=0.01;
 
-    // probability a randomly generated point will *not*
-    // fall within our smallest area amin
-    double A = M_PI*radius*radius/4.0;
-    double pmiss = 1. - amin/A;
+  // the above require 649 points for a 3 degree radius
+  // the above require 7231 points for a 10 degree radius
 
-    npy_intp nrand=0;
-    if(pmiss > 1.e-10) {
-        // how many points do we need in order for the
-        // probability of missing the hole to be pmax?
-        //      We need n such that (1-amin/a)^n = pmax
-        double tmp = log10(pmax)/log10(pmiss);
-        if (tmp < 20) tmp = 20;
-        if (tmp > 20000) tmp = 20000;
-        nrand = lround(tmp);
-    } else {
-        // we reach here often because the search area is very 
-        // close to or smaller than our minimum resolvable area
-        // We don't want nrand to be less than say 20
-        nrand = 20;
-    }
-    //std::cout<<"nrand: "<<nrand<<"\n";
 
-    // get test the point as clambda,ceta
-    double clambda = ang.Lambda();
-    double ceta = ang.Eta();
+  // probability a given random point generated within our test area could miss
+  // a hole of size amin
+  double A = M_PI*radius*radius/4.0;
+  double pmiss = 1. - amin/A;
 
-    double rand_clambda=0;
-    double rand_ceta=0;
+  int nrand=0;
+  if(pmiss > 1.e-10) {
 
-    // use clambda,ceta coords
-    Stomp::AngularCoordinate::Sphere 
-        sys= Stomp::AngularCoordinate::Survey;
-    AngularCoordinate tmp_ang;
-    for (npy_intp i=0; i<nrand; i++) {
-        _GenerateRandLamEtaQuadrant(
-                clambda,
-                ceta,
-                radius,
-                quadrant,
-                rand_clambda,
-                rand_ceta);
-        tmp_ang.Set(rand_clambda,rand_ceta,sys);
-        if ( !Contains(tmp_ang) ) {
-            return false;
-        } 
-    }
+    // how many points do we need in order for the probability of missing a
+    // hole of size amin to be pmax?
+    //      We need n such that (1-amin/a)^n = pmiss^n = pmax
+    double tmp = log10(pmax)/log10(pmiss);
+    if (tmp < 20) tmp = 20;
+    if (tmp > 20000) tmp = 20000;
+    nrand = lround(tmp);
+  } else {
+    // we reach here often because the search area is very 
+    // close to or smaller than our minimum resolvable area
+    // We don't want nrand to be less than say 20
+    nrand = 20;
+  }
+  //std::cout<<"nrand: "<<nrand<<"\n";
 
-    return true;
+  // get test the point as clambda,ceta
+  double clambda = ang.Lambda();
+  double ceta = ang.Eta();
+
+  double rand_clambda=0;
+  double rand_ceta=0;
+
+  // use clambda,ceta coords
+  Stomp::AngularCoordinate::Sphere sys= Stomp::AngularCoordinate::Survey;
+  AngularCoordinate tmp_ang;
+  for (int i=0; i<nrand; i++) {
+    _GenerateRandLamEtaQuadrant(clambda, ceta, radius, quadrant, rand_clambda,
+        rand_ceta);
+    tmp_ang.Set(rand_clambda,rand_ceta,sys);
+    if ( !Contains(tmp_ang) ) {
+      return false;
+    } 
+  }
+
+  return true;
 
 }
 
 
 // Generate a random point in the requested quadrant
-void Map::_GenerateRandLamEtaQuadrant(
-        double lambda, 
-        double eta, 
-        double R,             // in degrees
-        int quadrant, 
-        double& rand_lambda, 
-        double& rand_eta) throw (const char*)
+void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta, double R,
+    int quadrant, double& rand_lambda, double& rand_eta) throw (const char*)
 
 {
 
-    // this is crazy slow
-    //MTRand mtrand;
-    //mtrand.seed();
+  // this is crazy slow
+  //MTRand mtrand;
+  //mtrand.seed();
 
-    std::stringstream err;
-    double cospsi;
-    double theta,phi,sintheta,costheta,sinphi,cosphi;
-    double theta2,costheta2,sintheta2;
-    double phi2;
-    double Dphi,cosDphi;
-    double sinr,cosr;
-    double min_theta;
+  std::stringstream err;
+  double cospsi;
+  double theta,phi,sintheta,costheta,sinphi,cosphi;
+  double theta2,costheta2,sintheta2;
+  double phi2;
+  double Dphi,cosDphi;
+  double sinr,cosr;
+  double min_theta;
 
-    double rand_r, rand_psi;
+  double rand_r, rand_psi;
 
-    // generate uniformly in R^2
-    // random [0,1)
-    //rand_r = mtrand.randExc();
-    rand_r = 
-        ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
-    rand_r = sqrt(rand_r)*R*DegToRad;
+  // generate uniformly in R^2
+  // random [0,1)
+  //rand_r = mtrand.randExc();
+  rand_r = 
+    ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
+  rand_r = sqrt(rand_r)*R*DegToRad;
 
-    // generate theta uniformly from [min_theta,min_theta+90)
-    min_theta = quadrant*M_PI/2.;
+  // generate theta uniformly from [min_theta,min_theta+90)
+  min_theta = quadrant*M_PI/2.;
 
-    rand_psi = 
-        ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
-    //rand_psi = mtrand.randExc();
-    rand_psi = M_PI/2.*rand_psi + min_theta;
+  rand_psi = 
+    ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
+  //rand_psi = mtrand.randExc();
+  rand_psi = M_PI/2.*rand_psi + min_theta;
 
-    cospsi = cos(rand_psi);
+  cospsi = cos(rand_psi);
 
 
-    // [0,180]
-    theta = (90.0 - lambda)*DegToRad;
-    // [0,360]
-    phi   = (eta + 180.0)*DegToRad;
+  // [0,180]
+  theta = (90.0 - lambda)*DegToRad;
+  // [0,360]
+  phi   = (eta + 180.0)*DegToRad;
 
-    sintheta = sin(theta);
-    costheta = cos(theta);
-    sinphi = sin(phi);
-    cosphi = cos(phi);
+  sintheta = sin(theta);
+  costheta = cos(theta);
+  sinphi = sin(phi);
+  cosphi = cos(phi);
 
-    sinr = sin(rand_r);
-    cosr = cos(rand_r);
+  sinr = sin(rand_r);
+  cosr = cos(rand_r);
 
-    costheta2 = costheta*cosr + sintheta*sinr*cospsi;
-    if (costheta2 < -1.) costheta2 = -1.;
-    if (costheta2 >  1.) costheta2 =  1.;
-    theta2 = acos(costheta2);
-    sintheta2 = sin(theta2);
+  costheta2 = costheta*cosr + sintheta*sinr*cospsi;
+  if (costheta2 < -1.) costheta2 = -1.;
+  if (costheta2 >  1.) costheta2 =  1.;
+  theta2 = acos(costheta2);
+  sintheta2 = sin(theta2);
 
-    cosDphi = (cosr - costheta*costheta2)/(sintheta*sintheta2);
+  cosDphi = (cosr - costheta*costheta2)/(sintheta*sintheta2);
 
-    if (cosDphi < -1.) cosDphi = -1.;
-    if (cosDphi >  1.) cosDphi =  1.;
-    Dphi = acos(cosDphi);
+  if (cosDphi < -1.) cosDphi = -1.;
+  if (cosDphi >  1.) cosDphi =  1.;
+  Dphi = acos(cosDphi);
 
-    switch(quadrant)
-    {
-        case 0: 
-            phi2 = phi + Dphi;
-            break;
-        case 1: 
-            phi2 = phi + Dphi;
-            break;
-        case 2: 
-            phi2 = phi - Dphi;
-            break;
-        case 3: 
-            phi2 = phi - Dphi;
-            break;
-        default: 
-            err<<"Error: quadrant is undefined: "<<quadrant;
-            throw err.str().c_str();
-    }
+  switch(quadrant)
+  {
+    case 0: 
+      phi2 = phi + Dphi;
+      break;
+    case 1: 
+      phi2 = phi + Dphi;
+      break;
+    case 2: 
+      phi2 = phi - Dphi;
+      break;
+    case 3: 
+      phi2 = phi - Dphi;
+      break;
+    default: 
+      err<<"Error: quadrant is undefined: "<<quadrant;
+      throw err.str().c_str();
+  }
 
-    rand_lambda = 90.0 - RadToDeg*theta2;
-    rand_eta    = RadToDeg*phi2 - 180.0;
+  rand_lambda = 90.0 - RadToDeg*theta2;
+  rand_eta    = RadToDeg*phi2 - 180.0;
 
 }
 

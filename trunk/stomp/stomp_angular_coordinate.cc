@@ -1,5 +1,6 @@
 // Copyright 2010  All Rights Reserved.
 // Author: ryan.scranton@gmail.com (Ryan Scranton)
+// vim: set et ts=2 sw=2:
 
 // STOMP is a set of libraries for doing astrostatistical analysis on the
 // celestial sphere.  The goal is to enable descriptions of arbitrary regions
@@ -86,24 +87,26 @@ AngularCoordinate::~AngularCoordinate() {
 }
 
 
+#ifdef WITH_NUMPY
 Stomp::AngularCoordinate::Sphere AngularCoordinate::SystemFromString(
         const std::string& system) throw (const char* ) {
 
-    Stomp::AngularCoordinate::Sphere 
-        sys=Stomp::AngularCoordinate::Survey;
-	if (system == "eq" || system == "equatorial") {
-		sys = Stomp::AngularCoordinate::Equatorial;
-	} else if (system == "sdss" || system == "survey") {
-		sys = Stomp::AngularCoordinate::Survey;
-	} else if (system == "gal" || system == "galactic") {
-		sys = Stomp::AngularCoordinate::Galactic;
-	} else {
-        std::stringstream err;
-		err<<"bad coord system indicator '"<<system<<"'";
-		throw err.str().c_str();
-	}
-    return sys;
+  Stomp::AngularCoordinate::Sphere 
+    sys=Stomp::AngularCoordinate::Survey;
+  if (system == "eq" || system == "equatorial") {
+    sys = Stomp::AngularCoordinate::Equatorial;
+  } else if (system == "sdss" || system == "survey") {
+    sys = Stomp::AngularCoordinate::Survey;
+  } else if (system == "gal" || system == "galactic") {
+    sys = Stomp::AngularCoordinate::Galactic;
+  } else {
+    std::stringstream err;
+    err<<"bad coord system indicator '"<<system<<"'";
+    throw err.str().c_str();
+  }
+  return sys;
 }
+#endif
 
 
 void AngularCoordinate::Set(double theta, double phi, Sphere sphere,
