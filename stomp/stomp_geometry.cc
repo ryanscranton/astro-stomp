@@ -270,6 +270,38 @@ WedgeBound::WedgeBound(const AngularCoordinate& center_point, double radius,
     position_angle_min_ = position_angle_max;
   }
   sphere_ = sphere;
+
+  AngularCoordinate start_ang;
+  switch (sphere_) {
+  case AngularCoordinate::Survey:
+    start_ang.SetSurveyCoordinates(center_point_.Lambda()+radius_,
+				   center_point_.Eta());
+    break;
+  case AngularCoordinate::Equatorial:
+    start_ang.SetEquatorialCoordinates(center_point_.RA(),
+				       center_point_.DEC()+radius_);
+    break;
+  case AngularCoordinate::Galactic:
+    start_ang.SetGalacticCoordinates(center_point_.GalLon(),
+				     center_point_.GalLat()+radius_);
+    break;
+  }
+
+  AngularCoordinate rotate_ang;
+  start_ang.Rotate(center_point_, position_angle_min_, rotate_ang, sphere_);
+  double cosphi = center_point_.CosPositionAngle(rotate_ang, sphere_);
+  double sinphi = center_point_.SinPositionAngle(rotate_ang, sphere_);
+  cosphi_min_ = cosphi_max_ = cosphi;
+  sinphi_min_ = sinphi_max_ = sinphi;
+
+  start_ang.Rotate(center_point_, position_angle_max_, rotate_ang, sphere_);
+  cosphi = center_point_.CosPositionAngle(rotate_ang, sphere_);
+  sinphi = center_point_.SinPositionAngle(rotate_ang, sphere_);
+  if (DoubleLT(cosphi, cosphi_min_)) cosphi_min_ = cosphi;
+  if (DoubleGT(cosphi, cosphi_max_)) cosphi_max_ = cosphi;
+  if (DoubleLT(sinphi, sinphi_min_)) sinphi_min_ = sinphi;
+  if (DoubleGT(sinphi, sinphi_max_)) sinphi_max_ = sinphi;
+
   SetContinuousBounds(true);
 
   FindArea();
@@ -336,9 +368,10 @@ bool WedgeBound::CheckPoint(AngularCoordinate& ang) {
   bool within_bound = false;
 
   if (DoubleGE(center_point_.DotProduct(ang), costhetamin_)) {
-    double position_angle = center_point_.PositionAngle(ang, sphere_);
-    if (DoubleGE(position_angle, position_angle_min_) &&
-	DoubleLE(position_angle, position_angle_max_))
+    double cosphi = center_point_.CosPositionAngle(ang, sphere_);
+    double sinphi = center_point_.SinPositionAngle(ang, sphere_);
+    if (DoubleGE(cosphi, cosphi_min_) && DoubleLE(cosphi, cosphi_max_) &&
+	DoubleGE(sinphi, sinphi_min_) && DoubleLE(sinphi, sinphi_max_))
       within_bound = true;
   }
 

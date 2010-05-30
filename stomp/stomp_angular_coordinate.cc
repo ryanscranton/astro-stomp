@@ -400,13 +400,13 @@ void AngularCoordinate::GreatCircle(AngularCoordinate& ang,
 
 double AngularCoordinate::PositionAngle(AngularCoordinate& ang, Sphere sphere) {
   double pos_angle = RadToDeg*atan2(SinPositionAngle(ang, sphere),
-					   CosPositionAngle(ang, sphere));
+				    CosPositionAngle(ang, sphere));
   return (DoubleGT(pos_angle, 0.0) ? pos_angle : pos_angle + 360.0);
 }
 
 double AngularCoordinate::PositionAngle(Pixel& pix, Sphere sphere) {
   double pos_angle = RadToDeg*atan2(SinPositionAngle(pix, sphere),
-					   CosPositionAngle(pix, sphere));
+				    CosPositionAngle(pix, sphere));
   return (DoubleGT(pos_angle, 0.0) ? pos_angle : pos_angle + 360.0);
 }
 

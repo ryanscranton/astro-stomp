@@ -173,6 +173,7 @@ class WedgeBound : public GeometricBound {
  private:
   AngularCoordinate center_point_;
   double radius_, costhetamin_, position_angle_min_, position_angle_max_;
+  double cosphi_min_, cosphi_max_, sinphi_min_, sinphi_max_;
   AngularCoordinate::Sphere sphere_;
 };
 
