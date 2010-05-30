@@ -50,7 +50,7 @@
 
 // prevent SWIG from grabbing these symbols
 /*
-#define _INSIDE_MAP          1
+#define INSIDE_MAP          1
 #define _FIRST_QUADRANT_OK   2
 #define _SECOND_QUADRANT_OK  4
 #define _THIRD_QUADRANT_OK   8
@@ -369,11 +369,11 @@ class Map : public BaseMap {
 
 #endif
 
-  static int _INSIDE_MAP;
-  static int _FIRST_QUADRANT_OK;
-  static int _SECOND_QUADRANT_OK;
-  static int _THIRD_QUADRANT_OK;
-  static int _FOURTH_QUADRANT_OK;
+  static int INSIDE_MAP;
+  static int FIRST_QUADRANT_OK;
+  static int SECOND_QUADRANT_OK;
+  static int THIRD_QUADRANT_OK;
+  static int FOURTH_QUADRANT_OK;
 
   // Check four quadrants using a monte carlo technique
   int QuadrantsContainedMC(AngularCoordinate& ang, double radius,

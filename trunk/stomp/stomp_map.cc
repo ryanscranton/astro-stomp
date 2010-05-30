@@ -23,11 +23,11 @@
 
 namespace Stomp {
 
-int Map::_INSIDE_MAP=1;
-int Map::_FIRST_QUADRANT_OK=2;
-int Map::_SECOND_QUADRANT_OK=4;
-int Map::_THIRD_QUADRANT_OK=8;
-int Map::_FOURTH_QUADRANT_OK=16;
+int Map::INSIDE_MAP=1;
+int Map::FIRST_QUADRANT_OK=2;
+int Map::SECOND_QUADRANT_OK=4;
+int Map::THIRD_QUADRANT_OK=8;
+int Map::FOURTH_QUADRANT_OK=16;
 
 
 SubMap::SubMap(uint32_t superpixnum) {
@@ -1770,7 +1770,7 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
   for (npy_intp i=0; i<x1.size(); i++) {
     ang.Set(x1[i], x2[i], sys);
     if (Contains(ang)) {
-      maskflags[i] |= _INSIDE_MAP;
+      maskflags[i] |= INSIDE_MAP;
 
       // If radii were sent, we will do the quadrant check
       if (nrad > 0) {
@@ -1793,16 +1793,16 @@ int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
 
   if (1) {
     if (QuadrantContainedMC(ang,radius,0)) {
-      maskflags |= _FIRST_QUADRANT_OK;
+      maskflags |= FIRST_QUADRANT_OK;
     }
     if (QuadrantContainedMC(ang,radius,1)) {
-      maskflags |= _SECOND_QUADRANT_OK;
+      maskflags |= SECOND_QUADRANT_OK;
     }
     if (QuadrantContainedMC(ang,radius,2)) {
-      maskflags |= _THIRD_QUADRANT_OK;
+      maskflags |= THIRD_QUADRANT_OK;
     }
     if (QuadrantContainedMC(ang,radius,3)) {
-      maskflags |= _FOURTH_QUADRANT_OK;
+      maskflags |= FOURTH_QUADRANT_OK;
     }
   } else {
     double amin=0.05;
@@ -1810,22 +1810,22 @@ int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
     {
       WedgeBound wb(ang, radius, 0.0, 90.0, coord_system);
       if (Contains(wb, amin, pmax)) 
-        maskflags |= _FIRST_QUADRANT_OK;
+        maskflags |= FIRST_QUADRANT_OK;
     }
     {
       WedgeBound wb(ang, radius, 90.0, 180.0, coord_system);
       if (Contains(wb, amin, pmax))
-        maskflags |= _SECOND_QUADRANT_OK;
+        maskflags |= SECOND_QUADRANT_OK;
     }
     {
       WedgeBound wb(ang, radius, 180.0, 270.0, coord_system);
       if (Contains(wb, amin, pmax))
-        maskflags |= _THIRD_QUADRANT_OK;
+        maskflags |= THIRD_QUADRANT_OK;
     }
     {
       WedgeBound wb(ang, radius, 270.0, 360.0, coord_system);
       if (Contains(wb, amin, pmax))
-        maskflags |= _FOURTH_QUADRANT_OK;
+        maskflags |= FOURTH_QUADRANT_OK;
     }
 
   }
