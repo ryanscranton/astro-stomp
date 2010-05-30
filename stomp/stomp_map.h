@@ -48,15 +48,18 @@
 #include "../python/NumpyVector.h"
 #endif
 
-namespace Stomp {
+// prevent SWIG from grabbing these symbols
+/*
+#define _INSIDE_MAP          1
+#define _FIRST_QUADRANT_OK   2
+#define _SECOND_QUADRANT_OK  4
+#define _THIRD_QUADRANT_OK   8
+#define _FOURTH_QUADRANT_OK 16
+*/
 
-// want to make these member variables but
-// problems with swig
-#define INSIDE_MAP  1
-#define FIRST_QUADRANT_OK 2
-#define SECOND_QUADRANT_OK 4
-#define THIRD_QUADRANT_OK 8
-#define FOURTH_QUADRANT_OK 16
+
+
+namespace Stomp {
 
 class AngularCoordinate;  // class declaration in stomp_angular_coordinate.h
 class Pixel;              // class declaration in stomp_pixel.h
@@ -362,7 +365,15 @@ class Map : public BaseMap {
     throw (const char*);
   PyObject* Contains(PyObject* x1obj,PyObject* x2obj,const std::string& system,
       PyObject* radobj=NULL) throw (const char* );
+
+
 #endif
+
+  static int _INSIDE_MAP;
+  static int _FIRST_QUADRANT_OK;
+  static int _SECOND_QUADRANT_OK;
+  static int _THIRD_QUADRANT_OK;
+  static int _FOURTH_QUADRANT_OK;
 
   // Check four quadrants using a monte carlo technique
   int QuadrantsContainedMC(AngularCoordinate& ang, double radius,
@@ -540,16 +551,9 @@ private:
   ResolutionDict pixel_count_;
 };
 
-/*
-#ifdef WITH_NUMPY
-// Static 
-int Map::INSIDE_MAP = 1;
-int Map::FIRST_QUADRANT_OK=2;
-int Map::SECOND_QUADRANT_OK=4;
-int Map::THIRD_QUADRANT_OK=8;
-int Map::FOURTH_QUADRANT_OK=16;
-#endif
-*/
+
+
 } // end namespace Stomp
+
 
 #endif
