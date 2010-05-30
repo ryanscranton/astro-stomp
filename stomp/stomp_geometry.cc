@@ -64,8 +64,8 @@ void GeometricBound::SetAngularBounds(double lammin, double lammax,
   etamin_ = etamin;
   etamax_ = etamax;
 
-  z_min_ = cos(DegToRad*lammin_);
-  z_max_ = cos(DegToRad*lammax_);
+  z_min_ = sin(DegToRad*lammin_);
+  z_max_ = sin(DegToRad*lammax_);
   set_bounds_ = true;
 }
 

@@ -29861,196 +29861,6 @@ fail:
 }
 
 
-SWIGINTERN int Swig_var_Map_INSIDE_MAP_set(PyObject *_val) {
-  {
-    int val;
-    int res = SWIG_AsVal_int(_val, &val);
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""Stomp::Map::INSIDE_MAP""' of type '""int""'");
-    }
-    Stomp::Map::INSIDE_MAP = static_cast< int >(val);
-  }
-  return 0;
-fail:
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_Map_INSIDE_MAP_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_int(static_cast< int >(Stomp::Map::INSIDE_MAP));
-  return pyobj;
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_INSIDE_MAP_get(PyObject *SWIGUNUSEDPARM(self), PyObject *SWIGUNUSEDPARM(args)) {
-  return Swig_var_Map_INSIDE_MAP_get();
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_INSIDE_MAP_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *value;
-  int res;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:set",&value)) return NULL;
-  res = Swig_var_Map_INSIDE_MAP_set(value);
-  return !res ? SWIG_Py_Void() : NULL;
-}
-
-
-SWIGINTERN int Swig_var_Map_FIRST_QUADRANT_OK_set(PyObject *_val) {
-  {
-    int val;
-    int res = SWIG_AsVal_int(_val, &val);
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""Stomp::Map::FIRST_QUADRANT_OK""' of type '""int""'");
-    }
-    Stomp::Map::FIRST_QUADRANT_OK = static_cast< int >(val);
-  }
-  return 0;
-fail:
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_Map_FIRST_QUADRANT_OK_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_int(static_cast< int >(Stomp::Map::FIRST_QUADRANT_OK));
-  return pyobj;
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_FIRST_QUADRANT_OK_get(PyObject *SWIGUNUSEDPARM(self), PyObject *SWIGUNUSEDPARM(args)) {
-  return Swig_var_Map_FIRST_QUADRANT_OK_get();
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_FIRST_QUADRANT_OK_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *value;
-  int res;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:set",&value)) return NULL;
-  res = Swig_var_Map_FIRST_QUADRANT_OK_set(value);
-  return !res ? SWIG_Py_Void() : NULL;
-}
-
-
-SWIGINTERN int Swig_var_Map_SECOND_QUADRANT_OK_set(PyObject *_val) {
-  {
-    int val;
-    int res = SWIG_AsVal_int(_val, &val);
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""Stomp::Map::SECOND_QUADRANT_OK""' of type '""int""'");
-    }
-    Stomp::Map::SECOND_QUADRANT_OK = static_cast< int >(val);
-  }
-  return 0;
-fail:
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_Map_SECOND_QUADRANT_OK_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_int(static_cast< int >(Stomp::Map::SECOND_QUADRANT_OK));
-  return pyobj;
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_SECOND_QUADRANT_OK_get(PyObject *SWIGUNUSEDPARM(self), PyObject *SWIGUNUSEDPARM(args)) {
-  return Swig_var_Map_SECOND_QUADRANT_OK_get();
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_SECOND_QUADRANT_OK_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *value;
-  int res;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:set",&value)) return NULL;
-  res = Swig_var_Map_SECOND_QUADRANT_OK_set(value);
-  return !res ? SWIG_Py_Void() : NULL;
-}
-
-
-SWIGINTERN int Swig_var_Map_THIRD_QUADRANT_OK_set(PyObject *_val) {
-  {
-    int val;
-    int res = SWIG_AsVal_int(_val, &val);
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""Stomp::Map::THIRD_QUADRANT_OK""' of type '""int""'");
-    }
-    Stomp::Map::THIRD_QUADRANT_OK = static_cast< int >(val);
-  }
-  return 0;
-fail:
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_Map_THIRD_QUADRANT_OK_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_int(static_cast< int >(Stomp::Map::THIRD_QUADRANT_OK));
-  return pyobj;
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_THIRD_QUADRANT_OK_get(PyObject *SWIGUNUSEDPARM(self), PyObject *SWIGUNUSEDPARM(args)) {
-  return Swig_var_Map_THIRD_QUADRANT_OK_get();
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_THIRD_QUADRANT_OK_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *value;
-  int res;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:set",&value)) return NULL;
-  res = Swig_var_Map_THIRD_QUADRANT_OK_set(value);
-  return !res ? SWIG_Py_Void() : NULL;
-}
-
-
-SWIGINTERN int Swig_var_Map_FOURTH_QUADRANT_OK_set(PyObject *_val) {
-  {
-    int val;
-    int res = SWIG_AsVal_int(_val, &val);
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""Stomp::Map::FOURTH_QUADRANT_OK""' of type '""int""'");
-    }
-    Stomp::Map::FOURTH_QUADRANT_OK = static_cast< int >(val);
-  }
-  return 0;
-fail:
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_Map_FOURTH_QUADRANT_OK_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_int(static_cast< int >(Stomp::Map::FOURTH_QUADRANT_OK));
-  return pyobj;
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_FOURTH_QUADRANT_OK_get(PyObject *SWIGUNUSEDPARM(self), PyObject *SWIGUNUSEDPARM(args)) {
-  return Swig_var_Map_FOURTH_QUADRANT_OK_get();
-}
-
-
-SWIGINTERN PyObject *_wrap_Map_FOURTH_QUADRANT_OK_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *value;
-  int res;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:set",&value)) return NULL;
-  res = Swig_var_Map_FOURTH_QUADRANT_OK_set(value);
-  return !res ? SWIG_Py_Void() : NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Map_QuadrantsContainedMC(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::Map *arg1 = (Stomp::Map *) 0 ;
@@ -93766,16 +93576,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Map_GenerateRandomEq", _wrap_Map_GenerateRandomEq, METH_VARARGS, NULL},
 	 { (char *)"Map_GenerateRandomSurvey", _wrap_Map_GenerateRandomSurvey, METH_VARARGS, NULL},
 	 { (char *)"Map_GenerateRandomGal", _wrap_Map_GenerateRandomGal, METH_VARARGS, NULL},
-	 { (char *)"Map_INSIDE_MAP_get", _wrap_Map_INSIDE_MAP_get, METH_VARARGS, NULL},
-	 { (char *)"Map_INSIDE_MAP_set", _wrap_Map_INSIDE_MAP_set, METH_VARARGS, NULL},
-	 { (char *)"Map_FIRST_QUADRANT_OK_get", _wrap_Map_FIRST_QUADRANT_OK_get, METH_VARARGS, NULL},
-	 { (char *)"Map_FIRST_QUADRANT_OK_set", _wrap_Map_FIRST_QUADRANT_OK_set, METH_VARARGS, NULL},
-	 { (char *)"Map_SECOND_QUADRANT_OK_get", _wrap_Map_SECOND_QUADRANT_OK_get, METH_VARARGS, NULL},
-	 { (char *)"Map_SECOND_QUADRANT_OK_set", _wrap_Map_SECOND_QUADRANT_OK_set, METH_VARARGS, NULL},
-	 { (char *)"Map_THIRD_QUADRANT_OK_get", _wrap_Map_THIRD_QUADRANT_OK_get, METH_VARARGS, NULL},
-	 { (char *)"Map_THIRD_QUADRANT_OK_set", _wrap_Map_THIRD_QUADRANT_OK_set, METH_VARARGS, NULL},
-	 { (char *)"Map_FOURTH_QUADRANT_OK_get", _wrap_Map_FOURTH_QUADRANT_OK_get, METH_VARARGS, NULL},
-	 { (char *)"Map_FOURTH_QUADRANT_OK_set", _wrap_Map_FOURTH_QUADRANT_OK_set, METH_VARARGS, NULL},
 	 { (char *)"Map_QuadrantsContainedMC", _wrap_Map_QuadrantsContainedMC, METH_VARARGS, NULL},
 	 { (char *)"Map_QuadrantContainedMC", _wrap_Map_QuadrantContainedMC, METH_VARARGS, NULL},
 	 { (char *)"Map_Contains", _wrap_Map_Contains, METH_VARARGS, NULL},
@@ -95838,11 +95638,11 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"HPixArea",Swig_var_HPixArea_get, Swig_var_HPixArea_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"MaxPixnum",Swig_var_MaxPixnum_get, Swig_var_MaxPixnum_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"MaxSuperpixnum",Swig_var_MaxSuperpixnum_get, Swig_var_MaxSuperpixnum_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"Map_INSIDE_MAP",Swig_var_Map_INSIDE_MAP_get, Swig_var_Map_INSIDE_MAP_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"Map_FIRST_QUADRANT_OK",Swig_var_Map_FIRST_QUADRANT_OK_get, Swig_var_Map_FIRST_QUADRANT_OK_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"Map_SECOND_QUADRANT_OK",Swig_var_Map_SECOND_QUADRANT_OK_get, Swig_var_Map_SECOND_QUADRANT_OK_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"Map_THIRD_QUADRANT_OK",Swig_var_Map_THIRD_QUADRANT_OK_get, Swig_var_Map_THIRD_QUADRANT_OK_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"Map_FOURTH_QUADRANT_OK",Swig_var_Map_FOURTH_QUADRANT_OK_get, Swig_var_Map_FOURTH_QUADRANT_OK_set);
+  SWIG_Python_SetConstant(d, "INSIDE_MAP",SWIG_From_int(static_cast< int >(1)));
+  SWIG_Python_SetConstant(d, "FIRST_QUADRANT_OK",SWIG_From_int(static_cast< int >(2)));
+  SWIG_Python_SetConstant(d, "SECOND_QUADRANT_OK",SWIG_From_int(static_cast< int >(4)));
+  SWIG_Python_SetConstant(d, "THIRD_QUADRANT_OK",SWIG_From_int(static_cast< int >(8)));
+  SWIG_Python_SetConstant(d, "FOURTH_QUADRANT_OK",SWIG_From_int(static_cast< int >(16)));
   SWIG_Python_SetConstant(d, "ScalarMap_ScalarField",SWIG_From_int(static_cast< int >(Stomp::ScalarMap::ScalarField)));
   SWIG_Python_SetConstant(d, "ScalarMap_DensityField",SWIG_From_int(static_cast< int >(Stomp::ScalarMap::DensityField)));
   SWIG_Python_SetConstant(d, "ScalarMap_SampledField",SWIG_From_int(static_cast< int >(Stomp::ScalarMap::SampledField)));
