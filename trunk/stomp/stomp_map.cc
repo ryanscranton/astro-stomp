@@ -23,6 +23,13 @@
 
 namespace Stomp {
 
+int Map::_INSIDE_MAP=1;
+int Map::_FIRST_QUADRANT_OK=2;
+int Map::_SECOND_QUADRANT_OK=4;
+int Map::_THIRD_QUADRANT_OK=8;
+int Map::_FOURTH_QUADRANT_OK=16;
+
+
 SubMap::SubMap(uint32_t superpixnum) {
   superpixnum_ = superpixnum;
   area_ = 0.0;
@@ -949,6 +956,7 @@ Map::Map(GeometricBound& bound, double weight, uint32_t max_resolution,
   }
 }
 
+
 Map::~Map() {
   min_level_ = max_level_ = 0;
   min_weight_ = 1.0e30;
@@ -1641,9 +1649,6 @@ PyObject* Map::GenerateRandomPoints(uint32_t n_point,
   NumpyVector<double> x1(n_point);
   NumpyVector<double> x2(n_point);
 
-  double minimum_probability = -0.0001;
-  double probability_slope = 0.0;
-
   if (use_weighted_sampling) {
     if (max_weight_ - min_weight_ < 0.0001) {
       use_weighted_sampling = false;
@@ -1765,15 +1770,14 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
   for (npy_intp i=0; i<x1.size(); i++) {
     ang.Set(x1[i], x2[i], sys);
     if (Contains(ang)) {
-      //maskflags[i] |= Map::INSIDE_MAP;
-      maskflags[i] |= INSIDE_MAP;
+      maskflags[i] |= _INSIDE_MAP;
 
       // If radii were sent, we will do the quadrant check
       if (nrad > 0) {
-	if (nrad > 1) {
-	  thisrad = rad[i];
-	}
-	maskflags[i] |= QuadrantsContainedMC(ang,thisrad,sys);
+        if (nrad > 1) {
+          thisrad = rad[i];
+        }
+        maskflags[i] |= QuadrantsContainedMC(ang,thisrad,sys);
       }
     }
   }
@@ -1786,20 +1790,48 @@ int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
 			      Stomp::AngularCoordinate::Sphere coord_system)
   throw (const char*) {
   int maskflags=0;
-  if (QuadrantContainedMC(ang,radius,0)) {
-    maskflags |= FIRST_QUADRANT_OK;
-  }
-  if (QuadrantContainedMC(ang,radius,1)) {
-    maskflags |= SECOND_QUADRANT_OK;
-  }
-  if (QuadrantContainedMC(ang,radius,2)) {
-    maskflags |= THIRD_QUADRANT_OK;
-  }
-  if (QuadrantContainedMC(ang,radius,3)) {
-    maskflags |= FOURTH_QUADRANT_OK;
+
+  if (1) {
+    if (QuadrantContainedMC(ang,radius,0)) {
+      maskflags |= _FIRST_QUADRANT_OK;
+    }
+    if (QuadrantContainedMC(ang,radius,1)) {
+      maskflags |= _SECOND_QUADRANT_OK;
+    }
+    if (QuadrantContainedMC(ang,radius,2)) {
+      maskflags |= _THIRD_QUADRANT_OK;
+    }
+    if (QuadrantContainedMC(ang,radius,3)) {
+      maskflags |= _FOURTH_QUADRANT_OK;
+    }
+  } else {
+    double amin=0.05;
+    double pmax=0.01;
+    {
+      WedgeBound wb(ang, radius, 0.0, 90.0, coord_system);
+      if (Contains(wb, amin, pmax)) 
+        maskflags |= _FIRST_QUADRANT_OK;
+    }
+    {
+      WedgeBound wb(ang, radius, 90.0, 180.0, coord_system);
+      if (Contains(wb, amin, pmax))
+        maskflags |= _SECOND_QUADRANT_OK;
+    }
+    {
+      WedgeBound wb(ang, radius, 180.0, 270.0, coord_system);
+      if (Contains(wb, amin, pmax))
+        maskflags |= _THIRD_QUADRANT_OK;
+    }
+    {
+      WedgeBound wb(ang, radius, 270.0, 360.0, coord_system);
+      if (Contains(wb, amin, pmax))
+        maskflags |= _FOURTH_QUADRANT_OK;
+    }
+
   }
   return maskflags;
 }
+
 
 bool Map::QuadrantContainedMC(AngularCoordinate& ang, double radius,
 			      int quadrant) throw (const char*) {
@@ -1944,6 +1976,12 @@ void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta,
   rand_eta    = RadToDeg*phi2 - 180.0;
 }
 
+//
+// amin: Minimum size we want to resolve in square degrees 0.05 corresponds to
+// half an SDSS field
+//
+// pmax: probability a randomly generated point will *not* fall within our
+// smallest area amin
 bool Map::Contains(GeometricBound& bound, double area_resolution,
 		   double precision) {
   double miss_prob = 1.0 - area_resolution/bound.Area();
