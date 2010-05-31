@@ -48,15 +48,6 @@
 #include "../python/NumpyVector.h"
 #endif
 
-// prevent SWIG from grabbing these symbols
-/*
-#define INSIDE_MAP          1
-#define _FIRST_QUADRANT_OK   2
-#define _SECOND_QUADRANT_OK  4
-#define _THIRD_QUADRANT_OK   8
-#define _FOURTH_QUADRANT_OK 16
-*/
-
 
 
 namespace Stomp {
