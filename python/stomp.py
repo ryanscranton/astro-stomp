@@ -572,11 +572,6 @@ class BaseMap(_object):
 BaseMap_swigregister = _stomp.BaseMap_swigregister
 BaseMap_swigregister(BaseMap)
 
-INSIDE_MAP = _stomp.INSIDE_MAP
-FIRST_QUADRANT_OK = _stomp.FIRST_QUADRANT_OK
-SECOND_QUADRANT_OK = _stomp.SECOND_QUADRANT_OK
-THIRD_QUADRANT_OK = _stomp.THIRD_QUADRANT_OK
-FOURTH_QUADRANT_OK = _stomp.FOURTH_QUADRANT_OK
 class SubMap(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, SubMap, name, value)
@@ -666,6 +661,21 @@ class Map(BaseMap):
     def GenerateRandomEq(*args): return _stomp.Map_GenerateRandomEq(*args)
     def GenerateRandomSurvey(*args): return _stomp.Map_GenerateRandomSurvey(*args)
     def GenerateRandomGal(*args): return _stomp.Map_GenerateRandomGal(*args)
+    __swig_setmethods__["INSIDE_MAP"] = _stomp.Map_INSIDE_MAP_set
+    __swig_getmethods__["INSIDE_MAP"] = _stomp.Map_INSIDE_MAP_get
+    if _newclass:INSIDE_MAP = _swig_property(_stomp.Map_INSIDE_MAP_get, _stomp.Map_INSIDE_MAP_set)
+    __swig_setmethods__["FIRST_QUADRANT_OK"] = _stomp.Map_FIRST_QUADRANT_OK_set
+    __swig_getmethods__["FIRST_QUADRANT_OK"] = _stomp.Map_FIRST_QUADRANT_OK_get
+    if _newclass:FIRST_QUADRANT_OK = _swig_property(_stomp.Map_FIRST_QUADRANT_OK_get, _stomp.Map_FIRST_QUADRANT_OK_set)
+    __swig_setmethods__["SECOND_QUADRANT_OK"] = _stomp.Map_SECOND_QUADRANT_OK_set
+    __swig_getmethods__["SECOND_QUADRANT_OK"] = _stomp.Map_SECOND_QUADRANT_OK_get
+    if _newclass:SECOND_QUADRANT_OK = _swig_property(_stomp.Map_SECOND_QUADRANT_OK_get, _stomp.Map_SECOND_QUADRANT_OK_set)
+    __swig_setmethods__["THIRD_QUADRANT_OK"] = _stomp.Map_THIRD_QUADRANT_OK_set
+    __swig_getmethods__["THIRD_QUADRANT_OK"] = _stomp.Map_THIRD_QUADRANT_OK_get
+    if _newclass:THIRD_QUADRANT_OK = _swig_property(_stomp.Map_THIRD_QUADRANT_OK_get, _stomp.Map_THIRD_QUADRANT_OK_set)
+    __swig_setmethods__["FOURTH_QUADRANT_OK"] = _stomp.Map_FOURTH_QUADRANT_OK_set
+    __swig_getmethods__["FOURTH_QUADRANT_OK"] = _stomp.Map_FOURTH_QUADRANT_OK_get
+    if _newclass:FOURTH_QUADRANT_OK = _swig_property(_stomp.Map_FOURTH_QUADRANT_OK_get, _stomp.Map_FOURTH_QUADRANT_OK_set)
     def QuadrantsContainedMC(*args): return _stomp.Map_QuadrantsContainedMC(*args)
     def QuadrantContainedMC(*args): return _stomp.Map_QuadrantContainedMC(*args)
     def Contains(*args): return _stomp.Map_Contains(*args)

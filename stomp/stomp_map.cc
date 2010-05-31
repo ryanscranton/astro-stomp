@@ -1736,8 +1736,8 @@ PyObject* Map::GenerateRandomGal(uint32_t n_point, bool use_weighted_sampling)
 }
 
 PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
-			const std::string& system, PyObject* radobj)
-  throw (const char* ) {
+			const std::string& system, PyObject* radobj) throw (const char* ) {
+
   // convert the string system indicator to a Sphere id
   Stomp::AngularCoordinate::Sphere sys =
     Stomp::AngularCoordinate::SystemFromString(system);
@@ -1749,6 +1749,8 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
   if (x1.size() != x2.size()) {
     throw "coordinates must be same size";
   }
+
+  // optional radius, can be scalar or x1.size()
   NumpyVector<double> rad;
   npy_intp nrad=0;
   double thisrad=-1;
@@ -1764,6 +1766,7 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
     std::srand ( std::time(NULL) );
   }
 
+  // An output numpy array 
   NumpyVector<npy_int8> maskflags(x1.size());
 
   Stomp::AngularCoordinate ang;
