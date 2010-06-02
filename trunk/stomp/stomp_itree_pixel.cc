@@ -149,10 +149,7 @@ void IndexedTreePixel::FindPairs(AngularCoordinate& ang, AngularBin& theta,
     if (intersects_annulus == 1) {
       // Fully contained in the annulus, so we get a copy of all of the pointers
       // in the sub-nodes.
-      for (ITreePtrIterator iter=subpix_.begin();
-	   iter!=subpix_.end();++iter) {
-	_PointPtrs(i_ang);
-      }
+      _PointPtrs(i_ang);
     } else {
       if (intersects_annulus == -1) {
 	// Partial intersection with the annulus, so to pass the bounds along
@@ -253,10 +250,7 @@ void IndexedTreePixel::_FindPairs(AngularCoordinate& ang, AngularBin& theta,
     if (intersects_annulus == 1) {
       // Fully contained in the annulus, so we get a copy of all of the pointers
       // in the sub-nodes.
-      for (ITreePtrIterator iter=subpix_.begin();
-	   iter!=subpix_.end();++iter) {
-	_PointPtrs(i_ang);
-      }
+      _PointPtrs(i_ang);
     } else {
       if (intersects_annulus == -1) {
 	// Partial intersection with the annulus, so to pass the bounds along
@@ -280,7 +274,7 @@ void IndexedTreePixel::_PointPtrs(IAngularPtrVector& i_ang) {
   } else {
     for (ITreePtrIterator iter=subpix_.begin();
 	 iter!=subpix_.end();++iter) {
-      _PointPtrs(i_ang);
+      (*iter)->_PointPtrs(i_ang);
     }
   }
 }
