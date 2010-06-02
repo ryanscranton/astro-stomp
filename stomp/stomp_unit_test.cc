@@ -14,9 +14,11 @@ int main(int argc, char **argv) {
   void PixelUnitTests(bool run_all_tests);
   void ScalarPixelUnitTests(bool run_all_tests);
   void TreePixelUnitTests(bool run_all_tests);
+  void IndexedTreePixelUnitTests(bool run_all_tests);
   void MapUnitTests(bool run_all_tests);
   void ScalarMapUnitTests(bool run_all_tests);
   void TreeMapUnitTests(bool run_all_tests);
+  void IndexedTreeMapUnitTests(bool run_all_tests);
   void GeometryUnitTests(bool run_all_tests);
   void UtilUnitTests(bool run_all_tests);
 
@@ -46,6 +48,9 @@ int main(int argc, char **argv) {
   // The TreePixel class
   TreePixelUnitTests(FLAGS_all_tests);
 
+  // The IndexedTreePixel class
+  IndexedTreePixelUnitTests(FLAGS_all_tests);
+
   // The Map class
   MapUnitTests(FLAGS_all_tests);
 
@@ -54,6 +59,9 @@ int main(int argc, char **argv) {
 
   // The TreeMap class
   TreeMapUnitTests(FLAGS_all_tests);
+
+  // The IndexedTreeMap class
+  IndexedTreeMapUnitTests(FLAGS_all_tests);
 
   // The GeometricBound class and derivatives
   GeometryUnitTests(FLAGS_all_tests);
