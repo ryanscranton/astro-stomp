@@ -6877,6 +6877,238 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularBin_CalculateResolution__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  uint32_t arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  unsigned int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:AngularBin_CalculateResolution",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_CalculateResolution" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularBin_CalculateResolution" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularBin_CalculateResolution" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "AngularBin_CalculateResolution" "', argument " "4"" of type '" "uint32_t""'");
+  } 
+  arg4 = static_cast< uint32_t >(val4);
+  (arg1)->CalculateResolution(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_CalculateResolution__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  double arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:AngularBin_CalculateResolution",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_CalculateResolution" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularBin_CalculateResolution" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularBin_CalculateResolution" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (arg1)->CalculateResolution(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_CalculateResolution__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularBin_CalculateResolution",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_CalculateResolution" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularBin_CalculateResolution" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  (arg1)->CalculateResolution(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_CalculateResolution__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularBin_CalculateResolution",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularBin, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularBin_CalculateResolution" "', argument " "1"" of type '" "Stomp::AngularBin *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularBin * >(argp1);
+  (arg1)->CalculateResolution();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularBin_CalculateResolution(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[5];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 4); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_AngularBin_CalculateResolution__SWIG_3(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AngularBin_CalculateResolution__SWIG_2(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_AngularBin_CalculateResolution__SWIG_1(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularBin, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_double(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_unsigned_SS_int(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_AngularBin_CalculateResolution__SWIG_0(self, args);
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularBin_CalculateResolution'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    CalculateResolution(Stomp::AngularBin *,double,double,uint32_t)\n"
+    "    CalculateResolution(Stomp::AngularBin *,double,double)\n"
+    "    CalculateResolution(Stomp::AngularBin *,double)\n"
+    "    CalculateResolution(Stomp::AngularBin *)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularBin_SetThetaMin(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularBin *arg1 = (Stomp::AngularBin *) 0 ;
@@ -10293,7 +10525,46 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_AngularCorrelation_SetMaxResolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_AngularCorrelation_SetMaxResolution__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  uint32_t arg2 ;
+  bool arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:AngularCorrelation_SetMaxResolution",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation_SetMaxResolution" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCorrelation_SetMaxResolution" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCorrelation_SetMaxResolution" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  (arg1)->SetMaxResolution(arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCorrelation_SetMaxResolution__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
   uint32_t arg2 ;
@@ -10323,6 +10594,62 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularCorrelation_SetMaxResolution(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCorrelation, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_AngularCorrelation_SetMaxResolution__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__AngularCorrelation, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_AngularCorrelation_SetMaxResolution__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'AngularCorrelation_SetMaxResolution'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetMaxResolution(Stomp::AngularCorrelation *,uint32_t,bool)\n"
+    "    SetMaxResolution(Stomp::AngularCorrelation *,uint32_t)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularCorrelation_SetMinResolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
@@ -10346,6 +10673,45 @@ SWIGINTERN PyObject *_wrap_AngularCorrelation_SetMinResolution(PyObject *SWIGUNU
   } 
   arg2 = static_cast< uint32_t >(val2);
   (arg1)->SetMinResolution(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCorrelation_AutoMaxResolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  uint32_t arg2 ;
+  double arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:AngularCorrelation_AutoMaxResolution",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation_AutoMaxResolution" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCorrelation_AutoMaxResolution" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = static_cast< uint32_t >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AngularCorrelation_AutoMaxResolution" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  (arg1)->AutoMaxResolution(arg2,arg3);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -93427,6 +93793,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AngularBin_ClearRegions", _wrap_AngularBin_ClearRegions, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_InitializeRegions", _wrap_AngularBin_InitializeRegions, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_SetResolution", _wrap_AngularBin_SetResolution, METH_VARARGS, NULL},
+	 { (char *)"AngularBin_CalculateResolution", _wrap_AngularBin_CalculateResolution, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_SetThetaMin", _wrap_AngularBin_SetThetaMin, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_SetThetaMax", _wrap_AngularBin_SetThetaMax, METH_VARARGS, NULL},
 	 { (char *)"AngularBin_SetTheta", _wrap_AngularBin_SetTheta, METH_VARARGS, NULL},
@@ -93491,6 +93858,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AngularCorrelation_AssignBinResolutions", _wrap_AngularCorrelation_AssignBinResolutions, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_SetMaxResolution", _wrap_AngularCorrelation_SetMaxResolution, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_SetMinResolution", _wrap_AngularCorrelation_SetMinResolution, METH_VARARGS, NULL},
+	 { (char *)"AngularCorrelation_AutoMaxResolution", _wrap_AngularCorrelation_AutoMaxResolution, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindAutoCorrelation", _wrap_AngularCorrelation_FindAutoCorrelation, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindCrossCorrelation", _wrap_AngularCorrelation_FindCrossCorrelation, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindAutoCorrelationWithRegions", _wrap_AngularCorrelation_FindAutoCorrelationWithRegions, METH_VARARGS, NULL},

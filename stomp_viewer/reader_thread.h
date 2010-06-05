@@ -29,12 +29,9 @@ class ReadMapThread : public QThread {
   ~ReadMapThread();
 
   void readMap(const std::string& map_file_name);
-  void clearMaps();
 
  signals:
   void newBaseMap(Stomp::Map* base_map);
-  void newSoftenedMap(uint8_t level, Stomp::Map* softened_map);
-  void readerProgress(int progress);
 
  protected:
   void run();
@@ -44,9 +41,7 @@ class ReadMapThread : public QThread {
   QWaitCondition condition;
   std::string map_file_name_;
   Stomp::Map* base_map_;
-  std::map<uint8_t, Stomp::Map*> softened_maps_;
   bool good_base_map_;
-  uint8_t softened_level_;
   bool restart;
   bool abort;
 };

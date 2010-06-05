@@ -22,7 +22,6 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
       stomp_map_[level] = base_map;
   */
   good_map_ = false;
-  good_soften_ = true;
   good_points_ = false;
 
   fill_ = false;
@@ -47,16 +46,15 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
   qRegisterMetaType<QImage>("QImage");
   connect(&render_map_thread_, SIGNAL(renderedImage(QImage)),
 	  this, SLOT(newMapImage(QImage)));
+  connect(&render_map_thread_, SIGNAL(renderProgress(int)),
+          this, SLOT(renderProgress(int)));
   connect(&render_points_thread_, SIGNAL(renderedImage(QImage)),
 	  this, SLOT(newPointsImage(QImage)));
+  connect(&render_points_thread_, SIGNAL(renderProgress(int)),
+          this, SLOT(renderProgress(int)));
 
-  qRegisterMetaType<uint8_t>("uint8_t");
   connect(&read_map_thread_, SIGNAL(newBaseMap(Stomp::Map*)),
 	  this, SLOT(newBaseMap(Stomp::Map*)));
-  connect(&read_map_thread_, SIGNAL(newSoftenedMap(uint8_t, Stomp::Map*)),
-	  this, SLOT(newSoftenedMap(uint8_t, Stomp::Map*)));
-  connect(&read_map_thread_, SIGNAL(readerProgress(int)),
-	  this, SLOT(readerProgress(int)));
 
   show_grid_ = false;
   show_coordinates_ = false;
@@ -167,21 +165,14 @@ double RenderArea::mouseLatitude() {
 
 void RenderArea::updatePixmap(bool send_update_call) {
   if (good_map_) {
-    Stomp::Map* render_map = base_map_;
-
-    if (good_soften_) {
-      _findRenderLevel();
-      render_map = stomp_map_[render_level_];
-    }
-
-    render_map_thread_.renderMap(render_map, geom_, map_palette_,
+    render_map_thread_.renderMap(base_map_, geom_, map_palette_,
 				 max_resolution_, antialiased_, fill_);
   } else {
     map_pixmap_ = QPixmap(width(), height());
     map_pixmap_.fill(background_color_);
   }
 
-  updatePoints(false);
+  if (send_update_call)  updatePoints(false);
   updateGrid(false);
   if (send_update_call) update();
 }
@@ -226,7 +217,6 @@ bool RenderArea::readNewMap(QString& input_file) {
   std::ifstream test_file(stl_input_file.c_str());
 
   good_map_ = false;
-  good_soften_ = false;
 
   if (test_file) {
     file_exists = true;
@@ -242,7 +232,7 @@ void RenderArea::newBaseMap(Stomp::Map* base_map) {
 
   good_map_ = !base_map_->Empty();
   if (good_map_) {
-    emit newStatus("Read base map.  Preparing derived maps...", 0);
+    emit newStatus("Read base map.  Rendering...", 0);
     _findNewWeightBounds(base_map);
     _findNewImageBounds(base_map);
     _findNewMaxResolution(base_map);
@@ -251,17 +241,7 @@ void RenderArea::newBaseMap(Stomp::Map* base_map) {
   }
 }
 
-void RenderArea::newSoftenedMap(uint8_t level, Stomp::Map* softened_map) {
-  stomp_map_[level] = softened_map;
-
-  if (level == Stomp::HPixLevel) {
-    good_soften_ = true;
-    emit newStatus("Done with all derived maps.", 0);
-    updatePixmap();
-  }
-}
-
-void RenderArea::readerProgress(int progress) {
+void RenderArea::renderProgress(int progress) {
   emit progressUpdate(progress);
 }
 
@@ -272,29 +252,15 @@ bool RenderArea::readNewPointsFile(QString& input_file,
 
   std::string stl_input_file = std::string(input_file.toLatin1());
 
-  std::ifstream input_file_ptr(stl_input_file.c_str());
+  int8_t weight_column = -1;
+  if (weighted_points) weight_column = 2;
 
-  bool good_points_ = false;
+  good_points_ =
+    Stomp::WeightedAngularCoordinate::ToWAngularVector(stl_input_file, ang_,
+						       sphere, false, 0, 1,
+						       weight_column);
 
-  if (input_file_ptr) {
-    good_points_ = true;
-
-    double theta, phi, weight = 1.0;
-
-    while (!input_file_ptr.eof()) {
-      if (weighted_points) {
-	input_file_ptr >> theta >> phi >> weight;
-      } else {
-	input_file_ptr >> theta >> phi;
-      }
-
-      if (!input_file_ptr.eof()) {
-	Stomp::WeightedAngularCoordinate tmp_ang(theta, phi, 1.0, sphere);
-	ang_.push_back(tmp_ang);
-      }
-    }
-    input_file_ptr.close();
-
+  if (good_points_) {
     _findNewWeightBounds(ang_);
     if (!good_map_) _findNewImageBounds(ang_);
     emit newMapParameters();
@@ -408,11 +374,7 @@ void RenderArea::setCoordinateSystem(Stomp::AngularCoordinate::Sphere sphere) {
     setFullSky(true);
   } else {
     if (good_map_) {
-      if (!good_soften_) {
-	_findNewImageBounds(base_map_);
-      } else {
-	_findNewImageBounds(stomp_map_[Stomp::HPixResolution]);
-      }
+      _findNewImageBounds(base_map_);
     } else {
       setFullSky(true);
       setFullSky(false);
@@ -760,7 +722,8 @@ void RenderArea::_drawLonTick(QPainter *painter, double longitude,
   painter->drawLine(QLineF(lower_point, upper_point));
 
   lower_point = QPointF(geom_.lonToX(longitude), 0.0);
-  upper_point = QPointF(geom_.lonToX(longitude), static_cast<qreal>(tick_length));
+  upper_point = QPointF(geom_.lonToX(longitude),
+			static_cast<qreal>(tick_length));
   painter->drawLine(QLineF(lower_point, upper_point));
 }
 
@@ -1024,38 +987,4 @@ void RenderArea::_findNewMaxResolution(Stomp::Map* stomp_map) {
   setMaxResolution(stomp_map->MaxResolution());
 }
 
-void RenderArea::_findRenderLevel(uint32_t target_pixels) {
-  double cartesian_area = geom_.lonRange()*geom_.latRange();
-
-  render_level_ = Stomp::HPixLevel;
-  for (uint8_t level=Stomp::HPixLevel+1;level<=Stomp::MaxPixelLevel;level++) {
-    uint32_t n_pixel = stomp_map_[level]->Size();
-
-    if (cartesian_area < 10000.0) {
-      n_pixel = 0;
-      double frac_pixel = 0.0;
-
-      Stomp::Map* level_map = stomp_map_[level];
-      Stomp::LatLonBound bounds(geom_.latitudeMin(), geom_.latitudeMax(),
-				geom_.longitudeMin(), geom_.longitudeMax(),
-				geom_.sphere());
-      Stomp::PixelVector superpix;
-      level_map->Coverage(superpix, Stomp::HPixResolution, false);
-      for (Stomp::PixelIterator iter=superpix.begin();
-	   iter!=superpix.end();++iter) {
-	// _ScorePixel should give us an estimate of the fraction of the
-	// superpixel that's within the viewer bounds.
-	frac_pixel +=
-	  -1.0*level_map->_ScorePixel(bounds, *iter)*
-	  level_map->Size(iter->Superpixnum());
-      }
-      n_pixel = static_cast<uint32_t>(frac_pixel);
-    }
-    if (n_pixel < target_pixels) {
-      render_level_ = level;
-    } else {
-      break;
-    }
-  }
-}
 

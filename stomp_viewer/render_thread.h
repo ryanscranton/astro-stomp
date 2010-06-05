@@ -40,6 +40,7 @@ class RenderMapThread : public QThread {
 
  signals:
   void renderedImage(const QImage& image);
+  void renderProgress(int progress);
 
  protected:
   void run();
@@ -68,6 +69,7 @@ class RenderPointsThread : public QThread {
 
  signals:
   void renderedImage(const QImage& image);
+  void renderProgress(int progress);
 
  protected:
   void run();

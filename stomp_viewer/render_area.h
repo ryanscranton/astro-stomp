@@ -91,15 +91,9 @@ class RenderArea : public QWidget {
   // starts the Map rendering thread to show the base Map.
   void newBaseMap(Stomp::Map* base_map);
 
-  // After reading in the Map, the reader thread starts constructing the
-  // softened Maps.  This takes some time (hence the separate thread), but
-  // will make for quicker rendering once they're available.  This slot is tied
-  // to this process.
-  void newSoftenedMap(uint8_t level, Stomp::Map* softened_map);
-
-  // While the softening is happening, the reader thread will alert us of the
-  // progress via this slot.
-  void readerProgress(int progress);
+  // While the rendering is being done, the render threads will update us as
+  // to their progress
+  void renderProgress(int progress);
 
   // Read in a new set of points.  Return true if the operation was successful.
   bool readNewPointsFile(QString& file_name,
@@ -247,10 +241,6 @@ class RenderArea : public QWidget {
   void _findNewImageBounds(Stomp::WAngularVector& ang);
   void _findNewMaxResolution(Stomp::Map* stomp_map);
 
-  // Based on the current display bounds, find the version of the input map
-  // that contains a reasonable number of Pixels for rendering.
-  void _findRenderLevel(uint32_t target_pixels = 100000);
-
  private:
   bool antialiased_;
   Palette map_palette_, points_palette_;
@@ -262,10 +252,8 @@ class RenderArea : public QWidget {
   QPixmap points_pixmap_;
   QPixmap *grid_pixmap_;
   QColor background_color_;
-  std::map<uint8_t, Stomp::Map*> stomp_map_;
   Stomp::Map* base_map_;
   bool good_map_;
-  bool good_soften_;
   Stomp::WAngularVector ang_;
   bool good_points_;
   bool fill_;
