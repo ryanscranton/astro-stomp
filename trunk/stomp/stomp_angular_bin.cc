@@ -16,6 +16,8 @@
 
 #include "stomp_core.h"
 #include "stomp_angular_bin.h"
+#include "stomp_pixel.h"
+#include "stomp_angular_coordinate.h"
 
 namespace Stomp {
 
@@ -112,6 +114,66 @@ void AngularBin::InitializeRegions(int16_t n_regions) {
 
 void AngularBin::SetResolution(uint32_t resolution) {
   resolution_ = resolution;
+}
+
+void AngularBin::CalculateResolution(double lammin, double lammax,
+				     uint32_t max_resolution) {
+  if (lammin < -70.0) {
+    std::cout << "Resetting minimum lambda value to -70.0...\n";
+    lammin = -70.0;
+  }
+  if (lammax > 70.0) {
+    std::cout << "Resetting maximum lambda value to 70.0...\n";
+    lammax = 70.0;
+  }
+
+  AngularCoordinate min_ang(lammin, 0.0, AngularCoordinate::Survey);
+  AngularCoordinate max_ang(lammax, 0.0, AngularCoordinate::Survey);
+
+  uint32_t pixel_resolution = HPixResolution;
+
+  uint32_t ny_req = 1000000000;
+  uint32_t small_good = 0, eta_good = 0;
+  Pixel tmp_pix, tmp2_pix;
+
+  while (((small_good < ny_req) || (eta_good < ny_req)) &&
+	 (pixel_resolution <= max_resolution/2)) {
+    
+    small_good = eta_good = 0;
+    pixel_resolution <<= 1;
+
+    tmp_pix.SetResolution(pixel_resolution);
+    tmp2_pix.SetResolution(pixel_resolution);
+
+    tmp_pix.SetPixnumFromAng(min_ang);
+    uint32_t ny_max = tmp_pix.PixelY();
+
+    tmp_pix.SetPixnumFromAng(max_ang);
+    uint32_t ny_min = tmp_pix.PixelY();
+
+    ny_req = ny_max - ny_min;
+
+    tmp2_pix = tmp_pix;
+    for (uint32_t y=ny_min+1,x=tmp2_pix.PixelX();y<=ny_max;y++) {
+      tmp_pix.SetPixnumFromXY(x+1,y);
+      double costheta =
+	tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
+	tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
+	tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
+      if (1.0 - costheta*costheta < Sin2ThetaMax()) eta_good++;
+
+      tmp_pix.SetPixnumFromXY(x,y);
+      costheta =
+	tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
+	tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
+	tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
+      if (1.0 - costheta*costheta < Sin2ThetaMax()) small_good++;
+
+      tmp2_pix = tmp_pix;
+    }
+  }
+
+  SetResolution(pixel_resolution);
 }
 
 void AngularBin::SetTheta(double theta) {

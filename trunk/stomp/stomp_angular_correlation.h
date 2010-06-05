@@ -65,18 +65,26 @@ class AngularCorrelation {
   // for each bin is set to -1, which would indicate that any correlation
   // calculation with that bin should be done using a pair-based estimator.
   void AssignBinResolutions(double lammin = -70.0, double lammax = 70.0,
-			    uint32_t min_resolution = MaxPixelResolution);
+			    uint32_t max_resolution = MaxPixelResolution);
 
   // For small angular scales, it's usually faster and more memory
   // efficient to use a pair-based estimator.  To set this scale, we choose
   // a maximum resolution scale we're willing to use our pixel-based estimator
   // on and modify all smaller angular bins to use the pair-based estimator.
-  void SetMaxResolution(uint32_t resolution);
+  // The boolean indicates to the object whether this break between the two
+  // estimators is being set by hand (default) or should be over-ridden if the
+  // methods for calculating the correlation functions are called.
+  void SetMaxResolution(uint32_t resolution, bool manual_break = true);
 
   // Additionally, if we are using regions to calculate correlation functions,
   // we need to set the minimum resolution to match the resolution used to
   // divide the total survey area.
   void SetMinResolution(uint32_t resolution);
+
+  // If we haven't set the break manually, this method attempts to find a
+  // reasonable place for it, based on the number of objects involved in the
+  // correlation function calculation and the area involved.
+  void AutoMaxResolution(uint32_t n_obj, double area);
 
   // Some wrapper methods for find the auto-correlation and cross-correlations
   void FindAutoCorrelation(Map& stomp_map,
@@ -152,6 +160,7 @@ class AngularCorrelation {
   ThetaIterator theta_pair_begin_, theta_pair_end_;
   double theta_min_, theta_max_, sin2theta_min_, sin2theta_max_;
   uint32_t min_resolution_, max_resolution_;
+  bool manual_resolution_break_;
 };
 
 } // end namespace Stomp

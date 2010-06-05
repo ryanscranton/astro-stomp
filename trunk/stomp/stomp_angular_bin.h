@@ -70,6 +70,12 @@ class AngularBin {
   // suited to the pair-based method.
   void SetResolution(uint32_t resolution);
 
+  // We can also calculate the appropriate resolution to use given the span
+  // of our angular limits.  The idea here is to find the largest possible
+  // resolution that still resolves this bin's angular scale.
+  void CalculateResolution(double lammin = -70.0, double lammax = 70.0,
+			   uint32_t max_resolution = MaxPixelResolution);
+
   // Seting the angular minima, maxima and mid-point.
   //
   // Depending on whether we're using linear or logarithmic angular binning,

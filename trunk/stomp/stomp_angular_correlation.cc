@@ -57,6 +57,8 @@ AngularCorrelation::AngularCorrelation(double theta_min, double theta_max,
     theta_pair_begin_ = thetabin_.begin();
     theta_pair_end_ = thetabin_.end();
   }
+
+  manual_resolution_break_ = false;
 }
 
 AngularCorrelation::AngularCorrelation(uint32_t n_bins,
@@ -89,87 +91,44 @@ AngularCorrelation::AngularCorrelation(uint32_t n_bins,
     theta_pair_begin_ = thetabin_.begin();
     theta_pair_end_ = thetabin_.end();
   }
+
+  manual_resolution_break_ = false;
 }
 
 void AngularCorrelation::AssignBinResolutions(double lammin, double lammax,
-					      uint32_t min_resolution) {
+					      uint32_t max_resolution) {
   min_resolution_ = MaxPixelResolution;
   max_resolution_ = HPixResolution;
 
-  if (lammin < -70.0) {
-    std::cout << "Resetting minimum lambda value to -70.0...\n";
-    lammin = -70.0;
-  }
-  if (lammax > 70.0) {
-    std::cout << "Resetting maximum lambda value to 70.0...\n";
-    lammax = 70.0;
-  }
-
-  AngularCoordinate min_ang(lammin,0.0,AngularCoordinate::Survey);
-  AngularCoordinate max_ang(lammax,0.0,AngularCoordinate::Survey);
-
   for (ThetaIterator iter=thetabin_.begin();iter!=thetabin_.end();++iter) {
-    uint32_t pixel_resolution = HPixResolution;
+    iter->CalculateResolution(lammin, lammax, max_resolution);
 
-    uint32_t ny_req = 1000000000, ny_min, ny_max;
-    uint32_t small_good = 0, eta_good = 0;
-    Pixel tmp_pix, tmp2_pix;
-
-    while (((small_good < ny_req) || (eta_good < ny_req)) &&
-	   (pixel_resolution <= min_resolution/2)) {
-
-      small_good = eta_good = 0;
-      pixel_resolution <<= 1;
-
-      tmp_pix.SetResolution(pixel_resolution);
-      tmp2_pix.SetResolution(pixel_resolution);
-
-      tmp_pix.SetPixnumFromAng(min_ang);
-      ny_max = tmp_pix.PixelY();
-
-      tmp_pix.SetPixnumFromAng(max_ang);
-      ny_min = tmp_pix.PixelY();
-
-      ny_req = ny_max - ny_min;
-
-      tmp2_pix = tmp_pix;
-      for (uint32_t y=ny_min+1,x=tmp2_pix.PixelX();y<=ny_max;y++) {
-	tmp_pix.SetPixnumFromXY(x+1,y);
-	double costheta =
-	  tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
-	  tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
-	  tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
-	if (1.0 - costheta*costheta < iter->Sin2ThetaMax()) eta_good++;
-
-	tmp_pix.SetPixnumFromXY(x,y);
-	costheta =
-	  tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
-	  tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
-	  tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
-	if (1.0 - costheta*costheta < iter->Sin2ThetaMax()) small_good++;
-
-	tmp2_pix = tmp_pix;
-      }
-    }
-    // std::cout << pixel_resolution << ": " << iter->ThetaMin() <<
-    // " - " << iter->ThetaMax() << "\n";
-    iter->SetResolution(pixel_resolution);
-
-    if (pixel_resolution < min_resolution_) min_resolution_ = pixel_resolution;
-    if (pixel_resolution > max_resolution_) max_resolution_ = pixel_resolution;
+    if (iter->Resolution() < min_resolution_)
+      min_resolution_ = iter->Resolution();
+    if (iter->Resolution() > max_resolution_)
+      max_resolution_ = iter->Resolution();
   }
 }
 
-void AngularCorrelation::SetMaxResolution(uint32_t resolution) {
+void AngularCorrelation::SetMaxResolution(uint32_t resolution,
+					  bool manual_break) {
   max_resolution_ = resolution;
+
+  // By default every bin is calculated with the pixel-based estimator
   theta_pair_begin_ = thetabin_.begin();
+  theta_pair_end_ = thetabin_.begin();
+  theta_pixel_begin_ = thetabin_.begin();
+
   for (ThetaIterator iter=thetabin_.begin();iter!=thetabin_.end();++iter) {
+    iter->CalculateResolution();
     if (iter->Resolution() > max_resolution_) {
       iter->SetResolution(0);
       ++theta_pixel_begin_;
       ++theta_pair_end_;
     }
   }
+
+  if (manual_break) manual_resolution_break_ = true;
 }
 
 void AngularCorrelation::SetMinResolution(uint32_t resolution) {
@@ -181,9 +140,34 @@ void AngularCorrelation::SetMinResolution(uint32_t resolution) {
   }
 }
 
+void AngularCorrelation::AutoMaxResolution(uint32_t n_obj, double area) {
+  uint32_t max_resolution = 2048;
+
+  if (area > 500.0) {
+    // large survey limit
+    max_resolution = 512;
+    if (n_obj < 500000) max_resolution = 64;
+    if ((n_obj > 500000) && (n_obj < 2000000)) max_resolution = 128;
+    if ((n_obj > 2000000) && (n_obj < 10000000)) max_resolution = 256;
+  } else {
+    // small survey limit
+    if (n_obj < 500000) max_resolution = 256;
+    if ((n_obj > 500000) && (n_obj < 2000000)) max_resolution = 512;
+    if ((n_obj > 2000000) && (n_obj < 10000000)) max_resolution = 1024;
+  }
+
+  std::cout << "Setting maximum resolution to " <<
+    static_cast<int>(max_resolution) << "...\n";
+
+  SetMaxResolution(max_resolution, false);
+}
+
 void AngularCorrelation::FindAutoCorrelation(Map& stomp_map,
 					     WAngularVector& galaxy,
 					     uint8_t random_iterations) {
+  if (!manual_resolution_break_)
+    AutoMaxResolution(galaxy.size(), stomp_map.Area());
+
   FindPixelAutoCorrelation(stomp_map, galaxy);
   FindPairAutoCorrelation(stomp_map, galaxy, random_iterations);
 }
@@ -192,6 +176,12 @@ void AngularCorrelation::FindCrossCorrelation(Map& stomp_map,
 					      WAngularVector& galaxy_a,
 					      WAngularVector& galaxy_b,
 					      uint8_t random_iterations) {
+  if (!manual_resolution_break_) {
+    uint32_t n_obj =
+      static_cast<uint32_t>(sqrt(1.0*galaxy_a.size()*galaxy_b.size()));
+    AutoMaxResolution(n_obj, stomp_map.Area());
+  }
+
   FindPixelCrossCorrelation(stomp_map, galaxy_a, galaxy_b);
   FindPairCrossCorrelation(stomp_map, galaxy_a, galaxy_b, random_iterations);
 }
@@ -200,6 +190,9 @@ void AngularCorrelation::FindAutoCorrelationWithRegions(Map& stomp_map,
 							WAngularVector& gal,
 							uint8_t random_iter,
 							uint16_t n_regions) {
+  if (!manual_resolution_break_)
+    AutoMaxResolution(gal.size(), stomp_map.Area());
+
   if (n_regions == 0) n_regions = static_cast<uint16_t>(2*thetabin_.size());
   std::cout << "Regionating with " << n_regions << " regions...\n";
   uint16_t n_true_regions = stomp_map.InitializeRegions(n_regions);
@@ -225,6 +218,12 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
 							 WAngularVector& gal_b,
 							 uint8_t random_iter,
 							 uint16_t n_regions) {
+  if (!manual_resolution_break_) {
+    uint32_t n_obj =
+      static_cast<uint32_t>(sqrt(1.0*gal_a.size()*gal_b.size()));
+    AutoMaxResolution(n_obj, stomp_map.Area());
+  }
+
   if (n_regions == 0) n_regions = static_cast<uint16_t>(2*thetabin_.size());
   uint16_t n_true_regions = stomp_map.InitializeRegions(n_regions);
   if (n_true_regions != n_regions) {
@@ -245,7 +244,7 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
 void AngularCorrelation::FindPixelAutoCorrelation(Map& stomp_map,
 						  WAngularVector& galaxy) {
 
-  std::cout << "Initialing ScalarMap at " << max_resolution_ << "...\n";
+  std::cout << "Initializing ScalarMap at " << max_resolution_ << "...\n";
   ScalarMap* scalar_map = new ScalarMap(stomp_map, max_resolution_,
 					ScalarMap::DensityField);
   if (stomp_map.NRegion() > 0) {

@@ -53,6 +53,8 @@ void RenderMapThread::run() {
     bool fill = fill_;
     mutex.unlock();
 
+    uint32_t step = stomp_map->Size()/15;
+
     QImage image(geom.width(), geom.height(),
 		 QImage::Format_ARGB32_Premultiplied);
     image.fill(QColor(Qt::white).rgb());
@@ -71,8 +73,15 @@ void RenderMapThread::run() {
 
 	double render_pixel_area = geom.renderPixelArea();
 
+	uint32_t counter = 0;
+	int status = 0;
 	for (Stomp::MapIterator iter=stomp_map->Begin();
 	     iter!=stomp_map->End();stomp_map->Iterate(&iter)) {
+	  counter++;
+	  if (counter % step == 0) {
+	    status++;
+	    emit renderProgress(status);
+	  }
 	  if (restart) break;
 	  if (abort) return;
 	  Stomp::PixelIterator pix = iter.second;
@@ -175,9 +184,11 @@ void RenderPointsThread::run() {
     bool antialiased = antialiased_;
     mutex.unlock();
 
+    uint32_t step = ang->size()/15;
+
     QImage image(geom.width(), geom.height(),
 		 QImage::Format_ARGB32_Premultiplied);
-    image.fill(QColor(Qt::transparent).rgb());
+    image.fill(QColor(Qt::transparent).rgba());
 
     QPainter painter;
 
@@ -190,8 +201,16 @@ void RenderPointsThread::run() {
       }
 
       if (!ang->empty()) {
+	uint32_t plotted_points = 0;
+	uint32_t counter = 0;
+	int status = 0;
 	for (Stomp::WAngularIterator iter=ang->begin();
 	     iter!=ang->end();++iter) {
+	  counter++;
+	  if (counter % step == 0) {
+	    status++;
+	    emit renderProgress(status);
+	  }
 	  if (restart) break;
 	  if (abort) return;
 	  QPointF point;
@@ -200,8 +219,11 @@ void RenderPointsThread::run() {
 	    painter.setBrush(pixel_brush);
 	    painter.setPen(QPen(pixel_brush, 0));
 	    painter.drawPoint(point);
+	    plotted_points++;
 	  }
 	}
+	std::cout << "Plotted " << plotted_points << "/" <<
+	  ang->size() << " points...\n";
       }
       accessed_device = painter.end();
       if (!restart && accessed_device) emit renderedImage(image);
