@@ -256,7 +256,7 @@ bool RegionMap::InitializeRegions(BaseMap* base_map, BaseMap& stomp_map) {
   // pixel.  If the node is not present in the input map, then
   // we bail and return false.
   PixelVector coverage_pix;
-  base_map->Coverage(coverage_pix, stomp_map.RegionResolution());
+  stomp_map.Coverage(coverage_pix, stomp_map.RegionResolution(), false);
 
   for (PixelIterator iter=coverage_pix.begin();
        iter!=coverage_pix.end();++iter) {

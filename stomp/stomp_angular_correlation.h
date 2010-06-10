@@ -138,6 +138,13 @@ class AngularCorrelation {
   // calculated without regions, then this column will be omitted.
   bool Write(const std::string& output_file_name);
 
+  // In some cases, we want to default to using either the pair-based or
+  // pixel-based estimator for all of our bins, regardless of angular scale.
+  // These methods allow us to over-ride the default behavior of the
+  // correlation code.
+  void UseOnlyPixels();
+  void UseOnlyPairs();
+
   // Now, some accessor methods for finding the angular range of the bins
   // with a given resolution attached to them (the default value returns the
   // results for all angular bins; for pair-based bins, resolution = -1).
