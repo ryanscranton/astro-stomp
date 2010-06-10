@@ -664,6 +664,21 @@ bool AngularCorrelation::Write(const std::string& output_file_name) {
   return wrote_file;
 }
 
+void AngularCorrelation::UseOnlyPixels() {
+  AssignBinResolutions();
+  theta_pixel_begin_ = thetabin_.begin();
+  theta_pair_begin_ = thetabin_.begin();
+  theta_pair_end_ = thetabin_.begin();
+}
+
+void AngularCorrelation::UseOnlyPairs() {
+  min_resolution_ = HPixResolution;
+  max_resolution_ = HPixResolution;
+  theta_pixel_begin_ = thetabin_.end();
+  theta_pair_begin_ = thetabin_.begin();
+  theta_pair_end_ = thetabin_.end();
+}
+
 double AngularCorrelation::ThetaMin(uint32_t resolution) {
   double theta_min = -1.0;
   if ((resolution < HPixResolution) ||

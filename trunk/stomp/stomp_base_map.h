@@ -85,6 +85,13 @@ class RegionMap {
 
   // Alternatively, we could import our region map from another BaseMap.  The
   // return value indicates success or failure.
+  //
+  // WARNING: Using this method will apply the source_map's regionation
+  // to the base_map, regardless of the geometry of the base_map.  This means
+  // that, if the two BaseMaps have disjoint areas, then the regionation could
+  // have unpredictable results.  Applying a Map's regionation to a ScalarMap
+  // or TreeMap derived from that Map or points within the Map will have the
+  // expected result.  Other use cases are strictly caveat emptor.
   bool InitializeRegions(BaseMap* base_map, BaseMap& source_map);
 
   // Once we have the map divided into sub-regions, there are number of things
