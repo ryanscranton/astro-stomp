@@ -637,7 +637,8 @@ void Pixel::XYBounds(double theta, uint32_t& x_min,
   etamin -= EtaOffSet;
   etamin *= DegToRad;
 
-  if (etamin <= 0.0) etamin = etamin + 2.0*Pi;
+  if (DoubleLT(etamin, 0.0)) etamin += 2.0*Pi;
+  if (DoubleGT(etamin, 2.0*Pi)) etamin -= 2.0*Pi;
 
   etamin /= 2.0*Pi;
   x_min = static_cast<uint32_t>(nx*etamin);
@@ -654,7 +655,8 @@ void Pixel::XYBounds(double theta, uint32_t& x_min,
   etamax -= EtaOffSet;
   etamax *= DegToRad;
 
-  if (etamax <= 0.0) etamax = etamax + 2.0*Pi;
+  if (DoubleLT(etamax, 0.0)) etamax += 2.0*Pi;
+  if (DoubleGT(etamax, 2.0*Pi)) etamax -= 2.0*Pi;
 
   etamax /= 2.0*Pi;
   x_max = static_cast<uint32_t>(nx*etamax);
@@ -739,7 +741,8 @@ void Pixel::XYBounds(double theta, std::vector<uint32_t>& x_min,
     etamin -= EtaOffSet;
     etamin *= DegToRad;
 
-    if (etamin <= 0.0) etamin = etamin + 2.0*Pi;
+    if (DoubleLT(etamin, 0.0)) etamin += 2.0*Pi;
+    if (DoubleGT(etamin, 2.0*Pi)) etamin -= 2.0*Pi;
 
     etamin /= 2.0*Pi;
     x_min.push_back(static_cast<uint32_t>(nx*etamin));
@@ -748,7 +751,8 @@ void Pixel::XYBounds(double theta, std::vector<uint32_t>& x_min,
     etamax -= EtaOffSet;
     etamax *= DegToRad;
 
-    if (etamax <= 0.0) etamax = etamax + 2.0*Pi;
+    if (DoubleLT(etamax, 0.0)) etamax += 2.0*Pi;
+    if (DoubleGT(etamax, 2.0*Pi)) etamax -= 2.0*Pi;
 
     etamax /= 2.0*Pi;
     x_max.push_back(static_cast<uint32_t>(nx*etamax));
@@ -798,7 +802,8 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
   etamin -= EtaOffSet;
   etamin *= DegToRad;
 
-  if (etamin <= 0.0) etamin = etamin + 2.0*Pi;
+  if (DoubleLT(etamin, 0.0)) etamin += 2.0*Pi;
+  if (DoubleGT(etamin, 2.0*Pi)) etamin -= 2.0*Pi;
 
   etamin /= 2.0*Pi;
   x_min = static_cast<uint32_t>(nx*etamin);
@@ -815,7 +820,8 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
   etamax -= EtaOffSet;
   etamax *= DegToRad;
 
-  if (etamax <= 0.0) etamax = etamax + 2.0*Pi;
+  if (DoubleLT(etamax, 0.0)) etamax += 2.0*Pi;
+  if (DoubleGT(etamax, 2.0*Pi)) etamax -= 2.0*Pi;
 
   etamax /= 2.0*Pi;
   x_max = static_cast<uint32_t>(nx*etamax);
@@ -900,6 +906,7 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
   x_min.reserve(y_max-y_min+1);
   x_max.reserve(y_max-y_min+1);
 
+  double ang_eta = ang.Eta();
   uint32_t nx = Nx0*Resolution();
   for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
     double lam = 90.0 -
@@ -908,17 +915,23 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
     double sphere_correction = 1.0 +
       lam*lam*(0.000192312 - lam*lam*(1.82764e-08 - 1.28162e-11*lam*lam));
 
-    double etamin = ang.Eta() - theta*sphere_correction;
+    double etamin = ang_eta - theta*sphere_correction;
     etamin -= EtaOffSet;
     etamin *= DegToRad;
-    if (etamin <= 0.0) etamin = etamin + 2.0*Pi;
+
+    if (DoubleLT(etamin, 0.0)) etamin += 2.0*Pi;
+    if (DoubleGT(etamin, 2.0*Pi)) etamin -= 2.0*Pi;
+
     etamin /= 2.0*Pi;
     x_min.push_back(static_cast<uint32_t>(nx*etamin));
 
     double etamax = ang.Eta() + theta*sphere_correction;
     etamax -= EtaOffSet;
     etamax *= DegToRad;
-    if (etamax <= 0.0) etamax = etamax + 2.0*Pi;
+
+    if (DoubleLT(etamax, 0.0)) etamax += 2.0*Pi;
+    if (DoubleGT(etamax, 2.0*Pi)) etamax -= 2.0*Pi;
+
     etamax /= 2.0*Pi;
     x_max.push_back(static_cast<uint32_t>(nx*etamax));
 

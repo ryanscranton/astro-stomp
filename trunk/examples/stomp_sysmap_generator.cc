@@ -131,6 +131,16 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
+  // Before starting, the internal way that we're representing the systematics
+  // map (with the SysDict STL map) relies on using the Stomp::Pixel Pixnum()
+  // method as a key.  This method only works for resolution vales of 2048 or
+  // lower, so we need to catch the user before they try using an illegal
+  // value.
+  if (FLAGS_resolution > 2048) {
+    std::cout << "Maximum resolution is 2048.  Please lower expectations.\n";
+    exit(1);
+  }
+
   // First, we read our STOMP map into a map object.  There are a couple
   // permutations based on the various map formats that are out there: with
   // or without a weight column or in the single index or double index format.
@@ -184,7 +194,6 @@ int main(int argc, char **argv) {
     std::cout << "\tParsing " << file_iter->c_str() << "...\n";
     std::ifstream systematics_file(file_iter->c_str());
     double lambda, eta, seeing, extinction, sky;
-    uint32_t pixnum;
     SysDictIterator sys_iter;
 
     while (!systematics_file.eof()) {
