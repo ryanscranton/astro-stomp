@@ -143,12 +143,23 @@ int main(int argc, char **argv) {
   std::cout << "Writing galaxy auto-correlation to " <<
     wtheta_file_name << "\n";
 
-  std::ofstream output_file(wtheta_file_name.c_str());
-  for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
-    output_file << std::setprecision(6) << iter->Theta() << " " <<
-      iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
+  if (wtheta.Write(wtheta_file_name)) {
+    std::cout << "Done.\n";
+  } else {
+    std::cout << "Failed to write results to " << wtheta_file_name << "\n";
   }
-  output_file.close();
+
+  std::string covar_file_name = "CovarWtheta_" + FLAGS_output_tag;
+  std::cout << "Writing covariance matrix to " <<
+    covar_file_name << "\n";
+
+  if (wtheta.WriteCovariance(covar_file_name)) {
+    std::cout << "Done.\n";
+  } else {
+    std::cout << "Failed to write covariance matrix to " <<
+      covar_file_name << "\n";
+  }
+
 
   return 0;
 }
