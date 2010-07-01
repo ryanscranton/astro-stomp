@@ -211,10 +211,10 @@ bool AngularBin::WithinCosBounds(double costheta) {
 
 void AngularBin::AddToPixelWtheta(double dwtheta, double dweight,
 				  int16_t region_a, int16_t region_b) {
-  if ((region_a == -1) || (region_b == -1)) {
-    pixel_wtheta_ += dwtheta;
-    pixel_weight_ += dweight;
-  } else {
+  pixel_wtheta_ += dwtheta;
+  pixel_weight_ += dweight;
+
+  if ((region_a != -1) && (region_b != -1)) {
     for (int16_t k=0;k<n_region_;k++) {
       if ((k != region_a) && (k != region_b)) {
 	pixel_wtheta_region_[k] += dwtheta;
@@ -225,9 +225,9 @@ void AngularBin::AddToPixelWtheta(double dwtheta, double dweight,
 }
 
 void AngularBin::AddToWeight(double weight, int16_t region) {
-  if (region == -1) {
-    weight_ += weight;
-  } else {
+  weight_ += weight;
+
+  if (region != -1) {
     for (int16_t k=0;k<n_region_;k++) {
       if (k != region) weight_region_[k] += weight;
     }
@@ -235,9 +235,8 @@ void AngularBin::AddToWeight(double weight, int16_t region) {
 }
 
 void AngularBin::AddToCounter(uint32_t step, int16_t region) {
-  if (region == -1) {
-    counter_ += step;
-  } else {
+  counter_ += step;
+  if (region != -1) {
     for (int16_t k=0;k<n_region_;k++) {
       if (k != region) counter_region_[k] += step;
     }

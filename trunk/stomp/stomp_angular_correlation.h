@@ -161,6 +161,21 @@ class AngularCorrelation {
   uint32_t MinResolution();
   uint32_t MaxResolution();
 
+  // The AngularBin accessor methods work fine for calculations that can be
+  // done using the data from a single AngularBin, but for the covariance
+  // matrix for our measurement we need a method that can access
+  // multiple bins at once.  This method returns the (theta_a, theta_b) of the
+  // covariance matrix.
+  double Covariance(uint8_t bin_idx_a, uint8_t bin_idx_b);
+
+  // Alternatively, we can just write the full covariance matrix to a file.
+  // The output format will be
+  //
+  //   THETA_A  THETA_B  Cov(THETA_A, THETA_B)
+  //
+  bool WriteCovariance(const std::string& output_file_name);
+  
+
  private:
   ThetaVector thetabin_;
   ThetaIterator theta_pixel_begin_;

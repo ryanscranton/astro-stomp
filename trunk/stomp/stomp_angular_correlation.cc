@@ -858,4 +858,60 @@ uint32_t AngularCorrelation::MaxResolution() {
   return max_resolution_;
 }
 
+double AngularCorrelation::Covariance(uint8_t bin_idx_a, uint8_t bin_idx_b) {
+  double covariance = 0.0;
+
+  ThetaIterator theta_a = BinIterator(bin_idx_a);
+  ThetaIterator theta_b = BinIterator(bin_idx_b);
+
+  if ((theta_a->NRegion() == theta_b->NRegion()) &&
+      (theta_a->NRegion() > 0)) {
+    // We have a valid number of regions and both bins were calculated with
+    // the same number of regions, so we calculate the jack-knife covariance.
+    uint16_t n_region = theta_a->NRegion();
+    double mean_wtheta_a = theta_a->MeanWtheta();
+    double mean_wtheta_b = theta_b->MeanWtheta();
+
+    for (uint16_t region_iter=0;region_iter<n_region;region_iter++) {
+      covariance +=
+	(theta_a->Wtheta(region_iter) - mean_wtheta_a)*
+	(theta_b->Wtheta(region_iter) - mean_wtheta_b);
+    }
+
+    covariance *= (n_region - 1.0)*(n_region - 1.0)/(1.0*n_region*n_region);
+  } else {
+    // If the above doesn't hold, then we're reduced to using Poisson errors.
+    // In this case, we only have non-zero elements on the diagonal of the
+    // covariance matrix; all others are zero by definition.
+    if (bin_idx_a == bin_idx_b) {
+      covariance = theta_a->WthetaError()*theta_a->WthetaError();
+    }
+  }
+
+  return covariance;
+}
+
+bool AngularCorrelation::WriteCovariance(const std::string& output_file_name) {
+  bool wrote_file = false;
+
+  std::ofstream output_file(output_file_name.c_str());
+
+  if (output_file.is_open()) {
+    wrote_file = true;
+
+    for (uint8_t theta_idx_a=0;theta_idx_a<thetabin_.size();theta_idx_a++) {
+      for (uint8_t theta_idx_b=0;theta_idx_b<thetabin_.size();theta_idx_b++) {
+	output_file << std::setprecision(6) <<
+	  thetabin_[theta_idx_a].Theta() << " " << 
+	  thetabin_[theta_idx_b].Theta() << " " << 
+	  Covariance(theta_idx_a, theta_idx_b) << "\n";
+      }
+    }
+
+    output_file.close();
+  }
+
+  return wrote_file;
+}
+
 } // end namespace Stomp
