@@ -216,6 +216,11 @@ bool RenderArea::readNewMap(QString& input_file) {
   bool file_exists = false;
   std::ifstream test_file(stl_input_file.c_str());
 
+  if (good_map_) {
+    base_map_->Clear();
+    delete base_map_;
+  }
+
   good_map_ = false;
 
   if (test_file) {
