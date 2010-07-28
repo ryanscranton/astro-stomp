@@ -89,6 +89,15 @@ class GeometricBound {
   virtual bool FindAngularBounds();
   virtual bool FindArea();
 
+  // With those methods implemented, we can provide some indication as to
+  // whether or not a Pixel is within the GeometricBound or give a measure as
+  // to how much of the Pixel is inside.  In the latter case, the return values
+  // run from -1.0 (completely inside GeometricBound) to 0.0 (completely outside
+  // GeometricBound).  The unconventional values allows the pixelization code
+  // in the Map class to easily sort the Pixels by inclusion.
+  bool CheckPixel(Pixel& pix);
+  double ScorePixel(Pixel& pix);
+
   // And some simple getters and setters for the values that determine the
   // area and bounds as well as a boolean to indicate whether or not the eta
   // bounds are continuous across the eta discontinuity.  We need the setters

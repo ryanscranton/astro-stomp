@@ -425,7 +425,6 @@ class Map : public BaseMap {
 		     GeometricBound& bound,
 		     uint32_t& x_min, uint32_t& x_max,
 		     uint32_t& y_min, uint32_t& y_max);
-  double _ScorePixel(GeometricBound& bound, Pixel& pix);
 
   // Three simple functions for performing the same operation on the weights
   // of all of the pixels in the current map.  These are prelude to the next

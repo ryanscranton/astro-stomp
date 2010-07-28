@@ -2312,7 +2312,7 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
             if (x==nx) x = 0;
             tmp_pix.SetPixnumFromXY(x,y);
 
-            score = _ScorePixel(bound, tmp_pix);
+            score = bound.ScorePixel(tmp_pix);
 
             if (score < -0.99999) {
               tmp_pix.SetWeight(weight);
@@ -2360,7 +2360,7 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
             for (uint32_t x=x_min;x<=x_max;x++) {
               tmp_pix.SetPixnumFromXY(x,y);
 
-              score = _ScorePixel(bound, tmp_pix);
+              score = bound.ScorePixel(tmp_pix);
 
               if (score < -0.99999) {
                 tmp_pix.SetWeight(weight);
@@ -2471,10 +2471,10 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 
       // This if statement checks positions within the pixel against the
       // footprint bound.
-      if (DoubleLT(_ScorePixel(bound, tmp_pix), 0.0)) {
+      if (DoubleLT(bound.ScorePixel(tmp_pix), 0.0)) {
 	// std::cout << m << "," << y << ": " <<
 	// tmp_pix.Lambda() << ", " << tmp_pix.Eta() << ": " <<
-	// _ScorePixel(bound, tmp_pix) << "\n";
+	// bound.ScorePixel(tmp_pix) << "\n";
         found_pixel = true;
         m = nx_pix + 1;
       }
@@ -2508,7 +2508,7 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 
       // This if statement checks positions within the pixel against the
       // footprint bound.
-      if (_ScorePixel(bound, tmp_pix) < -0.000001) {
+      if (bound.ScorePixel(tmp_pix) < -0.000001) {
         found_pixel = true;
         m = nx_pix + 1;
       }
@@ -2543,7 +2543,7 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 
       // This if statement checks positions within the pixel against the
       // footprint bound.
-      if (_ScorePixel(bound, tmp_pix) < -0.000001) {
+      if (bound.ScorePixel(tmp_pix) < -0.000001) {
         found_pixel = true;
         y = y_max + 1;
       }
@@ -2585,7 +2585,7 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
 
       // This if statement checks positions within the pixel against the
       // footprint bound.
-      if (_ScorePixel(bound, tmp_pix) < -0.000001) {
+      if (bound.ScorePixel(tmp_pix) < -0.000001) {
         found_pixel = true;
         y = y_max + 1;
       }
@@ -2608,83 +2608,6 @@ bool Map::_FindXYBounds(const uint8_t resolution_level,
   // ", Y: " << y_min << " - " << y_max << "\n";
 
   return !boundary_failure;
-}
-
-double Map::_ScorePixel(GeometricBound& bound, Pixel& pix) {
-
-  double inv_nx = 1.0/static_cast<double>(Nx0*pix.Resolution());
-  double inv_ny = 1.0/static_cast<double>(Ny0*pix.Resolution());
-  double x = static_cast<double>(pix.PixelX());
-  double y = static_cast<double>(pix.PixelY());
-
-  double lammid = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.5)*inv_ny);
-  double lammin = 90.0 - RadToDeg*acos(1.0-2.0*(y+1.0)*inv_ny);
-  double lammax = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.0)*inv_ny);
-  double lam_quart = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.75)*inv_ny);
-  double lam_three = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.25)*inv_ny);
-
-  double etamid = RadToDeg*(2.0*Pi*(x+0.5))*inv_nx + EtaOffSet;
-  if (DoubleGE(etamid, 180.0)) etamid -= 360.0;
-  if (DoubleLE(etamid, -180.0)) etamid += 360.0;
-
-  double etamin = RadToDeg*(2.0*Pi*(x+0.0))*inv_nx + EtaOffSet;
-  if (DoubleGE(etamin, 180.0)) etamin -= 360.0;
-  if (DoubleLE(etamin, -180.0)) etamin += 360.0;
-
-  double etamax = RadToDeg*(2.0*Pi*(x+1.0))*inv_nx + EtaOffSet;
-  if (DoubleGE(etamax, 180.0)) etamax -= 360.0;
-  if (DoubleLE(etamax, -180.0)) etamax += 360.0;
-
-  double eta_quart = RadToDeg*(2.0*Pi*(x+0.25))*inv_nx + EtaOffSet;
-  if (DoubleGE(eta_quart, 180.0)) eta_quart -= 360.0;
-  if (DoubleLE(eta_quart, -180.0)) eta_quart += 360.0;
-
-  double eta_three = RadToDeg*(2.0*Pi*(x+0.75))*inv_nx + EtaOffSet;
-  if (DoubleGE(eta_three, 180.0)) eta_three -= 360.0;
-  if (DoubleLE(eta_three, -180.0)) eta_three += 360.0;
-
-  double score = 0.0;
-
-  AngularCoordinate ang(lammid, etamid, AngularCoordinate::Survey);
-  if (bound.CheckPoint(ang)) score -= 4.0;
-
-  ang.SetSurveyCoordinates(lam_quart,etamid);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_three,etamid);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lammid,eta_quart);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lammid,eta_quart);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-
-  ang.SetSurveyCoordinates(lam_quart,eta_quart);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_three,eta_quart);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_quart,eta_three);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-  ang.SetSurveyCoordinates(lam_three,eta_three);
-  if (bound.CheckPoint(ang)) score -= 3.0;
-
-  ang.SetSurveyCoordinates(lammid,etamax);
-  if (bound.CheckPoint(ang)) score -= 2.0;
-  ang.SetSurveyCoordinates(lammid,etamin);
-  if (bound.CheckPoint(ang)) score -= 2.0;
-  ang.SetSurveyCoordinates(lammax,etamid);
-  if (bound.CheckPoint(ang)) score -= 2.0;
-  ang.SetSurveyCoordinates(lammin,etamid);
-  if (bound.CheckPoint(ang)) score -= 2.0;
-
-  ang.SetSurveyCoordinates(lammax,etamax);
-  if (bound.CheckPoint(ang)) score -= 1.0;
-  ang.SetSurveyCoordinates(lammax,etamin);
-  if (bound.CheckPoint(ang)) score -= 1.0;
-  ang.SetSurveyCoordinates(lammin,etamax);
-  if (bound.CheckPoint(ang)) score -= 1.0;
-  ang.SetSurveyCoordinates(lammin,etamin);
-  if (bound.CheckPoint(ang)) score -= 1.0;
-
-  return score/40.0;
 }
 
 bool Map::IngestMap(PixelVector& pix, bool destroy_copy) {
