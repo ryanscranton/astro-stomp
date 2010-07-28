@@ -119,20 +119,20 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map, uint16_t n_region,
     // std::cout << "\tBreaking up " << stomp_map->Area() <<
     // " square degrees into " << n_region << " equal-area pieces.\n";
 
-    std::vector<uint32_t> tmp_stripe;
+    std::map<uint32_t, bool> stripe_dict;
     tmp_stripe.reserve(region_pix.size());
     for (PixelIterator iter=region_pix.begin();
 	 iter!=region_pix.end();++iter) {
-      tmp_stripe.push_back(iter->Stripe(region_resolution_));
+      stripe_dict[iter->Stripe(region_resolution_)] = true;
     }
 
-    sort(tmp_stripe.begin(), tmp_stripe.end());
     std::vector<uint32_t> stripe;
-    stripe.push_back(tmp_stripe[0]);
-    for (uint32_t i=1;i<tmp_stripe.size();i++)
-      if (tmp_stripe[i] != tmp_stripe[i-1]) stripe.push_back(tmp_stripe[i]);
+    for (std::map<uint32_t, bool>::iterator iter=stripe_dict.begin();
+	 iter!=stripe_dict.end();++iter) {
+      stripe.push_back(iter->first);
+    }
 
-    tmp_stripe.clear();
+    stripe_dict.clear();
 
     sort(stripe.begin(), stripe.end());
 
