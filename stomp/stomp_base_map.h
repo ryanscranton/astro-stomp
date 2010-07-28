@@ -29,7 +29,7 @@ namespace Stomp {
 
 class AngularCoordinate;  // class declaration in stomp_angular_coordinate.h
 class Pixel;              // class declaration in stomp_pixel.h
-class Section;
+class GeometricBound;     // class declaration in stomp_geometry.h
 class RegionMap;
 class BaseMap;
 
@@ -42,19 +42,18 @@ typedef RegionAreaDict::iterator RegionAreaIterator;
 typedef std::pair<RegionAreaIterator, RegionAreaIterator> RegionAreaPair;
 
 
-class Section {
-  // This is barely a class.  Really, it's just a small object that's necessary
-  // for constructing the sub-regions in the *Map classes.
- public:
-  Section();
-  ~Section();
-  void SetMinStripe(uint32_t stripe);
-  void SetMaxStripe(uint32_t stripe);
-  uint32_t MinStripe();
-  uint32_t MaxStripe();
+struct section {
+  // Simple structure to hold our section data.  A section is defined by a
+  // minimum and maximum Pixel::Stripe value.
+  uint32_t min_stripe;
+  uint32_t max_stripe;
+};
 
- private:
-  uint32_t stripe_min_, stripe_max_;
+class RegionBound {
+  // In general, RegionMaps are created in such a way as to make the size and
+  // shape of the jack-knife sections as regular as possible.  However, there
+  // may be additional geometric information that we want to consider when 
+
 };
 
 class RegionMap {
@@ -125,6 +124,11 @@ class RegionMap {
   // Return iterators for the set of RegionMap objects.
   RegionIterator Begin();
   RegionIterator End();
+
+  // If we are splitting the area of a given BaseMap without reference to an
+  // external BaseMap, then we need some internal methods to help make sure
+  // that the division of the area is done properly.
+  void _SectionizeArea(PixelVector& pix, std::vector<Section>& section);
 
  private:
   RegionDict region_map_;
