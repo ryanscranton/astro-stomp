@@ -53,6 +53,166 @@ bool GeometricBound::FindArea() {
   return HPixArea*MaxSuperpixnum;
 }
 
+bool GeometricBound::CheckPixel(Pixel& pix) {
+  double inv_nx = 1.0/static_cast<double>(Nx0*pix.Resolution());
+  double inv_ny = 1.0/static_cast<double>(Ny0*pix.Resolution());
+  double x = static_cast<double>(pix.PixelX());
+  double y = static_cast<double>(pix.PixelY());
+
+  double lammid = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.5)*inv_ny);
+  double lammin = 90.0 - RadToDeg*acos(1.0-2.0*(y+1.0)*inv_ny);
+  double lammax = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.0)*inv_ny);
+  double lam_quart = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.75)*inv_ny);
+  double lam_three = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.25)*inv_ny);
+
+  double etamid = RadToDeg*(2.0*Pi*(x+0.5))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamid, 180.0)) etamid -= 360.0;
+  if (DoubleLE(etamid, -180.0)) etamid += 360.0;
+
+  double etamin = RadToDeg*(2.0*Pi*(x+0.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamin, 180.0)) etamin -= 360.0;
+  if (DoubleLE(etamin, -180.0)) etamin += 360.0;
+
+  double etamax = RadToDeg*(2.0*Pi*(x+1.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamax, 180.0)) etamax -= 360.0;
+  if (DoubleLE(etamax, -180.0)) etamax += 360.0;
+
+  double eta_quart = RadToDeg*(2.0*Pi*(x+0.25))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_quart, 180.0)) eta_quart -= 360.0;
+  if (DoubleLE(eta_quart, -180.0)) eta_quart += 360.0;
+
+  double eta_three = RadToDeg*(2.0*Pi*(x+0.75))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_three, 180.0)) eta_three -= 360.0;
+  if (DoubleLE(eta_three, -180.0)) eta_three += 360.0;
+
+  bool within_bound = false;
+
+  AngularCoordinate ang(lammid, etamid, AngularCoordinate::Survey);
+  if (CheckPoint(ang)) within_bound = true;
+
+  if (!within_bound) {
+    ang.SetSurveyCoordinates(lam_quart,etamid);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lam_three,etamid);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammid,eta_quart);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammid,eta_quart);
+    if (CheckPoint(ang)) within_bound = true;
+  }
+
+  if (!within_bound) {
+    ang.SetSurveyCoordinates(lam_quart,eta_quart);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lam_three,eta_quart);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lam_quart,eta_three);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lam_three,eta_three);
+    if (CheckPoint(ang)) within_bound = true;
+  }
+
+  if (!within_bound) {
+    ang.SetSurveyCoordinates(lammid,etamax);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammid,etamin);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammax,etamid);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammin,etamid);
+    if (CheckPoint(ang)) within_bound = true;
+  }
+
+  if (!within_bound) {
+    ang.SetSurveyCoordinates(lammax,etamax);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammax,etamin);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammin,etamax);
+    if (CheckPoint(ang)) within_bound = true;
+    ang.SetSurveyCoordinates(lammin,etamin);
+    if (CheckPoint(ang)) within_bound = true;
+  }
+
+  return within_bound;
+}
+
+double GeometricBound::ScorePixel(Pixel& pix) {
+  double inv_nx = 1.0/static_cast<double>(Nx0*pix.Resolution());
+  double inv_ny = 1.0/static_cast<double>(Ny0*pix.Resolution());
+  double x = static_cast<double>(pix.PixelX());
+  double y = static_cast<double>(pix.PixelY());
+
+  double lammid = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.5)*inv_ny);
+  double lammin = 90.0 - RadToDeg*acos(1.0-2.0*(y+1.0)*inv_ny);
+  double lammax = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.0)*inv_ny);
+  double lam_quart = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.75)*inv_ny);
+  double lam_three = 90.0 - RadToDeg*acos(1.0-2.0*(y+0.25)*inv_ny);
+
+  double etamid = RadToDeg*(2.0*Pi*(x+0.5))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamid, 180.0)) etamid -= 360.0;
+  if (DoubleLE(etamid, -180.0)) etamid += 360.0;
+
+  double etamin = RadToDeg*(2.0*Pi*(x+0.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamin, 180.0)) etamin -= 360.0;
+  if (DoubleLE(etamin, -180.0)) etamin += 360.0;
+
+  double etamax = RadToDeg*(2.0*Pi*(x+1.0))*inv_nx + EtaOffSet;
+  if (DoubleGE(etamax, 180.0)) etamax -= 360.0;
+  if (DoubleLE(etamax, -180.0)) etamax += 360.0;
+
+  double eta_quart = RadToDeg*(2.0*Pi*(x+0.25))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_quart, 180.0)) eta_quart -= 360.0;
+  if (DoubleLE(eta_quart, -180.0)) eta_quart += 360.0;
+
+  double eta_three = RadToDeg*(2.0*Pi*(x+0.75))*inv_nx + EtaOffSet;
+  if (DoubleGE(eta_three, 180.0)) eta_three -= 360.0;
+  if (DoubleLE(eta_three, -180.0)) eta_three += 360.0;
+
+  double score = 0.0;
+
+  AngularCoordinate ang(lammid, etamid, AngularCoordinate::Survey);
+  if (CheckPoint(ang)) score -= 4.0;
+
+  ang.SetSurveyCoordinates(lam_quart,etamid);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,etamid);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lammid,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lammid,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+
+  ang.SetSurveyCoordinates(lam_quart,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,eta_quart);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_quart,eta_three);
+  if (CheckPoint(ang)) score -= 3.0;
+  ang.SetSurveyCoordinates(lam_three,eta_three);
+  if (CheckPoint(ang)) score -= 3.0;
+
+  ang.SetSurveyCoordinates(lammid,etamax);
+  if (CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammid,etamin);
+  if (CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammax,etamid);
+  if (CheckPoint(ang)) score -= 2.0;
+  ang.SetSurveyCoordinates(lammin,etamid);
+  if (CheckPoint(ang)) score -= 2.0;
+
+  ang.SetSurveyCoordinates(lammax,etamax);
+  if (CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammax,etamin);
+  if (CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammin,etamax);
+  if (CheckPoint(ang)) score -= 1.0;
+  ang.SetSurveyCoordinates(lammin,etamin);
+  if (CheckPoint(ang)) score -= 1.0;
+
+  return score/40.0;
+}
+
 void GeometricBound::SetArea(double input_area) {
   area_ = input_area;
 }
