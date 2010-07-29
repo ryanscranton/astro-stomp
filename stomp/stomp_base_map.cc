@@ -17,35 +17,10 @@
 // jack-knife errors for our various statistical analyses.
 
 #include "stomp_core.h"
+#include "stomp_geometry.h"
 #include "stomp_base_map.h"
 
 namespace Stomp {
-
-Section::Section() {
-  stripe_min_ = -1;
-  stripe_max_ = -1;
-}
-
-Section::~Section() {
-  stripe_min_ = -1;
-  stripe_max_ = -1;
-}
-
-void Section::SetMinStripe(uint32_t stripe) {
-  stripe_min_ = stripe;
-}
-
-void Section::SetMaxStripe(uint32_t stripe) {
-  stripe_max_ = stripe;
-}
-
-uint32_t Section::MinStripe() {
-  return stripe_min_;
-}
-
-uint32_t Section::MaxStripe() {
-  return stripe_max_;
-}
 
 RegionMap::RegionMap() {
   ClearRegions();
@@ -59,55 +34,24 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map, uint16_t n_region,
 				      uint32_t region_resolution) {
   ClearRegions();
 
-  // If we have the default value for the resolution, we need to attempt to
-  // find a reasonable value for the resolution based on the area.  We want to
-  // shoot for something along the lines of 50 pixels per region to give us a
-  // fair chance of getting equal areas without using too many pixels.
-  if (region_resolution == 0) {
-    double target_area = stomp_map->Area()/(50*n_region);
-    region_resolution = Stomp::HPixResolution;
-    while ((Pixel::PixelArea(region_resolution) > target_area) &&
-	   (region_resolution < 1024)) region_resolution <<= 1;
-    // std::cout << "Automatically setting region resolution to " <<
-    // region_resolution << " based on requested n_region\n";
-  }
+  _FindRegionResolution(stomp_map, n_region, region_resolution);
 
-  if (region_resolution > 256) {
-    std::cout <<
-      "WARNING: Attempting to generate region map with resolution " <<
-      "above 256!\n";
-    std::cout << "This may end badly.\n";
-    if (region_resolution > 2048) {
-      std::cout <<
-	"FAIL: Ok, the resolution is above 2048.  Can't do this.  Try again\n";
-      exit(1);
-    }
-  }
+  PixelVector coverage_pix;
+  stomp_map->Coverage(coverage_pix, region_resolution_);
 
-  if (region_resolution > stomp_map->MaxResolution()) {
-    std::cout << "WARNING: Re-setting region map resolution to " <<
-      stomp_map->MaxResolution() << " to satisfy input map limits.\n";
-    region_resolution = stomp_map->MaxResolution();
-  }
-
-  region_resolution_ = region_resolution;
-  //std::cout << "Generating regionation map at " << region_resolution_ << "\n";
-
-  PixelVector region_pix;
-  stomp_map->Coverage(region_pix, region_resolution_);
-
-  // std::cout << "Creating region map with " << region_pix.size() <<
+  // std::cout << "Creating region map with " << coverage_pix.size() <<
   // " pixels...\n";
 
-  if (static_cast<uint32_t>(n_region) > region_pix.size()) {
+  if (static_cast<uint32_t>(n_region) > coverage_pix.size()) {
     std::cout << "WARNING: Exceeded maximum possible regions.  Setting to " <<
-      region_pix.size() << " regions.\n";
-    n_region = static_cast<uint32_t>(region_pix.size());
+      coverage_pix.size() << " regions.\n";
+    n_region = static_cast<uint32_t>(coverage_pix.size());
   }
 
-  if (static_cast<uint32_t>(n_region) == region_pix.size()) {
+  if (static_cast<uint32_t>(n_region) == coverage_pix.size()) {
     int16_t i=0;
-    for (PixelIterator iter=region_pix.begin();iter!=region_pix.end();++iter) {
+    for (PixelIterator iter=coverage_pix.begin();
+	 iter!=coverage_pix.end();++iter) {
       region_map_[iter->Pixnum()] = i;
       i++;
     }
@@ -116,113 +60,17 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map, uint16_t n_region,
     std::cout << "\tThis will be dead easy, " <<
       "but won't guarantee an equal area solution...\n";
   } else {
-    // std::cout << "\tBreaking up " << stomp_map->Area() <<
-    // " square degrees into " << n_region << " equal-area pieces.\n";
+    // First, find the unique stripes in our BaseMap.
+    std::vector<uint32_t> unique_stripes;
+    _FindUniqueStripes(coverage_pix, unique_stripes);
 
-    std::map<uint32_t, bool> stripe_dict;
-    tmp_stripe.reserve(region_pix.size());
-    for (PixelIterator iter=region_pix.begin();
-	 iter!=region_pix.end();++iter) {
-      stripe_dict[iter->Stripe(region_resolution_)] = true;
-    }
+    // Now, find the break-points in our stripes so that our regions are
+    // roughly square.
+    SectionVector sectionVec;
+    _FindSections(unique_stripes, stomp_map->Area(), n_region, sectionVec);
 
-    std::vector<uint32_t> stripe;
-    for (std::map<uint32_t, bool>::iterator iter=stripe_dict.begin();
-	 iter!=stripe_dict.end();++iter) {
-      stripe.push_back(iter->first);
-    }
-
-    stripe_dict.clear();
-
-    sort(stripe.begin(), stripe.end());
-
-    std::vector<Section> super_section;
-
-    Section tmp_section;
-    tmp_section.SetMinStripe(stripe[0]);
-    tmp_section.SetMaxStripe(stripe[0]);
-
-    super_section.push_back(tmp_section);
-
-    for (uint32_t i=1,j=0;i<stripe.size();i++) {
-      if (stripe[i] == stripe[i-1] + 1) {
-        super_section[j].SetMaxStripe(stripe[i]);
-      } else {
-        tmp_section.SetMinStripe(stripe[i]);
-        tmp_section.SetMaxStripe(stripe[i]);
-        super_section.push_back(tmp_section);
-        j++;
-      }
-    }
-
-    double region_length = sqrt(stomp_map->Area()/n_region);
-    uint8_t region_width =
-        static_cast<uint8_t>(region_length*Stomp::Nx0*region_resolution_/360.0);
-    if (region_width == 0) region_width = 1;
-
-    std::vector<Section> section;
-
-    int32_t j = -1;
-    for (std::vector<Section>::iterator iter=super_section.begin();
-         iter!=super_section.end();++iter) {
-
-      for (uint32_t stripe_iter=iter->MinStripe(),section_iter=region_width;
-           stripe_iter<=iter->MaxStripe();stripe_iter++) {
-        if (section_iter == region_width) {
-          tmp_section.SetMinStripe(stripe_iter);
-          tmp_section.SetMaxStripe(stripe_iter);
-          section.push_back(tmp_section);
-          section_iter = 1;
-          j++;
-        } else {
-          section[j].SetMaxStripe(stripe_iter);
-          section_iter++;
-        }
-      }
-    }
-
-    double region_area = 0.0, running_area = 0.0;
-    double unit_area = Pixel::PixelArea(region_resolution_);
-    uint32_t n_pixel = 0;
-    int16_t region_iter = 0;
-    double mean_area = stomp_map->Area()/region_pix.size();
-    double area_break = stomp_map->Area()/n_region;
-
-    // std::cout << "\tAssigning areas...\n\n";
-    // std::cout << "\tSample  Pixels  Unmasked Area  Masked Area\n";
-    // std::cout << "\t------  ------  -------------  -----------\n";
-    for (std::vector<Section>::iterator section_iter=section.begin();
-         section_iter!=section.end();++section_iter) {
-
-      for (PixelIterator iter=region_pix.begin();
-	   iter!=region_pix.end();++iter) {
-        if ((iter->Stripe(region_resolution_) >=
-	     section_iter->MinStripe()) &&
-            (iter->Stripe(region_resolution_) <=
-	     section_iter->MaxStripe())) {
-          if ((region_area + 0.75*mean_area < area_break*(region_iter+1)) ||
-	      (region_iter == n_region-1)) {
-            region_area += iter->Weight()*unit_area;
-            region_map_[iter->Pixnum()] = region_iter;
-            running_area += iter->Weight()*unit_area;
-            n_pixel++;
-          } else {
-	    // std::cout << "\t" << region_iter << "\t" << n_pixel << "\t" <<
-	    // n_pixel*unit_area << "\t\t" << running_area << "\n";
-	    region_area_[region_iter] = running_area;
-
-            region_iter++;
-            region_area += iter->Weight()*unit_area;
-            region_map_[iter->Pixnum()] = region_iter;
-            running_area = iter->Weight()*unit_area;
-            n_pixel = 1;
-          }
-        }
-      }
-    }
-    region_area_[region_iter] = running_area;
-    // std::cout << "\t" << region_iter << "\t" << n_pixel << "\t" <<
-    // n_pixel*unit_area << "\t\t" << running_area << "\n";
+    // And regionate.
+    _Regionate(coverage_pix, sectionVec, n_region);
   }
 
   std::vector<uint32_t> region_count_check;
@@ -275,6 +123,165 @@ bool RegionMap::InitializeRegions(BaseMap* base_map, BaseMap& stomp_map) {
   }
 
   return initialized_region_map;
+}
+
+void RegionMap::_FindRegionResolution(BaseMap* base_map, uint16_t n_region,
+				      uint32_t region_resolution) {
+  // If we have the default value for the resolution, we need to attempt to
+  // find a reasonable value for the resolution based on the area.  We want to
+  // shoot for something along the lines of 50 pixels per region to give us a
+  // fair chance of getting equal areas without using too many pixels.
+  if (region_resolution == 0) {
+    double target_area = base_map->Area()/(50*n_region);
+    region_resolution = Stomp::HPixResolution;
+    while ((Pixel::PixelArea(region_resolution) > target_area) &&
+	   (region_resolution < 1024)) region_resolution <<= 1;
+    // std::cout << "Automatically setting region resolution to " <<
+    // region_resolution << " based on requested n_region\n";
+  }
+
+  if (region_resolution > 256) {
+    std::cout <<
+      "WARNING: Attempting to generate region map with resolution " <<
+      "above 256!\n";
+    std::cout << "This may end badly.\n";
+    if (region_resolution > 2048) {
+      std::cout <<
+	"FAIL: Ok, the resolution is above 2048.  Can't do this.  Try again\n";
+      exit(1);
+    }
+  }
+
+  if (region_resolution > base_map->MaxResolution()) {
+    std::cout << "WARNING: Re-setting region map resolution to " <<
+      base_map->MaxResolution() << " to satisfy input map limits.\n";
+    region_resolution = base_map->MaxResolution();
+  }
+
+  region_resolution_ = region_resolution;
+}
+
+void RegionMap::_FindUniqueStripes(PixelVector& coverage_pix,
+				   std::vector<uint32_t>& unique_stripes) {
+  if (!unique_stripes.empty()) unique_stripes.clear();
+
+  std::map<uint32_t, bool> stripe_dict;
+  for (PixelIterator iter=coverage_pix.begin();
+       iter!=coverage_pix.end();++iter) {
+    stripe_dict[iter->Stripe(region_resolution_)] = true;
+  }
+
+  for (std::map<uint32_t, bool>::iterator iter=stripe_dict.begin();
+       iter!=stripe_dict.end();++iter) {
+    unique_stripes.push_back(iter->first);
+  }
+
+  stripe_dict.clear();
+
+  sort(unique_stripes.begin(), unique_stripes.end());
+}
+
+void RegionMap::_FindSections(std::vector<uint32_t>& unique_stripes,
+			      double base_map_area, uint8_t n_region,
+			      SectionVector& sectionVec) {
+  // First, we need to find the contiguous sets of stripes.
+  std::vector<section> contiguous_section;
+
+  section tmp_section;
+  tmp_section.min_stripe = unique_stripes[0];
+  tmp_section.max_stripe = unique_stripes[0];
+
+  contiguous_section.push_back(tmp_section);
+
+  for (uint32_t i=1,j=0;i<unique_stripes.size();i++) {
+    if (unique_stripes[i] == unique_stripes[i-1] + 1) {
+      contiguous_section[j].max_stripe = unique_stripes[i];
+    } else {
+      tmp_section.min_stripe = unique_stripes[i];
+      tmp_section.max_stripe = unique_stripes[i];
+      contiguous_section.push_back(tmp_section);
+      j++;
+    }
+  }
+
+  // Now work out the width of the sections based on the rough dimensions of
+  // the BaseMap.
+  double region_length = sqrt(base_map_area/n_region);
+  uint8_t region_width =
+    static_cast<uint8_t>(region_length*Nx0*region_resolution_/360.0);
+  if (region_width == 0) region_width = 1;
+
+  // Finally, we can apply this region width to our sections to find our
+  // final set of breakpoints.
+  int32_t j = -1;
+  for (std::vector<section>::iterator iter=contiguous_section.begin();
+       iter!=contiguous_section.end();++iter) {
+
+    for (uint32_t stripe_iter=iter->min_stripe, section_iter=region_width;
+	 stripe_iter<=iter->max_stripe;stripe_iter++) {
+      if (section_iter == region_width) {
+	tmp_section.min_stripe = stripe_iter;
+	tmp_section.max_stripe = stripe_iter;
+	sectionVec.push_back(tmp_section);
+	section_iter = 1;
+	j++;
+      } else {
+	sectionVec[j].max_stripe = stripe_iter;
+	section_iter++;
+      }
+    }
+  }
+}
+
+void RegionMap::_Regionate(PixelVector& coverage_pix,
+			   SectionVector& sectionVec, uint8_t n_region,
+			   uint8_t starting_region_index) {
+  double region_area = 0.0, running_area = 0.0;
+  double unit_area = Pixel::PixelArea(region_resolution_);
+  double base_map_area = 0.0;
+  for (PixelIterator iter=coverage_pix.begin();
+       iter!=coverage_pix.end();++iter) {
+    base_map_area += unit_area*iter->Weight();
+  }
+
+  uint32_t n_pixel = 0;
+  int16_t region_iter = starting_region_index;
+  double mean_area = base_map_area/coverage_pix.size();
+  double area_break = base_map_area/n_region;
+
+  // std::cout << "\tAssigning areas...\n\n";
+  // std::cout << "\tSample  Pixels  Unmasked Area  Masked Area\n";
+  // std::cout << "\t------  ------  -------------  -----------\n";
+  for (std::vector<section>::iterator section_iter=sectionVec.begin();
+       section_iter!=sectionVec.end();++section_iter) {
+
+    for (PixelIterator iter=coverage_pix.begin();
+	 iter!=coverage_pix.end();++iter) {
+      if ((iter->Stripe(region_resolution_) >= section_iter->min_stripe) &&
+	  (iter->Stripe(region_resolution_) <= section_iter->max_stripe)) {
+	if ((region_area + 0.75*mean_area < area_break*(region_iter+1)) ||
+	    (region_iter == n_region-1)) {
+	  region_area += iter->Weight()*unit_area;
+	  region_map_[iter->Pixnum()] = region_iter;
+	  running_area += iter->Weight()*unit_area;
+	  n_pixel++;
+	} else {
+	  // std::cout << "\t" << region_iter << "\t" << n_pixel << "\t" <<
+	  // n_pixel*unit_area << "\t\t" << running_area << "\n";
+	  region_area_[region_iter] = running_area;
+
+	  region_iter++;
+	  region_area += iter->Weight()*unit_area;
+	  region_map_[iter->Pixnum()] = region_iter;
+	  running_area = iter->Weight()*unit_area;
+	  n_pixel = 1;
+	}
+      }
+    }
+  }
+  region_area_[region_iter] = running_area;
+  // std::cout << "\t" << region_iter << "\t" << n_pixel << "\t" <<
+  // n_pixel*unit_area << "\t\t" << running_area << "\n";
 }
 
 int16_t RegionMap::FindRegion(AngularCoordinate& ang) {

@@ -22,6 +22,7 @@
 #include <stdint.h>
 #include <iostream>
 #include "stomp_core.h"
+#include "stomp_pixel.h"
 #include "stomp_angular_coordinate.h"
 #include "stomp_geometry.h"
 
