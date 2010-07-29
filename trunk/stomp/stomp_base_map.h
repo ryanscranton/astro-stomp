@@ -49,6 +49,8 @@ struct section {
   uint32_t max_stripe;
 };
 
+typedef std::vector<section> SectionVector;
+
 class RegionBound {
   // In general, RegionMaps are created in such a way as to make the size and
   // shape of the jack-knife sections as regular as possible.  However, there
@@ -93,6 +95,36 @@ class RegionMap {
   // expected result.  Other use cases are strictly caveat emptor.
   bool InitializeRegions(BaseMap* base_map, BaseMap& source_map);
 
+  // Some internal methods we'll use to handle the actual work of regionation.
+  //
+  // First up, if we aren't given a specific resolution to use for regionation,
+  // we need to find one.
+  void _FindRegionResolution(BaseMap* base_map, uint16_t n_region,
+			     uint32_t region_resolution);
+
+  // Once we have our regionation resolution worked out, the various methods
+  // will generate a set of uniform resolution coverage pixels for us to
+  // regionate.  The key to making the regions roughly square is to figure out
+  // how wide the BaseMap is relative to its length.  To characterize this,
+  // we use the Stripe method from the Pixel class.  First we need to find the
+  // set of stripes that span our BaseMap.
+  void _FindUniqueStripes(PixelVector& coverage_pix,
+			  std::vector<uint32_t>& unique_stripes);
+
+  // Given this list of stripes, we can work out where the break points need
+  // to be to make the regions roughly square.  This is complicated a bit by
+  // the possibility that the BaseMap area isn't simply connected, but this
+  // is something we can handle.  This will yield a vector of sections that
+  // encode our breakpoints.
+  void _FindSections(std::vector<uint32_t>& unique_stripes,
+		     double base_map_area, uint8_t n_region,
+		     SectionVector& sectionVec);
+
+  // Finally, with our sections defined, we can take our vector of coverage
+  // pixels and regionate them.
+  void _Regionate(PixelVector& coverage_pix, SectionVector& sectionVec,
+		  uint8_t n_region, uint8_t starting_region_index = 0);
+
   // Once we have the map divided into sub-regions, there are number of things
   // we might do.  The simplest would be to take in an AngularCoordinate object
   // and return the index of the sub-region that contained that point.  If
@@ -124,11 +156,6 @@ class RegionMap {
   // Return iterators for the set of RegionMap objects.
   RegionIterator Begin();
   RegionIterator End();
-
-  // If we are splitting the area of a given BaseMap without reference to an
-  // external BaseMap, then we need some internal methods to help make sure
-  // that the division of the area is done properly.
-  void _SectionizeArea(PixelVector& pix, std::vector<Section>& section);
 
  private:
   RegionDict region_map_;
