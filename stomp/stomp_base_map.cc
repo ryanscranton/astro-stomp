@@ -587,6 +587,16 @@ int16_t RegionMap::FindRegion(AngularCoordinate& ang) {
 	  region_map_[tmp_pix.Pixnum()] : -1);
 }
 
+int16_t RegionMap::FindRegion(Pixel& pix) {
+  if (pix.Resolution() >= region_resolution_) {
+    uint32_t pix_idx = pix.SuperPix(region_resolution_);
+    return (region_map_.find(pix_idx) != region_map_.end() ?
+	    region_map_[pix_idx] : -1);
+  } else {
+    return -1;
+  }
+}
+
 void RegionMap::ClearRegions() {
   region_map_.clear();
   n_region_ = 0;
@@ -705,6 +715,10 @@ bool BaseMap::InitializeRegions(BaseMap& base_map) {
 
 int16_t BaseMap::FindRegion(AngularCoordinate& ang) {
   return region_map_.FindRegion(ang);
+}
+
+int16_t BaseMap::FindRegion(Pixel& pix) {
+  return region_map_.FindRegion(pix);
 }
 
 void BaseMap::ClearRegions() {

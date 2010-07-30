@@ -227,6 +227,8 @@ class AngularCorrelation(_object):
     def FindPairAutoCorrelation(*args): return _stomp.AngularCorrelation_FindPairAutoCorrelation(*args)
     def FindPairCrossCorrelation(*args): return _stomp.AngularCorrelation_FindPairCrossCorrelation(*args)
     def Write(*args): return _stomp.AngularCorrelation_Write(*args)
+    def UseOnlyPixels(*args): return _stomp.AngularCorrelation_UseOnlyPixels(*args)
+    def UseOnlyPairs(*args): return _stomp.AngularCorrelation_UseOnlyPairs(*args)
     def ThetaMin(*args): return _stomp.AngularCorrelation_ThetaMin(*args)
     def ThetaMax(*args): return _stomp.AngularCorrelation_ThetaMax(*args)
     def Sin2ThetaMin(*args): return _stomp.AngularCorrelation_Sin2ThetaMin(*args)
@@ -238,6 +240,8 @@ class AngularCorrelation(_object):
     def NBins(*args): return _stomp.AngularCorrelation_NBins(*args)
     def MinResolution(*args): return _stomp.AngularCorrelation_MinResolution(*args)
     def MaxResolution(*args): return _stomp.AngularCorrelation_MaxResolution(*args)
+    def Covariance(*args): return _stomp.AngularCorrelation_Covariance(*args)
+    def WriteCovariance(*args): return _stomp.AngularCorrelation_WriteCovariance(*args)
     def Bins(self):
         "Returns an iterator for Bins."
         return GenericIterator(
@@ -464,6 +468,22 @@ Pixel_ResolveSuperPixel = _stomp.Pixel_ResolveSuperPixel
 Pixel_ResolvePixel = _stomp.Pixel_ResolvePixel
 Pixel_FindUniquePixels = _stomp.Pixel_FindUniquePixels
 
+class PixelOrdering(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, PixelOrdering, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, PixelOrdering, name)
+    __repr__ = _swig_repr
+    def __call__(*args): return _stomp.PixelOrdering___call__(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_PixelOrdering(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_PixelOrdering
+    __del__ = lambda self : None;
+PixelOrdering_swigregister = _stomp.PixelOrdering_swigregister
+PixelOrdering_swigregister(PixelOrdering)
+
 class ScalarPixel(Pixel):
     __swig_setmethods__ = {}
     for _s in [Pixel]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -494,24 +514,52 @@ class ScalarPixel(Pixel):
 ScalarPixel_swigregister = _stomp.ScalarPixel_swigregister
 ScalarPixel_swigregister(ScalarPixel)
 
-class Section(_object):
+class section(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, Section, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, section, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, Section, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, section, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["min_stripe"] = _stomp.section_min_stripe_set
+    __swig_getmethods__["min_stripe"] = _stomp.section_min_stripe_get
+    if _newclass:min_stripe = _swig_property(_stomp.section_min_stripe_get, _stomp.section_min_stripe_set)
+    __swig_setmethods__["max_stripe"] = _stomp.section_max_stripe_set
+    __swig_getmethods__["max_stripe"] = _stomp.section_max_stripe_get
+    if _newclass:max_stripe = _swig_property(_stomp.section_max_stripe_get, _stomp.section_max_stripe_set)
     def __init__(self, *args): 
-        this = _stomp.new_Section(*args)
+        this = _stomp.new_section(*args)
         try: self.this.append(this)
         except: self.this = this
-    __swig_destroy__ = _stomp.delete_Section
+    __swig_destroy__ = _stomp.delete_section
     __del__ = lambda self : None;
-    def SetMinStripe(*args): return _stomp.Section_SetMinStripe(*args)
-    def SetMaxStripe(*args): return _stomp.Section_SetMaxStripe(*args)
-    def MinStripe(*args): return _stomp.Section_MinStripe(*args)
-    def MaxStripe(*args): return _stomp.Section_MaxStripe(*args)
-Section_swigregister = _stomp.Section_swigregister
-Section_swigregister(Section)
+section_swigregister = _stomp.section_swigregister
+section_swigregister(section)
+
+class RegionBound(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RegionBound, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, RegionBound, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _stomp.new_RegionBound(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _stomp.delete_RegionBound
+    __del__ = lambda self : None;
+    def SetGeometricBound(*args): return _stomp.RegionBound_SetGeometricBound(*args)
+    def SetNRegion(*args): return _stomp.RegionBound_SetNRegion(*args)
+    def NRegion(*args): return _stomp.RegionBound_NRegion(*args)
+    def CheckPixel(*args): return _stomp.RegionBound_CheckPixel(*args)
+    def ScorePixel(*args): return _stomp.RegionBound_ScorePixel(*args)
+    def AddPixel(*args): return _stomp.RegionBound_AddPixel(*args)
+    def RemovePixel(*args): return _stomp.RegionBound_RemovePixel(*args)
+    def Coverage(*args): return _stomp.RegionBound_Coverage(*args)
+    def CoveragePixels(*args): return _stomp.RegionBound_CoveragePixels(*args)
+    def CoverageArea(*args): return _stomp.RegionBound_CoverageArea(*args)
+    def BoundArea(*args): return _stomp.RegionBound_BoundArea(*args)
+RegionBound_swigregister = _stomp.RegionBound_swigregister
+RegionBound_swigregister(RegionBound)
 
 class RegionMap(_object):
     __swig_setmethods__ = {}
@@ -526,6 +574,11 @@ class RegionMap(_object):
     __swig_destroy__ = _stomp.delete_RegionMap
     __del__ = lambda self : None;
     def InitializeRegions(*args): return _stomp.RegionMap_InitializeRegions(*args)
+    def _FindRegionResolution(*args): return _stomp.RegionMap__FindRegionResolution(*args)
+    def _FindUniqueStripes(*args): return _stomp.RegionMap__FindUniqueStripes(*args)
+    def _FindSections(*args): return _stomp.RegionMap__FindSections(*args)
+    def _Regionate(*args): return _stomp.RegionMap__Regionate(*args)
+    def _VerifyRegionation(*args): return _stomp.RegionMap__VerifyRegionation(*args)
     def FindRegion(*args): return _stomp.RegionMap_FindRegion(*args)
     def ClearRegions(*args): return _stomp.RegionMap_ClearRegions(*args)
     def Region(*args): return _stomp.RegionMap_Region(*args)
@@ -660,9 +713,6 @@ class Map(BaseMap):
     def RegionOnlyMap(*args): return _stomp.Map_RegionOnlyMap(*args)
     def RegionExcludedMap(*args): return _stomp.Map_RegionExcludedMap(*args)
     def GenerateRandomPoints(*args): return _stomp.Map_GenerateRandomPoints(*args)
-    def GenerateRandomEq(*args): return _stomp.Map_GenerateRandomEq(*args)
-    def GenerateRandomSurvey(*args): return _stomp.Map_GenerateRandomSurvey(*args)
-    def GenerateRandomGal(*args): return _stomp.Map_GenerateRandomGal(*args)
     __swig_setmethods__["INSIDE_MAP"] = _stomp.Map_INSIDE_MAP_set
     __swig_getmethods__["INSIDE_MAP"] = _stomp.Map_INSIDE_MAP_get
     if _newclass:INSIDE_MAP = _swig_property(_stomp.Map_INSIDE_MAP_get, _stomp.Map_INSIDE_MAP_set)
@@ -687,7 +737,6 @@ class Map(BaseMap):
     def PixelizeBound(*args): return _stomp.Map_PixelizeBound(*args)
     def _FindStartingResolutionLevel(*args): return _stomp.Map__FindStartingResolutionLevel(*args)
     def _FindXYBounds(*args): return _stomp.Map__FindXYBounds(*args)
-    def _ScorePixel(*args): return _stomp.Map__ScorePixel(*args)
     def ScaleWeight(*args): return _stomp.Map_ScaleWeight(*args)
     def AddConstantWeight(*args): return _stomp.Map_AddConstantWeight(*args)
     def InvertWeight(*args): return _stomp.Map_InvertWeight(*args)
@@ -785,6 +834,8 @@ class ScalarMap(BaseMap):
     def CalculateMeanIntensity(*args): return _stomp.ScalarMap_CalculateMeanIntensity(*args)
     def ConvertToOverDensity(*args): return _stomp.ScalarMap_ConvertToOverDensity(*args)
     def ConvertFromOverDensity(*args): return _stomp.ScalarMap_ConvertFromOverDensity(*args)
+    def UseLocalMeanIntensity(*args): return _stomp.ScalarMap_UseLocalMeanIntensity(*args)
+    def UsingLocalMeanIntensity(*args): return _stomp.ScalarMap_UsingLocalMeanIntensity(*args)
     def ImprintMap(*args): return _stomp.ScalarMap_ImprintMap(*args)
     def AutoCorrelate(*args): return _stomp.ScalarMap_AutoCorrelate(*args)
     def AutoCorrelateWithRegions(*args): return _stomp.ScalarMap_AutoCorrelateWithRegions(*args)
@@ -830,6 +881,8 @@ class GeometricBound(_object):
     def CheckPoint(*args): return _stomp.GeometricBound_CheckPoint(*args)
     def FindAngularBounds(*args): return _stomp.GeometricBound_FindAngularBounds(*args)
     def FindArea(*args): return _stomp.GeometricBound_FindArea(*args)
+    def CheckPixel(*args): return _stomp.GeometricBound_CheckPixel(*args)
+    def ScorePixel(*args): return _stomp.GeometricBound_ScorePixel(*args)
     def SetArea(*args): return _stomp.GeometricBound_SetArea(*args)
     def SetAngularBounds(*args): return _stomp.GeometricBound_SetAngularBounds(*args)
     def SetContinuousBounds(*args): return _stomp.GeometricBound_SetContinuousBounds(*args)

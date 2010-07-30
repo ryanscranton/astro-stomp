@@ -248,6 +248,17 @@ class ScalarMap : public BaseMap {
   void ConvertToOverDensity();
   void ConvertFromOverDensity();
 
+  // In general, the mean intensity is calculated over the entire ScalarMap as
+  // a whole.  However, for some data sets where there are large spatial
+  // gradients, the global mean isn't a particularly useful measure of the
+  // expected intensity.  In those cases, we are better off measuring deviations
+  // from a local mean intensity.  In order to do this, we need to have the
+  // ScalarMap sub-divided into regions; the boolean indicates that this has
+  // been done and we can successfully calculate the local mean.  If the return
+  // value is false, then the ScalarMap's behavior will not be altered.
+  bool UseLocalMeanIntensity(bool use_local_mean);
+  bool UsingLocalMeanIntensity();
+
   // Given a Map, we export the scalar field in the current
   // ScalarMap into its weight values.  This will naturally perform an
   // intersection between the areas covered by the two maps.  If there is no
@@ -332,9 +343,10 @@ class ScalarMap : public BaseMap {
   ScalarSubMapVector sub_map_;
   ScalarMapType map_type_;
   double area_, mean_intensity_, unmasked_fraction_minimum_, total_intensity_;
+  std::vector<double> local_mean_intensity_;
   uint32_t resolution_, total_points_;
   bool converted_to_overdensity_, calculated_mean_intensity_;
-  bool initialized_sub_map_;
+  bool initialized_sub_map_, use_local_mean_intensity_;
 };
 
 } // end namespace Stomp

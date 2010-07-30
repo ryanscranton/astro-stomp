@@ -206,6 +206,10 @@ class RegionMap {
   // then the return value is -1.
   int16_t FindRegion(AngularCoordinate& ang);
 
+  // Likewise for an input Pixel (Pixels with resolution lower than our region
+  // map will also return -1 even if they are within the BaseMap).
+  int16_t FindRegion(Pixel& pix);
+
   // And finally, a method for removing the current sub-region setup so that
   // a new version can be imposed on the map.  This method is called before
   // InitializeRegions does anything, so two successive calls to
@@ -287,6 +291,7 @@ class BaseMap {
 			     uint32_t region_resolution = 0);
   bool InitializeRegions(BaseMap& base_map);
   int16_t FindRegion(AngularCoordinate& ang);
+  int16_t FindRegion(Pixel& pix);
   void ClearRegions();
   void RegionArea(int16_t region, PixelVector& pix);
   int16_t Region(uint32_t region_idx);
