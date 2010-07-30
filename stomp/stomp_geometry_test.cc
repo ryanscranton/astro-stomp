@@ -60,7 +60,7 @@ void AnnulusBoundTests() {
     annulus.Area() << " (" <<
     (cos(min_radius*Stomp::DegToRad) - cos(max_radius*Stomp::DegToRad))*
     2.0*Stomp::Pi*Stomp::StradToDeg << ")\n";
-  
+
   std::cout << "Bounds:\n" << "\tLambda: " << annulus.LambdaMin() << " - " <<
     annulus.LambdaMax() << ", Eta: " << annulus.EtaMin() << " - " <<
     annulus.EtaMax() << "\n";
@@ -227,18 +227,79 @@ void PolygonBoundTests() {
   }
 }
 
+void LatLonBoundTests() {
+  // Test the LatLonBound class
+  std::cout << "\n";
+  std::cout << "*************************\n";
+  std::cout << "*** LatLonBound Tests ***\n";
+  std::cout << "*************************\n";
+
+  Stomp::LatLonBound latlon(-5.0, 5.0, -5.0, 5.0,
+			    Stomp::AngularCoordinate::Equatorial);
+  Stomp::AngularCoordinate ang;
+  std::cout << "Latlon Area: " << latlon.Area() << "\n";
+
+  std::cout << "Bounds:\n" << "\tLambda: " <<
+    latlon.LambdaMin() << " - " << latlon.LambdaMax() << ", Eta: " <<
+    latlon.EtaMin() << " - " << latlon.EtaMax() << "\n";
+
+  ang.SetEquatorialCoordinates(0.0, 0.0);
+  if (latlon.CheckPoint(ang)) {
+    std::cout << "Good: CheckPoint inside the bound returns as true\n";
+  } else {
+    std::cout << "Bad: CheckPoint inside the bound returns as false\n";
+  }
+
+  ang.SetEquatorialCoordinates(-1.5, -1.0);
+  if (latlon.CheckPoint(ang)) {
+    std::cout << "Good: CheckPoint inside the bound returns as true\n";
+  } else {
+    std::cout << "Bad: CheckPoint inside the bound returns as false\n";
+  }
+
+  ang.SetEquatorialCoordinates(1.0, 1.0);
+  if (latlon.CheckPoint(ang)) {
+    std::cout << "Good: CheckPoint inside the bound returns as true\n";
+  } else {
+    std::cout << "Bad: CheckPoint inside the bound returns as false\n";
+  }
+
+  ang.SetEquatorialCoordinates(-1.0, 1.0);
+  if (latlon.CheckPoint(ang)) {
+    std::cout << "Good: CheckPoint inside the bound returns as true\n";
+  } else {
+    std::cout << "Bad: CheckPoint inside the bound returns as false\n";
+  }
+
+  ang.SetEquatorialCoordinates(2.0, -2.0);
+  if (latlon.CheckPoint(ang)) {
+    std::cout << "Good: CheckPoint inside the bound returns as true\n";
+  } else {
+    std::cout << "Bad: CheckPoint inside the bound returns as false\n";
+  }
+
+  ang.SetEquatorialCoordinates(24.0, 0.0);
+  if (latlon.CheckPoint(ang)) {
+    std::cout << "Bad: CheckPoint outside the bound returns as true\n";
+  } else {
+    std::cout << "Good: CheckPoint outside the bound returns as false\n";
+  }
+}
+
 // Define our command line flags
 DEFINE_bool(all_geometry_tests, false, "Run all class unit tests.");
 DEFINE_bool(circle_bound_tests, false, "Run CircleBound tests");
 DEFINE_bool(annulus_bound_tests, false, "Run AnnulusBound tests");
 DEFINE_bool(wedge_bound_tests, false, "Run WedgeBound tests");
 DEFINE_bool(polygon_bound_tests, false, "Run PolygonBound tests");
+DEFINE_bool(latlon_bound_tests, false, "Run LatLonBound tests");
 
 void GeometryUnitTests(bool run_all_tests) {
   void CircleBoundTests();
   void AnnulusBoundTests();
   void WedgeBoundTests();
   void PolygonBoundTests();
+  void LatLonBoundTests();
 
   if (run_all_tests) FLAGS_all_geometry_tests = true;
 
@@ -257,4 +318,8 @@ void GeometryUnitTests(bool run_all_tests) {
   // Check the PolygonBound class.
   if (FLAGS_all_geometry_tests || FLAGS_polygon_bound_tests)
     PolygonBoundTests();
+
+  // Check the LatLonBound class.
+  if (FLAGS_all_geometry_tests || FLAGS_latlon_bound_tests)
+    LatLonBoundTests();
 }

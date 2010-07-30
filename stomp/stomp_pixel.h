@@ -77,11 +77,11 @@ class Pixel {
   void SetPixnumFromXY(uint32_t x, uint32_t y);
   void SetWeight(double weight);
 
-  uint8_t Level();
-  uint32_t Resolution();
-  uint32_t PixelX();
-  uint32_t PixelY();
-  double Weight();
+  uint8_t Level() const;
+  uint32_t Resolution() const;
+  uint32_t PixelX() const;
+  uint32_t PixelY() const;
+  double Weight() const;
 
   // And operations on the Weight value associated with the Pixel.
   void ReverseWeight();

@@ -181,15 +181,15 @@ void Pixel::SetPixnumFromXY(uint32_t x, uint32_t y) {
   y_ = y;
 }
 
-uint8_t Pixel::Level() {
+uint8_t Pixel::Level() const {
   return level_;
 }
 
-uint32_t Pixel::Resolution() {
+uint32_t Pixel::Resolution() const {
   return static_cast<uint32_t>(1 << level_);
 }
 
-double Pixel::Weight() {
+double Pixel::Weight() const {
   return weight_;
 }
 
@@ -205,11 +205,11 @@ void Pixel::InvertWeight() {
   weight_ = 1.0/weight_;
 }
 
-uint32_t Pixel::PixelX() {
+uint32_t Pixel::PixelX() const {
   return x_;
 }
 
-uint32_t Pixel::PixelY() {
+uint32_t Pixel::PixelY() const {
   return y_;
 }
 

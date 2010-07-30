@@ -26,12 +26,15 @@ RegionBound::RegionBound() {
   coverage_pix_.clear();
   pixel_area_ = 0.0;
   n_region_ = 0;
+
+  bound_ptr_ = NULL;
 }
 
-RegionBound::RegionBound(GeometricBound& bound, uint8_t n_region) {
+RegionBound::RegionBound(GeometricBound* bound) {
   coverage_pix_.clear();
   pixel_area_ = 0.0;
   n_region_ = 0;
+  bound_ptr_ = NULL;
 
   SetGeometricBound(bound);
 }
@@ -42,8 +45,12 @@ RegionBound::~RegionBound() {
   n_region_ = 0;
 }
 
-void RegionBound::SetGeometricBound(GeometricBound& bound) {
-  bound_ = bound;
+void RegionBound::SetGeometricBound(GeometricBound* bound) {
+  if (bound_ptr_ != NULL) {
+    delete bound_ptr_;
+  }
+
+  bound_ptr_ = bound;
 }
 
 void RegionBound::SetNRegion(uint16_t n_region) {
@@ -55,11 +62,11 @@ uint16_t RegionBound::NRegion() {
 }
 
 bool RegionBound::CheckPixel(Pixel& pix) {
-  return bound_.CheckPixel(pix);
+  return bound_ptr_->CheckPixel(pix);
 }
 
 double RegionBound::ScorePixel(Pixel& pix) {
-  return bound_.ScorePixel(pix);
+  return bound_ptr_->ScorePixel(pix);
 }
 
 bool RegionBound::AddPixel(Pixel& pix) {
@@ -68,10 +75,10 @@ bool RegionBound::AddPixel(Pixel& pix) {
   CoverageIterator iter = coverage_pix_.find(pix);
   if (iter == coverage_pix_.end()) {
     coverage_pix_[pix] = true;
-    pixel_area_ += pix.Area();
+    pixel_area_ += pix.Area()*pix.Weight();
     added_pixel = true;
   }
-  
+
   return added_pixel;
 }
 
@@ -81,10 +88,10 @@ bool RegionBound::RemovePixel(Pixel& pix) {
   CoverageIterator iter = coverage_pix_.find(pix);
   if (iter != coverage_pix_.end()) {
     coverage_pix_.erase(pix);
-    pixel_area_ -= pix.Area();
+    pixel_area_ -= pix.Area()*pix.Weight();
     removed_pixel = true;
   }
-  
+
   return removed_pixel;
 }
 
@@ -108,7 +115,7 @@ double RegionBound::CoverageArea() {
 }
 
 double RegionBound::BoundArea() {
-  return bound_.Area();
+  return bound_ptr_->Area();
 }
 
 RegionMap::RegionMap() {
@@ -270,6 +277,7 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
     uint16_t unassigned_regions = 0;
     uint8_t counter = 1;
     while (tmp_regions < n_region && counter <= 5) {
+      tmp_regions = 0;
       for (RegionBoundIterator bound_iter=region_bounds.begin();
 	   bound_iter!=region_bounds.end();++bound_iter) {
 	uint16_t bound_regions =
@@ -279,12 +287,12 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
 	tmp_regions += bound_regions;
       }
       if (unassigned_pix.size() > 0) {
-	unassigned_regions =
-	  static_cast<uint16_t>(bound_iter->CoverageArea()/unit_area);
+	unassigned_regions = static_cast<uint16_t>(unassigned_area/unit_area);
+	if (unassigned_regions == 0) unassigned_regions = 1;
 	tmp_regions += unassigned_regions;
       }
     }
-  
+
     if (counter == 5) {
       std::cout << "Unable to find a match in number of regions: " <<
 	tmp_regions << " (" << n_region << ")\n";
@@ -294,11 +302,16 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
     n_region = tmp_regions;
 
     uint16_t starting_region = 0;
+    uint16_t bound_idx = 0;
     for (RegionBoundIterator bound_iter=region_bounds.begin();
 	 bound_iter!=region_bounds.end();++bound_iter) {
       PixelVector region_pix;
       bound_iter->Coverage(region_pix);
-   
+      std::cout << "RegionBound " << bound_idx << ": " <<
+	bound_iter->CoverageArea() << " sq. deg. coverage, " <<
+	region_pix.size() << " coverage pixels, " <<
+	bound_iter->NRegion() << " sub-regions.\n";
+
       std::vector<uint32_t> unique_stripes;
       _FindUniqueStripes(region_pix, unique_stripes);
 
@@ -309,9 +322,14 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
       _Regionate(region_pix, sectionVec, bound_iter->NRegion(),
 		 starting_region);
       starting_region += bound_iter->NRegion();
+      bound_idx++;
     }
 
     if (unassigned_pix.size() > 0) {
+      std::cout << "Unassigned Area: " <<
+	unassigned_area << " sq. deg. area, " <<
+	unassigned_pix.size() << " coverage pixels, " <<
+	unassigned_regions << " sub-regions.\n";
       std::vector<uint32_t> unique_stripes;
       _FindUniqueStripes(unassigned_pix, unique_stripes);
 
@@ -482,7 +500,7 @@ void RegionMap::_Regionate(PixelVector& coverage_pix,
   }
 
   if (n_region == 1) {
-    // If we only have a single region to handle, then the procedure is 
+    // If we only have a single region to handle, then the procedure is
     // trivial.
     for (PixelIterator iter=coverage_pix.begin();
 	 iter!=coverage_pix.end();++iter) {
@@ -494,6 +512,7 @@ void RegionMap::_Regionate(PixelVector& coverage_pix,
     double region_area = 0.0, running_area = 0.0;
 
     uint32_t n_pixel = 0;
+    int16_t region_counter = 0;
     int16_t region_iter = starting_region_index;
     double mean_area = base_map_area/coverage_pix.size();
     double area_break = base_map_area/n_region;
@@ -508,8 +527,8 @@ void RegionMap::_Regionate(PixelVector& coverage_pix,
 	   iter!=coverage_pix.end();++iter) {
 	if ((iter->Stripe(region_resolution_) >= section_iter->min_stripe) &&
 	    (iter->Stripe(region_resolution_) <= section_iter->max_stripe)) {
-	  if ((region_area + 0.75*mean_area < area_break*(region_iter+1)) ||
-	      (region_iter == n_region-1)) {
+	  if ((region_area + 0.75*mean_area < area_break*(region_counter+1)) ||
+	      (region_counter == n_region-1)) {
 	    region_area += iter->Weight()*unit_area;
 	    region_map_[iter->Pixnum()] = region_iter;
 	    running_area += iter->Weight()*unit_area;
@@ -520,6 +539,7 @@ void RegionMap::_Regionate(PixelVector& coverage_pix,
 	    region_area_[region_iter] = running_area;
 
 	    region_iter++;
+	    region_counter++;
 	    region_area += iter->Weight()*unit_area;
 	    region_map_[iter->Pixnum()] = region_iter;
 	    running_area = iter->Weight()*unit_area;
