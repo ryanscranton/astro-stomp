@@ -261,7 +261,6 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
     // unassigned area) and split things up accordingly.  The goal is to
     // find a number of regions that's at least as many as were requested,
     // if not exactly that many.
-
     double unit_area = 4.0*Pi*StradToDeg;
     for (RegionBoundIterator bound_iter=region_bounds.begin();
 	 bound_iter!=region_bounds.end();++bound_iter) {
@@ -280,9 +279,19 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
       tmp_regions = 0;
       for (RegionBoundIterator bound_iter=region_bounds.begin();
 	   bound_iter!=region_bounds.end();++bound_iter) {
+	// A static cast gets us the lower limit on the number of regions we
+	// should use for each BoundRegion.
 	uint16_t bound_regions =
 	  static_cast<uint16_t>(bound_iter->CoverageArea()/unit_area);
 	if (bound_regions == 0) bound_regions = 1;
+
+	// But we also need to check if we'd have a better fit for our unit
+	// area by increasing the number of regions by 1
+	if (fabs(bound_iter->CoverageArea()/bound_regions - unit_area) >
+	    fabs(bound_iter->CoverageArea()/(bound_regions+1) - unit_area)) {
+	  bound_regions++;
+	}
+
 	bound_iter->SetNRegion(bound_regions);
 	tmp_regions += bound_regions;
       }
