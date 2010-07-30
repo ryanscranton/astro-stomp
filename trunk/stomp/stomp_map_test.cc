@@ -715,6 +715,120 @@ void MapRegionTests() {
   }
 }
 
+void MapRegionBoundTests() {
+  // Ok, now we want to test the various routines for breaking our map into
+  // nearly equal sub-regions where we have user-supplied RegionBounds
+  std::cout << "\n";
+  std::cout << "*****************************\n";
+  std::cout << "*** Map RegionBound Tests ***\n";
+  std::cout << "*****************************\n\n";
+  Stomp::LatLonBound map_bound(-5.0, 5.0, -5.0, 5.0,
+			       Stomp::AngularCoordinate::Equatorial);
+  std::cout << "Map bounds: " <<
+    map_bound.LatitudeMin() << " - " << map_bound.LatitudeMax() << ", " <<
+    map_bound.LongitudeMin() << " - " << map_bound.LongitudeMax() << "\n";
+
+  Stomp::Map* stomp_map = new Stomp::Map(map_bound, 1.0, 256, true);
+  uint16_t n_regions = 10;
+
+  // First, we regionate the area using the standard method.
+  std::cout << "Trying to regionate the map into " << n_regions <<
+    " pieces...\n";
+  uint16_t n_regions_final = stomp_map->InitializeRegions(n_regions);
+  std::cout << "\tRegionated into " << n_regions_final << " (" <<
+    n_regions << ") regions at " << stomp_map->RegionResolution() << "\n";
+  for (uint16_t region_iter=0;region_iter<n_regions_final;region_iter++)
+    std::cout << "\t\t" << region_iter << ": " <<
+      stomp_map->RegionArea(region_iter) << " sq. degrees.\n";
+
+  // Now, we create a RegionBound in the center of the Map and re-regionate
+  // with it included.
+  Stomp::LatLonBound* single_bound =
+    new Stomp::LatLonBound(-1.0, 1.0, -1.0, 1.0,
+			   Stomp::AngularCoordinate::Equatorial);
+  Stomp::RegionBound region_bound(single_bound);
+
+  std::cout << "Checking RegionBound behavior..\n";
+  Stomp::PixelVector coverage_pix;
+  stomp_map->Coverage(coverage_pix);
+  uint32_t bound_contained = 0;
+  uint32_t region_contained = 0;
+  for (Stomp::PixelIterator iter=coverage_pix.begin();
+       iter!=coverage_pix.end();++iter) {
+    if (single_bound->CheckPixel(*iter)) bound_contained++;
+    if (region_bound.CheckPixel(*iter)) region_contained++;
+  }
+  std::cout << "\t" << coverage_pix.size() <<
+    " coverage pixels at resolution " << Stomp::HPixResolution << "\n\t\t" <<
+    bound_contained << " contained in GeometricBound\n\t\t" <<
+    region_contained << " contained in RegionBound\n";
+  std::cout << "\tGeometricBound area: " << single_bound->Area() <<
+    " sq. deg.\n";
+  std::cout << "\tRegionBound area: " << region_bound.BoundArea() <<
+    " sq. deg.\n";
+
+  Stomp::RegionBoundVector regionVec;
+  regionVec.push_back(region_bound);
+
+  std::cout << "\nRe-Regionating the map with central RegionBound...\n";
+  n_regions_final = stomp_map->InitializeRegions(regionVec, n_regions);
+  std::cout << "\tRegionated into " << n_regions_final << " (" <<
+    n_regions << ") regions at " << stomp_map->RegionResolution() << "\n";
+  for (uint16_t region_iter=0;region_iter<n_regions_final;region_iter++)
+    std::cout << "\t\t" << region_iter << ": " <<
+      stomp_map->RegionArea(region_iter) << " sq. degrees.\n";
+
+  // Now we include a whole series of RegionBounds that should divide up the
+  // Map area with nothing left over.  The RegionBounds are also set up so
+  // that they have unequal areas so that we test the ability of the code to
+  // handle that case.
+  regionVec.clear();
+
+  Stomp::LatLonBound* upper_left =
+    new Stomp::LatLonBound(0.0, 5.0, -5.0, 0.0,
+			   Stomp::AngularCoordinate::Equatorial);
+  Stomp::RegionBound upper_left_region(upper_left);
+  regionVec.push_back(upper_left_region);
+
+  Stomp::LatLonBound* lower_left =
+    new Stomp::LatLonBound(-5.0, 0.0, -5.0, 0.0,
+			   Stomp::AngularCoordinate::Equatorial);
+  Stomp::RegionBound lower_left_region(lower_left);
+  regionVec.push_back(lower_left_region);
+
+  Stomp::LatLonBound* upper_right =
+    new Stomp::LatLonBound(0.0, 5.0, 0.0, 5.0,
+			   Stomp::AngularCoordinate::Equatorial);
+  Stomp::RegionBound upper_right_region(upper_right);
+  regionVec.push_back(upper_right_region);
+
+  Stomp::LatLonBound* lower_right0 =
+    new Stomp::LatLonBound(-5.0, -4.0, 0.0, 5.0,
+			   Stomp::AngularCoordinate::Equatorial);
+  Stomp::RegionBound lower_right0_region(lower_right0);
+  regionVec.push_back(lower_right0_region);
+
+  Stomp::LatLonBound* lower_right1 =
+    new Stomp::LatLonBound(-4.0, -2.5, 0.0, 5.0,
+			   Stomp::AngularCoordinate::Equatorial);
+  Stomp::RegionBound lower_right1_region(lower_right1);
+  regionVec.push_back(lower_right1_region);
+
+  Stomp::LatLonBound* lower_right2 =
+    new Stomp::LatLonBound(-2.5, 0.0, 0.0, 5.0,
+			   Stomp::AngularCoordinate::Equatorial);
+  Stomp::RegionBound lower_right2_region(lower_right2);
+  regionVec.push_back(lower_right2_region);
+
+  std::cout << "\nRe-Regionating the map with multiple RegionBounds...\n";
+  n_regions_final = stomp_map->InitializeRegions(regionVec, n_regions);
+  std::cout << "\tRegionated into " << n_regions_final << " (" <<
+    n_regions << ") regions at " << stomp_map->RegionResolution() << "\n";
+  for (uint16_t region_iter=0;region_iter<n_regions_final;region_iter++)
+    std::cout << "\t\t" << region_iter << ": " <<
+      stomp_map->RegionArea(region_iter) << " sq. degrees.\n";
+}
+
 void MapSoftenTests() {
   // Ok, now we test our routines for softening the maximum resolution of the
   // Map and cut the map based on the Weight.
@@ -796,6 +910,7 @@ DEFINE_bool(map_contains_tests, false, "Run Map Contains tests");
 DEFINE_bool(map_random_points_tests, false, "Run Map random points tests");
 DEFINE_bool(map_multimap_tests, false, "Run Map multi-map tests");
 DEFINE_bool(map_region_tests, false, "Run Map region tests");
+DEFINE_bool(map_region_bound_tests, false, "Run Map RegionBound tests");
 DEFINE_bool(map_soften_tests, false, "Run Map soften tests");
 
 void MapUnitTests(bool run_all_tests) {
@@ -811,6 +926,7 @@ void MapUnitTests(bool run_all_tests) {
   void MapRandomPointsTests();
   void MapMultiMapTests();
   void MapRegionTests();
+  void MapRegionBoundTests();
   void MapSoftenTests();
 
   if (run_all_tests) FLAGS_all_map_tests = true;
@@ -857,6 +973,11 @@ void MapUnitTests(bool run_all_tests) {
 
   // Check the routines for breaking a Stomp::Map into sub-regions.
   if (FLAGS_all_map_tests || FLAGS_map_region_tests) MapRegionTests();
+
+  // Check the routines for breaking a Stomp::Map into sub-regions with
+  // specified RegionBounds.
+  if (FLAGS_all_map_tests || FLAGS_map_region_bound_tests)
+    MapRegionBoundTests();
 
   // Check the routines for softening the maximum resolution of the
   // Map and cutting the map based on the Weight.

@@ -23,6 +23,7 @@
 #include <vector>
 #include <map>
 #include "stomp_core.h"
+#include "stomp_geometry.h"
 #include "stomp_pixel.h"
 
 namespace Stomp {
@@ -48,7 +49,7 @@ typedef std::pair<RegionAreaIterator, RegionAreaIterator> RegionAreaPair;
 
 typedef std::map<const Pixel, bool, PixelOrdering> CoverageDict;
 typedef CoverageDict::iterator CoverageIterator;
- 
+
 struct section {
   // Simple structure to hold our section data.  A section is defined by a
   // minimum and maximum Pixel::Stripe value.
@@ -70,18 +71,18 @@ class RegionBound {
   // RegionBounds.
  public:
   RegionBound();
-  RegionBound(GeometricBound& bound);
+  RegionBound(GeometricBound* bound);
   ~RegionBound();
 
   // If we use the default constructor, we need to be able to set the
   // GeometricBound associated with our RegionBound.
-  void SetGeometricBound(GeometricBound& bound);
+  void SetGeometricBound(GeometricBound* bound);
 
   // Setter and getter for the number of sub-regions assigned to this
   // RegionBound.
   void SetNRegion(uint16_t n_region);
   uint16_t NRegion();
-  
+
   // We need to be able to see if a given coverage Pixel is touched by our
   // GeometricBound as well as possibly decide whether a Pixel should go into
   // our RegionBound or another, based on the fraction of the Pixel contained.
@@ -107,7 +108,7 @@ class RegionBound {
 
 
  private:
-  GeometricBound bound_;
+  GeometricBound* bound_ptr_;
   CoverageDict coverage_pix_;
   double pixel_area_;
   uint16_t n_region_;

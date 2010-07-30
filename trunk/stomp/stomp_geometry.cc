@@ -1175,7 +1175,7 @@ bool LatLonBound::FindAngularBounds() {
   bound_area *= 0.5*(sin(lammin*DegToRad) - sin(lammin*DegToRad));
   bound_area *= (etamax - etamin)/360.0;
 
-  if (bound_area < Area() && Area() > 2.0*Pi) {
+  if (bound_area < Area() && Area() > 2.0*Pi*StradToDeg) {
     lammin = -90.0;
     lammax = 90.0;
     etamin = -180.0;
