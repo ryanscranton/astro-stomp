@@ -42,9 +42,10 @@
 
 namespace Stomp {
 
-class Pixel;                // class declaration in stomp_pixel.h
-class AngularBin;           // class definition in stomp_angular_bin.h
-class AngularCorrelation;   // class definition in stomp_angular_correlation.h
+class Pixel;
+class PixelOrdering;
+class AngularBin;
+class AngularCorrelation;
 class AngularCoordinate;
 class WeightedAngularCoordinate;
 class CosmoCoordinate;

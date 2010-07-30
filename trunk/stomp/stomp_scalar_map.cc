@@ -122,6 +122,7 @@ ScalarMap::ScalarMap() {
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
   initialized_sub_map_ = false;
+  use_local_mean_intensity_ = false;
   map_type_ = ScalarField;
 }
 
@@ -168,6 +169,7 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   area_ = 0.0;
   total_intensity_ = 0.0;
@@ -225,6 +227,7 @@ ScalarMap::ScalarMap(ScalarMap& scalar_map,
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   area_ = 0.0;
   total_intensity_ = 0.0;
@@ -266,6 +269,7 @@ ScalarMap::ScalarMap(ScalarVector& pix,
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   initialized_sub_map_ = _InitializeSubMap();
 }
@@ -301,6 +305,7 @@ ScalarMap::ScalarMap(Map& stomp_map,
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   area_ = 0.0;
   total_intensity_ = 0.0;
@@ -399,6 +404,7 @@ void ScalarMap::InitializeFromMap(Map& stomp_map, uint32_t input_resolution,
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   area_ = 0.0;
   total_intensity_ = 0.0;
@@ -461,6 +467,7 @@ void ScalarMap::InitializeFromScalarMap(ScalarMap& scalar_map,
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   area_ = 0.0;
   total_intensity_ = 0.0;
@@ -500,6 +507,7 @@ void ScalarMap::InitializeFromScalarPixels(ScalarVector& pix,
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   initialized_sub_map_ = _InitializeSubMap();
 }
@@ -961,64 +969,216 @@ double ScalarMap::FindLocalPointDensity(AngularCoordinate& ang,
 }
 
 void ScalarMap::CalculateMeanIntensity() {
-  double sum_pixel = 0.0;
-  mean_intensity_ = 0.0;
+  if (!use_local_mean_intensity_) {
+    double sum_pixel = 0.0;
+    mean_intensity_ = 0.0;
 
-  if (map_type_ == ScalarField) {
-    for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
-      mean_intensity_ += iter->Intensity()*iter->Weight();
-      sum_pixel += iter->Weight();
+    switch (map_type_) {
+    case ScalarField:
+      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	mean_intensity_ += iter->Intensity()*iter->Weight();
+	sum_pixel += iter->Weight();
+      }
+      break;
+    case DensityField:
+      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	mean_intensity_ += iter->Intensity()/(iter->Area()*iter->Weight());
+	sum_pixel += 1.0;
+      }
+    break;
+    case SampledField:
+      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	mean_intensity_ += iter->MeanIntensity()*iter->Weight();
+	sum_pixel += iter->Weight();
+      }
+      break;
     }
-  }
-  if (map_type_ == DensityField) {
-    for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
-      mean_intensity_ += iter->Intensity()/(iter->Area()*iter->Weight());
-      sum_pixel += 1.0;
-    }
-  }
-  if (map_type_ == SampledField) {
-    for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
-      mean_intensity_ += iter->MeanIntensity()*iter->Weight();
-      sum_pixel += iter->Weight();
-    }
-  }
 
-  mean_intensity_ /= sum_pixel;
-  calculated_mean_intensity_ = true;
+    mean_intensity_ /= sum_pixel;
+    calculated_mean_intensity_ = true;
+  } else {
+    if (RegionsInitialized()) {
+      local_mean_intensity_.clear();
+      std::vector<double> sum_pixel;
+
+      local_mean_intensity_.reserve(NRegion());
+      sum_pixel.reserve(NRegion());
+
+      for (uint16_t i=0;i<NRegion();i++) {
+	sum_pixel[i] = 0.0;
+	local_mean_intensity_[i] = 0.0;
+      }
+
+      switch (map_type_) {
+      case ScalarField:
+	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	  int16_t region_idx = FindRegion(*iter);
+	  if (region_idx != -1 && region_idx < NRegion()) {
+	    local_mean_intensity_[region_idx] +=
+	      iter->Intensity()*iter->Weight();
+	    sum_pixel[region_idx] += iter->Weight();
+	  }
+	}
+	break;
+      case DensityField:
+	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	  int16_t region_idx = FindRegion(*iter);
+	  if (region_idx != -1 && region_idx < NRegion()) {
+	    local_mean_intensity_[region_idx] +=
+	      iter->Intensity()/(iter->Area()*iter->Weight());
+	    sum_pixel[region_idx] += 1.0;
+	  }
+	}
+	break;
+      case SampledField:
+	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	  int16_t region_idx = FindRegion(*iter);
+	  if (region_idx != -1 && region_idx < NRegion()) {
+	    local_mean_intensity_[region_idx] +=
+	      iter->MeanIntensity()*iter->Weight();
+	    sum_pixel[region_idx] += iter->Weight();
+	  }
+	}
+	break;
+      }
+
+      for (uint16_t i=0;i<NRegion();i++) {
+	local_mean_intensity_[i] /= sum_pixel[i];
+      }
+
+      calculated_mean_intensity_ = true;
+    }
+  }
 }
 
 void ScalarMap::ConvertToOverDensity() {
   if (!calculated_mean_intensity_) CalculateMeanIntensity();
 
-  // Only do this conversion if we've got raw intensity values in our map.
-  if (!converted_to_overdensity_) {
-    if (map_type_ == DensityField) {
-      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
-	iter->ConvertToFractionalOverDensity(mean_intensity_);
-    } else {
-      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
-	iter->ConvertToOverDensity(mean_intensity_);
+  if (!use_local_mean_intensity_) {
+    // Only do this conversion if we've got raw intensity values in our map.
+    if (!converted_to_overdensity_) {
+      if (map_type_ == DensityField) {
+	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
+	  iter->ConvertToFractionalOverDensity(mean_intensity_);
+      } else {
+	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
+	  iter->ConvertToOverDensity(mean_intensity_);
+      }
+    }
+
+    converted_to_overdensity_ = true;
+  } else {
+    if (RegionsInitialized()) {
+      // Only do this conversion if we've got raw intensity values in our map.
+      if (!converted_to_overdensity_) {
+	if (map_type_ == DensityField) {
+	  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	    int16_t region_idx = FindRegion(*iter);
+	    if (region_idx != -1 && region_idx < NRegion()) {
+	      double local_mean_intensity = local_mean_intensity_[region_idx];
+	      iter->ConvertToFractionalOverDensity(local_mean_intensity);
+	    } else {
+	      std::cout <<
+		"Failed to find region when calculating over-density!\n";
+	      exit(2);
+	    }
+	  }
+	} else {
+	  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	    int16_t region_idx = FindRegion(*iter);
+	    if (region_idx != -1 && region_idx < NRegion()) {
+	      double local_mean_intensity = local_mean_intensity_[region_idx];
+	      iter->ConvertToOverDensity(local_mean_intensity);
+	    } else {
+	      std::cout <<
+		"Failed to find region when calculating over-density!\n";
+	      exit(2);
+	    }
+	  }
+	}
+      }
+
+      converted_to_overdensity_ = true;
     }
   }
-
-  converted_to_overdensity_ = true;
 }
 
 void ScalarMap::ConvertFromOverDensity() {
   if (!calculated_mean_intensity_) CalculateMeanIntensity();
 
-  // Only do this conversion if we've got over-density values in our map.
-  if (converted_to_overdensity_) {
-    if (map_type_ == DensityField) {
-      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
-	iter->ConvertFromFractionalOverDensity(mean_intensity_);
-    } else {
-      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
-	iter->ConvertFromOverDensity(mean_intensity_);
+  if (!use_local_mean_intensity_) {
+    // Only do this conversion if we've got over-density values in our map.
+    if (converted_to_overdensity_) {
+      if (map_type_ == DensityField) {
+	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
+	  iter->ConvertFromFractionalOverDensity(mean_intensity_);
+      } else {
+	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
+	  iter->ConvertFromOverDensity(mean_intensity_);
+      }
+    }
+
+    converted_to_overdensity_ = false;
+  } else {
+    if (RegionsInitialized()) {
+      // Only do this conversion if we've got over-density values in our map.
+      if (converted_to_overdensity_) {
+	if (map_type_ == DensityField) {
+	  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	    int16_t region_idx = FindRegion(*iter);
+	    if (region_idx != -1 && region_idx < NRegion()) {
+	      double local_mean_intensity = local_mean_intensity_[region_idx];
+	      iter->ConvertFromFractionalOverDensity(local_mean_intensity);
+	    } else {
+	      std::cout <<
+		"Failed to find region when calculating over-density!\n";
+	      exit(2);
+	    }
+	  }
+	} else {
+	  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	    int16_t region_idx = FindRegion(*iter);
+	    if (region_idx != -1 && region_idx < NRegion()) {
+	      double local_mean_intensity = local_mean_intensity_[region_idx];
+	      iter->ConvertFromOverDensity(local_mean_intensity);
+	    } else {
+	      std::cout <<
+		"Failed to find region when calculating over-density!\n";
+	      exit(2);
+	    }
+	  }
+	}
+      }
+
+      converted_to_overdensity_ = false;
     }
   }
+}
 
-  converted_to_overdensity_ = false;
+bool ScalarMap::UseLocalMeanIntensity(bool use_local_mean) {
+  if (RegionsInitialized()) {
+    // Before we potentially change the way that the mean intensity is
+    // calculated, we need to make sure that we're working with the raw
+    // intensities instead of over-densities.  The latter are a function of
+    // the mean intensity, so we need to make sure that we've managed the
+    // transition in such a way that we can get back to the raw intensities.
+    bool overdensity_map = IsOverDensityMap();
+
+    if (overdensity_map) ConvertFromOverDensity();
+
+    use_local_mean_intensity_ = use_local_mean;
+    calculated_mean_intensity_ = false;
+
+    if (overdensity_map) ConvertToOverDensity();
+
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool ScalarMap::UsingLocalMeanIntensity() {
+  return use_local_mean_intensity_;
 }
 
 bool ScalarMap::ImprintMap(Map& stomp_map) {

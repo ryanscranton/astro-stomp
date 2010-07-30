@@ -748,7 +748,7 @@ void MapRegionBoundTests() {
 			   Stomp::AngularCoordinate::Equatorial);
   Stomp::RegionBound region_bound(single_bound);
 
-  std::cout << "Checking RegionBound behavior..\n";
+  std::cout << "\nChecking RegionBound behavior..\n";
   Stomp::PixelVector coverage_pix;
   stomp_map->Coverage(coverage_pix);
   uint32_t bound_contained = 0;
