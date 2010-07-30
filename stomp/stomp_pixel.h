@@ -45,6 +45,7 @@ class Pixel {
   // instantiated with no particular location.
 
  public:
+  friend class PixelOrdering;
   Pixel();
   Pixel(const uint32_t resolution, const uint32_t pixnum,
 	const double weight = 0.0);
@@ -464,6 +465,25 @@ class Pixel {
   uint32_t x_, y_;
   uint8_t level_;
 };
+
+class PixelOrdering {
+  // Convenience class so that we can use Pixels as keys for std::map objects.
+ public:
+  int operator()(const Pixel& pix_a, const Pixel& pix_b) {
+    // Same algorithm as Pixel::LocalOrder
+    if (pix_a.Level() == pix_b.Level()) {
+      if (pix_a.PixelY() == pix_b.PixelY()) {
+	return (pix_a.PixelX() < pix_b.PixelX() ? true : false);
+      } else {
+	return (pix_a.PixelY() < pix_b.PixelY() ? true : false);
+      }
+    } else {
+      return (pix_a.Level() < pix_b.Level() ? true : false);
+    }
+  }
+};
+
+
 
 } // end namespace Stomp
 
