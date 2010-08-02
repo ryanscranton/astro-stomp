@@ -1181,16 +1181,39 @@ bool ScalarMap::UsingLocalMeanIntensity() {
   return use_local_mean_intensity_;
 }
 
-bool ScalarMap::ImprintMap(Map& stomp_map) {
-  PixelVector pixVec;
+bool ScalarMap::ImprintMap(Map& stomp_map, bool use_mean_local_intensity) {
+  if (!use_mean_local_intensity) {
+    PixelVector pixVec;
 
-  pixVec.reserve(pix_.size());
+    pixVec.reserve(pix_.size());
 
-  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
-    pixVec.push_back(Pixel(iter->PixelX(), iter->PixelY(),
-			   iter->Resolution(), iter->Intensity()));
+    for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
+      pixVec.push_back(Pixel(iter->PixelX(), iter->PixelY(),
+			     iter->Resolution(), iter->Intensity()));
 
-  return stomp_map.ImprintMap(pixVec);
+    return stomp_map.ImprintMap(pixVec);
+  } else {
+    if (RegionsInitialized()) {
+      if (!UsingLocalMeanIntensity()) UseLocalMeanIntensity(true);
+
+      PixelVector pixVec;
+
+      pixVec.reserve(pix_.size());
+
+      for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	int16_t region_idx = FindRegion(*iter);
+	if (region_idx != -1 && region_idx < NRegion()) {
+	  double local_mean_intensity = local_mean_intensity_[region_idx];
+	  pixVec.push_back(Pixel(iter->PixelX(), iter->PixelY(),
+				 iter->Resolution(), local_mean_intensity));
+      	}
+      }
+
+      return stomp_map.ImprintMap(pixVec);
+    } else {
+      return false;
+    }
+  }
 }
 
 void ScalarMap::AutoCorrelate(AngularCorrelation& wtheta) {
