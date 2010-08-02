@@ -95,6 +95,11 @@ bool RegionBound::RemovePixel(Pixel& pix) {
   return removed_pixel;
 }
 
+void RegionBound::ClearPixels() {
+  coverage_pix_.clear();
+  pixel_area_ = 0.0;
+}
+
 void RegionBound::Coverage(PixelVector& pix) {
   if (!pix.empty()) pix.clear();
 
@@ -185,6 +190,10 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
   // Regionate the BaseMap using the input RegionBounds to delineate special
   // sub-regions within the BaseMap.
   ClearRegions();
+  for (RegionBoundIterator bound_iter=region_bounds.begin();
+       bound_iter!=region_bounds.end();++bound_iter) {
+    if (bound_iter->CoveragePixels() > 0) bound_iter->ClearPixels();
+  }
 
   _FindRegionResolution(stomp_map, n_region, region_resolution);
 
@@ -300,6 +309,8 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
 	if (unassigned_regions == 0) unassigned_regions = 1;
 	tmp_regions += unassigned_regions;
       }
+      counter++;
+      unit_area /= 2.0;
     }
 
     if (counter == 5) {
@@ -331,6 +342,7 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
       _Regionate(region_pix, sectionVec, bound_iter->NRegion(),
 		 starting_region);
       starting_region += bound_iter->NRegion();
+      bound_iter->ClearPixels();
       bound_idx++;
     }
 
