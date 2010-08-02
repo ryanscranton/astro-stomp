@@ -95,6 +95,7 @@ class RegionBound {
   // we also need the ability to remove a Pixel from our set.
   bool AddPixel(Pixel& pix);
   bool RemovePixel(Pixel& pix);
+  void ClearPixels();
 
   // Once we have assembled our coverage Pixels, we need a means for extracting
   // a copy of them.  The output PixelVector will be sorted using LocalOrdering.

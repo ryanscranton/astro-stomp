@@ -827,6 +827,20 @@ void MapRegionBoundTests() {
   for (uint16_t region_iter=0;region_iter<n_regions_final;region_iter++)
     std::cout << "\t\t" << region_iter << ": " <<
       stomp_map->RegionArea(region_iter) << " sq. degrees.\n";
+
+  // Finally, we need to verify that our method for sub-dividing the smallest
+  // RegionBound works properly.  We do this by increasing the number of
+  // sub-regions beyond what we've just determined is the natural number of
+  // the set of RegionBounds.
+  n_regions = n_regions_final*2 + 1;
+
+  std::cout << "\nRe-Regionating the map with multiple RegionBounds...\n";
+  n_regions_final = stomp_map->InitializeRegions(regionVec, n_regions);
+  std::cout << "\tRegionated into " << n_regions_final << " (" <<
+    n_regions << ") regions at " << stomp_map->RegionResolution() << "\n";
+  for (uint16_t region_iter=0;region_iter<n_regions_final;region_iter++)
+    std::cout << "\t\t" << region_iter << ": " <<
+      stomp_map->RegionArea(region_iter) << " sq. degrees.\n";
 }
 
 void MapSoftenTests() {
