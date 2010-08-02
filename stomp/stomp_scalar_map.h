@@ -264,8 +264,10 @@ class ScalarMap : public BaseMap {
   // intersection between the areas covered by the two maps.  If there is no
   // overlapping area, then the method returns false and the input Map
   // will not be modified.  A true result means that there was at least some
-  // overlap.
-  bool ImprintMap(Map& stomp_map);
+  // overlap.  If the input boolean is set to true, then the Map will be
+  // imprinted with the mean local intensity instead of the intensity.  This
+  // requires that the ScalarMap be regionated.
+  bool ImprintMap(Map& stomp_map, bool use_mean_local_intensity = false);
 
   // This method calculates the auto-correlation of the scalar field in the
   // current map.  The simpler case is the one where the argument is an
