@@ -321,17 +321,16 @@ class Map : public BaseMap {
                             uint32_t n_point = 1,
                             bool use_weighted_sampling = false);
 
-
-
   // Instead of a fixed number of random positions, we may have either a
   // vector of WeightedAngularCoordinate objects where we want to randomize
   // the positions or a vector of weights that need random angular positions
   // to go along with them.  In either case, the number of random positions
   // is taken from the size of the input vector (or the number of input points
-  // within the current Map if the filter flag is set to true).
+  // within the current Map).
   void GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
-			    bool filter_input_points = false);
-  void GenerateRandomPoints(WAngularVector& ang, std::vector<double>& weights);
+			    bool use_weighted_sampling = false);
+  void GenerateRandomPoints(WAngularVector& ang, std::vector<double>& weights,
+			    bool use_weighted_sampling = false);
 
   // This version returns numerical python arrays in a tuple
   // Requires python and numpy support
