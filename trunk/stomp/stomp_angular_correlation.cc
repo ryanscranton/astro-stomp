@@ -457,7 +457,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
 
     // Generate set of random points based on the input galaxy file and map.
     WAngularVector random_galaxy;
-    stomp_map.GenerateRandomPoints(random_galaxy, galaxy, true);
+    stomp_map.GenerateRandomPoints(random_galaxy, galaxy);
 
     // Create the TreeMap from those random points.
     TreeMap* random_tree = new TreeMap(min_resolution_, 200);
@@ -566,10 +566,10 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     std::cout << "\tRandom iteration " <<
       static_cast<int>(rand_iter) << "...\n";
     WAngularVector random_galaxy_a;
-    stomp_map.GenerateRandomPoints(random_galaxy_a, galaxy_a, true);
+    stomp_map.GenerateRandomPoints(random_galaxy_a, galaxy_a);
 
     WAngularVector random_galaxy_b;
-    stomp_map.GenerateRandomPoints(random_galaxy_b, galaxy_b, true);
+    stomp_map.GenerateRandomPoints(random_galaxy_b, galaxy_b);
 
     // Galaxy-Random
     for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {

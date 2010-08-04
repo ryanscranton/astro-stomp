@@ -1577,7 +1577,6 @@ void Map::GenerateRandomPoints(AngularVector& ang, uint32_t n_point,
 
   double minimum_probability = -0.0001;
   double probability_slope = 0.0;
-
   if (use_weighted_sampling) {
     if (max_weight_ - min_weight_ < 0.0001) {
       use_weighted_sampling = false;
@@ -1620,6 +1619,115 @@ void Map::GenerateRandomPoints(AngularVector& ang, uint32_t n_point,
       }
     }
 
+    ang.push_back(tmp_ang);
+  }
+}
+
+void Map::GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
+			       bool use_weighted_sampling) {
+  if (!ang.empty()) ang.clear();
+  ang.reserve(input_ang.size());
+
+  double minimum_probability = -0.0001;
+  double probability_slope = 0.0;
+  if (use_weighted_sampling) {
+    if (max_weight_ - min_weight_ < 0.0001) {
+      use_weighted_sampling = false;
+    } else {
+      minimum_probability = 1.0/(max_weight_ - min_weight_ + 1.0);
+      probability_slope =
+          (1.0 - minimum_probability)/(max_weight_ - min_weight_);
+    }
+  }
+
+  PixelVector superpix;
+  Coverage(superpix);
+
+  MTRand mtrand;
+  mtrand.seed();
+
+  WeightedAngularCoordinate tmp_ang;
+  for (uint32_t m=0;m<input_ang.size();m++) {
+    if (Contains(input_ang[m])) {
+      bool keep = false;
+      double lambda, eta, z, map_weight, probability_limit;
+      uint32_t n,k;
+
+      while (!keep) {
+	n = mtrand.randInt(superpix.size()-1);
+	k = superpix[n].Superpixnum();
+
+	z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
+					     sub_map_[k].ZMin());
+	lambda = asin(z)*RadToDeg;
+	eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
+						 sub_map_[k].EtaMin());
+	tmp_ang.SetSurveyCoordinates(lambda,eta);
+
+	keep = sub_map_[k].FindLocation(tmp_ang, map_weight);
+
+	if (use_weighted_sampling && keep) {
+	  probability_limit =
+	    minimum_probability + (map_weight - min_weight_)*probability_slope;
+	  if (mtrand.rand(1.0) > probability_limit) keep = false;
+	}
+      }
+      tmp_ang.SetWeight(input_ang[m].Weight());
+      ang.push_back(tmp_ang);
+    }
+  }
+}
+
+void Map::GenerateRandomPoints(WAngularVector& ang,
+			       std::vector<double>& weights,
+			       bool use_weighted_sampling) {
+  if (!ang.empty()) ang.clear();
+  ang.reserve(weights.size());
+
+  double minimum_probability = -0.0001;
+  double probability_slope = 0.0;
+  if (use_weighted_sampling) {
+    if (max_weight_ - min_weight_ < 0.0001) {
+      use_weighted_sampling = false;
+    } else {
+      minimum_probability = 1.0/(max_weight_ - min_weight_ + 1.0);
+      probability_slope =
+          (1.0 - minimum_probability)/(max_weight_ - min_weight_);
+    }
+  }
+
+  PixelVector superpix;
+  Coverage(superpix);
+
+  MTRand mtrand;
+  mtrand.seed();
+
+  WeightedAngularCoordinate tmp_ang;
+  for (uint32_t m=0;m<weights.size();m++) {
+    bool keep = false;
+    double lambda, eta, z, map_weight, probability_limit;
+    uint32_t n,k;
+
+    while (!keep) {
+      n = mtrand.randInt(superpix.size()-1);
+      k = superpix[n].Superpixnum();
+
+      z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
+					   sub_map_[k].ZMin());
+      lambda = asin(z)*RadToDeg;
+      eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
+					       sub_map_[k].EtaMin());
+      tmp_ang.SetSurveyCoordinates(lambda,eta);
+
+      keep = sub_map_[k].FindLocation(tmp_ang, map_weight);
+
+      if (use_weighted_sampling && keep) {
+	probability_limit =
+	  minimum_probability + (map_weight - min_weight_)*probability_slope;
+	if (mtrand.rand(1.0) > probability_limit) keep = false;
+      }
+    }
+    tmp_ang.SetWeight(weights[m]);
     ang.push_back(tmp_ang);
   }
 }
@@ -1736,8 +1844,8 @@ PyObject* Map::GenerateRandomGal(uint32_t n_point, bool use_weighted_sampling)
 }
 
 PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
-			const std::string& system, PyObject* radobj) throw (const char* ) {
-
+			const std::string& system, PyObject* radobj)
+  throw (const char* ) {
   // convert the string system indicator to a Sphere id
   Stomp::AngularCoordinate::Sphere sys =
     Stomp::AngularCoordinate::SystemFromString(system);
@@ -1766,7 +1874,7 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
     std::srand ( std::time(NULL) );
   }
 
-  // An output numpy array 
+  // An output numpy array
   NumpyVector<npy_int8> maskflags(x1.size());
 
   Stomp::AngularCoordinate ang;
@@ -1812,7 +1920,7 @@ int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
     double pmax=0.01;
     {
       WedgeBound wb(ang, radius, 0.0, 90.0, coord_system);
-      if (Contains(wb, amin, pmax)) 
+      if (Contains(wb, amin, pmax))
         maskflags |= FIRST_QUADRANT_OK;
     }
     {
@@ -1834,7 +1942,6 @@ int Map::QuadrantsContainedMC(AngularCoordinate& ang, double radius,
   }
   return maskflags;
 }
-
 
 bool Map::QuadrantContainedMC(AngularCoordinate& ang, double radius,
 			      int quadrant) throw (const char*) {
@@ -2049,82 +2156,6 @@ double Map::FindUnmaskedFraction(GeometricBound& bound, double area_resolution,
 
   return static_cast<double>(n_inside)/static_cast<double>(n_rand);
 }
-
-void Map::GenerateRandomPoints(WAngularVector& ang, WAngularVector& input_ang,
-			       bool filter_input_points) {
-  if (!ang.empty()) ang.clear();
-  ang.reserve(input_ang.size());
-
-  PixelVector superpix;
-  Coverage(superpix);
-
-  MTRand mtrand;
-  mtrand.seed();
-
-  WeightedAngularCoordinate tmp_ang;
-  for (uint32_t m=0;m<input_ang.size();m++) {
-    if (!filter_input_points ||
-	(filter_input_points && Contains(input_ang[m]))) {
-      bool keep = false;
-      double lambda, eta, z, map_weight;
-      uint32_t n,k;
-
-      while (!keep) {
-	n = mtrand.randInt(superpix.size()-1);
-	k = superpix[n].Superpixnum();
-
-	z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
-					     sub_map_[k].ZMin());
-	lambda = asin(z)*RadToDeg;
-	eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
-						 sub_map_[k].EtaMin());
-	tmp_ang.SetSurveyCoordinates(lambda,eta);
-
-	keep = sub_map_[k].FindLocation(tmp_ang, map_weight);
-      }
-      tmp_ang.SetWeight(input_ang[m].Weight());
-      ang.push_back(tmp_ang);
-    }
-  }
-}
-
-void Map::GenerateRandomPoints(WAngularVector& ang,
-			       std::vector<double>& weights) {
-  if (!ang.empty()) ang.clear();
-  ang.reserve(weights.size());
-
-  PixelVector superpix;
-  Coverage(superpix);
-
-  MTRand mtrand;
-  mtrand.seed();
-
-  WeightedAngularCoordinate tmp_ang;
-  for (uint32_t m=0;m<weights.size();m++) {
-    bool keep = false;
-    double lambda, eta, z, map_weight;
-    uint32_t n,k;
-
-    while (!keep) {
-      n = mtrand.randInt(superpix.size()-1);
-      k = superpix[n].Superpixnum();
-
-      z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
-					   sub_map_[k].ZMin());
-      lambda = asin(z)*RadToDeg;
-      eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
-					       sub_map_[k].EtaMin());
-      tmp_ang.SetSurveyCoordinates(lambda,eta);
-
-      keep = sub_map_[k].FindLocation(tmp_ang, map_weight);
-    }
-    tmp_ang.SetWeight(weights[m]);
-    ang.push_back(tmp_ang);
-  }
-}
-
-
-
 
 bool Map::Write(const std::string& OutputFile, bool hpixel_format,
 		bool weighted_map) {
