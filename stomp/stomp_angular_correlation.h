@@ -86,6 +86,13 @@ class AngularCorrelation {
   // correlation function calculation and the area involved.
   void AutoMaxResolution(uint32_t n_obj, double area);
 
+  // If we're going to use regions to find jack-knife errors, then we need
+  // to initialize the AngularBins to handle this state of affairs or possibly
+  // clear out previous calculations.
+  void InitializeRegions(int16_t n_regions);
+  void ClearRegions();
+  int16_t NRegion();
+
   // Some wrapper methods for find the auto-correlation and cross-correlations
   void FindAutoCorrelation(Map& stomp_map,
 			   WAngularVector& galaxy,
@@ -174,7 +181,7 @@ class AngularCorrelation {
   //   THETA_A  THETA_B  Cov(THETA_A, THETA_B)
   //
   bool WriteCovariance(const std::string& output_file_name);
-  
+
 
  private:
   ThetaVector thetabin_;
@@ -182,6 +189,7 @@ class AngularCorrelation {
   ThetaIterator theta_pair_begin_, theta_pair_end_;
   double theta_min_, theta_max_, sin2theta_min_, sin2theta_max_;
   uint32_t min_resolution_, max_resolution_;
+  int16_t n_region_;
   bool manual_resolution_break_;
 };
 

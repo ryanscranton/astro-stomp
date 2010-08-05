@@ -999,52 +999,65 @@ void ScalarMap::CalculateMeanIntensity() {
   } else {
     if (RegionsInitialized()) {
       local_mean_intensity_.clear();
-      std::vector<double> sum_pixel;
+      std::vector<double> sum_pixel_vec;
+
+      double sum_pixel = 0.0;
+      mean_intensity_ = 0.0;
 
       local_mean_intensity_.reserve(NRegion());
-      sum_pixel.reserve(NRegion());
+      sum_pixel_vec.reserve(NRegion());
 
       for (uint16_t i=0;i<NRegion();i++) {
-	sum_pixel[i] = 0.0;
+	sum_pixel_vec[i] = 0.0;
 	local_mean_intensity_[i] = 0.0;
       }
 
       switch (map_type_) {
       case ScalarField:
 	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	  mean_intensity_ += iter->Intensity()*iter->Weight();
+	  sum_pixel += iter->Weight();
+
 	  int16_t region_idx = FindRegion(*iter);
 	  if (region_idx != -1 && region_idx < NRegion()) {
 	    local_mean_intensity_[region_idx] +=
 	      iter->Intensity()*iter->Weight();
-	    sum_pixel[region_idx] += iter->Weight();
+	    sum_pixel_vec[region_idx] += iter->Weight();
 	  }
 	}
 	break;
       case DensityField:
 	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	  mean_intensity_ += iter->Intensity()/(iter->Area()*iter->Weight());
+	  sum_pixel += 1.0;
+
 	  int16_t region_idx = FindRegion(*iter);
 	  if (region_idx != -1 && region_idx < NRegion()) {
 	    local_mean_intensity_[region_idx] +=
 	      iter->Intensity()/(iter->Area()*iter->Weight());
-	    sum_pixel[region_idx] += 1.0;
+	    sum_pixel_vec[region_idx] += 1.0;
 	  }
 	}
 	break;
       case SampledField:
 	for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
+	  mean_intensity_ += iter->MeanIntensity()*iter->Weight();
+	  sum_pixel += iter->Weight();
+
 	  int16_t region_idx = FindRegion(*iter);
 	  if (region_idx != -1 && region_idx < NRegion()) {
 	    local_mean_intensity_[region_idx] +=
 	      iter->MeanIntensity()*iter->Weight();
-	    sum_pixel[region_idx] += iter->Weight();
+	    sum_pixel_vec[region_idx] += iter->Weight();
 	  }
 	}
 	break;
       }
 
       for (uint16_t i=0;i<NRegion();i++) {
-	local_mean_intensity_[i] /= sum_pixel[i];
+	local_mean_intensity_[i] /= sum_pixel_vec[i];
       }
+      mean_intensity_ /= sum_pixel;
 
       calculated_mean_intensity_ = true;
     }
