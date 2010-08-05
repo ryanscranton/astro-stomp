@@ -10726,6 +10726,79 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_AngularCorrelation_InitializeRegions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  int16_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:AngularCorrelation_InitializeRegions",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation_InitializeRegions" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AngularCorrelation_InitializeRegions" "', argument " "2"" of type '" "int16_t""'");
+  } 
+  arg2 = static_cast< int16_t >(val2);
+  (arg1)->InitializeRegions(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCorrelation_ClearRegions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCorrelation_ClearRegions",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation_ClearRegions" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  (arg1)->ClearRegions();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AngularCorrelation_NRegion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int16_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AngularCorrelation_NRegion",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__AngularCorrelation, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AngularCorrelation_NRegion" "', argument " "1"" of type '" "Stomp::AngularCorrelation *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::AngularCorrelation * >(argp1);
+  result = (int16_t)(arg1)->NRegion();
+  resultobj = SWIG_From_short(static_cast< short >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AngularCorrelation_FindAutoCorrelation__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::AngularCorrelation *arg1 = (Stomp::AngularCorrelation *) 0 ;
@@ -24099,6 +24172,27 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_RegionBound_ClearPixels(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::RegionBound *arg1 = (Stomp::RegionBound *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:RegionBound_ClearPixels",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__RegionBound, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RegionBound_ClearPixels" "', argument " "1"" of type '" "Stomp::RegionBound *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::RegionBound * >(argp1);
+  (arg1)->ClearPixels();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_RegionBound_Coverage(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::RegionBound *arg1 = (Stomp::RegionBound *) 0 ;
@@ -30667,6 +30761,60 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints__SWIG_5(PyObject *SWIGUNUSED
   Stomp::Map *arg1 = (Stomp::Map *) 0 ;
   Stomp::WAngularVector *arg2 = 0 ;
   std::vector< double,std::allocator< double > > *arg3 = 0 ;
+  bool arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  bool val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:Map_GenerateRandomPoints",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__Map, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Map_GenerateRandomPoints" "', argument " "1"" of type '" "Stomp::Map *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::Map * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Map_GenerateRandomPoints" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_GenerateRandomPoints" "', argument " "2"" of type '" "Stomp::WAngularVector &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::WAngularVector * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t,  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Map_GenerateRandomPoints" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Map_GenerateRandomPoints" "', argument " "3"" of type '" "std::vector< double,std::allocator< double > > &""'"); 
+  }
+  arg3 = reinterpret_cast< std::vector< double,std::allocator< double > > * >(argp3);
+  ecode4 = SWIG_AsVal_bool(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Map_GenerateRandomPoints" "', argument " "4"" of type '" "bool""'");
+  } 
+  arg4 = static_cast< bool >(val4);
+  (arg1)->GenerateRandomPoints(*arg2,*arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::Map *arg1 = (Stomp::Map *) 0 ;
+  Stomp::WAngularVector *arg2 = 0 ;
+  std::vector< double,std::allocator< double > > *arg3 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -30784,7 +30932,7 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints(PyObject *self, PyObject *ar
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
-          return _wrap_Map_GenerateRandomPoints__SWIG_5(self, args);
+          return _wrap_Map_GenerateRandomPoints__SWIG_6(self, args);
         }
       }
     }
@@ -30826,6 +30974,31 @@ SWIGINTERN PyObject *_wrap_Map_GenerateRandomPoints(PyObject *self, PyObject *ar
       _v = SWIG_CheckState(res);
       if (_v) {
         void *vptr = 0;
+        int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_double_std__allocatorT_double_t_t, 0);
+        _v = SWIG_CheckState(res);
+        if (_v) {
+          {
+            int res = SWIG_AsVal_bool(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_Map_GenerateRandomPoints__SWIG_5(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        void *vptr = 0;
         int res = SWIG_ConvertPtr(argv[2], &vptr, SWIGTYPE_p_std__vectorT_Stomp__WeightedAngularCoordinate_std__allocatorT_Stomp__WeightedAngularCoordinate_t_t, 0);
         _v = SWIG_CheckState(res);
         if (_v) {
@@ -30849,6 +31022,7 @@ fail:
     "    GenerateRandomPoints(Stomp::Map *,Stomp::AngularVector &)\n"
     "    GenerateRandomPoints(Stomp::Map *,Stomp::WAngularVector &,Stomp::WAngularVector &,bool)\n"
     "    GenerateRandomPoints(Stomp::Map *,Stomp::WAngularVector &,Stomp::WAngularVector &)\n"
+    "    GenerateRandomPoints(Stomp::Map *,Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &,bool)\n"
     "    GenerateRandomPoints(Stomp::Map *,Stomp::WAngularVector &,std::vector< double,std::allocator< double > > &)\n");
   return NULL;
 }
@@ -38508,7 +38682,50 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ScalarMap_ImprintMap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_ScalarMap_ImprintMap__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Stomp::ScalarMap *arg1 = (Stomp::ScalarMap *) 0 ;
+  Stomp::Map *arg2 = 0 ;
+  bool arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ScalarMap_ImprintMap",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Stomp__ScalarMap, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ScalarMap_ImprintMap" "', argument " "1"" of type '" "Stomp::ScalarMap *""'"); 
+  }
+  arg1 = reinterpret_cast< Stomp::ScalarMap * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Stomp__Map,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ScalarMap_ImprintMap" "', argument " "2"" of type '" "Stomp::Map &""'"); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ScalarMap_ImprintMap" "', argument " "2"" of type '" "Stomp::Map &""'"); 
+  }
+  arg2 = reinterpret_cast< Stomp::Map * >(argp2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ScalarMap_ImprintMap" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  result = (bool)(arg1)->ImprintMap(*arg2,arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ScalarMap_ImprintMap__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Stomp::ScalarMap *arg1 = (Stomp::ScalarMap *) 0 ;
   Stomp::Map *arg2 = 0 ;
@@ -38538,6 +38755,60 @@ SWIGINTERN PyObject *_wrap_ScalarMap_ImprintMap(PyObject *SWIGUNUSEDPARM(self), 
   resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ScalarMap_ImprintMap(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 3); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_ScalarMap_ImprintMap__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Stomp__ScalarMap, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Stomp__Map, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_ScalarMap_ImprintMap__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'ScalarMap_ImprintMap'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    ImprintMap(Stomp::ScalarMap *,Stomp::Map &,bool)\n"
+    "    ImprintMap(Stomp::ScalarMap *,Stomp::Map &)\n");
   return NULL;
 }
 
@@ -94518,6 +94789,9 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AngularCorrelation_SetMaxResolution", _wrap_AngularCorrelation_SetMaxResolution, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_SetMinResolution", _wrap_AngularCorrelation_SetMinResolution, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_AutoMaxResolution", _wrap_AngularCorrelation_AutoMaxResolution, METH_VARARGS, NULL},
+	 { (char *)"AngularCorrelation_InitializeRegions", _wrap_AngularCorrelation_InitializeRegions, METH_VARARGS, NULL},
+	 { (char *)"AngularCorrelation_ClearRegions", _wrap_AngularCorrelation_ClearRegions, METH_VARARGS, NULL},
+	 { (char *)"AngularCorrelation_NRegion", _wrap_AngularCorrelation_NRegion, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindAutoCorrelation", _wrap_AngularCorrelation_FindAutoCorrelation, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindCrossCorrelation", _wrap_AngularCorrelation_FindCrossCorrelation, METH_VARARGS, NULL},
 	 { (char *)"AngularCorrelation_FindAutoCorrelationWithRegions", _wrap_AngularCorrelation_FindAutoCorrelationWithRegions, METH_VARARGS, NULL},
@@ -94708,6 +94982,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"RegionBound_ScorePixel", _wrap_RegionBound_ScorePixel, METH_VARARGS, NULL},
 	 { (char *)"RegionBound_AddPixel", _wrap_RegionBound_AddPixel, METH_VARARGS, NULL},
 	 { (char *)"RegionBound_RemovePixel", _wrap_RegionBound_RemovePixel, METH_VARARGS, NULL},
+	 { (char *)"RegionBound_ClearPixels", _wrap_RegionBound_ClearPixels, METH_VARARGS, NULL},
 	 { (char *)"RegionBound_Coverage", _wrap_RegionBound_Coverage, METH_VARARGS, NULL},
 	 { (char *)"RegionBound_CoveragePixels", _wrap_RegionBound_CoveragePixels, METH_VARARGS, NULL},
 	 { (char *)"RegionBound_CoverageArea", _wrap_RegionBound_CoverageArea, METH_VARARGS, NULL},

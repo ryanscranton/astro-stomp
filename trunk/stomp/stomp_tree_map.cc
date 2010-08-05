@@ -436,10 +436,10 @@ void TreeMap::FindPairsWithRegions(AngularVector& ang, AngularBin& theta) {
   uint32_t n_pair = 0;
   for (AngularIterator ang_iter=ang.begin();ang_iter!=ang.end();++ang_iter) {
     center_pix.BoundingRadius(*ang_iter, theta.ThetaMax(), pix);
-    uint16_t region = Region(center_pix.Pixnum());
+    uint16_t region = FindRegion(center_pix);
 
     for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
-      if (region == Region(pix_iter->Pixnum())) {
+      if (region == FindRegion(*pix_iter)) {
 	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
 	if (iter != tree_map_.end())
 	  n_pair = tree_map_[pix_iter->Pixnum()]->FindPairs(*ang_iter,
@@ -476,10 +476,10 @@ void TreeMap::FindWeightedPairsWithRegions(AngularVector& ang,
   double total_weight = 0.0;
   for (AngularIterator ang_iter=ang.begin();ang_iter!=ang.end();++ang_iter) {
     center_pix.BoundingRadius(*ang_iter, theta.ThetaMax(), pix);
-    uint16_t region = Region(center_pix.Pixnum());
+    uint16_t region = FindRegion(center_pix);
 
     for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
-      if (region == Region(pix_iter->Pixnum())) {
+      if (region == FindRegion(*pix_iter)) {
 	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
 	if (iter != tree_map_.end())
 	  total_weight =
@@ -519,10 +519,10 @@ void TreeMap::FindWeightedPairsWithRegions(WAngularVector& w_ang,
   for (WAngularIterator ang_iter=w_ang.begin();
        ang_iter!=w_ang.end();++ang_iter) {
     center_pix.BoundingRadius(*ang_iter, theta.ThetaMax(), pix);
-    uint16_t region = Region(center_pix.Pixnum());
+    uint16_t region = FindRegion(center_pix);
 
     for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
-      if (region == Region(pix_iter->Pixnum())) {
+      if (region == FindRegion(*pix_iter)) {
 	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
 	if (iter != tree_map_.end())
 	  total_weight =
@@ -562,10 +562,10 @@ void TreeMap::FindWeightedPairsWithRegions(AngularVector& ang,
   double total_weight = 0.0;
   for (AngularIterator ang_iter=ang.begin();ang_iter!=ang.end();++ang_iter) {
     center_pix.BoundingRadius(*ang_iter, theta.ThetaMax(), pix);
-    uint16_t region = Region(center_pix.Pixnum());
+    uint16_t region = FindRegion(center_pix);
 
     for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
-      if (region == Region(pix_iter->Pixnum())) {
+      if (region == FindRegion(*pix_iter)) {
 	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
 	if (iter != tree_map_.end())
 	  total_weight =
@@ -608,10 +608,10 @@ void TreeMap::FindWeightedPairsWithRegions(WAngularVector& w_ang,
   for (WAngularIterator ang_iter=w_ang.begin();
        ang_iter!=w_ang.end();++ang_iter) {
     center_pix.BoundingRadius(*ang_iter, theta.ThetaMax(), pix);
-    uint16_t region = Region(center_pix.Pixnum());
+    uint16_t region = FindRegion(center_pix);
 
     for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
-      if (region == Region(pix_iter->Pixnum())) {
+      if (region == FindRegion(*pix_iter)) {
 	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
 	if (iter != tree_map_.end())
 	  total_weight =
@@ -655,10 +655,10 @@ void TreeMap::FindWeightedPairsWithRegions(WAngularVector& w_ang,
   for (WAngularIterator ang_iter=w_ang.begin();
        ang_iter!=w_ang.end();++ang_iter) {
     center_pix.BoundingRadius(*ang_iter, theta.ThetaMax(), pix);
-    uint16_t region = Region(center_pix.Pixnum());
+    uint16_t region = FindRegion(center_pix);
 
     for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
-      if (region == Region(pix_iter->Pixnum())) {
+      if (region == FindRegion(*pix_iter)) {
 	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
 	if (iter != tree_map_.end())
 	  total_weight =

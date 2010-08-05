@@ -162,6 +162,22 @@ void AngularCorrelation::AutoMaxResolution(uint32_t n_obj, double area) {
   SetMaxResolution(max_resolution, false);
 }
 
+void AngularCorrelation::InitializeRegions(int16_t n_regions) {
+  n_region_ = n_regions;
+  for (ThetaIterator iter=Begin();iter!=End();++iter)
+    iter->InitializeRegions(n_region_);
+}
+
+void AngularCorrelation::ClearRegions() {
+  n_region_ = 0;
+  for (ThetaIterator iter=Begin();iter!=End();++iter)
+    iter->ClearRegions();
+}
+
+int16_t AngularCorrelation::NRegion() {
+  return n_region_;
+}
+
 void AngularCorrelation::FindAutoCorrelation(Map& stomp_map,
 					     WAngularVector& galaxy,
 					     uint8_t random_iterations) {
@@ -203,8 +219,7 @@ void AngularCorrelation::FindAutoCorrelationWithRegions(Map& stomp_map,
   }
 
   std::cout << "Regionated at " << stomp_map.RegionResolution() << "...\n";
-  for (ThetaIterator iter=Begin();iter!=End();++iter)
-    iter->InitializeRegions(n_regions);
+  InitializeRegions(n_regions);
   SetMinResolution(stomp_map.RegionResolution());
 
   std::cout << "Auto-correlating with pixels...\n";
@@ -233,8 +248,7 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
   }
 
   std::cout << "Regionated at " << stomp_map.RegionResolution() << "...\n";
-  for (ThetaIterator iter=Begin();iter!=End();++iter)
-    iter->InitializeRegions(n_regions);
+  InitializeRegions(n_regions);
   SetMinResolution(stomp_map.RegionResolution());
 
   FindPixelCrossCorrelation(stomp_map, gal_a, gal_b);

@@ -372,29 +372,40 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
 
 bool RegionMap::InitializeRegions(BaseMap* base_map, BaseMap& stomp_map) {
   bool initialized_region_map = true;
-  if (!region_map_.empty()) region_map_.clear();
 
-  region_resolution_ = stomp_map.RegionResolution();
-  n_region_ = stomp_map.NRegion();
+  // First we need to check if that our input base_map can support a RegionMap
+  // the requested solution.  In particular, if base_map has a uniform
+  // resolution (like a ScalarMap or the base nodes of TreeMap), then it can't
+  // handle a RegionMap at higher resolution.
+  if ((base_map->MinResolution() == base_map->MaxResolution()) &&
+      base_map->MinResolution() < stomp_map.RegionResolution()) {
+    initialized_region_map = false;
+  } else {
+    if (!region_map_.empty()) region_map_.clear();
 
-  // Iterate through the current BaseMap to find the region value for each
-  // pixel.  If the node is not present in the input map, then
-  // we bail and return false.
-  PixelVector coverage_pix;
-  stomp_map.Coverage(coverage_pix, stomp_map.RegionResolution(), false);
+    region_resolution_ = stomp_map.RegionResolution();
+    n_region_ = stomp_map.NRegion();
 
-  for (PixelIterator iter=coverage_pix.begin();
-       iter!=coverage_pix.end();++iter) {
-    int16_t region = stomp_map.Region(iter->SuperPix(region_resolution_));
-    if (region != -1) {
-      region_map_[iter->SuperPix(region_resolution_)] = region;
-    } else {
-      initialized_region_map = false;
-      iter = coverage_pix.end();
+    // Iterate through the current BaseMap to find the region value for each
+    // pixel.  If the node is not present in the input map, then
+    // we bail and return false.
+    PixelVector coverage_pix;
+    stomp_map.Coverage(coverage_pix, stomp_map.RegionResolution(), false);
+
+    for (PixelIterator iter=coverage_pix.begin();
+	 iter!=coverage_pix.end();++iter) {
+      int16_t region = stomp_map.Region(iter->SuperPix(region_resolution_));
+      if (region != -1) {
+	region_map_[iter->SuperPix(region_resolution_)] = region;
+      } else {
+	initialized_region_map = false;
+	iter = coverage_pix.end();
+      }
     }
   }
 
   if (!initialized_region_map) {
+    if (!region_map_.empty()) region_map_.clear();
     region_resolution_ = 0;
     n_region_ = -1;
   }
