@@ -752,20 +752,29 @@ bool SubMap::Exclude(Map& stomp_map) {
 void SubMap::ScaleWeight(const double weight_scale) {
   for (PixelIterator iter=pix_.begin();iter!=pix_.end();++iter)
     iter->SetWeight(iter->Weight()*weight_scale);
+  min_weight_ *= weight_scale;
+  max_weight_ *= weight_scale;
 }
 
 void SubMap::AddConstantWeight(const double add_weight) {
   for (PixelIterator iter=pix_.begin();iter!=pix_.end();++iter)
     iter->SetWeight(iter->Weight()+add_weight);
+  min_weight_ += add_weight;
+  max_weight_ += add_weight;
 }
 
 void SubMap::InvertWeight() {
+  min_weight_ = 1.0e30;
+  max_weight_ = -1.0e30;
+
   for (PixelIterator iter=pix_.begin();iter!=pix_.end();++iter) {
     if ((iter->Weight() > 1.0e-15) || (iter->Weight() < -1.0e-15)) {
       iter->SetWeight(1.0/iter->Weight());
     } else {
       iter->SetWeight(0.0);
     }
+    if (iter->Weight() < min_weight_) min_weight_ = iter->Weight();
+    if (iter->Weight() > max_weight_) max_weight_ = iter->Weight();
   }
 }
 
@@ -2989,16 +2998,30 @@ bool Map::ImprintMap(Map& stomp_map) {
 void Map::ScaleWeight(const double weight_scale) {
   for (uint32_t k=0;k<MaxSuperpixnum;k++)
     if (sub_map_[k].Initialized()) sub_map_[k].ScaleWeight(weight_scale);
+  min_weight_ *= weight_scale;
+  max_weight_ *= weight_scale;
 }
 
 void Map::AddConstantWeight(const double add_weight) {
   for (uint32_t k=0;k<MaxSuperpixnum;k++)
     if (sub_map_[k].Initialized()) sub_map_[k].AddConstantWeight(add_weight);
+  min_weight_ += add_weight;
+  max_weight += add_weight;
 }
 
 void Map::InvertWeight() {
-  for (uint32_t k=0;k<MaxSuperpixnum;k++)
-    if (sub_map_[k].Initialized()) sub_map_[k].InvertWeight();
+  min_weight_ = 1.0e30;
+  max_weight_ = -1.0e30;
+
+  for (uint32_t k=0;k<MaxSuperpixnum;k++) {
+    if (sub_map_[k].Initialized()) {
+      sub_map_[k].InvertWeight();
+      if (sub_map_[k].MinWeight() < min_weight_)
+	min_weight_ = sub_map_[k].MinWeight();
+      if (sub_map_[k].MaxWeight() > max_weight_)
+	max_weight_ = sub_map_[k].MaxWeight();
+    }
+  }
 }
 
 void Map::Pixels(PixelVector& pix, uint32_t superpixnum) {
