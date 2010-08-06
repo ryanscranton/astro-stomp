@@ -525,12 +525,9 @@ class Map : public BaseMap {
 
 
 private:
-
   void _GenerateRandLamEtaQuadrant(double lambda,double eta, double R,
-      int quadrant, double& rand_lambda, 
+      int quadrant, double& rand_lambda,
       double& rand_eta) throw (const char*);
-
-
 
   SubMapVector sub_map_;
   MapIterator begin_, end_;
