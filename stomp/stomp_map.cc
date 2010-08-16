@@ -3006,7 +3006,7 @@ void Map::AddConstantWeight(const double add_weight) {
   for (uint32_t k=0;k<MaxSuperpixnum;k++)
     if (sub_map_[k].Initialized()) sub_map_[k].AddConstantWeight(add_weight);
   min_weight_ += add_weight;
-  max_weight += add_weight;
+  max_weight_ += add_weight;
 }
 
 void Map::InvertWeight() {
