@@ -28,8 +28,11 @@ class MassFunction(object):
     halo bias as a function of halo mass or as a function of nu, as well as
     translate between mass and nu.
     """
-    def __init__(self, mass_min=1.0e9, mass_max=5.0e17, redshift=0.0,
-                 camb_param=None, halo_param=None, **kws):
+    def __init__(self, redshift=0.0, camb_param=None, halo_param=None, **kws):
+        # Hard coded, but we shouldn't expect halos outside of this range.
+        mass_min = 1.0e9
+        mass_max = 5.0e17
+
         dlog_mass = (numpy.log10(mass_max) - numpy.log10(mass_min))/100
         self.log_mass_max = numpy.log10(mass_max) + dlog_mass
         self.log_mass_min = numpy.log10(mass_min) - dlog_mass

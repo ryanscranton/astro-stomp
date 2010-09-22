@@ -16,7 +16,7 @@ __author__ = "Ryan Scranton <ryan.scranton@gmail.com"
 
 class CambWrapper(object):
     """Wrapper for calling the CAMB code."""
-    def __init__(self, camb_param=None, halo_param=None, **kws):
+    def __init__(self, camb_param=None, **kws):
         self.camb_path = ""
         self.parameter_file = "camb_param.ini"
 
