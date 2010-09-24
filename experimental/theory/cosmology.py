@@ -12,7 +12,7 @@ that can take those parameters and return standard cosmological quantities
 (comoving distance, linear growth factor, etc.) as a function of redshift.
 """
 
-__author__ = "Ryan Scranton <ryan.scranton@gmail.com"
+__author__ = "Ryan Scranton <ryan.scranton@gmail.com>"
 
 
 class Cosmology(object):
@@ -110,7 +110,7 @@ class Cosmology(object):
 
     def _reset_redshift_maximum(self, redshift):
         dz = (redshift - self.z_min)/100
-        self.z_max = redshift + dz
+        self.z_max = redshift
         self._z_array = numpy.arange(self.z_min, self.z_max + dz, dz)
         self._chi_array = numpy.zeros_like(self._z_array)
         self._growth_array = numpy.zeros_like(self._z_array)
@@ -130,13 +130,13 @@ class Cosmology(object):
         distance = 0.0
 
         if redshift < self.z_max and redshift > self.z_min:
-            distance = self._chi_spline(redshift)
+            distance = self._chi_spline(redshift)[0]
         else:
             if redshift > self.z_max:
                 self._reset_redshift_maximum(redshift)
                 distance = self.comoving_distance(redshift)
             else:
-                if redshift >= 0.0:
+                if redshift > 0.00001:
                     self._reset_redshift_minimum(redshift)
                     distance = self.comoving_distance(redshift)
 
@@ -149,20 +149,20 @@ class Cosmology(object):
         return self.comoving_distance(redshift)/(1.0 + redshift)
 
     def redshift(self, comoving_distance):
-        return self._z_spline(comoving_distance)
+        return self._z_spline(comoving_distance)[0]
 
     def growth_factor(self, redshift):
         """Linear growth factor, normalized to unity at z = 0."""
-        growth = 1.0;
+        growth = 1.0
 
         if redshift < self.z_max and redshift > self.z_min:
-            growth = self._growth_spline(redshift)
+            growth = self._growth_spline(redshift)[0]
         else:
             if redshift > self.z_max:
                 self._reset_redshift_maximum(redshift)
                 growth = self.growth_factor(redshift)
             else:
-                if redshift > 0.0:
+                if redshift > 0.00001:
                     self._reset_redshift_minimum(redshift)
                     growth = self.growth_factor(redshift)
 
@@ -231,7 +231,7 @@ class Cosmology(object):
         return delta_k
 
     def linear_power(self, k, redshift=None):
-        return 2.0*numpy.pi**2*self.delta_k(k*self.h, redshift)*self.h**3/k**3
+        return 2.0*numpy.pi**2*self.delta_k(k*self.h, redshift)/k**3
 
     def sigma_r(self, scale, redshift=None):
         """RMS power on scale in Mpc/h"""
@@ -269,9 +269,28 @@ class Cosmology(object):
         """Ratio of (delta_c(z)/sigma(M, z))^2"""
         return (self.delta_c(redshift)/self.sigma_m(mass, redshift))**2.0
 
-    def write(self, output_file_name):
+    def write(self, output_file_name, output_power_file_name=None):
         f = open(output_file_name, "w")
         for z, chi, growth in zip(
             self._z_array, self._chi_array, self._growth_array):
-            f.write("%1.10f %1.10f %1.10f\n" % (z, chi, growth))
+            if z < self.z_max:
+                f.write("%1.10f %1.10f %1.10f %1.10f %1.10f %1.10f %1.10f\n" % (
+                    z, chi, growth, self.omega_m(z), self.omega_l(z),
+                    self.delta_v(z), self.delta_c(z)))
         f.close()
+
+        if not output_power_file_name is None:
+            k_min = 0.001
+            k_max = 100.0
+
+            dln_k = (numpy.log(k_max) - numpy.log(k_min))/200
+            ln_k_max = numpy.log(k_max) + dln_k
+            ln_k_min = numpy.log(k_min) - dln_k
+
+            ln_k_array = numpy.arange(ln_k_min, ln_k_max + dln_k, dln_k)
+            f = open(output_power_file_name, "w")
+            for ln_k in ln_k_array:
+                k = numpy.exp(ln_k)
+                f.write("%1.10f %1.10f\n" % (k, self.linear_power(k)))
+            f.close()
+
