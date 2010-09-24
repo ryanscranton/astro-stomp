@@ -18,7 +18,7 @@ integrals.  It can also return the peak in the redshift sensitivity, so we can
 make the best approximation as to the appropriate power spectrum.
 """
 
-__author__ = "Ryan Scranton <ryan.scranton@gmail.com"
+__author__ = "Ryan Scranton <ryan.scranton@gmail.com>"
 
 class dNdz(object):
     """Base class for a simple redshift distribution.
@@ -129,7 +129,7 @@ class WindowFunction(object):
 
     def window_function(self, chi):
         if chi <= self.chi_max and chi >= self.chi_min:
-            return self._wf_spline(chi)
+            return self._wf_spline(chi)[0]
         else:
             return 0.0
 
@@ -289,7 +289,7 @@ class Kernel(object):
     def kernel(self, log_ktheta):
         if (log_ktheta <= self.log_ktheta_max and
             log_ktheta >= self.log_ktheta_min):
-            return self._kernel_spline(log_ktheta)
+            return self._kernel_spline(log_ktheta)[0]
         else:
             return 0.0
 

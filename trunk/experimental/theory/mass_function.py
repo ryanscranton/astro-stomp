@@ -19,7 +19,7 @@ and those where fluctuations large enough for collapse are exponentially
 suppressed.
 """
 
-__author__ = "Ryan Scranton <ryan.scranton@gmail.com"
+__author__ = "Ryan Scranton <ryan.scranton@gmail.com>"
 
 class MassFunction(object):
     """Object representing a mass function for a given input cosmology.
@@ -33,12 +33,12 @@ class MassFunction(object):
         mass_min = 1.0e9
         mass_max = 5.0e17
 
-        dlog_mass = (numpy.log10(mass_max) - numpy.log10(mass_min))/100
-        self.log_mass_max = numpy.log10(mass_max) + dlog_mass
-        self.log_mass_min = numpy.log10(mass_min) - dlog_mass
+        dln_mass = (numpy.log(mass_max) - numpy.log(mass_min))/100
+        self.ln_mass_max = numpy.log(mass_max) + dln_mass
+        self.ln_mass_min = numpy.log(mass_min) - dln_mass
 
-        self._log_mass_array = numpy.arange(
-            self.log_mass_min, self.log_mass_max + dlog_mass, dlog_mass)
+        self._ln_mass_array = numpy.arange(
+            self.ln_mass_min, self.ln_mass_max + dln_mass, dln_mass)
 
         if camb_param is None:
             camb_param = param.CambParams(**kws)
@@ -48,30 +48,37 @@ class MassFunction(object):
 
         self.stq = halo_param.stq
         self.st_little_a = halo_param.st_little_a
+        self.c0 = halo_param.cbarcoef/(1.0 + redshift)
+        self.beta = halo_param.cbarslope
+        self.alpha = halo_param.dpalpha
 
         self.redshift = redshift
         z_min = 0.0
         z_max = self.redshift + 1.0
 
         self.cosmo = cosmology.Cosmology(z_min, z_max, camb_param)
+        self.delta_c = self.cosmo.delta_c(self.redshift)
 
         self._initialize_splines()
         self._normalize()
 
     def _initialize_splines(self):
-        self._nu_array = numpy.zeros_like(self._log_mass_array)
+        self._nu_array = numpy.zeros_like(self._ln_mass_array)
 
-        for idx in xrange(self._log_mass_array.size):
-            mass = 10.0**self._log_mass_array[idx]
+        for idx in xrange(self._ln_mass_array.size):
+            mass = numpy.exp(self._ln_mass_array[idx])
             self._nu_array[idx] = self.cosmo.nu_m(mass, self.redshift)
 
         self.nu_min = 1.001*self._nu_array[0]
         self.nu_max = 0.999*self._nu_array[-1]
 
         self._nu_spline = InterpolatedUnivariateSpline(
-            self._log_mass_array, self._nu_array)
-        self._log_mass_spline = InterpolatedUnivariateSpline(
-            self._nu_array, self._log_mass_array)
+            self._ln_mass_array, self._nu_array)
+        self._ln_mass_spline = InterpolatedUnivariateSpline(
+            self._nu_array, self._ln_mass_array)
+
+        # Set M_star, the mass for which nu == 1
+        self.m_star = self.mass(1.0)
 
     def _normalize(self):
         self.f_norm = 1.0
@@ -90,23 +97,35 @@ class MassFunction(object):
             numpy.sqrt(nu_prime)*numpy.exp(-0.5*nu_prime)/nu)
 
     def f_m(self, mass):
-        return self.f_nu(self._nu_spline(numpy.log10(mass)))
+        return self.f_nu(self.nu(mass))
 
-    def bias_nu(self, nu, redshift=None):
+    def bias_nu(self, nu):
+        """Halo bias as a function of nu."""
         nu_prime = nu*self.st_little_a
-        delta_c = self.cosmo.delta_c(redshift)
         return self.bias_norm*(
-            1.0 + (nu - 1.0)/delta_c +
-            2.0*self.stq/(delta_c*(1.0 + nu_prime**self.stq)))
+            1.0 + (nu - 1.0)/self.delta_c +
+            2.0*self.stq/(self.delta_c*(1.0 + nu_prime**self.stq)))
 
-    def bias_m(self, mass, redshift=None):
-        return self.bias_nu(self._nu_spline(numpy.log10(mass)))
+    def bias_m(self, mass):
+        """Halo bias as a function of mass."""
+        return self.bias_nu(self.nu(mass))
 
     def nu(self, mass):
-        return self._nu_spline(numpy.log10(mass))
+        """nu as a function of halo mass."""
+        return self._nu_spline(numpy.log(mass))[0]
+
+    def ln_mass(self, nu):
+        """Natural log of halo mass as a function of nu."""
+        return self._ln_mass_spline(nu)[0]
 
     def mass(self, nu):
-        return 10.0**self._log_mass_spline(nu)
+        """Halo mass as a function of nu."""
+        return numpy.exp(self.ln_mass(nu))
 
-    def m_star(self):
-        return 10.0**self._log_mass_spline(1.0)
+    def write(self, output_file_name):
+        print "M* = 10^%1.4f M_sun" % numpy.log10(self.m_star)
+        output_file = open(output_file_name, "w")
+        for ln_mass, nu, in zip(self._ln_mass_array, self._nu_array):
+            output_file.write("%1.10f %1.10f %1.10f %1.10f\n" % (
+                numpy.exp(ln_mass), nu, self.f_nu(nu), self.bias_nu(nu)))
+        output_file.close()

@@ -2,7 +2,6 @@ from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate
 import param  # cosmological parameter object from Cosmopy
 import numpy
-import cosmology
 import os
 import types
 
@@ -12,12 +11,12 @@ Given a set of parameters, we want to use the CAMB code to generate a linear
 power spectrum we can output for arbitrary wavenumber.
 """
 
-__author__ = "Ryan Scranton <ryan.scranton@gmail.com"
+__author__ = "Ryan Scranton <ryan.scranton@gmail.com>"
 
 class CambWrapper(object):
     """Wrapper for calling the CAMB code."""
     def __init__(self, camb_param=None, **kws):
-        self.camb_path = ""
+        self.camb_path = "/usr/local/bin/"
         self.parameter_file = "camb_param.ini"
 
         if camb_param is None:
@@ -47,7 +46,7 @@ class CambWrapper(object):
 
         os.system(camb_executable + " " + self.parameter_file)
 
-        power_spectrum_file = self.camb_param.output_root+"_matterpower.dat"
+        power_spectrum_file = self._camb_param.output_root+"_matterpower.dat"
         if not os.path.exists(power_spectrum_file):
             print "%s does not exist!" % power_spectrum_file
 
@@ -55,8 +54,8 @@ class CambWrapper(object):
         self.k_min = 1.01*k_array[0]
         self.k_max = 0.99*k_array[-1]
 
-        self._log_k_array = numpy.zeros_like(k_array)
-        self._log_power_array = numpy.zeros_like(k_array)
+        self._ln_k_array = numpy.zeros_like(k_array)
+        self._ln_power_array = numpy.zeros_like(k_array)
 
         for idx in xrange(k_array.size):
             self._ln_k_array[idx] = numpy.log(k_array[idx])
@@ -64,7 +63,7 @@ class CambWrapper(object):
         self._ln_power_spline = InterpolatedUnivariateSpline(
             self._ln_k_array, self._ln_power_array)
 
-        if clean_files:
+        if cleanup_files:
             self.cleanup_files()
 
         self._initialized = True
@@ -75,7 +74,7 @@ class CambWrapper(object):
         output_file = file(parameter_file, "w")
 
         for key in self._camb_param.iterkeys():
-            if type(self._camb_param[key]) == ListType:
+            if type(self._camb_param[key]) == types.ListType:
                 for i,val in enumerate(self._camb_param[key]):
                     output_file.write(key+"("+str(i+1)+") = "+str(val)+"\n")
             else:
@@ -89,27 +88,31 @@ class CambWrapper(object):
         return power_matrix[:,0], power_matrix[:,1]
 
     def cleanup_files(self):
-        if os.path.exists(self.paramter_file):
-            os.system("rm %s" % parameter_file)
+        if os.path.exists(self.parameter_file):
+            os.system("rm %s" % self.parameter_file)
 
-        power_spectrum_file = self.camb_param.output_root+"_matterpower.dat"
+        power_spectrum_file = self._camb_param.output_root+"_matterpower.dat"
         if os.path.exists(power_spectrum_file):
             os.system("rm %s" % power_spectrum_file)
 
-        transfer_file = self.camb_param.output_root+"_transfer_out.dat"
+        transfer_file = self._camb_param.output_root+"_transfer_out.dat"
         if os.path.exists(transfer_file):
             os.system("rm %s" % transfer_file)
 
-        cl_file = self.camb_param.output_root+"_scalCls.dat"
+        cl_file = self._camb_param.output_root+"_scalCls.dat"
         if os.path.exists(cl_file):
             os.system("rm %s" % cl_file)
+
+        parameter_file = self._camb_param.output_root+"_params.ini"
+        if os.path.exists(parameter_file):
+            os.system("rm %s" % parameter_file)
 
     def linear_power(self, k):
         if not self._initialized:
             self.run()
 
         if k < self.k_max and k > self.k_min:
-            return numpy.exp(self._ln_power_spline(numpy.log(k)))
+            return numpy.exp(self._ln_power_spline(numpy.log(k))[0])
         else:
             return 0.0
 
@@ -137,4 +140,10 @@ class CambWrapper(object):
         self._ln_power_spline = InterpolatedUnivariateSpline(
             self._ln_k_array, self._ln_power_array)
 
+    def write(self, output_file_name):
+        f = open(output_file_name, "w")
+        for ln_k in self._ln_k_array:
+            k = numpy.exp(ln_k)
+            f.write("%1.10f %1.10f\n" % (k, self.linear_power(k)))
+        f.close()
 
