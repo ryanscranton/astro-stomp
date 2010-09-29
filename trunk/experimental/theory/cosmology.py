@@ -25,13 +25,13 @@ class Cosmology(object):
     D(z).
     """
     def __init__(self, z_min, z_max, camb_param=None, **kws):
-        dz = (z_max - z_min)/100
+        dz = (z_max - z_min)/100.0
         self.z_max = z_max + dz
         self.z_min = z_min - dz
         if self.z_min < 0.0: self.z_min = 0.0
 
 
-        dz = (self.z_max - self.z_min)/100
+        dz = (self.z_max - self.z_min)/100.0
         self._z_array = numpy.arange(self.z_min, self.z_max + dz, dz)
         self._chi_array = numpy.zeros_like(self._z_array)
         self._growth_array = numpy.zeros_like(self._z_array)
@@ -109,7 +109,7 @@ class Cosmology(object):
             return False
 
     def _reset_redshift_maximum(self, redshift):
-        dz = (redshift - self.z_min)/100
+        dz = (redshift - self.z_min)/100.0
         self.z_max = redshift
         self._z_array = numpy.arange(self.z_min, self.z_max + dz, dz)
         self._chi_array = numpy.zeros_like(self._z_array)
@@ -119,7 +119,7 @@ class Cosmology(object):
 
     def _reset_redshift_minimum(self, redshift):
         self.z_min = redshift
-        dz = (self.z_max - self.z_min)/100
+        dz = (self.z_max - self.z_min)/100.0
         self._z_array = numpy.arange(self.z_min, self.z_max+dz, dz)
         self._chi_array = numpy.zeros_like(self._z_array)
         self._growth_array = numpy.zeros_like(self._z_array)

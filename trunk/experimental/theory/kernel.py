@@ -3,6 +3,7 @@ from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate as In
 from scipy import special as S
 import param  # cosmological parameter object from Cosmopy
+import cosmology
 import numpy
 import copy
 
@@ -75,7 +76,7 @@ class dNdzMagLim(dNdz):
         self.b = b
 
     def raw_dndz(self, redshift):
-        return ((redshift**a)*numpy.exp(-1.0*redshift/self.z0**self.b))
+        return ((redshift**self.a)*numpy.exp(-1.0*redshift/self.z0**self.b))
 
 class WindowFunction(object):
     """Base class for an angular correlation window function.
@@ -95,24 +96,24 @@ class WindowFunction(object):
     derived classes and then the kernel object will sample the spline via the
     window_function() method.
     """
-    def __init__(self, z_min, z_max, cosmology=None,
+    def __init__(self, z_min, z_max, cosmo=None,
                  camb_param=None, **kws):
         self.z_min = z_min
         self.z_max = z_max
 
-        if cosmology is None:
+        if cosmo is None:
             if camb_param is None:
                 self.param = param.CambParams(**kws)
             else:
                 self.param = camb_param
-            self.cosmo = Cosmology(z_min, z_max, self.param)
+            self.cosmo = cosmology.Cosmology(z_min, z_max, self.param)
         else:
-            self.cosmo = cosmology
+            self.cosmo = cosmo
 
         self.chi_min = self.cosmo.comoving_distance(z_min)
         self.chi_max = self.cosmo.comoving_distance(z_max)
 
-        dchi = (self.chi_max - self.chi_min)/200
+        dchi = (self.chi_max - self.chi_min)/200.0
         self._chi_array = numpy.arange(self.chi_min, self.chi_max + dchi, dchi)
         self._wf_array = numpy.zeros_like(self._chi_array)
 
@@ -150,13 +151,13 @@ class WindowFunctionGalaxy(WindowFunction):
 
     for comoving distance chi.
     """
-    def __init__(self, redshift_dist, cosmology=None,
+    def __init__(self, redshift_dist, cosmo=None,
                  camb_param=None, **kws):
         self._redshift_dist = redshift_dist
         self._redshift_dist.normalize()
 
         WindowFunction.__init__(self, redshift_dist.z_min, redshift_dist.z_max,
-                                cosmology, camb_param, **kws)
+                                cosmo, camb_param, **kws)
 
     def raw_window_function(self, chi):
         z = self.cosmo.redshift(chi)
@@ -182,7 +183,7 @@ class WindowFunctionConvergence(WindowFunction):
     where we have omitted the (2.5*s - 1) factor that is due to the number count
     slope of the sample.
     """
-    def __init__(self, redshift_dist, cosmology=None,
+    def __init__(self, redshift_dist, cosmo=None,
                  camb_param=None, **kws):
         self._redshift_dist = redshift_dist
         self._redshift_dist.normalize()
@@ -191,7 +192,7 @@ class WindowFunctionConvergence(WindowFunction):
         # Even though the input distribution may only extend between some bounds
         # in redshift, the lensing kernel will extend across z = [0, z_max)
         WindowFunction.__init__(self, 0.0, redshift_dist.z_max,
-                                cosmology, camb_param, **kws)
+                                cosmo, camb_param, **kws)
         self._g_chi_min = (
             self.cosmo.comoving_distance(self._redshift_dist.z_min))
 
@@ -206,7 +207,7 @@ class WindowFunctionConvergence(WindowFunction):
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
-        return 3.0*self.cosmo.omega_m*g_chi/a
+        return 3.0*self.cosmo.omega_m0*g_chi/a
 
     def _lensing_integrand(self, chi, chi0):
         z = self.cosmo.redshift(chi)
@@ -243,7 +244,7 @@ class Kernel(object):
         if self.window_function_b.chi_max > self.chi_max:
             self.chi_max = self.window_function_b.chi_max
 
-        dlog_ktheta = (self.log_ktheta_max - self.log_ktheta_min)/200
+        dlog_ktheta = (self.log_ktheta_max - self.log_ktheta_min)/200.0
         self._log_ktheta_array = numpy.arange(
             self.log_ktheta_min, self.log_ktheta_max + dlog_ktheta, dlog_ktheta)
         self._kernel_array = numpy.zeros_like(self._log_ktheta_array)
@@ -280,7 +281,8 @@ class Kernel(object):
         return 4.0*numpy.pi*numpy.pi*kernel
 
     def _kernel_integrand(self, chi, ktheta):
-        D_z = self.window_function_a.cosmo.growth_factor(chi)
+        D_z = self.window_function_a.cosmo.growth_factor(
+            self.window_function_a.cosmo.redshift(chi))
 
         return (self.window_function_a.window_function(chi)*
                 self.window_function_b.window_function(chi)*

@@ -36,7 +36,7 @@ class Halo(object):
         k_min = 0.001
         k_max = 100.0
 
-        dln_k = (numpy.log(k_max) - numpy.log(k_min))/200
+        dln_k = (numpy.log(k_max) - numpy.log(k_min))/200.0
         self.ln_k_max = numpy.log(k_max) + dln_k
         self.ln_k_min = numpy.log(k_min) - dln_k
 
