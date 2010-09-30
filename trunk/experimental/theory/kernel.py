@@ -113,7 +113,7 @@ class WindowFunction(object):
         self._chi_array = numpy.arange(self.chi_min, self.chi_max + dchi, dchi)
         self._wf_array = numpy.zeros_like(self._chi_array)
 
-    self.set_cosmology(self, camb_param):
+    def set_cosmology(self, camb_param):
         self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
 
         if self.initialized_spline:
@@ -124,7 +124,7 @@ class WindowFunction(object):
             self._wf_array[idx] = self.raw_window_function(self._chi_array[idx])
         self._wf_spline = InterpolatedUnivariateSpline(self._chi_array,
                                                        self._wf_array)
-        self.initialized_splines = True
+        self.initialized_spline = True
 
     def raw_window_function(self, chi):
         return 1.0
@@ -263,10 +263,10 @@ class Kernel(object):
             self.z_max = self.window_function_b.z_max
         self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
 
-        dlog_ktheta = (self.log_ktheta_max - self.log_ktheta_min)/200.0
-        self._log_ktheta_array = numpy.arange(
-            self.log_ktheta_min, self.log_ktheta_max + dlog_ktheta, dlog_ktheta)
-        self._kernel_array = numpy.zeros_like(self._log_ktheta_array)
+        dln_ktheta = (self.ln_ktheta_max - self.ln_ktheta_min)/200.0
+        self._ln_ktheta_array = numpy.arange(
+            self.ln_ktheta_min, self.ln_ktheta_max + dln_ktheta, dln_ktheta)
+        self._kernel_array = numpy.zeros_like(self._ln_ktheta_array)
 
         self._find_z_bar()
 
@@ -284,7 +284,7 @@ class Kernel(object):
         kernel_max = -1.0e30
         calculate_kernel = True
         ratio_limit = 1.0e-4
-        for idx in xrange(self._log_ktheta_array.size):
+        for idx in xrange(self._ln_ktheta_array.size):
             kernel = 0.0
             if calculate_kernel:
                 kernel = self.raw_kernel(self._ln_ktheta_array[idx])
@@ -300,7 +300,7 @@ class Kernel(object):
         self._kernel_spline = InterpolatedUnivariateSpline(
             self._ln_ktheta_array, self._kernel_array)
 
-    def raw_kernel(self, l_ktheta):
+    def raw_kernel(self, ln_ktheta):
         ktheta = numpy.exp(ln_ktheta)
 
         kernel, kernel_err = In.quad(self._kernel_integrand, 1.01*self.chi_min,

@@ -118,7 +118,7 @@ class MultiEpoch(object):
     def luminosity_distance(self, redshift):
         return (1.0 + redshift)*self.comoving_distance(redshift)
 
-    def angular_diameter_distance(self):
+    def angular_diameter_distance(self, redshift):
         return self.comoving_distance(redshift)/(1.0 + redshift)
 
     def redshift(self, comoving_distance):
