@@ -1,4 +1,3 @@
-from __future__ import division
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate as In
 from scipy import special as S
@@ -6,6 +5,7 @@ import param  # cosmological parameter object from Cosmopy
 import cosmology
 import numpy
 import copy
+import cosmology
 
 """This is a set of classes for constructing an angular correlation kernel.
 
@@ -96,19 +96,15 @@ class WindowFunction(object):
     derived classes and then the kernel object will sample the spline via the
     window_function() method.
     """
-    def __init__(self, z_min, z_max, cosmo=None,
-                 camb_param=None, **kws):
+    def __init__(self, z_min, z_max, camb_param=None, **kws):
+        self.initialized_spline = False
+
         self.z_min = z_min
         self.z_max = z_max
 
-        if cosmo is None:
-            if camb_param is None:
-                self.param = param.CambParams(**kws)
-            else:
-                self.param = camb_param
-            self.cosmo = cosmology.Cosmology(z_min, z_max, self.param)
-        else:
-            self.cosmo = cosmo
+        if camb_param is None:
+            camb_param = param.CambParams(**kws)
+        self.set_cosmology(camb_param)
 
         self.chi_min = self.cosmo.comoving_distance(z_min)
         self.chi_max = self.cosmo.comoving_distance(z_max)
@@ -117,18 +113,26 @@ class WindowFunction(object):
         self._chi_array = numpy.arange(self.chi_min, self.chi_max + dchi, dchi)
         self._wf_array = numpy.zeros_like(self._chi_array)
 
-        self._initialize_spline()
+    self.set_cosmology(self, camb_param):
+        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
+
+        if self.initialized_spline:
+            self._initialize_spline()
 
     def _initialize_spline(self):
         for idx in xrange(self._chi_array.size):
             self._wf_array[idx] = self.raw_window_function(self._chi_array[idx])
         self._wf_spline = InterpolatedUnivariateSpline(self._chi_array,
                                                        self._wf_array)
+        self.initialized_splines = True
 
     def raw_window_function(self, chi):
         return 1.0
 
     def window_function(self, chi):
+        if not self.initialized_spline:
+            self._initialize_spline()
+
         if chi <= self.chi_max and chi >= self.chi_min:
             return self._wf_spline(chi)[0]
         else:
@@ -151,13 +155,12 @@ class WindowFunctionGalaxy(WindowFunction):
 
     for comoving distance chi.
     """
-    def __init__(self, redshift_dist, cosmo=None,
-                 camb_param=None, **kws):
+    def __init__(self, redshift_dist, camb_param=None, **kws):
         self._redshift_dist = redshift_dist
         self._redshift_dist.normalize()
 
         WindowFunction.__init__(self, redshift_dist.z_min, redshift_dist.z_max,
-                                cosmo, camb_param, **kws)
+                                camb_param, **kws)
 
     def raw_window_function(self, chi):
         z = self.cosmo.redshift(chi)
@@ -183,8 +186,7 @@ class WindowFunctionConvergence(WindowFunction):
     where we have omitted the (2.5*s - 1) factor that is due to the number count
     slope of the sample.
     """
-    def __init__(self, redshift_dist, cosmo=None,
-                 camb_param=None, **kws):
+    def __init__(self, redshift_dist, camb_param=None, **kws):
         self._redshift_dist = redshift_dist
         self._redshift_dist.normalize()
 
@@ -192,7 +194,7 @@ class WindowFunctionConvergence(WindowFunction):
         # Even though the input distribution may only extend between some bounds
         # in redshift, the lensing kernel will extend across z = [0, z_max)
         WindowFunction.__init__(self, 0.0, redshift_dist.z_max,
-                                cosmo, camb_param, **kws)
+                                camb_param, **kws)
         self._g_chi_min = (
             self.cosmo.comoving_distance(self._redshift_dist.z_min))
 
@@ -227,29 +229,56 @@ class Kernel(object):
     and theta is in radians:
 
     K(k, theta) = 4pi^2*int(0, inf, D^2(chi)*W_a(chi)*W_b(chi)*J_0(k*theta*chi))
+
+    In addition to providing the kernel function, a kernel object also
+    calculates z_bar, the peak in the kernel redshift sensitivity.
     """
     def __init__(self, ktheta_min, ktheta_max,
-                 window_function_a, window_function_b):
-        self.log_ktheta_min = numpy.log10(ktheta_min)
-        self.log_ktheta_max = numpy.log10(ktheta_max)
+                 window_function_a, window_function_b,
+                 camb_param=None, **kws):
+        self.initialized_spline = False
+
+        self.ln_ktheta_min = numpy.log(ktheta_min)
+        self.ln_ktheta_max = numpy.log(ktheta_max)
+
+        if camb_param is None:
+            camb_param = param.CambParams(**kws)
 
         self.window_function_a = window_function_a
         self.window_function_b = window_function_b
 
+        self.window_function_a.set_cosmology(camb_param)
+        self.window_function_b.set_cosmology(camb_param)
+
         self.chi_min = self.window_function_a.chi_min
+        self.z_min = self.window_function_a.z_min
         if self.window_function_b.chi_min < self.chi_min:
             self.chi_min = self.window_function_b.chi_min
+            self.z_min = self.window_function_b.z_min
 
         self.chi_max = self.window_function_a.chi_max
+        self.z_max = self.window_function_a.z_max
         if self.window_function_b.chi_max > self.chi_max:
             self.chi_max = self.window_function_b.chi_max
+            self.z_max = self.window_function_b.z_max
+        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
 
         dlog_ktheta = (self.log_ktheta_max - self.log_ktheta_min)/200.0
         self._log_ktheta_array = numpy.arange(
             self.log_ktheta_min, self.log_ktheta_max + dlog_ktheta, dlog_ktheta)
         self._kernel_array = numpy.zeros_like(self._log_ktheta_array)
 
-        self._initialize_spline()
+        self._find_z_bar()
+
+    def _find_z_bar(self):
+        dz = (self.z_max - self.z_min)/100
+
+        kernel_max = -1.0e30
+        for z in numpy.arange(self.z_min, self.z_max, dz):
+            kernel = self._kernel_integrand(
+                self.cosmo.comoving_distance(z), 1.0)
+            if kernel > kernel_max:
+                self.z_bar = z
 
     def _initialize_spline(self):
         kernel_max = -1.0e30
@@ -258,21 +287,21 @@ class Kernel(object):
         for idx in xrange(self._log_ktheta_array.size):
             kernel = 0.0
             if calculate_kernel:
-                kernel = self.raw_kernel(self._log_ktheta_array[idx])
+                kernel = self.raw_kernel(self._ln_ktheta_array[idx])
 
             if numpy.abs(kernel) > kernel_max:
                 kernel_max = numpy.abs(kernel)
             if numpy.abs(kernel/kernel_max) < ratio_limit:
                 calculate_kernel = False
             self._kernel_array[idx] = kernel
-            print "%1.10f %1.10f" % (self._log_ktheta_array[idx],
-                             self._kernel_array[idx])
+            print "%1.10f %1.10f" % (self._ln_ktheta_array[idx],
+                                     self._kernel_array[idx])
 
         self._kernel_spline = InterpolatedUnivariateSpline(
-            self._log_ktheta_array, self._kernel_array)
+            self._ln_ktheta_array, self._kernel_array)
 
-    def raw_kernel(self, log_ktheta):
-        ktheta = 10.0**log_ktheta
+    def raw_kernel(self, l_ktheta):
+        ktheta = numpy.exp(ln_ktheta)
 
         kernel, kernel_err = In.quad(self._kernel_integrand, 1.01*self.chi_min,
                                      0.99*self.chi_max, args=(ktheta,),
@@ -288,16 +317,22 @@ class Kernel(object):
                 self.window_function_b.window_function(chi)*
                 D_z*D_z*S.j0(ktheta*chi))
 
-    def kernel(self, log_ktheta):
-        if (log_ktheta <= self.log_ktheta_max and
-            log_ktheta >= self.log_ktheta_min):
-            return self._kernel_spline(log_ktheta)[0]
+    def kernel(self, ln_ktheta):
+        if not self.initialized_spline:
+            self._initialize_spline()
+
+        if (ln_ktheta <= self.ln_ktheta_max and
+            ln_ktheta >= self.ln_ktheta_min):
+            return self._kernel_spline(ln_ktheta)[0]
         else:
             return 0.0
 
     def write(self, output_file_name):
+        if not self.initialized_spline:
+            self._initialize_spline()
+
         f = open(output_file_name, "w")
-        for log_ktheta, kernel in zip(
-            self._log_ktheta_array, self._kernel_array):
-            f.write("%1.10f %1.10f\n" % (10.0**log_ktheta, kernel))
+        for ln_ktheta, kernel in zip(
+            self._ln_ktheta_array, self._kernel_array):
+            f.write("%1.10f %1.10f\n" % (numpy.exp(ln_ktheta), kernel))
         f.close()

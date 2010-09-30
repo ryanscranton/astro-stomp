@@ -31,7 +31,7 @@ class MassFunction(object):
     def __init__(self, redshift=0.0, camb_param=None, halo_param=None, **kws):
         # Hard coded, but we shouldn't expect halos outside of this range.
         mass_min = 1.0e9
-        mass_max = 5.0e17
+        mass_max = 5.0e16
 
         dln_mass = (numpy.log(mass_max) - numpy.log(mass_min))/100
         self.ln_mass_max = numpy.log(mass_max) + dln_mass
@@ -53,11 +53,9 @@ class MassFunction(object):
         self.alpha = halo_param.dpalpha
 
         self.redshift = redshift
-        z_min = 0.0
-        z_max = self.redshift + 1.0
 
-        self.cosmo = cosmology.Cosmology(z_min, z_max, camb_param)
-        self.delta_c = self.cosmo.delta_c(self.redshift)
+        self.cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
+        self.delta_c = self.cosmo.delta_c()
 
         self._initialize_splines()
         self._normalize()
@@ -67,7 +65,7 @@ class MassFunction(object):
 
         for idx in xrange(self._ln_mass_array.size):
             mass = numpy.exp(self._ln_mass_array[idx])
-            self._nu_array[idx] = self.cosmo.nu_m(mass, self.redshift)
+            self._nu_array[idx] = self.cosmo.nu_m(mass)
 
         self.nu_min = 1.001*self._nu_array[0]
         self.nu_max = 0.999*self._nu_array[-1]
