@@ -29,38 +29,19 @@ class Correlation(object):
                                        self.log_theta_max, 20)
         self.wtheta_array= np.zeros(self.theta_array.size)
 
-        self.window_function_a = window_function_a
-        self.window_function_b = window_function_b
-
-        self.z_min = self.window_function_a.z_min
-        if self.z_min > self.window_function_b.z_min:
-            self.z_min = self.window_function_b.z_min
-        self.z_max = self.window_function_a.z_max
-        if self.z_max > self.window_function_b.z_max:
-            self.z_max = self.window_function_b.z_max
-
-        if camb_param is None:
-            camb_param = param.CambParams(**kws)
-        self.cosmology = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
-
-        self.window_function_a.set_cosmology(camb_param)
-        self.window_function_b.set_cosmology(camb_param)
-
         # Hard coded, but we shouldn't expect halos outside of this range.
         self._k_min = 0.001
         self._k_max = 100.0
 
         self.kernel = kernel.Kernel(self._k_min*theta_min, self._k_max*theta_max,
-                                    self.window_function_a, self.window_function_b)                               
+                                    window_function_a, window_function_b)
+        self.kernel.set_cosmology(camb_param)
+                      
         if halo_param is None:
             halo_param = param.HaloModelParams(**kws)
         self.halo = halo.Halo(input_hod, self.kernel.z_bar, camb_param, halo_param)
             
     def set_cosmology(self, camb_param):
-        self.cosmology = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
-
-        self.window_function_a.set_cosmology(camb_param)
-        self.window_function_b.set_cosmology(camb_param)
         self.kernel.set_cosmology(camb_param)
         self.halo.set_cosmology(camb_param, self.kernel.z_bar)
 
@@ -72,6 +53,7 @@ class Correlation(object):
 
     def compute_correlation(self):
         for idx in xrange(self.theta_array.size):
+            print "Computing Theta at", self.theta_array[idx]
             wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
                                                 self.kernel.ln_ktheta_min,
                                                 self.kernel.ln_ktheta_max,
