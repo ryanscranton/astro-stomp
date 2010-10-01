@@ -1,6 +1,7 @@
 import camb
 import cosmology
 import halo
+import hod
 import kernel
 import param
 import numpy as np
@@ -18,15 +19,31 @@ class Correlation(object):
     Template class for correlation function, theta should be in radians. The integrand is over ln_k_theta.
     """
 
-    def __init__(self, theta_min, theta_max, kern, haloModel):
+    def __init__(self, theta_min, theta_max, window_function_a, window_function_b, camb_param=None, hod_param=None, **kws):
         self.log_theta_min = np.log10(theta_min)
         self.log_theta_max = np.log10(theta_max)
         self.theta_array = np.logspace(self.log_theta_min, 
                                        self.log_theta_max, 
                                        20)
         self.wtheta_array= np.zeros(self.log_theta_array.size)
-        self.kernel = kern
-        self.halo = haloModel
+
+        self.window_function_a = window_function_a
+        self.window_function_b = window_function_b
+
+        self.z_min = self.window_function_a.z_min
+        if self.z_min > self.window_function_b.z_min:
+            self.z_min = self.window_function_b.z_min
+        self.z_max = self.window_function_a.z_max
+        if self.z_max > self.window_function_b.z_max:
+            self.z_max = self.window_function_b.z_max
+        
+        if camb_param is None:
+            camb_param = param.CambParams(**kws)
+        self.cosmology = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
+        if hod_param is None:
+            hod_param = param.HodModelParams(**kws)
+        self.hod = hod.HODKravtsov(hod_param)
+            
         
 
     def compute_correlation(self):
