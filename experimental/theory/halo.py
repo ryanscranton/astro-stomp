@@ -45,9 +45,11 @@ class Halo(object):
 
         if camb_param is None:
             camb_param = param.CambParams(**kws)
+        self.camb_param = camb_param
 
         if halo_param is None:
             halo_param = param.HaloModelParams(**kws)
+        self.halo_param = halo_param
 
         if redshift is None: redshift = 0.0
         self.redshift = redshift
@@ -83,6 +85,64 @@ class Halo(object):
         self._initialized_pp_mm = False
         self._initialized_pp_gm = False
         self._initialized_pp_gg = False
+
+    def set_cosmology(self, camb_param=None, redshift=None):
+        if camb_param==None:
+            camb_param = self.camb_param
+        if redshift==None:
+            redshift = self.redshift
+        cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
+        self.delta_v = cosmo.delta_v()
+        self.rho_bar = cosmo.rho_bar()
+        self.h = cosmo.h
+
+        self.c0 = self.halo_param.cbarcoef/(1.0 + self.redshift)
+
+        self.mass = mass_function.MassFunction(
+            self.redshift, camb_param, self.halo_param)
+
+        self.camb = camb.CambWrapper(camb_param)
+        self.camb.set_redshift(self.redshift)
+        self.camb.run()
+
+        self._calculate_n_bar()
+        self._initialize_halo_splines()
+        self._initialize_y_splines()
+
+        self._initialized_h_m = False
+        self._initialized_h_g = False
+
+        self._initialized_pp_mm = False
+        self._initialized_pp_gm = False
+        self._initialized_pp_gg = False
+
+    def set_hod(self, input_hod):
+        self.local_hod = input_hod
+
+        self._calculate_n_bar()
+        self._initialize_halo_splines()
+        self._initialize_y_splines()
+
+        self._initialized_h_m = False
+        self._initialized_h_g = False
+
+        self._initialized_pp_mm = False
+        self._initialized_pp_gm = False
+        self._initialized_pp_gg = False
+
+    def set_halo(self, halo_param=None):
+        self.c0 = halo_param.cbarcoef/(1.0 + self.redshift)
+        self.beta = halo_param.cbarslope
+        self.alpha = -1.0*halo_param.dpalpha
+
+        self.mass = mass_function.MassFunction(
+            self.redshift, self.camb_param, halo_param)
+
+        self.local_hod.set_halo(halo_param)
+        self.set_hod(self.local_hod)
+        
+    def set_redshift(self, redshift):
+        self.set_cosmology(self.camb_param, redshift)
 
     def linear_power(self, k):
         """Linear power spectrum in comoving (Mpc/h)^3 from CAMB."""
