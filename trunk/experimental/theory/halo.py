@@ -1,4 +1,5 @@
 from scipy.interpolate import SmoothBivariateSpline
+from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate
 from scipy import special
 import copy
@@ -91,18 +92,18 @@ class Halo(object):
             camb_param = self.camb_param
         if redshift==None:
             redshift = self.redshift
-        cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
+        cosmo = cosmology.SingleEpoch(redshift, camb_param)
         self.delta_v = cosmo.delta_v()
         self.rho_bar = cosmo.rho_bar()
         self.h = cosmo.h
 
-        self.c0 = self.halo_param.cbarcoef/(1.0 + self.redshift)
+        self.c0 = self.halo_param.cbarcoef/(1.0 + redshift)
 
         self.mass = mass_function.MassFunction(
             self.redshift, camb_param, self.halo_param)
 
         self.camb = camb.CambWrapper(camb_param)
-        self.camb.set_redshift(self.redshift)
+        self.camb.set_redshift(redshift)
         self.camb.run()
 
         self._calculate_n_bar()

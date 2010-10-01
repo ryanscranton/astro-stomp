@@ -13,6 +13,8 @@ Given a kernel function and halo model the class should produce a correlation as
 
 """
 
+__autho__ = "Chris Morrison <morrison.chrisb@gmail.com>"
+
 class Correlation(object):
 
     """
@@ -25,7 +27,7 @@ class Correlation(object):
         self.log_theta_max = np.log10(theta_max)
         self.theta_array = np.logspace(self.log_theta_min, 
                                        self.log_theta_max, 20)
-        self.wtheta_array= np.zeros(self.log_theta_array.size)
+        self.wtheta_array= np.zeros(self.theta_array.size)
 
         self.window_function_a = window_function_a
         self.window_function_b = window_function_b
@@ -48,13 +50,11 @@ class Correlation(object):
         self._k_min = 0.001
         self._k_max = 100.0
 
-        self.kernel = kernel.Kernel(self._k_min*theta_min, self._k_max*theta_max
-                                    self.window_function_a, self.window_function_b)
-                                    
-        self.halo_param
-        if hod_param is None:
-            hod_param = param.HodModelParams(**kws)
-        self.halo(input_hod, self.kernel.z_bar, camb_param, halo_param)
+        self.kernel = kernel.Kernel(self._k_min*theta_min, self._k_max*theta_max,
+                                    self.window_function_a, self.window_function_b)                               
+        if halo_param is None:
+            halo_param = param.HaloModelParams(**kws)
+        self.halo = halo.Halo(input_hod, self.kernel.z_bar, camb_param, halo_param)
             
     def set_cosmology(self, camb_param):
         self.cosmology = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
@@ -65,20 +65,24 @@ class Correlation(object):
         self.halo.set_cosmology(camb_param, self.kernel.z_bar)
 
     def set_halo(self, halo_param):
-        self.halo.set_halo(halo_param)  
+        self.halo.set_halo(halo_param)
+
+    def set_hod(self, input_hod):
+        self.halo.set_hod(input_hod)
 
     def compute_correlation(self):
         for idx in xrange(self.theta_array.size):
-            wtheta, wtheta_err = integrante.quad(self._correlation_integrand, 
-                                                 self.kernel.ln_ktheta_min,
-                                                 self.kernel.ln_ktheta_max,
-                                                 args=(self.theta_array[idx]])
+            wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
+                                                self.kernel.ln_ktheta_min,
+                                                self.kernel.ln_ktheta_max,
+                                                args=(self.theta_array[idx]),
+                                                limit=200)
             self.wtheta_array[idx] = wtheta
 
     def _correlation_integrand(self, ln_ktheta, theta):
-        k = np.exp(ln_k_theta)/theta
+        k = np.exp(ln_ktheta)/theta
         dk = k
-        return dk*self.halo.linear_power(k)*self.kernel(ln_ktheta)
+        return dk*k*self.halo.power_gg(k)*self.kernel.kernel(ln_ktheta)
 
     def write(self, output_file_name):
         f = open(output_file_name, "w")
