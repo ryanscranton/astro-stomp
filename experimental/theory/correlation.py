@@ -54,7 +54,7 @@ class Correlation(object):
         self.halo_param
         if hod_param is None:
             hod_param = param.HodModelParams(**kws)
-        self.halo(redshift=self.kernel.z_bar, camb_param, halo_param)
+        self.halo(input_hod, self.kernel.z_bar, camb_param, halo_param)
             
     def set_cosmology(self, camb_param):
         self.cosmology = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
@@ -62,7 +62,7 @@ class Correlation(object):
         self.window_function_a.set_cosmology(camb_param)
         self.window_function_b.set_cosmology(camb_param)
         self.kernel.set_cosmology(camb_param)
-        self.halo.set_cosmology(input_hod, self.kernel.z_bar, camb_param, halo_param)
+        self.halo.set_cosmology(camb_param, self.kernel.z_bar)
 
     def set_halo(self, halo_param):
         self.halo.set_halo(halo_param)  
