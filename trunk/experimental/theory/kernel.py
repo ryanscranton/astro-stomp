@@ -300,6 +300,27 @@ class Kernel(object):
         self._kernel_spline = InterpolatedUnivariateSpline(
             self._ln_ktheta_array, self._kernel_array)
 
+    def set_cosmology(self, camb_param):
+        self.initialized_spline = False
+
+        self.window_function_a.set_cosmology(camb_param)
+        self.window_function_b.set_cosmology(camb_param)
+        
+        self.chi_min = self.window_function_a.chi_min
+        self.z_min = self.window_function_a.z_min
+        if self.window_function_b.chi_min < self.chi_min:
+            self.chi_min = self.window_function_b.chi_min
+            self.z_min = self.window_function_b.z_min
+
+        self.chi_max = self.window_function_a.chi_max
+        self.z_max = self.window_function_a.z_max
+        if self.window_function_b.chi_max > self.chi_max:
+            self.chi_max = self.window_function_b.chi_max
+            self.z_max = self.window_function_b.z_max
+        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
+
+        self._find_z_bar()  
+
     def raw_kernel(self, ln_ktheta):
         ktheta = numpy.exp(ln_ktheta)
 

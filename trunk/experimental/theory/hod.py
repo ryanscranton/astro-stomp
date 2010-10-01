@@ -43,6 +43,9 @@ class HOD(object):
                 exp_nth *= (j*alpha_m2 - j + 1)
         return exp_nth
 
+    def set_halo(halo_param):
+        pass
+
     def write(self, output_file_name):
         mass_max = 1.0e16
         mass_min = 1.0e9
@@ -76,14 +79,16 @@ class HODKravtsov(HOD):
 
         if halo_param is None:
             halo_param = param.HaloModelParams(**kws)
+        self.set_halo(halo_param)
 
+        self._hod[1] = self.first_moment
+        self._hod[2] = self.second_moment
+
+    def set_halo(halo_param):
         self.min_mass = halo_param.m11_msunh
         self.mass_one = halo_param.m13_msunh
         self.mass_cut = halo_param.mcut_msunh
         self.alpha = halo_param.alphaexp
-
-        self._hod[1] = self.first_moment
-        self._hod[2] = self.second_moment
 
     def first_moment(self, mass, z=None):
         return (self.central_first_moment(mass) +
