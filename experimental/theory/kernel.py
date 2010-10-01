@@ -300,6 +300,8 @@ class Kernel(object):
         self._kernel_spline = InterpolatedUnivariateSpline(
             self._ln_ktheta_array, self._kernel_array)
 
+        self.initialized_spline = True
+
     def set_cosmology(self, camb_param):
         self.initialized_spline = False
 

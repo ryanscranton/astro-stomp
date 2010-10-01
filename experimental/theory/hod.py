@@ -84,7 +84,7 @@ class HODKravtsov(HOD):
         self._hod[1] = self.first_moment
         self._hod[2] = self.second_moment
 
-    def set_halo(halo_param):
+    def set_halo(self, halo_param):
         self.min_mass = halo_param.m11_msunh
         self.mass_one = halo_param.m13_msunh
         self.mass_cut = halo_param.mcut_msunh
