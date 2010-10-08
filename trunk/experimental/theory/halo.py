@@ -1,4 +1,4 @@
-from scipy.interpolate import SmoothBivariateSpline
+from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate
 from scipy import special
@@ -57,7 +57,11 @@ class Halo(object):
 
         self.c0 = halo_param.cbarcoef/(1.0 + self.redshift)
         self.beta = halo_param.cbarslope
-        self.alpha = -1.0*halo_param.dpalpha
+
+        # If we hard-code to an NFW profile, then we can use an analytic
+        # form for the halo profile Fourier transform.
+        # self.alpha = -1.0*halo_param.dpalpha
+        self.alpha = -1.0
 
         cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
         self.delta_v = cosmo.delta_v()
@@ -78,7 +82,6 @@ class Halo(object):
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
-        self._initialize_y_splines()
 
         self._initialized_h_m = False
         self._initialized_h_g = False
@@ -194,6 +197,26 @@ class Halo(object):
         """Halo concentration in M_sun/Mpc^3 as a function of mass in M_sun."""
         return numpy.exp(self._ln_halo_norm_spline(numpy.log(mass))[0])
 
+    def y(self, ln_k, mass):
+        """Fourier transform of the halo profile.
+
+        Using an analytic expression for the Fourier transform from
+        White (2001).  This is only valid for an NFW profile.
+        """
+
+        k = numpy.exp(ln_k)/self.h
+        con = self.concentration(mass)
+        con_plus = 1.0 + con
+        z = k*self.virial_radius(mass)/con
+        si_z, ci_z = special.sici(z)
+        si_cz, ci_cz = special.sici(con_plus*z)
+        rho_km = (numpy.cos(z)*(ci_cz - ci_z) +
+                  numpy.sin(z)*(si_cz - si_z) -
+                  numpy.sin(con*z)/(con_plus*z))
+        mass_k = numpy.log(con_plus) - con/con_plus
+
+        return rho_km/mass_k
+
     def write(self, output_file_name):
         f = open(output_file_name, "w")
         for ln_k in self._ln_k_array:
@@ -212,7 +235,7 @@ class Halo(object):
         for nu in self.mass._nu_array:
             mass = self.mass.mass(nu)
             f.write("%1.10f %1.10f %1.10f %1.10f %1.10f\n" % (
-                numpy.log10(mass), self._y(ln_k, nu), self.concentration(mass),
+                numpy.log10(mass), self.y(ln_k, nu), self.concentration(mass),
                 self.halo_normalization(mass), self.virial_radius(mass)))
         f.close()
 
@@ -324,8 +347,9 @@ class Halo(object):
 
     def _h_m_integrand(self, ln_nu, ln_k):
         nu = numpy.exp(ln_nu)
+        mass = self.mass.mass(nu)
 
-        return nu*self.mass.f_nu(nu)*self.mass.bias_nu(nu)*self._y(ln_k, nu)
+        return nu*self.mass.f_nu(nu)*self.mass.bias_nu(nu)*self.y(ln_k, mass)
 
     def _initialize_h_g(self):
         h_g_array = numpy.zeros_like(self._ln_k_array)
@@ -346,7 +370,7 @@ class Halo(object):
         mass = self.mass.mass(nu)
 
         return (nu*self.mass.f_nu(nu)*self.mass.bias_nu(nu)*
-                self._y(ln_k, nu)*self.local_hod.first_moment(mass)/mass)
+                self.y(ln_k, mass)*self.local_hod.first_moment(mass)/mass)
 
     def _initialize_pp_mm(self):
         pp_mm_array = numpy.zeros_like(self._ln_k_array)
@@ -365,7 +389,7 @@ class Halo(object):
     def _pp_mm_integrand(self, ln_nu, ln_k):
         nu = numpy.exp(ln_nu)
         mass = self.mass.mass(nu)
-        y = self._y(ln_k, nu)
+        y = self.y(ln_k, mass)
 
         return nu*self.mass.f_nu(nu)*mass*y*y
 
@@ -386,7 +410,7 @@ class Halo(object):
     def _pp_gg_integrand(self, ln_nu, ln_k):
         nu = numpy.exp(ln_nu)
         mass = self.mass.mass(nu)
-        y = self._y(ln_k, nu)
+        y = self.y(ln_k, mass)
         n_pair = self.local_hod.second_moment(self.mass.mass(nu))
 
         if n_pair < 1:
@@ -410,69 +434,11 @@ class Halo(object):
 
     def _pp_gm_integrand(self, ln_nu, ln_k):
         nu = numpy.exp(ln_nu)
-        y = self._y(ln_k, nu)
+        mass = self.mass.mass(nu)
+        y = self.y(ln_k, mass)
         n_exp = self.local_hod.first_moment(self.mass.mass(nu))
 
         if n_exp < 1:
             return nu*self.mass.f_nu(nu)*n_exp*y
         else:
             return nu*self.mass.f_nu(nu)*n_exp*y*y
-
-    def _y(self, ln_k, nu):
-        return self._y_spline(ln_k, nu)[0]
-
-    def _initialize_y_splines(self):
-        """Calculate y(k, mass) for a given wavenumber and mass.
-
-        This is a time intensive part of the code, but we can speed things up
-        by truncating the calculations when y -> 0 as k >> 1 and M >> M_star.
-        """
-
-        dln_k = (numpy.log(self._k_max) - numpy.log(self._k_min))/50
-        ln_k_array = numpy.arange(
-            self.ln_k_min, self.ln_k_max + dln_k, dln_k)
-
-        dln_mass = (self.mass.ln_mass_max - self.mass.ln_mass_min)/50
-        ln_mass_array = numpy.arange(
-            self.mass.ln_mass_min, self.mass.ln_mass_max + dln_mass, dln_mass)
-
-        self.y_array = numpy.zeros(ln_k_array.size*ln_mass_array.size)
-        self.y_k_array = numpy.zeros(ln_k_array.size*ln_mass_array.size)
-        self.y_nu_array = numpy.zeros(ln_k_array.size*ln_mass_array.size)
-
-        tol = 0.001
-
-        kdx = 0
-        for idx in xrange(ln_k_array.size):
-            k = numpy.exp(ln_k_array[idx])
-
-            calculate_y = True
-            for jdx in xrange(ln_mass_array.size):
-                nu = self.mass.nu(numpy.exp(ln_mass_array[jdx]))
-                if calculate_y:
-                    mass = numpy.exp(ln_mass_array[jdx])
-                    r_v = self.virial_radius(mass)
-                    y, y_err = integrate.quad(
-                        self._y_integrand,
-                        numpy.log(1.0e-6*r_v), numpy.log(r_v),
-                        args=(k, mass,), limit=150)
-                    self.y_array[kdx] = y/mass
-                else:
-                    self.y_array[kdx] = 0.0
-
-                if self.y_array[kdx] < tol:
-                    calculate_y = False
-                self.y_k_array[kdx] = ln_k_array[idx]
-                self.y_nu_array[kdx] = nu
-                kdx += 1
-
-        self._y_spline = SmoothBivariateSpline(self.y_k_array, self.y_nu_array, self.y_array)
-
-    def _y_integrand(self, ln_radius, k, mass):
-        r = numpy.exp(ln_radius)
-        k /= self.h
-        r_norm = (r*self.concentration(mass)/self.virial_radius(mass))
-        rho = r_norm**self.alpha/(1.0 + r_norm)**(3.0 + self.alpha)
-        rho *= self.halo_normalization(mass)
-
-        return 4.0*numpy.pi*r*r*r*rho*numpy.sin(k*r)/(k*r)
