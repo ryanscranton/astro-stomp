@@ -180,7 +180,7 @@ class Halo(object):
         """Galaxy power spectrum in comoving (Mpc/h)^3"""
         if not self._initialized_h_g:
             self._initialize_h_g()
-        if not self._initialized_pp_gm:
+        if not self._initialized_pp_gg:
             self._initialize_pp_gg()
 
         return self.linear_power(k)*self._h_g(k)*self._h_g(k) + self._pp_gg(k)
@@ -247,7 +247,7 @@ class Halo(object):
 
     def _pp_mm(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._pp_gm_spline(numpy.log(k))[0]
+            return self._pp_mm_spline(numpy.log(k))[0]
         else:
             return 0.0
 
