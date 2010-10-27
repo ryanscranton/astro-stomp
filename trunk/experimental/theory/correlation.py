@@ -13,7 +13,7 @@ Given a kernel function and halo model the class should produce a correlation as
 
 """
 
-__autho__ = "Chris Morrison <morrison.chrisb@gmail.com>"
+__author__ = "Chris Morrison <morrison.chrisb@gmail.com>"
 
 class Correlation(object):
 
@@ -21,7 +21,7 @@ class Correlation(object):
     Template class for correlation function, theta should be in radians. The integrand is over ln_k_theta.
     """
 
-    def __init__(self, theta_min, theta_max, window_function_a, window_function_b, camb_param=None, input_hod=None, halo_param=None, **kws):
+    def __init__(self, theta_min, theta_max, window_function_a, window_function_b, camb_param=None, input_hod=None, halo_param=None, powSpec=None, **kws):
 
         self.log_theta_min = np.log10(theta_min)
         self.log_theta_max = np.log10(theta_max)
@@ -35,6 +35,8 @@ class Correlation(object):
 
         self.kernel = kernel.Kernel(self._k_min*theta_min, self._k_max*theta_max,
                                     window_function_a, window_function_b)
+        if camb_param == None:
+            camb_param = param.CambParams(**kws)
         self.kernel.set_cosmology(camb_param)
                       
         if halo_param is None:
