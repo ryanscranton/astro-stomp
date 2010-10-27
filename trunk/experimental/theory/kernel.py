@@ -278,6 +278,7 @@ class Kernel(object):
             kernel = self._kernel_integrand(
                 self.cosmo.comoving_distance(z), 1.0)
             if kernel > kernel_max:
+                kernel_max = kernel
                 self.z_bar = z
 
     def _initialize_spline(self):
