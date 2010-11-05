@@ -29,6 +29,7 @@ class Correlation(object):
                                        self.log_theta_max, 20)
         self.wtheta_array= np.zeros(self.theta_array.size)
 
+
         # Hard coded, but we shouldn't expect halos outside of this range.
         self._k_min = 0.001
         self._k_max = 100.0
