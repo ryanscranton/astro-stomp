@@ -446,15 +446,18 @@ int main(int argc, char **argv) {
 
   // And write out the results...
   std::string wtheta_file_name = "Wtheta_" + FLAGS_output_tag;
-  std::cout << "Writing galaxy cross-correlation to " <<
-    wtheta_file_name << "\n";
+  std::string wcovar_file_name = "Wcovar_" + FLAGS_output_tag;
+  wtheta.Write(wtheta_file_name);
+  wtheta.WriteCovariance(wcovar_file_name);
+  //std::cout << "Writing galaxy cross-correlation to " <<
+  //  wtheta_file_name << "\n";
 
-  std::ofstream output_file(wtheta_file_name.c_str());
-  for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
-    output_file << std::setprecision(6) << iter->Theta() << " " <<
-      iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-  }
-  output_file.close();
+  //std::ofstream output_file(wtheta_file_name.c_str());
+  //for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
+  //  output_file << std::setprecision(6) << iter->Theta() << " " <<
+  //    iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
+  //}
+  //output_file.close();
 
   return 0;
 }
