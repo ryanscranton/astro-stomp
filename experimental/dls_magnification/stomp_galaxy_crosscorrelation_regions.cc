@@ -253,7 +253,7 @@ int main(int argc, char **argv) {
 			 Stomp::ScalarMap::DensityField);
   
   Stomp::ScalarMap* galaxy_map_b =
-    new Stomp::ScalarMap(*stomp_map, wtheta.MaxResolution(),
+    new Stomp::ScalarMap(*galaxy_map_a, wtheta.MaxResolution(),
 			 Stomp::ScalarMap::DensityField);
   std::cout<< "Populating Scalar Maps...\n";
   n_galaxy_a = 0;
