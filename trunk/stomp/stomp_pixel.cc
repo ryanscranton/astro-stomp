@@ -34,13 +34,13 @@ Pixel::Pixel(const uint32_t input_resolution,
   if ((input_resolution < HPixResolution) ||
       (input_resolution%2 != 0) ||
       (input_resolution > MaxPixelResolution)) {
-    std::cout << "Invalid resolution value: " <<
+    std::cout << "Stomp::Pixel::Pixel - Invalid resolution value: " <<
       static_cast<int>(input_resolution) << "\n ";
     exit(2);
   }
 
   if (input_pixnum > MaxPixnum)
-    std::cout << "Invalid pixel index value.\n ";
+    std::cout << "Stomp::Pixel::Pixel - Invalid pixel index value.\n ";
 
   SetResolution(input_resolution);
   y_ = input_pixnum/(Nx0*Resolution());
@@ -55,16 +55,16 @@ Pixel::Pixel(const uint32_t input_x,
   if ((input_resolution < HPixResolution) ||
       (input_resolution%2 != 0) ||
       (input_resolution > MaxPixelResolution)) {
-    std::cout << "Invalid resolution value: " <<
+    std::cout << "Stomp::Pixel::Pixel - Invalid resolution value: " <<
       static_cast<int>(input_resolution) << ".\n";
     exit(2);
   }
 
   if (input_x > Nx0*input_resolution)
-    std::cout << "Invalid x index value.\n";
+    std::cout << "Stomp::Pixel::Pixel - Invalid x index value.\n";
 
   if (input_y > Ny0*input_resolution)
-    std::cout << "Invalid y index value.\n";
+    std::cout << "Stomp::Pixel::Pixel - Invalid y index value.\n";
 
   SetResolution(input_resolution);
   x_ = input_x;
@@ -78,7 +78,7 @@ Pixel::Pixel(AngularCoordinate& ang, const uint32_t input_resolution,
   if ((input_resolution < HPixResolution) ||
       (input_resolution % 2 != 0) ||
       (input_resolution > MaxPixelResolution)) {
-    std::cout << "Invalid resolution value: " <<
+    std::cout << "Stomp::Pixel::Pixel - Invalid resolution value: " <<
       static_cast<int>(input_resolution) << ".\n";
     exit(2);
   }
@@ -216,7 +216,7 @@ uint32_t Pixel::PixelY() const {
 bool Pixel::SetToSuperPix(uint32_t lo_resolution) {
   bool success = false;
   if (Resolution() < lo_resolution) {
-    std::cout << "Illegal resolution value: " << lo_resolution <<
+    std::cout << "Stomp::Pixel::SetToSuperPix - Illegal resolution value: " << lo_resolution <<
       " < " << Resolution();
   } else {
     x_ /= Resolution()/lo_resolution;
@@ -232,7 +232,7 @@ bool Pixel::SetToSuperPix(uint32_t lo_resolution) {
 bool Pixel::SetToLevel(uint8_t lo_level) {
   bool success = false;
   if (Level() < lo_level) {
-    std::cout << "Illegal level value: " << lo_level << " < " << Level();
+    std::cout << "Stomp::Pixel::SetToLevel - Illegal level value: " << lo_level << " < " << Level();
   } else {
     x_ /= Resolution()/LevelToResolution(lo_level);
     y_ /= Resolution()/LevelToResolution(lo_level);
@@ -887,14 +887,14 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
   }
 
   if (y_max > ny -1) {
-    std::cout << "Illegal theta value on y index: Lambda,Eta = " <<
+    std::cout << "Stomp::Pixel::XYBounds - Illegal theta value on y index: Lambda,Eta = " <<
       ang.Lambda() << "," << ang.Eta() << ", theta = " << theta <<
       "\ny = " << y_max << "/" << ny - 1 << "\n";
     exit(2);
   }
 
   if (y_min > ny -1) {
-    std::cout << "Illegal theta value on y index: Lambda,Eta = " <<
+    std::cout << "Stomp::Pixel::XYBounds - Illegal theta value on y index: Lambda,Eta = " <<
       ang.Lambda() << "," << ang.Eta() << ", theta = " << theta <<
       "\ny = " << y_min << "/" << ny - 1 << "\n";
     exit(2);
@@ -950,13 +950,13 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
     }
 
     if (x_max[n] > nx -1) {
-      std::cout << "Illegal theta value on x index: Lambda,Eta = " <<
+      std::cout << "Stomp::Pixel::XYBounds - Illegal theta value on x index: Lambda,Eta = " <<
 	ang.Lambda() << "," << ang.Eta() << ", theta = " << theta <<
 	"\nx = " << x_max[n] << "/" << nx - 1 << "\n";
       exit(2);
     }
     if (x_min[n] > nx -1) {
-      std::cout << "Illegal theta value on x index: Lambda,Eta = " <<
+      std::cout << "Stomp::Pixel::XYBounds - Illegal theta value on x index: Lambda,Eta = " <<
 	ang.Lambda() << "," << ang.Eta() << ", theta = " << theta <<
 	"\nx = " << x_min[n] << "/" << nx - 1 << "\n";
       exit(2);
@@ -1434,7 +1434,7 @@ int8_t Pixel::IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta) {
 
   if ((intersects_inner_disk == 1) && (intersects_outer_disk == -1)) {
     // This should be impossible.  Raise an error.
-    std::cout << "Impossible annulus intersection: " <<
+    std::cout << "Stomp::Pixel::IntersectsAnnulus - Impossible annulus intersection: " <<
       intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
     exit(2);
   }
@@ -1453,14 +1453,14 @@ int8_t Pixel::IntersectsAnnulus(AngularCoordinate& ang, AngularBin& theta) {
 
   if ((intersects_inner_disk == 1) && (intersects_outer_disk == 0)) {
     // This should be impossible.  Raise an error.
-    std::cout << "Impossible annulus intersection: " <<
+    std::cout << "Stomp::Pixel::IntersectsAnnulus - Impossible annulus intersection: " <<
       intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
     exit(2);
   }
 
   if ((intersects_inner_disk == -1) && (intersects_outer_disk == 0)) {
     // This should be impossible.  Raise an error.
-    std::cout << "Impossible annulus intersection: " <<
+    std::cout << "Stomp::Pixel::IntersectsAnnulus - Impossible annulus intersection: " <<
       intersects_inner_disk << ", " << intersects_outer_disk << ".  Bailing.\n";
     exit(2);
   }
@@ -1483,7 +1483,7 @@ int8_t Pixel::IntersectsAnnulus(Pixel& pix, AngularBin& theta) {
 
 uint32_t Pixel::Stripe(uint32_t input_resolution) {
   if ((input_resolution%2 != 0) || (input_resolution < 4)) {
-    std::cout << "Illegal resolution in Stripe() call!\nExiting...\n";
+    std::cout << "Stomp::Pixel::Stripe - Illegal resolution in Stripe() call!\nExiting...\n";
     exit(1);
   }
 
@@ -2122,7 +2122,7 @@ void Pixel::HPix2Pix(uint32_t input_resolution,
 void Pixel::SuperPix(uint32_t hi_resolution, uint32_t hi_pixnum,
 		     uint32_t lo_resolution, uint32_t& lo_pixnum) {
   if (hi_resolution < lo_resolution) {
-    std::cout << "Can't go from low resolution to higher resolution.\n ";
+    std::cout << "Stomp::Pixel::SuperPix - Can't go from low resolution to higher resolution.\n ";
     exit(1);
   } else {
     uint32_t nx_hi = Nx0*hi_resolution;
@@ -2486,7 +2486,7 @@ void Pixel::ResolveSuperPixel(PixelVector& pix, bool ignore_weight) {
 
     if (unique_pix.size() != pix.size()) {
       std::cout <<
-	"Something has gone wrong searching for superpixels. Exiting.\n";
+	"Stomp::Pixel::ResolveSuperPixel - Something has gone wrong searching for superpixels. Exiting.\n";
       exit(1);
     }
 
@@ -2630,7 +2630,7 @@ void Pixel::HPix2XY(uint32_t input_resolution, uint32_t input_hpixnum,
 void Pixel::SuperHPix(uint32_t hi_resolution, uint32_t hi_hpixnum,
 		      uint32_t lo_resolution, uint32_t& lo_hpixnum) {
   if (hi_resolution < lo_resolution) {
-    std::cout << "Can't go from low resolution to higher resolution.\n ";
+    std::cout << "Stomp::Pixel::SuperHPix - Can't go from low resolution to higher resolution.\n ";
     exit(1);
   } else {
     uint32_t nx_hi = hi_resolution/HPixResolution;

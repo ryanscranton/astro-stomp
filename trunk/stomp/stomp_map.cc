@@ -957,11 +957,11 @@ Map::Map(const std::string& InputFile, bool hpixel_format, bool weighted_map) {
 Map::Map(GeometricBound& bound, double weight, uint32_t max_resolution,
 	 bool verbose) {
   if (PixelizeBound(bound, weight, max_resolution) && verbose) {
-    std::cout << "Successfully pixelized GeometricBound.\n" <<
+    std::cout << "Stomp::Map::Map - Successfully pixelized GeometricBound.\n" <<
       "\tOriginal Area: " << bound.Area() << " sq. degrees; " <<
       "Pixelized Area: " << Area() << " sq. degrees.\n";
   } else {
-    if (verbose) std::cout << "Pixelization failed.\n";
+    if (verbose) std::cout << "Stomp::Map::Map - Pixelization failed.\n";
   }
 }
 
@@ -2281,7 +2281,7 @@ bool Map::Read(const std::string& InputFile, bool hpixel_format,
 
     if (!found_beginning) found_file = false;
   } else {
-    std::cout << InputFile << " does not exist!.  No Map ingested\n";
+    std::cout << "Stomp::Map::Read - " << InputFile << " does not exist!.  No Map ingested\n";
   }
 
   return found_file;
@@ -2370,7 +2370,7 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
         }
       } else {
         if (resolve_pix.size() == 0) {
-          std::cout << "Missed all pixels in initial search; trying again...\n";
+          std::cout << "Stomp::Map::PixelizeBound - Missed all pixels in initial search; trying again...\n";
           for (PixelIterator iter=previous_pix.begin();
                iter!=previous_pix.end();++iter) {
             PixelVector sub_pix;

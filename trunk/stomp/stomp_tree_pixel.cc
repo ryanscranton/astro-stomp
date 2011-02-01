@@ -885,7 +885,7 @@ bool TreePixel::AddPoint(WeightedAngularCoordinate* ang) {
     } else {
       if (!initialized_subpixels_) {
 	if (!_InitializeSubPixels()) {
-	  std::cout << "Failed to initialize sub-pixels.  Exiting.\n";
+	  std::cout << "Stomp::TreePixel::AddPoint - Failed to initialize sub-pixels.  Exiting.\n";
 	  exit(2);
 	}
       }
