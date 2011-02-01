@@ -145,7 +145,7 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map, uint16_t n_region,
   // " pixels...\n";
 
   if (static_cast<uint32_t>(n_region) > coverage_pix.size()) {
-    std::cout << "WARNING: Exceeded maximum possible regions.  Setting to " <<
+    std::cout << "Stomp::RegionMap::InitializeRegions - WARNING: Exceeded maximum possible regions.  Setting to " <<
       coverage_pix.size() << " regions.\n";
     n_region = static_cast<uint16_t>(coverage_pix.size());
   }
@@ -158,7 +158,7 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map, uint16_t n_region,
       region_area_[region_iter] = iter->Weight()*iter->Area();
       region_iter++;
     }
-    std::cout <<
+    std::cout << "Stomp::RegionMap::InitializeRegions - \n" <<
       "\tWARNING: Number of regions matches number of regionation pixels.\n";
     std::cout << "\tThis will be dead easy, " <<
       "but won't guarantee an equal area solution...\n";
@@ -201,7 +201,7 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
   stomp_map->Coverage(coverage_pix, region_resolution_);
 
   if (static_cast<uint32_t>(n_region) > coverage_pix.size()) {
-    std::cout << "WARNING: Exceeded maximum possible regions.  Setting to " <<
+    std::cout << "Stomp::RegionMap::InitializeRegions - WARNING: Exceeded maximum possible regions.  Setting to " <<
       coverage_pix.size() << " regions.\n";
     n_region = static_cast<uint16_t>(coverage_pix.size());
   }
@@ -214,7 +214,7 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
       region_area_[region_iter] = iter->Weight()*iter->Area();
       region_iter++;
     }
-    std::cout <<
+    std::cout << "Stomp::RegionMap::InitializeRegions - \n" <<
       "\tWARNING: Number of regions matches number of regionation pixels.\n";
     std::cout << "\tThis will be dead easy, " <<
       "but won't guarantee an equal area solution...\n";
@@ -314,7 +314,7 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
     }
 
     if (counter == 5) {
-      std::cout << "Unable to find a match in number of regions: " <<
+      std::cout << "Stomp::RegionMap::InitializeRegions - Unable to find a match in number of regions: " <<
 	tmp_regions << " (" << n_region << ")\n";
       exit(2);
     }
@@ -323,11 +323,12 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
 
     uint16_t starting_region = 0;
     uint16_t bound_idx = 0;
+    std::cout << "Stomp::RegionMap::InitializeRegions - \n";
     for (RegionBoundIterator bound_iter=region_bounds.begin();
 	 bound_iter!=region_bounds.end();++bound_iter) {
       PixelVector region_pix;
       bound_iter->Coverage(region_pix);
-      std::cout << "RegionBound " << bound_idx << ": " <<
+      std::cout << "\tRegionBound " << bound_idx << ": " <<
 	bound_iter->CoverageArea() << " sq. deg. coverage, " <<
 	region_pix.size() << " coverage pixels, " <<
 	bound_iter->NRegion() << " sub-regions.\n";
@@ -346,8 +347,9 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
       bound_idx++;
     }
 
+    std::cout << "Stomp::RegionMap::InitializeRegions - \n";
     if (unassigned_pix.size() > 0) {
-      std::cout << "Unassigned Area: " <<
+      std::cout << "\tUnassigned Area: " <<
 	unassigned_area << " sq. deg. area, " <<
 	unassigned_pix.size() << " coverage pixels, " <<
 	unassigned_regions << " sub-regions.\n";
@@ -430,18 +432,18 @@ void RegionMap::_FindRegionResolution(BaseMap* base_map, uint16_t n_region,
 
   if (region_resolution > 256) {
     std::cout <<
-      "WARNING: Attempting to generate region map with resolution " <<
+      "Stomp::RegionMap::_FindRegionResolution - WARNING: Attempting to generate region map with resolution " <<
       "above 256!\n";
-    std::cout << "This may end badly.\n";
+    std::cout << "\tThis may end badly.\n";
     if (region_resolution > 2048) {
       std::cout <<
-	"FAIL: Ok, the resolution is above 2048.  Can't do this.  Try again\n";
+	"\tFAIL: Ok, the resolution is above 2048.  Can't do this.  Try again\n";
       exit(1);
     }
   }
 
   if (region_resolution > base_map->MaxResolution()) {
-    std::cout << "WARNING: Re-setting region map resolution to " <<
+    std::cout << "Stomp::RegionMap::_FindRegionResolution - WARNING: Re-setting region map resolution to " <<
       base_map->MaxResolution() << " to satisfy input map limits.\n";
     region_resolution = base_map->MaxResolution();
   }
@@ -596,7 +598,7 @@ void RegionMap::_VerifyRegionation(uint16_t n_region) {
     if (iter->second < n_region) {
       region_count_check[iter->second]++;
     } else {
-      std::cout << "FAIL: Encountered illegal region index: " <<
+      std::cout << "Stomp::RegionMap::_VerifyRegionation - FAIL: Encountered illegal region index: " <<
 	iter->second << "\nBailing...\n";
       exit(2);
     }

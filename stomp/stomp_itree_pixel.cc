@@ -434,7 +434,7 @@ bool IndexedTreePixel::AddPoint(IndexedAngularCoordinate* ang) {
     } else {
       if (!initialized_subpixels_) {
 	if (!_InitializeSubPixels()) {
-	  std::cout << "Failed to initialize sub-pixels.  Exiting.\n";
+	  std::cout << "Stomp::IndexedTreePixel::AddPoint - Failed to initialize sub-pixels.  Exiting.\n";
 	  exit(2);
 	}
       }

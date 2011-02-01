@@ -136,7 +136,7 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
 
   if (use_map_weight_as_intensity && !(map_type_ == ScalarField)) {
     std::cout <<
-      "WARNING: Converting MapType to ScalarField to sample " <<
+      "Stomp::ScalarMap::ScalarMap - WARNING: Converting MapType to ScalarField to sample " <<
       "input Map Weight\n";
     map_type_ = ScalarField;
   };
@@ -187,7 +187,7 @@ ScalarMap::ScalarMap(ScalarMap& scalar_map,
 		     uint32_t input_resolution,
 		     double min_unmasked_fraction) {
   if (input_resolution > scalar_map.Resolution()) {
-    std::cout << "Cannot make higher resolution density map " <<
+    std::cout << "Stomp::ScalarMap::ScalarMap - Cannot make higher resolution density map " <<
       "by resampling. Exiting.\n";
     exit(1);
   }
@@ -256,7 +256,7 @@ ScalarMap::ScalarMap(ScalarVector& pix,
   total_points_ = 0;
   for (ScalarIterator iter=pix.begin();iter!=pix.end();++iter) {
     if (iter->Resolution() != resolution_) {
-      std::cout << "Incompatible resolutions in ScalarPixel list.  Exiting.\n";
+      std::cout << "Stomp::ScalarMap::ScalarMap - Incompatible resolutions in ScalarPixel list.  Exiting.\n";
       exit(2);
     }
     area_ += iter->Area()*iter->Weight();
@@ -371,7 +371,7 @@ void ScalarMap::InitializeFromMap(Map& stomp_map, uint32_t input_resolution,
 
   if (use_map_weight_as_intensity && !(map_type_ != ScalarField)) {
     std::cout <<
-      "WARNING: Converting MapType to ScalarField to sample " <<
+      "Stomp::ScalarMap::InitializeFromMap - WARNING: Converting MapType to ScalarField to sample " <<
       "input Map Weight\n";
     map_type_ = ScalarField;
   };
@@ -420,7 +420,7 @@ void ScalarMap::InitializeFromMap(Map& stomp_map, uint32_t input_resolution,
 void ScalarMap::InitializeFromScalarMap(ScalarMap& scalar_map,
 					uint32_t input_resolution) {
   if (input_resolution > scalar_map.Resolution()) {
-    std::cout << "Cannot make higher resolution density map " <<
+    std::cout << "Stomp::ScalarMap::InitializeFromScalarMap - Cannot make higher resolution density map " <<
       "by resampling. Exiting.\n";
     exit(1);
   }
@@ -494,7 +494,7 @@ void ScalarMap::InitializeFromScalarPixels(ScalarVector& pix,
   total_points_ = 0;
   for (ScalarIterator iter=pix.begin();iter!=pix.end();++iter) {
     if (iter->Resolution() != resolution_) {
-      std::cout << "Incompatible resolutions in ScalarPixel list.  Exiting.\n";
+      std::cout << "Stomp::ScalarMap::InitializeFromScalarPixels - Incompatible resolutions in ScalarPixel list.  Exiting.\n";
       exit(2);
     }
     area_ += iter->Area()*iter->Weight();
@@ -600,7 +600,7 @@ void ScalarMap::Coverage(PixelVector& superpix, uint32_t resolution,
   if (!superpix.empty()) superpix.clear();
 
   if (resolution > resolution_) {
-    std::cout << "WARNING: Requested resolution is higher than " <<
+    std::cout << "Stomp::ScalarMap::Coverage - WARNING: Requested resolution is higher than " <<
       "the map resolution!\nReseting to map resolution...\n";
     resolution = resolution_;
   }
@@ -1092,7 +1092,7 @@ void ScalarMap::ConvertToOverDensity() {
 	      iter->ConvertToFractionalOverDensity(local_mean_intensity);
 	    } else {
 	      std::cout <<
-		"Failed to find region when calculating over-density!\n";
+		"Stomp::ScalarMap::ConvertToOverDensity - Failed to find region when calculating over-density!\n";
 	      exit(2);
 	    }
 	  }
@@ -1104,7 +1104,7 @@ void ScalarMap::ConvertToOverDensity() {
 	      iter->ConvertToOverDensity(local_mean_intensity);
 	    } else {
 	      std::cout <<
-		"Failed to find region when calculating over-density!\n";
+		"Stomp::ScalarMap::ConvertToOverDensity - Failed to find region when calculating over-density!\n";
 	      exit(2);
 	    }
 	  }
@@ -1144,7 +1144,7 @@ void ScalarMap::ConvertFromOverDensity() {
 	      iter->ConvertFromFractionalOverDensity(local_mean_intensity);
 	    } else {
 	      std::cout <<
-		"Failed to find region when calculating over-density!\n";
+		"Stomp::ScalarMap::ConvertFromOverDensity - Failed to find region when calculating over-density!\n";
 	      exit(2);
 	    }
 	  }
@@ -1156,7 +1156,7 @@ void ScalarMap::ConvertFromOverDensity() {
 	      iter->ConvertFromOverDensity(local_mean_intensity);
 	    } else {
 	      std::cout <<
-		"Failed to find region when calculating over-density!\n";
+		"Stomp::ScalarMap::ConvertFromOverDensity - Failed to find region when calculating over-density!\n";
 	      exit(2);
 	    }
 	  }
@@ -1245,7 +1245,7 @@ void ScalarMap::AutoCorrelate(AngularCorrelation& wtheta) {
 
     if (convert_back_to_raw) ConvertFromOverDensity();
   } else {
-    std::cout << "No angular bins have resolution " << resolution_ << "...\n";
+    std::cout << "Stomp::ScalarMap::AutoCorrelate - No angular bins have resolution " << resolution_ << "...\n";
   }
 }
 
@@ -1374,7 +1374,7 @@ void ScalarMap::AutoCorrelateWithRegions(AngularCorrelation& wtheta) {
 
     if (convert_back_to_raw) ConvertFromOverDensity();
   } else {
-    std::cout << "No angular bins have resolution " << resolution_ << "...\n";
+    std::cout << "Stomp::ScalarMap::AutoCorrelateWithRegions - No angular bins have resolution " << resolution_ << "...\n";
   }
 }
 
@@ -1523,14 +1523,14 @@ void ScalarMap::CrossCorrelate(ScalarMap& scalar_map,
     if (convert_back_to_raw) ConvertFromOverDensity();
     if (convert_input_map_back_to_raw) scalar_map.ConvertFromOverDensity();
   } else {
-    std::cout << "No angular bins have resolution " << resolution_ << "...\n";
+    std::cout << "Stomp::ScalarMap::CrossCorrelate - No angular bins have resolution " << resolution_ << "...\n";
   }
 }
 
 void ScalarMap::CrossCorrelate(ScalarMap& scalar_map,
 			       ThetaIterator theta_iter) {
   if (resolution_ != scalar_map.Resolution()) {
-    std::cout << "Map resolutions must match!  Exiting...\n";
+    std::cout << "Stomp::ScalarMap::CrossCorrelate - Map resolutions must match!  Exiting...\n";
     exit(1);
   }
 
@@ -1663,19 +1663,19 @@ void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
     if (convert_back_to_raw) ConvertFromOverDensity();
     if (convert_input_map_back_to_raw) scalar_map.ConvertFromOverDensity();
   } else {
-    std::cout << "No angular bins have resolution " << resolution_ << "...\n";
+    std::cout << "Stomp::ScalarMap::CrossCorrelateWithRegions - No angular bins have resolution " << resolution_ << "...\n";
   }
 }
 
 void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
 					  ThetaIterator theta_iter) {
   if (resolution_ != scalar_map.Resolution()) {
-    std::cout << "Map resolutions must match!  Exiting...\n";
+    std::cout << "Stomp::ScalarMap::CrossCorrelateWithRegions - Map resolutions must match!  Exiting...\n";
     exit(1);
   }
 
   if (NRegion() != scalar_map.NRegion()) {
-    std::cout << "Map regionation must match!  Exiting...\n";
+    std::cout << "Stomp::ScalarMap::CrossCorrelateWithRegions - Map regionation must match!  Exiting...\n";
     exit(1);
   }
 
@@ -1822,7 +1822,7 @@ double ScalarMap::Variance() {
 
 double ScalarMap::Covariance(ScalarMap& scalar_map) {
   if (resolution_ != scalar_map.Resolution()) {
-    std::cout << "Map resolutions must match!  Exiting...\n";
+    std::cout << "Stomp::ScalarMap::Covariance - Map resolutions must match!  Exiting...\n";
     exit(1);
   }
 
@@ -1914,12 +1914,12 @@ void ScalarMap::VarianceWithErrors(double& variance, double& variance_error) {
 void ScalarMap::CovarianceWithErrors(ScalarMap& scalar_map, double& covariance,
 				     double& covariance_error) {
   if (resolution_ != scalar_map.Resolution()) {
-    std::cout << "Map resolutions must match!  Exiting...\n";
+    std::cout << "Stomp::ScalarMap::CovarianceWithErrors - Map resolutions must match!  Exiting...\n";
     exit(1);
   }
 
   if (NRegion() != scalar_map.NRegion()) {
-    std::cout << "Map regionation must match!  Exiting...\n";
+    std::cout << "Stomp::ScalarMap::CovarianceWithErrors - Map regionation must match!  Exiting...\n";
     exit(1);
   }
 
