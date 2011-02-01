@@ -166,13 +166,14 @@ int main(int argc, char **argv) {
   // Now we use the regions version of the auto-correlation code to find our
   // result.
   if (FLAGS_maximum_resolution == -1) {
-    wtheta.AutoMaxResolution(sqrt(n_galaxy_a*n_galaxy_b), stomp_map->Area());
+    wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*n_galaxy_b)), stomp_map->Area());
   }
   else {
     std::cout << "Setting maximum resolution to " <<
-      static_cast<int>(FLAGS_maximum_resolution) << "...\n";
+      static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
     wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
   }
+  
 
   // Now we use the regions version of the auto-correlation code to find our
   // result.
