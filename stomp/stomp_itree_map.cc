@@ -315,7 +315,8 @@ bool IndexedTreeMap::AddPoint(IndexedAngularCoordinate* ang) {
 					   resolution_, maximum_points_)));
     iter = tree_map_.find(pix.Pixnum());
     if (iter == tree_map_.end()) {
-      std::cout << "Stomp::IndexedTreeMap::AddPoint - Creating new IndexedTreeMap node failed. Exiting.\n";
+      std::cout << "Stomp::IndexedTreeMap::AddPoint - " <<
+	"Creating new IndexedTreeMap node failed. Exiting.\n";
       exit(2);
     }
   }
@@ -356,7 +357,8 @@ bool IndexedTreeMap::Read(const std::string& input_file,
 
     if (input_file_str) {
       io_success = true;
-      if (verbose) std::cout << "Stomp::IndexedTreeMap::Read - Reading from " << input_file << "...\n";
+      if (verbose) std::cout << "Stomp::IndexedTreeMap::Read - " <<
+		     "Reading from " << input_file << "...\n";
       while (!input_file_str.eof()) {
 	if (!input_file_str.eof()) {
 	  // This should read each line into a buffer, convert that buffer into
@@ -394,13 +396,15 @@ bool IndexedTreeMap::Read(const std::string& input_file,
       }
       input_file_str.close();
     } else {
-      std::cout << "Stomp::IndexedTreeMap::Read - " << input_file << " does not exist!\n";
+      std::cout << "Stomp::IndexedTreeMap::Read - " << input_file <<
+	" does not exist!\n";
     }
   }
 
   if (verbose && io_success)
-    std::cout << "Stomp::IndexedTreeMap::Read - Read " << n_lines-1 << " lines from " << input_file <<
-      "; loaded " << NPoints() << " into tree...\n";
+    std::cout << "Stomp::IndexedTreeMap::Read - Read " << n_lines-1 <<
+      " lines from " << input_file << "; loaded " <<
+      NPoints() << " into tree...\n";
 
   return io_success;
 }
@@ -410,7 +414,8 @@ void IndexedTreeMap::Coverage(PixelVector& superpix, uint32_t resolution,
   if (!superpix.empty()) superpix.clear();
 
   if (resolution > resolution_) {
-    std::cout << "Stomp::IndexedTreeMap::Coverage - WARNING: Requested resolution is higher than " <<
+    std::cout << "Stomp::IndexedTreeMap::Coverage - " <<
+      "WARNING: Requested resolution is higher than " <<
       "the map resolution!\nReseting to map resolution...\n";
     resolution = resolution_;
   }

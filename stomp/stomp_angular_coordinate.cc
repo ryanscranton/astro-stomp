@@ -858,7 +858,8 @@ bool AngularCoordinate::ToAngularVector(const std::string& input_file,
       input_file_str.close();
       io_success = true;
     } else {
-      std::cout << "Stomp::AngularCoordinate::ToAngularVector - " << input_file << " does not exist!\n";
+      std::cout << "Stomp::AngularCoordinate::ToAngularVector - " <<
+	input_file << " does not exist!\n";
     }
   }
 
@@ -1200,7 +1201,8 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
       input_file_str.close();
       io_success = true;
     } else {
-      std::cout << "Stomp::WeightedAngularCoordinate::ToWAngularVector - " << input_file << " does not exist!\n";
+      std::cout << "Stomp::WeightedAngularCoordinate::ToWAngularVector - " <<
+	input_file << " does not exist!\n";
     }
   }
 
@@ -1367,7 +1369,8 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
       input_file_str.close();
       io_success = true;
     } else {
-      std::cout << "Stomp::WeightedAngularCoordinate::ToWAngularVector - " << input_file << " does not exist!\n";
+      std::cout << "Stomp::WeightedAngularCoordinate::ToWAngularVector - " <<
+	input_file << " does not exist!\n";
     }
   }
 

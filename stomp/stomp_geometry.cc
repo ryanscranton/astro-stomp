@@ -627,7 +627,14 @@ bool PolygonBound::FindArea() {
   double tmp_area = (sum - (n_vert_ - 2)*Pi)*StradToDeg;
 
   if (tmp_area > 4.0*Pi*StradToDeg) {
-    std::cout << "Stomp::PolygonBound::FindArea - Polygon area is over half the sphere.  This is bad.\n";
+    std::cout << "Stomp::PolygonBound::FindArea - " <<
+      "Polygon area is over half the sphere.  This is bad.\n";
+    return false;
+  }
+
+  if (tmp_area < 0.0) {
+    std::cout << "Stomp::PolygonBound::FindArea - " <<
+      "Polygon area is negative.  This is bad.\n";
     return false;
   }
 
