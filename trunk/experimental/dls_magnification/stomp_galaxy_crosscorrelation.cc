@@ -14,6 +14,7 @@ DEFINE_string(galaxy_file_a, "",
               "Name of the ASCII file containing an input galaxy catalog");
 DEFINE_string(galaxy_file_b, "",
               "Name of the ASCII file containing am input galaxy catalog");
+DEFINE_bool(galaxy_radec, false, "Galaxy coordinates are in RA-DEC");
 DEFINE_string(output_tag, "test",
               "Tag for output file: Wtheta_OUTPUT_TAG");
 DEFINE_double(theta_min, 0.001, "Minimum angular scale (in degrees)");
@@ -86,12 +87,15 @@ int main(int argc, char **argv) {
   double ra, dec, prob, mag;
   uint32_t n_galaxy_a = 0;
   uint32_t n_galaxy_b = 0;
+  Stomp::AngularCoordinate::Sphere galaxy_sphere =
+    Stomp::AngularCoordinate::Survey;
+  if (FLAGS_galaxy_radec) galaxy_sphere = Stomp::AngularCoordinate::Equatorial;
   
   std::cout << "Reading in Galaxy File A\n";
   while (!galaxy_file_a.eof()) {
     galaxy_file_a >> ra >> dec >> prob >> mag;
     Stomp::WeightedAngularCoordinate tmp_ang(ra, dec, prob,
-					     Stomp::AngularCoordinate::Equatorial);
+					     galaxy_sphere);
     if (stomp_map->FindLocation(tmp_ang, prob) &&
 	(tmp_ang.Weight() > 0.2)) galaxy_a.push_back(tmp_ang);
     n_galaxy_a++;
@@ -105,7 +109,7 @@ int main(int argc, char **argv) {
   while (!galaxy_file_b.eof()) {
     galaxy_file_b >> ra >> dec >> prob >> mag;
     Stomp::WeightedAngularCoordinate tmp_ang(ra, dec, prob,
-					     Stomp::AngularCoordinate::Equatorial);
+					     galaxy_sphere);
     if (stomp_map->FindLocation(tmp_ang, prob) &&
 	(tmp_ang.Weight() > 0.2)) galaxy_b.push_back(tmp_ang);
     n_galaxy_b++;
@@ -131,7 +135,14 @@ int main(int argc, char **argv) {
   // less memory, provided we choose the break sensibly).  This call will
   // modify all of the high-resolution bins so that they use the pair-based
   // estimator.
-  wtheta.SetMaxResolution(FLAGS_maximum_resolution);
+  if (FLAGS_maximum_resolution == -1) {
+    wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*n_galaxy_b)), stomp_map->Area());
+  }
+  else {
+    std::cout << "Setting maximum resolution to " <<
+      static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
+    wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+  }
 
 
   // Now, we're ready to start calculating the autocorrelation.  It is
