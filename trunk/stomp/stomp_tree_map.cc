@@ -424,7 +424,8 @@ void TreeMap::FindWeightedPairs(WAngularVector& w_ang,
 void TreeMap::FindPairsWithRegions(AngularVector& ang, AngularBin& theta) {
   if (!RegionsInitialized()) {
     std::cout <<
-      "Stomp::TreeMap::FindPairsWithRegions - Must initialize regions before calling FindPairsWithRegions\n" <<
+      "Stomp::TreeMap::FindPairsWithRegions - " <<
+      "Must initialize regions before calling FindPairsWithRegions\n" <<
       "\tExiting...\n";
     exit(2);
   }
@@ -464,7 +465,8 @@ void TreeMap::FindWeightedPairsWithRegions(AngularVector& ang,
 					   AngularBin& theta) {
   if (!RegionsInitialized()) {
     std::cout <<
-      "Stomp::TreeMap::FindWeightedPairsWithRegions - Must initialize regions before calling FindPairsWithRegions\n" <<
+      "Stomp::TreeMap::FindWeightedPairsWithRegions - " <<
+      "Must initialize regions before calling FindPairsWithRegions\n" <<
       "\tExiting...\n";
     exit(2);
   }
@@ -506,7 +508,8 @@ void TreeMap::FindWeightedPairsWithRegions(WAngularVector& w_ang,
 					   AngularBin& theta) {
   if (!RegionsInitialized()) {
     std::cout <<
-      "Stomp::TreeMap::FindWeightedPairsWithRegions - Must initialize regions before calling FindPairsWithRegions\n" <<
+      "Stomp::TreeMap::FindWeightedPairsWithRegions - " <<
+      "Must initialize regions before calling FindPairsWithRegions\n" <<
       "\tExiting...\n";
     exit(2);
   }
@@ -550,7 +553,8 @@ void TreeMap::FindWeightedPairsWithRegions(AngularVector& ang,
 					   const std::string& field_name) {
   if (!RegionsInitialized()) {
     std::cout <<
-      "Stomp::TreeMap::FindWeightedPairsWithRegions - Must initialize regions before calling FindPairsWithRegions\n" <<
+      "Stomp::TreeMap::FindWeightedPairsWithRegions - " <<
+      "Must initialize regions before calling FindPairsWithRegions\n" <<
       "\tExiting...\n";
     exit(2);
   }
@@ -595,7 +599,8 @@ void TreeMap::FindWeightedPairsWithRegions(WAngularVector& w_ang,
 					   const std::string& field_name) {
   if (!RegionsInitialized()) {
     std::cout <<
-      "Stomp::TreeMap::FindWeightedPairsWithRegions - Must initialize regions before calling FindPairsWithRegions\n" <<
+      "Stomp::TreeMap::FindWeightedPairsWithRegions - " <<
+      "Must initialize regions before calling FindPairsWithRegions\n" <<
       "\tExiting...\n";
     exit(2);
   }
@@ -642,7 +647,8 @@ void TreeMap::FindWeightedPairsWithRegions(WAngularVector& w_ang,
 					   const std::string& field_name) {
   if (!RegionsInitialized()) {
     std::cout <<
-      "Stomp::TreeMap::FindWeightedPairsWithRegions - Must initialize regions before calling FindPairsWithRegions\n" <<
+      "Stomp::TreeMap::FindWeightedPairsWithRegions - " <<
+      "Must initialize regions before calling FindPairsWithRegions\n" <<
       "\tExiting...\n";
     exit(2);
   }
@@ -870,7 +876,8 @@ bool TreeMap::AddPoint(WeightedAngularCoordinate* ang) {
 						resolution_, maximum_points_)));
     iter = tree_map_.find(pix.Pixnum());
     if (iter == tree_map_.end()) {
-      std::cout << "Stomp::TreeMap::AddPoint - Creating new TreeMap node failed. Exiting.\n";
+      std::cout << "Stomp::TreeMap::AddPoint - " <<
+	"Creating new TreeMap node failed. Exiting.\n";
       exit(2);
     }
   }
@@ -924,7 +931,8 @@ bool TreeMap::Read(const std::string& input_file,
 
     if (input_file_str) {
       io_success = true;
-      if (verbose) std::cout << "Stomp::TreeMap::Read - Reading from " << input_file << "...\n";
+      if (verbose) std::cout << "Stomp::TreeMap::Read - " <<
+		     "Reading from " << input_file << "...\n";
       while (!input_file_str.eof()) {
 	if (!input_file_str.eof()) {
 	  // This should read each line into a buffer, convert that buffer into
@@ -961,13 +969,15 @@ bool TreeMap::Read(const std::string& input_file,
       }
       input_file_str.close();
     } else {
-      std::cout << "Stomp::TreeMap::Read - " << input_file << " does not exist!\n";
+      std::cout << "Stomp::TreeMap::Read - " << input_file <<
+	" does not exist!\n";
     }
   }
 
   if (verbose && io_success)
-    std::cout << "Stomp::TreeMap::Read - Read " << n_lines-1 << " lines from " << input_file <<
-      "; loaded " << NPoints() << " into tree...\n";
+    std::cout << "Stomp::TreeMap::Read - Read " << n_lines-1 <<
+      " lines from " << input_file << "; loaded " << NPoints() <<
+      " into tree...\n";
 
   return io_success;
 }
@@ -988,7 +998,8 @@ bool TreeMap::Read(const std::string& input_file,
 
     if (input_file_str) {
       io_success = true;
-      if (verbose) std::cout << "Stomp::TreeMap::Read - Reading from " << input_file << "...\n";
+      if (verbose) std::cout << "Stomp::TreeMap::Read - Reading from " <<
+		     input_file << "...\n";
       while (!input_file_str.eof()) {
 	if (!input_file_str.eof()) {
 	  // This should read each line into a buffer, convert that buffer into
@@ -1034,13 +1045,15 @@ bool TreeMap::Read(const std::string& input_file,
       }
       input_file_str.close();
     } else {
-      std::cout << "Stomp::TreeMap::Read - " << input_file << " does not exist!\n";
+      std::cout << "Stomp::TreeMap::Read - " << input_file <<
+	" does not exist!\n";
     }
   }
 
   if (verbose && io_success)
-    std::cout << "Stomp::TreeMap::Read - Read " << n_lines-1 << " lines from " << input_file <<
-      "; loaded " << NPoints() << " into tree...\n";
+    std::cout << "Stomp::TreeMap::Read - Read " << n_lines-1 <<
+      " lines from " << input_file << "; loaded " << NPoints() <<
+      " into tree...\n";
 
   return io_success;
 }
@@ -1050,7 +1063,8 @@ void TreeMap::Coverage(PixelVector& superpix, uint32_t resolution,
   if (!superpix.empty()) superpix.clear();
 
   if (resolution > resolution_) {
-    std::cout << "Stomp::TreeMap::Coverage - WARNING: Requested resolution is higher than " <<
+    std::cout << "Stomp::TreeMap::Coverage - " <<
+      "WARNING: Requested resolution is higher than " <<
       "the map resolution!\nReseting to map resolution...\n";
     resolution = resolution_;
   }

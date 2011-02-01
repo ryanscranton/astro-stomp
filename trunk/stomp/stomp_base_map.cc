@@ -145,7 +145,8 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map, uint16_t n_region,
   // " pixels...\n";
 
   if (static_cast<uint32_t>(n_region) > coverage_pix.size()) {
-    std::cout << "Stomp::RegionMap::InitializeRegions - WARNING: Exceeded maximum possible regions.  Setting to " <<
+    std::cout << "Stomp::RegionMap::InitializeRegions - " <<
+      "WARNING: Exceeded maximum possible regions.  Setting to " <<
       coverage_pix.size() << " regions.\n";
     n_region = static_cast<uint16_t>(coverage_pix.size());
   }
@@ -201,7 +202,8 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
   stomp_map->Coverage(coverage_pix, region_resolution_);
 
   if (static_cast<uint32_t>(n_region) > coverage_pix.size()) {
-    std::cout << "Stomp::RegionMap::InitializeRegions - WARNING: Exceeded maximum possible regions.  Setting to " <<
+    std::cout << "Stomp::RegionMap::InitializeRegions - " <<
+      "WARNING: Exceeded maximum possible regions.  Setting to " <<
       coverage_pix.size() << " regions.\n";
     n_region = static_cast<uint16_t>(coverage_pix.size());
   }
@@ -314,7 +316,8 @@ uint16_t RegionMap::InitializeRegions(BaseMap* stomp_map,
     }
 
     if (counter == 5) {
-      std::cout << "Stomp::RegionMap::InitializeRegions - Unable to find a match in number of regions: " <<
+      std::cout << "Stomp::RegionMap::InitializeRegions - " <<
+	"Unable to find a match in number of regions: " <<
 	tmp_regions << " (" << n_region << ")\n";
       exit(2);
     }
@@ -432,18 +435,20 @@ void RegionMap::_FindRegionResolution(BaseMap* base_map, uint16_t n_region,
 
   if (region_resolution > 256) {
     std::cout <<
-      "Stomp::RegionMap::_FindRegionResolution - WARNING: Attempting to generate region map with resolution " <<
+      "Stomp::RegionMap::_FindRegionResolution - " <<
+      "WARNING: Attempting to generate region map with resolution " <<
       "above 256!\n";
     std::cout << "\tThis may end badly.\n";
     if (region_resolution > 2048) {
       std::cout <<
-	"\tFAIL: Ok, the resolution is above 2048.  Can't do this.  Try again\n";
+	"\tFAIL: Ok, the resolution is above 2048. Can't do this. Try again\n";
       exit(1);
     }
   }
 
   if (region_resolution > base_map->MaxResolution()) {
-    std::cout << "Stomp::RegionMap::_FindRegionResolution - WARNING: Re-setting region map resolution to " <<
+    std::cout << "Stomp::RegionMap::_FindRegionResolution - " <<
+      "WARNING: Re-setting region map resolution to " <<
       base_map->MaxResolution() << " to satisfy input map limits.\n";
     region_resolution = base_map->MaxResolution();
   }
@@ -598,7 +603,8 @@ void RegionMap::_VerifyRegionation(uint16_t n_region) {
     if (iter->second < n_region) {
       region_count_check[iter->second]++;
     } else {
-      std::cout << "Stomp::RegionMap::_VerifyRegionation - FAIL: Encountered illegal region index: " <<
+      std::cout << "Stomp::RegionMap::_VerifyRegionation - " <<
+	"FAIL: Encountered illegal region index: " <<
 	iter->second << "\nBailing...\n";
       exit(2);
     }

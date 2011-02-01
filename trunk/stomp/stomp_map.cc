@@ -2281,7 +2281,8 @@ bool Map::Read(const std::string& InputFile, bool hpixel_format,
 
     if (!found_beginning) found_file = false;
   } else {
-    std::cout << "Stomp::Map::Read - " << InputFile << " does not exist!.  No Map ingested\n";
+    std::cout << "Stomp::Map::Read - " << InputFile <<
+      " does not exist!.  No Map ingested\n";
   }
 
   return found_file;
@@ -2370,7 +2371,8 @@ bool Map::PixelizeBound(GeometricBound& bound, double weight,
         }
       } else {
         if (resolve_pix.size() == 0) {
-          std::cout << "Stomp::Map::PixelizeBound - Missed all pixels in initial search; trying again...\n";
+          std::cout << "Stomp::Map::PixelizeBound - " <<
+	    "Missed all pixels in initial search; trying again...\n";
           for (PixelIterator iter=previous_pix.begin();
                iter!=previous_pix.end();++iter) {
             PixelVector sub_pix;

@@ -119,11 +119,13 @@ void AngularBin::SetResolution(uint32_t resolution) {
 void AngularBin::CalculateResolution(double lammin, double lammax,
 				     uint32_t max_resolution) {
   if (lammin < -70.0) {
-    std::cout << "Stomp::AngularBin::CalculateResolution - Resetting minimum lambda value to -70.0...\n";
+    std::cout << "Stomp::AngularBin::CalculateResolution - " <<
+      "Resetting minimum lambda value to -70.0...\n";
     lammin = -70.0;
   }
   if (lammax > 70.0) {
-    std::cout << "Stomp::AngularBin::CalculateResolution - Resetting maximum lambda value to 70.0...\n";
+    std::cout << "Stomp::AngularBin::CalculateResolution - " <<
+      "Resetting maximum lambda value to 70.0...\n";
     lammax = 70.0;
   }
 
