@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
     galaxy_file_a >> ra >> dec >> prob >> mag;
     Stomp::WeightedAngularCoordinate tmp_ang(ra, dec, prob,
 					     Stomp::AngularCoordinate::Equatorial);
-    if (stomp_map->FindLocation(tmp_ang) &&
+    if (stomp_map->FindLocation(tmp_ang, prob) &&
 	(tmp_ang.Weight() > 0.2)) galaxy_a.push_back(tmp_ang);
     n_galaxy_a++;
   }
@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
     galaxy_file_b >> ra >> dec >> prob >> mag;
     Stomp::WeightedAngularCoordinate tmp_ang(ra, dec, prob,
 					     Stomp::AngularCoordinate::Equatorial);
-    if (stomp_map->FindLocation(tmp_ang) &&
+    if (stomp_map->FindLocation(tmp_ang, prob) &&
 	(tmp_ang.Weight() > 0.2)) galaxy_b.push_back(tmp_ang);
     n_galaxy_b++;
   }
