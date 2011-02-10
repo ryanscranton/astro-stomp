@@ -74,6 +74,14 @@ namespace Stomp {
       sum_odds_ += odds;
       n_obj_++;
     };
+    inline void SetSysParameters(double seeing, double extinction, 
+				 double sky, double odds, int n_obj) {
+      sum_seeing_ = n_obj*seeing;
+      sum_extinction_ = n_obj*extinction;
+      sum_sky_ = n_obj*sky;
+      sum_odds_ = n_obj*odds;
+      n_obj_ = n_obj;
+    };
     inline double MeanSeeing() {
       return (n_obj_ > 0 ? sum_seeing_/n_obj_ : -1.0);
     };
