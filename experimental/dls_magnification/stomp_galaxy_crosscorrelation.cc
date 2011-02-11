@@ -24,7 +24,7 @@ DEFINE_int32(n_random, 1,
 	     "Integer number of random points per galaxy to use.");
 DEFINE_bool(single_index, false, "Use older single-index file format.");
 DEFINE_bool(no_weight, false, "Input file is missing weight column.");
-DEFINE_int32(maximum_resolution, 128,
+DEFINE_int32(maximum_resolution, -1,
 	     "Maximum resolution to use for pixel-based estimator");
 
 int main(int argc, char **argv) {
