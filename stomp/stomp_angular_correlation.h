@@ -185,10 +185,10 @@ class AngularCorrelation {
 
  private:
   ThetaVector thetabin_;
-  ThetaIterator theta_pixel_begin_;
+  ThetaIterator theta_pixel_begin_, theta_pixel_end_;
   ThetaIterator theta_pair_begin_, theta_pair_end_;
   double theta_min_, theta_max_, sin2theta_min_, sin2theta_max_;
-  uint32_t min_resolution_, max_resolution_;
+  uint32_t min_resolution_, max_resolution_, regionation_resolution_;
   int16_t n_region_;
   bool manual_resolution_break_;
 };
