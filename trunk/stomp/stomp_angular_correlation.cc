@@ -45,15 +45,21 @@ AngularCorrelation::AngularCorrelation(double theta_min, double theta_max,
   theta_max_ = thetabin_[thetabin_.size()-1].ThetaMax();
   sin2theta_max_ = thetabin_[thetabin_.size()-1].Sin2ThetaMax();
 
+  regionation_resolution_ = 0;
+
   if (assign_resolutions) {
     AssignBinResolutions();
     theta_pixel_begin_ = thetabin_.begin();
+    theta_pixel_end_ = thetabin_.end();
+
     theta_pair_begin_ = thetabin_.begin();
     theta_pair_end_ = thetabin_.begin();
   } else {
     min_resolution_ = HPixResolution;
     max_resolution_ = HPixResolution;
     theta_pixel_begin_ = thetabin_.end();
+    theta_pixel_end_ = thetabin_.end();
+
     theta_pair_begin_ = thetabin_.begin();
     theta_pair_end_ = thetabin_.end();
   }
@@ -79,15 +85,21 @@ AngularCorrelation::AngularCorrelation(uint32_t n_bins,
   theta_max_ = thetabin_[n_bins-1].ThetaMax();
   sin2theta_max_ = thetabin_[n_bins-1].Sin2ThetaMax();
 
+  regionation_resolution_ = 0;
+
   if (assign_resolutions) {
     AssignBinResolutions();
     theta_pixel_begin_ = thetabin_.begin();
+    theta_pixel_end_ = thetabin_.end();
+
     theta_pair_begin_ = thetabin_.begin();
     theta_pair_end_ = thetabin_.begin();
   } else {
     min_resolution_ = HPixResolution;
     max_resolution_ = HPixResolution;
     theta_pixel_begin_ = thetabin_.end();
+    theta_pixel_end_ = thetabin_.end();
+
     theta_pair_begin_ = thetabin_.begin();
     theta_pair_end_ = thetabin_.end();
   }
@@ -117,7 +129,9 @@ void AngularCorrelation::SetMaxResolution(uint32_t resolution,
   // By default every bin is calculated with the pixel-based estimator
   theta_pair_begin_ = thetabin_.begin();
   theta_pair_end_ = thetabin_.begin();
+
   theta_pixel_begin_ = thetabin_.begin();
+  theta_pixel_end_ = thetabin_.end();
 
   for (ThetaIterator iter=thetabin_.begin();iter!=thetabin_.end();++iter) {
     iter->CalculateResolution();
@@ -133,7 +147,7 @@ void AngularCorrelation::SetMaxResolution(uint32_t resolution,
 
 void AngularCorrelation::SetMinResolution(uint32_t resolution) {
   min_resolution_ = resolution;
-  for (ThetaIterator iter=theta_pixel_begin_;iter!=thetabin_.end();++iter) {
+  for (ThetaIterator iter=theta_pixel_begin_;iter!=theta_pixel_end_;++iter) {
     if (iter->Resolution() < min_resolution_) {
       iter->SetResolution(min_resolution_);
     }
@@ -173,6 +187,7 @@ void AngularCorrelation::ClearRegions() {
   n_region_ = 0;
   for (ThetaIterator iter=Begin();iter!=End();++iter)
     iter->ClearRegions();
+  regionation_resolution_ = 0;
 }
 
 int16_t AngularCorrelation::NRegion() {
@@ -185,8 +200,11 @@ void AngularCorrelation::FindAutoCorrelation(Map& stomp_map,
   if (!manual_resolution_break_)
     AutoMaxResolution(galaxy.size(), stomp_map.Area());
 
-  FindPixelAutoCorrelation(stomp_map, galaxy);
-  FindPairAutoCorrelation(stomp_map, galaxy, random_iterations);
+  if (theta_pixel_begin_ != theta_pixel_end_)
+    FindPixelAutoCorrelation(stomp_map, galaxy);
+
+  if (theta_pair_begin_ != theta_pair_end_)
+    FindPairAutoCorrelation(stomp_map, galaxy, random_iterations);
 }
 
 void AngularCorrelation::FindCrossCorrelation(Map& stomp_map,
@@ -199,8 +217,11 @@ void AngularCorrelation::FindCrossCorrelation(Map& stomp_map,
     AutoMaxResolution(n_obj, stomp_map.Area());
   }
 
-  FindPixelCrossCorrelation(stomp_map, galaxy_a, galaxy_b);
-  FindPairCrossCorrelation(stomp_map, galaxy_a, galaxy_b, random_iterations);
+  if (theta_pixel_begin_ != theta_pixel_end_)
+    FindPixelCrossCorrelation(stomp_map, galaxy_a, galaxy_b);
+
+  if (theta_pair_begin_ != theta_pair_end_)
+    FindPairCrossCorrelation(stomp_map, galaxy_a, galaxy_b, random_iterations);
 }
 
 void AngularCorrelation::FindAutoCorrelationWithRegions(Map& stomp_map,
@@ -221,17 +242,27 @@ void AngularCorrelation::FindAutoCorrelationWithRegions(Map& stomp_map,
     n_regions = n_true_regions;
   }
 
-  std::cout << "Stomp::AgularCorrelation::FindAutoCorrelationWithRegions - " <<
-    "Regionated at " << stomp_map.RegionResolution() << "...\n";
-  InitializeRegions(n_regions);
-  SetMinResolution(stomp_map.RegionResolution());
+  regionation_resolution_ = stomp_map.RegionResolution();
 
   std::cout << "Stomp::AgularCorrelation::FindAutoCorrelationWithRegions - " <<
-    "Auto-correlating with pixels...\n";
-  FindPixelAutoCorrelation(stomp_map, gal);
-  std::cout << "Stomp::AgularCorrelation::FindAutoCorrelationWithRegions - " <<
-    "Auto-correlating with pairs...\n";
-  FindPairAutoCorrelation(stomp_map, gal, random_iter);
+    "Regionated at " << regionation_resolution_ << "...\n";
+  InitializeRegions(n_regions);
+  if (regionation_resolution_ > min_resolution_)
+    SetMinResolution(regionation_resolution_);
+
+  if (regionation_resolution_ > max_resolution_) {
+    std::cout << "Stomp::AngularCorrelation::FindAutoCorrelationWithRegions " <<
+      " - regionation resolution (" << regionation_resolution_ <<
+      ") exceeds maximum resolution (" << max_resolution_ << ")\n" <<
+      "\tReseting to use pair-based estimator only\n";
+    UseOnlyPairs();
+  }
+
+  if (theta_pixel_begin_ != theta_pixel_end_)
+    FindPixelAutoCorrelation(stomp_map, gal);
+
+  if (theta_pair_begin_ != theta_pair_end_)
+    FindPairAutoCorrelation(stomp_map, gal, random_iter);
 }
 
 void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
@@ -254,13 +285,27 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
     n_regions = n_true_regions;
   }
 
-  std::cout << "Stomp::AgularCorrelation::FindCrossCorrelationWithRegions" <<
-    " - Regionated at " << stomp_map.RegionResolution() << "...\n";
-  InitializeRegions(n_regions);
-  SetMinResolution(stomp_map.RegionResolution());
+  regionation_resolution_ = stomp_map.RegionResolution();
 
-  FindPixelCrossCorrelation(stomp_map, gal_a, gal_b);
-  FindPairCrossCorrelation(stomp_map, gal_a, gal_b, random_iter);
+  std::cout << "Stomp::AgularCorrelation::FindCrossCorrelationWithRegions" <<
+    " - Regionated at " << regionation_resolution_ << "...\n";
+  InitializeRegions(n_regions);
+  if (regionation_resolution_ > min_resolution_)
+    SetMinResolution(regionation_resolution_);
+
+  if (regionation_resolution_ > max_resolution_) {
+    std::cout << "Stomp::AngularCorrelation::FindAutoCorrelationWithRegions " <<
+      " - regionation resolution (" << regionation_resolution_ <<
+      ") exceeds maximum resolution (" << max_resolution_ << ")\n" <<
+      "\tReseting to use pair-based estimator only\n";
+    UseOnlyPairs();
+  }
+
+  if (theta_pixel_begin_ != theta_pixel_end_)
+    FindPixelCrossCorrelation(stomp_map, gal_a, gal_b);
+
+  if (theta_pair_begin_ != theta_pair_end_)
+    FindPairCrossCorrelation(stomp_map, gal_a, gal_b, random_iter);
 }
 
 void AngularCorrelation::FindPixelAutoCorrelation(Map& stomp_map,
@@ -302,26 +347,26 @@ void AngularCorrelation::FindPixelAutoCorrelation(Map& stomp_map,
   delete scalar_map;
 }
 
-void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& stomp_map) {
-  for (ThetaIterator iter=Begin(stomp_map.Resolution());
-       iter!=End(stomp_map.Resolution());++iter) {
+void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& scalar_map) {
+  for (ThetaIterator iter=Begin(scalar_map.Resolution());
+       iter!=End(scalar_map.Resolution());++iter) {
     std::cout << "Stomp::AgularCorrelation::FindPixelAutoCorrelation - \n";
-    if (stomp_map.NRegion() > 0) {
+    if (scalar_map.NRegion() > 0) {
       std::cout << "\tAuto-correlating with regions at " <<
-	stomp_map.Resolution() << "...\n";
-      stomp_map.AutoCorrelateWithRegions(iter);
+	scalar_map.Resolution() << "...\n";
+      scalar_map.AutoCorrelateWithRegions(iter);
     } else {
-      stomp_map.AutoCorrelate(iter);
+      scalar_map.AutoCorrelate(iter);
     }
   }
 
-  for (uint32_t resolution=stomp_map.Resolution()/2;
+  for (uint32_t resolution=scalar_map.Resolution()/2;
        resolution>=min_resolution_;resolution/=2) {
     ScalarMap* sub_scalar_map =
-      new ScalarMap(stomp_map,resolution);
-    if (stomp_map.NRegion() > 0) sub_scalar_map->InitializeRegions(stomp_map);
+      new ScalarMap(scalar_map,resolution);
+    if (scalar_map.NRegion() > 0) sub_scalar_map->InitializeRegions(scalar_map);
     for (ThetaIterator iter=Begin(resolution);iter!=End(resolution);++iter) {
-      if (stomp_map.NRegion() > 0) {
+      if (scalar_map.NRegion() > 0) {
 	std::cout << "\tAuto-correlating with regions at " <<
 	  sub_scalar_map->Resolution() << "...\n";
 	sub_scalar_map->AutoCorrelateWithRegions(iter);
@@ -331,6 +376,7 @@ void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& stomp_map) {
 	sub_scalar_map->AutoCorrelate(iter);
       }
     }
+
     delete sub_scalar_map;
   }
 }
@@ -440,7 +486,11 @@ void AngularCorrelation::FindPixelCrossCorrelation(ScalarMap& map_a,
 void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
 						 WAngularVector& galaxy,
 						 uint8_t random_iterations) {
-  TreeMap* galaxy_tree = new TreeMap(min_resolution_, 200);
+  int16_t tree_resolution = min_resolution_;
+  if (regionation_resolution_ > min_resolution_)
+    tree_resolution = regionation_resolution_;
+
+  TreeMap* galaxy_tree = new TreeMap(tree_resolution, 200);
 
   uint32_t n_kept = 0;
   uint32_t n_fail = 0;
@@ -471,7 +521,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
   // Galaxy-galaxy
   std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - \n";
   std::cout << "\tGalaxy-galaxy pairs...\n";
-  for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+  for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     if (stomp_map.NRegion() > 0) {
       galaxy_tree->FindWeightedPairsWithRegions(galaxy, *iter);
     } else {
@@ -485,7 +535,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
 
   // Before we start on the random iterations, we'll zero out the data fields
   // for those counts.
-  for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+  for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     iter->ResetGalRand();
     iter->ResetRandGal();
     iter->ResetRandRand();
@@ -501,7 +551,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
     stomp_map.GenerateRandomPoints(random_galaxy, galaxy);
 
     // Create the TreeMap from those random points.
-    TreeMap* random_tree = new TreeMap(min_resolution_, 200);
+    TreeMap* random_tree = new TreeMap(tree_resolution, 200);
 
     for (WAngularIterator iter=random_galaxy.begin();
 	 iter!=random_galaxy.end();++iter) {
@@ -522,7 +572,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
 
     // Galaxy-Random -- there's a symmetry here, so the results go in GalRand
     // and RandGal.
-    for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+    for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
       if (stomp_map.NRegion() > 0) {
 	random_tree->FindWeightedPairsWithRegions(galaxy, *iter);
       } else {
@@ -532,7 +582,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
     }
 
     // Random-Random
-    for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+    for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
       if (stomp_map.NRegion() > 0) {
 	random_tree->FindWeightedPairsWithRegions(random_galaxy, *iter);
       } else {
@@ -546,7 +596,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
 
   // Finally, we rescale our random pair counts to normalize them to the
   // number of input objects.
-  for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+  for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     iter->RescaleGalRand(1.0*random_iterations);
     iter->RescaleRandGal(1.0*random_iterations);
     iter->RescaleRandRand(1.0*random_iterations);
@@ -557,7 +607,11 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
 						  WAngularVector& galaxy_a,
 						  WAngularVector& galaxy_b,
 						  uint8_t random_iterations) {
-  TreeMap* galaxy_tree_a = new TreeMap(min_resolution_, 200);
+  int16_t tree_resolution = min_resolution_;
+  if (regionation_resolution_ > min_resolution_)
+    tree_resolution = regionation_resolution_;
+
+  TreeMap* galaxy_tree_a = new TreeMap(tree_resolution, 200);
 
   uint32_t n_kept = 0;
   uint32_t n_fail = 0;
@@ -588,7 +642,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
   // Galaxy-galaxy
   std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - \n";
   std::cout << "\tGalaxy-galaxy pairs...\n";
-  for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+  for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     if (stomp_map.NRegion() > 0) {
       galaxy_tree_a->FindWeightedPairsWithRegions(galaxy_b, *iter);
     } else {
@@ -604,7 +658,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
 
   // Before we start on the random iterations, we'll zero out the data fields
   // for those counts.
-  for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+  for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     iter->ResetGalRand();
     iter->ResetRandGal();
     iter->ResetRandRand();
@@ -621,7 +675,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     stomp_map.GenerateRandomPoints(random_galaxy_b, galaxy_b);
 
     // Galaxy-Random
-    for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+    for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
       if (stomp_map.NRegion() > 0) {
 	galaxy_tree_a->FindWeightedPairsWithRegions(random_galaxy_b, *iter);
       } else {
@@ -630,7 +684,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
       iter->MoveWeightToGalRand();
     }
 
-    TreeMap* random_tree_a = new TreeMap(min_resolution_, 200);
+    TreeMap* random_tree_a = new TreeMap(tree_resolution, 200);
 
     for (WAngularIterator iter=random_galaxy_a.begin();
 	 iter!=random_galaxy_a.end();++iter) {
@@ -650,7 +704,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     }
 
     // Random-Galaxy
-    for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+    for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
       if (stomp_map.NRegion() > 0) {
 	random_tree_a->FindWeightedPairsWithRegions(galaxy_b, *iter);
       } else {
@@ -660,7 +714,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     }
 
     // Random-Random
-    for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+    for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
       if (stomp_map.NRegion() > 0) {
 	random_tree_a->FindWeightedPairsWithRegions(random_galaxy_b, *iter);
       } else {
@@ -676,7 +730,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
 
   // Finally, we rescale our random pair counts to normalize them to the
   // number of input objects.
-  for (ThetaIterator iter=Begin(0);iter!=End(0);++iter) {
+  for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     iter->RescaleGalRand(1.0*random_iterations);
     iter->RescaleRandGal(1.0*random_iterations);
     iter->RescaleRandRand(1.0*random_iterations);
@@ -718,16 +772,21 @@ bool AngularCorrelation::Write(const std::string& output_file_name) {
 void AngularCorrelation::UseOnlyPixels() {
   AssignBinResolutions();
   theta_pixel_begin_ = thetabin_.begin();
+  theta_pixel_end_ = thetabin_.end();
+
   theta_pair_begin_ = thetabin_.begin();
   theta_pair_end_ = thetabin_.begin();
 }
 
 void AngularCorrelation::UseOnlyPairs() {
-  min_resolution_ = HPixResolution;
-  max_resolution_ = HPixResolution;
   theta_pixel_begin_ = thetabin_.end();
+  theta_pixel_end_ = thetabin_.end();
+
   theta_pair_begin_ = thetabin_.begin();
   theta_pair_end_ = thetabin_.end();
+  for (ThetaIterator iter=thetabin_.begin();iter!=thetabin_.end();++iter) {
+    iter->SetResolution(0);
+  }
 }
 
 double AngularCorrelation::ThetaMin(uint32_t resolution) {
@@ -953,8 +1012,8 @@ bool AngularCorrelation::WriteCovariance(const std::string& output_file_name) {
     for (uint8_t theta_idx_a=0;theta_idx_a<thetabin_.size();theta_idx_a++) {
       for (uint8_t theta_idx_b=0;theta_idx_b<thetabin_.size();theta_idx_b++) {
 	output_file << std::setprecision(6) <<
-	  thetabin_[theta_idx_a].Theta() << " " << 
-	  thetabin_[theta_idx_b].Theta() << " " << 
+	  thetabin_[theta_idx_a].Theta() << " " <<
+	  thetabin_[theta_idx_b].Theta() << " " <<
 	  Covariance(theta_idx_a, theta_idx_b) << "\n";
       }
     }
