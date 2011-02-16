@@ -346,7 +346,7 @@ int main(int argc, char **argv) {
 	n_galaxies++;
 	Stomp::AngularCoordinate ang(theta,phi,
 				     galaxy_sphere);
-	Stomp::Pixel tmp_pix(ang, FLAGS_resolution, 1.0);
+	Stomp::Pixel tmp_pix(ang, galmap_resolution, 1.0);
 	SysDictIterator sys_iter = sysmap.find(tmp_pix.Pixnum());     
 	if (sys_iter != sysmap.end()) {
 	  sys_iter->second.AddGalaxies(1);
