@@ -81,7 +81,7 @@ namespace Stomp {
     inline void SetSysParameters(double mean_seeing, double mean_extinction,
 				 double mean_sky, double mean_odds,
 				 int n_objects) {
-      sum_seeing_ = mean_seeing*n_objects;
+      sum_seeing_ =  mean_seeing*n_objects;
       sum_extinction_ = mean_extinction*n_objects;
       sum_sky_ = mean_sky*n_objects;
       sum_odds_ = mean_odds*n_objects;
@@ -169,30 +169,34 @@ int main(int argc, char **argv) {
 			  odds, n_objects);
       sysmap[tmp_pix.Pixnum()] = pix;
       coverage_map.push_back(tmp_pix);
-      if (n_objects == 0 && unmasked_fraction>0.25) {
+      if (n_objects == 0 && unmasked_fraction>0.10) {
 	empty_pixels.push_back(tmp_pix);
 	n_empty_pixels++;
       }
     }
   }
   std::cout << "Need to Fill " << n_empty_pixels << " empty pixels...\n";
-  double density = (1.0*n_objects_total)/(1.0*n_pixels);
-  std::cout << "Need to Fill " << n_empty_pixels << " empty pixels...\n";
   
   for (Stomp::PixelIterator iter=empty_pixels.begin();
        iter!=empty_pixels.end();++iter) {
     resolution = iter->Resolution();
-    SysDictIterator sys_iter = sysmap.find(iter->Pixnum());
     Stomp::PixelVector child_pixels;
     int super_resolution = resolution/2;
+    int n_objects_hold = 0;
 
-    while (sys_iter->second.NObjects() == 0) {
+    while (n_objects_hold <= 0) {
+      if (super_resolution < 128) {
+	std::cout << "WARNING::Resolution required to corse (<128).\n"
+		  << "\t Breaking Loop and leaving pixel empty.\n";
+	break;
+      }
       iter->SetToSuperPix(static_cast<uint32_t>(super_resolution));
       iter->SubPix(static_cast<uint32_t>(resolution), child_pixels);
       double sum_seeing = 0;
       double sum_extinction = 0;
       double sum_sky =0;
       double sum_odds = 0;
+      int n_objects = 0;
       double unmasked_total = 0;
 
       for (Stomp::PixelIterator child_iter = child_pixels.begin();
@@ -209,17 +213,26 @@ int main(int argc, char **argv) {
 	    sum_odds += child_sys_iter->second.UnmaskedFraction()*
 	      child_sys_iter->second.MeanOdds();
 	    unmasked_total += child_sys_iter->second.UnmaskedFraction();
+	    n_objects += child_sys_iter->second.NObjects();
 	  }
 	}
       }
-      if (unmasked_total > 0) {
-	double unmasked = sys_iter->second.UnmaskedFraction();
-	double ratio = (unmasked_total+unmasked)/unmasked_total;
-	sys_iter->second.SetSysParameters((sum_seeing*(ratio-1))/unmasked,
-					  (sum_extinction*(ratio-1))/unmasked, 
-					  (sum_sky*(ratio-1))/unmasked,
-					  (sum_odds*(ratio-1))/unmasked,99);
+      if (n_objects > 0) {
+	for (Stomp::PixelIterator child_iter = child_pixels.begin();
+	     child_iter != child_pixels.end(); ++child_iter) {
+	  SysDictIterator child_sys_iter = sysmap.find(child_iter->Pixnum());
+	  if (child_sys_iter != sysmap.end()) {
+	    child_sys_iter->second.SetSysParameters(sum_seeing/unmasked_total,
+						    sum_extinction/
+						    unmasked_total,
+						    sum_sky/unmasked_total,
+						    sum_odds/unmasked_total,
+						    ceil(n_objects/
+							 unmasked_total));
+	  }
+	}
       }
+      n_objects_hold = n_objects;
       super_resolution /= 2;
     }
   }
