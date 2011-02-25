@@ -87,21 +87,10 @@ class dNdzInterpolation(dNdz):
     def __init__(self, z_array, p_array):
         ## Need to impliment a test that throws out data at the begining or
         ## end of the z_array that has a value of zero for p_array
-        low_idx = 0
-        hi_idx = -1
-        for idx, p in enumerate(p_array):
-            if p == 0.0:
-                low_idx = idx
-            elif p > 0.0:
-                break
-        for idx in xrange(p_array.shape[0])
-            if p[-idx] == 0.0:
-                hi_idx = p_array.shape[0] - idx
-            elif p > 0.0:
-                break
-        dNdz.__init__(self, z_array[low_idx], z_array[hi_idx])
-        self._p_of_z = InterpolatedUnivariateSpline(z_array[low_idx:hi_idx],
-                                                  p_array[low_idx:hi_idx])
+        dNdz.__init__(self, z_array[0], z_array[-1])
+        norm = numpy.trapz(p_array, z_array)
+        self._p_of_z = InterpolatedUnivariateSpline(z_array, p_array/norm)
+        
 
     def raw_dndz(self, redshift):
         return self._p_of_z(redshift)
