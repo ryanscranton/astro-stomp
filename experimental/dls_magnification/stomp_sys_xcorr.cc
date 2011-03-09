@@ -26,6 +26,8 @@ DEFINE_double(extinction_min, 0.0, "Minimum allowable extinction value");
 DEFINE_double(extinction_max, 1.0, "Maximum allowable extinction value");
 DEFINE_double(sky_min, 0.0, "Minimum allowable sky brightness value");
 DEFINE_double(sky_max, 24.0, "Maximum allowable sky brightness value");
+DEFINE_double(odds_min, 0.0, "Minimum allowable sky brightness value");
+DEFINE_double(odds_max, 1.01, "Maximum allowable sky brightness value");
 DEFINE_bool(galaxy_galaxy, false,
 	    "Auto-correlate galaxy density.");
 DEFINE_bool(galaxy_seeing, false,
@@ -34,12 +36,14 @@ DEFINE_bool(galaxy_extinction, false,
 	    "Cross-correlate galaxy density and extinction variations.");
 DEFINE_bool(galaxy_sky, false,
 	    "Cross-correlate galaxy density and sky brightness variations.");
+DEFINE_bool(galaxy_odds, false,
+	    "Cross-correlate galaxy density and average odds variations.");
 DEFINE_int32(n_jack, -1,
 	     "Number of jack-knife samples to use; default to 2*n_thetabins.");
 DEFINE_double(theta_min, 0.09, "Minimum angular scale (in degrees)");
 DEFINE_double(theta_max, 2.0, "Maximum angular scale (in degrees)");
 DEFINE_double(galmap_resolution, 2048, "Resolution of Galaxy Map");
-DEFINE_int32(n_bins_per_decade, 8, "Number of angular bins per decade.");
+DEFINE_int32(n_bins_per_decade, 5, "Number of angular bins per decade.");
 
 typedef std::map<const uint32_t, int> KeepDict;
 typedef KeepDict::iterator KeepDictIterator;
@@ -49,7 +53,8 @@ Stomp::RegionBoundVector region_vector;
 enum SystematicsField {
   Seeing,
   Extinction,
-  Sky
+  Sky,
+  Odds
 };
 
 int main(int argc, char **argv) {
@@ -90,16 +95,13 @@ int main(int argc, char **argv) {
     FLAGS_extinction_max << "\n";
   std::cout <<
     "\t" << FLAGS_sky_min << " < sky brightness < " << FLAGS_sky_max << "\n";
+  std::cout <<
+    "\t" << FLAGS_odds_min << " < odds brightness < " << FLAGS_odds_max << "\n";
 
   // Now we read in our sysmap.  We only want to keep those pixels that
   // meet our selection criteria, so we filter on those as we read through
   // the file.
-  KeepDict keep_map;
-  if (FLAGS_sysmap_cut_file.empty()) {
-    FindAllowedArea(FLAGS_sysmap_file.c_str(), keep_map);
-  } else {
-    FindAllowedArea(FLAGS_sysmap_cut_file.c_str(), keep_map);
-  }
+  
   if (!FLAGS_input_bounds.empty()) {
     int type;
     double radius;
@@ -123,6 +125,13 @@ int main(int argc, char **argv) {
 	region_vector.push_back(region_bound);
       }
     }
+    FLAGS_n_jack = region_vector.size();
+  }
+  KeepDict keep_map;
+  if (FLAGS_sysmap_cut_file.empty()) {
+    FindAllowedArea(FLAGS_sysmap_file.c_str(), keep_map);
+  } else {
+    FindAllowedArea(FLAGS_sysmap_cut_file.c_str(), keep_map);
   }
 
   // We need some constraints from our angular binning, so we'll make a
@@ -146,6 +155,7 @@ int main(int argc, char **argv) {
   output_suffix << "_ext" << FLAGS_extinction_min << "-" <<
     FLAGS_extinction_max;
   output_suffix << "_sky" << FLAGS_sky_min << "-" << FLAGS_sky_max;
+  output_suffix << "_odds" << FLAGS_odds_min << "-" << FLAGS_odds_max;
   output_suffix << "_combined";
 
   // First, handle the galaxy auto-correlation case
@@ -237,6 +247,29 @@ int main(int argc, char **argv) {
     output_file.close();
   }
 
+  // Galaxy-Odds
+  if (FLAGS_galaxy_odds) {
+    Stomp::AngularCorrelation xcorr_odds(FLAGS_theta_min, FLAGS_theta_max,
+					   FLAGS_n_bins_per_decade);
+
+    CrossCorrelateSystematicsField(galaxy_map, Odds,
+				   xcorr_odds, keep_map);
+
+    std::string output_file_name =
+      "MeanWthetaSys_gal-odds_" + FLAGS_output_tag + output_suffix.str();
+    std::cout << "Writing results to " << output_file_name << "...\n";
+
+    std::ofstream output_file(output_file_name.c_str());
+    for (Stomp::ThetaIterator iter=xcorr_odds.Begin();
+	 iter!=xcorr_odds.End();++iter) {
+      if (iter->Resolution() != -1) {
+	output_file << std::setprecision(6) << iter->Theta() << " " <<
+	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
+      }
+    }
+    output_file.close();
+  }
+
   std::cout << "Done.\n";
 
   return 0;
@@ -244,17 +277,18 @@ int main(int argc, char **argv) {
 
 void FindAllowedArea(const char* sysmap_name, KeepDict& keep_map) {
   std::ifstream sysmap_file(sysmap_name);
-  double unmasked, seeing, extinction, sky;
+  double unmasked, seeing, extinction, sky, odds;
   uint32_t x, y, hpixnum, superpixnum, resolution, n_objects;
   double total_area = 0.0;
   
 
   std::cout << "Reading systematics map from " << FLAGS_sysmap_file << "...\n";
   unsigned long n_pixel = 0, n_keep = 0;
-  unsigned long n_seeing = 0, n_extinction = 0, n_sky = 0, n_blank = 0;
+  unsigned long n_seeing = 0, n_extinction = 0, n_sky = 0, n_odds = 0, 
+    n_blank = 0;
   while (!sysmap_file.eof()) {
     sysmap_file >> hpixnum >> superpixnum >> resolution >> unmasked >> seeing >>
-      extinction >> sky >> n_objects;
+      extinction >> sky >> odds >> n_objects;
 
     if (!sysmap_file.eof()) {
       n_pixel++;
@@ -263,14 +297,29 @@ void FindAllowedArea(const char* sysmap_name, KeepDict& keep_map) {
 	  (extinction >= FLAGS_extinction_min) &&
 	  (extinction <= FLAGS_extinction_max) &&
 	  (sky >= FLAGS_sky_min) &&
-	  (sky <= FLAGS_sky_max)) {
+	  (sky <= FLAGS_sky_max) &&
+	  (odds >= FLAGS_odds_min) &&
+	  (odds <= FLAGS_odds_max)) {
 	  //&& (n_objects > 0)) {
+	bool keep_pixel = false;
 	Stomp::Pixel::HPix2XY(resolution, hpixnum, superpixnum, x, y);
 	Stomp::Pixel tmp_pix(x, y, resolution, 1.0);
+	for (uint32_t bound_iter=0;bound_iter<region_vector.size();bound_iter++) {
+	  if (region_vector[bound_iter].CheckPixel(tmp_pix)) {
+	    if (keep_pixel) {
+	      std::cout << "Syspixel found in more than one bound!\n";
+	      keep_pixel = false;
+	      break;
+	    }
+	    keep_pixel = true;  
+	  }
+	}
 	//Stomp::ScalarPixel tmp_pix(x, y, resolution, unmasked, 0, 0);
-	total_area += unmasked*tmp_pix.Area();
-	keep_map[tmp_pix.Pixnum()] = 1;
-	n_keep++;
+	if (keep_pixel) {
+	  total_area += unmasked*tmp_pix.Area();
+	  keep_map[tmp_pix.Pixnum()] = 1;
+	  n_keep++;
+	}
 	//galaxy_pix.push_back(tmp_pix);
       } else {
 	if ((seeing < FLAGS_seeing_min) || (seeing > FLAGS_seeing_max))
@@ -278,6 +327,7 @@ void FindAllowedArea(const char* sysmap_name, KeepDict& keep_map) {
 	if ((extinction < FLAGS_extinction_min) ||
 	    (extinction > FLAGS_extinction_max)) n_extinction++;
 	if ((sky >= FLAGS_sky_min) || (sky <= FLAGS_sky_max)) n_sky++;
+	if ((odds >= FLAGS_odds_min) || (odds <= FLAGS_odds_max))
 	if (n_objects == 0) n_blank++;
       }
     }
@@ -288,12 +338,13 @@ void FindAllowedArea(const char* sysmap_name, KeepDict& keep_map) {
   std::cout << "\t\t" << n_seeing << " failed seeing cut.\n";
   std::cout << "\t\t" << n_extinction << " failed extinction cut.\n";
   std::cout << "\t\t" << n_sky << " failed sky_brightness cut.\n";
+  std::cout << "\t\t" << n_odds << " failed odds cut.\n";
   std::cout << "\t\t" << n_blank << " were empty.\n";
 }
 
 Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
   std::ifstream sysmap_file(FLAGS_sysmap_file.c_str());
-  double unmasked, seeing, extinction, sky;
+  double unmasked, seeing, extinction, sky, odds;
   uint32_t x, y, hpixnum, superpixnum, resolution, n_objects;
   double total_area = 0.0;
   Stomp::ScalarVector galaxy_pix;
@@ -301,7 +352,7 @@ Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
 
   while (!sysmap_file.eof()) {
     sysmap_file >> hpixnum >> superpixnum >> resolution >> unmasked >> seeing >>
-      extinction >> sky >> n_objects;
+      extinction >> sky >> odds >> n_objects;
 
     if (!sysmap_file.eof()) { 
       Stomp::Pixel::HPix2XY(resolution, hpixnum, superpixnum, x, y);
@@ -356,6 +407,7 @@ Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
     total_area << " sq. degrees...\n";
 
   // Convert raw galaxy pixels into a ScalarMap.
+  
   std::cout << "Making maps with " << FLAGS_n_jack << " regions...\n";
   if (!FLAGS_input_bounds.empty()) {
     galaxy_map->InitializeRegions(region_vector, FLAGS_n_jack, region_resolution);
@@ -420,7 +472,7 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
   //Scan through the systematics file again and load up the appropriate values.
   Stomp::ScalarVector sys_pix;
   std::ifstream sysmap_file(FLAGS_sysmap_file.c_str());
-  double unmasked, seeing, extinction, sky;
+  double unmasked, seeing, extinction, sky, odds;
   uint32_t x, y, hpixnum, superpixnum, resolution, n_objects;
   KeepDictIterator keep_iter;
 
@@ -437,12 +489,16 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
     std::cout << "Reading in sky brightness values from " <<
       FLAGS_sysmap_file << "...\n";
     break;
+  case Odds:
+    std::cout << "Reading in sky brightness values from " <<
+      FLAGS_sysmap_file << "...\n";
+    break;
   }
 
   // Parse the systematics file and pull out the requested field
   while (!sysmap_file.eof()) {
     sysmap_file >> hpixnum >> superpixnum >> resolution >> unmasked >>
-      seeing >> extinction >> sky >> n_objects;
+      seeing >> extinction >> sky >> odds >> n_objects;
 
     if (!sysmap_file.eof()) { 
       Stomp::Pixel::HPix2XY(resolution, hpixnum, superpixnum, x, y);
@@ -459,6 +515,9 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
 	  break;
 	case Sky:
 	  pix.SetIntensity(sky);
+	  break;
+	case Odds:
+	  pix.SetIntensity(odds);
 	  break;
 	}
 	sys_pix.push_back(pix);
@@ -488,6 +547,9 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
     break;
   case Sky:
     std::cout << "Cross-correlating galaxies with sky brightness...\n";
+    break;
+  case Odds:
+    std::cout << "Cross-correlating galaxies with odds brightness...\n";
     break;
   }
   for (Stomp::ThetaIterator iter=wtheta.Begin(max_resolution);
