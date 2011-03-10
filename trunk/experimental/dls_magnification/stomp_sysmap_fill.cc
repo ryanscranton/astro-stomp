@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
 			  odds, n_objects);
       sysmap[tmp_pix.Pixnum()] = pix;
       coverage_map.push_back(tmp_pix);
-      if (n_objects == 0 && unmasked_fraction>0.10) {
+      if (n_objects == 0 && unmasked_fraction>0.50) {
 	empty_pixels.push_back(tmp_pix);
 	n_empty_pixels++;
       }
@@ -184,7 +184,8 @@ int main(int argc, char **argv) {
     int super_resolution = resolution/2;
     int n_objects_hold = 0;
 
-    while (n_objects_hold <= 0) {
+    bool run_loop = true;
+    while (run_loop) {
       if (super_resolution < 128) {
 	std::cout << "WARNING::Resolution required to corse (<128).\n"
 		  << "\t Breaking Loop and leaving pixel empty.\n";
@@ -217,7 +218,7 @@ int main(int argc, char **argv) {
 	  }
 	}
       }
-      if (n_objects > 0) {
+      if (n_objects >= 2) {
 	for (Stomp::PixelIterator child_iter = child_pixels.begin();
 	     child_iter != child_pixels.end(); ++child_iter) {
 	  SysDictIterator child_sys_iter = sysmap.find(child_iter->Pixnum());
@@ -229,6 +230,7 @@ int main(int argc, char **argv) {
 						    sum_odds/unmasked_total,
 						    ceil(n_objects/
 							 unmasked_total));
+	    run_loop = false;
 	  }
 	}
       }
