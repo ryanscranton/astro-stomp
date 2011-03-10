@@ -38,8 +38,6 @@ DEFINE_bool(galaxy_sky, false,
 	    "Cross-correlate galaxy density and sky brightness variations.");
 DEFINE_bool(galaxy_odds, false,
 	    "Cross-correlate galaxy density and average odds variations.");
-DEFINE_int32(n_jack, -1,
-	     "Number of jack-knife samples to use; default to 2*n_thetabins.");
 DEFINE_double(theta_min, 0.09, "Minimum angular scale (in degrees)");
 DEFINE_double(theta_max, 2.0, "Maximum angular scale (in degrees)");
 DEFINE_double(galmap_resolution, 2048, "Resolution of Galaxy Map");
@@ -138,16 +136,7 @@ int main(int argc, char **argv) {
   // auto-correlation, then we'll use the object for that calculation.
   Stomp::AngularCorrelation wtheta(FLAGS_theta_min, FLAGS_theta_max,
 				   FLAGS_n_bins_per_decade);
-
-  // If there's no specifed number of jack-knife samples, then we default to
-  // twice the number of angular bins.
-  
-  if (FLAGS_n_jack == -1) {
-    FLAGS_n_jack = 2*wtheta.NBins();
-    if (!FLAGS_input_bounds.empty()){
-	FLAGS_n_jack = region_vector.size();
-    }
-  }
+ 
 
   // Now, read in the galaxy map.  We only want to keep those pixels that match
   // the ones that passed through our systematics cuts.
@@ -172,15 +161,7 @@ int main(int argc, char **argv) {
       "MeanWthetaSys_gal-gal_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
 
-    std::ofstream output_file(output_file_name.c_str());
-    for (Stomp::ThetaIterator iter=wtheta.Begin();
-	 iter!=wtheta.End();++iter) {
-      if (iter->Resolution() != -1) {
-	output_file << std::setprecision(6) << iter->Theta() << " " <<
-	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-      }
-    }
-    output_file.close();
+    wtheta.Write(output_file_name);
   }
 
   // Galaxy-Seeing
@@ -195,15 +176,7 @@ int main(int argc, char **argv) {
       "MeanWthetaSys_gal-see_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
 
-    std::ofstream output_file(output_file_name.c_str());
-    for (Stomp::ThetaIterator iter=xcorr_seeing.Begin();
-	 iter!=xcorr_seeing.End();++iter) {
-      if (iter->Resolution() != -1) {
-	output_file << std::setprecision(6) << iter->Theta() << " " <<
-	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-      }
-    }
-    output_file.close();
+    xcorr_seeing.Write(output_file_name);
   }
 
   // Galaxy-Extinction
@@ -218,15 +191,7 @@ int main(int argc, char **argv) {
       "MeanWthetaSys_gal-ext_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
 
-    std::ofstream output_file(output_file_name.c_str());
-    for (Stomp::ThetaIterator iter=xcorr_extinction.Begin();
-	 iter!=xcorr_extinction.End();++iter) {
-      if (iter->Resolution() != -1) {
-	output_file << std::setprecision(6) << iter->Theta() << " " <<
-	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-      }
-    }
-    output_file.close();
+    xcorr_extinction.Write(output_file_name);
   }
 
   // Galaxy-Sky Brightness
@@ -241,15 +206,7 @@ int main(int argc, char **argv) {
       "MeanWthetaSys_gal-sky_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
 
-    std::ofstream output_file(output_file_name.c_str());
-    for (Stomp::ThetaIterator iter=xcorr_sky.Begin();
-	 iter!=xcorr_sky.End();++iter) {
-      if (iter->Resolution() != -1) {
-	output_file << std::setprecision(6) << iter->Theta() << " " <<
-	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-      }
-    }
-    output_file.close();
+    xcorr_sky.Write(output_file_name);
   }
 
   // Galaxy-Odds
@@ -264,15 +221,7 @@ int main(int argc, char **argv) {
       "MeanWthetaSys_gal-odds_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
 
-    std::ofstream output_file(output_file_name.c_str());
-    for (Stomp::ThetaIterator iter=xcorr_odds.Begin();
-	 iter!=xcorr_odds.End();++iter) {
-      if (iter->Resolution() != -1) {
-	output_file << std::setprecision(6) << iter->Theta() << " " <<
-	  iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-      }
-    }
-    output_file.close();
+    xcorr_odds.Write(output_file_name);
   }
 
   std::cout << "Done.\n";
@@ -412,17 +361,6 @@ Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
     total_area << " sq. degrees...\n";
 
   // Convert raw galaxy pixels into a ScalarMap.
-  
-  std::cout << "Making maps with " << FLAGS_n_jack << " regions...\n";
-  if (!FLAGS_input_bounds.empty()) {
-    galaxy_map->InitializeRegions(region_vector, FLAGS_n_jack, region_resolution);
-    galaxy_map->UseLocalMeanIntensity(true);
-  }
-  else {
-    galaxy_map->InitializeRegions(FLAGS_n_jack, region_resolution);
-  }
-  std::cout << "Using Local Intensity? " << galaxy_map->UsingLocalMeanIntensity() << "\n";
-  std::cout << "Regionation Successful\n";
 
   return galaxy_map;
 }
@@ -431,12 +369,10 @@ void AutoCorrelateGalaxies(Stomp::ScalarMap* galaxy_map,
 			   Stomp::AngularCorrelation& wtheta) {
   // Since we're using jack knife samples, we need to initialize that
   // functionality in the AngularCorrelation object.
-  for (Stomp::ThetaIterator iter=wtheta.Begin();
-       iter!=wtheta.End();++iter) iter->InitializeRegions(FLAGS_n_jack);
 
   // And set up our AngularCorrelation resolution limits around the limits of
   // the galaxy map.
-  wtheta.SetMinResolution(galaxy_map->RegionResolution());
+  //wtheta.SetMinResolution(galaxy_map->RegionResolution());
   wtheta.SetMaxResolution(galaxy_map->Resolution());
 
   // Now we do the requested auto-correlation.
@@ -446,19 +382,15 @@ void AutoCorrelateGalaxies(Stomp::ScalarMap* galaxy_map,
   std::cout << "Starting galaxy auto-correlation...\n";
   for (Stomp::ThetaIterator iter=wtheta.Begin(max_resolution);
        iter!=wtheta.End(max_resolution);++iter)
-    galaxy_map->AutoCorrelateWithRegions(iter);
+    galaxy_map->AutoCorrelate(iter);
 
   for (int resolution=max_resolution/2;
        resolution>=min_resolution;resolution/=2) {
     Stomp::ScalarMap* galaxy_sub_map =
       new Stomp::ScalarMap(*galaxy_map, resolution);
-    galaxy_sub_map->InitializeRegions(*galaxy_map);
-    if (!FLAGS_input_bounds.empty())
-      galaxy_sub_map->UseLocalMeanIntensity(true);
-
     for (Stomp::ThetaIterator iter=wtheta.Begin(resolution);
 	 iter!=wtheta.End(resolution);++iter) {
-      galaxy_sub_map->AutoCorrelateWithRegions(iter);
+      galaxy_sub_map->AutoCorrelate(iter);
     }
     delete galaxy_sub_map;
   }
@@ -468,10 +400,8 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
 				    SystematicsField sys_field,
 				    Stomp::AngularCorrelation& wtheta,
 				    KeepDict& keep_map) {
-  for (Stomp::ThetaIterator iter=wtheta.Begin();
-       iter!=wtheta.End();++iter) iter->InitializeRegions(FLAGS_n_jack);
 
-  wtheta.SetMinResolution(galaxy_map->RegionResolution());
+  //wtheta.SetMinResolution(galaxy_map->RegionResolution());
   wtheta.SetMaxResolution(galaxy_map->Resolution());
 
   //Scan through the systematics file again and load up the appropriate values.
@@ -535,9 +465,6 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
   Stomp::ScalarMap* sys_map =
     new Stomp::ScalarMap(sys_pix, Stomp::ScalarMap::ScalarField);
   sys_pix.clear();
-  sys_map->InitializeRegions(*galaxy_map);
-  if (!FLAGS_input_bounds.empty())
-    sys_map->UseLocalMeanIntensity(true);
 
   // Now we do the requested cross-correlation.
   int max_resolution = galaxy_map->Resolution();
@@ -559,7 +486,7 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
   }
   for (Stomp::ThetaIterator iter=wtheta.Begin(max_resolution);
        iter!=wtheta.End(max_resolution);++iter) {
-    galaxy_map->CrossCorrelateWithRegions(*sys_map, iter);
+    galaxy_map->CrossCorrelate(*sys_map, iter);
   }
 
   std::cout << "Completed on galaxy map\n";
@@ -569,18 +496,13 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
     std::cout << "Current Resolution: " << resolution << "\n";
     Stomp::ScalarMap* galaxy_sub_map =
       new Stomp::ScalarMap(*galaxy_map, resolution);
-    galaxy_sub_map->InitializeRegions(*galaxy_map);
-    if (!FLAGS_input_bounds.empty())
-      galaxy_sub_map->UseLocalMeanIntensity(true);
-
+    
     Stomp::ScalarMap* sys_sub_map = 
       new Stomp::ScalarMap(*sys_map, resolution);
-    sys_sub_map->InitializeRegions(*sys_map);
-    if (!FLAGS_input_bounds.empty())
-      sys_sub_map->UseLocalMeanIntensity(true);
+    
     for (Stomp::ThetaIterator iter=wtheta.Begin(resolution);
 	 iter!=wtheta.End(resolution);++iter) {
-      galaxy_sub_map->CrossCorrelateWithRegions(*sys_sub_map, iter);
+      galaxy_sub_map->CrossCorrelate(*sys_sub_map, iter);
     }
     delete sys_sub_map;
     delete galaxy_sub_map;

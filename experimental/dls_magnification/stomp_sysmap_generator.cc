@@ -245,8 +245,8 @@ int main(int argc, char **argv) {
 	sys_iter->second.UnmaskedFraction() << " " <<
 	sys_iter->second.MeanSeeing() << " " <<
 	sys_iter->second.MeanExtinction() << " " <<
-	sqrt(1.0/iter->Weight()) << " " <<
-        //sys_iter->second.MeanSky() << " " <<
+	//sqrt(1.0/iter->Weight()) << " " <<
+        sys_iter->second.MeanSky() << " " <<
 	sys_iter->second.MeanOdds() << " " <<
 	sys_iter->second.NObjects() << "\n";
     }
