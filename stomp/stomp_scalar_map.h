@@ -31,53 +31,11 @@ class AngularCoordinate;           // class def. in stomp_angular_coordinate.h
 class WeightedAngularCoordinate;   // class def. in stomp_angular_coordinate.h
 class AngularCorrelation;          // class def. in stomp_angular_correlation.h
 class Map;                         // class definition in stomp_map.h
-class ScalarSubMap;
 class ScalarMap;
-
-typedef std::vector<ScalarSubMap> ScalarSubMapVector;
-typedef ScalarSubMapVector::iterator ScalarSubMapIterator;
-typedef std::pair<ScalarSubMapIterator, ScalarSubMapIterator> ScalarSubMapPair;
 
 typedef std::vector<ScalarMap> ScalarMapVector;
 typedef ScalarMapVector::iterator ScalarMapIterator;
 typedef std::pair<ScalarMapIterator, ScalarMapIterator> ScalarMapPair;
-
-class ScalarSubMap {
-  // For the ScalarMap, the sub-map class is more about book-keeping
-  // than operations.  They are still assembled around the superpixels, but
-  // since the methods need to talk to pixels from different superpixels so
-  // often it doesn't make sense to break up the data to the same degree.
-
- public:
-  ScalarSubMap(uint32_t superpixnum);
-  ~ScalarSubMap();
-  void AddToArea(uint32_t resolution, double weight);
-  void AddToIntensity(const double intensity, const uint32_t n_point = 1);
-  void SetIntensity(const double intensity);
-  void SetNPoints(const int n_point);
-  double Area();
-  double Intensity();
-  int NPoints();
-  double Density();
-  double PointDensity();
-  void SetBegin(ScalarIterator iter);
-  void SetEnd(ScalarIterator iter);
-  void SetNull(ScalarIterator iter);
-  ScalarIterator Begin();
-  ScalarIterator End();
-  bool Initialized();
-  uint32_t Size();
-
- private:
-  uint32_t superpixnum_;
-  ScalarIterator start_;
-  ScalarIterator finish_;
-  ScalarIterator null_;
-  bool initialized_;
-  double area_, total_intensity_;
-  int total_points_;
-  uint32_t size_;
-};
 
 class ScalarMap : public BaseMap {
   // Unlike a Map, where the set of Pixels is intended to match the
@@ -309,29 +267,21 @@ class ScalarMap : public BaseMap {
   uint32_t Resolution();
 
   // Some global methods for accessing the aggregate area, intensity, density
-  // and so for for the map.  If a superpixnum index is given as an
-  // argument, then the values for that pixel are returned.  Otherwise, the
-  // values for the whole map are given.  The extent to which these values
-  // are meaningful will depend on the type of scalar field encoded in the map.
+  // and so for for the map.  The extent to which these values are meaningful
+  // will depend on the type of scalar field encoded in the map.
   double Intensity();
-  double Intensity(uint32_t superpixnum);
   int NPoints();
-  int NPoints(uint32_t superpixnum);
   double Density();
-  double Density(uint32_t superpixnum);
   double PointDensity();
-  double PointDensity(uint32_t superpixnum);
-  ScalarIterator Begin(uint32_t superpixnum = MaxSuperpixnum);
-  ScalarIterator End(uint32_t superpixnum = MaxSuperpixnum);
+  ScalarIterator Begin();
+  ScalarIterator End();
   double MeanIntensity();
   bool IsOverDensityMap();
   ScalarMapType MapType();
 
   // We need these methods to comply with the BaseMap signature.
   virtual double Area();
-  double Area(uint32_t superpixnum);
   virtual uint32_t Size();
-  uint32_t Size(uint32_t superpixnum);
   virtual uint32_t MinResolution();
   virtual uint32_t MaxResolution();
   virtual uint8_t MinLevel();
@@ -342,13 +292,12 @@ class ScalarMap : public BaseMap {
 
  private:
   ScalarVector pix_;
-  ScalarSubMapVector sub_map_;
   ScalarMapType map_type_;
   double area_, mean_intensity_, unmasked_fraction_minimum_, total_intensity_;
-  std::vector<double> local_mean_intensity_;
   uint32_t resolution_, total_points_;
   bool converted_to_overdensity_, calculated_mean_intensity_;
-  bool initialized_sub_map_, use_local_mean_intensity_;
+  bool use_local_mean_intensity_;
+  std::vector<double> local_mean_intensity_;
 };
 
 } // end namespace Stomp
