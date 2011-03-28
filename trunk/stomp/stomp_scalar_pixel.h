@@ -23,6 +23,7 @@
 
 namespace Stomp {
 
+class AngularBin;           // class definition in stomp_angular_bin.h
 class ScalarPixel;
 
 typedef std::vector<ScalarPixel> ScalarVector;
@@ -102,11 +103,22 @@ class ScalarPixel : public Pixel {
   void ConvertFromOverDensity(double expected_intensity);
   void ConvertFromFractionalOverDensity(double expected_intensity);
 
+  // Since we've got this data stored locally in variables, we can use faster
+  // accessors than the standard Pixel methods.
+  virtual double UnitSphereX();
+  virtual double UnitSphereY();
+  virtual double UnitSphereZ();
+
+  // An internal method that we'll use when we calculate correlation
+  // functions.
+  void _WithinAnnulus(AngularBin& theta, ScalarVector& pix);
+
   // Finally, a method to tell us whether we're in over-density mode or not.
   bool IsOverDensity();
 
  private:
   double intensity_;
+  double unit_sphere_x_, unit_sphere_y_, unit_sphere_z_;
   uint32_t n_point_;
   bool is_overdensity_;
 };

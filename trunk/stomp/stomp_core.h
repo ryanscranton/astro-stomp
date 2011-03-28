@@ -12,8 +12,8 @@
 // function and should be included in any program using the library.
 
 
-#ifndef STOMP_CORE_H
-#define STOMP_CORE_H
+#ifndef STOMP_STOMP_CORE_H_
+#define STOMP_STOMP_CORE_H_
 
 #include <stdint.h>
 
@@ -76,6 +76,6 @@ bool DoubleEQ(double a, double b);
 // resolution level.
 uint8_t MostSignificantBit(uint32_t input_int);
 
-} // end namespace Stomp
+}  // end namespace Stomp
 
-#endif
+#endif  // STOMP_STOMP_CORE_H_

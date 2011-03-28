@@ -1,4 +1,18 @@
-#include "stomp_core.h"
+// Copyright 2010  All Rights Reserved.
+// Author: ryan.scranton@gmail.com (Ryan Scranton)
+
+// STOMP is a set of libraries for doing astrostatistical analysis on the
+// celestial sphere.  The goal is to enable descriptions of arbitrary regions
+// on the sky which may or may not encode futher spatial information (galaxy
+// density, CMB temperature, observational depth, etc.) and to do so in such
+// a way as to make the analysis of that data as algorithmically efficient as
+// possible.
+//
+// This file contains the basic constants necessary to make the library
+// function and should be included in any program using the library.
+
+
+#include <stomp/stomp_core.h>
 #include <math.h>
 
 namespace Stomp {
@@ -51,4 +65,4 @@ uint8_t MostSignificantBit(uint32_t input_int) {
   return ln_int;
 }
 
-} // end namespace Stomp
+}  // end namespace Stomp

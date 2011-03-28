@@ -36,27 +36,6 @@ void ScalarMapBasicTests() {
   std::cout << "\t" << stomp_map->Area() <<
     " sq. degrees in the source map.\n";
 
-  // Now in more detail on the area:
-  std::cout << "\tIn more detail:\n";
-
-  Stomp::PixelVector superpix;
-  scalar_map->Coverage(superpix);
-
-  for (Stomp::PixelIterator iter=superpix.begin();iter!=superpix.end();++iter) {
-    uint32_t n_pixel =
-      scalar_map->End(iter->Superpixnum()) -
-      scalar_map->Begin(iter->Superpixnum());
-    std::cout << "\t\t" << iter->Superpixnum() << ": " <<
-      scalar_map->Area(iter->Superpixnum()) << " square degrees, " <<
-      n_pixel << " pixels.\n";
-    std::cout << "\t\t\tOrginal map: " <<
-      stomp_map->Area(iter->Superpixnum()) << " square degrees, " <<
-      stomp_map->Size(iter->Superpixnum()) << " pixels.\n";
-    std::cout << "\t\t\tResampled map: " <<
-      scalar_map->FindUnmaskedFraction(*iter)*iter->Area() <<
-      " square degrees\n";
-  }
-
   // Now, let's add those random points to the current map.  Since they were
   // both created with the same source map, they should all find a home.
   std::cout << "\tAttempting to add random points to density map\n";
@@ -73,13 +52,6 @@ void ScalarMapBasicTests() {
     " points in map.\n";
   std::cout << "\t\t\t" << scalar_map->MeanIntensity() <<
     " points/sq. degree.\n";
-
-  std::cout << "\t\tChecking distribution:\n";
-  for (Stomp::PixelIterator iter=superpix.begin();iter!=superpix.end();++iter) {
-    std::cout << "\t\t\t" << iter->Superpixnum() << ": " <<
-      scalar_map->Density(iter->Superpixnum()) <<
-      " objects/square degree\n";
-  }
 }
 
 void ScalarMapLocalTests() {
@@ -297,7 +269,7 @@ void ScalarMapAutoCorrelationTests() {
        resolution>=wtheta->MinResolution();resolution/=2) {
     Stomp::ScalarMap* sub_scalar_map =
         new Stomp::ScalarMap(*scalar_map,resolution);
-    std::cout << "\t" << resolution <<
+    std::cout << "\t" << sub_scalar_map->Resolution() <<
         ": Original Map Density: " << scalar_map->Density() <<
         ": New Map Density: " << sub_scalar_map->Density() << "\n";
     sub_scalar_map->AutoCorrelate(*wtheta);

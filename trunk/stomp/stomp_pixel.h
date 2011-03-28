@@ -48,11 +48,11 @@ class Pixel {
   friend class PixelOrdering;
   Pixel();
   Pixel(const uint32_t resolution, const uint32_t pixnum,
-	const double weight = 0.0);
+        const double weight = 0.0);
   Pixel(AngularCoordinate& ang, const uint32_t resolution,
-	const double weight = 0.0);
+        const double weight = 0.0);
   Pixel(const uint32_t x, const uint32_t y,
-	const uint32_t resolution, const double weight = 0.0);
+        const uint32_t resolution, const double weight = 0.0);
   virtual ~Pixel();
 
   // For the purposes of simple ordering (as would be done in various STL

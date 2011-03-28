@@ -22,94 +22,6 @@
 
 namespace Stomp {
 
-ScalarSubMap::ScalarSubMap(uint32_t superpixnum) {
-  superpixnum_ = superpixnum;
-  initialized_ = false;
-  area_ = 0.0;
-  total_intensity_ = 0.0;
-  total_points_ = 0;
-  size_ = 0;
-}
-
-ScalarSubMap::~ScalarSubMap() {
-  superpixnum_ = MaxSuperpixnum;
-  initialized_ = false;
-  area_ = 0.0;
-  total_intensity_ = 0.0;
-  total_points_ = 0;
-  size_ = 0;
-}
-
-void ScalarSubMap::AddToArea(uint32_t resolution, double weight) {
-  area_ +=weight*HPixArea*HPixResolution*HPixResolution/
-    (resolution*resolution);
-  size_++;
-}
-
-void ScalarSubMap::AddToIntensity(const double intensity,
-				  const uint32_t n_point) {
-  total_intensity_ += intensity;
-  total_points_ += n_point;
-}
-
-void ScalarSubMap::SetIntensity(const double intensity) {
-  total_intensity_ = intensity;
-}
-
-void ScalarSubMap::SetNPoints(const int n_point) {
-  total_points_ = n_point;
-}
-
-double ScalarSubMap::Area() {
-  return area_;
-}
-
-double ScalarSubMap::Intensity() {
-  return (initialized_ ? total_intensity_ : 0.0);
-}
-
-int ScalarSubMap::NPoints() {
-  return (initialized_ ? total_points_ : 0);
-}
-
-double ScalarSubMap::Density() {
-  return (initialized_ ? total_intensity_/area_ : 0.0);
-}
-
-double ScalarSubMap::PointDensity() {
-  return (initialized_ ? static_cast<double>(total_points_)/area_ : 0.0);
-}
-
-void ScalarSubMap::SetBegin(ScalarIterator iter) {
-  start_ = iter;
-  finish_ = ++iter;
-  initialized_ = true;
-}
-
-void ScalarSubMap::SetEnd(ScalarIterator iter) {
-  finish_ = ++iter;
-}
-
-void ScalarSubMap::SetNull(ScalarIterator iter) {
-  null_ = iter;
-}
-
-ScalarIterator ScalarSubMap::Begin() {
-  return (initialized_ ? start_ : null_);
-}
-
-ScalarIterator ScalarSubMap::End() {
-  return (initialized_ ? finish_ : null_);
-}
-
-bool ScalarSubMap::Initialized() {
-  return initialized_;
-}
-
-uint32_t ScalarSubMap::Size() {
-  return (initialized_ ? size_ : 0);
-}
-
 ScalarMap::ScalarMap() {
   area_ = 0.0;
   resolution_ = 0;
@@ -117,11 +29,9 @@ ScalarMap::ScalarMap() {
   mean_intensity_ = 0.0;
   total_intensity_ = 0.0;
   if (!pix_.empty()) pix_.clear();
-  if (!sub_map_.empty()) sub_map_.clear();
   ClearRegions();
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
-  initialized_sub_map_ = false;
   use_local_mean_intensity_ = false;
   map_type_ = ScalarField;
 }
@@ -166,7 +76,7 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
 
   pix_.resize(pix_.size());
 
-  sort(pix_.begin(),pix_.end(),Pixel::SuperPixelBasedOrder);
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
@@ -180,8 +90,6 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
     total_intensity_ += iter->Intensity();
     total_points_ += iter->NPoints();
   }
-
-  initialized_sub_map_ = _InitializeSubMap();
 }
 
 ScalarMap::ScalarMap(ScalarMap& scalar_map,
@@ -204,17 +112,14 @@ ScalarMap::ScalarMap(ScalarMap& scalar_map,
 	 iter!=scalar_map.End();++iter) pix_.push_back(*iter);
   } else {
     PixelVector superpix;
-    scalar_map.Coverage(superpix);
+    scalar_map.Coverage(superpix, HPixResolution, false);
 
     uint32_t x_min, x_max, y_min, y_max;
-    ScalarPixel tmp_pix;
-    tmp_pix.SetResolution(resolution_);
-
     for (PixelIterator iter=superpix.begin();iter!=superpix.end();++iter) {
-      iter->SubPix(resolution_,x_min,x_max,y_min,y_max);
+      iter->SubPix(resolution_, x_min, x_max, y_min, y_max);
       for (uint32_t y=y_min;y<=y_max;y++) {
 	for (uint32_t x=x_min;x<=x_max;x++) {
-	  tmp_pix.SetPixnumFromXY(x,y);
+          ScalarPixel tmp_pix(x, y, resolution_);
 	  scalar_map.Resample(tmp_pix);
 	  if (tmp_pix.Weight() > unmasked_fraction_minimum_)
 	    pix_.push_back(tmp_pix);
@@ -225,7 +130,7 @@ ScalarMap::ScalarMap(ScalarMap& scalar_map,
 
   pix_.resize(pix_.size());
 
-  sort(pix_.begin(), pix_.end(), Pixel::SuperPixelBasedOrder);
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
@@ -239,8 +144,6 @@ ScalarMap::ScalarMap(ScalarMap& scalar_map,
     total_intensity_ += iter->Intensity();
     total_points_ += iter->NPoints();
   }
-
-  initialized_sub_map_ = _InitializeSubMap();
 }
 
 ScalarMap::ScalarMap(ScalarVector& pix,
@@ -262,19 +165,18 @@ ScalarMap::ScalarMap(ScalarVector& pix,
 	"Incompatible resolutions in ScalarPixel list.  Exiting.\n";
       exit(2);
     }
+
     area_ += iter->Area()*iter->Weight();
     total_intensity_ += iter->Intensity();
     total_points_ += iter->NPoints();
     pix_.push_back(*iter);
   }
 
-  sort(pix_.begin(), pix_.end(), Pixel::SuperPixelBasedOrder);
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
   use_local_mean_intensity_ = false;
-
-  initialized_sub_map_ = _InitializeSubMap();
 }
 
 ScalarMap::ScalarMap(Map& stomp_map,
@@ -288,23 +190,22 @@ ScalarMap::ScalarMap(Map& stomp_map,
   unmasked_fraction_minimum_ = min_unmasked_fraction;
   map_type_ = scalar_map_type;
 
-  ScalarPixel tmp_pix(center,resolution_,0.0,0.0,0);
+  Pixel pix(center, resolution_);
 
-  PixelVector pix;
-  tmp_pix.WithinAnnulus(theta_min,theta_max,pix);
+  PixelVector pixVec;
+  pix.WithinAnnulus(theta_min, theta_max, pixVec);
 
-  for (PixelIterator iter=pix.begin();iter!=pix.end();++iter) {
+  for (PixelIterator iter=pixVec.begin();iter!=pixVec.end();++iter) {
     double unmasked_fraction = stomp_map.FindUnmaskedFraction(*iter);
     if (unmasked_fraction > unmasked_fraction_minimum_) {
-      tmp_pix.SetPixnumFromXY(iter->PixelX(), iter->PixelY());
-      tmp_pix.SetWeight(unmasked_fraction);
-      pix_.push_back(tmp_pix);
+      pix_.push_back(ScalarPixel(iter->PixelX(), iter->PixelY(),
+                                 resolution_, unmasked_fraction));
     }
   }
 
   pix_.resize(pix_.size());
 
-  sort(pix_.begin(),pix_.end(),Pixel::SuperPixelBasedOrder);
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
@@ -315,8 +216,6 @@ ScalarMap::ScalarMap(Map& stomp_map,
   total_points_ = 0;
   for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter)
     area_ += iter->Area()*iter->Weight();
-
-  initialized_sub_map_ = _InitializeSubMap();
 }
 
 ScalarMap::~ScalarMap() {
@@ -325,35 +224,7 @@ ScalarMap::~ScalarMap() {
   mean_intensity_ = 0.0;
   total_intensity_ = 0.0;
   if (!pix_.empty()) pix_.clear();
-  if (!sub_map_.empty()) sub_map_.clear();
   ClearRegions();
-}
-
-bool ScalarMap::_InitializeSubMap() {
-  if (!sub_map_.empty()) sub_map_.clear();
-
-  sub_map_.reserve(MaxSuperpixnum);
-
-  for (uint32_t k=0;k<MaxSuperpixnum;k++) {
-    ScalarSubMap tmp_sub_map(k);
-    sub_map_.push_back(tmp_sub_map);
-  }
-
-  for (uint32_t k=0;k<MaxSuperpixnum;k++)
-    sub_map_[k].SetNull(pix_.end());
-
-  for (ScalarIterator iter=pix_.begin();iter!=pix_.end();++iter) {
-    uint32_t k = iter->Superpixnum();
-    sub_map_[k].AddToArea(iter->Resolution(), iter->Weight());
-    sub_map_[k].AddToIntensity(iter->Intensity(), iter->NPoints());
-    if (!sub_map_[k].Initialized()) {
-      sub_map_[k].SetBegin(iter);
-    } else {
-      sub_map_[k].SetEnd(iter);
-    }
-  }
-
-  return true;
 }
 
 void ScalarMap::SetResolution(uint32_t resolution) {
@@ -381,7 +252,7 @@ void ScalarMap::InitializeFromMap(Map& stomp_map, uint32_t input_resolution,
   };
 
   PixelVector superpix;
-  stomp_map.Coverage(superpix);
+  stomp_map.Coverage(superpix, HPixResolution, false);
 
   for (PixelIterator iter=superpix.begin();iter!=superpix.end();++iter) {
     PixelVector sub_pix;
@@ -404,7 +275,7 @@ void ScalarMap::InitializeFromMap(Map& stomp_map, uint32_t input_resolution,
 
   pix_.resize(pix_.size());
 
-  sort(pix_.begin(), pix_.end(), Pixel::SuperPixelBasedOrder);
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
@@ -417,8 +288,6 @@ void ScalarMap::InitializeFromMap(Map& stomp_map, uint32_t input_resolution,
     area_ += iter->Area()*iter->Weight();
     total_intensity_ += iter->Intensity();
   }
-
-  initialized_sub_map_ = _InitializeSubMap();
 }
 
 void ScalarMap::InitializeFromScalarMap(ScalarMap& scalar_map,
@@ -447,17 +316,15 @@ void ScalarMap::InitializeFromScalarMap(ScalarMap& scalar_map,
 	 iter!=scalar_map.End();++iter) pix_.push_back(*iter);
   } else {
     PixelVector superpix;
-    scalar_map.Coverage(superpix);
+    scalar_map.Coverage(superpix, HPixResolution, false);
 
     uint32_t x_min, x_max, y_min, y_max;
-    ScalarPixel tmp_pix;
-    tmp_pix.SetResolution(resolution_);
 
     for (PixelIterator iter=superpix.begin();iter!=superpix.end();++iter) {
       iter->SubPix(resolution_,x_min,x_max,y_min,y_max);
       for (uint32_t y=y_min;y<=y_max;y++) {
 	for (uint32_t x=x_min;x<=x_max;x++) {
-	  tmp_pix.SetPixnumFromXY(x,y);
+          ScalarPixel tmp_pix(x, y, resolution_);
 	  scalar_map.Resample(tmp_pix);
 	  if (tmp_pix.Weight() > unmasked_fraction_minimum_)
 	    pix_.push_back(tmp_pix);
@@ -468,7 +335,7 @@ void ScalarMap::InitializeFromScalarMap(ScalarMap& scalar_map,
 
   pix_.resize(pix_.size());
 
-  sort(pix_.begin(), pix_.end(), Pixel::SuperPixelBasedOrder);
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
@@ -482,8 +349,6 @@ void ScalarMap::InitializeFromScalarMap(ScalarMap& scalar_map,
     total_intensity_ += iter->Intensity();
     total_points_ += iter->NPoints();
   }
-
-  initialized_sub_map_ = _InitializeSubMap();
 }
 
 void ScalarMap::InitializeFromScalarPixels(ScalarVector& pix,
@@ -509,74 +374,57 @@ void ScalarMap::InitializeFromScalarPixels(ScalarVector& pix,
     pix_.push_back(*iter);
   }
 
-  sort(pix_.begin(), pix_.end(), Pixel::SuperPixelBasedOrder);
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
   mean_intensity_ = 0.0;
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
   use_local_mean_intensity_ = false;
-
-  initialized_sub_map_ = _InitializeSubMap();
 }
 
 bool ScalarMap::AddToMap(AngularCoordinate& ang, double object_weight) {
-  ScalarPixel tmp_pix(ang,resolution_,object_weight,1);
+  ScalarPixel tmp_pix(ang, resolution_, object_weight, 1);
   bool added_point = false;
-  uint32_t k = tmp_pix.Superpixnum();
 
-  if (sub_map_[k].Initialized()) {
-    ScalarPair iter;
-    iter = equal_range(sub_map_[k].Begin(),sub_map_[k].End(),tmp_pix,
-		       Pixel::SuperPixelBasedOrder);
-    if (iter.first != iter.second) {
-      if (map_type_ == ScalarField) {
-	iter.first->AddToIntensity(object_weight, 0);
-	sub_map_[k].AddToIntensity(object_weight, 0);
-      } else {
-	iter.first->AddToIntensity(object_weight, 1);
-	sub_map_[k].AddToIntensity(object_weight, 1);
-      }
-      total_intensity_ += object_weight;
-      total_points_++;
-      added_point = true;
+  ScalarPair iter;
+  iter = equal_range(pix_.begin(), pix_.end(), tmp_pix, Pixel::LocalOrder);
+  if (iter.first != iter.second) {
+    if (map_type_ == ScalarField) {
+      iter.first->AddToIntensity(object_weight, 0);
+    } else {
+      iter.first->AddToIntensity(object_weight, 1);
     }
+    total_intensity_ += object_weight;
+    total_points_++;
+    added_point = true;
   }
 
   return added_point;
 }
 
 bool ScalarMap::AddToMap(WeightedAngularCoordinate& ang) {
-  ScalarPixel tmp_pix(ang,resolution_,ang.Weight());
+  ScalarPixel tmp_pix(ang, resolution_, ang.Weight());
   bool added_point = false;
-  uint32_t k = tmp_pix.Superpixnum();
 
-  if (sub_map_[k].Initialized()) {
-    ScalarPair iter;
-    iter = equal_range(sub_map_[k].Begin(),sub_map_[k].End(),tmp_pix,
-		       Pixel::SuperPixelBasedOrder);
-    if (iter.first != iter.second) {
-      if (map_type_ == ScalarField) {
-	iter.first->AddToIntensity(ang.Weight(), 0);
-	sub_map_[k].AddToIntensity(ang.Weight(), 0);
-      } else {
-	iter.first->AddToIntensity(ang.Weight(), 1);
-	sub_map_[k].AddToIntensity(ang.Weight(), 1);
-      }
-      total_intensity_ += ang.Weight();
-      total_points_++;
-      added_point = true;
+  ScalarPair iter;
+  iter = equal_range(pix_.begin(),pix_.end(),tmp_pix, Pixel::LocalOrder);
+  if (iter.first != iter.second) {
+    if (map_type_ == ScalarField) {
+      iter.first->AddToIntensity(ang.Weight(), 0);
+    } else {
+      iter.first->AddToIntensity(ang.Weight(), 1);
     }
+    total_intensity_ += ang.Weight();
+    total_points_++;
+    added_point = true;
   }
 
   return added_point;
 }
 
 bool ScalarMap::AddToMap(Pixel& pix) {
-  uint32_t k = pix.Superpixnum();
   bool added_pixel = false;
 
-  if (sub_map_[k].Initialized() && (pix.Resolution() <= resolution_) &&
-      (map_type_ == ScalarField)) {
-
+  if ((pix.Resolution() <= resolution_) && (map_type_ == ScalarField)) {
     PixelVector pixVec;
     pix.SubPix(resolution_, pixVec);
     for (PixelIterator pix_iter=pixVec.begin();
@@ -586,15 +434,13 @@ bool ScalarMap::AddToMap(Pixel& pix) {
 			  pix_iter->Resolution());
 
       ScalarPair iter;
-      iter = equal_range(sub_map_[k].Begin(),sub_map_[k].End(),tmp_pix,
-			 Pixel::SuperPixelBasedOrder);
+      iter = equal_range(pix_.begin(), pix_.end(), tmp_pix, Pixel::LocalOrder);
       if (iter.first != iter.second) {
 	iter.first->SetIntensity(pix.Weight());
-	sub_map_[k].AddToIntensity(pix.Weight());
-	sub_map_[k].SetNPoints(0);
 	total_intensity_ += pix.Weight();
       }
     }
+
     added_pixel = true;
   }
 
@@ -612,54 +458,29 @@ void ScalarMap::Coverage(PixelVector& superpix, uint32_t resolution,
     resolution = resolution_;
   }
 
-  if (resolution == HPixResolution) {
-    // If we're dealing with a coverage map at superpixel resolution (the
-    // default behavior), then this is easy.  Just iterate over the submaps
-    // and keep those that have been initialized.
-    for (uint32_t k=0;k<MaxSuperpixnum;k++) {
-      if (sub_map_[k].Initialized()) {
-	// We store the unmasked fraction of each superpixel in the weight
-	// value in case that's useful.
-	Pixel tmp_pix(HPixResolution, k,
-		      sub_map_[k].Area()/HPixArea);
-	superpix.push_back(tmp_pix);
-      }
-    }
-  } else {
-    for (uint32_t k=0;k<MaxSuperpixnum;k++) {
-      if (sub_map_[k].Initialized()) {
-	Pixel tmp_pix(HPixResolution, k, 1.0);
-
-	PixelVector sub_pix;
-	tmp_pix.SubPix(resolution, sub_pix);
-
-	for (PixelIterator iter=sub_pix.begin();iter!=sub_pix.end();++iter) {
-	  // For each of the pixels in the superpixel, we check its status
-	  // against the current map.  This is faster than finding the unmasked
-	  // fraction directly and immediately tells us which pixels we can
-	  // eliminate and which of those we do keep require further
-	  // calculations to find the unmasked fraction.
-	  int8_t unmasked_status = FindUnmaskedStatus(*iter);
-	  if (unmasked_status != 0) {
-	    if (calculate_fraction) {
-	      iter->SetWeight(FindUnmaskedFraction(*iter));
-	    } else {
-	      iter->SetWeight(1.0);
-	    }
-	    superpix.push_back(*iter);
-	  }
-	}
-      }
-    }
-    sort(superpix.begin(), superpix.end(), Pixel::SuperPixelBasedOrder);
+  std::map<uint32_t, bool> coverage_map;
+  for (ScalarIterator iter=pix_.begin(); iter != pix_.end(); ++iter) {
+    coverage_map[iter->SuperPix(resolution)] = true;
   }
+
+  for (std::map<uint32_t, bool>::iterator iter=coverage_map.begin();
+       iter != coverage_map.end(); ++iter) {
+    Pixel tmp_pix(resolution, iter->first, 1.0);
+
+    if (calculate_fraction) {
+      tmp_pix.SetWeight(FindUnmaskedFraction(tmp_pix));
+    }
+    superpix.push_back(tmp_pix);
+  }
+
+  sort(superpix.begin(), superpix.end(), Pixel::SuperPixelBasedOrder);
 }
 
 bool ScalarMap::Covering(Map& stomp_map, uint32_t maximum_pixels) {
   if (!stomp_map.Empty()) stomp_map.Clear();
 
   PixelVector pix;
-  Coverage(pix);
+  Coverage(pix, HPixResolution, false);
 
   bool met_pixel_requirement;
   if (pix.size() > maximum_pixels) {
@@ -698,35 +519,34 @@ int8_t ScalarMap::FindUnmaskedStatus(Pixel& pix) {
   // By default, there is no overlap between the map and the input pixel.
   int8_t unmasked_status = 0;
 
-  uint32_t k = pix.Superpixnum();
+  // We have three cases: the input pixel is at lower, equal or higher
+  // resolution.  The last two cases can be handled in the same code
+  // block since we're looking for matching pixels in our current set.  Note
+  // that the higher resolution case output doesn't exactly mean the same
+  // thing as it does in the Map class since the pixels in ScalarMaps all have
+  // an unmasked fraction which isn't necessarily 1.
+  if (pix.Resolution() >= resolution_) {
+    Pixel tmp_pix = pix;
+    tmp_pix.SetToSuperPix(resolution_);
 
-  if (sub_map_[k].Initialized()) {
-    // Provided that the input pixel is contained in a Superpixnum where we've
-    // got pixels, we have three cases: the input pixel is at lower, equal or
-    // higher resolution.  The last two cases can be handled in the same code
-    // block since we're looking for matching pixels in our current set.  Note
-    // that the higher resolution case output doesn't exactly mean the same
-    // thing as it does in the Map class since the pixels in ScalarMaps all have
-    // an unmasked fraction which isn't necessarily 1.
-    if (pix.Resolution() >= resolution_) {
-      Pixel tmp_pix = pix;
-      tmp_pix.SetToSuperPix(resolution_);
+    ScalarPair iter = equal_range(pix_.begin(), pix_.end(), tmp_pix,
+                                  Pixel::LocalOrder);
+    if (iter.first != iter.second) unmasked_status = 1;
+  }
 
-      ScalarPair iter = equal_range(sub_map_[k].Begin(),
-				    sub_map_[k].End(), tmp_pix,
-				    Pixel::SuperPixelBasedOrder);
-      if (iter.first != iter.second) unmasked_status = 1;
-    }
+  // If the input pixel is larger than the ScalarMap pixels, then we scan
+  // through the input pixel's sub-pixels, looking for matches.
+  if (pix.Resolution() < resolution_) {
+    PixelVector pixVec;
+    pix.SubPix(resolution_, pixVec);
 
-    // If the input pixel is larger than the ScalarMap pixels, then we scan
-    // through the pixels in the ScalarSubMap to see if any are contained in
-    // the input pixel.
-    if (pix.Resolution() < resolution_) {
-      ScalarIterator iter = sub_map_[k].Begin();
-
-      while (iter!=sub_map_[k].End() && unmasked_status == 0) {
-	if (pix.Contains(*iter)) unmasked_status = -1;
-	++iter;
+    for (uint32_t i=0; i < pixVec.size(); i++) {
+      ScalarPair iter;
+      iter = equal_range(pix_.begin(), pix_.end(), pixVec[i],
+                         Pixel::LocalOrder);
+      if (iter.first != iter.second) {
+        unmasked_status = -1;
+        break;
       }
     }
   }
@@ -743,7 +563,9 @@ double ScalarMap::FindUnmaskedFraction(Pixel& pix) {
 }
 
 void ScalarMap::Resample(ScalarPixel& pix) {
-  double unmasked_fraction = 0.0, total_intensity = 0.0;
+  // Default values if we don't have the input pixel in our ScalarMap.
+  double unmasked_fraction = 0.0;
+  double total_intensity = 0.0;
   double weighted_intensity = 0.0;
   uint32_t total_points = 0;
 
@@ -753,59 +575,34 @@ void ScalarMap::Resample(ScalarPixel& pix) {
     weighted_intensity = -1.0;
     total_points = 0;
   } else {
-    uint32_t k = pix.Superpixnum();
+    if (pix.Resolution() == resolution_) {
+      ScalarPixel tmp_pix(pix.PixelX(), pix.PixelY(), pix.Resolution());
 
-    if (sub_map_[k].Initialized()) {
-      if (pix.Resolution() == resolution_) {
-        ScalarPixel tmp_pix(pix.PixelX(),pix.PixelY(),pix.Resolution());
-
-        ScalarPair iter = equal_range(sub_map_[k].Begin(),
-				      sub_map_[k].End(),tmp_pix,
-				      Pixel::SuperPixelBasedOrder);
-        if (iter.first != iter.second) {
-          unmasked_fraction = iter.first->Weight();
-	  total_intensity = iter.first->Intensity();
-	  weighted_intensity = total_intensity*unmasked_fraction;
-	  total_points = iter.first->NPoints();
-        }
-      } else {
-        uint32_t y_min, y_max, x_min, x_max;
-        double pixel_fraction =
+      ScalarPair iter = equal_range(pix_.begin(), pix_.end(), tmp_pix,
+                                    Pixel::LocalOrder);
+      if (iter.first != iter.second) {
+        unmasked_fraction = iter.first->Weight();
+        total_intensity = iter.first->Intensity();
+        weighted_intensity = total_intensity*unmasked_fraction;
+        total_points = iter.first->NPoints();
+      }
+    } else {
+      double pixel_fraction =
 	  1.0*pix.Resolution()*pix.Resolution()/(resolution_*resolution_);
 
-        pix.SubPix(resolution_,x_min,x_max,y_min,y_max);
+      PixelVector pixVec;
+      pix.SubPix(resolution_, pixVec);
 
-        for (uint32_t y=y_min;y<=y_max;y++) {
-          Pixel tmp_left(x_min,y,resolution_);
-          Pixel tmp_right(x_max,y,resolution_);
-
-          // Ok, we know that tmp_left and tmp_right are in the
-          // same superpixel so we can use strict order to make sure
-          // that we don't go past tmp_right.
-          if (tmp_right.HPixnum() >= sub_map_[k].Begin()->HPixnum()) {
-            while (tmp_left.HPixnum() < sub_map_[k].Begin()->HPixnum())
-              tmp_left.Iterate();
-
-            ScalarIterator iter =
-	      lower_bound(sub_map_[k].Begin(),sub_map_[k].End(),tmp_left,
-			  Pixel::SuperPixelBasedOrder);
-            if (iter != sub_map_[k].End()) {
-              while (iter->PixelY() < y) ++iter;
-
-              while (iter != sub_map_[k].End()) {
-                if (iter->HPixnum() <= tmp_right.HPixnum()) {
-                  unmasked_fraction += pixel_fraction*iter->Weight();
-		  total_intensity += iter->Intensity();
-		  weighted_intensity +=
-		    iter->Intensity()*pixel_fraction*iter->Weight();
-		  total_points += iter->NPoints();
-                  ++iter;
-                } else {
-                  iter = sub_map_[k].End();
-                }
-              }
-            }
-          }
+      for (uint32_t i=0; i < pixVec.size(); i++) {
+        ScalarPair iter;
+        iter = equal_range(pix_.begin(), pix_.end(), pixVec[i],
+                           Pixel::LocalOrder);
+        if (iter.first != iter.second) {
+          unmasked_fraction += pixel_fraction*iter.first->Weight();
+          total_intensity += iter.first->Intensity();
+          weighted_intensity +=
+              iter.first->Intensity()*pixel_fraction*iter.first->Weight();
+          total_points += iter.first->NPoints();
         }
       }
     }
@@ -821,7 +618,7 @@ void ScalarMap::Resample(ScalarPixel& pix) {
     if (converted_to_overdensity_) {
       if (map_type_ == DensityField) {
 	weighted_intensity =
-	  weighted_intensity*mean_intensity_ + mean_intensity_;
+            weighted_intensity*mean_intensity_ + mean_intensity_;
       } else {
 	weighted_intensity += mean_intensity_;
       }
@@ -1270,98 +1067,29 @@ void ScalarMap::AutoCorrelate(ThetaIterator theta_iter) {
 
   theta_iter->ResetPixelWtheta();
 
-  uint32_t y_min, y_max, k;
-  std::vector<uint32_t> x_min, x_max;
-  ScalarIterator iter;
-  ScalarPixel tmp_left, tmp_right;
-  double costheta = 0.0;
-  double theta = theta_iter->ThetaMax();
-  tmp_left.SetResolution(resolution_);
-  tmp_right.SetResolution(resolution_);
-
   for (ScalarIterator map_iter=pix_.begin();
        map_iter!=pix_.end();++map_iter) {
-    map_iter->XYBounds(theta,x_min,x_max,y_min,y_max,true);
+    // From a readability standpoint, the simplest thing to do is to
+    // use the Pixel.WithinAnnulus method to get a vector of pixel
+    // candidates and then check each in turn.  This isn't the fastest thing
+    // we could do (probably), but it is easy to read.
+    ScalarVector pixVec;
+    map_iter->_WithinAnnulus(*theta_iter, pixVec);
 
-    for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
-      tmp_left.SetPixnumFromXY(x_min[n],y);
-      tmp_right.SetPixnumFromXY(x_max[n],y);
-      k = tmp_left.Superpixnum();
-
-      if (Pixel::SuperPixelBasedOrder(*map_iter,tmp_right)) {
-	if (tmp_left.Superpixnum() != tmp_right.Superpixnum()) {
-
-	  // This is the same schema for iterating through the bounding
-	  // pixels as in FindLocalArea and FindLocalDensity.
-	  while (k != tmp_right.Superpixnum()) {
-	    if (sub_map_[k].Initialized()) {
-	      if (sub_map_[k].Begin()->PixelY() <= y) {
-		iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(),
-				   tmp_left,
-				   Pixel::SuperPixelBasedOrder);
-		while ((iter->PixelY() == y) &&
-		       (iter != sub_map_[k].End())) {
-		  if (Pixel::SuperPixelBasedOrder(*map_iter,*iter)) {
-		    costheta =
-		      map_iter->UnitSphereX()*iter->UnitSphereX() +
-		      map_iter->UnitSphereY()*iter->UnitSphereY() +
-		      map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		    if (theta_iter->WithinCosBounds(costheta)) {
-		      theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-						   map_iter->Weight()*
-						   iter->Intensity()*
-						   iter->Weight(),
-						   map_iter->Weight()*
-						   iter->Weight());
-		    }
-		  }
-		  ++iter;
-		}
-	      }
-	      tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-	      tmp_left.Iterate();
-	      k = tmp_left.Superpixnum();
-	    } else {
-	      while (!sub_map_[k].Initialized() &&
-		     k != tmp_right.Superpixnum()) {
-		tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-		tmp_left.Iterate();
-		k = tmp_left.Superpixnum();
-	      }
-	    }
-	  }
-	}
-
-	if (sub_map_[k].Initialized()) {
-	  if (Pixel::SuperPixelBasedOrder(*sub_map_[k].Begin(),
-					       tmp_left) ||
-	      Pixel::PixelMatch(*sub_map_[k].Begin(),tmp_left)) {
-	    iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(),
-			       tmp_left,
-			       Pixel::SuperPixelBasedOrder);
-	    while (iter != sub_map_[k].End()) {
-	      if (Pixel::SuperPixelBasedOrder(*iter,tmp_right)) {
-		if (Pixel::SuperPixelBasedOrder(*map_iter,*iter)) {
-		  costheta =
-		    map_iter->UnitSphereX()*iter->UnitSphereX() +
-		    map_iter->UnitSphereY()*iter->UnitSphereY() +
-		    map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		  if (theta_iter->WithinCosBounds(costheta)) {
-		    theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-						 map_iter->Weight()*
-						 iter->Intensity()*
-						 iter->Weight(),
-						 map_iter->Weight()*
-						 iter->Weight());
-		  }
-		}
-		++iter;
-	      } else {
-		iter = sub_map_[k].End();
-	      }
-	    }
-	  }
-	}
+    for (ScalarIterator pix_iter=pixVec.begin();
+         pix_iter!=pixVec.end();++pix_iter) {
+      // We can skip all pixels that preceed our current pixel since the
+      // products would be the same.  This keeps us from double counting and
+      // saves some time.
+      if (Pixel::LocalOrder(*map_iter, *pix_iter)) {
+        ScalarPair iter = equal_range(map_iter, pix_.end(), *pix_iter,
+                                      Pixel::LocalOrder);
+        if (iter.first != iter.second) {
+          theta_iter->AddToPixelWtheta(map_iter->Intensity()*map_iter->Weight()*
+                                       iter.first->Intensity()*
+                                       iter.first->Weight(),
+                                       map_iter->Weight()*iter.first->Weight());
+        }
       }
     }
   }
@@ -1405,109 +1133,33 @@ void ScalarMap::AutoCorrelateWithRegions(ThetaIterator theta_iter) {
 
   theta_iter->ResetPixelWtheta();
 
-  uint32_t y_min, y_max, k;
-  uint32_t map_region, pix_region;
-  std::vector<uint32_t> x_min, x_max;
-  ScalarIterator iter;
-  ScalarPixel tmp_left, tmp_right;
-  double costheta = 0.0;
-  double theta = theta_iter->ThetaMax();
-  tmp_left.SetResolution(resolution_);
-  tmp_right.SetResolution(resolution_);
-
+  // Same as the method without the regions, we just need to keep track of
+  // the region values for the two pixels involved.
   for (ScalarIterator map_iter=pix_.begin();
        map_iter!=pix_.end();++map_iter) {
-    map_iter->XYBounds(theta,x_min,x_max,y_min,y_max,true);
-    map_region = Region(map_iter->SuperPix(RegionResolution()));
+    uint32_t map_region = Region(map_iter->SuperPix(RegionResolution()));
 
-    for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
-      tmp_left.SetPixnumFromXY(x_min[n],y);
-      tmp_right.SetPixnumFromXY(x_max[n],y);
-      k = tmp_left.Superpixnum();
+    ScalarVector pixVec;
+    map_iter->_WithinAnnulus(*theta_iter, pixVec);
 
-      if (Pixel::SuperPixelBasedOrder(*map_iter,tmp_right)) {
-	if (tmp_left.Superpixnum() != tmp_right.Superpixnum()) {
-
-	  // This is the same schema for iterating through the bounding
-	  // pixels as in FindLocalArea and FindLocalDensity.
-	  while (k != tmp_right.Superpixnum()) {
-	    if (sub_map_[k].Initialized()) {
-	      if (sub_map_[k].Begin()->PixelY() <= y) {
-		iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(),
-				   tmp_left,
-				   Pixel::SuperPixelBasedOrder);
-		while ((iter->PixelY() == y) &&
-		       (iter != sub_map_[k].End())) {
-		  if (Pixel::SuperPixelBasedOrder(*map_iter,*iter)) {
-		    costheta =
-		      map_iter->UnitSphereX()*iter->UnitSphereX() +
-		      map_iter->UnitSphereY()*iter->UnitSphereY() +
-		      map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		    if (theta_iter->WithinCosBounds(costheta)) {
-		      pix_region =
-			Region(iter->SuperPix(RegionResolution()));
-		      theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-						   map_iter->Weight()*
-						   iter->Intensity()*
-						   iter->Weight(),
-						   map_iter->Weight()*
-						   iter->Weight(),
-						   map_region, pix_region);
-		    }
-		  }
-		  ++iter;
-		}
-	      }
-	      tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-	      tmp_left.Iterate();
-	      k = tmp_left.Superpixnum();
-	    } else {
-	      while (!sub_map_[k].Initialized() &&
-		     k != tmp_right.Superpixnum()) {
-		tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-		tmp_left.Iterate();
-		k = tmp_left.Superpixnum();
-	      }
-	    }
-	  }
-	}
-
-	if (sub_map_[k].Initialized()) {
-	  if (Pixel::SuperPixelBasedOrder(*sub_map_[k].Begin(),
-					       tmp_left) ||
-	      Pixel::PixelMatch(*sub_map_[k].Begin(),tmp_left)) {
-	    iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(),
-			       tmp_left,
-			       Pixel::SuperPixelBasedOrder);
-	    while (iter != sub_map_[k].End()) {
-	      if (Pixel::SuperPixelBasedOrder(*iter,tmp_right)) {
-		if (Pixel::SuperPixelBasedOrder(*map_iter,*iter)) {
-		  costheta =
-		    map_iter->UnitSphereX()*iter->UnitSphereX() +
-		    map_iter->UnitSphereY()*iter->UnitSphereY() +
-		    map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		  if (theta_iter->WithinCosBounds(costheta)) {
-		    pix_region =
-		      Region(iter->SuperPix(RegionResolution()));
-		    theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-						 map_iter->Weight()*
-						 iter->Intensity()*
-						 iter->Weight(),
-						 map_iter->Weight()*
-						 iter->Weight(),
-						 map_region, pix_region);
-		  }
-		}
-		++iter;
-	      } else {
-		iter = sub_map_[k].End();
-	      }
-	    }
-	  }
-	}
+    for (ScalarIterator pix_iter=pixVec.begin();
+         pix_iter!=pixVec.end();++pix_iter) {
+      if (Pixel::LocalOrder(*map_iter, *pix_iter)) {
+        ScalarPair iter = equal_range(map_iter, pix_.end(), *pix_iter,
+                                      Pixel::LocalOrder);
+        if (iter.first != iter.second) {
+          uint32_t pix_region =
+              Region(iter.first->SuperPix(RegionResolution()));
+          theta_iter->AddToPixelWtheta(map_iter->Intensity()*map_iter->Weight()*
+                                       iter.first->Intensity()*
+                                       iter.first->Weight(),
+                                       map_iter->Weight()*iter.first->Weight(),
+                                       map_region, pix_region);
+        }
       }
     }
   }
+
   if (convert_back_to_raw) ConvertFromOverDensity();
 }
 
@@ -1563,88 +1215,24 @@ void ScalarMap::CrossCorrelate(ScalarMap& scalar_map,
 
   theta_iter->ResetPixelWtheta();
 
-  uint32_t y_min, y_max, x_min, x_max, k;
-  double costheta = 0.0;
-  double theta = theta_iter->ThetaMax();
-  ScalarIterator iter;
-  ScalarPixel tmp_left, tmp_right;
-  tmp_left.SetResolution(resolution_);
-  tmp_right.SetResolution(resolution_);
-
+  // Same as the auto-correlation case, although this time we're iterating
+  // over the pixels in the input ScalarMap.  We also don't exclude pixels
+  // if their LocalOrder puts them before our input ScalarMap's pixel since
+  // double-counting isn't an issue.
   for (ScalarIterator map_iter=scalar_map.Begin();
        map_iter!=scalar_map.End();++map_iter) {
-    map_iter->XYBounds(theta, x_min, x_max, y_min, y_max, true);
+    ScalarVector pixVec;
+    map_iter->_WithinAnnulus(*theta_iter, pixVec);
 
-    for (uint32_t y=y_min;y<=y_max;y++) {
-      tmp_left.SetPixnumFromXY(x_min,y);
-      tmp_right.SetPixnumFromXY(x_max,y);
-      k = tmp_left.Superpixnum();
-
-      if (tmp_left.Superpixnum() != tmp_right.Superpixnum()) {
-
-	// This is the same schema for iterating through the bounding
-	// pixels as in FindLocalArea and FindLocalDensity.
-
-	while (k != tmp_right.Superpixnum()) {
-	  if (sub_map_[k].Initialized()) {
-	    if (sub_map_[k].Begin()->PixelY() <= y) {
-	      iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(),tmp_left,
-				 Pixel::SuperPixelBasedOrder);
-	      while ((iter->PixelY() == y) &&
-		     (iter != sub_map_[k].End())) {
-		costheta =
-		  map_iter->UnitSphereX()*iter->UnitSphereX() +
-		  map_iter->UnitSphereY()*iter->UnitSphereY() +
-		  map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		if (theta_iter->WithinCosBounds(costheta))
-		  theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-					       map_iter->Weight()*
-					       iter->Intensity()*
-					       iter->Weight(),
-					       map_iter->Weight()*
-					       iter->Weight());
-		++iter;
-	      }
-	    }
-	    tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-	    tmp_left.Iterate();
-	    k = tmp_left.Superpixnum();
-	  } else {
-	    while (!sub_map_[k].Initialized() &&
-		   k != tmp_right.Superpixnum()) {
-	      tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-	      tmp_left.Iterate();
-	      k = tmp_left.Superpixnum();
-	    }
-	  }
-	}
-
-	if (sub_map_[k].Initialized()) {
-	  if (Pixel::SuperPixelBasedOrder(*sub_map_[k].Begin(),
-					  tmp_left) ||
-	      Pixel::PixelMatch(*sub_map_[k].Begin(),tmp_left)) {
-	    iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(), tmp_left,
-			       Pixel::SuperPixelBasedOrder);
-	    while (iter != sub_map_[k].End()) {
-	      if (Pixel::SuperPixelBasedOrder(*iter,tmp_right)) {
-		costheta =
-		  map_iter->UnitSphereX()*iter->UnitSphereX() +
-		  map_iter->UnitSphereY()*iter->UnitSphereY() +
-		  map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		if (theta_iter->WithinCosBounds(costheta))
-		  theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-					       map_iter->Weight()*
-					       iter->Intensity()*
-					       iter->Weight(),
-					       map_iter->Weight()*
-					       iter->Weight());
-		++iter;
-	      } else {
-		iter = sub_map_[k].End();
-	      }
-	    }
-	  }
-	}
+    for (ScalarIterator pix_iter=pixVec.begin();
+         pix_iter!=pixVec.end();++pix_iter) {
+      ScalarPair iter = equal_range(pix_.begin(), pix_.end(), *pix_iter,
+                                    Pixel::LocalOrder);
+      if (iter.first != iter.second) {
+        theta_iter->AddToPixelWtheta(map_iter->Intensity()*map_iter->Weight()*
+                                     iter.first->Intensity()*
+                                     iter.first->Weight(),
+                                     map_iter->Weight()*iter.first->Weight());
       }
     }
   }
@@ -1716,98 +1304,27 @@ void ScalarMap::CrossCorrelateWithRegions(ScalarMap& scalar_map,
 
   theta_iter->ResetPixelWtheta();
 
-  uint32_t y_min, y_max, x_min, x_max, k;
-  uint32_t map_region, pix_region;
-  double costheta = 0.0;
-  double theta = theta_iter->ThetaMax();
-  ScalarIterator iter;
-  ScalarPixel tmp_left, tmp_right;
-  tmp_left.SetResolution(resolution_);
-  tmp_right.SetResolution(resolution_);
-
+  // Same as the method without the regions, we just need to keep track of
+  // the region values for the two pixels involved.
   for (ScalarIterator map_iter=scalar_map.Begin();
        map_iter!=scalar_map.End();++map_iter) {
-    map_iter->XYBounds(theta, x_min, x_max, y_min, y_max, true);
-    map_region = Region(map_iter->SuperPix(RegionResolution()));
+    int16_t map_region = Region(map_iter->SuperPix(RegionResolution()));
 
-    for (uint32_t y=y_min;y<=y_max;y++) {
-      tmp_left.SetPixnumFromXY(x_min,y);
-      tmp_right.SetPixnumFromXY(x_max,y);
-      k = tmp_left.Superpixnum();
+    ScalarVector pixVec;
+    map_iter->_WithinAnnulus(*theta_iter, pixVec);
 
-      if (tmp_left.Superpixnum() != tmp_right.Superpixnum()) {
-
-	// This is the same schema for iterating through the bounding
-	// pixels as in FindLocalArea and FindLocalDensity.
-
-	while (k != tmp_right.Superpixnum()) {
-	  if (sub_map_[k].Initialized()) {
-	    if (sub_map_[k].Begin()->PixelY() <= y) {
-	      iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(),tmp_left,
-				 Pixel::SuperPixelBasedOrder);
-	      while ((iter->PixelY() == y) &&
-		     (iter != sub_map_[k].End())) {
-		costheta =
-		  map_iter->UnitSphereX()*iter->UnitSphereX() +
-		  map_iter->UnitSphereY()*iter->UnitSphereY() +
-		  map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		if (theta_iter->WithinCosBounds(costheta)) {
-		  pix_region =
-		    Region(iter->SuperPix(RegionResolution()));
-		  theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-					       map_iter->Weight()*
-					       iter->Intensity()*
-					       iter->Weight(),
-					       map_iter->Weight()*
-					       iter->Weight(),
-					       map_region, pix_region);
-		}
-		++iter;
-	      }
-	    }
-	    tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-	    tmp_left.Iterate();
-	    k = tmp_left.Superpixnum();
-	  } else {
-	    while (!sub_map_[k].Initialized() &&
-		   k != tmp_right.Superpixnum()) {
-	      tmp_left.SetPixnumFromXY(tmp_left.PixelX1()-1,y);
-	      tmp_left.Iterate();
-	      k = tmp_left.Superpixnum();
-	    }
-	  }
-	}
-
-	if (sub_map_[k].Initialized()) {
-	  if (Pixel::SuperPixelBasedOrder(*sub_map_[k].Begin(),
-					       tmp_left) ||
-	      Pixel::PixelMatch(*sub_map_[k].Begin(),tmp_left)) {
-	    iter = lower_bound(sub_map_[k].Begin(),sub_map_[k].End(), tmp_left,
-			       Pixel::SuperPixelBasedOrder);
-	    while (iter != sub_map_[k].End()) {
-	      if (Pixel::SuperPixelBasedOrder(*iter,tmp_right)) {
-		costheta =
-		  map_iter->UnitSphereX()*iter->UnitSphereX() +
-		  map_iter->UnitSphereY()*iter->UnitSphereY() +
-		  map_iter->UnitSphereZ()*iter->UnitSphereZ();
-		if (theta_iter->WithinCosBounds(costheta)) {
-		  pix_region =
-		    Region(iter->SuperPix(RegionResolution()));
-		  theta_iter->AddToPixelWtheta(map_iter->Intensity()*
-					       map_iter->Weight()*
-					       iter->Intensity()*
-					       iter->Weight(),
-					       map_iter->Weight()*
-					       iter->Weight(),
-					       map_region, pix_region);
-		}
-		++iter;
-	      } else {
-		iter = sub_map_[k].End();
-	      }
-	    }
-	  }
-	}
+    for (ScalarIterator pix_iter=pixVec.begin();
+         pix_iter!=pixVec.end();++pix_iter) {
+      ScalarPair iter = equal_range(pix_.begin(), pix_.end(), *pix_iter,
+                                    Pixel::LocalOrder);
+      if (iter.first != iter.second) {
+        int16_t pix_region =
+            Region(iter.first->SuperPix(RegionResolution()));
+        theta_iter->AddToPixelWtheta(map_iter->Intensity()*map_iter->Weight()*
+                                     iter.first->Intensity()*
+                                     iter.first->Weight(),
+                                     map_iter->Weight()*iter.first->Weight(),
+                                     map_region, pix_region);
       }
     }
   }
@@ -1863,7 +1380,7 @@ double ScalarMap::Covariance(ScalarMap& scalar_map) {
   for (ScalarIterator map_iter=scalar_map.Begin();
        map_iter!=scalar_map.End();++map_iter) {
     ScalarPair iter = equal_range(search_begin, pix_.end(), *map_iter,
-				  Pixel::SuperPixelBasedOrder);
+				  Pixel::LocalOrder);
     if (iter.first != iter.second) {
       covariance +=
 	iter.first->Intensity()*iter.first->Weight()*
@@ -1969,7 +1486,7 @@ void ScalarMap::CovarianceWithErrors(ScalarMap& scalar_map, double& covariance,
   for (ScalarIterator map_iter=scalar_map.Begin();
        map_iter!=scalar_map.End();++map_iter) {
     ScalarPair iter = equal_range(search_begin, pix_.end(), *map_iter,
-				  Pixel::SuperPixelBasedOrder);
+				  Pixel::LocalOrder);
     if (iter.first != iter.second) {
       int16_t pix_region = Region(map_iter->SuperPix(RegionResolution()));
       region_covariance[pix_region] +=
@@ -2015,58 +1532,32 @@ double ScalarMap::Intensity() {
   return total_intensity_;
 }
 
-double ScalarMap::Intensity(uint32_t superpixnum) {
-  return sub_map_[superpixnum].Intensity();
-}
-
 int ScalarMap::NPoints() {
   return total_points_;
-}
-
-int ScalarMap::NPoints(uint32_t superpixnum) {
-  return sub_map_[superpixnum].NPoints();
 }
 
 double ScalarMap::Density() {
   return total_intensity_/area_;
 }
 
-double ScalarMap::Density(uint32_t superpixnum) {
-  return sub_map_[superpixnum].Density();
-}
-
 double ScalarMap::PointDensity() {
   return 1.0*total_points_/area_;
 }
 
-double ScalarMap::PointDensity(uint32_t superpixnum) {
-  return sub_map_[superpixnum].PointDensity();
+ScalarIterator ScalarMap::Begin() {
+  return pix_.begin();
 }
 
-ScalarIterator ScalarMap::Begin(uint32_t superpixnum) {
-  return (superpixnum < MaxSuperpixnum ?
-	  sub_map_[superpixnum].Begin() : pix_.begin());
-}
-
-ScalarIterator ScalarMap::End(uint32_t superpixnum) {
-  return (superpixnum < MaxSuperpixnum ?
-	  sub_map_[superpixnum].End() : pix_.end());
+ScalarIterator ScalarMap::End() {
+  return pix_.end();
 }
 
 double ScalarMap::Area() {
   return area_;
 }
 
-double ScalarMap::Area(uint32_t superpixnum) {
-  return sub_map_[superpixnum].Area();
-}
-
 uint32_t ScalarMap::Size() {
   return pix_.size();
-}
-
-uint32_t ScalarMap::Size(uint32_t superpixnum) {
-  return sub_map_[superpixnum].Size();
 }
 
 uint32_t ScalarMap::MinResolution() {
@@ -2096,7 +1587,6 @@ void ScalarMap::Clear() {
   mean_intensity_ = 0.0;
   total_intensity_ = 0.0;
   if (!pix_.empty()) pix_.clear();
-  if (!sub_map_.empty()) sub_map_.clear();
   converted_to_overdensity_ = false;
   calculated_mean_intensity_ = false;
   ClearRegions();

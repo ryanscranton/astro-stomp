@@ -18,12 +18,16 @@
 
 #include "stomp_core.h"
 #include "stomp_scalar_pixel.h"
+#include "stomp_angular_bin.h"
 
 namespace Stomp {
 
 ScalarPixel::ScalarPixel() {
   intensity_ = 0.0;
   n_point_ = 0;
+  unit_sphere_x_ = -1.0*sin(Lambda()*DegToRad);
+  unit_sphere_y_ = cos(Lambda()*DegToRad)*cos(Eta()*DegToRad+EtaPole);
+  unit_sphere_z_ = cos(Lambda()*DegToRad)*sin(Eta()*DegToRad+EtaPole);
 }
 
 ScalarPixel::ScalarPixel(const uint32_t input_resolution,
@@ -40,6 +44,9 @@ ScalarPixel::ScalarPixel(const uint32_t input_resolution,
   SetWeight(input_weight);
   intensity_ = input_intensity;
   n_point_ = n_point;
+  unit_sphere_x_ = -1.0*sin(Lambda()*DegToRad);
+  unit_sphere_y_ = cos(Lambda()*DegToRad)*cos(Eta()*DegToRad+EtaPole);
+  unit_sphere_z_ = cos(Lambda()*DegToRad)*sin(Eta()*DegToRad+EtaPole);
 }
 
 ScalarPixel::ScalarPixel(const uint32_t input_x,
@@ -53,6 +60,9 @@ ScalarPixel::ScalarPixel(const uint32_t input_x,
   SetWeight(input_weight);
   intensity_ = input_intensity;
   n_point_ = n_point;
+  unit_sphere_x_ = -1.0*sin(Lambda()*DegToRad);
+  unit_sphere_y_ = cos(Lambda()*DegToRad)*cos(Eta()*DegToRad+EtaPole);
+  unit_sphere_z_ = cos(Lambda()*DegToRad)*sin(Eta()*DegToRad+EtaPole);
 }
 
 ScalarPixel::ScalarPixel(AngularCoordinate& ang,
@@ -66,6 +76,9 @@ ScalarPixel::ScalarPixel(AngularCoordinate& ang,
   SetWeight(input_weight);
   intensity_ = input_intensity;
   n_point_ = n_point;
+  unit_sphere_x_ = -1.0*sin(Lambda()*DegToRad);
+  unit_sphere_y_ = cos(Lambda()*DegToRad)*cos(Eta()*DegToRad+EtaPole);
+  unit_sphere_z_ = cos(Lambda()*DegToRad)*sin(Eta()*DegToRad+EtaPole);
 }
 
 ScalarPixel::~ScalarPixel() {
@@ -129,6 +142,49 @@ void ScalarPixel::ConvertFromFractionalOverDensity(double expected_intensity) {
   double norm_intensity = expected_intensity*Weight()*Area();
   intensity_ = intensity_*norm_intensity + norm_intensity;
   is_overdensity_ = false;
+}
+
+void ScalarPixel::_WithinAnnulus(AngularBin& theta, ScalarVector& pix) {
+  if (!pix.empty()) pix.clear();
+
+  uint32_t y_min;
+  uint32_t y_max;
+  std::vector<uint32_t> x_min;
+  std::vector<uint32_t> x_max;
+
+  XYBounds(theta.ThetaMax(), x_min, x_max, y_min, y_max, false);
+
+  uint32_t nx = Nx0*Resolution();
+  uint32_t nx_pix;
+  for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
+    if ((x_max[n] < x_min[n]) && (x_min[n] > nx/2)) {
+      nx_pix = nx - x_min[n] + x_max[n] + 1;
+    } else {
+      nx_pix = x_max[n] - x_min[n] + 1;
+    }
+    if (nx_pix > nx) nx_pix = nx;
+    for (uint32_t m=0,x=x_min[n];m<nx_pix;m++,x++) {
+      if (x == nx) x = 0;
+      ScalarPixel tmp_pix(x, y, Resolution());
+      if (theta.WithinCosBounds(UnitSphereX()*tmp_pix.UnitSphereX() +
+                                UnitSphereY()*tmp_pix.UnitSphereY() +
+                                UnitSphereZ()*tmp_pix.UnitSphereZ())) {
+        pix.push_back(tmp_pix);
+      }
+    }
+  }
+}
+
+double ScalarPixel::UnitSphereX() {
+  return unit_sphere_x_;
+}
+
+double ScalarPixel::UnitSphereY() {
+  return unit_sphere_y_;
+}
+
+double ScalarPixel::UnitSphereZ() {
+  return unit_sphere_z_;
 }
 
 bool ScalarPixel::IsOverDensity() {
