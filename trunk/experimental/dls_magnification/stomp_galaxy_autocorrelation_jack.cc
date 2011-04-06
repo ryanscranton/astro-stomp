@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
 
 	if ((prob >= FLAGS_prob_min) && (prob <= FLAGS_prob_max) &&
 	    (mag >= FLAGS_mag_min) && (mag <= FLAGS_mag_max) &&
-	    (stomp_map->FindLocation(tmp_ang,weight))) galaxy.push_back(tmp_ang);
+	    (stomp_map->FindLocation(tmp_ang,prob))) galaxy.push_back(tmp_ang);
 	n_galaxy++;
       }
     }
@@ -133,15 +133,14 @@ int main(int argc, char **argv) {
   // modify all of the high-resolution bins so that they use the pair-based
   // estimator.
   if (FLAGS_maximum_resolution == -1) {
-    FLAGS_maximum_resolution = 512;
-    if (n_galaxy < 2000000) FLAGS_maximum_resolution = 128;
-    if ((n_galaxy > 2000000) && (n_galaxy < 10000000))
-      FLAGS_maximum_resolution = 256;
+    wtheta.AutoMaxResolution(static_cast<uint32_t>(n_galaxy), 
+			     stomp_map->Area());
   }
-
-  std::cout << "Setting maximum resolution to " <<
-    FLAGS_maximum_resolution << "...\n";
-  wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+  else {
+    std::cout << "Setting maximum resolution to " <<
+      static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
+    wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+  }
 
   // Now we use the regions version of the auto-correlation code to find our
   // result.

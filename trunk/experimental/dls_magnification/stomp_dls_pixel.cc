@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 	}
 	//Stomp::GeometricBound* bound;
 	//if (type == 1) {
-	Stomp::PolygonBound bound = new Stomp::PolygonBound(ang);
+	Stomp::PolygonBound* bound = new Stomp::PolygonBound(ang);
 	  //}
 	//else {
 	//  bound = 

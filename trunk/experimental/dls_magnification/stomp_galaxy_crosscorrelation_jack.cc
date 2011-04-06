@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
   std::ifstream galaxy_file_b(FLAGS_galaxy_file_b.c_str());
   double theta, phi, prob, mag, weight;
   
-  prob = 1.0;
+  #prob = 1.0;
   mag = 0.5*(FLAGS_mag_max_a + FLAGS_mag_min_a);
   
   while (!galaxy_file_a.eof()) {
@@ -123,6 +123,7 @@ int main(int argc, char **argv) {
   n_galaxy_a = galaxy_a.size();
   galaxy_a.resize(n_galaxy_a);
 
+  prob =1.0;
   mag = 0.5*(FLAGS_mag_max_b + FLAGS_mag_min_b);
 
   while (!galaxy_file_b.eof()) {
@@ -166,7 +167,9 @@ int main(int argc, char **argv) {
   // Now we use the regions version of the auto-correlation code to find our
   // result.
   if (FLAGS_maximum_resolution == -1) {
-    wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*n_galaxy_b)), stomp_map->Area());
+    wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*
+							n_galaxy_b)), 
+			     stomp_map->Area());
   }
   else {
     std::cout << "Setting maximum resolution to " <<

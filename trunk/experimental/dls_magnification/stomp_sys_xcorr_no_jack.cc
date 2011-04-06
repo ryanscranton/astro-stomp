@@ -134,14 +134,14 @@ int main(int argc, char **argv) {
   // We need some constraints from our angular binning, so we'll make a
   // single AngularCorrelation object at the outset.  If we do the galaxy
   // auto-correlation, then we'll use the object for that calculation.
-  Stomp::AngularCorrelation wtheta(FLAGS_theta_min, FLAGS_theta_max,
+  Stomp::AngularCorrelation gal_xcorr(FLAGS_theta_min, FLAGS_theta_max,
 				   FLAGS_n_bins_per_decade);
  
 
   // Now, read in the galaxy map.  We only want to keep those pixels that match
   // the ones that passed through our systematics cuts.
   Stomp::ScalarMap* galaxy_map =
-    LoadGalaxyData(keep_map, wtheta.MinResolution());
+    LoadGalaxyData(keep_map, gal_xcorr.MinResolution());
 
   // Set up the file name suffix that specifies our systematics cuts.
   std::ostringstream output_suffix;
@@ -154,14 +154,18 @@ int main(int argc, char **argv) {
 
   // First, handle the galaxy auto-correlation case
   if (FLAGS_galaxy_galaxy) {
-    AutoCorrelateGalaxies(galaxy_map, wtheta);
+    AutoCorrelateGalaxies(galaxy_map, gal_xcorr);
 
     // And write out the results...
     std::string output_file_name =
       "MeanWthetaSys_gal-gal_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
 
-    wtheta.Write(output_file_name);
+    for (Stomp::ThetaIterator iter=gal_xcorr.Begin();
+	 iter!=gal_xcorr.End();++iter) {
+      std::cout << iter->Resolution() << "\n";
+    }
+    gal_xcorr.Write(output_file_name);
   }
 
   // Galaxy-Seeing
@@ -175,6 +179,10 @@ int main(int argc, char **argv) {
     std::string output_file_name =
       "MeanWthetaSys_gal-see_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
+    for (Stomp::ThetaIterator iter=xcorr_seeing.Begin();
+	 iter!=xcorr_seeing.End();++iter) {
+      std::cout << iter->Resolution() << "\n";
+    }
 
     xcorr_seeing.Write(output_file_name);
   }
@@ -190,6 +198,10 @@ int main(int argc, char **argv) {
     std::string output_file_name =
       "MeanWthetaSys_gal-ext_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
+    for (Stomp::ThetaIterator iter=xcorr_extinction.Begin();
+	 iter!=xcorr_extinction.End();++iter) {
+      std::cout << iter->Resolution() << "\n";
+    }
 
     xcorr_extinction.Write(output_file_name);
   }
@@ -205,6 +217,10 @@ int main(int argc, char **argv) {
     std::string output_file_name =
       "MeanWthetaSys_gal-sky_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
+    for (Stomp::ThetaIterator iter=xcorr_sky.Begin();
+	 iter!=xcorr_sky.End();++iter) {
+      std::cout << iter->Resolution() << "\n";
+    }
 
     xcorr_sky.Write(output_file_name);
   }
@@ -220,6 +236,10 @@ int main(int argc, char **argv) {
     std::string output_file_name =
       "MeanWthetaSys_gal-odds_" + FLAGS_output_tag + output_suffix.str();
     std::cout << "Writing results to " << output_file_name << "...\n";
+    for (Stomp::ThetaIterator iter=xcorr_odds.Begin();
+	 iter!=xcorr_odds.End();++iter) {
+      std::cout << iter->Resolution() << "\n";
+    }
 
     xcorr_odds.Write(output_file_name);
   }
@@ -331,13 +351,9 @@ Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
     gal_file >> ra >> dec >> weight >> mag;
     
     Stomp::AngularCoordinate ang(ra, dec, Stomp::AngularCoordinate::Equatorial);
-    galaxy_map->AddToMap(ang,1);
-    //Stomp::Pixel pix(ang, FLAGS_galmap_resolution, 1);
-    //keep_iter = keep_map.find(pix.Pixnum());
-    //if (keep_iter != keep_map.end()) {
-    //  galaxy_map->AddToMap(pix);
-    n_galaxies++;
-      //}
+    if (galaxy_map->AddToMap(ang,1)) {
+      n_galaxies++;
+    }
   }
   gal_file.close();
   if (!FLAGS_gal_map_output.empty()) {
@@ -466,6 +482,10 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
     new Stomp::ScalarMap(sys_pix, Stomp::ScalarMap::ScalarField);
   sys_pix.clear();
 
+  std::cout << "Sizes of Systematics and Galaxy Map.\n"
+	    << "\tSysmap: " << sys_map->Size() 
+	    << ", Galaxy: " << galaxy_map->Size() << "\n";
+
   // Now we do the requested cross-correlation.
   int max_resolution = galaxy_map->Resolution();
   int min_resolution = wtheta.MinResolution();
@@ -487,7 +507,9 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
   for (Stomp::ThetaIterator iter=wtheta.Begin(max_resolution);
        iter!=wtheta.End(max_resolution);++iter) {
     galaxy_map->CrossCorrelate(*sys_map, iter);
+    //sys_map->AutoCorrelate(iter);
   }
+  
 
   std::cout << "Completed on galaxy map\n";
 
@@ -503,6 +525,7 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
     for (Stomp::ThetaIterator iter=wtheta.Begin(resolution);
 	 iter!=wtheta.End(resolution);++iter) {
       galaxy_sub_map->CrossCorrelate(*sys_sub_map, iter);
+      //sys_sub_map->AutoCorrelate(iter);
     }
     delete sys_sub_map;
     delete galaxy_sub_map;
