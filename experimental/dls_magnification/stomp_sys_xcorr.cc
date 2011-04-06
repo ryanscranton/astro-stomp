@@ -309,14 +309,15 @@ void FindAllowedArea(const char* sysmap_name, KeepDict& keep_map) {
 	bool keep_pixel = false;
 	Stomp::Pixel::HPix2XY(resolution, hpixnum, superpixnum, x, y);
 	Stomp::Pixel tmp_pix(x, y, resolution, 1.0);
-	for (uint32_t bound_iter=0;bound_iter<region_vector.size();bound_iter++) {
+	for (uint32_t bound_iter=0;bound_iter<region_vector.size();
+	     bound_iter++) {
 	  if (region_vector[bound_iter].CheckPixel(tmp_pix)) {
 	    if (keep_pixel) {
 	      std::cout << "Syspixel found in more than one bound!\n";
 	      keep_pixel = false;
 	      break;
 	    }
-	    keep_pixel = true;  
+	    keep_pixel = true;
 	  }
 	}
 	//Stomp::ScalarPixel tmp_pix(x, y, resolution, unmasked, 0, 0);
@@ -382,13 +383,9 @@ Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
     gal_file >> ra >> dec >> weight >> mag;
     
     Stomp::AngularCoordinate ang(ra, dec, Stomp::AngularCoordinate::Equatorial);
-    galaxy_map->AddToMap(ang,1);
-    //Stomp::Pixel pix(ang, FLAGS_galmap_resolution, 1);
-    //keep_iter = keep_map.find(pix.Pixnum());
-    //if (keep_iter != keep_map.end()) {
-    //  galaxy_map->AddToMap(pix);
-    n_galaxies++;
-      //}
+    if (galaxy_map->AddToMap(ang,1)) {
+      n_galaxies++;
+    }
   }
   gal_file.close();
   if (!FLAGS_gal_map_output.empty()) {
@@ -495,7 +492,7 @@ void CrossCorrelateSystematicsField(Stomp::ScalarMap* galaxy_map,
       FLAGS_sysmap_file << "...\n";
     break;
   case Odds:
-    std::cout << "Reading in sky brightness values from " <<
+    std::cout << "Reading in odds values from " <<
       FLAGS_sysmap_file << "...\n";
     break;
   }
