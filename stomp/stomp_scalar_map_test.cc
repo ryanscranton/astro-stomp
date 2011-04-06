@@ -283,6 +283,85 @@ void ScalarMapAutoCorrelationTests() {
       ") = " << iter->Wtheta() << "\n";
 }
 
+void ScalarMapCrossCorrelationTests() {
+  std::cout << "\n";
+  std::cout << "****************************************\n";
+  std::cout << "*** ScalarMap CrossCorrelation Tests ***\n";
+  std::cout << "****************************************\n";
+  double theta = 3.0;
+  Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
+  Stomp::Pixel tmp_pix(ang, 256);
+  Stomp::PixelVector annulus_pix;
+  tmp_pix.WithinRadius(theta, annulus_pix);
+  uint32_t scalar_resolution = 512;
+  Stomp::Map* stomp_map = new Stomp::Map(annulus_pix);
+  Stomp::ScalarMap* scalar_map_a =
+      new Stomp::ScalarMap(*stomp_map, scalar_resolution,
+                           Stomp::ScalarMap::DensityField);
+  Stomp::ScalarMap* scalar_map_b =
+      new Stomp::ScalarMap(*stomp_map, scalar_resolution,
+                           Stomp::ScalarMap::DensityField);
+
+  uint32_t n_random = 10000;
+  uint32_t n_found_a = 0;
+  uint32_t n_found_b = 0;
+  Stomp::AngularVector rand_ang;
+  stomp_map->GenerateRandomPoints(rand_ang, n_random);
+  for (Stomp::AngularIterator iter=rand_ang.begin();
+       iter!=rand_ang.end();++iter) {
+    if (scalar_map_a->AddToMap(*iter)) n_found_a++;
+    if (scalar_map_b->AddToMap(*iter)) n_found_b++;
+  }
+  if (n_random != n_found_a)
+    std::cout << "Failed to add all random points to the density map.\n";
+  if (n_random != n_found_b)
+    std::cout << "Failed to add all random points to the density map.\n";
+
+  double theta_min = 0.01;
+  double theta_max = 10.0;
+  Stomp::AngularCorrelation *wtheta_auto =
+    new Stomp::AngularCorrelation(theta_min, theta_max, 6.0);
+  Stomp::AngularCorrelation *wtheta_cross =
+    new Stomp::AngularCorrelation(theta_min, theta_max, 6.0);
+
+  scalar_map_a->AutoCorrelate(*wtheta_auto);
+  scalar_map_a->CrossCorrelate(*scalar_map_b, *wtheta_cross);
+
+  // Alrighty, now for our grand finale, let's lay out the code that we'd
+  // use to do the auto-correlation for all scales, using our current
+  // density map as the highest resolution map.
+  for (uint32_t resolution=scalar_map_a->Resolution()/2;
+       resolution>=wtheta_auto->MinResolution();resolution/=2) {
+    Stomp::ScalarMap* sub_scalar_map_a =
+        new Stomp::ScalarMap(*scalar_map_a, resolution);
+    Stomp::ScalarMap* sub_scalar_map_b =
+        new Stomp::ScalarMap(*scalar_map_b, resolution);
+    std::cout << "\t" << sub_scalar_map_a->Resolution() <<
+        ": Original Map Density: " << scalar_map_a->Density() <<
+        ": New Map Density: " << sub_scalar_map_a->Density() << "\n";
+    sub_scalar_map_a->AutoCorrelate(*wtheta_auto);
+    sub_scalar_map_a->CrossCorrelate(*sub_scalar_map_b, *wtheta_cross);
+
+    delete sub_scalar_map_a;
+    delete sub_scalar_map_b;
+  }
+
+  for (uint8_t i=0;i<wtheta_auto->NBins();i++) {
+    Stomp::ThetaIterator auto_iter = wtheta_auto->BinIterator(i);
+    Stomp::ThetaIterator cross_iter = wtheta_cross->BinIterator(i);
+
+    if (auto_iter->Resolution() <= scalar_map_a->Resolution() &&
+        auto_iter->Resolution() >= Stomp::HPixResolution) {
+      std::cout << "\tw(" << auto_iter->Theta() << ", " <<
+          auto_iter->Resolution() << ", " <<
+          cross_iter->Resolution() << ") = " <<
+          cross_iter->Wtheta() << " (" << auto_iter->Wtheta() << ", +-" <<
+          auto_iter->PoissonNoise(scalar_map_a->Density(),
+                                  scalar_map_a->Area()) << ")\n";
+    }
+  }
+}
+
 // Define our command line flags
 DEFINE_bool(all_scalar_map_tests, false, "Run all class unit tests.");
 DEFINE_bool(scalar_map_basic_tests, false, "Run ScalarMap basic tests");
@@ -292,6 +371,8 @@ DEFINE_bool(scalar_map_resampling_tests, false,
 DEFINE_bool(scalar_map_region_tests, false, "Run ScalarMap region tests");
 DEFINE_bool(scalar_map_autocorrelation_tests, false,
             "Run ScalarMap auto-correlation tests");
+DEFINE_bool(scalar_map_crosscorrelation_tests, false,
+            "Run ScalarMap cross-correlation tests");
 
 void ScalarMapUnitTests(bool run_all_tests) {
   void ScalarMapBasicTests();
@@ -299,6 +380,7 @@ void ScalarMapUnitTests(bool run_all_tests) {
   void ScalarMapResamplingTests();
   void ScalarMapRegionTests();
   void ScalarMapAutoCorrelationTests();
+  void ScalarMapCrossCorrelationTests();
 
   if (run_all_tests) FLAGS_all_scalar_map_tests = true;
 
@@ -325,4 +407,8 @@ void ScalarMapUnitTests(bool run_all_tests) {
   // Check the auto-correlation methods in the Stomp::ScalarMap class.
   if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_autocorrelation_tests)
     ScalarMapAutoCorrelationTests();
+
+  // Check the cross-correlation methods in the Stomp::ScalarMap class.
+  if (FLAGS_all_scalar_map_tests || FLAGS_scalar_map_crosscorrelation_tests)
+    ScalarMapCrossCorrelationTests();
 }
