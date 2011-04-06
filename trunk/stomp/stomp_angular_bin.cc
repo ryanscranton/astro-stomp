@@ -211,6 +211,16 @@ bool AngularBin::WithinCosBounds(double costheta) {
 	  DoubleLE(costheta, costheta_max_) ? true : false);
 }
 
+double AngularBin::Area() {
+  return (costheta_max_ - costheta_min_)*2.0*Pi*StradToDeg;
+}
+
+double AngularBin::PoissonNoise(double objects_per_square_degree,
+                                double survey_area) {
+  return 1.0/sqrt(objects_per_square_degree*objects_per_square_degree*
+                  survey_area*Area());
+}
+
 void AngularBin::AddToPixelWtheta(double dwtheta, double dweight,
 				  int16_t region_a, int16_t region_b) {
   pixel_wtheta_ += dwtheta;

@@ -91,6 +91,12 @@ class AngularBin {
   bool WithinSin2Bounds(double sin2theta);
   bool WithinCosBounds(double costheta);
 
+  // Since we know the inner and outer angular radii for our bin, we can
+  // calculate the area of the bin and, given a density of objects per square
+  // degree, the expected Poisson noise.
+  double Area();
+  double PoissonNoise(double objects_per_square_degree, double survey_area);
+
   // For the pixel-based w(theta), we use two internal variables:
   //
   //  * PixelWtheta, which stores the sum of the products of the overdensities
