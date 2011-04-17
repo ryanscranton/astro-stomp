@@ -14,7 +14,8 @@ DEFINE_string(galaxy_file_a, "",
               "Name of the ASCII file containing an input galaxy catalog");
 DEFINE_string(galaxy_file_b, "",
               "Name of the ASCII file containing am input galaxy catalog");
-DEFINE_bool(galaxy_radec, false, "Galaxy coordinates are in RA-DEC");
+DEFINE_bool(galaxy_radec, true, "Galaxy coordinates are in RA-DEC");
+DEFINE_bool(use_only_pairs, false, "Use Only Pairs in correlation");
 DEFINE_string(output_tag, "test",
               "Tag for output file: Wtheta_OUTPUT_TAG");
 DEFINE_double(theta_min, 0.001, "Minimum angular scale (in degrees)");
@@ -135,13 +136,20 @@ int main(int argc, char **argv) {
   // less memory, provided we choose the break sensibly).  This call will
   // modify all of the high-resolution bins so that they use the pair-based
   // estimator.
-  if (FLAGS_maximum_resolution == -1) {
-    wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*n_galaxy_b)), stomp_map->Area());
+  if (FLAGS_use_only_pairs) {
+    wtheta.UseOnlyPairs();
   }
   else {
-    std::cout << "Setting maximum resolution to " <<
-      static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
-    wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+    if (FLAGS_maximum_resolution == -1) {
+      wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*
+							  n_galaxy_b)), 
+			       stomp_map->Area());
+    }
+    else {
+      std::cout << "Setting maximum resolution to " <<
+	static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
+      wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+    }
   }
 
 
@@ -154,7 +162,7 @@ int main(int argc, char **argv) {
   // for the pair-based estimator.  Instead, we'll walk through the process
   // explicitly, starting with the creation of a ScalarMap for the
   // pixel-based estimator. Screw Dat I'm doing it the easy way.
-  wtheta.FindCrossCorrelation(*stomp_map,galaxy_a,galaxy_b,FLAGS_n_random);
+  wtheta.FindCrossCorrelation(*stomp_map, galaxy_a, galaxy_b, FLAGS_n_random);
   
 
   // Finally write out the results...
@@ -162,12 +170,7 @@ int main(int argc, char **argv) {
   std::cout << "Writing galaxy auto-correlation to " <<
     wtheta_file_name << "\n";
 
-  std::ofstream output_file(wtheta_file_name.c_str());
-  for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
-    output_file << std::setprecision(6) << iter->Theta() << " " <<
-      iter->Wtheta()  << " " << iter->WthetaError() << "\n";
-  }
-  output_file.close();
+  wtheta.Write(wtheta_file_name);
 
   return 0;
 }
