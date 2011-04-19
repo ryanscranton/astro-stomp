@@ -787,6 +787,8 @@ void AngularCorrelation::UseOnlyPairs() {
   for (ThetaIterator iter=thetabin_.begin();iter!=thetabin_.end();++iter) {
     iter->SetResolution(0);
   }
+  manual_resolution_break_ = true;
+  
 }
 
 double AngularCorrelation::ThetaMin(uint32_t resolution) {

@@ -332,6 +332,13 @@ class Map : public BaseMap {
   void GenerateRandomPoints(WAngularVector& ang, std::vector<double>& weights,
 			    bool use_weighted_sampling = false);
 
+  //Like the above methods but only returns a single random angular vector on
+  //the map. Boolien is used to return the weight of the map at the random
+  // possition.
+  void GenerateSingleRandomPoint(WeightedAngularCoordinate& ang,
+				 bool return_local_weight = false,
+				 bool use_weighted_sampling = false);
+
   // This version returns numerical python arrays in a tuple
   // Requires python and numpy support
 #ifdef WITH_NUMPY
