@@ -117,7 +117,9 @@ int main(int argc, char **argv) {
 	
 	Stomp::AngularVector ang_vector;
 	for (int i=0;i<4;i++)
-	  ang_vector.push_back(Stomp::AngularCoordinate(ra[i],dec[i],Stomp::AngularCoordinate::Equatorial));
+	  ang_vector.push_back(Stomp::AngularCoordinate
+			       (ra[i],dec[i],					
+				Stomp::AngularCoordinate::Equatorial));
 	
 	Stomp::PolygonBound* poly_bound = new Stomp::PolygonBound(ang_vector);
 	Stomp::RegionBound region_bound(poly_bound);
@@ -398,8 +400,8 @@ Stomp::ScalarMap* LoadGalaxyData(KeepDict& keep_map, int region_resolution) {
 	iter->Resolution() << " " <<
 	galaxy_map->FindUnmaskedFraction(*iter) << " " <<
 	galaxy_map->FindIntensity(*iter) << " " <<
-	galaxy_map->FindDensity(*iter)/(60.0*60.0) << " " <<
-	galaxy_map->FindPointDensity(*iter)/(60.0*60.0) << "\n";
+	galaxy_map->FindDensity(*iter) << " " <<
+	galaxy_map->FindPointDensity(*iter) << "\n";
     }
     output_file.close();
   }
