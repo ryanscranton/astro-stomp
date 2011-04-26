@@ -40,19 +40,19 @@ const uint32_t MaxPixnum = Nx0*Ny0*2048*2048;
 const uint32_t MaxSuperpixnum = Nx0*Ny0*HPixResolution*HPixResolution;
 
 bool DoubleLT(double a, double b) {
-  return (a < b - 1.0e-10 ? true : false);
+  return (a < b - 1.0e-15 ? true : false);
 }
 
 bool DoubleLE(double a, double b) {
-  return (a <= b + 1.0e-10 ? true : false);
+  return (a <= b + 1.0e-15 ? true : false);
 }
 
 bool DoubleGT(double a, double b) {
-  return (a > b + 1.0e-10 ? true : false);
+  return (a > b + 1.0e-15 ? true : false);
 }
 
 bool DoubleGE(double a, double b) {
-  return (a >= b - 1.0e-10 ? true : false);
+  return (a >= b - 1.0e-15 ? true : false);
 }
 
 bool DoubleEQ(double a, double b) {

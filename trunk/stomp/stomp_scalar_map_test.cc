@@ -36,21 +36,53 @@ void ScalarMapBasicTests() {
   std::cout << "\t" << stomp_map->Area() <<
     " sq. degrees in the source map.\n";
 
+  // Now initialize a version of the map from a vector of ScalarPixels
+  // generated from annulus_pix.
+  std::cout << "Initializing second map built from ScalarPixels...\n";
+  Stomp::ScalarVector scalar_pix;
+  scalar_pix.reserve(annulus_pix.size());
+
+  for (Stomp::PixelIterator iter=annulus_pix.begin();
+       iter != annulus_pix.end();++iter) {
+    scalar_pix.push_back(Stomp::ScalarPixel(iter->PixelX(), iter->PixelY(),
+                                            iter->Resolution(), 1.0));
+  }
+
+  Stomp::ScalarMap* second_map =
+      new Stomp::ScalarMap(scalar_pix, Stomp::ScalarMap::DensityField);
+  std::cout << "\t" << second_map->Size() << " pixels (" <<
+      scalar_map->Size() << " in original map, " << annulus_pix.size() <<
+      " annulus pixels)\n";
+  std::cout << "\t" << second_map->Area() << " sq. degrees (" <<
+      scalar_map->Area() << ")\n";
+
   // Now, let's add those random points to the current map.  Since they were
   // both created with the same source map, they should all find a home.
   std::cout << "\tAttempting to add random points to density map\n";
-  uint32_t n_random = 10000;
+  uint32_t n_random = 100000;
   uint32_t n_found = 0;
+  uint32_t n_found_second = 0;
   Stomp::AngularVector rand_ang;
   stomp_map->GenerateRandomPoints(rand_ang, n_random);
-  for (Stomp::AngularIterator iter=rand_ang.begin();iter!=rand_ang.end();++iter)
+  for (Stomp::AngularIterator iter=rand_ang.begin();
+       iter!=rand_ang.end();++iter) {
     if (scalar_map->AddToMap(*iter)) n_found++;
+    if (second_map->AddToMap(*iter)) n_found_second++;
+  }
+
   if (n_random != n_found)
     std::cout << "Failed to add all random points to the density map.\n";
+  if (n_random != n_found_second)
+    std::cout << "Failed to add all random points to the 2nd density map.\n";
 
   std::cout << "\t\tPut " << n_found << "/" << rand_ang.size() <<
     " points in map.\n";
   std::cout << "\t\t\t" << scalar_map->MeanIntensity() <<
+    " points/sq. degree.\n";
+
+  std::cout << "\t\tPut " << n_found_second << "/" << rand_ang.size() <<
+    " points in second map.\n";
+  std::cout << "\t\t\t" << second_map->MeanIntensity() <<
     " points/sq. degree.\n";
 }
 
@@ -246,7 +278,7 @@ void ScalarMapAutoCorrelationTests() {
   Stomp::ScalarMap* scalar_map =
     new Stomp::ScalarMap(*stomp_map, 128, Stomp::ScalarMap::DensityField);
 
-  uint32_t n_random = 10000;
+  uint32_t n_random = 100000;
   uint32_t n_found = 0;
   Stomp::AngularVector rand_ang;
   stomp_map->GenerateRandomPoints(rand_ang, n_random);
@@ -280,7 +312,9 @@ void ScalarMapAutoCorrelationTests() {
   for (Stomp::ThetaIterator iter=wtheta->Begin(scalar_map->Resolution());
        iter!=wtheta->End(wtheta->MinResolution());++iter)
     std::cout << "\tw(" << iter->Theta() << ", " << iter->Resolution() <<
-      ") = " << iter->Wtheta() << "\n";
+        ") = " << iter->Wtheta() << " +- " <<
+        iter->PoissonNoise(scalar_map->Density(),
+                           scalar_map->Area()) << "\n";
 }
 
 void ScalarMapCrossCorrelationTests() {
@@ -302,7 +336,7 @@ void ScalarMapCrossCorrelationTests() {
       new Stomp::ScalarMap(*stomp_map, scalar_resolution,
                            Stomp::ScalarMap::DensityField);
 
-  uint32_t n_random = 10000;
+  uint32_t n_random = 100000;
   uint32_t n_found_a = 0;
   uint32_t n_found_b = 0;
   Stomp::AngularVector rand_ang;
