@@ -62,9 +62,9 @@ void TreePixelPairTests() {
   std::cout << "****************************\n";
 
   Stomp::AngularCoordinate ang(60.0, 0.0, Stomp::AngularCoordinate::Survey);
-  uint16_t n_points_per_node = 500;
+  uint16_t n_points_per_node = 50;
   uint32_t n_points = 10000;
-  Stomp::TreePixel tree_pix(ang, Stomp::HPixResolution,
+  Stomp::TreePixel tree_pix(ang, 4*Stomp::HPixResolution,
 			    n_points_per_node);
 
   Stomp::AngularVector angVec;
@@ -92,8 +92,8 @@ void TreePixelPairTests() {
     " pairs; " << direct_pairs << " pairs from brute force.\n";
 
   // Now, we check the annulus finding.
-  double theta_max = 0.15;
-  double theta_min = 0.1;
+  double theta_max = 0.015;
+  double theta_min = 0.01;
   double annulus_area =
     (1.0 - cos(theta_max*Stomp::DegToRad))*
     2.0*Stomp::Pi*Stomp::StradToDeg;
@@ -138,7 +138,11 @@ void TreePixelPairTests() {
     " counter offset).\n";
 
   std::cout << "Angular Bin full pairs test:\n";
-  Stomp::AngularCorrelation wtheta(0.01, 5.0, 5.0, false);
+  theta_min = 0.001;
+  theta_max = 5.0;
+  double bins_per_decade = 10.0;
+  Stomp::AngularCorrelation wtheta(theta_min, theta_max, bins_per_decade,
+                                   false);
   for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter)
     iter->ResetCounter();
 
@@ -146,25 +150,29 @@ void TreePixelPairTests() {
   tree_pix.FindWeightedPairs(angVec, wtheta);
 
   std::cout << "\tDone.  Starting brute force calculation...\n";
-  Stomp::AngularCorrelation wtheta_brute(0.01, 5.0, 5.0, false);
+  Stomp::AngularCorrelation wtheta_brute(theta_min, theta_max, bins_per_decade,
+                                         false);
   Stomp::ThetaIterator theta_begin = wtheta_brute.Begin();
   Stomp::ThetaIterator theta_end = wtheta_brute.End();
-  Stomp::ThetaIterator theta_iter;
   double costheta = 0.0;
   for (Stomp::AngularIterator ang_iter=angVec.begin();
        ang_iter!=angVec.end();++ang_iter) {
     for (Stomp::AngularIterator inner_iter=angVec.begin();
 	 inner_iter!=angVec.end();++inner_iter) {
       costheta = ang_iter->DotProduct(*inner_iter);
-      theta_iter = wtheta_brute.Find(theta_begin, theta_end,
-				     1.0-costheta*costheta);
-      if (theta_iter != theta_end) theta_iter->AddToCounter();
+      for (Stomp::ThetaIterator theta_iter=theta_begin;
+           theta_iter!=theta_end;++theta_iter) {
+        if (theta_iter->WithinCosBounds(costheta)) {
+          theta_iter->AddToCounter();
+        }
+      }
     }
   }
 
   for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
     double sin2theta = 0.5*(iter->Sin2ThetaMin()+iter->Sin2ThetaMax());
-    theta_iter = wtheta_brute.Find(theta_begin, theta_end, sin2theta);
+    Stomp::ThetaIterator theta_iter =
+        wtheta_brute.Find(theta_begin, theta_end, sin2theta);
     std::cout << "\t" << iter->ThetaMin() << " - " << iter->ThetaMax() <<
       ": " << iter->Counter() << " pairs; " << theta_iter->Counter() <<
       " brute force pairs.\n";
