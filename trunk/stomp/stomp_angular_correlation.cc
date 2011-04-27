@@ -234,7 +234,10 @@ void AngularCorrelation::FindAutoCorrelationWithRegions(Map& stomp_map,
   if (n_regions == 0) n_regions = static_cast<uint16_t>(2*thetabin_.size());
   std::cout << "Stomp::AgularCorrelation::FindAutoCorrelationWithRegions - " <<
     "Regionating with " << n_regions << " regions...\n";
-  uint16_t n_true_regions = stomp_map.InitializeRegions(n_regions);
+  uint16_t n_true_regions = stomp_map.NRegion();
+  if (n_true_regions == 0)
+    n_true_regions = stomp_map.InitializeRegions(n_regions);
+
   if (n_true_regions != n_regions) {
     std::cout << "Stomp::AgularCorrelation::" <<
       "FindAutoCorrelationWithRegions - Splitting into " << n_true_regions <<
@@ -277,7 +280,9 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
   }
 
   if (n_regions == 0) n_regions = static_cast<uint16_t>(2*thetabin_.size());
-  uint16_t n_true_regions = stomp_map.InitializeRegions(n_regions);
+  uint16_t n_true_regions = stomp_map.NRegion();
+  if (n_true_regions == 0)
+    n_true_regions = stomp_map.InitializeRegions(n_regions);
   if (n_true_regions != n_regions) {
     std::cout << "Stomp::AgularCorrelation::FindCrossCorrelationWithRegions" <<
       " - Splitting into " << n_true_regions << " rather than " <<
