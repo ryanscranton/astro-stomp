@@ -121,6 +121,8 @@ class AngularBin(_object):
     def WithinBounds(*args): return _stomp.AngularBin_WithinBounds(*args)
     def WithinSin2Bounds(*args): return _stomp.AngularBin_WithinSin2Bounds(*args)
     def WithinCosBounds(*args): return _stomp.AngularBin_WithinCosBounds(*args)
+    def Area(*args): return _stomp.AngularBin_Area(*args)
+    def PoissonNoise(*args): return _stomp.AngularBin_PoissonNoise(*args)
     def AddToPixelWtheta(*args): return _stomp.AngularBin_AddToPixelWtheta(*args)
     def AddToWeight(*args): return _stomp.AngularBin_AddToWeight(*args)
     def AddToCounter(*args): return _stomp.AngularBin_AddToCounter(*args)
@@ -513,6 +515,10 @@ class ScalarPixel(Pixel):
     def ConvertToFractionalOverDensity(*args): return _stomp.ScalarPixel_ConvertToFractionalOverDensity(*args)
     def ConvertFromOverDensity(*args): return _stomp.ScalarPixel_ConvertFromOverDensity(*args)
     def ConvertFromFractionalOverDensity(*args): return _stomp.ScalarPixel_ConvertFromFractionalOverDensity(*args)
+    def UnitSphereX(*args): return _stomp.ScalarPixel_UnitSphereX(*args)
+    def UnitSphereY(*args): return _stomp.ScalarPixel_UnitSphereY(*args)
+    def UnitSphereZ(*args): return _stomp.ScalarPixel_UnitSphereZ(*args)
+    def _WithinAnnulus(*args): return _stomp.ScalarPixel__WithinAnnulus(*args)
     def IsOverDensity(*args): return _stomp.ScalarPixel_IsOverDensity(*args)
 ScalarPixel_swigregister = _stomp.ScalarPixel_swigregister
 ScalarPixel_swigregister(ScalarPixel)
@@ -717,6 +723,9 @@ class Map(BaseMap):
     def RegionOnlyMap(*args): return _stomp.Map_RegionOnlyMap(*args)
     def RegionExcludedMap(*args): return _stomp.Map_RegionExcludedMap(*args)
     def GenerateRandomPoints(*args): return _stomp.Map_GenerateRandomPoints(*args)
+    def GenerateRandomEq(*args): return _stomp.Map_GenerateRandomEq(*args)
+    def GenerateRandomSurvey(*args): return _stomp.Map_GenerateRandomSurvey(*args)
+    def GenerateRandomGal(*args): return _stomp.Map_GenerateRandomGal(*args)
     __swig_setmethods__["INSIDE_MAP"] = _stomp.Map_INSIDE_MAP_set
     __swig_getmethods__["INSIDE_MAP"] = _stomp.Map_INSIDE_MAP_get
     if _newclass:INSIDE_MAP = _swig_property(_stomp.Map_INSIDE_MAP_get, _stomp.Map_INSIDE_MAP_set)
@@ -769,37 +778,6 @@ class Map(BaseMap):
 Map_swigregister = _stomp.Map_swigregister
 Map_swigregister(Map)
 
-class ScalarSubMap(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ScalarSubMap, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, ScalarSubMap, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _stomp.new_ScalarSubMap(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _stomp.delete_ScalarSubMap
-    __del__ = lambda self : None;
-    def AddToArea(*args): return _stomp.ScalarSubMap_AddToArea(*args)
-    def AddToIntensity(*args): return _stomp.ScalarSubMap_AddToIntensity(*args)
-    def SetIntensity(*args): return _stomp.ScalarSubMap_SetIntensity(*args)
-    def SetNPoints(*args): return _stomp.ScalarSubMap_SetNPoints(*args)
-    def Area(*args): return _stomp.ScalarSubMap_Area(*args)
-    def Intensity(*args): return _stomp.ScalarSubMap_Intensity(*args)
-    def NPoints(*args): return _stomp.ScalarSubMap_NPoints(*args)
-    def Density(*args): return _stomp.ScalarSubMap_Density(*args)
-    def PointDensity(*args): return _stomp.ScalarSubMap_PointDensity(*args)
-    def SetBegin(*args): return _stomp.ScalarSubMap_SetBegin(*args)
-    def SetEnd(*args): return _stomp.ScalarSubMap_SetEnd(*args)
-    def SetNull(*args): return _stomp.ScalarSubMap_SetNull(*args)
-    def Begin(*args): return _stomp.ScalarSubMap_Begin(*args)
-    def End(*args): return _stomp.ScalarSubMap_End(*args)
-    def Initialized(*args): return _stomp.ScalarSubMap_Initialized(*args)
-    def Size(*args): return _stomp.ScalarSubMap_Size(*args)
-ScalarSubMap_swigregister = _stomp.ScalarSubMap_swigregister
-ScalarSubMap_swigregister(ScalarSubMap)
-
 class ScalarMap(BaseMap):
     __swig_setmethods__ = {}
     for _s in [BaseMap]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -817,7 +795,6 @@ class ScalarMap(BaseMap):
         except: self.this = this
     __swig_destroy__ = _stomp.delete_ScalarMap
     __del__ = lambda self : None;
-    def _InitializeSubMap(*args): return _stomp.ScalarMap__InitializeSubMap(*args)
     def SetResolution(*args): return _stomp.ScalarMap_SetResolution(*args)
     def InitializeFromMap(*args): return _stomp.ScalarMap_InitializeFromMap(*args)
     def InitializeFromScalarMap(*args): return _stomp.ScalarMap_InitializeFromScalarMap(*args)
