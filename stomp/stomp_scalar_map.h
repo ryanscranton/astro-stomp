@@ -106,9 +106,6 @@ class ScalarMap : public BaseMap {
 	    double theta_min = -1.0);
   virtual ~ScalarMap();
 
-  // Internal method that should probably never be called.
-  bool _InitializeSubMap();
-
   // This is generally set through the constructor.  However, if
   // you want to re-initialize the same object with different parameters or
   // use the constructor without any arguments, this will set the
