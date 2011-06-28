@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
   std::ifstream galaxy_file_b(FLAGS_galaxy_file_b.c_str());
   double theta, phi, prob, mag, weight;
   
-  #prob = 1.0;
+  prob = 1.0;
   mag = 0.5*(FLAGS_mag_max_a + FLAGS_mag_min_a);
   
   while (!galaxy_file_a.eof()) {
@@ -184,20 +184,19 @@ int main(int argc, char **argv) {
 					galaxy_a,
 					galaxy_b,
 					static_cast<uint8_t>(FLAGS_n_random),
-					static_cast<uint16_t>(FLAGS_n_jackknife));
+					static_cast<uint16_t>(FLAGS_n_jackknife
+							      ));
 
 
   // And write out the results...
   std::string wtheta_file_name = "Wtheta_" + FLAGS_output_tag;
   std::cout << "Writing galaxy cross-correlation to " <<
     wtheta_file_name << "\n";
-
-  std::ofstream output_file(wtheta_file_name.c_str());
-  for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
-    output_file << std::setprecision(6) << iter->Theta() << " " <<
-      iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-  }
-  output_file.close();
+  wtheta.Write(wtheta_file_name);
+  std::string wcov_file_name = "Wcov_" + FLAGS_output_tag;
+  std::cout << "Writing galaxy cross-correlation covariance to " <<
+    wcov_file_name << "\n";
+  wtheta.WriteCovariance(wtheta_file_name);
 
   return 0;
 }
