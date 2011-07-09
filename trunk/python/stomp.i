@@ -2,6 +2,7 @@
 %{
 #include "../stomp/stomp_core.h"
 #include "../stomp/stomp_angular_bin.h"
+#include "../stomp/stomp_radial_bin.h"
 #include "../stomp/stomp_angular_coordinate.h"
 #include "../stomp/stomp_angular_correlation.h"
 #include "../stomp/stomp_pixel.h"
@@ -45,6 +46,7 @@ namespace Stomp {
 class Pixel;
 class PixelOrdering;
 class AngularBin;
+class RadialBin;
 class AngularCorrelation;
 class AngularCoordinate;
 class WeightedAngularCoordinate;
@@ -108,6 +110,7 @@ typedef IndexVector::iterator IndexIterator;
 
 %include "../stomp/stomp_core.h"
 %include "../stomp/stomp_angular_bin.h"
+%include "../stomp/stomp_radial_bin.h"
 %include "../stomp/stomp_angular_correlation.h"
 %include "../stomp/stomp_pixel.h"
 %include "../stomp/stomp_scalar_pixel.h"
@@ -917,6 +920,8 @@ class IndexedTreeMap : public BaseMap {
 } // end namespace Stomp
 
 %template(AngularVector) std::vector<Stomp::AngularCoordinate>;
+%template(ThetaVector) std::vector<Stomp::AngularBin>;
+%template(RadialVector) std::vector<Stomp::RadialBin>;
 %template(WAngularVector) std::vector<Stomp::WeightedAngularCoordinate>;
 %template(CosmoVector) std::vector<Stomp::CosmoCoordinate>;
 %template(IAngularVector) std::vector<Stomp::IndexedAngularCoordinate>;

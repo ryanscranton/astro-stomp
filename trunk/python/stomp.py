@@ -204,6 +204,38 @@ AngularBin_ThetaOrder = _stomp.AngularBin_ThetaOrder
 AngularBin_SinThetaOrder = _stomp.AngularBin_SinThetaOrder
 AngularBin_ReverseResolutionOrder = _stomp.AngularBin_ReverseResolutionOrder
 
+class RadialBin(AngularBin):
+    __swig_setmethods__ = {}
+    for _s in [AngularBin]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RadialBin, name, value)
+    __swig_getmethods__ = {}
+    for _s in [AngularBin]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RadialBin, name)
+    __repr__ = _swig_repr
+    __swig_destroy__ = _stomp.delete_RadialBin
+    __del__ = lambda self : None;
+    def __init__(self, *args): 
+        this = _stomp.new_RadialBin(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def SetRadiusMin(*args): return _stomp.RadialBin_SetRadiusMin(*args)
+    def SetRadiusMax(*args): return _stomp.RadialBin_SetRadiusMax(*args)
+    def SetRadius(*args): return _stomp.RadialBin_SetRadius(*args)
+    def SetRedshift(*args): return _stomp.RadialBin_SetRedshift(*args)
+    def WithinRadialBounds(*args): return _stomp.RadialBin_WithinRadialBounds(*args)
+    def Radius(*args): return _stomp.RadialBin_Radius(*args)
+    def RadiusMin(*args): return _stomp.RadialBin_RadiusMin(*args)
+    def RadiusMax(*args): return _stomp.RadialBin_RadiusMax(*args)
+    def Redshift(*args): return _stomp.RadialBin_Redshift(*args)
+    __swig_getmethods__["RadialOrder"] = lambda x: _stomp.RadialBin_RadialOrder
+    if _newclass:RadialOrder = staticmethod(_stomp.RadialBin_RadialOrder)
+    __swig_getmethods__["ReverseResolutionOrder"] = lambda x: _stomp.RadialBin_ReverseResolutionOrder
+    if _newclass:ReverseResolutionOrder = staticmethod(_stomp.RadialBin_ReverseResolutionOrder)
+RadialBin_swigregister = _stomp.RadialBin_swigregister
+RadialBin_swigregister(RadialBin)
+RadialBin_RadialOrder = _stomp.RadialBin_RadialOrder
+RadialBin_ReverseResolutionOrder = _stomp.RadialBin_ReverseResolutionOrder
+
 class AngularCorrelation(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, AngularCorrelation, name, value)
@@ -291,7 +323,8 @@ class Pixel(_object):
     def SetToLevel(*args): return _stomp.Pixel_SetToLevel(*args)
     def SubPix(*args): return _stomp.Pixel_SubPix(*args)
     def FirstCohort(*args): return _stomp.Pixel_FirstCohort(*args)
-    def Area(*args): return _stomp.Pixel_Area(*args)
+    __swig_getmethods__["Area"] = lambda x: _stomp.Pixel_Area
+    if _newclass:Area = staticmethod(_stomp.Pixel_Area)
     def Superpixnum(*args): return _stomp.Pixel_Superpixnum(*args)
     def HPixnum(*args): return _stomp.Pixel_HPixnum(*args)
     def Pixnum(*args): return _stomp.Pixel_Pixnum(*args)
@@ -299,9 +332,11 @@ class Pixel(_object):
     def WithinBounds(*args): return _stomp.Pixel_WithinBounds(*args)
     def IntersectsBounds(*args): return _stomp.Pixel_IntersectsBounds(*args)
     def WithinRadius(*args): return _stomp.Pixel_WithinRadius(*args)
-    def WithinAnnulus(*args): return _stomp.Pixel_WithinAnnulus(*args)
+    __swig_getmethods__["WithinAnnulus"] = lambda x: _stomp.Pixel_WithinAnnulus
+    if _newclass:WithinAnnulus = staticmethod(_stomp.Pixel_WithinAnnulus)
     def BoundingRadius(*args): return _stomp.Pixel_BoundingRadius(*args)
-    def XYBounds(*args): return _stomp.Pixel_XYBounds(*args)
+    __swig_getmethods__["XYBounds"] = lambda x: _stomp.Pixel_XYBounds
+    if _newclass:XYBounds = staticmethod(_stomp.Pixel_XYBounds)
     def EtaStep(*args): return _stomp.Pixel_EtaStep(*args)
     def NearEdgeDistance(*args): return _stomp.Pixel_NearEdgeDistance(*args)
     def FarEdgeDistance(*args): return _stomp.Pixel_FarEdgeDistance(*args)
@@ -435,6 +470,9 @@ class Pixel(_object):
     if _newclass:FindUniquePixels = staticmethod(_stomp.Pixel_FindUniquePixels)
 Pixel_swigregister = _stomp.Pixel_swigregister
 Pixel_swigregister(Pixel)
+Pixel_Area = _stomp.Pixel_Area
+Pixel_WithinAnnulus = _stomp.Pixel_WithinAnnulus
+Pixel_XYBounds = _stomp.Pixel_XYBounds
 Pixel_ResolutionToLevel = _stomp.Pixel_ResolutionToLevel
 Pixel_LevelToResolution = _stomp.Pixel_LevelToResolution
 Pixel_Ang2Pix = _stomp.Pixel_Ang2Pix
@@ -1180,6 +1218,7 @@ class Histogram(_object):
 Histogram_swigregister = _stomp.Histogram_swigregister
 Histogram_swigregister(Histogram)
 
+Tokenize = _stomp.Tokenize
 class AngularCoordinate(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, AngularCoordinate, name, value)
@@ -1253,7 +1292,6 @@ class AngularCoordinate(_object):
     if _newclass:FromAngularVector = staticmethod(_stomp.AngularCoordinate_FromAngularVector)
 AngularCoordinate_swigregister = _stomp.AngularCoordinate_swigregister
 AngularCoordinate_swigregister(AngularCoordinate)
-Tokenize = _stomp.Tokenize
 AngularCoordinate_SurveyToGalactic = _stomp.AngularCoordinate_SurveyToGalactic
 AngularCoordinate_SurveyToEquatorial = _stomp.AngularCoordinate_SurveyToEquatorial
 AngularCoordinate_EquatorialToSurvey = _stomp.AngularCoordinate_EquatorialToSurvey
@@ -1730,6 +1768,98 @@ class AngularVector(_object):
     __del__ = lambda self : None;
 AngularVector_swigregister = _stomp.AngularVector_swigregister
 AngularVector_swigregister(AngularVector)
+
+class ThetaVector(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ThetaVector, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, ThetaVector, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.ThetaVector_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.ThetaVector___nonzero__(*args)
+    def __len__(*args): return _stomp.ThetaVector___len__(*args)
+    def pop(*args): return _stomp.ThetaVector_pop(*args)
+    def __getslice__(*args): return _stomp.ThetaVector___getslice__(*args)
+    def __setslice__(*args): return _stomp.ThetaVector___setslice__(*args)
+    def __delslice__(*args): return _stomp.ThetaVector___delslice__(*args)
+    def __delitem__(*args): return _stomp.ThetaVector___delitem__(*args)
+    def __getitem__(*args): return _stomp.ThetaVector___getitem__(*args)
+    def __setitem__(*args): return _stomp.ThetaVector___setitem__(*args)
+    def append(*args): return _stomp.ThetaVector_append(*args)
+    def empty(*args): return _stomp.ThetaVector_empty(*args)
+    def size(*args): return _stomp.ThetaVector_size(*args)
+    def clear(*args): return _stomp.ThetaVector_clear(*args)
+    def swap(*args): return _stomp.ThetaVector_swap(*args)
+    def get_allocator(*args): return _stomp.ThetaVector_get_allocator(*args)
+    def begin(*args): return _stomp.ThetaVector_begin(*args)
+    def end(*args): return _stomp.ThetaVector_end(*args)
+    def rbegin(*args): return _stomp.ThetaVector_rbegin(*args)
+    def rend(*args): return _stomp.ThetaVector_rend(*args)
+    def pop_back(*args): return _stomp.ThetaVector_pop_back(*args)
+    def erase(*args): return _stomp.ThetaVector_erase(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_ThetaVector(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _stomp.ThetaVector_push_back(*args)
+    def front(*args): return _stomp.ThetaVector_front(*args)
+    def back(*args): return _stomp.ThetaVector_back(*args)
+    def assign(*args): return _stomp.ThetaVector_assign(*args)
+    def resize(*args): return _stomp.ThetaVector_resize(*args)
+    def insert(*args): return _stomp.ThetaVector_insert(*args)
+    def reserve(*args): return _stomp.ThetaVector_reserve(*args)
+    def capacity(*args): return _stomp.ThetaVector_capacity(*args)
+    __swig_destroy__ = _stomp.delete_ThetaVector
+    __del__ = lambda self : None;
+ThetaVector_swigregister = _stomp.ThetaVector_swigregister
+ThetaVector_swigregister(ThetaVector)
+
+class RadialVector(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RadialVector, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, RadialVector, name)
+    __repr__ = _swig_repr
+    def iterator(*args): return _stomp.RadialVector_iterator(*args)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(*args): return _stomp.RadialVector___nonzero__(*args)
+    def __len__(*args): return _stomp.RadialVector___len__(*args)
+    def pop(*args): return _stomp.RadialVector_pop(*args)
+    def __getslice__(*args): return _stomp.RadialVector___getslice__(*args)
+    def __setslice__(*args): return _stomp.RadialVector___setslice__(*args)
+    def __delslice__(*args): return _stomp.RadialVector___delslice__(*args)
+    def __delitem__(*args): return _stomp.RadialVector___delitem__(*args)
+    def __getitem__(*args): return _stomp.RadialVector___getitem__(*args)
+    def __setitem__(*args): return _stomp.RadialVector___setitem__(*args)
+    def append(*args): return _stomp.RadialVector_append(*args)
+    def empty(*args): return _stomp.RadialVector_empty(*args)
+    def size(*args): return _stomp.RadialVector_size(*args)
+    def clear(*args): return _stomp.RadialVector_clear(*args)
+    def swap(*args): return _stomp.RadialVector_swap(*args)
+    def get_allocator(*args): return _stomp.RadialVector_get_allocator(*args)
+    def begin(*args): return _stomp.RadialVector_begin(*args)
+    def end(*args): return _stomp.RadialVector_end(*args)
+    def rbegin(*args): return _stomp.RadialVector_rbegin(*args)
+    def rend(*args): return _stomp.RadialVector_rend(*args)
+    def pop_back(*args): return _stomp.RadialVector_pop_back(*args)
+    def erase(*args): return _stomp.RadialVector_erase(*args)
+    def __init__(self, *args): 
+        this = _stomp.new_RadialVector(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(*args): return _stomp.RadialVector_push_back(*args)
+    def front(*args): return _stomp.RadialVector_front(*args)
+    def back(*args): return _stomp.RadialVector_back(*args)
+    def assign(*args): return _stomp.RadialVector_assign(*args)
+    def resize(*args): return _stomp.RadialVector_resize(*args)
+    def insert(*args): return _stomp.RadialVector_insert(*args)
+    def reserve(*args): return _stomp.RadialVector_reserve(*args)
+    def capacity(*args): return _stomp.RadialVector_capacity(*args)
+    __swig_destroy__ = _stomp.delete_RadialVector
+    __del__ = lambda self : None;
+RadialVector_swigregister = _stomp.RadialVector_swigregister
+RadialVector_swigregister(RadialVector)
 
 class WAngularVector(_object):
     __swig_setmethods__ = {}
