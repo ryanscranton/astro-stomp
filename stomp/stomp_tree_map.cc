@@ -944,7 +944,7 @@ bool TreeMap::Read(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements, " ");
 	  n_lines++;
 	  if (verbose && n_lines == check_lines) {
 	    std::cout << "\tRead " << check_lines << " lines...\n";
@@ -1011,7 +1011,7 @@ bool TreeMap::Read(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements, " ");
 	  n_lines++;
 	  if (verbose && n_lines == check_lines) {
 	    std::cout << "\tRead " << check_lines << " lines...\n";

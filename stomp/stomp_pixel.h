@@ -113,6 +113,7 @@ class Pixel {
   // Since the pixels are equal-area, we only need to know how many times
   // we've sub-divided to get from the HpixResolution to our current resolution.
   double Area();
+  static double Area(uint32_t resolution);
 
   // This returns the index of the pixel that contains the current pixel at
   // a coarser resolution.
@@ -163,6 +164,9 @@ class Pixel {
 			     PixelVector& pix, bool check_full_pixel=false);
   virtual void WithinAnnulus(AngularBin& theta, PixelVector& pix,
 			     bool check_full_pixel=false);
+  static void WithinAnnulus(AngularCoordinate& ang, uint32_t resolution,
+                            AngularBin& theta, PixelVector& pix,
+                            bool check_full_pixel=false);
 
   // While the methods above are useful, sometimes we want a bit less precision.
   // The return vector of pixels include any possible pixels that might be
@@ -186,14 +190,22 @@ class Pixel {
 		uint32_t& y_min, uint32_t& y_max,
 		bool add_buffer = false);
   void XYBounds(AngularCoordinate& ang, double theta,
-		uint32_t& x_min, uint32_t& x_max,
-		uint32_t& y_min, uint32_t& y_max,
-		bool add_buffer = false);
+                uint32_t& x_min, uint32_t& x_max,
+                uint32_t& y_min, uint32_t& y_max,
+                bool add_buffer = false);
   void XYBounds(AngularCoordinate& ang, double theta,
-		std::vector<uint32_t>& x_min,
-		std::vector<uint32_t>& x_max,
-		uint32_t& y_min, uint32_t& y_max,
-		bool add_buffer = false);
+                std::vector<uint32_t>& x_min,
+                std::vector<uint32_t>& x_max,
+                uint32_t& y_min, uint32_t& y_max,
+                bool add_buffer = false);
+  static void XYBounds(AngularCoordinate& ang, uint32_t resolution,
+                       double theta, uint32_t& x_min, uint32_t& x_max,
+                       uint32_t& y_min, uint32_t& y_max,
+                       bool add_buffer = false);
+  static void XYBounds(AngularCoordinate& ang, uint32_t resolution,
+                       double theta, std::vector<uint32_t>& x_min,
+                       std::vector<uint32_t>& x_max, uint32_t& y_min,
+                       uint32_t& y_max, bool add_buffer = false);
   uint8_t EtaStep(double theta);
 
   // Additionally, it can be useful to know the projected angular distance
@@ -269,6 +281,7 @@ class Pixel {
   double GalLon();
   double GalLat();
   void Ang(AngularCoordinate& ang);
+  AngularCoordinate Ang();
   double Lambda();
   double Eta();
 

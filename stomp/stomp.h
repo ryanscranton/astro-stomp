@@ -19,6 +19,7 @@
 #include <stomp/stomp_core.h>
 #include <stomp/stomp_angular_coordinate.h>
 #include <stomp/stomp_angular_bin.h>
+#include <stomp/stomp_radial_bin.h>
 #include <stomp/stomp_angular_correlation.h>
 #include <stomp/stomp_pixel.h>
 #include <stomp/stomp_scalar_pixel.h>

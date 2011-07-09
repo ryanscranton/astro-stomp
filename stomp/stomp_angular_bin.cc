@@ -8,11 +8,6 @@
 // a way as to make the analysis of that data as algorithmically efficient as
 // possible.
 //
-// This file contains a single class for dealing with angular annuli
-// on the sky.  There is no heavy coding here (indeed, all of the class code is
-// in this header), but the functionality here is necessary for the angular
-// correlation operations in stomp_correlation.h as well as the pair finding
-// in the TreePixel and TreeMap classes.
 
 #include "stomp_core.h"
 #include "stomp_angular_bin.h"
@@ -140,38 +135,42 @@ void AngularBin::CalculateResolution(double lammin, double lammax,
 
   while (((small_good < ny_req) || (eta_good < ny_req)) &&
 	 (pixel_resolution <= max_resolution/2)) {
-    
+
     small_good = eta_good = 0;
     pixel_resolution <<= 1;
 
-    tmp_pix.SetResolution(pixel_resolution);
-    tmp2_pix.SetResolution(pixel_resolution);
+    // Skip this resolution scale if the Lambda limits are smaller than pixels
+    // at this resolution.
+    if (lammax - lammin > sqrt(Pixel::Area(pixel_resolution))) {
+      tmp_pix.SetResolution(pixel_resolution);
+      tmp2_pix.SetResolution(pixel_resolution);
 
-    tmp_pix.SetPixnumFromAng(min_ang);
-    uint32_t ny_max = tmp_pix.PixelY();
+      tmp_pix.SetPixnumFromAng(min_ang);
+      uint32_t ny_max = tmp_pix.PixelY();
 
-    tmp_pix.SetPixnumFromAng(max_ang);
-    uint32_t ny_min = tmp_pix.PixelY();
+      tmp_pix.SetPixnumFromAng(max_ang);
+      uint32_t ny_min = tmp_pix.PixelY();
 
-    ny_req = ny_max - ny_min;
-
-    tmp2_pix = tmp_pix;
-    for (uint32_t y=ny_min+1,x=tmp2_pix.PixelX();y<=ny_max;y++) {
-      tmp_pix.SetPixnumFromXY(x+1,y);
-      double costheta =
-	tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
-	tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
-	tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
-      if (1.0 - costheta*costheta < Sin2ThetaMax()) eta_good++;
-
-      tmp_pix.SetPixnumFromXY(x,y);
-      costheta =
-	tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
-	tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
-	tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
-      if (1.0 - costheta*costheta < Sin2ThetaMax()) small_good++;
+      ny_req = ny_max - ny_min;
 
       tmp2_pix = tmp_pix;
+      for (uint32_t y=ny_min+1,x=tmp2_pix.PixelX();y<=ny_max;y++) {
+        tmp_pix.SetPixnumFromXY(x+1,y);
+        double costheta =
+            tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
+            tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
+            tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
+        if (1.0 - costheta*costheta < Sin2ThetaMax()) eta_good++;
+
+        tmp_pix.SetPixnumFromXY(x,y);
+        costheta =
+            tmp_pix.UnitSphereX()*tmp2_pix.UnitSphereX() +
+            tmp_pix.UnitSphereY()*tmp2_pix.UnitSphereY() +
+            tmp_pix.UnitSphereZ()*tmp2_pix.UnitSphereZ();
+        if (1.0 - costheta*costheta < Sin2ThetaMax()) small_good++;
+
+        tmp2_pix = tmp_pix;
+      }
     }
   }
 

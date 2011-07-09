@@ -40,7 +40,7 @@ class AngularBin {
 
  public:
   AngularBin();
-  ~AngularBin();
+  virtual ~AngularBin();
 
   // The simplest AngularBin object needs only a minimum and maximum angular
   // range (generally denoted by _theta_ in the literature).  Theta is taken to

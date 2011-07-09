@@ -333,6 +333,11 @@ double Pixel::Area() {
     (Resolution()*Resolution());
 }
 
+double Pixel::Area(uint32_t resolution) {
+  return HPixArea*HPixResolution*HPixResolution/
+    (resolution*resolution);
+}
+
 uint32_t Pixel::SuperPix(uint32_t lo_resolution) {
   return (Resolution() < lo_resolution ?
 	  Nx0*Ny0*lo_resolution*lo_resolution :
@@ -524,6 +529,14 @@ void Pixel::WithinAnnulus(double theta_min, double theta_max,
 
 void Pixel::WithinAnnulus(AngularBin& theta, PixelVector& pix,
 			  bool check_full_pixel) {
+  AngularCoordinate ang;
+  Ang(ang);
+  WithinAnnulus(ang, Resolution(), theta, pix, check_full_pixel);
+}
+
+void Pixel::WithinAnnulus(AngularCoordinate& ang, uint32_t resolution,
+                          AngularBin& theta, PixelVector& pix,
+                          bool check_full_pixel) {
   if (!pix.empty()) pix.clear();
 
   uint32_t y_min;
@@ -531,9 +544,10 @@ void Pixel::WithinAnnulus(AngularBin& theta, PixelVector& pix,
   std::vector<uint32_t> x_min;
   std::vector<uint32_t> x_max;
 
-  XYBounds(theta.ThetaMax(), x_min, x_max, y_min, y_max, true);
+  XYBounds(ang, resolution, theta.ThetaMax(),
+           x_min, x_max, y_min, y_max, true);
 
-  uint32_t nx = Nx0*Resolution();
+  uint32_t nx = Nx0*resolution;
   uint32_t nx_pix;
 
   for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
@@ -545,24 +559,24 @@ void Pixel::WithinAnnulus(AngularBin& theta, PixelVector& pix,
     if (nx_pix > nx) nx_pix = nx;
     for (uint32_t m=0,x=x_min[n];m<nx_pix;m++,x++) {
       if (x == nx) x = 0;
-      Pixel tmp_pix(x, y, Resolution(), 1.0);
+      Pixel tmp_pix(x, y, resolution, 1.0);
       bool within_bounds =
-	theta.WithinCosBounds(UnitSphereX()*tmp_pix.UnitSphereX() +
-			      UnitSphereY()*tmp_pix.UnitSphereY() +
-			      UnitSphereZ()*tmp_pix.UnitSphereZ());
+	theta.WithinCosBounds(ang.UnitSphereX()*tmp_pix.UnitSphereX() +
+			      ang.UnitSphereY()*tmp_pix.UnitSphereY() +
+			      ang.UnitSphereZ()*tmp_pix.UnitSphereZ());
       if (check_full_pixel && within_bounds) {
-	if (theta.WithinCosBounds(UnitSphereX()*tmp_pix.UnitSphereX_UL() +
-				  UnitSphereY()*tmp_pix.UnitSphereY_UL() +
-				  UnitSphereZ()*tmp_pix.UnitSphereZ_UL()) &&
-	    theta.WithinCosBounds(UnitSphereX()*tmp_pix.UnitSphereX_UR() +
-				  UnitSphereY()*tmp_pix.UnitSphereY_UR() +
-				  UnitSphereZ()*tmp_pix.UnitSphereZ_UR()) &&
-	    theta.WithinCosBounds(UnitSphereX()*tmp_pix.UnitSphereX_LL() +
-				  UnitSphereY()*tmp_pix.UnitSphereY_LL() +
-				  UnitSphereZ()*tmp_pix.UnitSphereZ_LL()) &&
-	    theta.WithinCosBounds(UnitSphereX()*tmp_pix.UnitSphereX_LR() +
-				  UnitSphereY()*tmp_pix.UnitSphereY_LR() +
-				  UnitSphereZ()*tmp_pix.UnitSphereZ_LR())) {
+	if (theta.WithinCosBounds(ang.UnitSphereX()*tmp_pix.UnitSphereX_UL() +
+				  ang.UnitSphereY()*tmp_pix.UnitSphereY_UL() +
+				  ang.UnitSphereZ()*tmp_pix.UnitSphereZ_UL()) &&
+	    theta.WithinCosBounds(ang.UnitSphereX()*tmp_pix.UnitSphereX_UR() +
+				  ang.UnitSphereY()*tmp_pix.UnitSphereY_UR() +
+				  ang.UnitSphereZ()*tmp_pix.UnitSphereZ_UR()) &&
+	    theta.WithinCosBounds(ang.UnitSphereX()*tmp_pix.UnitSphereX_LL() +
+				  ang.UnitSphereY()*tmp_pix.UnitSphereY_LL() +
+				  ang.UnitSphereZ()*tmp_pix.UnitSphereZ_LL()) &&
+	    theta.WithinCosBounds(ang.UnitSphereX()*tmp_pix.UnitSphereX_LR() +
+				  ang.UnitSphereY()*tmp_pix.UnitSphereY_LR() +
+				  ang.UnitSphereZ()*tmp_pix.UnitSphereZ_LR())) {
 	  within_bounds = true;
 	} else {
 	  within_bounds = false;
@@ -610,171 +624,39 @@ void Pixel::BoundingRadius(AngularCoordinate& ang, double theta_max,
   }
 }
 
-void Pixel::XYBounds(double theta, uint32_t& x_min,
-		     uint32_t& x_max, uint32_t& y_min,
-		     uint32_t& y_max, bool add_buffer) {
-  double lammin = Lambda() - theta;
-  if (lammin < -90.0) lammin = -90.0;
-  double lammax = Lambda() + theta;
-  if (lammax > 90.0) lammax = 90.0;
-
-  double sphere_correction  = 1.0;
-  if (fabs(lammin) > fabs(lammax)) {
-    sphere_correction =
-      1.0 + 0.000192312*lammin*lammin -
-      1.82764e-08*lammin*lammin*lammin*lammin +
-      1.28162e-11*lammin*lammin*lammin*lammin*lammin*lammin;
-  } else {
-    sphere_correction =
-      1.0 + 0.000192312*lammax*lammax -
-      1.82764e-08*lammax*lammax*lammax*lammax +
-      1.28162e-11*lammax*lammax*lammax*lammax*lammax*lammax;
-  }
-
-  uint32_t nx = Nx0*Resolution();
-  uint32_t ny = Ny0*Resolution();
-
-  double etamin = Eta() - theta*sphere_correction;
-  etamin -= EtaOffSet;
-  etamin *= DegToRad;
-
-  if (DoubleLT(etamin, 0.0)) etamin += 2.0*Pi;
-  if (DoubleGT(etamin, 2.0*Pi)) etamin -= 2.0*Pi;
-
-  etamin /= 2.0*Pi;
-  x_min = static_cast<uint32_t>(nx*etamin);
-
-  lammax = (90.0 - lammax)*DegToRad;
-
-  if (lammax >= Pi) {
-    y_min = ny - 1;
-  } else {
-    y_min = static_cast<uint32_t>(ny*((1.0 - cos(lammax))/2.0));
-  }
-
-  double etamax = Eta() + theta*sphere_correction;
-  etamax -= EtaOffSet;
-  etamax *= DegToRad;
-
-  if (DoubleLT(etamax, 0.0)) etamax += 2.0*Pi;
-  if (DoubleGT(etamax, 2.0*Pi)) etamax -= 2.0*Pi;
-
-  etamax /= 2.0*Pi;
-  x_max = static_cast<uint32_t>(nx*etamax);
-
-  lammin = (90.0 - lammin)*DegToRad;
-
-  if (lammin >= Pi) {
-    y_max = ny - 1;
-  } else {
-    y_max = static_cast<uint32_t>(ny*((1.0 - cos(lammin))/2.0));
-  }
-
-  if (add_buffer) {
-    if (x_min == 0) {
-      x_min = nx - 1;
-    } else {
-      x_min--;
-    }
-
-    if (x_max == nx - 1) {
-      x_max = 0;
-    } else {
-      x_max++;
-    }
-
-    if (y_max < ny - 1) y_max++;
-    if (y_min > 0) y_min--;
-  }
+void Pixel::XYBounds(double theta,
+		     uint32_t& x_min, uint32_t& x_max,
+		     uint32_t& y_min, uint32_t& y_max,
+		     bool add_buffer) {
+  AngularCoordinate ang = Ang();
+  XYBounds(ang, Resolution(), theta, x_min, x_max, y_min, y_max, add_buffer);
 }
 
-void Pixel::XYBounds(double theta, std::vector<uint32_t>& x_min,
+void Pixel::XYBounds(double theta,
+		     std::vector<uint32_t>& x_min,
 		     std::vector<uint32_t>& x_max,
 		     uint32_t& y_min, uint32_t& y_max,
 		     bool add_buffer) {
-  if (!x_min.empty()) x_min.clear();
-  if (!x_max.empty()) x_max.clear();
-
-  double lammin = Lambda() - theta;
-  if (lammin < -90.0) lammin = -90.0;
-  double lammax = Lambda() + theta;
-  if (lammax > 90.0) lammax = 90.0;
-
-  uint32_t ny = Ny0*Resolution();
-
-  lammax = (90.0 - lammax)*DegToRad;
-
-  if (lammax >= Pi) {
-    y_min = ny - 1;
-  } else {
-    y_min = static_cast<uint32_t>(ny*((1.0 - cos(lammax))/2.0));
-  }
-
-  lammin = (90.0 - lammin)*DegToRad;
-
-  if (lammin >= Pi) {
-    y_max = ny - 1;
-  } else {
-    y_max = static_cast<uint32_t>(ny*((1.0 - cos(lammin))/2.0));
-  }
-
-  if (add_buffer) {
-    if (y_max < ny - 1) y_max++;
-    if (y_min > 0) y_min--;
-  }
-
-  if (!x_min.empty()) x_min.clear();
-  if (!x_max.empty()) x_max.clear();
-
-  x_min.reserve(y_max-y_min+1);
-  x_max.reserve(y_max-y_min+1);
-
-  uint32_t nx = Nx0*Resolution();
-
-  for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
-    double lam = 90.0 -
-      RadToDeg*acos(1.0 - 2.0*(y+0.5)/(Ny0*Resolution()));
-
-    double sphere_correction = 1.0 +
-      lam*lam*(0.000192312 - lam*lam*(1.82764e-08 - 1.28162e-11*lam*lam));
-
-    double etamin = Eta() - theta*sphere_correction;
-    etamin -= EtaOffSet;
-    etamin *= DegToRad;
-
-    if (DoubleLT(etamin, 0.0)) etamin += 2.0*Pi;
-    if (DoubleGT(etamin, 2.0*Pi)) etamin -= 2.0*Pi;
-
-    etamin /= 2.0*Pi;
-    x_min.push_back(static_cast<uint32_t>(nx*etamin));
-
-    double etamax = Eta() + theta*sphere_correction;
-    etamax -= EtaOffSet;
-    etamax *= DegToRad;
-
-    if (DoubleLT(etamax, 0.0)) etamax += 2.0*Pi;
-    if (DoubleGT(etamax, 2.0*Pi)) etamax -= 2.0*Pi;
-
-    etamax /= 2.0*Pi;
-    x_max.push_back(static_cast<uint32_t>(nx*etamax));
-
-    if (add_buffer) {
-      if (x_min[n] == 0) {
-	x_min[n] = nx - 1;
-      } else {
-	x_min[n] -= 1;
-      }
-
-      if (x_max[n] == nx - 1) {
-	x_max[n] = 0;
-      } else {
-	x_max[n] += 1;
-      }
-    }
-  }
+  AngularCoordinate ang = Ang();
+  XYBounds(ang, Resolution(), theta, x_min, x_max, y_min, y_max, add_buffer);
 }
 
 void Pixel::XYBounds(AngularCoordinate& ang, double theta,
+		     uint32_t& x_min, uint32_t& x_max,
+		     uint32_t& y_min, uint32_t& y_max,
+		     bool add_buffer) {
+  XYBounds(ang, Resolution(), theta, x_min, x_max, y_min, y_max, add_buffer);
+}
+
+void Pixel::XYBounds(AngularCoordinate& ang, double theta,
+		     std::vector<uint32_t>& x_min,
+		     std::vector<uint32_t>& x_max,
+		     uint32_t& y_min, uint32_t& y_max,
+		     bool add_buffer) {
+  XYBounds(ang, Resolution(), theta, x_min, x_max, y_min, y_max, add_buffer);
+}
+
+void Pixel::XYBounds(AngularCoordinate& ang, uint32_t resolution, double theta,
 		     uint32_t& x_min, uint32_t& x_max,
 		     uint32_t& y_min, uint32_t& y_max,
 		     bool add_buffer) {
@@ -796,8 +678,8 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
       1.28162e-11*lammax*lammax*lammax*lammax*lammax*lammax;
   }
 
-  uint32_t nx = Nx0*Resolution();
-  uint32_t ny = Ny0*Resolution();
+  uint32_t nx = Nx0*resolution;
+  uint32_t ny = Ny0*resolution;
 
   double etamin = ang.Eta() - theta*sphere_correction;
   etamin -= EtaOffSet;
@@ -853,7 +735,7 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
   }
 }
 
-void Pixel::XYBounds(AngularCoordinate& ang, double theta,
+void Pixel::XYBounds(AngularCoordinate& ang, uint32_t resolution, double theta,
 		     std::vector<uint32_t>& x_min,
 		     std::vector<uint32_t>& x_max,
 		     uint32_t& y_min, uint32_t& y_max,
@@ -866,7 +748,7 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
   double lammax = ang.Lambda() + theta;
   if (lammax > 90.0) lammax = 90.0;
 
-  uint32_t ny = Ny0*Resolution();
+  uint32_t ny = Ny0*resolution;
 
   lammax = (90.0 - lammax)*DegToRad;
   if (lammax >= Pi) {
@@ -908,10 +790,10 @@ void Pixel::XYBounds(AngularCoordinate& ang, double theta,
   x_max.reserve(y_max-y_min+1);
 
   double ang_eta = ang.Eta();
-  uint32_t nx = Nx0*Resolution();
+  uint32_t nx = Nx0*resolution;
   for (uint32_t y=y_min,n=0;y<=y_max;y++,n++) {
     double lam = 90.0 -
-      RadToDeg*acos(1.0 - 2.0*(y+0.5)/(Ny0*Resolution()));
+      RadToDeg*acos(1.0 - 2.0*(y+0.5)/(Ny0*resolution));
 
     double sphere_correction = 1.0 +
       lam*lam*(0.000192312 - lam*lam*(1.82764e-08 - 1.28162e-11*lam*lam));
@@ -1541,6 +1423,10 @@ void Pixel::Ang(AngularCoordinate& ang) {
 			   acos(1.0-2.0*(y_+0.5)/(Ny0*Resolution())),
 			   RadToDeg*(2.0*Pi*(x_+0.5))/
 			   (Nx0*Resolution()) + EtaOffSet);
+}
+
+AngularCoordinate Pixel::Ang() {
+  return AngularCoordinate(Lambda(), Eta(), AngularCoordinate::Survey);
 }
 
 double Pixel::Lambda() {

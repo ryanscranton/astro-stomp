@@ -844,7 +844,7 @@ bool AngularCoordinate::ToAngularVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements, " ");
 	  n_lines++;
 
 	  if ((line_elements.size() > theta_column) &&
@@ -1182,7 +1182,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements, " ");
 	  n_lines++;
 
 	  if ((line_elements.size() > theta_column) &&
@@ -1338,7 +1338,7 @@ bool WeightedAngularCoordinate::ToWAngularVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements, " ");
 	  n_lines++;
 
 	  if ((line_elements.size() > theta_column) &&
@@ -1623,7 +1623,7 @@ bool CosmoCoordinate::ToCosmoVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements, " ");
 	  n_lines++;
 
 	  if ((line_elements.size() > theta_column) &&
@@ -1869,7 +1869,7 @@ bool IndexedAngularCoordinate::ToIAngularVector(const std::string& input_file,
 
 	  input_file_str.getline(line_buffer, 1000);
 	  std::string line_string(line_buffer);
-	  Tokenize(line_string, line_elements);
+	  Tokenize(line_string, line_elements, " ");
 
 	  if ((line_elements.size() > theta_column) &&
 	      (line_elements.size() > phi_column)) {
