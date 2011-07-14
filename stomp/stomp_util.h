@@ -15,6 +15,7 @@
 #define STOMP_UTIL_H
 
 #include <sys/time.h>
+#include <string>
 
 namespace Stomp {
 
