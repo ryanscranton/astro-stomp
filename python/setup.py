@@ -31,6 +31,7 @@ except:
     depends=[]
 
 
+include_dirs.append('../')
 
 # create the ups table
 pyvers='%s.%s' % sys.version_info[0:2]

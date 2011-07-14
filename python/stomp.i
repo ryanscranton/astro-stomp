@@ -24,6 +24,7 @@
     SWIG_fail;
 %}
 
+%feature("autodoc", "1");
 
 %include stdint.i
 %include stl.i
