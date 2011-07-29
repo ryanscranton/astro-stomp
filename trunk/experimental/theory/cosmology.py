@@ -33,7 +33,7 @@ class SingleEpoch(object):
         self.omega_b0 = camb_param.omega_baryon
         self.omega_l0 = camb_param.omega_lambda
         self.h = camb_param.hubble/100.0
-        self.H0 = self.h/3000.0
+        self.H0 = self.h*100.0/(3*10**5)
         self.omega_r0 = 4.17e-5/(self.h**2)
 
         self.flat = True
@@ -41,15 +41,15 @@ class SingleEpoch(object):
         self.closed = False
 
         omega_total = self.omega_m0 + self.omega_l0
-        if omega_total <= 1.0001 and omega_total >= 0.9999:
+        if omega_total <= 1.001 and omega_total >= 0.999:
             self.flat = True
         else:
             self.flat = False
-        if omega_total <= 0.9999:
+        if omega_total <= 0.999:
             self.open = True
         else:
             self.open = False
-        if omega_total > 1.0001:
+        if omega_total > 1.001:
             self.closed = True
         else:
             self.closed = False
@@ -74,6 +74,11 @@ class SingleEpoch(object):
         growth, growth_err = integrate.quad(self._growth_integrand, 0.0, a)
         growth *= 2.5*self.omega_m0/(self.E(self._redshift)*self.H0)
         self._growth = growth/self.growth_norm
+
+    def set_redshift(self, redshift):
+        self._redshift = redshift
+
+        self._initialize_defaults()
 
     def E(self, redshift):
         return 1.0/(self.H0*numpy.sqrt(self.E0(redshift)))
