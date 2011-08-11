@@ -360,6 +360,16 @@ class Map : public BaseMap {
   PyObject* GenerateRandomGal(uint32_t n_point,
 			      bool use_weighted_sampling = false)
     throw (const char*);
+
+
+  // generate random points in a circle or possibly sub-quadrant around the
+  // input lambda,eta lambda,eta,R in degrees, quadrante in [0,3]
+  PyObject* GenerateRandomQuadrantPointsSurvey(double lambda_center, double eta_center, 
+          double R, uint32_t n_point, int quadrant=-1) 
+    throw (const char*);
+
+
+  // radius in degrees
   PyObject* Contains(PyObject* x1obj,PyObject* x2obj,const std::string& system,
       PyObject* radobj=NULL) throw (const char* );
 
@@ -373,12 +383,16 @@ class Map : public BaseMap {
   static int FOURTH_QUADRANT_OK;
 
   // Check four quadrants using a monte carlo technique
+  // radius in degrees
   int QuadrantsContainedMC(AngularCoordinate& ang, double radius,
           Stomp::AngularCoordinate::Sphere coord_system) throw (const char*);
 
+
   // check a single quadrant
+  // radius in degrees
   bool QuadrantContainedMC(AngularCoordinate& ang, double radius,
           int quadrant) throw (const char*);
+
 
   // Depending on our precision requirements, it can occasionally be faster to
   // use Monte Carlo sampling to find out if a given region is within our Map.
@@ -532,9 +546,12 @@ class Map : public BaseMap {
 
 
 private:
-  void _GenerateRandLamEtaQuadrant(double lambda,double eta, double R,
-      int quadrant, double& rand_lambda,
-      double& rand_eta) throw (const char*);
+
+  // generate a random point in the specified quadrant in sdss survey
+  // coordinates
+  // lambda, eta, R in degrees. quadrant in [0,3]
+  void _GenerateRandLamEtaQuadrant(double lambda, double eta, double R,
+      int quadrant, double& rand_lambda, double& rand_eta) throw (const char*);
 
   SubMapVector sub_map_;
   MapIterator begin_, end_;
