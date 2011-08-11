@@ -1842,18 +1842,18 @@ PyObject* Map::GenerateRandomPoints(uint32_t n_point,
       k = superpix[n].Superpixnum();
 
       z = sub_map_[k].ZMin() +
-	mtrand.rand(sub_map_[k].ZMax() - sub_map_[k].ZMin());
+        mtrand.rand(sub_map_[k].ZMax() - sub_map_[k].ZMin());
       lambda = asin(z)*RadToDeg;
       eta = sub_map_[k].EtaMin() +
-	mtrand.rand(sub_map_[k].EtaMax() - sub_map_[k].EtaMin());
+        mtrand.rand(sub_map_[k].EtaMax() - sub_map_[k].EtaMin());
       tmp_ang.SetSurveyCoordinates(lambda,eta);
 
       keep = sub_map_[k].FindLocation(tmp_ang,weight);
 
       if (use_weighted_sampling && keep) {
-	probability_limit =
-	  minimum_probability + (weight - min_weight_)*probability_slope;
-	if (mtrand.rand(1.0) > probability_limit) keep = false;
+        probability_limit =
+          minimum_probability + (weight - min_weight_)*probability_slope;
+        if (mtrand.rand(1.0) > probability_limit) keep = false;
       }
     }
 
@@ -1901,6 +1901,35 @@ PyObject* Map::GenerateRandomGal(uint32_t n_point, bool use_weighted_sampling)
 			      use_weighted_sampling);
 }
 
+// generate random points in a quadrant around the input lambda,eta
+// lambda,eta,R in degrees, quadrante in [0,3]
+PyObject* Map::GenerateRandomQuadrantPointsSurvey(double lambda_center, double eta_center, 
+    double R, uint32_t n_point, int quadrant) throw (const char*)  {
+
+  std::srand ( std::time(NULL) );
+
+  // Make the output numpy arrays
+  NumpyVector<double> rand_lambda(n_point);
+  NumpyVector<double> rand_eta(n_point);
+
+  double rlam=0, reta=0;
+  for (uint32_t i=0; i<n_point; i++) {
+    _GenerateRandLamEtaQuadrant(lambda_center, eta_center, R, quadrant,
+				                        rlam, reta);
+    rand_lambda[i] = rlam;
+    rand_eta[i] = reta;
+  }
+
+  PyObject* output_tuple = PyTuple_New(2);
+  PyTuple_SetItem(output_tuple, 0, rand_lambda.getref());
+  PyTuple_SetItem(output_tuple, 1, rand_eta.getref());
+
+  return output_tuple;
+}
+
+
+
+
 PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
 			const std::string& system, PyObject* radobj)
   throw (const char* ) {
@@ -1926,7 +1955,9 @@ PyObject* Map::Contains(PyObject* x1obj, PyObject* x2obj,
     if (nrad != 1 && nrad != x1.size()) {
       throw "radius must be same length as coordinates or length 1";
     }
-    thisrad = rad[0];
+    if (nrad == 1) {
+      thisrad = rad[0];
+    }
     // seed the random number generator.  Distinctive to
     // one second
     std::srand ( std::time(NULL) );
@@ -2076,7 +2107,7 @@ void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta,
   double sinr,cosr;
   double min_theta;
 
-  double rand_r, rand_psi;
+  double rand_r, rand_psi, rand_num;
 
   // generate uniformly in R^2
   // random [0,1)
@@ -2085,14 +2116,17 @@ void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta,
     ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
   rand_r = sqrt(rand_r)*R*DegToRad;
 
-  // generate theta uniformly from [min_theta,min_theta+90)
-  min_theta = quadrant*M_PI/2.;
-
-  rand_psi =
+  rand_num =
     ( (double)std::rand() / ((double)(RAND_MAX)+(double)(1)) );
-  //rand_psi = mtrand.randExc();
-  rand_psi = M_PI/2.*rand_psi + min_theta;
 
+  // generate theta uniformly from [min_theta,min_theta+90)
+  if (quadrant == -1) {
+    // full circle
+    rand_psi = rand_num*2.*M_PI;
+  } else {
+    min_theta = quadrant*M_PI/2.;
+    rand_psi = M_PI/2.*rand_num + min_theta;
+  }
   cospsi = cos(rand_psi);
 
 
@@ -2123,6 +2157,13 @@ void Map::_GenerateRandLamEtaQuadrant(double lambda, double eta,
 
   switch(quadrant)
   {
+    case -1:
+      if (rand_num > 0.5) {
+        phi2 = phi + Dphi;
+      } else {
+        phi2 = phi - Dphi;
+      }
+      break;
     case 0:
       phi2 = phi + Dphi;
       break;
