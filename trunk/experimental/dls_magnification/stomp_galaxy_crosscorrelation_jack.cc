@@ -15,6 +15,7 @@ DEFINE_string(galaxy_file_a, "",
 DEFINE_string(galaxy_file_b, "",
               "Name of the ASCII file containing the second galaxies");
 DEFINE_bool(galaxy_radec, false, "Galaxy coordinates are in RA-DEC");
+DEFINE_bool(use_only_pairs, false, "Use Only Pairs in correlation");
 DEFINE_string(output_tag, "test",
               "Tag for output file: Wtheta_OUTPUT_TAG");
 DEFINE_double(theta_min, 0.001, "Minimum angular scale (in degrees)");
@@ -166,17 +167,21 @@ int main(int argc, char **argv) {
 
   // Now we use the regions version of the auto-correlation code to find our
   // result.
-  if (FLAGS_maximum_resolution == -1) {
-    wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*
-							n_galaxy_b)), 
-			     stomp_map->Area());
+  if (FLAGS_use_only_pairs) {
+    wtheta.UseOnlyPairs();
   }
   else {
-    std::cout << "Setting maximum resolution to " <<
-      static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
-    wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+    if (FLAGS_maximum_resolution == -1) {
+      wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*
+							  n_galaxy_b)), 
+			       stomp_map->Area());
+    }
+    else {
+      std::cout << "Setting maximum resolution to " <<
+	static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
+      wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+    }
   }
-  
 
   // Now we use the regions version of the auto-correlation code to find our
   // result.

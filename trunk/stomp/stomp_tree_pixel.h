@@ -29,6 +29,7 @@ namespace Stomp {
 
 class AngularBin;           // class definition in stomp_angular_bin.h
 class AngularCorrelation;   // class definition in stomp_angular_correlation.h
+class RadialBin;
 class TreePixel;
 class TreeNeighbor;
 class NearestNeighborPixel;

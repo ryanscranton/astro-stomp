@@ -17,6 +17,7 @@
 #include "stomp_core.h"
 #include "stomp_tree_pixel.h"
 #include "stomp_angular_bin.h"
+#include "stomp_radial_bin.h"
 #include "stomp_angular_correlation.h"
 
 namespace Stomp {

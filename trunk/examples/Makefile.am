@@ -14,6 +14,7 @@ exampledir = @top_srcdir@/examples
 example_PROGRAMS = stomp_adapt_map stomp_circle_coverage stomp_combine_maps \
                    stomp_galaxy_autocorrelation \
                    stomp_galaxy_autocorrelation_jack stomp_local_density \
+                   stomp_galaxy_radial_autocorrelation_jack \
                    stomp_pixelize_circles stomp_stripe_filter \
                    stomp_sysmap_density stomp_sysmap_filter \
                    stomp_sysmap_generator stomp_sys_xcorr
@@ -27,6 +28,8 @@ stomp_combine_maps_SOURCES = stomp_combine_maps.cc
 stomp_galaxy_autocorrelation_SOURCES = stomp_galaxy_autocorrelation.cc
 
 stomp_galaxy_autocorrelation_jack_SOURCES = stomp_galaxy_autocorrelation_jack.cc
+
+stomp_galaxy_radial_autocorrelation_jack_SOURCES = stomp_galaxy_radial_autocorrelation_jack.cc
 
 stomp_local_density_SOURCES = stomp_local_density.cc
 

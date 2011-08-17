@@ -21,6 +21,15 @@
 
 namespace Stomp {
 
+AngularCorrelation::AngularCorrelation() {
+  theta_min_ = theta_max_ = sin2theta_min_ = sin2theta_max_ = 0.0;
+  min_resolution_ = HPixResolution;
+  max_resolution_ = HPixResolution;
+  regionation_resolution_ = 0;
+  n_region_ = -1;
+  manual_resolution_break_ = false;
+}
+
 AngularCorrelation::AngularCorrelation(double theta_min, double theta_max,
 				       double bins_per_decade,
 				       bool assign_resolutions) {
@@ -170,7 +179,7 @@ void AngularCorrelation::AutoMaxResolution(uint32_t n_obj, double area) {
     if ((n_obj > 2000000) && (n_obj < 10000000)) max_resolution = 1024;
   }
 
-  std::cout << "Stomp::AgularCorrelation::AutoMaxResolution - " <<
+  std::cout << "Stomp::AngularCorrelation::AutoMaxResolution - " <<
     "Setting maximum resolution to " <<
     static_cast<int>(max_resolution) << "...\n";
 
@@ -232,14 +241,14 @@ void AngularCorrelation::FindAutoCorrelationWithRegions(Map& stomp_map,
     AutoMaxResolution(gal.size(), stomp_map.Area());
 
   if (n_regions == 0) n_regions = static_cast<uint16_t>(2*thetabin_.size());
-  std::cout << "Stomp::AgularCorrelation::FindAutoCorrelationWithRegions - " <<
+  std::cout << "Stomp::AngularCorrelation::FindAutoCorrelationWithRegions - " <<
     "Regionating with " << n_regions << " regions...\n";
   uint16_t n_true_regions = stomp_map.NRegion();
   if (n_true_regions == 0)
     n_true_regions = stomp_map.InitializeRegions(n_regions);
 
   if (n_true_regions != n_regions) {
-    std::cout << "Stomp::AgularCorrelation::" <<
+    std::cout << "Stomp::AngularCorrelation::" <<
       "FindAutoCorrelationWithRegions - Splitting into " << n_true_regions <<
       " rather than " << n_regions << "...\n";
     n_regions = n_true_regions;
@@ -247,7 +256,7 @@ void AngularCorrelation::FindAutoCorrelationWithRegions(Map& stomp_map,
 
   regionation_resolution_ = stomp_map.RegionResolution();
 
-  std::cout << "Stomp::AgularCorrelation::FindAutoCorrelationWithRegions - " <<
+  std::cout << "Stomp::AngularCorrelation::FindAutoCorrelationWithRegions - " <<
     "Regionated at " << regionation_resolution_ << "...\n";
   InitializeRegions(n_regions);
   if (regionation_resolution_ > min_resolution_)
@@ -284,7 +293,7 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
   if (n_true_regions == 0)
     n_true_regions = stomp_map.InitializeRegions(n_regions);
   if (n_true_regions != n_regions) {
-    std::cout << "Stomp::AgularCorrelation::FindCrossCorrelationWithRegions" <<
+    std::cout << "Stomp::AngularCorrelation::FindCrossCorrelationWithRegions" <<
       " - Splitting into " << n_true_regions << " rather than " <<
       n_regions << "...\n";
     n_regions = n_true_regions;
@@ -292,7 +301,7 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
 
   regionation_resolution_ = stomp_map.RegionResolution();
 
-  std::cout << "Stomp::AgularCorrelation::FindCrossCorrelationWithRegions" <<
+  std::cout << "Stomp::AngularCorrelation::FindCrossCorrelationWithRegions" <<
     " - Regionated at " << regionation_resolution_ << "...\n";
   InitializeRegions(n_regions);
   if (regionation_resolution_ > min_resolution_)
@@ -316,17 +325,17 @@ void AngularCorrelation::FindCrossCorrelationWithRegions(Map& stomp_map,
 void AngularCorrelation::FindPixelAutoCorrelation(Map& stomp_map,
 						  WAngularVector& galaxy) {
 
-  std::cout << "Stomp::AgularCorrelation::FindPixelAutoCorrelation - " <<
+  std::cout << "Stomp::AngularCorrelation::FindPixelAutoCorrelation - " <<
     "Initializing ScalarMap at " << max_resolution_ << "...\n";
   ScalarMap* scalar_map = new ScalarMap(stomp_map, max_resolution_,
 					ScalarMap::DensityField);
   if (stomp_map.NRegion() > 0) {
-    std::cout << "Stomp::AgularCorrelation::FindPixelAutoCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelAutoCorrelation - " <<
       "Intializing regions...\n";
     scalar_map->InitializeRegions(stomp_map);
   }
 
-  std::cout << "Stomp::AgularCorrelation::FindPixelAutoCorrelation - " <<
+  std::cout << "Stomp::AngularCorrelation::FindPixelAutoCorrelation - " <<
     "Adding points to ScalarMap...\n";
   uint32_t n_filtered = 0;
   uint32_t n_kept = 0;
@@ -338,12 +347,12 @@ void AngularCorrelation::FindPixelAutoCorrelation(Map& stomp_map,
   }
 
   if (n_filtered != galaxy.size())
-    std::cout << "Stomp::AgularCorrelation::FindPixelAutoCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelAutoCorrelation - " <<
       "WARNING: " << galaxy.size() - n_filtered << "/" << galaxy.size() <<
       " objects not within input Map.\n";
 
   if (n_filtered != n_kept)
-    std::cout << "Stomp::AgularCorrelation::FindPixelAutoCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelAutoCorrelation - " <<
       "WARNING: Failed to place " << n_filtered - n_kept << "/" <<
       n_filtered << " filtered objects into ScalarMap.\n";
 
@@ -355,7 +364,7 @@ void AngularCorrelation::FindPixelAutoCorrelation(Map& stomp_map,
 void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& scalar_map) {
   for (ThetaIterator iter=Begin(scalar_map.Resolution());
        iter!=End(scalar_map.Resolution());++iter) {
-    std::cout << "Stomp::AgularCorrelation::FindPixelAutoCorrelation - \n";
+    std::cout << "Stomp::AngularCorrelation::FindPixelAutoCorrelation - \n";
     if (scalar_map.NRegion() > 0) {
       std::cout << "\tAuto-correlating with regions at " <<
 	scalar_map.Resolution() << "...\n";
@@ -389,14 +398,14 @@ void AngularCorrelation::FindPixelAutoCorrelation(ScalarMap& scalar_map) {
 void AngularCorrelation::FindPixelCrossCorrelation(Map& stomp_map,
 						   WAngularVector& galaxy_a,
 						   WAngularVector& galaxy_b) {
-  std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - " <<
+  std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - " <<
     "Initialing ScalarMaps at " << max_resolution_ << "...\n";
   ScalarMap* scalar_map_a = new ScalarMap(stomp_map, max_resolution_,
 					  ScalarMap::DensityField);
   ScalarMap* scalar_map_b = new ScalarMap(stomp_map, max_resolution_,
 					  ScalarMap::DensityField);
   if (stomp_map.NRegion() > 0) {
-    std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - " <<
       "Intializing regions...\n";
     scalar_map_a->InitializeRegions(stomp_map);
     scalar_map_b->InitializeRegions(stomp_map);
@@ -412,11 +421,11 @@ void AngularCorrelation::FindPixelCrossCorrelation(Map& stomp_map,
   }
 
   if (n_filtered != galaxy_a.size())
-    std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - " <<
       "WARNING: " << galaxy_a.size() - n_filtered <<
       "/" << galaxy_a.size() << " objects not within input Map.\n";
   if (n_filtered != n_kept)
-    std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - " <<
       "WARNING: Failed to place " << n_filtered - n_kept <<
       "/" << n_filtered << " filtered objects into ScalarMap.\n";
 
@@ -430,11 +439,11 @@ void AngularCorrelation::FindPixelCrossCorrelation(Map& stomp_map,
   }
 
   if (n_filtered != galaxy_b.size())
-    std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - " <<
       "WARNING: " << galaxy_b.size() - n_filtered << "/" << galaxy_b.size() <<
       " objects not within input Map.\n";
   if (n_filtered != n_kept)
-    std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - " <<
       "WARNING: Failed to place " << n_filtered - n_kept <<
       "/" << n_filtered << " filtered objects into ScalarMap.\n";
 
@@ -447,7 +456,7 @@ void AngularCorrelation::FindPixelCrossCorrelation(Map& stomp_map,
 void AngularCorrelation::FindPixelCrossCorrelation(ScalarMap& map_a,
 						   ScalarMap& map_b) {
   if (map_a.Resolution() != map_b.Resolution()) {
-    std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - " <<
+    std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - " <<
       "Incompatible density map resolutions.  Exiting!\n";
     exit(1);
   }
@@ -471,7 +480,7 @@ void AngularCorrelation::FindPixelCrossCorrelation(ScalarMap& map_a,
       sub_map_b->InitializeRegions(map_a);
     }
 
-    std::cout << "Stomp::AgularCorrelation::FindPixelCrossCorrelation - \n";
+    std::cout << "Stomp::AngularCorrelation::FindPixelCrossCorrelation - \n";
     for (ThetaIterator iter=Begin(resolution);iter!=End(resolution);++iter) {
       if (map_a.NRegion() > 0) {
 	std::cout << "\tCross-correlating with regions at " <<
@@ -503,28 +512,28 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
     if (stomp_map.Contains(*iter)) {
       n_kept++;
       if (!galaxy_tree->AddPoint(*iter)) {
-	std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - " <<
+	std::cout << "Stomp::AngularCorrelation::FindPairAutoCorrelation - " <<
 	  "Failed to add point: " << iter->Lambda() << ", " <<
 	  iter->Eta() << "\n";
 	n_fail++;
       }
     }
   }
-  std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - " <<
+  std::cout << "Stomp::AngularCorrelation::FindPairAutoCorrelation - " <<
     n_kept - n_fail << "/" << galaxy.size() << " objects added to tree;" <<
     n_fail << " failed adds...\n";
 
 
   if (stomp_map.NRegion() > 0) {
     if (!galaxy_tree->InitializeRegions(stomp_map)) {
-      std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - " <<
+      std::cout << "Stomp::AngularCorrelation::FindPairAutoCorrelation - " <<
 	"Failed to initialize regions on TreeMap  Exiting.\n";
       exit(2);
     }
   }
 
   // Galaxy-galaxy
-  std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - \n";
+  std::cout << "Stomp::AngularCorrelation::FindPairAutoCorrelation - \n";
   std::cout << "\tGalaxy-galaxy pairs...\n";
   for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     if (stomp_map.NRegion() > 0) {
@@ -546,7 +555,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
     iter->ResetRandRand();
   }
 
-  std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - \n";
+  std::cout << "Stomp::AngularCorrelation::FindPairAutoCorrelation - \n";
   for (uint8_t rand_iter=0;rand_iter<random_iterations;rand_iter++) {
     std::cout << "\tRandom iteration " <<
       static_cast<int>(rand_iter) << "...\n";
@@ -561,7 +570,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
     for (WAngularIterator iter=random_galaxy.begin();
 	 iter!=random_galaxy.end();++iter) {
       if (!random_tree->AddPoint(*iter)) {
-	std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - " <<
+	std::cout << "Stomp::AngularCorrelation::FindPairAutoCorrelation - " <<
 	  "Failed to add point: " << iter->Lambda() << ", " <<
 	  iter->Eta() << "\n";
       }
@@ -569,7 +578,7 @@ void AngularCorrelation::FindPairAutoCorrelation(Map& stomp_map,
 
     if (stomp_map.NRegion() > 0) {
       if (!random_tree->InitializeRegions(stomp_map)) {
-	std::cout << "Stomp::AgularCorrelation::FindPairAutoCorrelation - " <<
+	std::cout << "Stomp::AngularCorrelation::FindPairAutoCorrelation - " <<
 	  "Failed to initialize regions on TreeMap  Exiting.\n";
 	exit(2);
       }
@@ -624,7 +633,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     if (stomp_map.Contains(*iter)) {
       n_kept++;
       if (!galaxy_tree_a->AddPoint(*iter)) {
-	std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - " <<
+	std::cout << "Stomp::AngularCorrelation::FindPairCrossCorrelation - " <<
 	  "Failed to add point: " << iter->Lambda() << ", " <<
 	  iter->Eta() << "\n";
 	n_fail++;
@@ -632,20 +641,20 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     }
   }
 
-  std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - " <<
+  std::cout << "Stomp::AngularCorrelation::FindPairCrossCorrelation - " <<
     n_kept - n_fail << "/" << galaxy_a.size() <<
     " objects added to tree;" << n_fail << " failed adds...\n";
 
   if (stomp_map.NRegion() > 0) {
     if (!galaxy_tree_a->InitializeRegions(stomp_map)) {
-      std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - " <<
+      std::cout << "Stomp::AngularCorrelation::FindPairCrossCorrelation - " <<
 	"Failed to initialize regions on TreeMap  Exiting.\n";
       exit(2);
     }
   }
 
   // Galaxy-galaxy
-  std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - \n";
+  std::cout << "Stomp::AngularCorrelation::FindPairCrossCorrelation - \n";
   std::cout << "\tGalaxy-galaxy pairs...\n";
   for (ThetaIterator iter=theta_pair_begin_;iter!=theta_pair_end_;++iter) {
     if (stomp_map.NRegion() > 0) {
@@ -669,7 +678,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     iter->ResetRandRand();
   }
 
-  std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - \n";
+  std::cout << "Stomp::AngularCorrelation::FindPairCrossCorrelation - \n";
   for (uint8_t rand_iter=0;rand_iter<random_iterations;rand_iter++) {
     std::cout << "\tRandom iteration " <<
       static_cast<int>(rand_iter) << "...\n";
@@ -694,7 +703,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
     for (WAngularIterator iter=random_galaxy_a.begin();
 	 iter!=random_galaxy_a.end();++iter) {
       if (!random_tree_a->AddPoint(*iter)) {
-	std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - " <<
+	std::cout << "Stomp::AngularCorrelation::FindPairCrossCorrelation - " <<
 	  "Failed to add point: " << iter->Lambda() << ", " <<
 	  iter->Eta() << "\n";
       }
@@ -702,7 +711,7 @@ void AngularCorrelation::FindPairCrossCorrelation(Map& stomp_map,
 
     if (stomp_map.NRegion() > 0) {
       if (!random_tree_a->InitializeRegions(stomp_map)) {
-	std::cout << "Stomp::AgularCorrelation::FindPairCrossCorrelation - " <<
+	std::cout << "Stomp::AngularCorrelation::FindPairCrossCorrelation - " <<
 	  "Failed to initialize regions on TreeMap  Exiting.\n";
 	exit(2);
       }
