@@ -21,6 +21,7 @@
 #include <stomp/stomp_angular_bin.h>
 #include <stomp/stomp_radial_bin.h>
 #include <stomp/stomp_angular_correlation.h>
+#include <stomp/stomp_radial_correlation.h>
 #include <stomp/stomp_pixel.h>
 #include <stomp/stomp_scalar_pixel.h>
 #include <stomp/stomp_tree_pixel.h>

@@ -1741,6 +1741,63 @@ void Map::GenerateRandomPoints(WAngularVector& ang,
   }
 }
 
+void Map::GenerateRandomPoints(CosmoVector& ang, CosmoVector& input_ang,
+			       bool use_weighted_sampling) {
+  if (!ang.empty()) ang.clear();
+  ang.reserve(input_ang.size());
+
+  double minimum_probability = -0.0001;
+  double probability_slope = 0.0;
+  if (use_weighted_sampling) {
+    if (max_weight_ - min_weight_ < 0.0001) {
+      use_weighted_sampling = false;
+    } else {
+      minimum_probability = 1.0/(max_weight_ - min_weight_ + 1.0);
+      probability_slope =
+          (1.0 - minimum_probability)/(max_weight_ - min_weight_);
+    }
+  }
+
+  PixelVector superpix;
+  Coverage(superpix);
+
+  MTRand mtrand;
+  mtrand.seed();
+
+  CosmoCoordinate tmp_ang;
+  for (uint32_t m=0;m<input_ang.size();m++) {
+    if (Contains(input_ang[m])) {
+      bool keep = false;
+      double lambda, eta, z, map_weight, probability_limit;
+      uint32_t n,k,red_id;
+
+      while (!keep) {
+	n = mtrand.randInt(superpix.size()-1);
+	k = superpix[n].Superpixnum();
+
+	z = sub_map_[k].ZMin() + mtrand.rand(sub_map_[k].ZMax() -
+					     sub_map_[k].ZMin());
+	lambda = asin(z)*RadToDeg;
+	eta = sub_map_[k].EtaMin() + mtrand.rand(sub_map_[k].EtaMax() -
+						 sub_map_[k].EtaMin());
+	tmp_ang.SetSurveyCoordinates(lambda,eta);
+
+	keep = sub_map_[k].FindLocation(tmp_ang, map_weight);
+
+	if (use_weighted_sampling && keep) {
+	  probability_limit =
+	    minimum_probability + (map_weight - min_weight_)*probability_slope;
+	  if (mtrand.rand(1.0) > probability_limit) keep = false;
+	}
+      }
+      tmp_ang.SetWeight(input_ang[m].Weight());
+      red_id = mtrand.randInt(input_ang.size()-1);
+      tmp_ang.SetRedshift(input_ang[red_id].Redshift());
+      ang.push_back(tmp_ang);
+    }
+  }
+}
+
 void Map::GenerateSingleRandomPoint(WeightedAngularCoordinate& ang, 
 				    bool return_local_weight,
 				    bool use_weighted_sampling) {

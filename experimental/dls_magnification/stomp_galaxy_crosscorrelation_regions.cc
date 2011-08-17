@@ -17,6 +17,7 @@ DEFINE_string(galaxy_file_b, "",
 DEFINE_string(region_file, "",
 	      "ASCII file containing region definitions");
 DEFINE_bool(galaxy_radec, false, "Galaxy coordinates are in RA-DEC");
+DEFINE_bool(use_only_pairs, false, "Use Only Pair Based Estimator");
 DEFINE_string(output_tag, "test",
               "Tag for output file: Wtheta_OUTPUT_TAG");
 DEFINE_double(theta_min, 0.001, "Minimum angular scale (in degrees)");
@@ -203,6 +204,9 @@ int main(int argc, char **argv) {
   //    static_cast<int>(FLAGS_maximum_resolution) << "...\n";
   //  wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
   //}
+  if (FLAGS.use_only_pairs) {
+    wtheta.UseOnlyPairs();
+  }
   std::cout << "Maximum resolution Set to " <<
     static_cast<int>(wtheta.MaxResolution()) << "...\n";
 
@@ -367,7 +371,7 @@ int main(int argc, char **argv) {
   // the weight field in each angular bin to the galaxy-galaxy field.
   for (Stomp::ThetaIterator iter=wtheta.Begin(0);iter!=wtheta.End(0);++iter) {
     iter->MoveWeightToGalGal();
-    std::cout << "Mean gal-gal is " << iter->MeanGalGal() << " " << iter->NRegion() << "\n";
+    //std::cout << "Mean gal-gal is " << iter->MeanGalGal() << " " << iter->NRegion() << "\n";
   }
 
   // Before we start on the random iterations, we'll zero out the data fields
@@ -398,7 +402,7 @@ int main(int argc, char **argv) {
     for (Stomp::ThetaIterator iter=wtheta.Begin(0);iter!=wtheta.End(0);++iter) {
       //galaxy_tree_a->FindWeightedPairsWithRegions(random_galaxy_b, *iter);
       iter->MoveWeightToGalRand();
-      std::cout << "Mean gal-rand is " << iter->MeanGalRand() << " " << iter->NRegion() << "\n";
+      //std::cout << "Mean gal-rand is " << iter->MeanGalRand() << " " << iter->NRegion() << "\n";
     }
 
     Stomp::TreeMap* random_tree_a = new Stomp::TreeMap(wtheta.MaxResolution(), 200);
@@ -428,7 +432,7 @@ int main(int argc, char **argv) {
     for (Stomp::ThetaIterator iter=wtheta.Begin(0);iter!=wtheta.End(0);++iter) {
       //random_tree_a->FindWeightedPairsWithRegions(random_galaxy_b, *iter);
       iter->MoveWeightToRandRand();
-      std::cout << "Mean rand-rand is " << iter->MeanRandRand() << " " << iter->NRegion() << "\n";
+      //std::cout << "Mean rand-rand is " << iter->MeanRandRand() << " " << iter->NRegion() << "\n";
     }
 
     delete random_tree_a;

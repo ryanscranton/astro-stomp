@@ -524,7 +524,7 @@ void SystematicsCorrelation(Stomp::WAngularVector &galaxy,
   std::string sys_type;
   switch (sys_field) {
   case Seeing:
-    sys_type.append("seeing");
+    sys_type.append("see");
     break;
   case Extinction:
     sys_type.append("ext");

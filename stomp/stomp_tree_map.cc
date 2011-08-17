@@ -20,6 +20,7 @@
 #include "stomp_tree_map.h"
 #include "stomp_map.h"
 #include "stomp_angular_bin.h"
+#include "stomp_radial_bin.h"
 #include "stomp_angular_correlation.h"
 #include "stomp_util.h"
 
@@ -536,6 +537,44 @@ void TreeMap::FindWeightedPairsWithRegions(WAngularVector& w_ang,
 	if (iter != tree_map_.end())
 	  total_weight =
 	    tree_map_[pix_iter->Pixnum()]->FindWeightedPairs(*ang_iter, theta);
+      }
+    }
+  }
+}
+
+void TreeMap::FindWeightedPairsWithRegions(CosmoVector& c_ang,
+					   RadialBin& radius) {
+  if (!RegionsInitialized()) {
+    std::cout <<
+      "Stomp::TreeMap::FindWeightedPairsWithRegions - " <<
+      "Must initialize regions before calling FindPairsWithRegions\n" <<
+      "\tExiting...\n";
+    exit(2);
+  }
+
+  // First we need to find out which pixels this angular bin possibly touches.
+  Pixel center_pix;
+  center_pix.SetResolution(resolution_);
+  PixelVector pix;
+  double total_weight = 0.0;
+  for (CosmoIterator ang_iter=c_ang.begin();
+       ang_iter!=c_ang.end();++ang_iter) {
+    radius.SetRedshift(ang_iter->Redshift());
+    center_pix.BoundingRadius(*ang_iter, radius.ThetaMax(), pix);
+    uint16_t region = FindRegion(center_pix);
+
+    for (PixelIterator pix_iter=pix.begin();pix_iter!=pix.end();++pix_iter) {
+      if (region == FindRegion(*pix_iter)) {
+	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
+	if (iter != tree_map_.end())
+	  total_weight =
+	    tree_map_[pix_iter->Pixnum()]->FindWeightedPairs(*ang_iter,
+							     radius, region);
+      } else {
+	TreeDictIterator iter = tree_map_.find(pix_iter->Pixnum());
+	if (iter != tree_map_.end())
+	  total_weight =
+	    tree_map_[pix_iter->Pixnum()]->FindWeightedPairs(*ang_iter, radius);
       }
     }
   }

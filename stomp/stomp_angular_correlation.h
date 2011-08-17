@@ -40,6 +40,7 @@ class AngularCorrelation {
   // cross-correlation calculations into simple, one-line calls.
 
  public:
+  AngularCorrelation();
   // The first constructor takes an angular minimum and maximum (in degrees)
   // and constructs a logrithmic binning scheme using the specified number
   // of bins per decade (which can be a non-integer value, obviously).  The

@@ -35,6 +35,7 @@ namespace Stomp {
 
 class AngularBin;           // class definition in stomp_angular_bin.h
 class AngularCorrelation;   // class definition in stomp_angular_correlation.h
+class RadialBin;           
 class Map;                  // class definition in stomp_map.h
 class TreePixel;            // class definition in stomp_tree_pixel.h
 class TreeMap;
@@ -170,6 +171,7 @@ class TreeMap : public BaseMap {
   void FindWeightedPairsWithRegions(AngularVector& ang,
                                     AngularCorrelation& wtheta);
   void FindWeightedPairsWithRegions(WAngularVector& w_ang, AngularBin& theta);
+  void FindWeightedPairsWithRegions(CosmoVector& c_ang, RadialBin& radius);
   void FindWeightedPairsWithRegions(WAngularVector& w_ang,
                                     AngularCorrelation& wtheta);
   void FindWeightedPairsWithRegions(AngularVector& ang, AngularBin& theta,

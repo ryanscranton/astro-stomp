@@ -119,6 +119,32 @@ int main(int argc, char **argv)
 	  delete circle_map;
 	  n_regions++;
 	}
+	else if (type==3) {
+	  Stomp::LatLonBound* latlon_bound = 
+	    new Stomp::LatLonBound(dec[0], dec[1], ra[0], ra[1],
+				   Stomp::AngularCoordinate::Equatorial);
+	  raw_area += latlon_bound->Area();
+	  if (FLAGS_verbose) {
+	    std::cout << idx << " " << radius << ", " 
+		      << latlon_bound->Area() << ", " 
+		      << latlon_bound->LambdaMin() << " - " 
+		      << latlon_bound->LambdaMax() << ", " 
+		      << latlon_bound->EtaMin() << " - " 
+		      << latlon_bound->EtaMax() << "\n";
+	  }
+	  Stomp::Map* latlon_map =
+	    new Stomp::Map(*latlon_bound, weight, FLAGS_max_resolution,
+			   FLAGS_verbose);
+	  pixelized_raw_area += latlon_map->Area();
+	  n_kept++;
+	  if (FLAGS_add_maps)
+	    exp_map->AddMap(*latlon_map, false);
+	  else
+	    exp_map->IngestMap(*latlon_map);
+	  delete latlon_bound;
+	  delete latlon_map;
+	  n_regions++;
+	}
 	else if (type==4) {
 	  Stomp::AngularVector ang;
 	  for (int i=0;i<4;i++)
