@@ -26,7 +26,7 @@ defaultCosmoParamDict = {
         "cs2_lam": 1,
         "omega_baryon": 0.0455,
         "omega_cdm": 0.226,
-        "omega_lambda": 0.728,
+        "omega_lambda": 0.7285,
         "omega_neutrino": 0,
         "temp_cmb": 2.726,
         "helium_fraction": 0.249,
@@ -118,7 +118,7 @@ defaultHaloModelParamDict = {
                  # If zero, don't use analytic model.
                  # Standard in model: 1/6.  Deprecated.
 
-    "k": 10.**numpy.arange(-2.,2.,0.1),
+    "k": 10.**numpy.arange(-3.,2.,0.1),
     "dofthp": 1,  # Calculate Fourier-transformed halo profiles (yes=1)?
                   # Optional since it can take a while, and doesn"t
                   # necessarily have to be redone.
@@ -161,14 +161,14 @@ defaultHaloModelParamDict = {
                       # "gm" (galaxy-mass) also acceptable.
 
     # HOD parameters.  Notation as in Scoccimarro et al. (2001)
-    "mcut_msunh": 4e12,  # cut-off mass for haloes to start having > 1 gal.
+    "mcut_msunh": 0.30e13,  # cut-off mass for haloes to start having > 1 gal.
                          # Blue: 4e12 Msun/h.  Red: 2.5e12 Msuh/h
-    "m11_msunh": 1e11,   # mass below which a halo has zero galaxies
+    "m11_msunh": 0.30e13 ,   # (1e11) mass below which a halo has zero galaxies
                          # {0,    m < m11
 
-    "m13_msunh": 1e13,
+    "m13_msunh": 1.84e13, # (1e13)
     "n0": 0.7,       # params in <N_gal|m> = {N0, m11 < m < mcut
-    "alphaexp":0.8,  #                       {N0(m/mcut)^alphaexp, m > mcut
+    "alphaexp":1.0,  # old 0.8               {N0(m/mcut)^alphaexp, m > mcut
 
     "hodkrav":1,  # use Kravtsov et al."s (2004) HOD parameterization.
                   # 2: use possibly more accurate parameterization

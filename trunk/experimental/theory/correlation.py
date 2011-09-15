@@ -14,6 +14,9 @@ Given a kernel function and halo model the class should produce a correlation as
 
 """
 
+speed_of_light = 3*10**5
+degToRad = np.pi/180.0
+
 __author__ = "Chris Morrison <morrison.chrisb@gmail.com>"
 
 class Correlation(object):
@@ -30,7 +33,7 @@ class Correlation(object):
         self.log_theta_min = np.log10(theta_min)
         self.log_theta_max = np.log10(theta_max)
         self.theta_array = np.logspace(self.log_theta_min, 
-                                       self.log_theta_max, 20)
+                                       self.log_theta_max, 100)
         self.wtheta_array= np.zeros(self.theta_array.size)
 
 
@@ -62,7 +65,7 @@ class Correlation(object):
 
     def compute_correlation(self):
         for idx in xrange(self.theta_array.size):
-            print "Computing Theta at", self.theta_array[idx]
+            #print "Computing Theta at", self.theta_array[idx]
             wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
                                                 self.kernel.ln_ktheta_min,
                                                 self.kernel.ln_ktheta_max,
@@ -70,17 +73,45 @@ class Correlation(object):
                                                 limit=200)
             self.wtheta_array[idx] = wtheta
 
+    def correlation(self, theta):
+        wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
+                                            self.kernel.ln_ktheta_min,
+                                            self.kernel.ln_ktheta_max,
+                                            args=(self.theta_array[idx]),
+                                            limit=200)
+        self.wtheta_array[idx] = wtheta
+
     def _correlation_integrand(self, ln_ktheta, theta):
+        dln_ktheta = 1.0
         k = np.exp(ln_ktheta)/theta
-        dk = k
-        return dk*k*self.halo.power_mm(k)*self.kernel.kernel(ln_ktheta)
+        dk = k*dln_ktheta
+        return dk*k*self.halo.power_gm(k)*self.kernel.kernel(ln_ktheta)
 
     def write(self, output_file_name):
         f = open(output_file_name, "w")
         for theta, wtheta in zip(
             self.theta_array, self.wtheta_array):
-            f.write("%1.10f %1.10f\n" % (theta, wtheta))
+            f.write("%1.10f %1.10f\n" % (theta/degToRad, wtheta))
         f.close()
+
+class AutoCorrelation(Correlation):
+
+    def __init__(self, theta_min, theta_max, 
+                 window_function, 
+                 camb_param=None, input_hod=None, halo_param=None, 
+                 powSpec=None, **kws):
+        self.window_function = window_function
+        Correlation.__init__(self, theta_min, theta_max,
+                             window_function, window_function,
+                             camb_param, input_hod, halo_param, powSpec,
+                             **kws)
+
+    def _correlation_integrand(self, ln_ktheta, theta):
+        dln_ktheta = 1.0
+        k = np.exp(ln_ktheta)/theta
+        dk = k*dln_ktheta
+        return dk*k*self.halo.power_gg(k)*self.kernel.kernel(ln_ktheta)
+
 
 class CorrelationDeltaFunction(Correlation):
     
@@ -114,16 +145,18 @@ class CorrelationDeltaFunction(Correlation):
         if camb_param == None:
             camb_param = param.CambParams(**kws)
         self.cosmology = cosmology.MultiEpoch(0,self.z_b+self.z_a,camb_param)
-        self.xiA_a = self.cosmology.angular_diameter_distance(self.z_a)
-        self.xiA_b = self.cosmology.angular_diameter_distance(self.z_b)
-        print (self.cosmology.angular_diameter_distance(self.z_a),
-               self.cosmology.angular_diameter_distance(self.z_b),
-               self.cosmology.comoving_distance(self.z_a),
-               self.cosmology.omega_m0,
+        self.xiA_a = self.cosmology.comoving_distance(self.z_a)
+        self.xiA_b = self.cosmology.comoving_distance(self.z_b)
+        print (self.xiA_a, self.xiA_b, self.cosmology.h, 
+               self.cosmology.omega_m0, 1+self.z_a, self.xiA_b-self.xiA_a,
+               self.xiA_b*self.xiA_a,
                self.cosmology.growth_factor(self.z_a))
-        self.cosmology_prefactor = (3.0/2.0*self.cosmology.omega_m0*
-                (1+self.z_a)*
-                (self.xiA_b-self.xiA_a)/(self.xiA_b*self.xiA_a))
+        self.cosmology_prefactor = (3.0/2.0*(self.cosmology.h*100/
+                                             speed_of_light)**2*
+                                    self.cosmology.omega_m0*
+                                    (1+self.z_a)*
+                                    (self.xiA_b-self.xiA_a)/
+                                    (self.xiA_b*self.xiA_a))
         print self.cosmology_prefactor
 
         self.ln_s_min = np.log(self._k_min*self.xiA_a)
@@ -144,7 +177,7 @@ class CorrelationDeltaFunction(Correlation):
                                                 self.ln_s_max,
                                                 args=(self.theta_array[idx]),
                                                 limit=200)
-            self.wtheta_array[idx] = self.cosmology_prefactor/(2*np.pi)*wtheta
+            self.wtheta_array[idx] = self.cosmology_prefactor*wtheta
 
     def _correlation_integrand(self, ln_s, theta):
         dln_s = 1.0
@@ -163,3 +196,4 @@ class CorrelationDeltaFunction(Correlation):
             f.write("%1.10f %1.10f %1.10f\n" % (k, self._correlation_integrand(
                         ln_s, theta)/s**2,special.j0(s*theta)))
         f.close()
+
