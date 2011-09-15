@@ -19,7 +19,7 @@ profile as a function of mass and radius and its Fourier transform as a
 function of mass and wavenumber.
 """
 
-__author__ = ("Ryan Scranton <ryan.scranton@gmail.com>, "
+__author__ = ("Ryan Scranton <ryan.scranton@gmail.com>, "+
               "Chris Morrison <morrison.chrisb@gmail.com>")
 
 class Halo(object):
