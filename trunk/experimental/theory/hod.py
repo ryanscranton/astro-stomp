@@ -66,10 +66,12 @@ class HOD(object):
         f.close()
 
 class HODPoisson(HOD):
+
     def __init__(self):
         pass
 
 class HODBinomial(HOD):
+
     def __init__(self, n_max, min_mass, mass_max, p_m_spline):
         pass
 
@@ -108,3 +110,23 @@ class HODKravtsov(HOD):
 
     def satellite_second_moment(self, mass):
         return self.satellite_first_moment(mass)**2
+
+class HODMandelbaum(HOD):
+
+    def __init__(self, M0=1.0e13, norm=1.0e13):
+        HOD.__init__(self)
+
+        self.M0 = M0
+        self.norm = norm
+
+        self._hod[1] = self.first_moment
+        self._hod[2] = self.second_moment
+
+    def first_moment(self, mass, z=None):
+        if mass > self.M0:
+            return mass/self.norm
+        if mass <= self.M0:
+            return mass*mass/(self.M0*self.norm)
+
+    def second_moment(self, mass, z=None):
+        return self.first_moment(mass)**2
