@@ -1,6 +1,7 @@
 import numpy
 import param
 from scipy import interpolate
+from scipy import special
 
 """Classes for implementing a halo occupation distribution.
 
@@ -83,9 +84,6 @@ class HODKravtsov(HOD):
             halo_param = param.HaloModelParams(**kws)
         self.set_halo(halo_param)
 
-        self._hod[1] = self.first_moment
-        self._hod[2] = self.second_moment
-
     def set_halo(self, halo_param):
         self.min_mass = halo_param.m11_msunh
         self.mass_one = halo_param.m13_msunh
@@ -109,7 +107,33 @@ class HODKravtsov(HOD):
         return mass/self.mass_one*numpy.exp(-self.mass_cut/mass)
 
     def satellite_second_moment(self, mass):
-        return self.satellite_first_moment(mass)**2
+        return (self.satellite_first_moment(mass))**2
+
+class HODZheng(HOD):
+
+    def __init__(self, M_min=10**11.83, sigma=0.30, 
+                 M_0=10**11.53, M_1=10**13.02, alpha=1.0, w=1.0):
+        self.M_min = M_min
+        self.sigma = sigma
+        self.M_0 = M_0
+        self.M_1 = M_1
+        self.alpha = alpha
+        self.w = w
+        HOD.__init__(self)
+
+    def firt_moment(self, mass, z=None):
+        return self.central_term(mass)*(
+            1+self.satellite_term(mass))
+
+    def second_moment(self, mass):
+        return self.w*(self.central_term(mass)*self.satellite_term(mass))**2
+
+    def central_term(self, mass):
+        return 0.5*(1+special.erf((numpy.log10(mass) - numpy.log10(self.M_min))/
+                                  self.sigma))
+
+    def satellite_term(self, mass):
+        return ((mass - self.M_0)/self.M_1)**self.alpha
 
 class HODMandelbaum(HOD):
 
