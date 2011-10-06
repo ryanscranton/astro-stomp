@@ -161,14 +161,14 @@ defaultHaloModelParamDict = {
                       # "gm" (galaxy-mass) also acceptable.
 
     # HOD parameters.  Notation as in Scoccimarro et al. (2001)
-    "mcut_msunh": 0.30e13,  # cut-off mass for haloes to start having > 1 gal.
+    "mcut_msunh": 4e12,  # cut-off mass for haloes to start having > 1 gal.
                          # Blue: 4e12 Msun/h.  Red: 2.5e12 Msuh/h
-    "m11_msunh": 0.30e13 ,   # (1e11) mass below which a halo has zero galaxies
+    "m11_msunh": 1e11 ,   # (1e11) mass below which a halo has zero galaxies
                          # {0,    m < m11
 
-    "m13_msunh": 1.84e13, # (1e13)
+    "m13_msunh": 1e13, # (1e13)
     "n0": 0.7,       # params in <N_gal|m> = {N0, m11 < m < mcut
-    "alphaexp":1.0,  # old 0.8               {N0(m/mcut)^alphaexp, m > mcut
+    "alphaexp":0.8,  # old 0.8               {N0(m/mcut)^alphaexp, m > mcut
 
     "hodkrav":1,  # use Kravtsov et al."s (2004) HOD parameterization.
                   # 2: use possibly more accurate parameterization

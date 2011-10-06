@@ -161,12 +161,23 @@ class SingleEpoch(object):
 
     def sigma_r(self, scale):
         """RMS power on scale in Mpc/h"""
+        if 1.0/scale <= self.k_min:
+            self.k_min = (1.0/scale)/10.0
+            print "WARNING: Requesting scale greater than k_min."
+            print "\tResetting k_min to",self.k_min
+        if 1.0/scale >= self.k_max:
+            self.k_max = (1.0/scale)*10.0
+            print "WARNING: Requesting scale greater than k_max."
+            print "\tResetting k_max to",self.k_max
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,), limit=100)
         sigma2 /= 2.0*numpy.pi*numpy.pi
 
         sigma2 *= self._growth*self._growth
+
+        self.k_min = 0.001
+        self.k_max = 100.0
 
         return numpy.sqrt(sigma2)
 

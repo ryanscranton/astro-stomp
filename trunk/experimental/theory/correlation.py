@@ -52,6 +52,10 @@ class Correlation(object):
             halo_param = param.HaloModelParams(**kws)
         self.halo = halo.Halo(input_hod, self.kernel.z_bar, camb_param, 
                               halo_param)
+
+    def set_redshift(self, redshift):
+        self.kernel.z_bar = redshift
+        self.halo.set_redshift(self.kernel.z_bar)
             
     def set_cosmology(self, camb_param):
         self.kernel.set_cosmology(camb_param)
@@ -73,7 +77,7 @@ class Correlation(object):
                                                 limit=200)
             self.wtheta_array[idx] = wtheta
 
-    def correlation(self, theta):
+    def _correlation(self, theta):
         wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
                                             self.kernel.ln_ktheta_min,
                                             self.kernel.ln_ktheta_max,
@@ -82,10 +86,7 @@ class Correlation(object):
         self.wtheta_array[idx] = wtheta
 
     def _correlation_integrand(self, ln_ktheta, theta):
-        dln_ktheta = 1.0
-        k = np.exp(ln_ktheta)/theta
-        dk = k*dln_ktheta
-        return dk*k*self.halo.power_gm(k)*self.kernel.kernel(ln_ktheta)
+        return 1.0
 
     def write(self, output_file_name):
         f = open(output_file_name, "w")
@@ -93,6 +94,22 @@ class Correlation(object):
             self.theta_array, self.wtheta_array):
             f.write("%1.10f %1.10f\n" % (theta/degToRad, wtheta))
         f.close()
+
+class MagCorrelation(Correlation):
+    def __init__(self, theta_min, theta_max, 
+                 window_function_a, window_function_b, 
+                 camb_param=None, input_hod=None, halo_param=None, 
+                 powSpec=None, **kws):
+        Correlation.__init__(self, theta_min, theta_max,
+                             window_function_a, window_function_b,
+                             camb_param, input_hod, halo_param, powSpec,
+                             **kws)
+
+    def _correlation_integrand(self, ln_ktheta, theta):
+        dln_ktheta = 1.0
+        k = np.exp(ln_ktheta)/theta
+        dk = k*dln_ktheta
+        return dk*k*self.halo.power_mm(k)*self.kernel.kernel(ln_ktheta)
 
 class AutoCorrelation(Correlation):
 
@@ -110,7 +127,7 @@ class AutoCorrelation(Correlation):
         dln_ktheta = 1.0
         k = np.exp(ln_ktheta)/theta
         dk = k*dln_ktheta
-        return dk*k*self.halo.power_gg(k)*self.kernel.kernel(ln_ktheta)
+        return dk*k*self.halo.power_mm(k)*self.kernel.kernel(ln_ktheta)
 
 
 class CorrelationDeltaFunction(Correlation):

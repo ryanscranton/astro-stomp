@@ -121,11 +121,11 @@ class HODZheng(HOD):
         self.w = w
         HOD.__init__(self)
 
-    def firt_moment(self, mass, z=None):
+    def first_moment(self, mass, z=None):
         return self.central_term(mass)*(
             1+self.satellite_term(mass))
 
-    def second_moment(self, mass):
+    def second_moment(self, mass, z=None):
         return self.w*(self.central_term(mass)*self.satellite_term(mass))**2
 
     def central_term(self, mass):
@@ -133,7 +133,11 @@ class HODZheng(HOD):
                                   self.sigma))
 
     def satellite_term(self, mass):
-        return ((mass - self.M_0)/self.M_1)**self.alpha
+        diff = mass - self.M_0
+        if diff >=0.0:
+            return numpy.power((mass - self.M_0)/self.M_1,self.alpha)
+        else:
+            return 0.0
 
 class HODMandelbaum(HOD):
 

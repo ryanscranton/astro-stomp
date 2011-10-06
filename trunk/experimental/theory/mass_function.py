@@ -30,8 +30,8 @@ class MassFunction(object):
     """
     def __init__(self, redshift=0.0, camb_param=None, halo_param=None, **kws):
         # Hard coded, but we shouldn't expect halos outside of this range.
-        mass_min = 1.0e9
-        mass_max = 5.0e16
+        mass_min = 1.0e9 # originaly 1.0e9
+        mass_max = 5.0e16 # originaly 5.0e16
 
         dln_mass = (numpy.log(mass_max) - numpy.log(mass_min))/100
         self.ln_mass_max = numpy.log(mass_max) + dln_mass
@@ -69,6 +69,8 @@ class MassFunction(object):
 
         self.nu_min = 1.001*self._nu_array[0]
         self.nu_max = 0.999*self._nu_array[-1]
+
+        print "nu_min:",self.nu_min,"nu_max:",self.nu_max
 
         self._nu_spline = InterpolatedUnivariateSpline(
             self._ln_mass_array, self._nu_array)
@@ -127,3 +129,54 @@ class MassFunction(object):
             output_file.write("%1.10f %1.10f %1.10f %1.10f\n" % (
                 numpy.exp(ln_mass), nu, self.f_nu(nu), self.bias_nu(nu)))
         output_file.close()
+
+class WarrenMassFunction(MassFunction):
+
+    def __init__(self, redshift=0.0, camb_param=None, halo_param=None, **kws):
+        self.A0 = 0.26
+        self.a0 = 2.30
+        self.b0 = 1.46
+        self.c  = 1.97
+        self.k_min = 0.001
+        self.k_max = 100.0
+
+        MassFunction.__init__(self, redshift, camb_param, halo_param, **kws)
+
+    def f_nu(self, nu):
+        sigma = self.cosmo.sigma_m(self.mass(nu))
+        mass = self.mass(nu)
+        return (self.f_norm*self.f_sigma(sigma)*
+                self.cosmo.rho_bar()/mass*(-1.0/sigma)*
+                self.sigma_m_prime(mass))
+
+    def f_m(self, mass):
+        nu = self.nu(mass)
+        return self.f_nu(nu)
+
+    def f_sigma(self, sigma):
+        return (self.A0**(numpy.power(sigma/self.b0,-self.a0) + 1)*
+                numpy.exp(-self.c0/(sigma*sigma)))
+
+    def sigma_m_prime(self, mass):
+        scale = (3.0*mass/(4.0*numpy.pi*self.cosmo.rho_bar()))**(1.0/3.0)
+        scale_m_prime = (3.0*mass/(4.0*numpy.pi*
+                                   self.cosmo.rho_bar()))**(-2.0/3.0)*(
+            1.0/(4.0*numpy.pi*self.cosmo.rho_bar()))
+        pk2_int, pk2_error = integrate.quad(self._sigma_prime_integrand,
+                                            numpy.log(self.k_min),
+                                            numpy.log(self.k_max),args=(scale,),
+                                            limit=100)
+        pk2_int *= scale_m_prime/(2.0*numpy.pi*numpy.pi)
+        return 1.0/(2*self.cosmo.sigma_r(scale))*pk2_int
+    
+    def _sigma_prime_integrand(self, ln_k, scale):
+        k = numpy.exp(ln_k)
+        kR = scale*k
+        
+        W_1 = 54.0*(numpy.sin(kR) - kR*numpy.cos(kR))**2/(
+            kR*kR*kR*kR*kR*kR*scale)
+        W_2 = 18.0*(numpy.sin(kR)*(numpy.sin(kR)-kR*numpy.cos(kR)))/(
+            kR*kR*kR*kR*scale)
+        
+        return self.cosmo.linear_power(k)*(W_1+W_2)*k*k*k
+        
