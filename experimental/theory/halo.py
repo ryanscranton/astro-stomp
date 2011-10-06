@@ -81,6 +81,7 @@ class Halo(object):
         self.camb.run()
 
         self._calculate_n_bar()
+        self._calculate_bias()
         self._initialize_halo_splines()
 
         self._initialized_h_m = False
@@ -111,7 +112,6 @@ class Halo(object):
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
-        self._initialize_y_splines()
 
         self._initialized_h_m = False
         self._initialized_h_g = False
@@ -125,7 +125,6 @@ class Halo(object):
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
-        self._initialize_y_splines()
 
         self._initialized_h_m = False
         self._initialized_h_g = False
@@ -235,8 +234,17 @@ class Halo(object):
         for nu in self.mass._nu_array:
             mass = self.mass.mass(nu)
             f.write("%1.10f %1.10f %1.10f %1.10f %1.10f\n" % (
-                numpy.log10(mass), self.y(ln_k, nu), self.concentration(mass),
+                numpy.log10(mass), self.y(ln_k, mass), self.concentration(mass),
                 self.halo_normalization(mass), self.virial_radius(mass)))
+        f.close()
+
+    def write_power_components(self, output_file_name):
+        f = open(output_file_name, "w")
+        for ln_k in self._ln_k_array:
+            k = numpy.exp(ln_k)
+            f.write("%1.10f %1.10f %1.10f %1.10f %1.10f %1.10f\n" % (
+                k, self._h_m(k), self._pp_mm(k),
+                self._h_g(k), self._pp_gm(k), self._pp_gg(k)))
         f.close()
 
     def _h_m(self, k):
@@ -282,6 +290,30 @@ class Halo(object):
 
         return nu*self.local_hod.first_moment(mass)*self.mass.f_nu(nu)/mass
 
+    # def _calculate_n_bar(self):
+    #     self.n_bar, nbar_err = integrate.quad(
+    #         self._nbar_integrand, self.mass.ln_mass_min,
+    #         self.mass.ln_mass_max)
+
+    #     self.n_bar_over_rho_bar = self.n_bar/self.rho_bar
+
+    # def _nbar_integrand(self, ln_mass):
+    #     mass = self.mass.mass(ln_mass)
+
+    #     return mass*self.local_hod.first_moment(mass)*self.mass.f_m(mass)
+
+    def _calculate_bias(self):
+        self.bias, bias_err = integrate.quad(
+            self._bias_integrand, self.mass.ln_mass_min,self.mass.ln_mass_max)
+
+        self.bias = self.bias/self.n_bar
+
+    def _bias_integrand(self, ln_mass):
+        mass = numpy.exp(ln_mass)
+
+        return (mass*self.local_hod.first_moment(mass)*self.mass.f_m(mass)*
+                self.mass.bias_m(mass))
+
     def _initialize_halo_splines(self):
         ln_r_v_array = numpy.zeros_like(self.mass._nu_array)
         ln_concen_array = numpy.zeros_like(self.mass._nu_array)
@@ -300,12 +332,28 @@ class Halo(object):
         self._ln_halo_norm_spline = InterpolatedUnivariateSpline(
             self.mass._ln_mass_array, ln_halo_norm_array)
 
+    def a_c(self, mass):
+        """Formation epoch definition from Wechsler et al. 2002
+        """
+        a_c = 0.1*numpy.log10(mass)-0.9
+        if a_c > 0.01:
+            return 0.1*numpy.log10(mass)-0.9
+        elif a_c <=0.01:
+            return 0.01
+
     def _concentration(self, mass):
         """Halo concentration as a function of halo mass.
 
-        Functional form from Bullock et al.
+        Functional form from Wechsler et al. 2002
         """
-        return self.c0*(mass/self.mass.m_star)**self.beta
+        return 4.1/(self.a_c(mass)*(1+self.redshift))
+
+    # def _concentration(self, mass):
+    #     """Halo concentration as a function of halo mass.
+
+    #     Functional form from Bullock et al.
+    #     """
+    #     return self.c0*(mass/self.mass.m_star)**self.beta
 
     def _halo_normalization(self, mass):
         """Halo normalization as a function of mass.

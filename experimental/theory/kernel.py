@@ -348,8 +348,6 @@ class Kernel(object):
         kernel, kernel_err = In.quad(self._kernel_integrand, 1.01*self.chi_min,
                                      0.99*self.chi_max, args=(ktheta,),
                                      limit=200)
-        
-        #return 4.0*numpy.pi*numpy.pi*kernel
         return kernel
 
     def _kernel_integrand(self, chi, ktheta):
