@@ -112,11 +112,11 @@ class HODKravtsov(HOD):
 class HODZheng(HOD):
 
     def __init__(self, M_min=10**11.83, sigma=0.30, 
-                 M_0=10**11.53, M_1=10**13.02, alpha=1.0, w=1.0):
+                 M_0=10**11.53, M_1p=10**13.02, alpha=1.0, w=1.0):
         self.M_min = M_min
         self.sigma = sigma
         self.M_0 = M_0
-        self.M_1 = M_1
+        self.M_1p = M_1p
         self.alpha = alpha
         self.w = w
         HOD.__init__(self)
@@ -135,7 +135,7 @@ class HODZheng(HOD):
     def satellite_term(self, mass):
         diff = mass - self.M_0
         if diff >=0.0:
-            return numpy.power((mass - self.M_0)/self.M_1,self.alpha)
+            return numpy.power((mass - self.M_0)/self.M_1p,self.alpha)
         else:
             return 0.0
 
@@ -151,10 +151,10 @@ class HODMandelbaum(HOD):
         self._hod[2] = self.second_moment
 
     def first_moment(self, mass, z=None):
-        if mass > self.M0:
+        if mass > 3*self.M0:
             return mass/self.norm
-        if mass <= self.M0:
-            return mass*mass/(self.M0*self.norm)
+        if mass <= 3*self.M0:
+            return mass*mass/(3*self.M0*self.norm)
 
     def second_moment(self, mass, z=None):
         return self.first_moment(mass)**2
