@@ -47,6 +47,8 @@ class Correlation(object):
         if camb_param == None:
             camb_param = param.CambParams(**kws)
         self.kernel.set_cosmology(camb_param)
+
+        self.D_z = self.kernel.comso.growth_factor(self.kernel.z_bar)
                       
         if halo_param is None:
             halo_param = param.HaloModelParams(**kws)
@@ -106,10 +108,12 @@ class MagCorrelation(Correlation):
                              **kws)
 
     def _correlation_integrand(self, ln_ktheta, theta):
+        
         dln_ktheta = 1.0
         k = np.exp(ln_ktheta)/theta
         dk = k*dln_ktheta
-        return dk*k*self.halo.power_mm(k)*self.kernel.kernel(ln_ktheta)
+        return (dk*k*self.halo.power_mm(k)*self.kernel.kernel(ln_ktheta)/
+                (self.D_z*self.D_z))
 
 class AutoCorrelation(Correlation):
 
