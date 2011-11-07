@@ -11,12 +11,13 @@
 DEFINE_string(map_file, "",
               "Name of the ASCII file containing the StompMap geometry");
 DEFINE_bool(galaxy_radec, false, "Galaxy coordinates are in RA-DEC");
+DEFINE_bool(use_only_pairs, false, "Use only Stomp pair based estimator");
 DEFINE_string(output_tag, "test",
               "Tag for output file: Wtheta_OUTPUT_TAG");
 DEFINE_double(theta_min, 0.001, "Minimum angular scale (in degrees)");
 DEFINE_double(theta_max, 10.0, "Maximum angular scale (in degrees)");
-DEFINE_double(mag_min, 16.0, "Minimum acceptable galaxy magnitude");
-DEFINE_double(mag_max, 17.0, "Maximum acceptable galaxy magnitude");
+DEFINE_double(mag_min, 10.0, "Minimum acceptable galaxy magnitude");
+DEFINE_double(mag_max, 28.0, "Maximum acceptable galaxy magnitude");
 DEFINE_double(prob_min, 0.2, "Minimum acceptable galaxy likelihood");
 DEFINE_double(prob_max, 1.00001, "Maximum acceptable galaxy likelihood");
 DEFINE_int32(n_bins_per_decade, 5, "Number of angular bins per decade.");
@@ -88,7 +89,7 @@ int main(int argc, char **argv) {
   for (int i=1;i<argc;i++) {
     std::cout << "\tParsing " << argv[i] << "...\n";
     std::ifstream galaxy_file(argv[i]);
-    double theta, phi, prob, mag, weight;
+    double theta, phi, prob, mag;
 
     prob = 1.0;
     mag = 0.5*(FLAGS_mag_max + FLAGS_mag_min);
@@ -141,6 +142,9 @@ int main(int argc, char **argv) {
       static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
     wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
   }
+  if (FLAGS_use_only_pairs) {
+    wtheta.UseOnlyPairs();
+  }
 
   // Now we use the regions version of the auto-correlation code to find our
   // result.
@@ -151,15 +155,12 @@ int main(int argc, char **argv) {
 
   // And write out the results...
   std::string wtheta_file_name = "Wtheta_" + FLAGS_output_tag;
+  std::string wcovar_file_name = "Wcovar_" + FLAGS_output_tag;
   std::cout << "Writing galaxy auto-correlation to " <<
     wtheta_file_name << "\n";
-
-  std::ofstream output_file(wtheta_file_name.c_str());
-  for (Stomp::ThetaIterator iter=wtheta.Begin();iter!=wtheta.End();++iter) {
-    output_file << std::setprecision(6) << iter->Theta() << " " <<
-      iter->MeanWtheta()  << " " << iter->MeanWthetaError() << "\n";
-  }
-  output_file.close();
+  
+  wtheta.Write(wtheta_file_name);
+  wtheta.WriteCovariance(wcovar_file_name);
 
   return 0;
 }
