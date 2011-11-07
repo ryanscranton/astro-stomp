@@ -95,6 +95,12 @@ int main(int argc, char **argv) {
     mag = 0.5*(FLAGS_mag_max + FLAGS_mag_min);
 
     while (!galaxy_file.eof()) {
+      char c;
+      c = galaxy_file.peek();
+      if (c == '#') {
+	galaxy_file.ignore(2048, '\n');
+	continue;
+      }
       if (FLAGS_coordinates_only) {
 	galaxy_file >> theta >> phi;
       } else {
