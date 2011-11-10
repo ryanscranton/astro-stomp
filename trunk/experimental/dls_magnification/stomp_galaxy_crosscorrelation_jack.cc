@@ -103,6 +103,12 @@ int main(int argc, char **argv) {
   mag = 0.5*(FLAGS_mag_max_a + FLAGS_mag_min_a);
   
   while (!galaxy_file_a.eof()) {
+    char c;
+    c = galaxy_file_a.peek();
+    if (c == '#') {
+      galaxy_file_a.ignore(2048, '\n');
+      continue;
+    }
     if (FLAGS_coordinates_only) {
       galaxy_file_a >> theta >> phi;
     } else {
@@ -128,6 +134,12 @@ int main(int argc, char **argv) {
   mag = 0.5*(FLAGS_mag_max_b + FLAGS_mag_min_b);
 
   while (!galaxy_file_b.eof()) {
+    char c;
+    c = galaxy_file_b.peek();
+    if (c == '#') {
+      galaxy_file_b.ignore(2048, '\n');
+      continue;
+    }
     if (FLAGS_coordinates_only) {
       galaxy_file_b >> theta >> phi;
     } else {
@@ -167,20 +179,18 @@ int main(int argc, char **argv) {
 
   // Now we use the regions version of the auto-correlation code to find our
   // result.
-  if (FLAGS_use_only_pairs) {
-    wtheta.UseOnlyPairs();
+  if (FLAGS_maximum_resolution == -1) {
+    wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*
+							n_galaxy_b)), 
+			     stomp_map->Area());
   }
   else {
-    if (FLAGS_maximum_resolution == -1) {
-      wtheta.AutoMaxResolution(static_cast<uint32_t>(sqrt(1.0*n_galaxy_a*
-							  n_galaxy_b)), 
-			       stomp_map->Area());
-    }
-    else {
-      std::cout << "Setting maximum resolution to " <<
-	static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
-      wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
-    }
+    std::cout << "Setting maximum resolution to " <<
+      static_cast<uint16_t>(FLAGS_maximum_resolution) << "...\n";
+    wtheta.SetMaxResolution(static_cast<uint16_t>(FLAGS_maximum_resolution));
+  }
+  if (FLAGS_use_only_pairs) {
+    wtheta.UseOnlyPairs();
   }
 
   // Now we use the regions version of the auto-correlation code to find our
