@@ -211,7 +211,7 @@ int main(int argc, char **argv) {
   std::string wcov_file_name = "Wcov_" + FLAGS_output_tag;
   std::cout << "Writing galaxy cross-correlation covariance to " <<
     wcov_file_name << "\n";
-  wtheta.WriteCovariance(wtheta_file_name);
+  wtheta.WriteCovariance(wcov_file_name);
 
   return 0;
 }
