@@ -34,16 +34,22 @@ class AngularCorrelation(object):
         self.theta_max = theta_max
         self.bins_per_decade = bins_per_decade
 
-        unit_double = numpy.floor(numpy.log10(theta_min))*bins_per_decade
-        theta = numpy.power(10.0, unit_double/bins_per_decade)
         self.angular_bins = []
-        while theta < theta_max:
-            if theta >= self.theta_min and theta < theta_max:
-                self.angular_bins.append(AngularBin(
-                        theta,numpy.power(10.0,
-                                          (unit_double+1.0)/bins_per_decade)))
-            unit_double += 1.0
+        if bins_per_decade >= 1:
+            unit_double = numpy.floor(numpy.log10(theta_min))*bins_per_decade
             theta = numpy.power(10.0, unit_double/bins_per_decade)
+            while theta < theta_max:
+                if theta >= self.theta_min and theta < theta_max:
+                    self.angular_bins.append(AngularBin(
+                            theta,numpy.power(10.0,
+                                              (unit_double+1.0)/
+                                              bins_per_decade)))
+                unit_double += 1.0
+                theta = numpy.power(10.0, unit_double/bins_per_decade)
+        else:
+            self.angular_bins.append(AngularBin(self.theta_min,
+                                                self.theta_max))
+            self.angular_bins[0].theta = (self.theta_max+self.theta_min)/2.0
 
     def write_result(self, file_name):
         file_out = open(file_name,'w')
@@ -278,6 +284,12 @@ if __name__ == "__main__":
                       help="Run Auto-Correlation")
     parser.add_option("-n","--n_randoms",dest="n_randoms",default=1,
                       action="store",type="int",help="# Randoms")
+    parser.add_option('--theta_min',dest='theta_min',default=0.001,
+                      action="store",type="float",help="Minimum Angle")
+    parser.add_option('--theta_max',dest='theta_max',default=0.5,
+                      action="store",type="float",help="Maximum Angle")
+    parser.add_option('--bins_per_decade',dest='bins_per_decade',default=5,
+                      action="store",type="int",help="# Bins Per Decade")
     (options, args) = parser.parse_args()
 
     fore = numpy.loadtxt(options.fore)
@@ -286,8 +298,11 @@ if __name__ == "__main__":
     rand = rand[numpy.logical_and(
             numpy.logical_and(rand[:,2]>1000,rand[:,2]<9000),
             numpy.logical_and(rand[:,3]>1000,rand[:,3]<9000))]
-    
-    wtheta = AngularCorrelation(fore, back, rand, options.n_randoms)
+
+    wtheta = AngularCorrelation(fore, back, rand, options.n_randoms,
+                                theta_min=options.theta_min,
+                                theta_max=options.theta_max, 
+                                bins_per_decade=options.bins_per_decade)
     if options.auto_corr == "false":
         wtheta.find_cross_correlation()
     else:
