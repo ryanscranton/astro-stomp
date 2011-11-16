@@ -10,6 +10,8 @@
 // Define our command-line flags.
 DEFINE_string(map_file, "",
               "Name of the ASCII file containing the StompMap geometry");
+DEFINE_string(galaxy_file, "",
+	      "Name of input galaxy file.");
 DEFINE_bool(galaxy_radec, false, "Galaxy coordinates are in RA-DEC");
 DEFINE_bool(use_only_pairs, false, "Use only Stomp pair based estimator");
 DEFINE_string(output_tag, "test",
@@ -35,7 +37,7 @@ int main(int argc, char **argv) {
   std::string usage = "Usage: ";
   usage += argv[0];
   usage += " --map_file=<StompMap ASCII>";
-  usage += " <list of galaxy input files>";
+  usage += " --galaxy_file=<ASCII Catalog>";
   google::SetUsageMessage(usage);
   google::ParseCommandLineFlags(&argc, &argv, true);
 
@@ -45,7 +47,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  if (argc < 2) {
+  if (FLAGS_galaxy_file.empty()) {
     std::cout << usage << "\n";
     std::cout << "Type '" << argv[0] << " --help' for a list of options.\n";
     exit(1);
@@ -71,7 +73,6 @@ int main(int argc, char **argv) {
   std::cout << "Read map from " << FLAGS_map_file << "; total area: " <<
     stomp_map->Area() << " sq. deg.\n";
 
-
   // Now we read in our galaxy data file.  The expected format is
   //  LAMBDA  ETA  WEIGHT  MAGNITUDE
   // where the WEIGHT column is the likelihood that the object is a galaxy
@@ -80,45 +81,42 @@ int main(int argc, char **argv) {
   // map.
   Stomp::WAngularVector galaxy;
 
-  std::cout << "Parsing " << argc-1 << " files...\n";
+  std::cout << "Parsing " << FLAGS_galaxy_file << " files...\n";
   unsigned long n_galaxy = 0;
 
   Stomp::AngularCoordinate::Sphere galaxy_sphere =
     Stomp::AngularCoordinate::Survey;
   if (FLAGS_galaxy_radec) galaxy_sphere = Stomp::AngularCoordinate::Equatorial;
-  for (int i=1;i<argc;i++) {
-    std::cout << "\tParsing " << argv[i] << "...\n";
-    std::ifstream galaxy_file(argv[i]);
-    double theta, phi, prob, mag;
+  std::ifstream galaxy_file(FLAGS_galaxy_file.c_str());
+  double theta, phi, prob, mag, weight;
+  
+  prob = 1.0;
+  mag = 0.5*(FLAGS_mag_max + FLAGS_mag_min);
 
-    prob = 1.0;
-    mag = 0.5*(FLAGS_mag_max + FLAGS_mag_min);
-
-    while (!galaxy_file.eof()) {
-      char c;
-      c = galaxy_file.peek();
-      if (c == '#') {
-	galaxy_file.ignore(2048, '\n');
-	continue;
-      }
-      if (FLAGS_coordinates_only) {
-	galaxy_file >> theta >> phi;
-      } else {
-	galaxy_file >> theta >> phi >> prob >> mag;
-      }
-
-      if (!galaxy_file.eof()) {
-	Stomp::WeightedAngularCoordinate tmp_ang(theta, phi,
-						 prob, galaxy_sphere);
-
-	if ((prob >= FLAGS_prob_min) && (prob <= FLAGS_prob_max) &&
-	    (mag >= FLAGS_mag_min) && (mag <= FLAGS_mag_max) &&
-	    (stomp_map->FindLocation(tmp_ang,prob))) galaxy.push_back(tmp_ang);
-	n_galaxy++;
-      }
+  while (!galaxy_file.eof()) {
+    char c;
+    c = galaxy_file.peek();
+    if (c == '#') {
+      galaxy_file.ignore(2048, '\n');
+      continue;
     }
-    galaxy_file.close();
+    if (FLAGS_coordinates_only) {
+      galaxy_file >> theta >> phi;
+    } else {
+      galaxy_file >> theta >> phi >> prob >> mag;
+    }
+    
+    if (!galaxy_file.eof()) {
+      Stomp::WeightedAngularCoordinate tmp_ang(theta, phi,
+					       prob, galaxy_sphere);
+      
+      if ((prob >= FLAGS_prob_min) && (prob <= FLAGS_prob_max) &&
+	  (mag >= FLAGS_mag_min) && (mag <= FLAGS_mag_max) &&
+	  (stomp_map->FindLocation(tmp_ang, weight))) galaxy.push_back(tmp_ang);
+      n_galaxy++;
+    }
   }
+  galaxy_file.close();
   std::cout << "Read " << n_galaxy << " galaxies; kept " <<
     galaxy.size() << "\n";
   n_galaxy = galaxy.size();
