@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
     Stomp::AngularCoordinate::Survey;
   if (FLAGS_galaxy_radec) galaxy_sphere = Stomp::AngularCoordinate::Equatorial;
   std::ifstream galaxy_file(FLAGS_galaxy_file.c_str());
-  double theta, phi, prob, mag, weight;
+  double theta, phi, prob, mag;
   
   prob = 1.0;
   mag = 0.5*(FLAGS_mag_max + FLAGS_mag_min);
@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
       
       if ((prob >= FLAGS_prob_min) && (prob <= FLAGS_prob_max) &&
 	  (mag >= FLAGS_mag_min) && (mag <= FLAGS_mag_max) &&
-	  (stomp_map->FindLocation(tmp_ang, weight))) galaxy.push_back(tmp_ang);
+	  (stomp_map->Contains(tmp_ang))) galaxy.push_back(tmp_ang);
       n_galaxy++;
     }
   }
