@@ -2,11 +2,11 @@ from __future__ import division
 import numpy
 
 """
-A simple, no-frills correlation code for python. Given one(two) catalogs and a
-catalog of random points, the code computes the auto(cross)-corrlation between
-the catalog(s) and subtracts off the random contribution as in the L&S'93
-estimator in log bins of degrees. The code can be used as a stand alone
-or imported by another function.
+A simple, no-frills correlation code for python. Given one(two) catalogs in Ra 
+Dec with weights and acatalog of random points, the code computes the auto(cross
+)-corrlation between the catalog(s) and subtracts off the random contribution as
+in the L&S'93 estimator in log bins of degrees. The code can be used as a stand 
+alone or imported by another function.
 """
 
 def spherical_distance(obj, cat):

@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
   if (FLAGS_galaxy_radec) galaxy_sphere = Stomp::AngularCoordinate::Equatorial;
   std::ifstream galaxy_file_a(FLAGS_galaxy_file_a.c_str());
   std::ifstream galaxy_file_b(FLAGS_galaxy_file_b.c_str());
-  double theta, phi, prob, mag, weight;
+  double theta, phi, prob, mag;
   
   prob = 1.0;
   mag = 0.5*(FLAGS_mag_max_a + FLAGS_mag_min_a);
@@ -119,8 +119,9 @@ int main(int argc, char **argv) {
       Stomp::WeightedAngularCoordinate tmp_ang(theta, phi,
 					       prob, galaxy_sphere);
       
-      if ((mag >= FLAGS_mag_min_a) && (mag <= FLAGS_mag_max_a) &&
-	  (stomp_map->FindLocation(tmp_ang,weight))) galaxy_a.push_back(tmp_ang);
+      if ((prob >= FLAGS_prob_min) && (prob <= FLAGS_prob_max) &&
+	  (mag >= FLAGS_mag_min_a) && (mag <= FLAGS_mag_max_a) &&
+	  (stomp_map->Contains(tmp_ang))) galaxy_a.push_back(tmp_ang);
       n_galaxy_a++;
     }
   }
@@ -152,7 +153,7 @@ int main(int argc, char **argv) {
       
       if ((prob >= FLAGS_prob_min) && (prob <= FLAGS_prob_max) &&
 	  (mag >= FLAGS_mag_min_b) && (mag <= FLAGS_mag_max_b) &&
-	  (stomp_map->FindLocation(tmp_ang,weight))) galaxy_b.push_back(tmp_ang);
+	  (stomp_map->Contains(tmp_ang))) galaxy_b.push_back(tmp_ang);
       n_galaxy_b++;
     }
   }
