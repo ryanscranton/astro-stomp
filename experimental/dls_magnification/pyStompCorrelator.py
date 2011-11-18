@@ -257,8 +257,8 @@ if __name__ == "__main__":
     random_3 = numpy.random.uniform(0,1,size=(1000000,3))
     test_correlator = AngularCorrelation(random_1, random_2, random_3,
                                          n_random=5,verbose=True)
-    #test_correlator.find_auto_correlation()
-    #test_correlator.write_result('test_auto_correlation.ascii')
+    test_correlator.find_auto_correlation()
+    test_correlator.write_result('test_auto_correlation.ascii')
     test_correlator.reset_pairs()
     test_correlator.find_cross_correlation()
     test_correlator.write_result('test_cross_correlation.ascii')
