@@ -82,12 +82,14 @@ class MassFunction(object):
 
     def _normalize(self):
         self.f_norm = 1.0
-        norm, norm_err = integrate.quad(self.f_nu, self.nu_min, self.nu_max)
+        norm, norm_err = integrate.quad(self.f_nu, self.nu_min, self.nu_max,
+                                        limit=200)
         self.f_norm = 1.0/norm
 
         self.bias_norm = 1.0
         norm, norm_err = integrate.quad(lambda x: self.f_nu(x)*self.bias_nu(x),
-                                        self.nu_min, self.nu_max)
+                                        self.nu_min, self.nu_max,
+                                        limit=200)
         self.bias_norm = 1.0/norm
 
     def f_nu(self, nu):
@@ -165,7 +167,7 @@ class WarrenMassFunction(MassFunction):
         pk2_int, pk2_error = integrate.quad(self._sigma_prime_integrand,
                                             numpy.log(self.k_min),
                                             numpy.log(self.k_max),args=(scale,),
-                                            limit=100)
+                                            limit=200)
         pk2_int *= scale_m_prime/(2.0*numpy.pi*numpy.pi)
         return 1.0/(2*self.cosmo.sigma_r(scale))*pk2_int
     

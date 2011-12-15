@@ -34,7 +34,7 @@ class dNdz(object):
         self.norm = 1.0
 
     def normalize(self):
-        norm, norm_err = In.quad(self.dndz, self.z_min, self.z_max)
+        norm, norm_err = In.quad(self.dndz, self.z_min, self.z_max,limit=200)
         print "dN/dz normalization = %1.10f, err = %1.10f" % (norm, norm_err)
 
         self.norm = 1.0/norm
@@ -84,12 +84,13 @@ class dNdzInterpolation(dNdz):
     redshift.
     """
 
-    def __init__(self, z_array, p_array):
+    def __init__(self, z_array, p_array,interpolation_order=2):
         ## Need to impliment a test that throws out data at the begining or
         ## end of the z_array that has a value of zero for p_array
         dNdz.__init__(self, z_array[0], z_array[-1])
         norm = numpy.trapz(p_array, z_array)
-        self._p_of_z = InterpolatedUnivariateSpline(z_array, p_array/norm)
+        self._p_of_z = InterpolatedUnivariateSpline(z_array, p_array/norm,
+                                                    k=interpolation_order)
         
 
     def raw_dndz(self, redshift):
@@ -173,7 +174,8 @@ class WindowFunctionGalaxy(WindowFunction):
 
     for comoving distance chi.
     """
-    def __init__(self, redshift_dist, camb_param=None, **kws):
+    def __init__(self, redshift_dist,
+                 camb_param=None, **kws):
         self._redshift_dist = redshift_dist
         self._redshift_dist.normalize()
 
@@ -223,7 +225,7 @@ class WindowFunctionConvergence(WindowFunction):
         if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
 
         g_chi, g_chi_err = In.quad(self._lensing_integrand, chi_bound,
-                                   self.chi_max, args=(chi,))
+                                   self.chi_max, args=(chi,),limit=200)
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
@@ -235,6 +237,55 @@ class WindowFunctionConvergence(WindowFunction):
         dzdchi = 1.0/self.cosmo.E(z)
 
         return dzdchi*self._redshift_dist.dndz(z)*(chi - chi0)/chi
+
+class WindowFunctionConvergenceDelta(WindowFunction):
+    """WindowFunction class for magnification of a background sample.
+
+    This derived class calculates the magnification effect of a background
+    sample as a function of comoving distance chi.  In essence, given a sample
+    with redshift distribution dN/dz, what is the weighted fraction of that
+    sample that is beyond chi:
+
+    g(chi) = chi*int(chi, inf, dN/dz dz/dchi' (1.0 - chi/chi'))
+
+    and the window function is
+
+    W(chi) = 3*omega_m*g(chi)/a
+
+    where we have omitted the (2.5*s - 1) factor that is due to the number count
+    slope of the sample.
+    """
+    def __init__(self, redshift, camb_param=None, **kws):
+        self._redshift = redshift
+        #self._redshift_dist.normalize()
+
+        self._g_chi_min = 0.0
+        # Even though the input distribution may only extend between some bounds
+        # in redshift, the lensing kernel will extend across z = [0, z_max)
+        WindowFunction.__init__(self, 0.0, redshift,
+                                camb_param, **kws)
+        #self._g_chi_min = (
+        #    self.cosmo.comoving_distance(self._redshift_dist.z_min))
+
+    def raw_window_function(self, chi):
+        a = 1.0/(1.0 + self._redshift)
+
+        chi_bound = chi
+        if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
+
+        g_chi = self._lensing_integrand(chi)
+
+        g_chi *= self.cosmo.H0*self.cosmo.H0*chi
+
+        return 3.0*self.cosmo.omega_m0*g_chi/a
+
+    def _lensing_integrand(self, chi0):
+        if chi0 > self.chi_max:
+            return 0.0
+
+        #dzdchi = 1.0/self.cosmo.E(self._redshift)
+
+        return (self.chi_max - chi0)/self.chi_max
 
 class Kernel(object):
     """Container class for calculating correlation function kernels.
@@ -279,8 +330,9 @@ class Kernel(object):
         if self.window_function_b.chi_max > self.chi_max:
             self.chi_max = self.window_function_b.chi_max
             self.z_max = self.window_function_b.z_max
+    
         self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
-
+        
         dln_ktheta = (self.ln_ktheta_max - self.ln_ktheta_min)/200.0
         self._ln_ktheta_array = numpy.arange(
             self.ln_ktheta_min, self.ln_ktheta_max + dln_ktheta, dln_ktheta)
@@ -294,7 +346,7 @@ class Kernel(object):
         kernel_max = -1.0e30
         for z in numpy.arange(self.z_min, self.z_max, dz):
             kernel = self._kernel_integrand(
-                self.cosmo.comoving_distance(z), 1.0)
+                self.cosmo.comoving_distance(z), 0.0)
             if kernel > kernel_max:
                 kernel_max = kernel
                 self.z_bar = z
@@ -351,8 +403,7 @@ class Kernel(object):
         return kernel
 
     def _kernel_integrand(self, chi, ktheta):
-        D_z = self.window_function_a.cosmo.growth_factor(
-            self.window_function_a.cosmo.redshift(chi))
+        D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
 
         return (self.window_function_a.window_function(chi)*
                 self.window_function_b.window_function(chi)*

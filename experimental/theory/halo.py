@@ -280,7 +280,7 @@ class Halo(object):
     def _calculate_n_bar(self):
         self.n_bar_over_rho_bar, nbar_err = integrate.quad(
             self._nbar_integrand, numpy.log(self.mass.nu_min),
-            numpy.log(self.mass.nu_max))
+            numpy.log(self.mass.nu_max),limit=200)
 
         self.n_bar = self.n_bar_over_rho_bar*self.rho_bar
 
@@ -304,7 +304,8 @@ class Halo(object):
 
     def _calculate_bias(self):
         self.bias, bias_err = integrate.quad(
-            self._bias_integrand, self.mass.ln_mass_min,self.mass.ln_mass_max)
+            self._bias_integrand, self.mass.ln_mass_min,self.mass.ln_mass_max,
+            limit=200)
 
         self.bias = self.bias/self.n_bar
 
@@ -385,7 +386,7 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             h_m, h_m_err = integrate.quad(
                 self._h_m_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=150,
+                numpy.log(self.mass.nu_max),limit=200,
                 args=(self._ln_k_array[idx],))
             h_m_array[idx] = h_m
 
@@ -405,8 +406,8 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             h_g, h_g_err = integrate.quad(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=150,
-                args=(self._ln_k_array[idx],))
+                numpy.log(self.mass.nu_max),limit=200,
+                args=(self._ln_k_array[idx],)) #Limit Was 150
             h_g_array[idx] = h_g/self.n_bar_over_rho_bar
 
         self._h_g_spline = InterpolatedUnivariateSpline(
@@ -426,8 +427,8 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             pp_mm, pp_mm_err = integrate.quad(
                 self._pp_mm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=150,
-                args=(self._ln_k_array[idx],))
+                numpy.log(self.mass.nu_max),limit=200,
+                args=(self._ln_k_array[idx],)) # Limit was 150
             pp_mm_array[idx] = pp_mm/self.rho_bar
 
         self._pp_mm_spline = InterpolatedUnivariateSpline(
@@ -447,8 +448,8 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             pp_gg, pp_gg_err = integrate.quad(
                 self._pp_gg_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=150,
-                args=(self._ln_k_array[idx],))
+                numpy.log(self.mass.nu_max),limit=200,
+                args=(self._ln_k_array[idx],)) # Limit Was 150
             pp_gg_array[idx] = pp_gg*self.rho_bar/(self.n_bar*self.n_bar)
 
         self._pp_gg_spline = InterpolatedUnivariateSpline(
@@ -472,8 +473,8 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             pp_gm, pp_gm_err = integrate.quad(
                 self._pp_gm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=150,
-                args=(self._ln_k_array[idx],))
+                numpy.log(self.mass.nu_max),limit=200,
+                args=(self._ln_k_array[idx],)) # Limit Was 150
             pp_gm_array[idx] = pp_gm/self.n_bar
 
         self._pp_gm_spline = InterpolatedUnivariateSpline(
