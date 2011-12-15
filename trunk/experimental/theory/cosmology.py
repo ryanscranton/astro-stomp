@@ -64,14 +64,16 @@ class SingleEpoch(object):
         self._initialize_defaults()
 
     def _initialize_defaults(self):
-        self._chi, dist_err = integrate.quad(self.E, 0.0, self._redshift)
+        self._chi, dist_err = integrate.quad(self.E, 0.0, self._redshift,
+                                             limit=200)
 
         self.growth_norm, growth_norm_err = integrate.quad(
-            self._growth_integrand, 0.0, 1.0)
+            self._growth_integrand, 0.0, 1.0,limit=200)
         self.growth_norm *= 2.5*self.omega_m0/(self.E(0.0)*self.H0)
 
         a = 1.0/(1.0 + self._redshift)
-        growth, growth_err = integrate.quad(self._growth_integrand, 0.0, a)
+        growth, growth_err = integrate.quad(self._growth_integrand, 0.0, a,
+                                            limit=200)
         growth *= 2.5*self.omega_m0/(self.E(self._redshift)*self.H0)
         self._growth = growth/self.growth_norm
 
@@ -171,7 +173,7 @@ class SingleEpoch(object):
             print "\tResetting k_max to",self.k_max
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
-            numpy.log(self.k_max), args=(scale,), limit=100)
+            numpy.log(self.k_max), args=(scale,), limit=200)
         sigma2 /= 2.0*numpy.pi*numpy.pi
 
         sigma2 *= self._growth*self._growth
@@ -272,7 +274,7 @@ class MultiEpoch(object):
     def _initialize_splines(self):
         for idx in xrange(self._z_array.size):
             dist, dist_err = integrate.quad(
-                self.epoch0.E, 0.0, self._z_array[idx])
+                self.epoch0.E, 0.0, self._z_array[idx],limit=200)
             self._chi_array[idx] = dist
         self._chi_spline = InterpolatedUnivariateSpline(
             self._z_array, self._chi_array)
@@ -284,7 +286,7 @@ class MultiEpoch(object):
         for idx in xrange(self._z_array.size):
             a = 1.0/(1.0 + self._z_array[idx])
             growth, growth_err = integrate.quad(
-                self.epoch0._growth_integrand, 0.0, a)
+                self.epoch0._growth_integrand, 0.0, a,limit=200)
             growth *= 2.5*self.omega_m0/(self.E(self._z_array[idx])*self.H0)
             self._growth_array[idx] = growth/self.growth_norm
 
@@ -388,7 +390,7 @@ class MultiEpoch(object):
         """RMS power on scale in Mpc/h"""
         sigma2, sigma2_err = integrate.quad(
             self.epoch0._sigma_integrand, numpy.log(self.k_min),
-            numpy.log(self.k_max), args=(scale,))
+            numpy.log(self.k_max), args=(scale,),limit=200) # Limt was 50
         sigma2 /= 2.0*numpy.pi*numpy.pi
 
         if not redshift is None:
