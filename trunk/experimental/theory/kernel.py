@@ -338,6 +338,8 @@ class Kernel(object):
             self.ln_ktheta_min, self.ln_ktheta_max + dln_ktheta, dln_ktheta)
         self._kernel_array = numpy.zeros_like(self._ln_ktheta_array)
 
+        self._j0_limit = S.jn_zeros(0,4)[-1]
+
         self._find_z_bar()
 
     def _find_z_bar(self):
@@ -356,14 +358,14 @@ class Kernel(object):
         calculate_kernel = True
         ratio_limit = 1.0e-4
         for idx in xrange(self._ln_ktheta_array.size):
-            kernel = 0.0
-            if calculate_kernel:
-                kernel = self.raw_kernel(self._ln_ktheta_array[idx])
+            #kernel = 0.0
+            #if calculate_kernel:
+            kernel = self.raw_kernel(self._ln_ktheta_array[idx])
 
-            if numpy.abs(kernel) > kernel_max:
-                kernel_max = numpy.abs(kernel)
-            if numpy.abs(kernel/kernel_max) < ratio_limit:
-                calculate_kernel = False
+            #if numpy.abs(kernel) > kernel_max:
+            #    kernel_max = numpy.abs(kernel)
+            #if numpy.abs(kernel/kernel_max) < ratio_limit:
+            #    calculate_kernel = False
             self._kernel_array[idx] = kernel
             print "%1.10f %1.10f" % (self._ln_ktheta_array[idx],
                                      self._kernel_array[idx])
@@ -405,9 +407,12 @@ class Kernel(object):
     def _kernel_integrand(self, chi, ktheta):
         D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
 
-        return (self.window_function_a.window_function(chi)*
-                self.window_function_b.window_function(chi)*
-                D_z*D_z*S.j0(ktheta*chi))
+        if ktheta*chi < self._j0_limit:
+            return (self.window_function_a.window_function(chi)*
+                    self.window_function_b.window_function(chi)*
+                    D_z*D_z*S.j0(ktheta*chi))
+        else:
+            return 0.0
 
     def kernel(self, ln_ktheta):
         if not self.initialized_spline:
