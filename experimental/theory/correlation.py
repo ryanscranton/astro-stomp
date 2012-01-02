@@ -100,17 +100,17 @@ Defaults to linear_power
             self.wtheta_array[idx] = self._correlation(theta)
 
     def _correlation(self, theta):
-        ln_ktheta_min = np.log(self._k_min*theta)
-        ln_ktheta_max = np.log(self._k_max*theta)
+        ln_kmin = np.log(self._k_min)
+        ln_kmax = np.log(self._k_max)
         wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
-                                            ln_ktheta_min,
-                                            ln_ktheta_max,
+                                            ln_kmin,
+                                            ln_kmax,
                                             args=(theta,),
                                             limit=200)
         print "Theta:",theta,"Wtheta:",wtheta
         return wtheta
 
-    def _correlation_integrand(self, ln_ktheta, theta):
+    def _correlation_integrand(self, ln_k, theta):
         return 1.0
 
     def write(self, output_file_name):
@@ -130,12 +130,12 @@ class MagCorrelation(Correlation):
                              camb_param, input_hod, halo_param, powSpec,
                              **kws)
 
-    def _correlation_integrand(self, ln_ktheta, theta):
-        dln_ktheta = 1.0
-        k = np.exp(ln_ktheta)/theta
-        dk = k*dln_ktheta
-        return (dk*k*self.power_spec(k)*self.kernel.kernel(ln_ktheta)/
-                (self.D_z*self.D_z))
+    def _correlation_integrand(self, ln_k, theta):
+        dln_k = 1.0
+        k = np.exp(ln_k)
+        dk = k*dln_k
+        return (dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
+                self.kernel.kernel(np.log(k*theta)))
 
 class AutoCorrelation(Correlation):
 
@@ -149,12 +149,12 @@ class AutoCorrelation(Correlation):
                              camb_param, input_hod, halo_param, powSpec,
                              **kws)
 
-    def _correlation_integrand(self, ln_ktheta, theta):
-        dln_ktheta = 1.0
-        k = np.exp(ln_ktheta)/theta
-        dk = k*dln_ktheta
+    def _correlation_integrand(self, ln_k, theta):
+        dln_k = 1.0
+        k = np.exp(ln_k)
+        dk = k*dln_k
         return (dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
-                self.kernel.kernel(ln_ktheta))
+                self.kernel.kernel(np.log(k*theta)))
 
 class AutoCorrelationDeltaFunction(Correlation):
 
@@ -193,12 +193,12 @@ class AutoCorrelationDeltaFunction(Correlation):
             print "\t setting to linear_power"
             self.power_spec = self.halo.__getattribute__('linear_power')
         
-    def _correlation_integrand(self, ln_ktheta, theta):
-        dln_ktheta = 1.0
-        k = np.exp(ln_ktheta)/theta
-        dk = k*dln_ktheta
+    def _correlation_integrand(self, ln_k, theta):
+        dln_k = 1.0
+        k = np.exp(ln_k)
+        dk = k*dln_k
         return (dk*k*self.power_spec(k)*
-                special.j0(k*theta*self.cosmology.angular_diameter_distance()))
+                special.j0(k*theta*cosmo.comoving_distance()))
 
 class CorrelationDeltaFunction(Correlation):
     
