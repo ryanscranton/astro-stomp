@@ -214,11 +214,10 @@ class Halo(object):
         for idx, ln_mass in enumerate(self._ln_mass_array,):
             y_ln_k, y_ln_k_err = integrate.quad(
                 self._y_integrand,
-                -100,
-                numpy.log(10*numpy.pi/
-                          numpy.exp(ln_k)),
+                0.0,
+                self.virial_radius(numpy.exp(ln_mass)),
                 args=(ln_k,ln_mass),
-                limit=100)
+                limit=200)
             self._y_ln_k_array[idx] = y_ln_k
             print "y value:",y_ln_k, numpy.exp(ln_k), ln_mass
         #print self._y_ln_k_array
@@ -226,10 +225,11 @@ class Halo(object):
                                                       self._y_ln_k_array)
         self._y_ln_k_hold = ln_k
 
-    def _y_integrand(self, ln_r, ln_k, ln_mass):
-        dln_r = 1.0
-        r = numpy.exp(ln_r)
-        dr = r*dln_r
+    def _y_integrand(self, r, ln_k, ln_mass):
+        #dln_r = 1.0
+        #r = numpy.exp(ln_r)
+        #dr = r*dln_r
+        dr = 1.0
         k = numpy.exp(ln_k)
         mass = numpy.exp(ln_mass)
 
@@ -240,7 +240,8 @@ class Halo(object):
         con = self.concentration(mass)
         r_v = self.virial_radius(mass)
         r_s = r_v/con 
-        return norm*(r/r_s)**self.alpha/numpy.power(1+r/r_s,3+self.alpha)
+        return norm*numpy.power(r/r_s,self.alpha)/numpy.power(
+            1+r/r_s,3+self.alpha)
 
     # def y(self, ln_k, mass):
     #     """Fourier transform of the halo profile.
