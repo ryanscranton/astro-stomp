@@ -1,20 +1,21 @@
 from __future__ import division
 import numpy
 import stomp
+import cosmology
 
 """
-A simple, no-frills correlation code for python. Given one(two) catalogs and a
-catalog of random points, the code computes the auto(cross)-corrlation between
-the catalog(s) and subtracts off the random contribution as in the L&S'93
-estimator in log bins of degrees. The code can be used as a stand alone
-or imported by another function.
+A simple, no-frills radial correlation code for python. 
+Given one(two) catalogs and a catalog of random points, the code computes 
+the auto(cross)-corrlation between the catalog(s) and subtracts off the 
+random contribution as in the L&S'93 estimator in log bins of degrees. 
+The code can be used as a stand aloneor imported by another function.
 
 Columns for the catalogs are assumed to be:
-ra dec weight
+ra dec weight redshift
 
 Columns for the randoms need only be:
 ra dec
-The code uses randomized weights from the input catalogs and
+The code uses randomized weights and redshifts from the input catalogs and
 assigns them to the random points.
 """
 
@@ -23,10 +24,12 @@ def spherical_distance(obj, cat):
     dy = (obj[1] - cat[:,1])
     return numpy.sqrt(numpy.power(dx,2)+numpy.power(dy,2))
 
-class AngularCorrelation(object):
+cosmo = cosmology.MultiEpoch(0.0,5.01)
+
+class RadialCorrelation(object):
 
     def __init__(self, cat_1, cat_2, rand_1, rand_2=None, n_random=1,
-                 theta_min=0.001, theta_max=0.5, bins_per_decade=5,
+                 r_min=0.001, r_max=10.0, bins_per_decade=5,
                  verbose=False):
         self.verbose = verbose
         self.cat_1 = cat_1[cat_1[:,0].argsort()]
@@ -54,26 +57,26 @@ class AngularCorrelation(object):
             self.randoms_2 = numpy.random.permutation(rand_2)[
                 :n_random*len(cat_2)]
 
-        self.theta_min = theta_min
-        self.theta_max = theta_max
+        self.r_min = r_min
+        self.r_max = r_max
         self.bins_per_decade = bins_per_decade
 
         self.angular_bins = []
         if bins_per_decade >= 1:
-            unit_double = numpy.floor(numpy.log10(theta_min))*bins_per_decade
-            theta = numpy.power(10.0, unit_double/bins_per_decade)
-            while theta < theta_max:
-                if theta >= self.theta_min and theta < theta_max:
-                    self.angular_bins.append(AngularBin(
-                            theta,numpy.power(10.0,
-                                              (unit_double+1.0)/
-                                              bins_per_decade)))
+            unit_double = numpy.floor(numpy.log10(r_min))*bins_per_decade
+            r = numpy.power(10.0, unit_double/bins_per_decade)
+            while r < r_max:
+                if r >= self.r_min and r < r_max:
+                    self.angular_bins.append(RadialBin(
+                            r,numpy.power(10.0,
+                                          (unit_double+1.0)/
+                                          bins_per_decade)))
                 unit_double += 1.0
-                theta = numpy.power(10.0, unit_double/bins_per_decade)
+                r = numpy.power(10.0, unit_double/bins_per_decade)
         else:
-            self.angular_bins.append(AngularBin(self.theta_min,
-                                                self.theta_max))
-            self.angular_bins[0].theta = (self.theta_max+self.theta_min)/2.0
+            self.angular_bins.append(RadialBin(self.r_min,
+                                               self.r_max))
+            self.angular_bins[0].r = (self.r_max+self.r_min)/2.0
         if n_random == 0:
             for bin in self.angular_bins:
                 bin._gal_rand = 0.0
@@ -87,7 +90,7 @@ class AngularCorrelation(object):
                 bin.rescale_gal_rand(1.0*self.n_random)
                 bin.rescale_rand_gal(1.0*self.n_random)
                 bin.rescale_rand_rand(1.0*self.n_random)
-            file_out.writelines(str(bin.theta)+' '+
+            file_out.writelines(str(bin.r)+' '+
                                 str(bin.compute_correlation())+' '+
                                 str(bin.compute_error())+' '+
                                 str(bin._gal_gal)+' '+
@@ -117,11 +120,15 @@ class AngularCorrelation(object):
             obj_coord = stomp.WeightedAngularCoordinate(
                 obj[0],obj[1],obj[2],
                 stomp.AngularCoordinate.Equatorial)
+            d_A = cosmo.angular_diameter_distance(obj[3])*numpy.pi/180.0
+            if self.verbose and idx%int(self.cat_1.shape[0]/5)==0:
+                print "\tAngular Min Max"
+                print "\t",self.r_min/d_A, self.r_max/d_A
             for bin in self.angular_bins:
                 bin.add_to_gal_gal(galaxy_tree.FindWeightedPairs(
                         obj_coord,
-                        bin.theta_min,
-                        bin.theta_max))
+                        bin.r_min/d_A,
+                        bin.r_max/d_A))
         for rand_it in xrange(self.n_random):
             if self.verbose:
                 print "Starting Random Iteration",rand_it+1
@@ -129,8 +136,9 @@ class AngularCorrelation(object):
             randoms = self.randoms_1[
                 rand_it*len(self.cat_1):(rand_it+1)*len(self.cat_1)]
             weights = numpy.random.permutation(self.cat_1[:,2])
+            redshifts = numpy.random.permutation(self.cat_1[:,3])
             randoms = numpy.array([randoms[:,0],randoms[:,1],
-                                   weights]).transpose()
+                                   weights,redshifts]).transpose()
             if self.verbose:
                 print "\tComputing Gal-Rand"
             for idx,rand in enumerate(randoms):
@@ -141,9 +149,10 @@ class AngularCorrelation(object):
                     print "Failed to add object!"
                 if self.verbose and idx%int(randoms.shape[0]/5)==0:
                     print "\tRunning Object",idx
+                d_A = cosmo.angular_diameter_distance(rand[3])*numpy.pi/180.0
                 for bin in self.angular_bins:
                     gal_rand = galaxy_tree.FindWeightedPairs(
-                        rand_coord,bin.theta_min,bin.theta_max)
+                        rand_coord,bin.r_min/d_A,bin.r_max/d_A)
                     bin.add_to_gal_rand(gal_rand)
                     bin.add_to_rand_gal(gal_rand)
             if self.verbose:
@@ -154,9 +163,10 @@ class AngularCorrelation(object):
                 rand_coord = stomp.WeightedAngularCoordinate(
                     rand[0],rand[1],rand[2],
                     stomp.AngularCoordinate.Equatorial)
+                d_A = cosmo.angular_diameter_distance(rand[3])*numpy.pi/180.0
                 for bin in self.angular_bins:
                     bin.add_to_rand_rand(random_tree.FindWeightedPairs(
-                            rand_coord,bin.theta_min,bin.theta_max))
+                            rand_coord,bin.r_min/d_A,bin.r_max/d_A))
 
     def find_cross_correlation(self):
         if self.verbose:
@@ -175,22 +185,27 @@ class AngularCorrelation(object):
             obj_coord = stomp.WeightedAngularCoordinate(
                 obj[0],obj[1],obj[2],
                 stomp.AngularCoordinate.Equatorial)
+            d_A = cosmo.angular_diameter_distance(obj[3])*numpy.pi/180.0
             for bin in self.angular_bins:
                 bin.add_to_gal_gal(galaxy_tree.FindWeightedPairs(
                         obj_coord,
-                        bin.theta_min,
-                        bin.theta_max))
+                        bin.r_min/d_A,
+                        bin.r_max/d_A))
         for rand_it in xrange(self.n_random):
             if self.verbose:
                 print "Starting Random Iteration",rand_it+1
             rand_1 = self.randoms_1[
                 rand_it*len(self.cat_1):(rand_it+1)*len(self.cat_1)]
             weights = numpy.random.permutation(self.cat_1[:,2])
-            rand_1 = numpy.array([rand_1[:,0],rand_1[:,1],weights]).transpose()
+            redshifts = numpy.random.permutation(self.cat_1[:,2])
+            rand_1 = numpy.array([rand_1[:,0],rand_1[:,1],
+                                  weights,redshifts]).transpose()
             rand_2 = self.randoms_2[
                 rand_it*len(self.cat_2):(rand_it+1)*len(self.cat_2)]
             weights = numpy.random.permutation(self.cat_2[:,2])
-            rand_2 = numpy.array([rand_2[:,0],rand_2[:,1],weights]).transpose()
+            redshifts = numpy.random.permutation(self.cat_2[:,2])
+            rand_2 = numpy.array([rand_2[:,0],rand_2[:,1],
+                                  weights,redshifts]).transpose()
             random_tree = stomp.TreeMap(256)
             for obj in rand_2:
                 if numpy.logical_not(random_tree.AddPoint(
@@ -206,11 +221,12 @@ class AngularCorrelation(object):
                 obj_coord = stomp.WeightedAngularCoordinate(
                     obj[0],obj[1],obj[2],
                     stomp.AngularCoordinate.Equatorial)
+                d_A = cosmo.angular_diameter_distance(obj[3])*numpy.pi/180.0
                 for bin in self.angular_bins:
                     bin.add_to_gal_rand(random_tree.FindWeightedPairs(
                             obj_coord,
-                            bin.theta_min,
-                            bin.theta_max))
+                            bin.r_min/d_A,
+                            bin.r_max/d_A))
             if self.verbose:
                 print "\tComputing Rand-Gal"
             for idx,obj in enumerate(rand_1):
@@ -219,11 +235,12 @@ class AngularCorrelation(object):
                 obj_coord = stomp.WeightedAngularCoordinate(
                     obj[0],obj[1],obj[2],
                     stomp.AngularCoordinate.Equatorial)
+                d_A = cosmo.angular_diameter_distance(obj[3])*numpy.pi/180.0
                 for bin in self.angular_bins:
                     bin.add_to_rand_gal(galaxy_tree.FindWeightedPairs(
                             obj_coord,
-                            bin.theta_min,
-                            bin.theta_max))
+                            bin.r_min/d_A,
+                            bin.r_max/d_A))
             if self.verbose:
                 print "\tComputing Rand-Rand"
             for idx,obj in enumerate(rand_1):
@@ -232,19 +249,20 @@ class AngularCorrelation(object):
                 obj_coord = stomp.WeightedAngularCoordinate(
                     obj[0],obj[1],obj[2],
                     stomp.AngularCoordinate.Equatorial)
+                d_A = cosmo.angular_diameter_distance(obj[3])*numpy.pi/180.0
                 for bin in self.angular_bins:
                     bin.add_to_rand_rand(random_tree.FindWeightedPairs(
                             obj_coord,
-                            bin.theta_min,
-                            bin.theta_max))
+                            bin.r_min/d_A,
+                            bin.r_max/d_A))
 
-class AngularBin(object):
+class RadialBin(object):
     
-    def __init__(self, theta_min, theta_max):
-        self.theta_min = theta_min
-        self.theta_max = theta_max
-        self.theta = numpy.power(10.0,0.5*(numpy.log10(theta_min)+
-                                 numpy.log10(theta_max)))
+    def __init__(self, r_min, r_max):
+        self.r_min = r_min
+        self.r_max = r_max
+        self.r = numpy.power(10.0,0.5*(numpy.log10(r_min)+
+                                 numpy.log10(r_max)))
         self.reset_pairs()
 
     def reset_pairs(self):
@@ -283,11 +301,11 @@ class AngularBin(object):
 
 if __name__ == "__main__":
     print "Running Unit Test"
-    random_1 = numpy.random.uniform(0,1,size=(10000,3))
-    random_2 = numpy.random.uniform(0,1,size=(10000,3))
-    random_3 = numpy.random.uniform(0,1,size=(1000000,3))
-    test_correlator = AngularCorrelation(random_1, random_2, random_3,
-                                         n_random=5,verbose=True)
+    random_1 = numpy.random.uniform(0.01,1.0,size=(10000,4))
+    random_2 = numpy.random.uniform(0.01,1.0,size=(10000,4))
+    random_3 = numpy.random.uniform(0.01,1.0,size=(1000000,4))
+    test_correlator = RadialCorrelation(random_1, random_2, random_3,
+                                        n_random=5,verbose=True)
     test_correlator.find_auto_correlation()
     test_correlator.write_result('test_auto_correlation.ascii')
     test_correlator.reset_pairs()
