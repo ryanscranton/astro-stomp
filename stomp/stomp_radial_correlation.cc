@@ -308,6 +308,62 @@ bool RadialCorrelation::Write(const std::string& output_file_name) {
   return wrote_file;
 }
 
+double RadialCorrelation::Covariance(uint8_t bin_idx_a, uint8_t bin_idx_b) {
+  double covariance = 0.0;
+
+  RadialIterator r_a = BinIterator(bin_idx_a);
+  RadialIterator r_b = BinIterator(bin_idx_b);
+
+  if ((r_a->NRegion() == r_b->NRegion()) &&
+      (r_a->NRegion() > 0)) {
+    // We have a valid number of regions and both bins were calculated with
+    // the same number of regions, so we calculate the jack-knife covariance.
+    uint16_t n_region = r_a->NRegion();
+    double mean_wtheta_a = r_a->MeanWtheta();
+    double mean_wtheta_b = r_b->MeanWtheta();
+
+    for (uint16_t region_iter=0;region_iter<n_region;region_iter++) {
+      covariance +=
+	(r_a->Wtheta(region_iter) - mean_wtheta_a)*
+	(r_b->Wtheta(region_iter) - mean_wtheta_b);
+    }
+
+    covariance *= (n_region - 1.0)*(n_region - 1.0)/(1.0*n_region*n_region);
+  } else {
+    // If the above doesn't hold, then we're reduced to using Poisson errors.
+    // In this case, we only have non-zero elements on the diagonal of the
+    // covariance matrix; all others are zero by definition.
+    if (bin_idx_a == bin_idx_b) {
+      covariance = r_a->WthetaError()*r_a->WthetaError();
+    }
+  }
+
+  return covariance;
+}
+
+bool RadialCorrelation::WriteCovariance(const std::string& output_file_name) {
+  bool wrote_file = false;
+
+  std::ofstream output_file(output_file_name.c_str());
+
+  if (output_file.is_open()) {
+    wrote_file = true;
+
+    for (uint8_t r_idx_a=0;r_idx_a<radialbin_.size();r_idx_a++) {
+      for (uint8_t r_idx_b=0;r_idx_b<radialbin_.size();r_idx_b++) {
+	output_file << std::setprecision(6) <<
+	  radialbin_[r_idx_a].Radius() << " " <<
+	  radialbin_[r_idx_b].Radius() << " " <<
+	  Covariance(r_idx_a, r_idx_b) << "\n";
+      }
+    }
+
+    output_file.close();
+  }
+
+  return wrote_file;
+}
+
 void RadialCorrelation::UseOnlyPairs() {
   radial_pixel_begin_ = radialbin_.end();
   radial_pixel_end_ = radialbin_.end();
