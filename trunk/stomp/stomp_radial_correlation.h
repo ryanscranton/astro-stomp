@@ -111,6 +111,9 @@ class RadialCorrelation : public AngularCorrelation {
   // calculated without regions, then this column will be omitted.
   bool Write(const std::string& output_file_name);
 
+  double Covariance(uint8_t bin_idx_a, uint8_t bin_idx_b);
+  bool WriteCovariance(const std::string& output_file_name);
+
   // In some cases, we want to default to using either the pair-based or
   // pixel-based estimator for all of our bins, regardless of angular scale.
   // These methods allow us to over-ride the default behavior of the
