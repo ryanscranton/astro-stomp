@@ -1,5 +1,6 @@
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate
+from scipy import special
 import param  # cosmological parameter object from Cosmopy
 import numpy
 
@@ -124,7 +125,7 @@ class SingleEpoch(object):
         if self.flat and self.omega_m0 < 1.0001:
             delta_c *= self.omega_m()**0.0055
 
-        return delta_c/self._growth
+        return delta_c
 
     def delta_v(self):
         """Over-density for a collapsed, virialized halo."""
@@ -147,55 +148,79 @@ class SingleEpoch(object):
 
     def _bbks(self, k):
         """BBKS transfer function."""
-        q = k/self.omega_m0/self.h**2*numpy.exp(
+        Gamma = self.omega_m0*self.h
+        #q = k/(Gamma*self.h)
+        q = k/(Gamma*self.h)*numpy.exp(
             self.omega_b0 + numpy.sqrt(2*self.h)*self.omega_b0/self.omega_m0)
         return (numpy.log(1.0 + 2.34*q)/(2.34*q)*
-                (1 + 3.89*q + (16.1*q)**2 + (5.46*q)**3 + (6.71*q)**4)**(-0.25))
+                (1 + 3.89*q + (16.1*q)**2 + (5.47*q)**3 + (6.71*q)**4)**(-0.25))
 
     def delta_k(self, k):
-        """k^2*P(k)/2*pi^2: dimensionless linear power spectrum."""
+        """k^3*P(k)/2*pi^2: dimensionless linear power spectrum."""
         delta_k = (
             self.delta_H**2*(3000.0*k/self.h)**(3 + self.n)*self._bbks(k)**2)
         return delta_k*self._growth*self._growth
 
     def linear_power(self, k):
-        return 2.0*numpy.pi*numpy.pi*self.delta_k(k*self.h)/(k*k*k)
+        return 2.0*numpy.pi*numpy.pi*self.delta_k(k)/(k*k*k)
 
     def sigma_r(self, scale):
         """RMS power on scale in Mpc/h"""
         if 1.0/scale <= self.k_min:
-            self.k_min = (1.0/scale)/10.0
+            self.k_min = (1.0/scale)/2.0
             print "WARNING: Requesting scale greater than k_min."
             print "\tResetting k_min to",self.k_min
         if 1.0/scale >= self.k_max:
-            self.k_max = (1.0/scale)*10.0
+            self.k_max = (1.0/scale)*2.0
             print "WARNING: Requesting scale greater than k_max."
             print "\tResetting k_max to",self.k_max
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,), limit=200)
-        sigma2 /= 2.0*numpy.pi*numpy.pi
-
-        sigma2 *= self._growth*self._growth
-
-        self.k_min = 0.001
-        self.k_max = 100.0
+        sigma2 *= numpy.pi*numpy.pi/2.0
 
         return numpy.sqrt(sigma2)
 
     def _sigma_integrand(self, ln_k, scale):
         k = numpy.exp(ln_k)
+        dk = 1.0*k
         kR = scale*k
 
-        W = 9.0*(numpy.sin(kR) - kR*numpy.cos(kR))**2/(kR*kR*kR*kR*kR*kR)
+        W = (2*numpy.pi)**(-3.0/2.0)*3.0*(
+            numpy.sin(kR)/kR**3-numpy.cos(kR)/kR**2)
 
-        return self.linear_power(k)*W*k*k*k
+        return dk*self.linear_power(k)*W*W*k*k
 
     def sigma_m(self, mass):
         """RMS power on scale subtended by total mean mass in solar masses."""
         scale = (3.0*mass/(4.0*numpy.pi*self.rho_bar()))**(1.0/3.0)
 
         return self.sigma_r(scale)
+
+    def sigma_r_prime(self, scale):
+        pk2_int, pk2_error = integrate.quad(self._sigma_prime_integrand,
+                                            numpy.log(self.k_min),
+                                            numpy.log(self.k_max),args=(scale,),
+                                            limit=200)
+        return 1.0/(2*self.sigma_r(scale))*pk2_int*numpy*numpy.pi**2/2.0
+
+    def sigma_m_prime(self, mass):
+        scale = (3.0*mass/(4.0*numpy.pi*self.rho_bar()))**(1.0/3.0)
+        d_M_d_R = 4.0*numpy.pi*self.rho_bar()*scale*scale
+
+        return self.sigma_r_prime(scale)*d_M_d_R
+    
+    def _sigma_prime_integrand(self, ln_k, scale):
+        k = numpy.exp(ln_k)
+        dk = 1.0*k
+        kR = scale*k
+        
+        W_1 = 18.0*(numpy.sin(kR)*(numpy.sin(kR)-kR*numpy.cos(kR)))/(
+            kR*kR*kR*kR*scale)
+        W_2 = 54.0*(numpy.sin(kR) - kR*numpy.cos(kR))**2/(
+            kR*kR*kR*kR*kR*kR*scale)
+        
+        return (2*numpy.pi)**(-3.0)*dk*self.linear_power(k)*(W_1-W_2)*k*k
 
     def nu_r(self, scale):
         """Ratio of (delta_c/sigma(R))^2"""
