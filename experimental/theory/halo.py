@@ -37,14 +37,7 @@ class Halo(object):
         self._k_max = 100.0
         ln_mass_min = numpy.log(1.0e9)
         ln_mass_max = numpy.log(5.0e16)
-
-        self._y_ln_k_hold = numpy.log(self._k_min)-10
-        self._ln_mass_array = numpy.arange(ln_mass_min,
-                                           ln_mass_max,
-                                           (ln_mass_max-ln_mass_min)/50.0)
-        print self._ln_mass_array
-        self._y_ln_k_array = numpy.empty(self._ln_mass_array.shape)
-
+        
         dln_k = (numpy.log(self._k_max) - numpy.log(self._k_min))/200.0
         self.ln_k_max = numpy.log(self._k_max) + dln_k
         self.ln_k_min = numpy.log(self._k_min) - dln_k
@@ -205,63 +198,24 @@ class Halo(object):
         return numpy.exp(self._ln_halo_norm_spline(numpy.log(mass))[0])
 
     def y(self, ln_k, mass):
-        if ln_k != self._y_ln_k_hold:
-            self._initialize_y_spline(ln_k)
-        ln_mass = numpy.log(mass)
-        return self._y_spline(ln_mass)
+        """Fourier transform of the halo profile.
 
-    def _initialize_y_spline(self, ln_k):
-        for idx, ln_mass in enumerate(self._ln_mass_array,):
-            y_ln_k, y_ln_k_err = integrate.quad(
-                self._y_integrand,
-                0.0,
-                self.virial_radius(numpy.exp(ln_mass)),
-                args=(ln_k,ln_mass),
-                limit=200)
-            self._y_ln_k_array[idx] = y_ln_k
-            print "y value:",y_ln_k, numpy.exp(ln_k), ln_mass
-        #print self._y_ln_k_array
-        self._y_spline = InterpolatedUnivariateSpline(self._ln_mass_array,
-                                                      self._y_ln_k_array)
-        self._y_ln_k_hold = ln_k
+        Using an analytic expression for the Fourier transform from
+        White (2001).  This is only valid for an NFW profile.
+        """
 
-    def _y_integrand(self, r, ln_k, ln_mass):
-        #dln_r = 1.0
-        #r = numpy.exp(ln_r)
-        #dr = r*dln_r
-        dr = 1.0
-        k = numpy.exp(ln_k)
-        mass = numpy.exp(ln_mass)
-
-        return dr*4*numpy.pi*r*r*self._rho(r,mass)*numpy.sin(k*r)/(k*r)/mass
-        
-    def _rho(self, r, mass):
-        norm = self.halo_normalization(mass)
+        k = numpy.exp(ln_k)/self.h
         con = self.concentration(mass)
-        r_v = self.virial_radius(mass)
-        r_s = r_v/con 
-        return norm*numpy.power(r/r_s,self.alpha)/numpy.power(
-            1+r/r_s,3+self.alpha)
+        con_plus = 1.0 + con
+        z = k*self.virial_radius(mass)/con
+        si_z, ci_z = special.sici(z)
+        si_cz, ci_cz = special.sici(con_plus*z)
+        rho_km = (numpy.cos(z)*(ci_cz - ci_z) +
+                  numpy.sin(z)*(si_cz - si_z) -
+                  numpy.sin(con*z)/(con_plus*z))
+        mass_k = numpy.log(con_plus) - con/con_plus
 
-    # def y(self, ln_k, mass):
-    #     """Fourier transform of the halo profile.
-
-    #     Using an analytic expression for the Fourier transform from
-    #     White (2001).  This is only valid for an NFW profile.
-    #     """
-
-    #     k = numpy.exp(ln_k)/self.h
-    #     con = self.concentration(mass)
-    #     con_plus = 1.0 + con
-    #     z = k*self.virial_radius(mass)/con
-    #     si_z, ci_z = special.sici(z)
-    #     si_cz, ci_cz = special.sici(con_plus*z)
-    #     rho_km = (numpy.cos(z)*(ci_cz - ci_z) +
-    #               numpy.sin(z)*(si_cz - si_z) -
-    #               numpy.sin(con*z)/(con_plus*z))
-    #     mass_k = numpy.log(con_plus) - con/con_plus
-
-    #     return rho_km/mass_k
+        return rho_km/mass_k
 
     def write(self, output_file_name):
         f = open(output_file_name, "w")
@@ -402,7 +356,7 @@ class Halo(object):
         Functional form from Bullock et al.
         """
         return self.c0*(mass/self.mass.m_star)**self.beta
-
+        
     def _halo_normalization(self, mass):
         """Halo normalization as a function of mass.
 

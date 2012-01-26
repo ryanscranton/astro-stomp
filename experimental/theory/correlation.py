@@ -4,7 +4,7 @@ import halo
 import hod
 import kernel
 import param
-import numpy as np
+import numpy
 from scipy import special
 from scipy import integrate
 
@@ -15,7 +15,7 @@ Given a kernel function and halo model the class should produce a correlation as
 """
 
 speed_of_light = 3*10**5
-degToRad = np.pi/180.0
+degToRad = numpy.pi/180.0
 
 __author__ = "Chris Morrison <morrison.chrisb@gmail.com>"
 
@@ -35,15 +35,15 @@ Defaults to linear_power
                  camb_param=None, input_hod=None, halo_param=None, 
                  powSpec=None, **kws):
 
-        self.log_theta_min = np.log10(theta_min)
-        self.log_theta_max = np.log10(theta_max)
-        self.theta_array = np.logspace(self.log_theta_min,
-                                       self.log_theta_max, 100)
+        self.log_theta_min = numpy.log10(theta_min)
+        self.log_theta_max = numpy.log10(theta_max)
+        self.theta_array = numpy.logspace(self.log_theta_min,
+                                       self.log_theta_max, 50)
         if theta_min==theta_max:
-            self.log_theta_min = np.log10(theta_min)
-            self.log_theta_max = np.log10(theta_min)
-            self.theta_array = np.array([theta_min])
-        self.wtheta_array= np.zeros(self.theta_array.size)
+            self.log_theta_min = numpy.log10(theta_min)
+            self.log_theta_max = numpy.log10(theta_min)
+            self.theta_array = numpy.array([theta_min])
+        self.wtheta_array= numpy.zeros(self.theta_array.size)
 
         # Hard coded, but we shouldn't expect halos outside of this range.
         self._k_min = 0.001
@@ -100,8 +100,8 @@ Defaults to linear_power
             self.wtheta_array[idx] = self._correlation(theta)
 
     def _correlation(self, theta):
-        ln_kmin = np.log(self._k_min)
-        ln_kmax = np.log(self._k_max)
+        ln_kmin = numpy.log(self._k_min)
+        ln_kmax = numpy.log(self._k_max)
         wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
                                             ln_kmin,
                                             ln_kmax,
@@ -132,10 +132,10 @@ class MagCorrelation(Correlation):
 
     def _correlation_integrand(self, ln_k, theta):
         dln_k = 1.0
-        k = np.exp(ln_k)
-        dk = k*dln_k
+        k = numpy.exp(ln_k)
+        dk = k*dln_k/(4*numpy.pi)
         return (dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
-                self.kernel.kernel(np.log(k*theta)))
+                self.kernel.kernel(numpy.log(k*theta)))
 
 class AutoCorrelation(Correlation):
 
@@ -151,29 +151,29 @@ class AutoCorrelation(Correlation):
 
     def _correlation_integrand(self, ln_k, theta):
         dln_k = 1.0
-        k = np.exp(ln_k)
-        dk = k*dln_k
+        k = numpy.exp(ln_k)
+        dk = k*dln_k/(2*numpy.pi)
         return (dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
-                self.kernel.kernel(np.log(k*theta)))
+                self.kernel.kernel(numpy.log(k*theta)))
 
 class AutoCorrelationDeltaFunction(Correlation):
 
     def __init__(self, theta_min, theta_max, redshift, input_cosmology=None,
                input_hod=None, input_halo=None, powSpec=None, **kws):
-        self.log_theta_min = np.log10(theta_min)
-        self.log_theta_max = np.log10(theta_max)
-        self.theta_array = np.logspace(self.log_theta_min, 
+        self.log_theta_min = numpy.log10(theta_min)
+        self.log_theta_max = numpy.log10(theta_max)
+        self.theta_array = numpy.logspace(self.log_theta_min, 
                                        self.log_theta_max, 20)
-        self.wtheta_array= np.zeros(self.theta_array.size)
+        self.wtheta_array= numpy.zeros(self.theta_array.size)
         self.z = redshift
         self._k_min = 0.001
         self._k_max = 100.0
         
-        self.ln_ktheta_min = np.log(self._k_min*theta_min)
-        self.ln_ktheta_max = np.log(self._k_max*theta_max)
+        self.ln_ktheta_min = numpy.log(self._k_min*theta_min)
+        self.ln_ktheta_max = numpy.log(self._k_max*theta_max)
 
         dln_ktheta = (self.ln_ktheta_max - self.ln_ktheta_min)/200.0
-        self._ln_ktheta_array = np.arange(
+        self._ln_ktheta_array = numpy.arange(
             self.ln_ktheta_min, self.ln_ktheta_max + dln_ktheta, dln_ktheta)
 
         if input_cosmology == None:
@@ -195,7 +195,7 @@ class AutoCorrelationDeltaFunction(Correlation):
         
     def _correlation_integrand(self, ln_k, theta):
         dln_k = 1.0
-        k = np.exp(ln_k)
+        k = numpy.exp(ln_k)
         dk = k*dln_k
         return (dk*k*self.power_spec(k)*
                 special.j0(k*theta*cosmo.comoving_distance()))
@@ -210,15 +210,15 @@ class CorrelationDeltaFunction(Correlation):
     def __init__(self, theta_min, theta_max, redshift_a, redshift_b, 
                  camb_param=None, input_hod=None, halo_param=None, 
                  powSpec=None, **kws):
-        self.log_theta_min = np.log10(theta_min)
-        self.log_theta_max = np.log10(theta_max)
-        self.theta_array = np.logspace(self.log_theta_min, 
+        self.log_theta_min = numpy.log10(theta_min)
+        self.log_theta_max = numpy.log10(theta_max)
+        self.theta_array = numpy.logspace(self.log_theta_min, 
                                        self.log_theta_max, 20)
         if theta_min == theta_max:
-            self.log_theta_min = np.log10(theta_min)
-            self.log_theta_max = np.log10(theta_min)
-            self.theta_array = np.array([theta_min])
-        self.wtheta_array= np.zeros(self.theta_array.size)
+            self.log_theta_min = numpy.log10(theta_min)
+            self.log_theta_max = numpy.log10(theta_min)
+            self.theta_array = numpy.array([theta_min])
+        self.wtheta_array= numpy.zeros(self.theta_array.size)
 
         self.z_a = redshift_a
         self.z_b = redshift_b
@@ -227,10 +227,10 @@ class CorrelationDeltaFunction(Correlation):
         self._k_min = 0.001
         self._k_max = 100.0
         
-        self.ln_ktheta_min = np.log(self._k_min*theta_min)
-        self.ln_ktheta_max = np.log(self._k_max*theta_max)
+        self.ln_ktheta_min = numpy.log(self._k_min*theta_min)
+        self.ln_ktheta_max = numpy.log(self._k_max*theta_max)
         dln_ktheta = (self.ln_ktheta_max - self.ln_ktheta_min)/200.0
-        self._ln_ktheta_array = np.arange(
+        self._ln_ktheta_array = numpy.arange(
             self.ln_ktheta_min, self.ln_ktheta_max + dln_ktheta, dln_ktheta)
 
         if camb_param == None:
@@ -250,10 +250,10 @@ class CorrelationDeltaFunction(Correlation):
                                     (self.xiA_b*self.xiA_a))
         print self.cosmology_prefactor
 
-        self.ln_s_min = np.log(self._k_min*self.xiA_a)
-        self.ln_s_max = np.log(self._k_max*self.xiA_b)
+        self.ln_s_min = numpy.log(self._k_min*self.xiA_a)
+        self.ln_s_max = numpy.log(self._k_max*self.xiA_b)
         dln_s = (self.ln_s_max - self.ln_s_min)/200.0
-        self._ln_s_array = np.arange(
+        self._ln_s_array = numpy.arange(
             self.ln_s_min, self.ln_s_max + dln_s, dln_s)
                       
         if halo_param is None:
@@ -272,7 +272,7 @@ class CorrelationDeltaFunction(Correlation):
 
     def _correlation_integrand(self, ln_s, theta):
         dln_s = 1.0
-        s = np.exp(ln_s)
+        s = numpy.exp(ln_s)
         ds = s*dln_s
         k = s/self.xiA_a
         return (ds*s*self.halo.power_mm(k)
@@ -280,9 +280,9 @@ class CorrelationDeltaFunction(Correlation):
 
     def write_kernel(self, output_file_name):
         f = open(output_file_name, "w")
-        theta = 1.0/60.0*np.pi/180.0
+        theta = 1.0/60.0*numpy.pi/180.0
         for ln_s in self._ln_s_array:
-            s = np.exp(ln_s)
+            s = numpy.exp(ln_s)
             k = s/self.xiA_a
             f.write("%1.10f %1.10f %1.10f\n" % (k, self._correlation_integrand(
                         ln_s, theta)/s**2,special.j0(s*theta)))
