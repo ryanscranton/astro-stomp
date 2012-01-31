@@ -14,8 +14,8 @@ DEFINE_string(galaxy_file, "",
 DEFINE_bool(galaxy_radec, false, "Galaxy coordinates are in RA-DEC");
 DEFINE_string(output_file, "Wradial_test",
               "Output file");
-DEFINE_double(r_min, 1, "Minimum radial scale (in Mpc/h)");
-DEFINE_double(r_max, 10.0, "Maximum radial scale (in Mpc/h)");
+DEFINE_double(r_min, 1, "Minimum radial scale (in Mpc)");
+DEFINE_double(r_max, 10.0, "Maximum radial scale (in Mpc)");
 DEFINE_double(mag_min, 16.0, "Minimum acceptable galaxy magnitude");
 DEFINE_double(mag_max, 17.0, "Maximum acceptable galaxy magnitude");
 DEFINE_double(z_min, 0.0, "Minimum acceptable galaxy redshift");
