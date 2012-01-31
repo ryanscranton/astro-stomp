@@ -48,17 +48,17 @@ void Cosmology::SetOmegaL(double omega_lambda) {
 }
 
 double Cosmology::ComovingDistance(double z) {
-  // In Mpc/h.
-  return HubbleDistance()*z/sqrt(1.0 + a_*z + b_*z*z);
+  // In Mpc.
+  return HuleDistance()*z/sqrt(1.0 + a_*z + b_*z*z);
 }
 
 double Cosmology::AngularDiameterDistance(double z) {
-  // In Mpc/h.
+  // In Mpc.
   return ComovingDistance(z)/(1.0+z);
 }
 
 double Cosmology::LuminosityDistance(double z) {
-  // In Mpc/h.
+  // In Mpc.
   return ComovingDistance(z)*(1.0+z);
 }
 
