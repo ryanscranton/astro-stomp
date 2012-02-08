@@ -16,30 +16,31 @@ import unittest
 REVISION = "$Revision: 59 $"
 
 # cosmological parameters have CAMB compatible names
+# Parameters from WMAP7 + BAO + SN
 defaultCosmoParamDict = {
-        "ombh2": 0.02258,
-        "omch2": 0.1109,
-        "omnuh2": 0,
-        "omk": 0,
-        "hubble": 71.0,
-        "w": -1,
-        "cs2_lam": 1,
-        "omega_baryon": 0.0449,
-        "omega_cdm": 0.222,
-        "omega_lambda": 0.734,
-        "omega_neutrino": 0,
-        "temp_cmb": 2.726,
-        "helium_fraction": 0.249,
-        "massless_neutrinos": 3.,
-        "massive_neutrinos": 0,
-        "re_redshift": 10.4,
-        "re_ionization_frac": 1,
-        "scalar_amp": [2.3e-9],
-        "scalar_spectral_index": [1.0],
-        "scalar_nrun": [0],
-        "tensor_spectral_index": [0],
-        "initial_ratio": [1]
-        }
+    "ombh2": 0.02249,
+    "omch2": 0.1131,
+    "omnuh2": 0,
+    "omk": 0,
+    "hubble": 70.0,
+    "w": -1,
+    "cs2_lam": 1,
+    "omega_baryon": 0.0461,
+    "omega_cdm": 0.232,
+    "omega_lambda": 0.722,
+    "omega_neutrino": 0,
+    "temp_cmb": 2.726,
+    "helium_fraction": 0.249,
+    "massless_neutrinos": 3.0,
+    "massive_neutrinos": 0,
+    "re_redshift": 10.4,
+    "re_ionization_frac": 1,
+    "scalar_amp": [2.461e-9],
+    "scalar_spectral_index": [0.960],
+    "scalar_nrun": [0],
+    "tensor_spectral_index": [0],
+    "initial_ratio": [1]
+    }
 
 # note that all cosmological parameters are also Camb parameters
 # initial_vector is a unique case, since it needs to print differently

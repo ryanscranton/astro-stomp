@@ -64,10 +64,10 @@ class Halo(object):
         # self.alpha = -1.0*halo_param.dpalpha
         self.alpha = -1.0
 
-        cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
-        self.delta_v = cosmo.delta_v()
-        self.rho_bar = cosmo.rho_bar()
-        self.h = cosmo.h
+        self.cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
+        self.delta_v = self.cosmo.delta_v()
+        self.rho_bar = self.cosmo.rho_bar()
+        self.h = self.cosmo.h
 
         self.mass = mass_function.MassFunction(
             self.redshift, camb_param, halo_param)
@@ -77,9 +77,9 @@ class Halo(object):
         else:
             self.local_hod = input_hod
 
-        self.camb = camb.CambWrapper(camb_param)
-        self.camb.set_redshift(redshift)
-        self.camb.run()
+        # self.camb = camb.CambWrapper(camb_param)
+        # self.camb.set_redshift(redshift)
+        # self.camb.run()
 
         self._calculate_n_bar()
         #self._calculate_bias()
@@ -97,19 +97,19 @@ class Halo(object):
             camb_param = self.camb_param
         if redshift==None:
             redshift = self.redshift
-        cosmo = cosmology.SingleEpoch(redshift, camb_param)
-        self.delta_v = cosmo.delta_v()
-        self.rho_bar = cosmo.rho_bar()
-        self.h = cosmo.h
+        self.cosmo = cosmology.SingleEpoch(redshift, camb_param)
+        self.delta_v = self.cosmo.delta_v()
+        self.rho_bar = self.cosmo.rho_bar()
+        self.h = self.cosmo.h
 
         self.c0 = self.halo_param.cbarcoef/(1.0 + redshift)
 
         self.mass = mass_function.MassFunction(
             self.redshift, camb_param, self.halo_param)
 
-        self.camb = camb.CambWrapper(camb_param)
-        self.camb.set_redshift(redshift)
-        self.camb.run()
+        # self.camb = camb.CambWrapper(camb_param)
+        # self.camb.set_redshift(redshift)
+        # self.camb.run()
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
@@ -148,9 +148,15 @@ class Halo(object):
     def set_redshift(self, redshift):
         self.set_cosmology(self.camb_param, redshift)
 
+    # def linear_power(self, k):
+    #     """Linear power spectrum in comoving (Mpc/h)^3 from CAMB."""
+    #     return self.camb.linear_power(k)
+
     def linear_power(self, k):
-        """Linear power spectrum in comoving (Mpc/h)^3 from CAMB."""
-        return self.camb.linear_power(k)
+        """
+        Linear power spectrum in comoving (Mpc/h)^3 from Eisenstien and Hu.
+        """
+        return self.cosmo.linear_power(k)
 
     def power_mm(self, k):
         """Non-linear power spectrum in comoving (Mpc/h)^3"""

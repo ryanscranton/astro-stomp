@@ -30,22 +30,38 @@ class MassFunction(object):
     """
     def __init__(self, redshift=0.0, camb_param=None, halo_param=None, **kws):
         # Hard coded, but we shouldn't expect halos outside of this range.
-        mass_min = 1.0e8 # originaly 1.0e9
-        mass_max = 5.0e16 # originaly 5.0e16
-
         self.redshift = redshift
         self.cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
         self.delta_c = self.cosmo.delta_c()
 
-        while 0.1 < self.cosmo.nu_m(mass_min):
-            print "Min mass", mass_min,"not low enough..."
-            mass_min = mass_min/2.0
-            print "\tSetting to",mass_min,"..."
+        mass_min = 1.0e8
+        mass_max = 1.0e17
 
-        while 500.0 < self.cosmo.nu_m(mass_max):
-            print "Max mass", mass_max,"too high..."
-            mass_max = mass_max/2.0
-            print "\tSetting to",mass_max,"..."
+        mass_limit_not_set = True
+        while mass_limit_not_set:
+            if 0.105 < self.cosmo.nu_m(mass_min):
+                #print "Min mass", mass_min,"too high..."
+                mass_min = mass_min/1.05
+                #print "\tSetting to",mass_min,"..."
+                continue
+            elif 0.095 > self.cosmo.nu_m(mass_min):
+                #print "Min mass", mass_min,"too low..."
+                mass_min = mass_min*1.05
+                #print "\tSetting to",mass_min,"..."
+                continue
+            if  47.5 > self.cosmo.nu_m(mass_max):
+                #print "Max mass", mass_max,"too low..."
+                mass_max = mass_max*1.05
+                #print "\tSetting to",mass_max,"..."
+                continue
+            elif 52.5 < self.cosmo.nu_m(mass_max):
+                #print "Max mass", mass_max,"too high..."
+                mass_max = mass_max/1.05
+                #print "\tSetting to",mass_max,"..."
+                continue
+            mass_limit_not_set = False
+
+        print "Mass Limits:",mass_min,"-",mass_max
 
         dln_mass = (numpy.log(mass_max) - numpy.log(mass_min))/100
         self.ln_mass_max = numpy.log(mass_max) + dln_mass
