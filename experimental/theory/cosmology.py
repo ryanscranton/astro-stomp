@@ -146,7 +146,89 @@ class SingleEpoch(object):
         """Matter density in solar masses per cubic Mpc."""
         return self.rho_crit()*self.omega_m()
 
-    def _bbks(self, k):
+    def _eh_transfer(self, k):
+        """
+        Eisenstein & Hu (1998) fitting function without BAO wiggles
+        (see eqs. 26,28-31 in their paper)
+        """
+
+        theta = 2.728/2.7
+        Ob = self.omega_b0
+        Om = self.omega_m0
+        h = self.h
+        Omh2 = Om*h**2
+        
+        s = 44.5*numpy.log(9.83/Omh2)/numpy.sqrt(1.+10*(Ob*h**2)**(3/4))
+        alpha = (1.-0.328*numpy.log(431.*Omh2)*Ob/Om +
+                 0.38*numpy.log(22.3*Omh2)*(Ob/Om)**2)
+        Gamma = Om*h*(alpha + (1.-alpha)/(1.+(0.43*k*s)**4))
+        q = k*theta/Gamma
+        
+        L0 = numpy.log(2*numpy.e+1.8*q)
+        C0 = 14.2 + 731./(1.+62.5*q)
+        T0 = L0/(L0 + C0*q**2)
+        return T0
+
+    def _eh_bao_transfer(self, k):
+        """
+        Eisenstein & Hu (1998) fitting function with BAO wiggles
+        (see eqs. 26,28-31 in their paper)
+        """
+        theta = 2.728/2.7
+        Ob = self.omega_b0
+        Om = self.omega_m0
+        Oc = Om-Ob
+        O  = Om
+        h = self.h
+        Omh2 = Om*h**2
+        Obh2 = Ob*h**2
+        Oh2  = O*h**2
+        ObO  = Ob/O
+        
+        zeq = 2.5e4*Oh2*theta**(-4)
+        keq = 7.46e-2*Oh2*theta**(-2)
+        b1  = 0.313*Oh2**(-0.419)*(1.+0.607*Oh2**0.674)
+        b2  = 0.238*Oh2**0.223
+        zd  = 1291.*(Oh2**0.251/(1.+0.659*Oh2**0.828))*(1.+b1*Obh2**b2)
+        
+        R = lambda z: 31.5*Obh2*theta**(-4)*(1000./z)
+        Req = R(zeq)
+        Rd  = R(zd)
+        
+        s = (2./(3.*keq))*numpy.sqrt(6./Req)*numpy.log((numpy.sqrt(1.+Rd)+numpy.sqrt(Rd+Req))/(1.+numpy.sqrt(Req)))
+        ks = k*h*s
+        
+        kSilk = 1.6*Obh2**0.52*Oh2**0.73*(1.+(10.4*Oh2)**(-0.95))
+        q = lambda k: k*h/(13.41*keq)
+        
+        G = lambda y: y*(-6.*numpy.sqrt(1.+y)+(2+3*y)*
+                          numpy.log((numpy.sqrt(1.+y)+1.)/(numpy.sqrt(1.+y)-1.)))
+        alpha_b = 2.07*keq*s*(1.+Rd)**(-3./4.)*G((1.+zeq)/(1.+zd))
+        beta_b = 0.5 + (ObO) + (3.-2.*ObO)*numpy.sqrt((17.2*Oh2)**2+1.)
+        
+        C   = lambda x,a: (14.2/a) + 386./(1.+69.9*q(x)**1.08)
+        T0t = lambda x,a,b: numpy.log(numpy.e+1.8*b*q(x))/(
+            numpy.log(numpy.e+1.8*b*q(k))+C(x,a)*q(x)**2)
+        
+        a1 = (46.9*Oh2)**0.670*(1.+(32.1*Oh2)**(-0.532))
+        a2 = (12.*Oh2)**0.424*(1.+(45.*Oh2)**(-0.582))
+        alpha_c = a1**(-ObO)*a2**(-ObO**3)
+        b1 = 0.944*(1.+(458.*Oh2)**(-0.708))**(-1)
+        b2 = (0.395*Oh2)**(-0.0266)
+        beta_c = 1./(1.+b1*((Oc/O)**b2-1))
+        
+        f = 1./(1.+(ks/5.4)**4)
+        Tc = f*T0t(k,1,beta_c) + (1.-f)*T0t(k,alpha_c,beta_c)
+        
+        beta_node = 8.41*(Oh2**0.435)
+        stilde = s/(1.+(beta_node/(ks))**3)**(1./3.)
+        
+        Tb1 = T0t(k,1.,1.)/(1.+(ks/5.2)**2)
+        Tb2 = (alpha_b/(1.+(beta_b/ks)**3))*numpy.exp(-(k*h/kSilk)**1.4)
+        Tb  = special.sph_jn(0,k*stilde)[0][0]*(Tb1+Tb2)
+        return ObO*Tb + (Oc/O)*Tc
+
+    def _bbks_Transfer(self, k):
         """BBKS transfer function."""
         Gamma = self.omega_m0*self.h
         #q = k/(Gamma*self.h)
@@ -158,7 +240,8 @@ class SingleEpoch(object):
     def delta_k(self, k):
         """k^3*P(k)/2*pi^2: dimensionless linear power spectrum."""
         delta_k = (
-            self.delta_H**2*(3000.0*k/self.h)**(3 + self.n)*self._bbks(k)**2)
+            self.delta_H**2*(k/self.H0)**(3 + self.n)*
+            self._eh_transfer(k)**2)
         return delta_k*self._growth*self._growth
 
     def linear_power(self, k):
@@ -177,7 +260,7 @@ class SingleEpoch(object):
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,), limit=200)
-        sigma2 *= numpy.pi*numpy.pi/2.0
+        sigma2 /= 4.0*numpy.pi*numpy.pi
 
         return numpy.sqrt(sigma2)
 
@@ -186,8 +269,7 @@ class SingleEpoch(object):
         dk = 1.0*k
         kR = scale*k
 
-        W = (2*numpy.pi)**(-3.0/2.0)*3.0*(
-            numpy.sin(kR)/kR**3-numpy.cos(kR)/kR**2)
+        W = 3.0*(numpy.sin(kR)/kR**3-numpy.cos(kR)/kR**2)
 
         return dk*self.linear_power(k)*W*W*k*k
 
@@ -416,7 +498,7 @@ class MultiEpoch(object):
         sigma2, sigma2_err = integrate.quad(
             self.epoch0._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,),limit=200) # Limt was 50
-        sigma2 /= 2.0*numpy.pi*numpy.pi
+        sigma2 /= numpy.pi*numpy.pi
 
         if not redshift is None:
             sigma2 *= self.growth_factor(redshift)**2

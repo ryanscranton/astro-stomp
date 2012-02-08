@@ -133,9 +133,10 @@ class MagCorrelation(Correlation):
     def _correlation_integrand(self, ln_k, theta):
         dln_k = 1.0
         k = numpy.exp(ln_k)
-        dk = k*dln_k/(4*numpy.pi)
-        return (dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
-                self.kernel.kernel(numpy.log(k*theta)))
+        dk = k*dln_k
+        return 2.0*numpy.sqrt(2)/(8.0*numpy.pi)*(
+            dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
+            self.kernel.kernel(numpy.log(k*theta)))
 
 class AutoCorrelation(Correlation):
 
@@ -152,9 +153,10 @@ class AutoCorrelation(Correlation):
     def _correlation_integrand(self, ln_k, theta):
         dln_k = 1.0
         k = numpy.exp(ln_k)
-        dk = k*dln_k/(2*numpy.pi)
-        return (dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
-                self.kernel.kernel(numpy.log(k*theta)))
+        dk = k*dln_k
+        return 2.0*numpy.sqrt(2)/(8.0*numpy.pi)*(
+            dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
+            self.kernel.kernel(numpy.log(k*theta)))
 
 class AutoCorrelationDeltaFunction(Correlation):
 
