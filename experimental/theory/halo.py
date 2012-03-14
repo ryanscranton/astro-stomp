@@ -77,9 +77,9 @@ class Halo(object):
         else:
             self.local_hod = input_hod
 
-        # self.camb = camb.CambWrapper(camb_param)
-        # self.camb.set_redshift(redshift)
-        # self.camb.run()
+        self.camb = camb.CambWrapper(camb_param)
+        self.camb.set_redshift(redshift)
+        self.camb.run()
 
         self._calculate_n_bar()
         #self._calculate_bias()
@@ -148,15 +148,15 @@ class Halo(object):
     def set_redshift(self, redshift):
         self.set_cosmology(self.camb_param, redshift)
 
-    # def linear_power(self, k):
-    #     """Linear power spectrum in comoving (Mpc/h)^3 from CAMB."""
-    #     return self.camb.linear_power(k)
-
     def linear_power(self, k):
-        """
-        Linear power spectrum in comoving (Mpc/h)^3 from Eisenstien and Hu.
-        """
-        return self.cosmo.linear_power(k)
+        """Linear power spectrum in comoving (Mpc/h)^3 from CAMB."""
+        return self.camb.linear_power(k)
+
+    # def linear_power(self, k):
+    #     """
+    #     Linear power spectrum in comoving (Mpc/h)^3 from Eisenstien and Hu.
+    #     """
+    #     return self.cosmo.linear_power(k)
 
     def power_mm(self, k):
         """Non-linear power spectrum in comoving (Mpc/h)^3"""
