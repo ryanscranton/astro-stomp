@@ -139,22 +139,66 @@ class HODZheng(HOD):
         else:
             return 0.0
 
+class HODZheng2(HOD):
+
+    def __init__(self, M_min=10**11.83, sigma=0.30, 
+                 M_0=10**11.53, M_1p=10**13.02, alpha=1.0, w=1.0):
+        self.M_min = M_min
+        self.sigma = sigma
+        self.M_0 = M_0
+        self.M_1p = M_1p
+        self.alpha = alpha
+        self.w = w
+        HOD.__init__(self)
+
+    def first_moment(self, mass, z=None):
+        return self.central_term(mass)*(
+            1+self.satellite_term(mass))
+
+    def second_moment(self, mass, z=None):
+        n_sat = self.satellite_term(mass)
+        return (2 + n_sat)*n_sat
+
+    def central_term(self, mass):
+        return 0.5*(1+special.erf((numpy.log10(mass) - numpy.log10(self.M_min))/
+                                  self.sigma))
+
+    def satellite_term(self, mass):
+        diff = mass - self.M_0
+        if diff >=0.0:
+            return numpy.power((mass - self.M_0)/self.M_1p,self.alpha)
+        else:
+            return 0.0
+
 class HODMandelbaum(HOD):
 
-    def __init__(self, M0=1.0e13, norm=1.0e13):
+    def __init__(self, M0=1.0e13, alpha=0.2, epsilon=1.0, norm=1.0e13):
         HOD.__init__(self)
 
         self.M0 = M0
-        self.norm = norm
+        self.M_min = 3.0*M0
+        self.alpha = 0.2
+        self.epsilon = epsilon
 
         self._hod[1] = self.first_moment
         self._hod[2] = self.second_moment
 
     def first_moment(self, mass, z=None):
-        if mass > 3*self.M0:
-            return mass/self.norm
-        if mass <= 3*self.M0:
-            return mass*mass/(3*self.M0*self.norm)
+        if mass >= self.M0:
+            return 1.0 + self.satellite_first_moment(mass)
+        return self.satellite_first_moment(mass)
 
     def second_moment(self, mass, z=None):
-        return self.first_moment(mass)**2
+        n_sat = self.satellite_first_moment(mass)
+        return (2 + n_sat)*n_sat
+
+    def satellite_first_moment(self, mass, z=None):
+        if mass < self.M_min:
+            return (mass/self.M_min)**2
+        else:
+            return mass/self.M_min
+        # diff = mass - self.M_min
+        # if diff < 0.0:
+        #     return 0.0
+        # else:
+        #     return (mass-self.M_min)/self.M_min
