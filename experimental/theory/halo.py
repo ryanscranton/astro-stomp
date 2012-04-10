@@ -121,6 +121,10 @@ class Halo(object):
         self._initialized_pp_gm = False
         self._initialized_pp_gg = False
 
+        self.camb = camb.CambWrapper(camb_param)
+        self.camb.set_redshift(redshift)
+        self.camb.run()
+
     def set_hod(self, input_hod):
         self.local_hod = input_hod
 

@@ -38,7 +38,7 @@ Defaults to linear_power
         self.log_theta_min = numpy.log10(theta_min)
         self.log_theta_max = numpy.log10(theta_max)
         self.theta_array = numpy.logspace(self.log_theta_min,
-                                       self.log_theta_max, 50)
+                                      self.log_theta_max, 50)
         if theta_min==theta_max:
             self.log_theta_min = numpy.log10(theta_min)
             self.log_theta_max = numpy.log10(theta_min)
@@ -134,7 +134,7 @@ class MagCorrelation(Correlation):
         dln_k = 1.0
         k = numpy.exp(ln_k)
         dk = k*dln_k
-        return 2.0*numpy.sqrt(2)/(8.0*numpy.pi)*(
+        return 1.0/(2.0*numpy.pi)*(
             dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
             self.kernel.kernel(numpy.log(k*theta)))
 
@@ -154,7 +154,7 @@ class AutoCorrelation(Correlation):
         dln_k = 1.0
         k = numpy.exp(ln_k)
         dk = k*dln_k
-        return 2.0*numpy.sqrt(2)/(8.0*numpy.pi)*(
+        return 1.0/(2*numpy.pi)*(
             dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
             self.kernel.kernel(numpy.log(k*theta)))
 
