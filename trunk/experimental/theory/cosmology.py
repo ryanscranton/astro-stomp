@@ -34,8 +34,9 @@ class SingleEpoch(object):
         self.omega_b0 = camb_param.omega_baryon
         self.omega_l0 = camb_param.omega_lambda
         self.h = camb_param.hubble/100.0
-        self.H0 = self.h*100.0/(3*10**5)
-        self.omega_r0 = 4.17e-5/(self.h**2)
+        self.H0 = 100.0/(3.0*10**5)
+        self.omega_r0 = 4.17e-5/self.h**2
+        self.sigma_8 = 0.811
 
         self.flat = True
         self.open = False
@@ -70,13 +71,16 @@ class SingleEpoch(object):
 
         self.growth_norm, growth_norm_err = integrate.quad(
             self._growth_integrand, 0.0, 1.0,limit=200)
-        self.growth_norm *= 2.5*self.omega_m0/(self.E(0.0)*self.H0)
+        self.growth_norm *= 2.5*self.omega_m0*numpy.sqrt(self.E0(0.0))
 
         a = 1.0/(1.0 + self._redshift)
         growth, growth_err = integrate.quad(self._growth_integrand, 0.0, a,
                                             limit=200)
-        growth *= 2.5*self.omega_m0/(self.E(self._redshift)*self.H0)
+        growth *= 2.5*self.omega_m0*numpy.sqrt(self.E0(self._redshift))
         self._growth = growth/self.growth_norm
+
+        self.sigma_norm = 1.0
+        self.sigma_norm = self.sigma_8*self._growth/self.sigma_r(8.0)
 
     def set_redshift(self, redshift):
         self._redshift = redshift
@@ -139,12 +143,37 @@ class SingleEpoch(object):
         return delta_v/self._growth
 
     def rho_crit(self):
-        """Critical density in solar masses per cubic Mpc."""
-        return self.E0(self._redshift)*1.0e-29*1.0e-33*2.937999e+73
+        """Critical density in h^2 solar masses per cubic Mpc."""
+        return 1.0e-29*1.0e-33*2.937999e+73*self.E0(self._redshift)
+        #return (1.879e-29/(1.989e33)*numpy.power(3.086e24,3)*
+        #        self.E0(self._redshift))
 
     def rho_bar(self):
-        """Matter density in solar masses per cubic Mpc."""
+        """Matter density in h^2 solar masses per cubic Mpc."""
         return self.rho_crit()*self.omega_m()
+
+    # def _eh_transfer(self, k):
+    #     """
+    #     Eisenstein & Hu (1998) fitting function without BAO wiggles
+    #     (see eqs. 26,28-31 in their paper)
+    #     """
+
+    #     theta = 2.728/2.7 # Temperature of CMB_2.7
+    #     Ob = self.omega_b0
+    #     Om = self.omega_m0
+    #     h = self.h
+    #     Omh2 = Om*h**2
+        
+    #     s = 44.5*numpy.log(9.83/Omh2)/numpy.sqrt(1.+10*(Ob*h**2)**(3/4))
+    #     alpha = (1.-0.328*numpy.log(431.*Omh2)*Ob/Om +
+    #              0.38*numpy.log(22.3*Omh2)*(Ob/Om)**2)
+    #     Gamma = Om*h*(alpha + (1.-alpha)/(1.+(0.43*k*s)**4))
+    #     q = k*theta/Gamma
+        
+    #     L0 = numpy.log(2*numpy.e+1.8*q)
+    #     C0 = 14.2 + 731./(1.+62.5*q)
+    #     T0 = L0/(L0 + C0*q**2)
+    #     return T0
 
     def _eh_transfer(self, k):
         """
@@ -152,22 +181,19 @@ class SingleEpoch(object):
         (see eqs. 26,28-31 in their paper)
         """
 
-        theta = 2.728/2.7
-        Ob = self.omega_b0
-        Om = self.omega_m0
-        h = self.h
-        Omh2 = Om*h**2
-        
-        s = 44.5*numpy.log(9.83/Omh2)/numpy.sqrt(1.+10*(Ob*h**2)**(3/4))
-        alpha = (1.-0.328*numpy.log(431.*Omh2)*Ob/Om +
-                 0.38*numpy.log(22.3*Omh2)*(Ob/Om)**2)
-        Gamma = Om*h*(alpha + (1.-alpha)/(1.+(0.43*k*s)**4))
-        q = k*theta/Gamma
-        
-        L0 = numpy.log(2*numpy.e+1.8*q)
-        C0 = 14.2 + 731./(1.+62.5*q)
-        T0 = L0/(L0 + C0*q**2)
-        return T0
+        theta = 2.728/2.7 # Temperature of CMB_2.7
+        Omh2 = self.omega_m0*self.h**2
+        Omb2 = self.omega_b0*self.h**2
+        omega_ratio = self.omega_b0/self.omega_m0
+        s = 44.5*numpy.log(9.83/Omh2)/numpy.sqrt(1+10.0*(Omb2)**(3/4))
+        alpha = (1 - 0.328*numpy.log(431.0*Omh2)*omega_ratio +
+                 0.38*numpy.log(22.3*Omh2)*omega_ratio**2)
+        Gamma_eff = self.omega_m0*self.h*(
+            alpha + (1-alpha)/(1+0.43*k*s)**4)
+        q = k*theta/Gamma_eff
+        L0 = numpy.log(2*numpy.e + 1.8*q)
+        C0 = 14.2 + 731.0/(1+62.5*q)
+        return L0/(L0 + C0*q*q)
 
     def _eh_bao_transfer(self, k):
         """
@@ -231,8 +257,8 @@ class SingleEpoch(object):
     def _bbks_Transfer(self, k):
         """BBKS transfer function."""
         Gamma = self.omega_m0*self.h
-        #q = k/(Gamma*self.h)
-        q = k/(Gamma*self.h)*numpy.exp(
+        #q = k/Gamma
+        q = k/Gamma*numpy.exp(
             self.omega_b0 + numpy.sqrt(2*self.h)*self.omega_b0/self.omega_m0)
         return (numpy.log(1.0 + 2.34*q)/(2.34*q)*
                 (1 + 3.89*q + (16.1*q)**2 + (5.47*q)**3 + (6.71*q)**4)**(-0.25))
@@ -241,8 +267,8 @@ class SingleEpoch(object):
         """k^3*P(k)/2*pi^2: dimensionless linear power spectrum."""
         delta_k = (
             self.delta_H**2*(k/self.H0)**(3 + self.n)*
-            self._eh_transfer(k)**2)
-        return delta_k*self._growth*self._growth
+            self._eh_transfer(k)**2)/self.h
+        return delta_k*self._growth*self._growth*self.sigma_norm*self.sigma_norm
 
     def linear_power(self, k):
         return 2.0*numpy.pi*numpy.pi*self.delta_k(k)/(k*k*k)
@@ -260,7 +286,9 @@ class SingleEpoch(object):
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,), limit=200)
-        sigma2 /= 4.0*numpy.pi*numpy.pi
+        sigma2 /= numpy.pi*numpy.pi
+
+        #sigma2 *= self._growth**2
 
         return numpy.sqrt(sigma2)
 
@@ -269,7 +297,8 @@ class SingleEpoch(object):
         dk = 1.0*k
         kR = scale*k
 
-        W = 3.0*(numpy.sin(kR)/kR**3-numpy.cos(kR)/kR**2)
+        W = 3.0*(
+            numpy.sin(kR)/kR**3-numpy.cos(kR)/kR**2)
 
         return dk*self.linear_power(k)*W*W*k*k
 
@@ -394,7 +423,8 @@ class MultiEpoch(object):
             a = 1.0/(1.0 + self._z_array[idx])
             growth, growth_err = integrate.quad(
                 self.epoch0._growth_integrand, 0.0, a,limit=200)
-            growth *= 2.5*self.omega_m0/(self.E(self._z_array[idx])*self.H0)
+            growth *= 2.5*self.omega_m0*numpy.sqrt(
+                self.epoch0.E0(self._z_array[idx]))
             self._growth_array[idx] = growth/self.growth_norm
 
         self._growth_spline = InterpolatedUnivariateSpline(

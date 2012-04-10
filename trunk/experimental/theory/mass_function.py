@@ -35,7 +35,7 @@ class MassFunction(object):
         self.delta_c = self.cosmo.delta_c()
 
         mass_min = 1.0e8
-        mass_max = 1.0e17
+        mass_max = 1.0e16
 
         mass_limit_not_set = True
         while mass_limit_not_set:

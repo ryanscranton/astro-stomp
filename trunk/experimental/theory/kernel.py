@@ -63,6 +63,26 @@ class dNdzGaussian(dNdz):
         return numpy.exp(-1.0*(redshift-self.z0)*(redshift-self.z0)/
                          (2.0*self.sigma_z*self.sigma_z))
 
+class dNdChiGaussian(dNdz):
+    """Derived class for a Gaussian-shaped comoving distance distribution.
+
+    dNdz ~ exp(-(chi-chi0)^2/sigma_chi^2)*dchi/dz
+
+    """
+    def __init__(self, chi_min, chi_max, chi0, sigma_chi,cosmo):
+        self.cosmo = cosmo
+        z_min = self.cosmo.redshift(chi_min)
+        z_max = self.cosmo.redshift(chi_max)
+        dNdz.__init__(self, z_min, z_max)
+        self.chi0 = chi0 
+        self.sigma_chi = sigma_chi
+
+    def raw_dndz(self, redshift):
+        chi = self.cosmo.comoving_distance(redshift)
+        return (numpy.exp(-1.0*(chi-self.chi0)*(chi-self.chi0)/
+                         (2.0*self.sigma_chi*self.sigma_chi))*
+                self.cosmo.E(redshift))
+
 class dNdzMagLim(dNdz):
     """Derived class for a magnitude-limited redshift distribution.
 
@@ -238,6 +258,38 @@ class WindowFunctionConvergence(WindowFunction):
 
         return dzdchi*self._redshift_dist.dndz(z)*(chi - chi0)/chi
 
+class WindowFunctionFlatConvergence(WindowFunction):
+    """WindowFunction class for magnification of a background sample.
+
+    This derived class calculates the magnification effect of a background
+    sample as a function of comoving distance chi.  In essence, given a sample
+    with redshift distribution dN/dz, what is the weighted fraction of that
+    sample that is beyond chi:
+
+    g(chi) = chi*int(chi, inf, dN/dz dz/dchi' (1.0 - chi/chi'))
+
+    and the window function is
+
+    W(chi) = 3*omega_m*g(chi)/a
+
+    where we have omitted the (2.5*s - 1) factor that is due to the number count
+    slope of the sample.
+    """
+    def __init__(self, z_min, z_max, camb_param=None, **kws):
+        # Even though the input distribution may only extend between some bounds
+        # in redshift, the lensing kernel will extend across z = [0, z_max)
+        WindowFunction.__init__(self, z_min, z_max,
+                                camb_param, **kws)
+
+    def raw_window_function(self, chi):
+        a = 1.0/(1.0 + self.cosmo.redshift(chi))
+
+        g_chi = 1.0
+
+        g_chi *= self.cosmo.H0*self.cosmo.H0*1907.71
+
+        return 3.0*self.cosmo.omega_m0*g_chi
+
 class WindowFunctionConvergenceDelta(WindowFunction):
     """WindowFunction class for magnification of a background sample.
 
@@ -406,6 +458,7 @@ class Kernel(object):
 
     def _kernel_integrand(self, chi, ktheta):
         D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
+        z = self.cosmo.redshift(chi)
 
         if ktheta*chi < self._j0_limit:
             return (self.window_function_a.window_function(chi)*
