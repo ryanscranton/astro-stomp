@@ -141,13 +141,12 @@ class HODZheng(HOD):
 
 class HODMandelbaum(HOD):
 
-    def __init__(self, M0=1.0e13, alpha=0.2, epsilon=1.0, norm=1.0e13):
+    def __init__(self, M0=1.0e13, alpha=1.0):
         HOD.__init__(self)
 
         self.M0 = M0
         self.M_min = 3.0*M0
-        self.alpha = 0.2
-        self.epsilon = epsilon
+        self.alpha = alpha
 
         self._hod[1] = self.first_moment
         self._hod[2] = self.second_moment
@@ -158,11 +157,11 @@ class HODMandelbaum(HOD):
 
     def second_moment(self, mass, z=None):
         n_sat = self.satellite_first_moment(mass)
-        return (2*(1-self.alpha) + n_sat)*n_sat
+        return (2 + n_sat)*n_sat
 
     def central_first_moment(self, mass, z=None):
         if mass >=self.M0:
-            return 1.0*(1-self.alpha)
+            return 1.0
         else:
             return 0.0
 
@@ -171,8 +170,3 @@ class HODMandelbaum(HOD):
             return (mass/self.M_min)**2*self.alpha
         else:
             return mass/self.M_min*self.alpha
-        # diff = mass - self.M_min
-        # if diff < 0.0:
-        #     return 0.0
-        # else:
-        #     return (mass-self.M_min)/self.M_min
