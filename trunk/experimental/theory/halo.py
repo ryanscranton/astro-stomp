@@ -80,6 +80,9 @@ class Halo(object):
         self.camb = camb.CambWrapper(camb_param)
         self.camb.set_redshift(redshift)
         self.camb.run()
+        self.sigma_8 = 0.811
+        self.sigma_norm = 1.0
+        self._initialize_sigma_norm()
 
         self._calculate_n_bar()
         #self._calculate_bias()
@@ -106,10 +109,6 @@ class Halo(object):
 
         self.mass = mass_function.MassFunction(
             self.redshift, camb_param, self.halo_param)
-
-        # self.camb = camb.CambWrapper(camb_param)
-        # self.camb.set_redshift(redshift)
-        # self.camb.run()
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
@@ -151,16 +150,32 @@ class Halo(object):
         
     def set_redshift(self, redshift):
         self.set_cosmology(self.camb_param, redshift)
+    
+    def sigma_r(self, scale):
+        """RMS power on scale in Mpc/h"""
+        sigma2, sigma2_err = integrate.quad(
+            self._sigma_integrand, numpy.log(self._k_min),
+            numpy.log(self._k_max), args=(scale,), limit=200)
+        sigma2 /= numpy.pi*numpy.pi
+
+        return numpy.sqrt(sigma2)
+
+    def _sigma_integrand(self, ln_k, scale):
+        k = numpy.exp(ln_k)
+        dk = 1.0*k
+        kR = scale*k
+
+        W = 3.0*(
+            numpy.sin(kR)/kR**3-numpy.cos(kR)/kR**2)
+
+        return dk*self.linear_power(k)*W*W*k*k
+
+    def _initialize_sigma_norm(self):
+        self.sigma_norm = self.sigma_8*self.cosmo._growth/self.sigma_r(8.0)
 
     def linear_power(self, k):
         """Linear power spectrum in comoving (Mpc/h)^3 from CAMB."""
-        return self.camb.linear_power(k)
-
-    # def linear_power(self, k):
-    #     """
-    #     Linear power spectrum in comoving (Mpc/h)^3 from Eisenstien and Hu.
-    #     """
-    #     return self.cosmo.linear_power(k)
+        return self.camb.linear_power(k)*self.sigma_norm*self.sigma_norm
 
     def power_mm(self, k):
         """Non-linear power spectrum in comoving (Mpc/h)^3"""
@@ -460,7 +475,7 @@ class Halo(object):
             pp_gg, pp_gg_err = integrate.quad(
                 self._pp_gg_integrand, numpy.log(self.mass.nu_min),
                 numpy.log(self.mass.nu_max),limit=200,
-                args=(self._ln_k_array[idx],)) # Limit Was 150
+                args=(self._ln_k_array[idx],))
             pp_gg_array[idx] = pp_gg*self.rho_bar/(self.n_bar*self.n_bar)
 
         self._pp_gg_spline = InterpolatedUnivariateSpline(
@@ -502,3 +517,104 @@ class Halo(object):
             return nu*self.mass.f_nu(nu)*n_exp*y
         else:
             return nu*self.mass.f_nu(nu)*n_exp*y*y
+
+
+class HaloExclusion(Halo):
+
+    def __init__(self, input_hod=None, redshift=None, camb_param=None,
+                 halo_param=None, **kws):
+        Halo.__init__(self, input_hod, redshift, camb_param, halo_param, **kws)
+        ln_r_v_array = numpy.zeros_like(self.mass._nu_array)
+
+        for idx in xrange(self.mass._nu_array.size):
+            mass = numpy.exp(self.mass._ln_mass_array[idx])
+            ln_r_v_array[idx] = numpy.log(self._virial_radius(mass))
+
+        self._ln_nu_v_r_spline = InterpolatedUnivariateSpline(
+            ln_r_v_array, self.mass._nu_array)
+
+        self.v_r_max = numpy.exp(numpy.max(ln_r_v_array))
+        self.v_r_min = numpy.exp(numpy.min(ln_r_v_array))
+        self._initialized_h_m_ext = False
+
+    def power_gm(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_m_ext:
+            self._initialize_h_m_ext()
+        if not self._initialized_h_g:
+            self._initialize_h_g()
+        if not self._initialized_pp_gm:
+            self._initialize_pp_gm()
+
+        return (self.power_mm(k)*self._h_g(k)*self._h_m_ext(k) + 
+                self._pp_gm(k))
+
+    def power_mg(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        return self.power_gm(k)
+
+    def power_gg(self, k):
+        """Galaxy power spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_g:
+            self._initialize_h_g()
+        if not self._initialized_pp_gg:
+            self._initialize_pp_gg()
+
+        return (self.power_mm(k)*self._h_g(k)*self._h_g(k) + 
+                self._pp_gg(k))
+
+    def _h_m_ext(self, k):
+        if k >= self._k_min and k <= self._k_max:
+            return self._h_m_ext_spline(numpy.log(k))[0]
+        else:
+            return 0.0
+
+    def _initialize_h_m_ext(self):
+        h_m_ext_array = numpy.zeros_like(self._ln_k_array)
+        
+        for idx in xrange(self._ln_k_array.size):
+            r_lim = 0.5/numpy.exp(self._ln_k_array[idx])
+            if r_lim >= self.v_r_max:
+                r_lim = self.v_r_max
+            elif r_lim <= self.v_r_min:
+                r_lim = self.v_r_min
+            nu_max = self._ln_nu_v_r_spline(numpy.log(r_lim))[0]
+            if nu_max >= self.mass.nu_max:
+                nu_max = self.mass.nu_max
+            elif nu_max <= self.mass.nu_min:
+                nu_max = self.mass.nu_min
+            
+            h_m, h_m_err = integrate.quad(
+                self._h_m_integrand, numpy.log(self.mass.nu_min),
+                numpy.log(nu_max),limit=200,
+                args=(self._ln_k_array[idx],))
+            h_m_ext_array[idx] = h_m
+
+        self._h_m_ext_spline = InterpolatedUnivariateSpline(
+            self._ln_k_array, h_m_ext_array)
+        self._initialized_h_m_ext = True
+
+    def _initialize_h_g(self):
+        h_g_array = numpy.zeros_like(self._ln_k_array)
+
+        for idx in xrange(self._ln_k_array.size):
+            r_lim = 0.5/numpy.exp(self._ln_k_array[idx])
+            if r_lim >= self.v_r_max:
+                r_lim = self.v_r_max
+            elif r_lim <= self.v_r_min:
+                r_lim = self.v_r_min
+            nu_max = self._ln_nu_v_r_spline(numpy.log(r_lim))[0]
+            if nu_max >= self.mass.nu_max:
+                nu_max = self.mass.nu_max
+            elif nu_max <= self.mass.nu_min:
+                nu_max = self.mass.nu_min
+
+            h_g, h_g_err = integrate.quad(
+                self._h_g_integrand, numpy.log(self.mass.nu_min),
+                numpy.log(nu_max),limit=200,
+                args=(self._ln_k_array[idx],))
+            h_g_array[idx] = h_g/self.n_bar_over_rho_bar
+
+        self._h_g_spline = InterpolatedUnivariateSpline(
+            self._ln_k_array, h_g_array)
+        self._initialized_h_g = True
