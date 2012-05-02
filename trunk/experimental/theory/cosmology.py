@@ -415,7 +415,7 @@ class MultiEpoch(object):
         distance = 0.0
 
         if redshift < self.z_max and redshift > self.z_min:
-            distance = self._chi_spline(redshift)[0]
+            distance = self._chi_spline(redshift)
         else:
             print ("Warning: requested redshift outside of bounds!  "
                    "Returning 0.")
@@ -429,14 +429,14 @@ class MultiEpoch(object):
         return self.comoving_distance(redshift)/(1.0 + redshift)
 
     def redshift(self, comoving_distance):
-        return self._z_spline(comoving_distance)[0]
+        return self._z_spline(comoving_distance)
 
     def growth_factor(self, redshift):
         """Linear growth factor, normalized to unity at z = 0."""
         growth = 1.0
 
         if redshift < self.z_max and redshift > self.z_min:
-            growth = self._growth_spline(redshift)[0]
+            growth = self._growth_spline(redshift)
         else:
             print ("Warning: requested redshift outside of bounds!  "
                    "Returning unity.")

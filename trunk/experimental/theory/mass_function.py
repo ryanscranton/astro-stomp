@@ -137,11 +137,11 @@ class MassFunction(object):
 
     def nu(self, mass):
         """nu as a function of halo mass."""
-        return self._nu_spline(numpy.log(mass))[0]
+        return self._nu_spline(numpy.log(mass))
 
     def ln_mass(self, nu):
         """Natural log of halo mass as a function of nu."""
-        return self._ln_mass_spline(nu)[0]
+        return self._ln_mass_spline(nu)
 
     def mass(self, nu):
         """Halo mass as a function of nu."""

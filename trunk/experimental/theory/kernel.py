@@ -172,7 +172,7 @@ class WindowFunction(object):
             self._initialize_spline()
 
         if chi <= self.chi_max and chi >= self.chi_min:
-            return self._wf_spline(chi)[0]
+            return self._wf_spline(chi)
         else:
             return 0.0
 
@@ -463,7 +463,7 @@ class Kernel(object):
 
         if (ln_ktheta <= self.ln_ktheta_max and
             ln_ktheta >= self.ln_ktheta_min):
-            return self._kernel_spline(ln_ktheta)[0]
+            return self._kernel_spline(ln_ktheta)
         else:
             return 0.0
 
