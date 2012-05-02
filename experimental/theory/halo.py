@@ -200,15 +200,15 @@ class Halo(object):
 
     def virial_radius(self, mass):
         """Halo virial radius in Mpc as a function of mass in M_sun."""
-        return numpy.exp(self._ln_r_v_spline(numpy.log(mass))[0])
+        return numpy.exp(self._ln_r_v_spline(numpy.log(mass)))
 
     def concentration(self, mass):
         """Halo concentration as a function of mass in M_sun."""
-        return numpy.exp(self._ln_concen_spline(numpy.log(mass))[0])
+        return numpy.exp(self._ln_concen_spline(numpy.log(mass)))
 
     def halo_normalization(self, mass):
         """Halo concentration in M_sun/Mpc^3 as a function of mass in M_sun."""
-        return numpy.exp(self._ln_halo_norm_spline(numpy.log(mass))[0])
+        return numpy.exp(self._ln_halo_norm_spline(numpy.log(mass)))
 
     def y(self, ln_k, mass):
         """Fourier transform of the halo profile.
@@ -263,31 +263,31 @@ class Halo(object):
 
     def _h_m(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._h_m_spline(numpy.log(k))[0]
+            return self._h_m_spline(numpy.log(k))
         else:
             return 0.0
 
     def _pp_mm(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._pp_mm_spline(numpy.log(k))[0]
+            return self._pp_mm_spline(numpy.log(k))
         else:
             return 0.0
 
     def _pp_gm(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._pp_gm_spline(numpy.log(k))[0]
+            return self._pp_gm_spline(numpy.log(k))
         else:
             return 0.0
 
     def _h_g(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._h_g_spline(numpy.log(k))[0]
+            return self._h_g_spline(numpy.log(k))
         else:
             return 0.0
 
     def _pp_gg(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._pp_gg_spline(numpy.log(k))[0]
+            return self._pp_gg_spline(numpy.log(k))
         else:
             return 0.0
 
@@ -553,7 +553,7 @@ class HaloExclusion(Halo):
 
     def _h_m_ext(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._h_m_ext_spline(numpy.log(k))[0]
+            return self._h_m_ext_spline(numpy.log(k))
         else:
             return 0.0
 
@@ -566,7 +566,7 @@ class HaloExclusion(Halo):
                 r_lim = self.v_r_max
             elif r_lim <= self.v_r_min:
                 r_lim = self.v_r_min
-            nu_max = self._ln_nu_v_r_spline(numpy.log(r_lim))[0]
+            nu_max = self._ln_nu_v_r_spline(numpy.log(r_lim))
             if nu_max >= self.mass.nu_max:
                 nu_max = self.mass.nu_max
             elif nu_max <= self.mass.nu_min:
@@ -591,7 +591,7 @@ class HaloExclusion(Halo):
                 r_lim = self.v_r_max
             elif r_lim <= self.v_r_min:
                 r_lim = self.v_r_min
-            nu_max = self._ln_nu_v_r_spline(numpy.log(r_lim))[0]
+            nu_max = self._ln_nu_v_r_spline(numpy.log(r_lim))
             if nu_max >= self.mass.nu_max:
                 nu_max = self.mass.nu_max
             elif nu_max <= self.mass.nu_min:
