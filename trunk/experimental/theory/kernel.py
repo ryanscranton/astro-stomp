@@ -1,6 +1,7 @@
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate as In
 from scipy import special as S
+import defaults
 import param  # cosmological parameter object from Cosmopy
 import cosmology
 import numpy
@@ -111,7 +112,6 @@ class dNdzInterpolation(dNdz):
         norm = numpy.trapz(p_array, z_array)
         self._p_of_z = InterpolatedUnivariateSpline(z_array, p_array/norm,
                                                     k=interpolation_order)
-        
 
     def raw_dndz(self, redshift):
         return self._p_of_z(redshift)
@@ -135,15 +135,15 @@ class WindowFunction(object):
     derived classes and then the kernel object will sample the spline via the
     window_function() method.
     """
-    def __init__(self, z_min, z_max, camb_param=None, **kws):
+    def __init__(self, z_min, z_max, cosmo_dict=None, **kws):
         self.initialized_spline = False
 
         self.z_min = z_min
         self.z_max = z_max
 
-        if camb_param is None:
-            camb_param = param.CambParams(**kws)
-        self.set_cosmology(camb_param)
+        if cosmo_dict is None:
+            cosmo_dict = defaults.default_cosmo_dict
+        self.set_cosmology(cosmo_dict)
 
         self.chi_min = self.cosmo.comoving_distance(z_min)
         self.chi_max = self.cosmo.comoving_distance(z_max)
@@ -152,11 +152,10 @@ class WindowFunction(object):
         self._chi_array = numpy.arange(self.chi_min, self.chi_max + dchi, dchi)
         self._wf_array = numpy.zeros_like(self._chi_array)
 
-    def set_cosmology(self, camb_param):
-        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
+    def set_cosmology(self, cosmo_dict):
+        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, cosmo_dict)
 
-        if self.initialized_spline:
-            self._initialize_spline()
+        self.initialized_spline = False
 
     def _initialize_spline(self):
         for idx in xrange(self._chi_array.size):
@@ -195,12 +194,12 @@ class WindowFunctionGalaxy(WindowFunction):
     for comoving distance chi.
     """
     def __init__(self, redshift_dist,
-                 camb_param=None, **kws):
+                 cosmo_dict=None, **kws):
         self._redshift_dist = redshift_dist
         self._redshift_dist.normalize()
 
         WindowFunction.__init__(self, redshift_dist.z_min, redshift_dist.z_max,
-                                camb_param, **kws)
+                                cosmo_dict)
 
     def raw_window_function(self, chi):
         z = self.cosmo.redshift(chi)
@@ -226,7 +225,7 @@ class WindowFunctionConvergence(WindowFunction):
     where we have omitted the (2.5*s - 1) factor that is due to the number count
     slope of the sample.
     """
-    def __init__(self, redshift_dist, camb_param=None, **kws):
+    def __init__(self, redshift_dist, cosmo_dict=None, **kws):
         self._redshift_dist = redshift_dist
         self._redshift_dist.normalize()
 
@@ -234,7 +233,7 @@ class WindowFunctionConvergence(WindowFunction):
         # Even though the input distribution may only extend between some bounds
         # in redshift, the lensing kernel will extend across z = [0, z_max)
         WindowFunction.__init__(self, 0.0, redshift_dist.z_max,
-                                camb_param, **kws)
+                                cosmo_dict, **kws)
         self._g_chi_min = (
             self.cosmo.comoving_distance(self._redshift_dist.z_min))
 
@@ -275,11 +274,11 @@ class WindowFunctionFlatConvergence(WindowFunction):
     where we have omitted the (2.5*s - 1) factor that is due to the number count
     slope of the sample.
     """
-    def __init__(self, z_min, z_max, camb_param=None, **kws):
+    def __init__(self, z_min, z_max, cosmo_dict=None, **kws):
         # Even though the input distribution may only extend between some bounds
         # in redshift, the lensing kernel will extend across z = [0, z_max)
         WindowFunction.__init__(self, z_min, z_max,
-                                camb_param, **kws)
+                                cosmo_dict, **kws)
 
     def raw_window_function(self, chi):
         a = 1.0/(1.0 + self.cosmo.redshift(chi))
@@ -307,7 +306,7 @@ class WindowFunctionConvergenceDelta(WindowFunction):
     where we have omitted the (2.5*s - 1) factor that is due to the number count
     slope of the sample.
     """
-    def __init__(self, redshift, camb_param=None, **kws):
+    def __init__(self, redshift, cosmo_dict=None, **kws):
         self._redshift = redshift
         #self._redshift_dist.normalize()
 
@@ -315,7 +314,7 @@ class WindowFunctionConvergenceDelta(WindowFunction):
         # Even though the input distribution may only extend between some bounds
         # in redshift, the lensing kernel will extend across z = [0, z_max)
         WindowFunction.__init__(self, 0.0, redshift,
-                                camb_param, **kws)
+                                cosmo_dict, **kws)
         #self._g_chi_min = (
         #    self.cosmo.comoving_distance(self._redshift_dist.z_min))
 
@@ -356,20 +355,20 @@ class Kernel(object):
     """
     def __init__(self, ktheta_min, ktheta_max,
                  window_function_a, window_function_b,
-                 camb_param=None, **kws):
+                 cosmo_dict=None, **kws):
         self.initialized_spline = False
 
         self.ln_ktheta_min = numpy.log(ktheta_min)
         self.ln_ktheta_max = numpy.log(ktheta_max)
 
-        if camb_param is None:
-            camb_param = param.CambParams(**kws)
+        if cosmo_dict is None:
+            cosmo_dict = defaults.default_cosmo_dict
 
         self.window_function_a = window_function_a
         self.window_function_b = window_function_b
 
-        self.window_function_a.set_cosmology(camb_param)
-        self.window_function_b.set_cosmology(camb_param)
+        self.window_function_a.set_cosmology(cosmo_dict)
+        self.window_function_b.set_cosmology(cosmo_dict)
 
         self.chi_min = self.window_function_a.chi_min
         self.z_min = self.window_function_a.z_min
@@ -383,7 +382,7 @@ class Kernel(object):
             self.chi_max = self.window_function_b.chi_max
             self.z_max = self.window_function_b.z_max
     
-        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
+        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, cosmo_dict)
         
         dln_ktheta = (self.ln_ktheta_max - self.ln_ktheta_min)/200.0
         self._ln_ktheta_array = numpy.arange(
@@ -410,28 +409,19 @@ class Kernel(object):
         calculate_kernel = True
         ratio_limit = 1.0e-4
         for idx in xrange(self._ln_ktheta_array.size):
-            #kernel = 0.0
-            #if calculate_kernel:
             kernel = self.raw_kernel(self._ln_ktheta_array[idx])
-
-            #if numpy.abs(kernel) > kernel_max:
-            #    kernel_max = numpy.abs(kernel)
-            #if numpy.abs(kernel/kernel_max) < ratio_limit:
-            #    calculate_kernel = False
             self._kernel_array[idx] = kernel
-            print "%1.10f %1.10f" % (self._ln_ktheta_array[idx],
-                                     self._kernel_array[idx])
 
         self._kernel_spline = InterpolatedUnivariateSpline(
             self._ln_ktheta_array, self._kernel_array)
 
         self.initialized_spline = True
 
-    def set_cosmology(self, camb_param):
+    def set_cosmology(self, cosmo_dict):
         self.initialized_spline = False
 
-        self.window_function_a.set_cosmology(camb_param)
-        self.window_function_b.set_cosmology(camb_param)
+        self.window_function_a.set_cosmology(cosmo_dict)
+        self.window_function_b.set_cosmology(cosmo_dict)
         
         self.chi_min = self.window_function_a.chi_min
         self.z_min = self.window_function_a.z_min
@@ -444,7 +434,7 @@ class Kernel(object):
         if self.window_function_b.chi_max > self.chi_max:
             self.chi_max = self.window_function_b.chi_max
             self.z_max = self.window_function_b.z_max
-        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, camb_param)
+        self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, cosmo_dict)
 
         self._find_z_bar()  
 

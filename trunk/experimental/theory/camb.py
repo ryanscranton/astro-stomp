@@ -1,6 +1,7 @@
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate
 import param  # cosmological parameter object from Cosmopy
+import defaults
 import numpy
 import os
 import types
@@ -15,12 +16,26 @@ __author__ = "Ryan Scranton <ryan.scranton@gmail.com>"
 
 class CambWrapper(object):
     """Wrapper for calling the CAMB code."""
-    def __init__(self, camb_param=None, **kws):
+    def __init__(self, camb_param=None, cosmo_dict=None, **kws):
         self.camb_path = "/usr/local/bin/"
         self.parameter_file = "camb_param.ini"
 
         if camb_param is None:
             camb_param = param.CambParams(**kws)
+
+        if cosmo_dict is None:
+            cosmo_dict = defaults.default_cosmo_dict
+
+        h2 = cosmo_dict['h']**2
+        omega_c0 = cosmo_dict['omega_m0']-cosmo_dict['omega_b0']
+        
+        camb_param.ombh2 = cosmo_dict['omega_b0']*h2
+        camb_param.omch2 = omega_c0*h2
+        camb_param.omk = 1-cosmo_dict['omega_m0']+cosmo_dict['omega_l0']
+        camb_param.w = cosmo_dict['w']
+        camb_param.omega_baryon = cosmo_dict['omega_b0']
+        camb_param.omega_cmd = omega_c0
+        camb_param.omega_lambda = cosmo_dict['omega_l0']
 
         self._camb_param = camb_param
 
@@ -120,12 +135,12 @@ class CambWrapper(object):
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,))
-        sigma2 *= numpy.log(10.0)/(2.0*numpy.pi**2)
+        sigma2 /= 2.0*numpy.pi*numpy.pi
 
         return numpy.sqrt(sigma2)
 
     def _sigma_integrand(self, logk, scale):
-        k = 10**logk
+        k = numpy.exp(logk)
         kR = scale*k
 
         W = 9.0*(numpy.sin(kR) - kR*numpy.cos(kR))**2/(kR**6)

@@ -1,7 +1,7 @@
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate
 from scipy import special
-import param  # cosmological parameter object from Cosmopy
+import defaults  # cosmological parameter object from Cosmopy
 import numpy
 
 """Classes for encoding basic cosmological parameters and quantities.
@@ -13,7 +13,8 @@ that can take those parameters and return standard cosmological quantities
 (comoving distance, linear growth factor, etc.) as a function of redshift.
 """
 
-__author__ = "Ryan Scranton <ryan.scranton@gmail.com>"
+__author__ = ("Ryan Scranton <ryan.scranton@gmail.com>, "+
+              "Chris Morrison <morrison.chrisb@gmail.com>")
 
 
 class SingleEpoch(object):
@@ -24,19 +25,21 @@ class SingleEpoch(object):
     Likewise, it can return a redshift, given an input comoving distance, as
     well as the growth factor D(z) and other cosmological parameters.
     """
-    def __init__(self, redshift, camb_param=None, **kws):
+    def __init__(self, redshift, cosmo_dict=None):
         self._redshift = redshift
 
-        if camb_param is None:
-            camb_param = param.CambParams(**kws)
+        if cosmo_dict is None:
+            cosmo_dict = defaults.default_cosmo_dict
 
-        self.omega_m0 = camb_param.omega_cdm + camb_param.omega_baryon
-        self.omega_b0 = camb_param.omega_baryon
-        self.omega_l0 = camb_param.omega_lambda
-        self.h = camb_param.hubble/100.0
+        self.omega_m0 = cosmo_dict["omega_m0"]
+        self.omega_b0 = cosmo_dict["omega_b0"]
+        self.omega_l0 = cosmo_dict["omega_l0"]
+        self.omega_r0 = cosmo_dict["omega_r0"]
+        self.cmb_temp = cosmo_dict["cmb_temp"]
+        self.h = cosmo_dict["h"]
+        self.sigma_8 = cosmo_dict["sigma_8"]
+        self.n = cosmo_dict["n_scalar"]
         self.H0 = 100.0/(3.0*10**5)
-        self.omega_r0 = 4.17e-5/self.h**2
-        self.sigma_8 = 0.811
 
         self.flat = True
         self.open = False
@@ -58,7 +61,6 @@ class SingleEpoch(object):
 
         self.k_min = 0.001
         self.k_max = 100.0
-        self.n = camb_param.scalar_spectral_index[0]
         self.delta_H = (
             1.94e-5*self.omega_m0**(-0.785 - 0.05*numpy.log(self.omega_m0))*
             numpy.exp(-0.95*(self.n - 1) - 0.169*(self.n - 1)**2))
@@ -152,36 +154,13 @@ class SingleEpoch(object):
         """Matter density in h^2 solar masses per cubic Mpc."""
         return self.rho_crit()*self.omega_m()
 
-    # def _eh_transfer(self, k):
-    #     """
-    #     Eisenstein & Hu (1998) fitting function without BAO wiggles
-    #     (see eqs. 26,28-31 in their paper)
-    #     """
-
-    #     theta = 2.728/2.7 # Temperature of CMB_2.7
-    #     Ob = self.omega_b0
-    #     Om = self.omega_m0
-    #     h = self.h
-    #     Omh2 = Om*h**2
-        
-    #     s = 44.5*numpy.log(9.83/Omh2)/numpy.sqrt(1.+10*(Ob*h**2)**(3/4))
-    #     alpha = (1.-0.328*numpy.log(431.*Omh2)*Ob/Om +
-    #              0.38*numpy.log(22.3*Omh2)*(Ob/Om)**2)
-    #     Gamma = Om*h*(alpha + (1.-alpha)/(1.+(0.43*k*s)**4))
-    #     q = k*theta/Gamma
-        
-    #     L0 = numpy.log(2*numpy.e+1.8*q)
-    #     C0 = 14.2 + 731./(1.+62.5*q)
-    #     T0 = L0/(L0 + C0*q**2)
-    #     return T0
-
     def _eh_transfer(self, k):
         """
         Eisenstein & Hu (1998) fitting function without BAO wiggles
         (see eqs. 26,28-31 in their paper)
         """
 
-        theta = 2.728/2.7 # Temperature of CMB_2.7
+        theta = self.cmb_temp/2.7 # Temperature of CMB_2.7
         Omh2 = self.omega_m0*self.h**2
         Omb2 = self.omega_b0*self.h**2
         omega_ratio = self.omega_b0/self.omega_m0
@@ -271,24 +250,22 @@ class SingleEpoch(object):
         return delta_k*self._growth*self._growth*self.sigma_norm*self.sigma_norm
 
     def linear_power(self, k):
-        return 2.0*numpy.pi*numpy.pi*self.delta_k(k)/(k*k*k)
+        return 4.0*numpy.pi*numpy.pi*self.delta_k(k)/(k*k*k)
 
     def sigma_r(self, scale):
         """RMS power on scale in Mpc/h"""
-        if 1.0/scale <= self.k_min:
+        if 1.0/scale <= self.k_min and self.k_min > 0.0001:
             self.k_min = (1.0/scale)/2.0
             print "WARNING: Requesting scale greater than k_min."
             print "\tResetting k_min to",self.k_min
-        if 1.0/scale >= self.k_max:
+        if 1.0/scale >= self.k_max and self.k_max < 10000:
             self.k_max = (1.0/scale)*2.0
             print "WARNING: Requesting scale greater than k_max."
             print "\tResetting k_max to",self.k_max
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,), limit=200)
-        sigma2 /= numpy.pi*numpy.pi
-
-        #sigma2 *= self._growth**2
+        sigma2 /= 2*numpy.pi*numpy.pi
 
         return numpy.sqrt(sigma2)
 
@@ -303,7 +280,7 @@ class SingleEpoch(object):
         return dk*self.linear_power(k)*W*W*k*k
 
     def sigma_m(self, mass):
-        """RMS power on scale subtended by total mean mass in solar masses."""
+        """RMS power on scale subtended by total mean mass in solar masses/h."""
         scale = (3.0*mass/(4.0*numpy.pi*self.rho_bar()))**(1.0/3.0)
 
         return self.sigma_r(scale)
@@ -373,7 +350,7 @@ class MultiEpoch(object):
     a redshift, given an input comoving distance, as well as the growth factor
     D(z) and a number of other cosmological parameters.
     """
-    def __init__(self, z_min, z_max, camb_param=None, **kws):
+    def __init__(self, z_min, z_max, cosmo_dict=None):
         dz = (z_max - z_min)/100.0
         self.z_max = z_max + dz
         self.z_min = z_min - dz
@@ -384,10 +361,10 @@ class MultiEpoch(object):
         self._chi_array = numpy.zeros_like(self._z_array)
         self._growth_array = numpy.zeros_like(self._z_array)
 
-        if camb_param is None:
-            camb_param = param.CambParams(**kws)
+        if cosmo_dict is None:
+            cosmo_dict = defaults.default_cosmo_dict
 
-        self.epoch0 = SingleEpoch(0.0, camb_param)
+        self.epoch0 = SingleEpoch(0.0, cosmo_dict)
 
         self.omega_m0 = self.epoch0.omega_m0
         self.omega_b0 = self.epoch0.omega_b0
@@ -395,13 +372,14 @@ class MultiEpoch(object):
         self.h = self.epoch0.h
         self.H0 = self.epoch0.H0
         self.omega_r0 = self.epoch0.omega_r0
+        self.sigma_8 = self.epoch0.sigma_8
 
         self.flat = self.epoch0.flat
         self.open = self.epoch0.open
         self.closed = self.epoch0.closed
 
         self.k_min = self.epoch0.k_min
-        self.k_max = self.epoch0.k_min
+        self.k_max = self.epoch0.k_max
         self.n = self.epoch0.n
         self.delta_H = self.epoch0.delta_H
 
@@ -513,24 +491,22 @@ class MultiEpoch(object):
 
         If redshift is omitted the results are given for z = 0.
         """
-        delta_k = (
-            self.delta_H**2*(3000.0*k/self.h)**(3 + self.n)*
-            self.epoch0._bbks(k)**2)
+        delta_k = self.eopch0.delta_k(k)
         if not redshift is None:
             delta_k *= self.growth_factor(redshift)**2
         return delta_k
 
     def linear_power(self, k, redshift=None):
-        return 2.0*numpy.pi*numpy.pi*self.delta_k(k*self.h, redshift)/(k*k*k)
+        return 4.0*numpy.pi*numpy.pi*self.delta_k(k, redshift)/(k*k*k)
 
     def sigma_r(self, scale, redshift=None):
         """RMS power on scale in Mpc/h"""
         sigma2, sigma2_err = integrate.quad(
             self.epoch0._sigma_integrand, numpy.log(self.k_min),
             numpy.log(self.k_max), args=(scale,),limit=200) # Limt was 50
-        sigma2 /= numpy.pi*numpy.pi
+        sigma2 /= 2*numpy.pi*numpy.pi
 
-        if not redshift is None:
+        if redshift is not None:
             sigma2 *= self.growth_factor(redshift)**2
 
         return numpy.sqrt(sigma2)
