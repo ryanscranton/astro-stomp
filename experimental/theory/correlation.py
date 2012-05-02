@@ -3,6 +3,7 @@ import cosmology
 import halo
 import hod
 import kernel
+import defaults
 import param
 import numpy
 from scipy import special
@@ -32,7 +33,7 @@ Defaults to linear_power
 
     def __init__(self, theta_min, theta_max, 
                  window_function_a, window_function_b, 
-                 camb_param=None, input_hod=None, halo_param=None, 
+                 cosmo_dict=None, input_hod=None, halo_dict=None, 
                  powSpec=None, **kws):
 
         self.log_theta_min = numpy.log10(theta_min)
@@ -49,19 +50,21 @@ Defaults to linear_power
         self._k_min = 0.001
         self._k_max = 100.0
 
+        if cosmo_dict == None:
+            cosmo_dict = defaults.default_cosmo_dict
+        self.cosmo_dict = cosmo_dict
+
         self.kernel = kernel.Kernel(self._k_min*theta_min, 
                                     self._k_max*theta_max,
-                                    window_function_a, window_function_b)
-        if camb_param == None:
-            camb_param = param.CambParams(**kws)
-        self.kernel.set_cosmology(camb_param)
+                                    window_function_a, window_function_b,
+                                    cosmo_dict)
 
         self.D_z = self.kernel.cosmo.growth_factor(self.kernel.z_bar)
                       
-        if halo_param is None:
-            halo_param = param.HaloModelParams(**kws)
-        self.halo = halo.Halo(input_hod, self.kernel.z_bar, camb_param, 
-                              halo_param)
+        if halo_dict is None:
+            halo_dict = defaults.default_halo_dict
+        self.halo = halo.HaloExclusion(input_hod, self.kernel.z_bar, 
+                                       cosmo_dict, halo_dict)
         if powSpec==None:
             powSpec = 'linear_power'
         try:
@@ -76,10 +79,10 @@ Defaults to linear_power
         self.D_z = self.kernel.cosmo.growth_factor(self.kernel.z_bar)
         self.halo.set_redshift(self.kernel.z_bar)
             
-    def set_cosmology(self, camb_param):
-        self.kernel.set_cosmology(camb_param)
+    def set_cosmology(self, cosmo_dict):
+        self.kernel.set_cosmology(cosmo_dict)
         self.D_z = self.kernel.cosmo.growth_factor(self.kernel.z_bar)
-        self.halo.set_cosmology(camb_param, self.kernel.z_bar)
+        self.halo.set_cosmology(cosmo_dict, self.kernel.z_bar)
 
     def set_power_spectrum(self, powSpec):
         try:
@@ -89,8 +92,8 @@ Defaults to linear_power
             print "\t setting to 'linear_power'"
             self.power_spec = self.halo.__getattribute__('linear_power')
 
-    def set_halo(self, halo_param):
-        self.halo.set_halo(halo_param)
+    def set_halo(self, halo_dict):
+        self.halo.set_halo(halo_dict)
 
     def set_hod(self, input_hod):
         self.halo.set_hod(input_hod)
@@ -107,7 +110,6 @@ Defaults to linear_power
                                             ln_kmax,
                                             args=(theta,),
                                             limit=200)
-        print "Theta:",theta,"Wtheta:",wtheta
         return wtheta
 
     def _correlation_integrand(self, ln_k, theta):
@@ -123,11 +125,11 @@ Defaults to linear_power
 class MagCorrelation(Correlation):
     def __init__(self, theta_min, theta_max, 
                  window_function_a, window_function_b, 
-                 camb_param=None, input_hod=None, halo_param=None, 
+                 cosmo_dict=None, input_hod=None, halo_dict=None, 
                  powSpec='power_gm', **kws):
         Correlation.__init__(self, theta_min, theta_max,
                              window_function_a, window_function_b,
-                             camb_param, input_hod, halo_param, powSpec,
+                             cosmo_dict, input_hod, halo_dict, powSpec,
                              **kws)
 
     def _correlation_integrand(self, ln_k, theta):
@@ -142,19 +144,19 @@ class AutoCorrelation(Correlation):
 
     def __init__(self, theta_min, theta_max, 
                  window_function, 
-                 camb_param=None, input_hod=None, halo_param=None, 
+                 cosmo_dict=None, input_hod=None, halo_dict=None, 
                  powSpec='power_gg', **kws):
         self.window_function = window_function
         Correlation.__init__(self, theta_min, theta_max,
                              window_function, window_function,
-                             camb_param, input_hod, halo_param, powSpec,
+                             cosmo_dict, input_hod, halo_dict, powSpec,
                              **kws)
 
     def _correlation_integrand(self, ln_k, theta):
         dln_k = 1.0
         k = numpy.exp(ln_k)
         dk = k*dln_k
-        return 1.0/(2*numpy.pi)*(
+        return 1.0/(2.0*numpy.pi)*(
             dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
             self.kernel.kernel(numpy.log(k*theta)))
 
@@ -210,7 +212,7 @@ class CorrelationDeltaFunction(Correlation):
     """
 
     def __init__(self, theta_min, theta_max, redshift_a, redshift_b, 
-                 camb_param=None, input_hod=None, halo_param=None, 
+                 cosmo_dict=None, input_hod=None, halo_dict=None, 
                  powSpec=None, **kws):
         self.log_theta_min = numpy.log10(theta_min)
         self.log_theta_max = numpy.log10(theta_max)
@@ -235,9 +237,9 @@ class CorrelationDeltaFunction(Correlation):
         self._ln_ktheta_array = numpy.arange(
             self.ln_ktheta_min, self.ln_ktheta_max + dln_ktheta, dln_ktheta)
 
-        if camb_param == None:
-            camb_param = param.CambParams(**kws)
-        self.cosmology = cosmology.MultiEpoch(0,self.z_b+self.z_a,camb_param)
+        if cosmo_dict == None:
+            cosmo_dict = param.CambParams(**kws)
+        self.cosmology = cosmology.MultiEpoch(0,self.z_b+self.z_a,cosmo_dict)
         self.xiA_a = self.cosmology.comoving_distance(self.z_a)
         self.xiA_b = self.cosmology.comoving_distance(self.z_b)
         print (self.xiA_a, self.xiA_b, self.cosmology.h, 
@@ -258,9 +260,9 @@ class CorrelationDeltaFunction(Correlation):
         self._ln_s_array = numpy.arange(
             self.ln_s_min, self.ln_s_max + dln_s, dln_s)
                       
-        if halo_param is None:
-            halo_param = param.HaloModelParams(**kws)
-        self.halo = halo.Halo(input_hod, self.z_a, camb_param, halo_param)
+        if halo_dict is None:
+            halo_dict = param.HaloModelParams(**kws)
+        self.halo = halo.Halo(input_hod, self.z_a, cosmo_dict, halo_dict)
 
     def compute_correlation(self):
         for idx in xrange(self.theta_array.size):

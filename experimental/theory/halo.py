@@ -3,6 +3,7 @@ from scipy import integrate
 from scipy import special
 import copy
 import param  # cosmological parameter object from Cosmopy
+import defaults
 import numpy
 import cosmology
 import mass_function
@@ -30,8 +31,8 @@ class Halo(object):
     the halo profile as a function of mass and radius and its Fourier transform
     as a function of mass and wavenumber.
     """
-    def __init__(self, input_hod=None, redshift=None, camb_param=None,
-                 halo_param=None, **kws):
+    def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
+                 halo_dict=None, use_camb=False, **kws):
         # Hard coded, but we shouldn't expect halos outside of this range.
         self._k_min = 0.001
         self._k_max = 100.0
@@ -45,47 +46,45 @@ class Halo(object):
         self._ln_k_array = numpy.arange(
             self.ln_k_min, self.ln_k_max + dln_k, dln_k)
 
-        if camb_param is None:
-            camb_param = param.CambParams(**kws)
-        self.camb_param = camb_param
+        if cosmo_dict is None:
+            cosmo_dict = defaults.default_cosmo_dict
+        self.cosmo_dict = cosmo_dict
 
-        if halo_param is None:
-            halo_param = param.HaloModelParams(**kws)
-        self.halo_param = halo_param
+        if halo_dict is None:
+            halo_dict = defaults.default_halo_dict
+        self.halo_dict = halo_dict
 
         if redshift is None: redshift = 0.0
         self.redshift = redshift
 
-        self.c0 = halo_param.cbarcoef/(1.0 + self.redshift)
-        self.beta = halo_param.cbarslope
+        self.c0 = halo_dict["c0"]/(1.0 + self.redshift)
+        self.beta = halo_dict["beta"]
 
         # If we hard-code to an NFW profile, then we can use an analytic
         # form for the halo profile Fourier transform.
-        # self.alpha = -1.0*halo_param.dpalpha
+        # self.alpha = -1.0*halo_dict.dpalpha
         self.alpha = -1.0
 
-        self.cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
+        self.cosmo = cosmology.SingleEpoch(self.redshift, cosmo_dict)
         self.delta_v = self.cosmo.delta_v()
         self.rho_bar = self.cosmo.rho_bar()
         self.h = self.cosmo.h
 
         self.mass = mass_function.MassFunction(
-            self.redshift, camb_param, halo_param)
+            self.redshift, cosmo_dict, halo_dict)
 
         if input_hod is None:
-            self.local_hod = hod.HODKravtsov(halo_param)
-        else:
-            self.local_hod = input_hod
-
-        self.camb = camb.CambWrapper(camb_param)
-        self.camb.set_redshift(redshift)
-        self.camb.run()
-        self.sigma_8 = 0.811
-        self.sigma_norm = 1.0
-        self._initialize_sigma_norm()
+            input_hod = hod.HODZheng()
+        self.local_hod = input_hod
+    
+        self.use_camb = use_camb
+        if self.use_camb:
+            self.camb = camb.CambWrapper(cosmo_dict)
+            self.camb.set_redshift(redshift)
+            self.camb.run()
+            self.camb.normalize(self.cosmo.sigma_8*self.cosmo._growth)
 
         self._calculate_n_bar()
-        #self._calculate_bias()
         self._initialize_halo_splines()
 
         self._initialized_h_m = False
@@ -95,20 +94,20 @@ class Halo(object):
         self._initialized_pp_gm = False
         self._initialized_pp_gg = False
 
-    def set_cosmology(self, camb_param=None, redshift=None):
-        if camb_param==None:
-            camb_param = self.camb_param
+    def set_cosmology(self, cosmo_dict=None, redshift=None):
+        if cosmo_dict==None:
+            cosmo_dict = self.cosmo_dict
         if redshift==None:
             redshift = self.redshift
-        self.cosmo = cosmology.SingleEpoch(redshift, camb_param)
+        self.cosmo = cosmology.SingleEpoch(redshift, cosmo_dict)
         self.delta_v = self.cosmo.delta_v()
         self.rho_bar = self.cosmo.rho_bar()
         self.h = self.cosmo.h
 
-        self.c0 = self.halo_param.cbarcoef/(1.0 + redshift)
+        self.c0 = self.halo_dict["c0"]/(1.0 + redshift)
 
         self.mass = mass_function.MassFunction(
-            self.redshift, camb_param, self.halo_param)
+            self.redshift, cosmo_dict, self.halo_dict)
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
@@ -120,15 +119,16 @@ class Halo(object):
         self._initialized_pp_gm = False
         self._initialized_pp_gg = False
 
-        self.camb = camb.CambWrapper(camb_param)
-        self.camb.set_redshift(redshift)
-        self.camb.run()
+        if self.use_camb:
+            self.camb = camb.CambWrapper(cosmo_dict)
+            self.camb.set_redshift(redshift)
+            self.camb.run()
+            self.camb.normalize(self.cosmo.sigma_8*self.cosmo._growth)
 
     def set_hod(self, input_hod):
         self.local_hod = input_hod
 
         self._calculate_n_bar()
-        self._initialize_halo_splines()
 
         self._initialized_h_m = False
         self._initialized_h_g = False
@@ -137,45 +137,33 @@ class Halo(object):
         self._initialized_pp_gm = False
         self._initialized_pp_gg = False
 
-    def set_halo(self, halo_param=None):
-        self.c0 = halo_param.cbarcoef/(1.0 + self.redshift)
-        self.beta = halo_param.cbarslope
-        self.alpha = -1.0*halo_param.dpalpha
+    def set_halo(self, halo_dict=None):
+        self.c0 = halo_dict["c0"]/(1.0 + self.redshift)
+        self.beta = halo_dict["beta"]
+        self.alpha = -1.0
 
         self.mass = mass_function.MassFunction(
-            self.redshift, self.camb_param, halo_param)
+            self.redshift, self.cosmo_dict, halo_dict)
 
-        self.local_hod.set_halo(halo_param)
+        self.local_hod.set_halo(halo_dict)
         self.set_hod(self.local_hod)
         
     def set_redshift(self, redshift):
-        self.set_cosmology(self.camb_param, redshift)
-    
-    def sigma_r(self, scale):
-        """RMS power on scale in Mpc/h"""
-        sigma2, sigma2_err = integrate.quad(
-            self._sigma_integrand, numpy.log(self._k_min),
-            numpy.log(self._k_max), args=(scale,), limit=200)
-        sigma2 /= numpy.pi*numpy.pi
-
-        return numpy.sqrt(sigma2)
-
-    def _sigma_integrand(self, ln_k, scale):
-        k = numpy.exp(ln_k)
-        dk = 1.0*k
-        kR = scale*k
-
-        W = 3.0*(
-            numpy.sin(kR)/kR**3-numpy.cos(kR)/kR**2)
-
-        return dk*self.linear_power(k)*W*W*k*k
-
-    def _initialize_sigma_norm(self):
-        self.sigma_norm = self.sigma_8*self.cosmo._growth/self.sigma_r(8.0)
+        self.set_cosmology(self.cosmo_dict, redshift)
 
     def linear_power(self, k):
+        if self.use_camb:
+            return self.linear_power_camb(k)
+        else:
+            return self.linear_power_eh(k)
+
+    def linear_power_camb(self, k):
         """Linear power spectrum in comoving (Mpc/h)^3 from CAMB."""
-        return self.camb.linear_power(k)*self.sigma_norm*self.sigma_norm
+        return self.camb.linear_power(k)
+
+    def linear_power_eh(self, k):
+        """Linear power spectrum in comoving (Mpc/h)^3 from E+Hu99."""
+        return self.cosmo.linear_power(k)
 
     def power_mm(self, k):
         """Non-linear power spectrum in comoving (Mpc/h)^3"""
@@ -521,9 +509,9 @@ class Halo(object):
 
 class HaloExclusion(Halo):
 
-    def __init__(self, input_hod=None, redshift=None, camb_param=None,
-                 halo_param=None, **kws):
-        Halo.__init__(self, input_hod, redshift, camb_param, halo_param, **kws)
+    def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
+                 halo_dict=None, **kws):
+        Halo.__init__(self, input_hod, redshift, cosmo_dict, halo_dict, **kws)
         ln_r_v_array = numpy.zeros_like(self.mass._nu_array)
 
         for idx in xrange(self.mass._nu_array.size):

@@ -28,10 +28,10 @@ class MassFunction(object):
     halo bias as a function of halo mass or as a function of nu, as well as
     translate between mass and nu.
     """
-    def __init__(self, redshift=0.0, camb_param=None, halo_param=None, **kws):
+    def __init__(self, redshift=0.0, cosmo_dict=None, halo_dict=None, **kws):
         # Hard coded, but we shouldn't expect halos outside of this range.
         self.redshift = redshift
-        self.cosmo = cosmology.SingleEpoch(self.redshift, camb_param)
+        self.cosmo = cosmology.SingleEpoch(self.redshift, cosmo_dict)
         self.delta_c = self.cosmo.delta_c()
 
         mass_min = 1.0e8
@@ -39,22 +39,22 @@ class MassFunction(object):
 
         mass_limit_not_set = True
         while mass_limit_not_set:
-            if 0.105 < self.cosmo.nu_m(mass_min):
+            if 0.1*(1.0+0.05) < self.cosmo.nu_m(mass_min):
                 #print "Min mass", mass_min,"too high..."
                 mass_min = mass_min/1.05
                 #print "\tSetting to",mass_min,"..."
                 continue
-            elif 0.095 > self.cosmo.nu_m(mass_min):
+            elif 0.1*(1.0-0.05) > self.cosmo.nu_m(mass_min):
                 #print "Min mass", mass_min,"too low..."
                 mass_min = mass_min*1.05
                 #print "\tSetting to",mass_min,"..."
                 continue
-            if  47.5 > self.cosmo.nu_m(mass_max):
+            if  50.0*(1.0-0.05) > self.cosmo.nu_m(mass_max):
                 #print "Max mass", mass_max,"too low..."
                 mass_max = mass_max*1.05
                 #print "\tSetting to",mass_max,"..."
                 continue
-            elif 52.5 < self.cosmo.nu_m(mass_max):
+            elif 50.0*(1.0+0.05) < self.cosmo.nu_m(mass_max):
                 #print "Max mass", mass_max,"too high..."
                 mass_max = mass_max/1.05
                 #print "\tSetting to",mass_max,"..."
@@ -70,22 +70,18 @@ class MassFunction(object):
         self._ln_mass_array = numpy.arange(
             self.ln_mass_min, self.ln_mass_max + dln_mass, dln_mass)
 
-        if camb_param is None:
-            camb_param = param.CambParams(**kws)
+        if cosmo_dict is None:
+            cosmo_dict = defaults.default_cosmo_dict
 
-        if halo_param is None:
-            halo_param = param.HaloModelParams(**kws)
+        if halo_dict is None:
+            halo_dict = defaults.default_halo_dict
 
-        self.stq = halo_param.stq
-        self.st_little_a = halo_param.st_little_a
-        self.c0 = halo_param.cbarcoef/(1.0 + redshift)
-        self.beta = halo_param.cbarslope
-        self.alpha = halo_param.dpalpha
+        self.stq = halo_dict["stq"]
+        self.st_little_a = halo_dict["st_little_a"]
+        self.c0 = halo_dict["c0"]/(1.0 + redshift)
 
         self._initialize_splines()
         self._normalize()
-
-    
 
     def _initialize_splines(self):
         self._nu_array = numpy.zeros_like(self._ln_mass_array)
@@ -161,7 +157,7 @@ class MassFunction(object):
 
 class TinkerMassFunction(MassFunction):
 
-    def __init__(self, redshift=0.0, camb_param=None, halo_param=None, **kws):
+    def __init__(self, redshift=0.0, cosmo_dict=None, halo_dict=None, **kws):
         self.A0 = 0.26
         self.a0 = 2.30
         self.b0 = 1.46
@@ -170,7 +166,7 @@ class TinkerMassFunction(MassFunction):
         self.k_max = 100.0
         self._initialized_spline = False
 
-        MassFunction.__init__(self, redshift, camb_param, halo_param, **kws)
+        MassFunction.__init__(self, redshift, cosmo_dict, halo_dict, **kws)
 
         self._initialize_f_nu_spline()
 
