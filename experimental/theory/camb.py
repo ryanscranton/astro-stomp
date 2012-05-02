@@ -127,7 +127,7 @@ class CambWrapper(object):
             self.run()
 
         if k < self.k_max and k > self.k_min:
-            return numpy.exp(self._ln_power_spline(numpy.log(k))[0])
+            return numpy.exp(self._ln_power_spline(numpy.log(k)))
         else:
             return 0.0
 
