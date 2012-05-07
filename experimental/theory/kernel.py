@@ -6,7 +6,6 @@ import param  # cosmological parameter object from Cosmopy
 import cosmology
 import numpy
 import copy
-import cosmology
 
 """This is a set of classes for constructing an angular correlation kernel.
 
@@ -49,6 +48,7 @@ class dNdz(object):
         else:
             return 0.0
 
+
 class dNdzGaussian(dNdz):
     """Derived class for a Gaussian-shaped redshift distribution.
 
@@ -63,6 +63,7 @@ class dNdzGaussian(dNdz):
     def raw_dndz(self, redshift):
         return numpy.exp(-1.0*(redshift-self.z0)*(redshift-self.z0)/
                          (2.0*self.sigma_z*self.sigma_z))
+
 
 class dNdChiGaussian(dNdz):
     """Derived class for a Gaussian-shaped comoving distance distribution.
@@ -84,6 +85,7 @@ class dNdChiGaussian(dNdz):
                          (2.0*self.sigma_chi*self.sigma_chi))*
                 self.cosmo.E(redshift))
 
+
 class dNdzMagLim(dNdz):
     """Derived class for a magnitude-limited redshift distribution.
 
@@ -98,6 +100,7 @@ class dNdzMagLim(dNdz):
 
     def raw_dndz(self, redshift):
         return ((redshift**self.a)*numpy.exp(-1.0*redshift/self.z0**self.b))
+
 
 class dNdzInterpolation(dNdz):
     """Derived class for a p(z) derived from real data assuming an array
@@ -181,6 +184,7 @@ class WindowFunction(object):
         for chi, wf in zip(self._chi_array, self._wf_array):
             f.write("%1.10f %1.10f\n" % (chi, wf))
         f.close()
+
 
 class WindowFunctionGalaxy(WindowFunction):
     """WindowFunction class for a galaxy distribution.
@@ -476,3 +480,25 @@ class Kernel(object):
             self._ln_ktheta_array, self._kernel_array):
             f.write("%1.10f %1.10f\n" % (numpy.exp(ln_ktheta), kernel))
         f.close()
+
+
+class GalaxyGalaxyLensingKernel(Kernel):
+
+    def __init__(self, ktheta_min, ktheta_max,
+                 window_function_a, window_function_b,
+                 cosmo_dict=None, **kws):
+        self._j2_limit = S.jn_zeros(2,4)[-1]
+        Kernel.__init__(self, ktheta_min, ktheta_max,
+                        window_function_a, window_function_b,
+                        cosmo_dict=None, **kws):
+
+    def _kernel_integrand(self, chi, ktheta):
+        D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
+        z = self.cosmo.redshift(chi)
+
+        if ktheta*chi < self._j2_limit:
+            return (self.window_function_a.window_function(chi)*
+                    self.window_function_b.window_function(chi)*
+                    D_z*D_z*S.j2(ktheta*chi))
+        else:
+            return 0.0
