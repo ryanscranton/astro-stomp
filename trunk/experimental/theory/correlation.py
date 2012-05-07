@@ -185,7 +185,7 @@ class GalaxyGalaxyLensing(Correlation):
             cosmo_dict = defaults.default_cosmo_dict
         self.cosmo_dict = cosmo_dict
 
-        self.kernel = kernel.GalaxyGalaxyKernel(
+        self.kernel = kernel.GalaxyGalaxyLensingKernel(
             self._k_min*theta_min, 
             self._k_max*theta_max,
             window_function_galaxy, window_function_convergence,

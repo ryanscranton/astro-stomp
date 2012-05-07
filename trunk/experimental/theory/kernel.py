@@ -490,7 +490,7 @@ class GalaxyGalaxyLensingKernel(Kernel):
         self._j2_limit = S.jn_zeros(2,4)[-1]
         Kernel.__init__(self, ktheta_min, ktheta_max,
                         window_function_a, window_function_b,
-                        cosmo_dict=None, **kws):
+                        cosmo_dict=None, **kws)
 
     def _kernel_integrand(self, chi, ktheta):
         D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
@@ -499,6 +499,6 @@ class GalaxyGalaxyLensingKernel(Kernel):
         if ktheta*chi < self._j2_limit:
             return (self.window_function_a.window_function(chi)*
                     self.window_function_b.window_function(chi)*
-                    D_z*D_z*S.j2(ktheta*chi))
+                    D_z*D_z*S.jn(2, ktheta*chi))
         else:
             return 0.0
