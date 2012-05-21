@@ -607,7 +607,151 @@ class HaloExclusion(Halo):
             self._ln_k_array, h_g_array)
         self._initialized_h_g = True
 
-class HaloAmiCentral(object):
+class HaloSatelliteCentral(Halo):
+
+    def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
+                 halo_dict=None, use_camb=False, **kws):
+        Halo.__init__(self, input_hod=None, redshift=None, cosmo_dict=None,
+                      halo_dict=None, use_camb=False, **kws)
+
+    def power_gm(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_m:
+            self._initialize_h_m()
+        if not self._initialized_h_g:
+            self._initialize_h_g()
+        if not self._initialized_pp_gm:
+            self._initialize_pp_gm()
+
+        return self.power_gm_cent(k) + self.power_gm_sat(k)
+
+    def power_gm_cent(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_m:
+            self._initialize_h_m()
+        if not self._initialized_h_g:
+            self._initialize_h_g()
+        if not self._initialized_pp_gm:
+            self._initialize_pp_gm()
+
+        return (self.linear_power(k)*self._h_g_cent(k)*self._h_m(k) + 
+                self._pp_gm_cent(k))
+
+    def power_gm_sat(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_m:
+            self._initialize_h_m()
+        if not self._initialized_h_g:
+            self._initialize_h_g()
+        if not self._initialized_pp_gm:
+            self._initialize_pp_gm()
+
+        return (self.linear_power(k)*self._h_g_sat(k)*self._h_m(k) +
+                self._pp_gm_sat(k))
+
+    def power_mg(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        return self.power_gm(k)
+
+    def _h_g_cent(self, k):
+        if k >= self._k_min and k <= self._k_max:
+            return self._h_g_cent_spline(numpy.log(k))
+        else:
+            return 0.0
+
+    def _h_g_sat(self, k):
+        if k >= self._k_min and k <= self._k_max:
+            return self._h_g_sat_spline(numpy.log(k))
+        else:
+            return 0.0
+
+    def _pp_gm_cent(self, k):
+        if k >= self._k_min and k <= self._k_max:
+            return self._pp_gm_sat_spline(numpy.log(k))
+        else:
+            return 0.0
+
+    def _pp_gm_sat(self, k):
+        if k >= self._k_min and k <= self._k_max:
+            return self._pp_gm_sat_spline(numpy.log(k))
+        else:
+            return 0.0
+
+    def _initialize_h_g(self):
+        h_g_cent_array = numpy.zeros_like(self._ln_k_array)
+
+        for idx in xrange(self._ln_k_array.size):
+            h_g_cent, h_g_cent_err = integrate.quad(
+                self._h_g_integrand, numpy.log(self.mass.nu_min),
+                numpy.log(self.mass.nu_max), limit=200,
+                args=(self._ln_k_array[idx], "central_first_moment"))
+            h_g_cent_array[idx] = h_g_cent/self.n_bar_over_rho_bar
+
+        self._h_g_cent_spline = InterpolatedUnivariateSpline(
+            self._ln_k_array, h_g_cent_array)
+
+        h_g_sat_array = numpy.zeros_like(self._ln_k_array)
+
+        for idx in xrange(self._ln_k_array.size):
+            h_g_sat, h_g_sat_err = integrate.quad(
+                self._h_g_integrand, numpy.log(self.mass.nu_min),
+                numpy.log(self.mass.nu_max), limit=200,
+                args=(self._ln_k_array[idx], "satellite_first_moment"))
+            h_g_sat_array[idx] = h_g_sat/self.n_bar_over_rho_bar
+
+        self._h_g_sat_spline = InterpolatedUnivariateSpline(
+            self._ln_k_array, h_g_sat_array)
+
+        self._initialized_h_g = True
+
+    def _h_g_integrand(self, ln_nu, ln_k, moment="central_first_moment"):
+        nu = numpy.exp(ln_nu)
+        mass = self.mass.mass(nu)
+
+        return (nu*self.mass.f_nu(nu)*self.mass.bias_nu(nu)*
+                self.y(ln_k, mass)*
+                (self.local_hod.__getattribute__(moment)(mass))/mass)
+
+    def _initialize_pp_gm_cent(self):
+        pp_gm_cent_array = numpy.zeros_like(self._ln_k_array)
+
+        for idx in xrange(self._ln_k_array.size):
+            pp_gm_cent, pp_gm_cent_err = integrate.quad(
+                self._pp_gm_integrand, numpy.log(self.mass.nu_min),
+                numpy.log(self.mass.nu_max), limit=200,
+                args=(self._ln_k_array[idx], "central_first_moment"))
+            pp_gm_cent_array[idx] = pp_gm_cent/self.n_bar
+
+        self._pp_gm_cent_spline = InterpolatedUnivariateSpline(
+            self._ln_k_array, pp_gm_array)
+
+        pp_gm_sat_array = numpy.zeros_like(self._ln_k_array)
+
+        for idx in xrange(self._ln_k_array.size):
+            pp_gm_sat, pp_gm_sat_err = integrate.quad(
+                self._pp_gm_integrand, numpy.log(self.mass.nu_min),
+                numpy.log(self.mass.nu_max), limit=200,
+                args=(self._ln_k_array[idx], "satellite_first_moment"))
+            pp_gm_sat_array[idx] = pp_gm_sat/self.n_bar
+
+        self._pp_gm_sat_cent_spline = InterpolatedUnivariateSpline(
+            self._ln_k_array, pp_gm_sat_array)
+
+        self._initialized_pp_gm = True
+
+    def _pp_gm_integrand(self, ln_nu, ln_k, moment="central_fist_moment"):
+        nu = numpy.exp(ln_nu)
+        mass = self.mass.mass(nu)
+        y = self.y(ln_k, mass)
+        n_exp = self.local_hod.__getattribute__(moment)(self.mass.mass(nu))
+
+        if n_exp < 1:
+            return nu*self.mass.f_nu(nu)*n_exp*y
+        else:
+            return nu*self.mass.f_nu(nu)*n_exp*y*y
+
+
+class HaloAmiCentral(Halo):
 
     def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
                  halo_dict=None, use_camb=False, B=1.0, **kws):
