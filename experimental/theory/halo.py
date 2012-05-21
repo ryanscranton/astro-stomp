@@ -606,3 +606,24 @@ class HaloExclusion(Halo):
         self._h_g_spline = InterpolatedUnivariateSpline(
             self._ln_k_array, h_g_array)
         self._initialized_h_g = True
+
+class HaloAmiCentral(object):
+
+    def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
+                 halo_dict=None, use_camb=False, B=1.0, **kws):
+        self.B = B
+        Halo.__init__(self, input_hod=None, redshift=None, cosmo_dict=None,
+                      halo_dict=None, use_camb=False, **kws)
+
+    def power_B_mm(self, k):
+        """Non-linear power spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_m:
+            self._initialize_h_m()
+        if not self._initialized_pp_mm:
+            self._initialize_pp_mm()
+
+        return self.linear_power(k)*self.B*self._h_m(k)*self._h_m(k) + 
+    self._pp_mm(k)
+
+    def set_B(self, B):
+        self.B = B
