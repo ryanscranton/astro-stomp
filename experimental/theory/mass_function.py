@@ -3,6 +3,7 @@ from scipy import integrate
 import param  # cosmological parameter object from Cosmopy
 import numpy
 import cosmology
+import defaults
 
 """Classes for encoding basic cosmological parameters and quantities.
 
@@ -63,12 +64,12 @@ class MassFunction(object):
 
         print "Mass Limits:",mass_min,"-",mass_max
 
-        dln_mass = (numpy.log(mass_max) - numpy.log(mass_min))/100
-        self.ln_mass_max = numpy.log(mass_max) + dln_mass
-        self.ln_mass_min = numpy.log(mass_min) - dln_mass
+        self.ln_mass_max = numpy.log(mass_max)
+        self.ln_mass_min = numpy.log(mass_min)
 
-        self._ln_mass_array = numpy.arange(
-            self.ln_mass_min, self.ln_mass_max + dln_mass, dln_mass)
+        self._ln_mass_array = numpy.linspace(
+            self.ln_mass_min, self.ln_mass_max,
+            defaults.default_precision["mass_npoints"])
 
         if cosmo_dict is None:
             cosmo_dict = defaults.default_cosmo_dict
@@ -105,14 +106,16 @@ class MassFunction(object):
 
     def _normalize(self):
         self.f_norm = 1.0
-        norm, norm_err = integrate.quad(self.f_nu, self.nu_min, self.nu_max,
-                                        limit=200)
+        norm, norm_err = integrate.quad(
+            self.f_nu, self.nu_min, self.nu_max,
+            limit=defaults.default_precision["mass_precision"])
         self.f_norm = 1.0/norm
 
         self.bias_norm = 1.0
-        norm, norm_err = integrate.quad(lambda x: self.f_nu(x)*self.bias_nu(x),
-                                        self.nu_min, self.nu_max,
-                                        limit=200)
+        norm, norm_err = integrate.quad(
+            lambda x: self.f_nu(x)*self.bias_nu(x),
+            self.nu_min, self.nu_max,
+            limit=defaults.default_precision["mass_precision"])
         self.bias_norm = 1.0/norm
 
     def f_nu(self, nu):

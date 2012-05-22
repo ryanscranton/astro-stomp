@@ -17,3 +17,20 @@ default_halo_dict = {
     "beta": -0.13,
     "alpha": -1
     }
+
+default_precision = {
+    "corr_npoints": 25,
+    "corr_precision": 50,
+    "cosmo_npoints": 50,
+    "cosmo_precision": 50,
+    "dNdz_precision": 50,
+    "halo_npoints": 50,
+    "halo_precision": 100,
+    "kernel_npoints": 100,
+    "kernel_precision": 50,
+    "mass_npoints": 50,
+    "mass_precision": 50,
+    "window_npoints": 50,
+    "window_precision": 50
+    }
+    

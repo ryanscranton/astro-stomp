@@ -30,11 +30,12 @@ class dNdz(object):
     def __init__(self, z_min, z_max):
         self.z_min = z_min
         self.z_max = z_max
-        dz = (self.z_max - self.z_min)/100
         self.norm = 1.0
 
     def normalize(self):
-        norm, norm_err = In.quad(self.dndz, self.z_min, self.z_max,limit=200)
+        norm, norm_err = In.quad(
+            self.dndz, self.z_min, self.z_max,
+            limit=defaults.default_precision["dNdz_precision"])
         print "dN/dz normalization = %1.10f, err = %1.10f" % (norm, norm_err)
 
         self.norm = 1.0/norm
@@ -151,8 +152,9 @@ class WindowFunction(object):
         self.chi_min = self.cosmo.comoving_distance(z_min)
         self.chi_max = self.cosmo.comoving_distance(z_max)
 
-        dchi = (self.chi_max - self.chi_min)/200.0
-        self._chi_array = numpy.arange(self.chi_min, self.chi_max + dchi, dchi)
+        self._chi_array = numpy.linspace(
+            self.chi_min, self.chi_max,
+            defaults.default_precision["window_npoints"])
         self._wf_array = numpy.zeros_like(self._chi_array)
 
     def set_cosmology(self, cosmo_dict):
@@ -247,8 +249,10 @@ class WindowFunctionConvergence(WindowFunction):
         chi_bound = chi
         if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
 
-        g_chi, g_chi_err = In.quad(self._lensing_integrand, chi_bound,
-                                   self.chi_max, args=(chi,),limit=200)
+        g_chi, g_chi_err = In.quad(
+            self._lensing_integrand, chi_bound,
+            self.chi_max, args=(chi,),
+            limit=defaults.default_precision["window_precision"])
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
@@ -388,9 +392,9 @@ class Kernel(object):
     
         self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, cosmo_dict)
         
-        dln_ktheta = (self.ln_ktheta_max - self.ln_ktheta_min)/200.0
-        self._ln_ktheta_array = numpy.arange(
-            self.ln_ktheta_min, self.ln_ktheta_max + dln_ktheta, dln_ktheta)
+        self._ln_ktheta_array = numpy.linspace(
+            self.ln_ktheta_min, self.ln_ktheta_max,
+            defaults.default_precision["kernel_npoints"])
         self._kernel_array = numpy.zeros_like(self._ln_ktheta_array)
 
         self._j0_limit = S.jn_zeros(0,4)[-1]
@@ -398,10 +402,9 @@ class Kernel(object):
         self._find_z_bar()
 
     def _find_z_bar(self):
-        dz = (self.z_max - self.z_min)/100
-
         kernel_max = -1.0e30
-        for z in numpy.arange(self.z_min, self.z_max, dz):
+        for z in numpy.linspace(self.z_min, self.z_max,
+                                defaults.default_precision["kernel_npoints"]):
             kernel = self._kernel_integrand(
                 self.cosmo.comoving_distance(z), 0.0)
             if kernel > kernel_max:
@@ -409,9 +412,6 @@ class Kernel(object):
                 self.z_bar = z
 
     def _initialize_spline(self):
-        kernel_max = -1.0e30
-        calculate_kernel = True
-        ratio_limit = 1.0e-4
         for idx in xrange(self._ln_ktheta_array.size):
             kernel = self.raw_kernel(self._ln_ktheta_array[idx])
             self._kernel_array[idx] = kernel
@@ -445,9 +445,10 @@ class Kernel(object):
     def raw_kernel(self, ln_ktheta):
         ktheta = numpy.exp(ln_ktheta)
 
-        kernel, kernel_err = In.quad(self._kernel_integrand, 1.01*self.chi_min,
-                                     0.99*self.chi_max, args=(ktheta,),
-                                     limit=200)
+        kernel, kernel_err = In.quad(
+            self._kernel_integrand, 1.01*self.chi_min,
+            0.99*self.chi_max, args=(ktheta,),
+            limit=defaults.default_precision["kernel_precision"])
         return kernel
 
     def _kernel_integrand(self, chi, ktheta):
