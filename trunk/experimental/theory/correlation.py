@@ -38,8 +38,9 @@ Defaults to linear_power
 
         self.log_theta_min = numpy.log10(theta_min)
         self.log_theta_max = numpy.log10(theta_max)
-        self.theta_array = numpy.logspace(self.log_theta_min,
-                                      self.log_theta_max, 50)
+        self.theta_array = numpy.logspace(
+            self.log_theta_min, self.log_theta_max,
+            defaults.default_precision["corr_npoints"])
         if theta_min==theta_max:
             self.log_theta_min = numpy.log10(theta_min)
             self.log_theta_max = numpy.log10(theta_min)
@@ -105,11 +106,10 @@ Defaults to linear_power
     def _correlation(self, theta):
         ln_kmin = numpy.log(self._k_min)
         ln_kmax = numpy.log(self._k_max)
-        wtheta, wtheta_err = integrate.quad(self._correlation_integrand, 
-                                            ln_kmin,
-                                            ln_kmax,
-                                            args=(theta,),
-                                            limit=200)
+        wtheta, wtheta_err = integrate.quad(
+            self._correlation_integrand, 
+            ln_kmin, ln_kmax, args=(theta,),
+            limit=defaults.default_precision["corr_precision"])
         return wtheta
 
     def _correlation_integrand(self, ln_k, theta):
@@ -195,8 +195,8 @@ class GalaxyGalaxyLensing(Correlation):
                       
         if halo_dict is None:
             halo_dict = defaults.default_halo_dict
-        self.halo = halo.HaloExclusion(input_hod, self.kernel.z_bar, 
-                                       cosmo_dict, halo_dict)
+        self.halo = halo.HaloSatelliteCentral(input_hod, self.kernel.z_bar, 
+                                              cosmo_dict, halo_dict)
         if powSpec==None:
             powSpec = 'linear_power'
         try:

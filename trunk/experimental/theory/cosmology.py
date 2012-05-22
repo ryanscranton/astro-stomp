@@ -1,8 +1,8 @@
-from scipy.interpolate import InterpolatedUnivariateSpline
+import defaults
+import numpy
 from scipy import integrate
 from scipy import special
-import defaults  # cosmological parameter object from Cosmopy
-import numpy
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 """Classes for encoding basic cosmological parameters and quantities.
 
@@ -25,6 +25,7 @@ class SingleEpoch(object):
     Likewise, it can return a redshift, given an input comoving distance, as
     well as the growth factor D(z) and other cosmological parameters.
     """
+
     def __init__(self, redshift, cosmo_dict=None):
         self._redshift = redshift
 
@@ -68,16 +69,19 @@ class SingleEpoch(object):
         self._initialize_defaults()
 
     def _initialize_defaults(self):
-        self._chi, dist_err = integrate.quad(self.E, 0.0, self._redshift,
-                                             limit=200)
+        self._chi, dist_err = integrate.quad(
+            self.E, 0.0, self._redshift,
+            limit=defaults.default_precision["cosmo_precision"])
 
         self.growth_norm, growth_norm_err = integrate.quad(
-            self._growth_integrand, 0.0, 1.0,limit=200)
+            self._growth_integrand, 0.0, 1.0,
+            limit=defaults.default_precision["cosmo_precision"])
         self.growth_norm *= 2.5*self.omega_m0*numpy.sqrt(self.E0(0.0))
 
         a = 1.0/(1.0 + self._redshift)
-        growth, growth_err = integrate.quad(self._growth_integrand, 0.0, a,
-                                            limit=200)
+        growth, growth_err = integrate.quad(
+            self._growth_integrand, 0.0, a,
+            limit=defaults.default_precision["cosmo_precision"])
         growth *= 2.5*self.omega_m0*numpy.sqrt(self.E0(self._redshift))
         self._growth = growth/self.growth_norm
 
@@ -85,14 +89,40 @@ class SingleEpoch(object):
         self.sigma_norm = self.sigma_8*self._growth/self.sigma_r(8.0)
 
     def set_redshift(self, redshift):
+        """
+        Sets internal variable _redshift to new value and re-initializes splines
+
+        Args:
+            redshift: redshift value at which to compute all cosmology values
+        """
         self._redshift = redshift
 
         self._initialize_defaults()
 
     def E(self, redshift):
+        """
+        1/H(z). Used to compute cosmological distances. Unlike other functions
+        in these SingleEpoch class this is redshift dependent.
+        Units are Mpc/h
+
+        Args:
+            redshift: redshift at which to compute E.
+        Returns:
+            Float value of 1/H at z=redshift.
+            1/H(redshift)
+        """
         return 1.0/(self.H0*numpy.sqrt(self.E0(redshift)))
 
     def E0(self, redshift):
+        """
+        (H(z)/H0)^2 aka Friedmen's equation. Used to compute various 
+        redshift dependent cosmological factors.
+
+        Args:
+            redshift: redshift at which to compute E0.
+        Returns:
+            Float value of (H(z)/H0)^2 at z=redshift
+        """
         a = 1.0/(1.0 + redshift)
         return self.omega_l0 + self.omega_m0/(a*a*a) + self.omega_r0/(a*a)
 
@@ -101,15 +131,28 @@ class SingleEpoch(object):
         return ((1.0 + redshift)/numpy.sqrt(self.E0(redshift)))**3
 
     def comoving_distance(self):
+        """
+        Returns the comoving distance at redshift self._redshif in units Mpc/h.
+        """
         return self._chi
 
     def luminosity_distance(self):
+        """
+        Returns the luminoity distance at redshift self._redshif in units Mpc/h.
+        """
         return (1.0 + self._redshift)*self._chi
 
     def angular_diameter_distance(self):
+        """
+        Returns the angluar diameter distance at redshift self._redshif in 
+        units Mpc/h.
+        """
         return self._chi/(1.0 + self._redshift)
 
     def redshift(self):
+        """
+        Getter for internal value _redshift
+        """
         return self._redshift
 
     def growth_factor(self):
@@ -117,13 +160,17 @@ class SingleEpoch(object):
         return self._growth
 
     def omega_m(self):
+        """Total mass denisty at redshift z = _redshift."""
         return self.omega_m0*(1.0 + self._redshift)**3/self.E0(self._redshift)
 
     def omega_l(self):
+        """Dark Energy denisty at redshift z = _redshift."""
         return self.omega_l0/self.E0(self._redshift)
 
     def delta_c(self):
-        """Over-density threshold for linear, spherical collapse."""
+        """
+        Over-density threshold for linear, spherical collapse a z=_redshift.
+        """
         # Fitting function taken from NFW97
         delta_c = 0.15*(12.0*numpy.pi)**(2.0/3.0)
         if self.open:
@@ -158,6 +205,11 @@ class SingleEpoch(object):
         """
         Eisenstein & Hu (1998) fitting function without BAO wiggles
         (see eqs. 26,28-31 in their paper)
+
+        Args:
+            k: Wave number at which to compute power spectrum.
+        Returns:
+            Transfer function T(k).
         """
 
         theta = self.cmb_temp/2.7 # Temperature of CMB_2.7
@@ -178,6 +230,11 @@ class SingleEpoch(object):
         """
         Eisenstein & Hu (1998) fitting function with BAO wiggles
         (see eqs. 26,28-31 in their paper)
+
+        Args:
+            k: Wave number at which to compute power spectrum.
+        Returns:
+            Transfer function T(k).
         """
         theta = 2.728/2.7
         Ob = self.omega_b0
@@ -234,7 +291,14 @@ class SingleEpoch(object):
         return ObO*Tb + (Oc/O)*Tc
 
     def _bbks_Transfer(self, k):
-        """BBKS transfer function."""
+        """
+        BBKS transfer function.
+
+        Args:
+            k: Wave number at which to compute power spectrum.
+        Returns:
+            Transfer function T(k).
+        """
         Gamma = self.omega_m0*self.h
         #q = k/Gamma
         q = k/Gamma*numpy.exp(
@@ -243,17 +307,40 @@ class SingleEpoch(object):
                 (1 + 3.89*q + (16.1*q)**2 + (5.47*q)**3 + (6.71*q)**4)**(-0.25))
 
     def delta_k(self, k):
-        """k^3*P(k)/2*pi^2: dimensionless linear power spectrum."""
+        """
+        k^3*P(k)/2*pi^2: dimensionless linear power spectrum normalized to by
+        sigma_8
+
+        Args:
+            k: Wave number at which to compute power spectrum.
+        Returns:
+            dimensionless linear power spectrum k^3*P(k)/2*pi^2
+        """
         delta_k = (
             self.delta_H**2*(k/self.H0)**(3 + self.n)*
             self._eh_transfer(k)**2)/self.h
         return delta_k*self._growth*self._growth*self.sigma_norm*self.sigma_norm
 
     def linear_power(self, k):
+        """
+        Linear power spectrum P(k) in units Mpc^3/h^3 normalized to by sigma_8.
+
+        Args:
+            k: Wave number at which to compute power spectrum.
+        Returns:
+            linear power spectrum P(k)
+        """
         return 4.0*numpy.pi*numpy.pi*self.delta_k(k)/(k*k*k)
 
     def sigma_r(self, scale):
-        """RMS power on scale in Mpc/h"""
+        """
+        RMS power on scale in Mpc/h. sigma_8 is defined as sigma_r(8.0).
+        
+        Args:
+            scale: length scale on which to compute RMS power
+        Returns:
+            sigma_r: RMS power
+        """
         if 1.0/scale <= self.k_min and self.k_min > 0.0001:
             self.k_min = (1.0/scale)/2.0
             print "WARNING: Requesting scale greater than k_min."
@@ -264,7 +351,8 @@ class SingleEpoch(object):
             print "\tResetting k_max to",self.k_max
         sigma2, sigma2_err = integrate.quad(
             self._sigma_integrand, numpy.log(self.k_min),
-            numpy.log(self.k_max), args=(scale,), limit=200)
+            numpy.log(self.k_max), args=(scale,),
+            limit=defaults.default_precision["cosmo_precision"])
         sigma2 /= 2*numpy.pi*numpy.pi
 
         return numpy.sqrt(sigma2)
@@ -280,43 +368,41 @@ class SingleEpoch(object):
         return dk*self.linear_power(k)*W*W*k*k
 
     def sigma_m(self, mass):
-        """RMS power on scale subtended by total mean mass in solar masses/h."""
+        """
+        RMS power on scale subtended by total mean mass in solar masses/h.
+
+        Args:
+            mass: mean mass at which to compute RMS power
+        Returns:
+            n_r: Normalized fluctuation
+        """
         scale = (3.0*mass/(4.0*numpy.pi*self.rho_bar()))**(1.0/3.0)
 
         return self.sigma_r(scale)
 
-    def sigma_r_prime(self, scale):
-        pk2_int, pk2_error = integrate.quad(self._sigma_prime_integrand,
-                                            numpy.log(self.k_min),
-                                            numpy.log(self.k_max),args=(scale,),
-                                            limit=200)
-        return 1.0/(2*self.sigma_r(scale))*pk2_int*numpy*numpy.pi**2/2.0
-
-    def sigma_m_prime(self, mass):
-        scale = (3.0*mass/(4.0*numpy.pi*self.rho_bar()))**(1.0/3.0)
-        d_M_d_R = 4.0*numpy.pi*self.rho_bar()*scale*scale
-
-        return self.sigma_r_prime(scale)*d_M_d_R
-    
-    def _sigma_prime_integrand(self, ln_k, scale):
-        k = numpy.exp(ln_k)
-        dk = 1.0*k
-        kR = scale*k
-        
-        W_1 = 18.0*(numpy.sin(kR)*(numpy.sin(kR)-kR*numpy.cos(kR)))/(
-            kR*kR*kR*kR*scale)
-        W_2 = 54.0*(numpy.sin(kR) - kR*numpy.cos(kR))**2/(
-            kR*kR*kR*kR*kR*kR*scale)
-        
-        return (2*numpy.pi)**(-3.0)*dk*self.linear_power(k)*(W_1-W_2)*k*k
-
     def nu_r(self, scale):
-        """Ratio of (delta_c/sigma(R))^2"""
+        """
+        Ratio of (delta_c/sigma(R))^2.
+
+        Args:
+            scale: length scale on which to compute nu
+        Returns:
+            nu_r: Normalized fluctuation
+        """
         sqrt_nu = self.delta_c()/self.sigma_r(scale)
         return sqrt_nu*sqrt_nu
 
     def nu_m(self, mass):
-        """Ratio of (delta_c/sigma(M))^2"""
+        """
+        Ratio of (delta_c/sigma(M))^2. Used as the integration variable for
+        halo.py and mass.py. Determains at which mean mass a halo has
+        collapsed.
+
+        Args:
+            mass: mean mass at which to compute nu
+        Returns:
+            nu_m: Normalized fluctuation
+        """
         sqrt_nu = self.delta_c()/self.sigma_m(mass)
         return sqrt_nu*sqrt_nu
 
@@ -341,6 +427,7 @@ class SingleEpoch(object):
                 f.write("%1.10f %1.10f\n" % (k, self.linear_power(k)))
             f.close()
 
+
 class MultiEpoch(object):
     """Class for calculating cosmological values across a range of redshifts.
 
@@ -350,14 +437,15 @@ class MultiEpoch(object):
     a redshift, given an input comoving distance, as well as the growth factor
     D(z) and a number of other cosmological parameters.
     """
+
     def __init__(self, z_min, z_max, cosmo_dict=None):
-        dz = (z_max - z_min)/100.0
-        self.z_max = z_max + dz
-        self.z_min = z_min - dz
+        self.z_max = z_max
+        self.z_min = z_min
         if self.z_min < 0.0: self.z_min = 0.0
 
-        dz = (self.z_max - self.z_min)/100.0
-        self._z_array = numpy.arange(self.z_min, self.z_max + dz, dz)
+        self._z_array = numpy.linspace(
+            self.z_min, self.z_max,
+            defaults.default_precision["cosmo_npoints"])
         self._chi_array = numpy.zeros_like(self._z_array)
         self._growth_array = numpy.zeros_like(self._z_array)
 
@@ -388,7 +476,8 @@ class MultiEpoch(object):
     def _initialize_splines(self):
         for idx in xrange(self._z_array.size):
             dist, dist_err = integrate.quad(
-                self.epoch0.E, 0.0, self._z_array[idx],limit=200)
+                self.epoch0.E, 0.0, self._z_array[idx],
+                limit=defaults.default_precision["cosmo_precision"])
             self._chi_array[idx] = dist
         self._chi_spline = InterpolatedUnivariateSpline(
             self._z_array, self._chi_array)
@@ -400,7 +489,8 @@ class MultiEpoch(object):
         for idx in xrange(self._z_array.size):
             a = 1.0/(1.0 + self._z_array[idx])
             growth, growth_err = integrate.quad(
-                self.epoch0._growth_integrand, 0.0, a,limit=200)
+                self.epoch0._growth_integrand, 0.0, a,
+                limit=defaults.default_precision["cosmo_precision"])
             growth *= 2.5*self.omega_m0*numpy.sqrt(
                 self.epoch0.E0(self._z_array[idx]))
             self._growth_array[idx] = growth/self.growth_norm
@@ -409,12 +499,29 @@ class MultiEpoch(object):
             self._z_array, self._growth_array)
 
     def E(self, redshift):
+        """
+        1/H(z). Used to compute cosmological distances. Units are Mpc/h
+
+        Args:
+            redshift: redshift at which to compute E.
+        Returns:
+            Float value of 1/H at z=redshift.
+            1/H(redshift)
+        """
         return self.epoch0.E(redshift)
 
     def comoving_distance(self, redshift):
+        """
+        Returns the comoving distance at redshift self._redshift in units Mpc/h.
+
+        Args:
+            redshift: redshift at which to caculate the comoving distance
+        Returns:
+            comoving_distance: Float comoving distance in Mpc/h
+        """
         distance = 0.0
 
-        if redshift < self.z_max and redshift > self.z_min:
+        if redshift <= self.z_max and redshift >= self.z_min:
             distance = self._chi_spline(redshift)
         else:
             print ("Warning: requested redshift outside of bounds!  "
@@ -423,19 +530,53 @@ class MultiEpoch(object):
         return distance
 
     def luminosity_distance(self, redshift):
+        """
+        Returns the luminosity distance at redshift self._redshift in units
+        Mpc/h.
+
+        Args:
+            redshift: redshift at which to caculate the luminosity distance
+        Returns:
+            comoving_distance: Float luminosity distance in Mpc/h
+        """
         return (1.0 + redshift)*self.comoving_distance(redshift)
 
     def angular_diameter_distance(self, redshift):
+        """
+        Returns the luminosity distance at redshift self._redshift in units
+        Mpc/h.
+
+        Args:
+            redshift: redshift at which to caculate the luminosity distance
+        Returns:
+            comoving_distance: Float luminosity distance in Mpc/h
+        """
         return self.comoving_distance(redshift)/(1.0 + redshift)
 
     def redshift(self, comoving_distance):
+        """
+        Given a comoving distance in Mpc/h return the redshift to this distance
+        assuming the observer as at redshift=0.
+
+        Args:
+            comoving_distance: comoving distance in Mpc/h
+        Returns:
+            redshift: Float value which is a distance comoving_distance away.
+        """
         return self._z_spline(comoving_distance)
 
     def growth_factor(self, redshift):
-        """Linear growth factor, normalized to unity at z = 0."""
+        """
+        Linear growth factor, normalized to unity at z = 0.
+
+        Args:
+            redshift: a float at which to compute the growth factor
+        Returns:
+            growth_factor: float value of the growth factor at z=redshift.
+        """
         growth = 1.0
 
-        if redshift < self.z_max and redshift > self.z_min:
+        if redshift <= self.z_max and redshift >= self.z_min:
             growth = self._growth_spline(redshift)
         else:
             print ("Warning: requested redshift outside of bounds!  "
@@ -444,10 +585,30 @@ class MultiEpoch(object):
         return growth
 
     def omega_m(self, redshift=None):
+        """
+        Total mass density as a precent of the critical density as a function 
+        of redshift
+
+        Args:
+            redshift: float value at which to compute omega_m
+        Returns:
+            omega_m: a float that is total mass density as a precent of the 
+            critical density at z=redshift.
+        """
         if redshift is None: redshift = 0.0
         return self.omega_m0*(1.0 + redshift)**3/self.epoch0.E0(redshift)
 
     def omega_l(self, redshift=None):
+        """
+        Dark Energy density as a function of the critical density as a function
+        of redshift
+
+        Args:
+            redshift: float value at which to compute omega_l
+        Returns:
+            omega_l: a float that is dark energy density as a precent of the 
+            critical density at z=redshift.
+        """
         if redshift is None: redshift = 0.0
         return self.omega_l0/self.epoch0.E0(redshift)
 
@@ -487,29 +648,38 @@ class MultiEpoch(object):
         return self.rho_crit(redshift)*self.omega_m(redshift)
 
     def delta_k(self, k, redshift=None):
-        """k^2*P(k)/2*pi^2: dimensionless linear power spectrum.
-
-        If redshift is omitted the results are given for z = 0.
         """
-        delta_k = self.eopch0.delta_k(k)
+        k^3*P(k)/2*pi^2: dimensionless linear power spectrum normalized to by
+        sigma_8
+
+        Args:
+            k: Wave number at which to compute power spectrum.
+        Returns:
+            dimensionless linear power spectrum k^3*P(k)/2*pi^2
+        """
+        delta_k = self.epoch0.delta_k(k)
         if not redshift is None:
             delta_k *= self.growth_factor(redshift)**2
         return delta_k
 
     def linear_power(self, k, redshift=None):
+        """
+        Linear power spectrum P(k) in units Mpc^3/h^3 normalized to by sigma_8.
+
+        Args:
+            k: Wave number at which to compute power spectrum.
+        Returns:
+            linear power spectrum P(k)
+        """
         return 4.0*numpy.pi*numpy.pi*self.delta_k(k, redshift)/(k*k*k)
 
     def sigma_r(self, scale, redshift=None):
         """RMS power on scale in Mpc/h"""
-        sigma2, sigma2_err = integrate.quad(
-            self.epoch0._sigma_integrand, numpy.log(self.k_min),
-            numpy.log(self.k_max), args=(scale,),limit=200) # Limt was 50
-        sigma2 /= 2*numpy.pi*numpy.pi
-
+        sigma = self.epoch0.sigma_r(scale)
         if redshift is not None:
-            sigma2 *= self.growth_factor(redshift)**2
+            sigma *= self.growth_factor(redshift)
 
-        return numpy.sqrt(sigma2)
+        return sigma
 
     def sigma_m(self, mass, redshift=None):
         """RMS power on scale subtended by total mean mass in solar masses."""
@@ -531,7 +701,7 @@ class MultiEpoch(object):
         f = open(output_file_name, "w")
         for z, chi, growth in zip(
             self._z_array, self._chi_array, self._growth_array):
-            if z < self.z_max:
+            if z <= self.z_max:
                 f.write(
                     "%1.10f %1.10f %1.10f %1.10f "
                     "%1.10f %1.10f %1.10f %1.10f\n" % (
@@ -543,7 +713,7 @@ class MultiEpoch(object):
             k_min = 0.001
             k_max = 100.0
 
-            dln_k = (numpy.log(k_max) - numpy.log(k_min))/200
+            dln_k = (numpy.log(k_max) - numpy.log(k_min))/50.0
             ln_k_max = numpy.log(k_max) + dln_k
             ln_k_min = numpy.log(k_min) - dln_k
 
@@ -553,4 +723,3 @@ class MultiEpoch(object):
                 k = numpy.exp(ln_k)
                 f.write("%1.10f %1.10f\n" % (k, self.linear_power(k)))
             f.close()
-

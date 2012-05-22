@@ -39,12 +39,12 @@ class Halo(object):
         ln_mass_min = numpy.log(1.0e9)
         ln_mass_max = numpy.log(5.0e16)
         
-        dln_k = (numpy.log(self._k_max) - numpy.log(self._k_min))/200.0
-        self.ln_k_max = numpy.log(self._k_max) + dln_k
-        self.ln_k_min = numpy.log(self._k_min) - dln_k
+        self.ln_k_max = numpy.log(self._k_max)
+        self.ln_k_min = numpy.log(self._k_min)
 
-        self._ln_k_array = numpy.arange(
-            self.ln_k_min, self.ln_k_max + dln_k, dln_k)
+        self._ln_k_array = numpy.linspace(
+            self.ln_k_min, self.ln_k_max,
+            defaults.default_precision["halo_npoints"])
 
         if cosmo_dict is None:
             cosmo_dict = defaults.default_cosmo_dict
@@ -294,7 +294,8 @@ class Halo(object):
     def _calculate_n_bar(self):
         self.n_bar_over_rho_bar, nbar_err = integrate.quad(
             self._nbar_integrand, numpy.log(self.mass.nu_min),
-            numpy.log(self.mass.nu_max),limit=200)
+            numpy.log(self.mass.nu_max),
+            limit=defaults.default_precision["halo_precision"])
 
         self.n_bar = self.n_bar_over_rho_bar*self.rho_bar
 
@@ -319,7 +320,7 @@ class Halo(object):
     def _calculate_bias(self):
         self.bias, bias_err = integrate.quad(
             self._bias_integrand, self.mass.ln_mass_min,self.mass.ln_mass_max,
-            limit=200)
+            limit=defaults.default_precision["halo_precision"])
 
         self.bias = self.bias/self.n_bar
 
@@ -400,7 +401,8 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             h_m, h_m_err = integrate.quad(
                 self._h_m_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=200,
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx],))
             h_m_array[idx] = h_m
 
@@ -420,8 +422,9 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             h_g, h_g_err = integrate.quad(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=200,
-                args=(self._ln_k_array[idx],)) #Limit Was 150
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
+                args=(self._ln_k_array[idx],))
             h_g_array[idx] = h_g/self.n_bar_over_rho_bar
 
         self._h_g_spline = InterpolatedUnivariateSpline(
@@ -441,8 +444,9 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             pp_mm, pp_mm_err = integrate.quad(
                 self._pp_mm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=200,
-                args=(self._ln_k_array[idx],)) # Limit was 150
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
+                args=(self._ln_k_array[idx],))
             pp_mm_array[idx] = pp_mm/self.rho_bar
 
         self._pp_mm_spline = InterpolatedUnivariateSpline(
@@ -462,7 +466,8 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             pp_gg, pp_gg_err = integrate.quad(
                 self._pp_gg_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=200,
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx],))
             pp_gg_array[idx] = pp_gg*self.rho_bar/(self.n_bar*self.n_bar)
 
@@ -487,7 +492,8 @@ class Halo(object):
         for idx in xrange(self._ln_k_array.size):
             pp_gm, pp_gm_err = integrate.quad(
                 self._pp_gm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),limit=200,
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx],)) # Limit Was 150
             pp_gm_array[idx] = pp_gm/self.n_bar
 
@@ -574,7 +580,8 @@ class HaloExclusion(Halo):
             
             h_m, h_m_err = integrate.quad(
                 self._h_m_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(nu_max),limit=200,
+                numpy.log(nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx],))
             h_m_ext_array[idx] = h_m
 
@@ -599,7 +606,8 @@ class HaloExclusion(Halo):
 
             h_g, h_g_err = integrate.quad(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(nu_max),limit=200,
+                numpy.log(nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx],))
             h_g_array[idx] = h_g/self.n_bar_over_rho_bar
 
@@ -667,7 +675,7 @@ class HaloSatelliteCentral(Halo):
 
     def _pp_gm_cent(self, k):
         if k >= self._k_min and k <= self._k_max:
-            return self._pp_gm_sat_spline(numpy.log(k))
+            return self._pp_gm_cent_spline(numpy.log(k))
         else:
             return 0.0
 
@@ -683,7 +691,8 @@ class HaloSatelliteCentral(Halo):
         for idx in xrange(self._ln_k_array.size):
             h_g_cent, h_g_cent_err = integrate.quad(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max), limit=200,
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "central_first_moment"))
             h_g_cent_array[idx] = h_g_cent/self.n_bar_over_rho_bar
 
@@ -695,7 +704,8 @@ class HaloSatelliteCentral(Halo):
         for idx in xrange(self._ln_k_array.size):
             h_g_sat, h_g_sat_err = integrate.quad(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max), limit=200,
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "satellite_first_moment"))
             h_g_sat_array[idx] = h_g_sat/self.n_bar_over_rho_bar
 
@@ -718,7 +728,8 @@ class HaloSatelliteCentral(Halo):
         for idx in xrange(self._ln_k_array.size):
             pp_gm_cent, pp_gm_cent_err = integrate.quad(
                 self._pp_gm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max), limit=200,
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "central_first_moment"))
             pp_gm_cent_array[idx] = pp_gm_cent/self.n_bar
 
@@ -730,7 +741,8 @@ class HaloSatelliteCentral(Halo):
         for idx in xrange(self._ln_k_array.size):
             pp_gm_sat, pp_gm_sat_err = integrate.quad(
                 self._pp_gm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max), limit=200,
+                numpy.log(self.mass.nu_max),
+                limit=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "satellite_first_moment"))
             pp_gm_sat_array[idx] = pp_gm_sat/self.n_bar
 
@@ -766,8 +778,8 @@ class HaloAmiCentral(Halo):
         if not self._initialized_pp_mm:
             self._initialize_pp_mm()
 
-        return self.linear_power(k)*self.B*self._h_m(k)*self._h_m(k) + 
-    self._pp_mm(k)
+        return (self.linear_power(k)*self.B*self._h_m(k)*self._h_m(k) + 
+                self._pp_mm(k))
 
     def set_B(self, B):
         self.B = B
