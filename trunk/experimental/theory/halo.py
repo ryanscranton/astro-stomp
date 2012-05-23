@@ -619,8 +619,8 @@ class HaloSatelliteCentral(Halo):
 
     def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
                  halo_dict=None, use_camb=False, **kws):
-        Halo.__init__(self, input_hod=None, redshift=None, cosmo_dict=None,
-                      halo_dict=None, use_camb=False, **kws)
+        Halo.__init__(self, input_hod, redshift, cosmo_dict,
+                      halo_dict, use_camb, **kws)
 
     def power_gm(self, k):
         """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
@@ -722,7 +722,7 @@ class HaloSatelliteCentral(Halo):
                 self.y(ln_k, mass)*
                 (self.local_hod.__getattribute__(moment)(mass))/mass)
 
-    def _initialize_pp_gm_cent(self):
+    def _initialize_pp_gm(self):
         pp_gm_cent_array = numpy.zeros_like(self._ln_k_array)
 
         for idx in xrange(self._ln_k_array.size):
@@ -734,7 +734,7 @@ class HaloSatelliteCentral(Halo):
             pp_gm_cent_array[idx] = pp_gm_cent/self.n_bar
 
         self._pp_gm_cent_spline = InterpolatedUnivariateSpline(
-            self._ln_k_array, pp_gm_array)
+            self._ln_k_array, pp_gm_cent_array)
 
         pp_gm_sat_array = numpy.zeros_like(self._ln_k_array)
 
@@ -746,12 +746,12 @@ class HaloSatelliteCentral(Halo):
                 args=(self._ln_k_array[idx], "satellite_first_moment"))
             pp_gm_sat_array[idx] = pp_gm_sat/self.n_bar
 
-        self._pp_gm_sat_cent_spline = InterpolatedUnivariateSpline(
+        self._pp_gm_sat_sat_spline = InterpolatedUnivariateSpline(
             self._ln_k_array, pp_gm_sat_array)
 
         self._initialized_pp_gm = True
 
-    def _pp_gm_integrand(self, ln_nu, ln_k, moment="central_fist_moment"):
+    def _pp_gm_integrand(self, ln_nu, ln_k, moment="central_first_moment"):
         nu = numpy.exp(ln_nu)
         mass = self.mass.mass(nu)
         y = self.y(ln_k, mass)
