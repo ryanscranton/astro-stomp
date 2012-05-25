@@ -33,10 +33,10 @@ class dNdz(object):
         self.norm = 1.0
 
     def normalize(self):
-        norm, norm_err = In.quad(
-            self.dndz, self.z_min, self.z_max,
-            limit=defaults.default_precision["dNdz_precision"])
-        print "dN/dz normalization = %1.10f, err = %1.10f" % (norm, norm_err)
+        norm = In.romberg(
+            self.dndz, self.z_min, self.z_max, vec_func=True,
+            tol=defaults.default_precision["dNdz_precision"])
+        print "dN/dz normalization = %1.10f" % (norm)
 
         self.norm = 1.0/norm
 
@@ -44,10 +44,9 @@ class dNdz(object):
         return 1.0
 
     def dndz(self, redshift):
-        if redshift <= self.z_max and redshift >= self.z_min:
-            return self.norm*self.raw_dndz(redshift)
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(redshift <= self.z_max, 
+                                             redshift >= self.z_min),
+                           self.norm*self.raw_dndz(redshift), 0.0)
 
 
 class dNdzGaussian(dNdz):
@@ -176,12 +175,13 @@ class WindowFunction(object):
         if not self.initialized_spline:
             self._initialize_spline()
 
-        if chi <= self.chi_max and chi >= self.chi_min:
-            return self._wf_spline(chi)
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(chi <= self.chi_max,
+                                             chi >= self.chi_min),
+                           self._wf_spline(chi), 0.0)
 
     def write(self, output_file_name):
+        if not self.initialized_spline:
+            self._initialize_spline()
         f = open(output_file_name, "w")
         for chi, wf in zip(self._chi_array, self._wf_array):
             f.write("%1.10f %1.10f\n" % (chi, wf))
@@ -246,13 +246,24 @@ class WindowFunctionConvergence(WindowFunction):
     def raw_window_function(self, chi):
         a = 1.0/(1.0 + self.cosmo.redshift(chi))
 
-        chi_bound = chi
-        if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
+        try:
+            g_chi = numpy.empty(len(chi))
+            for idx,value in enumerate(chi):
+                chi_bound = value
+                if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
 
-        g_chi, g_chi_err = In.quad(
-            self._lensing_integrand, chi_bound,
-            self.chi_max, args=(chi,),
-            limit=defaults.default_precision["window_precision"])
+                g_chi[idx] = In.romberg(
+                    self._lensing_integrand, chi_bound,
+                    self.chi_max, args=(value,), vec_func=True,
+                    tol=defaults.default_precision["window_precision"])
+        except TypeError:
+            chi_bound = chi
+            if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
+
+            g_chi = In.romberg(
+                self._lensing_integrand, chi_bound,
+                self.chi_max, args=(chi,), vec_func=True,
+                tol=defaults.default_precision["window_precision"])
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
@@ -402,14 +413,20 @@ class Kernel(object):
         self._find_z_bar()
 
     def _find_z_bar(self):
-        kernel_max = -1.0e30
-        for z in numpy.linspace(self.z_min, self.z_max,
-                                defaults.default_precision["kernel_npoints"]):
-            kernel = self._kernel_integrand(
-                self.cosmo.comoving_distance(z), 0.0)
-            if kernel > kernel_max:
-                kernel_max = kernel
-                self.z_bar = z
+        z_array = numpy.linspace(self.z_min, self.z_max,
+                               defaults.default_precision["kernel_npoints"])
+        self.z_bar = z_array[numpy.argmax(
+                self._kernel_integrand(self.cosmo.comoving_distance(z_array), 
+                                       0.0))]
+
+        # kernel_max = -1.0e30
+        # for z in numpy.linspace(self.z_min, self.z_max,
+        #                         defaults.default_precision["kernel_npoints"]):
+        #     kernel = self._kernel_integrand(
+        #         self.cosmo.comoving_distance(z), 0.0)
+        #     if kernel > kernel_max:
+        #         kernel_max = kernel
+        #         self.z_bar = z
 
     def _initialize_spline(self):
         for idx in xrange(self._ln_ktheta_array.size):
@@ -445,32 +462,30 @@ class Kernel(object):
     def raw_kernel(self, ln_ktheta):
         ktheta = numpy.exp(ln_ktheta)
 
-        kernel, kernel_err = In.quad(
-            self._kernel_integrand, 1.01*self.chi_min,
-            0.99*self.chi_max, args=(ktheta,),
-            limit=defaults.default_precision["kernel_precision"])
+        chi_max = self._j0_limit/ktheta
+        if chi_max >= self.chi_max:
+            chi_max = self.chi_max
+        kernel = In.romberg(
+            self._kernel_integrand, self.chi_min,
+            chi_max, args=(ktheta,), vec_func=True,
+            tol=defaults.default_precision["kernel_precision"])
         return kernel
 
     def _kernel_integrand(self, chi, ktheta):
         D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
         z = self.cosmo.redshift(chi)
-
-        if ktheta*chi < self._j0_limit:
-            return (self.window_function_a.window_function(chi)*
-                    self.window_function_b.window_function(chi)*
-                    D_z*D_z*S.j0(ktheta*chi))
-        else:
-            return 0.0
+        
+        return (self.window_function_a.window_function(chi)*
+                self.window_function_b.window_function(chi)*
+                D_z*D_z*S.j0(ktheta*chi))
 
     def kernel(self, ln_ktheta):
         if not self.initialized_spline:
             self._initialize_spline()
 
-        if (ln_ktheta <= self.ln_ktheta_max and
-            ln_ktheta >= self.ln_ktheta_min):
-            return self._kernel_spline(ln_ktheta)
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(ln_ktheta <= self.ln_ktheta_max,
+                                             ln_ktheta >= self.ln_ktheta_min),
+                           self._kernel_spline(ln_ktheta), 0.0)
 
     def write(self, output_file_name):
         if not self.initialized_spline:
@@ -493,13 +508,22 @@ class GalaxyGalaxyLensingKernel(Kernel):
                         window_function_a, window_function_b,
                         cosmo_dict=None, **kws)
 
+    def raw_kernel(self, ln_ktheta):
+        ktheta = numpy.exp(ln_ktheta)
+
+        chi_max = self._j2_limit/ktheta
+        if chi_max >= self.chi_max:
+            chi_max = self.chi_max
+        kernel = In.romberg(
+            self._kernel_integrand, self.chi_min,
+            chi_max, args=(ktheta,), vec_func=True,
+            tol=defaults.default_precision["kernel_precision"])
+        return kernel
+
     def _kernel_integrand(self, chi, ktheta):
         D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
         z = self.cosmo.redshift(chi)
 
-        if ktheta*chi < self._j2_limit:
-            return (self.window_function_a.window_function(chi)*
-                    self.window_function_b.window_function(chi)*
-                    D_z*D_z*S.jn(2, ktheta*chi))
-        else:
-            return 0.0
+        return (self.window_function_a.window_function(chi)*
+                self.window_function_b.window_function(chi)*
+                D_z*D_z*S.jn(2, ktheta*chi))

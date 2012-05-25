@@ -32,6 +32,8 @@ class SingleEpoch(object):
         if cosmo_dict is None:
             cosmo_dict = defaults.default_cosmo_dict
 
+        self.cosmo_dict = cosmo_dict
+
         self.omega_m0 = cosmo_dict["omega_m0"]
         self.omega_b0 = cosmo_dict["omega_b0"]
         self.omega_l0 = cosmo_dict["omega_l0"]
@@ -69,19 +71,19 @@ class SingleEpoch(object):
         self._initialize_defaults()
 
     def _initialize_defaults(self):
-        self._chi, dist_err = integrate.quad(
-            self.E, 0.0, self._redshift,
-            limit=defaults.default_precision["cosmo_precision"])
+        self._chi = integrate.romberg(
+            self.E, 0.0, self._redshift, vec_func=True,
+            tol=defaults.default_precision["cosmo_precision"])
 
-        self.growth_norm, growth_norm_err = integrate.quad(
-            self._growth_integrand, 0.0, 1.0,
-            limit=defaults.default_precision["cosmo_precision"])
+        self.growth_norm = integrate.romberg(
+            self._growth_integrand, 1e-16, 1.0, vec_func=True,
+            tol=defaults.default_precision["cosmo_precision"])
         self.growth_norm *= 2.5*self.omega_m0*numpy.sqrt(self.E0(0.0))
 
         a = 1.0/(1.0 + self._redshift)
-        growth, growth_err = integrate.quad(
-            self._growth_integrand, 0.0, a,
-            limit=defaults.default_precision["cosmo_precision"])
+        growth = integrate.romberg(
+            self._growth_integrand, 1e-16, a, vec_func=True,
+            tol=defaults.default_precision["cosmo_precision"])
         growth *= 2.5*self.omega_m0*numpy.sqrt(self.E0(self._redshift))
         self._growth = growth/self.growth_norm
 
@@ -349,11 +351,12 @@ class SingleEpoch(object):
             self.k_max = (1.0/scale)*2.0
             print "WARNING: Requesting scale greater than k_max."
             print "\tResetting k_max to",self.k_max
-        sigma2, sigma2_err = integrate.quad(
+
+        sigma2 = integrate.romberg(
             self._sigma_integrand, numpy.log(self.k_min),
-            numpy.log(self.k_max), args=(scale,),
-            limit=defaults.default_precision["cosmo_precision"])
-        sigma2 /= 2*numpy.pi*numpy.pi
+            numpy.log(self.k_max), args=(scale,), vec_func=True,
+            tol=defaults.default_precision["cosmo_precision"])
+        sigma2 /= 2.0*numpy.pi*numpy.pi
 
         return numpy.sqrt(sigma2)
 
@@ -475,9 +478,9 @@ class MultiEpoch(object):
 
     def _initialize_splines(self):
         for idx in xrange(self._z_array.size):
-            dist, dist_err = integrate.quad(
-                self.epoch0.E, 0.0, self._z_array[idx],
-                limit=defaults.default_precision["cosmo_precision"])
+            dist = integrate.romberg(
+                self.epoch0.E, 0.0, self._z_array[idx], vec_func=True,
+                tol=defaults.default_precision["cosmo_precision"])
             self._chi_array[idx] = dist
         self._chi_spline = InterpolatedUnivariateSpline(
             self._z_array, self._chi_array)
@@ -488,9 +491,9 @@ class MultiEpoch(object):
 
         for idx in xrange(self._z_array.size):
             a = 1.0/(1.0 + self._z_array[idx])
-            growth, growth_err = integrate.quad(
-                self.epoch0._growth_integrand, 0.0, a,
-                limit=defaults.default_precision["cosmo_precision"])
+            growth = integrate.romberg(
+                self.epoch0._growth_integrand, 1e-16, a, vec_func=True,
+                tol=defaults.default_precision["cosmo_precision"])
             growth *= 2.5*self.omega_m0*numpy.sqrt(
                 self.epoch0.E0(self._z_array[idx]))
             self._growth_array[idx] = growth/self.growth_norm
@@ -521,11 +524,13 @@ class MultiEpoch(object):
         """
         distance = 0.0
 
-        if redshift <= self.z_max and redshift >= self.z_min:
-            distance = self._chi_spline(redshift)
-        else:
-            print ("Warning: requested redshift outside of bounds!  "
-                   "Returning 0.")
+        distance = numpy.where(numpy.logical_and(redshift<=self.z_max,
+                                                 redshift>=self.z_min),
+                               self._chi_spline(redshift), 0.0)
+        if numpy.any(numpy.logical_or(redshift>self.z_max,
+                                      redshift<self.z_min)):
+            print ("Warning: a requested redshift was outside of bounds!  "
+                   "Returning 0 for this redshift.")
 
         return distance
 
@@ -576,11 +581,13 @@ class MultiEpoch(object):
         """
         growth = 1.0
 
-        if redshift <= self.z_max and redshift >= self.z_min:
-            growth = self._growth_spline(redshift)
-        else:
-            print ("Warning: requested redshift outside of bounds!  "
-                   "Returning unity.")
+        growth = numpy.where(numpy.logical_and(redshift<=self.z_max,
+                                               redshift>=self.z_min),
+                             self._growth_spline(redshift), 1.0)
+        if numpy.any(numpy.logical_or(redshift>self.z_max,
+                                      redshift<self.z_min)):
+            print ("Warning: a requested redshift was outside of bounds!  "
+                   "Returning unity for this redshift.")
 
         return growth
 
@@ -677,6 +684,8 @@ class MultiEpoch(object):
         """RMS power on scale in Mpc/h"""
         sigma = self.epoch0.sigma_r(scale)
         if redshift is not None:
+            g = self.growth_factor(redshift)
+            print "Growth is",g
             sigma *= self.growth_factor(redshift)
 
         return sigma
@@ -713,11 +722,7 @@ class MultiEpoch(object):
             k_min = 0.001
             k_max = 100.0
 
-            dln_k = (numpy.log(k_max) - numpy.log(k_min))/50.0
-            ln_k_max = numpy.log(k_max) + dln_k
-            ln_k_min = numpy.log(k_min) - dln_k
-
-            ln_k_array = numpy.arange(ln_k_min, ln_k_max + dln_k, dln_k)
+            ln_k_array = numpy.linspace(numpy.log(k_min), numpy.log(k_max), 100)
             f = open(output_power_file_name, "w")
             for ln_k in ln_k_array:
                 k = numpy.exp(ln_k)
