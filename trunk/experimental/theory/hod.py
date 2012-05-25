@@ -122,7 +122,7 @@ class HODZheng(HOD):
 
     def first_moment(self, mass, z=None):
         return (self.central_first_moment(mass)+
-                self.satellite_second_moment(mass))
+                self.satellite_first_moment(mass))
 
     def second_moment(self, mass, z=None):
         n_sat = self.satellite_first_moment(mass)
@@ -134,11 +134,10 @@ class HODZheng(HOD):
     
     def satellite_first_moment(self, mass):
         diff = mass - self.M_0
-        if diff >=0.0:
-            return (self.central_first_moment(mass)*
-                    numpy.power((mass - self.M_0)/self.M_1p,self.alpha))
-        else:
-            return 0.0
+        return numpy.where(diff >= 0.0,
+                           self.central_first_moment(mass)*
+                           numpy.power(diff/self.M_1p, self.alpha),
+                           0.0)
 
 class HODMandelbaum(HOD):
 
@@ -161,13 +160,10 @@ class HODMandelbaum(HOD):
         return (2 + n_sat)*n_sat
 
     def central_first_moment(self, mass, z=None):
-        if mass >=self.M0:
-            return 1.0
-        else:
-            return 0.0
+        return numpy.where(mass >= self.M0,
+                           1.0, 0.0)
 
     def satellite_first_moment(self, mass, z=None):
-        if mass < self.M_min:
-            return (mass/self.M_min)**2*self.w
-        else:
-            return mass/self.M_min*self.w
+        return numpy.where(mass < self.M_min,
+                           (mass/self.M_min)**2*self.w,
+                           mass/self.M_min*self.w)

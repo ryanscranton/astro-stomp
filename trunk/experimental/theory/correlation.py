@@ -106,10 +106,10 @@ Defaults to linear_power
     def _correlation(self, theta):
         ln_kmin = numpy.log(self._k_min)
         ln_kmax = numpy.log(self._k_max)
-        wtheta, wtheta_err = integrate.quad(
+        wtheta = integrate.romberg(
             self._correlation_integrand, 
-            ln_kmin, ln_kmax, args=(theta,),
-            limit=defaults.default_precision["corr_precision"])
+            ln_kmin, ln_kmax, args=(theta,), vec_func=True,
+            tol=defaults.default_precision["corr_precision"])
         return wtheta
 
     def _correlation_integrand(self, ln_k, theta):

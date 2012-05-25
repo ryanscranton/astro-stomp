@@ -20,17 +20,17 @@ default_halo_dict = {
 
 default_precision = {
     "corr_npoints": 25,
-    "corr_precision": 50,
+    "corr_precision":1.48e-8,
     "cosmo_npoints": 50,
-    "cosmo_precision": 50,
-    "dNdz_precision": 50,
+    "cosmo_precision": 1.48e-8,
+    "dNdz_precision": 1.48e-8,
     "halo_npoints": 50,
-    "halo_precision": 100,
+    "halo_precision": 1.48-8,
+    "halo_limit": 100,
     "kernel_npoints": 100,
-    "kernel_precision": 50,
+    "kernel_precision": 1.48e-8,
     "mass_npoints": 50,
-    "mass_precision": 50,
+    "mass_precision": 1.48e-8,
     "window_npoints": 50,
-    "window_precision": 50
+    "window_precision": 1.48e-8
     }
-    

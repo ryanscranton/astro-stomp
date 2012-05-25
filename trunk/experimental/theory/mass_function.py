@@ -35,7 +35,7 @@ class MassFunction(object):
         self.cosmo = cosmology.SingleEpoch(self.redshift, cosmo_dict)
         self.delta_c = self.cosmo.delta_c()
 
-        mass_min = 1.0e8
+        mass_min = 1.0e9
         mass_max = 1.0e16
 
         mass_limit_not_set = True
@@ -62,20 +62,18 @@ class MassFunction(object):
                 continue
             mass_limit_not_set = False
 
-        print "Mass Limits:",mass_min,"-",mass_max
+        print "Mass Limits:",mass_min*(0.95),"-",mass_max*(1.05)
 
-        self.ln_mass_max = numpy.log(mass_max)
-        self.ln_mass_min = numpy.log(mass_min)
+        self.ln_mass_max = numpy.log(mass_max*(0.95))
+        self.ln_mass_min = numpy.log(mass_min*(1.05))
 
         self._ln_mass_array = numpy.linspace(
             self.ln_mass_min, self.ln_mass_max,
             defaults.default_precision["mass_npoints"])
 
-        if cosmo_dict is None:
-            cosmo_dict = defaults.default_cosmo_dict
-
         if halo_dict is None:
             halo_dict = defaults.default_halo_dict
+        self.halo_dict = halo_dict
 
         self.stq = halo_dict["stq"]
         self.st_little_a = halo_dict["st_little_a"]
@@ -83,6 +81,22 @@ class MassFunction(object):
 
         self._initialize_splines()
         self._normalize()
+
+    def set_redshift(self, z, c_dict=None):
+        if c_dict is None:
+            c_dict = self.cosmo.cosmo_dict
+        self.__init__(redshift=z, cosmo_dict=c_dict,
+                      halo_dict=self.halo_dict)
+
+    def set_cosmology(self, c_dict, z = None):
+        if z is None:
+            z = self.redshift
+        self.__init__(redshift=z, cosmo_dict=c_dict, 
+                      halo_dict=self.halo_dict)
+
+    def set_halo(self, h_dict):
+        self.__init__(redshift=self.redshift, cosmo_dict=self.cosmo.cosmo_dict, 
+                      halo_dict=h_dict, **kws)
 
     def _initialize_splines(self):
         self._nu_array = numpy.zeros_like(self._ln_mass_array)
@@ -106,16 +120,16 @@ class MassFunction(object):
 
     def _normalize(self):
         self.f_norm = 1.0
-        norm, norm_err = integrate.quad(
-            self.f_nu, self.nu_min, self.nu_max,
-            limit=defaults.default_precision["mass_precision"])
+        norm = integrate.romberg(
+            self.f_nu, self.nu_min, self.nu_max, vec_func=True,
+            tol=defaults.default_precision["mass_precision"])
         self.f_norm = 1.0/norm
 
         self.bias_norm = 1.0
-        norm, norm_err = integrate.quad(
+        norm = integrate.romberg(
             lambda x: self.f_nu(x)*self.bias_nu(x),
-            self.nu_min, self.nu_max,
-            limit=defaults.default_precision["mass_precision"])
+            self.nu_min, self.nu_max, vec_func=True,
+            tol=defaults.default_precision["mass_precision"])
         self.bias_norm = 1.0/norm
 
     def f_nu(self, nu):
