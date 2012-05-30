@@ -848,7 +848,6 @@ class MultiEpoch(object):
         """
         sigma = self.epoch0.sigma_r(scale)
         if redshift is not None:
-            g = self.growth_factor(redshift)
             sigma *= self.growth_factor(redshift)
 
         return sigma

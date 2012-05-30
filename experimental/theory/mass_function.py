@@ -1,6 +1,5 @@
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy import integrate
-import param  # cosmological parameter object from Cosmopy
 import numpy
 import cosmology
 import defaults

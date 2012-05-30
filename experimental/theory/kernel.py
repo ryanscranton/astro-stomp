@@ -654,12 +654,12 @@ class GalaxyGalaxyLensingKernel(Kernel):
         if chi_max >= self.chi_max:
             chi_max = self.chi_max
         kernel = In.romberg(
-            self._kernel_integrand, self.chi_min,
+            self._kernel_integrand_j2, self.chi_min,
             chi_max, args=(ktheta,), vec_func=True,
             tol=defaults.default_precision["kernel_precision"])
         return kernel
 
-    def _kernel_integrand(self, chi, ktheta):
+    def _kernel_integrand_j2(self, chi, ktheta):
         D_z = self.cosmo.growth_factor(self.cosmo.redshift(chi))
         z = self.cosmo.redshift(chi)
 
