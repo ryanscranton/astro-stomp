@@ -27,7 +27,14 @@ class MassFunction(object):
 
     A MassFunction object can return a properly normalized halo abundance or
     halo bias as a function of halo mass or as a function of nu, as well as
-    translate between mass and nu.
+    translate between mass and nu. Current definition is from Sheth & Torman
+
+    Attributes:
+        redshift: float redshift at which to compute the mass function
+        cosmo_dict: dictionary of floats defining cosmological parameters (see
+            defaults.py for details)
+        halo_dict: dictionary of floats defining halo and mass function 
+            parameters (see defualts.py for details)
     """
     def __init__(self, redshift=0.0, cosmo_dict=None, halo_dict=None, **kws):
         # Hard coded, but we shouldn't expect halos outside of this range.
@@ -82,21 +89,44 @@ class MassFunction(object):
         self._initialize_splines()
         self._normalize()
 
-    def set_redshift(self, z, c_dict=None):
-        if c_dict is None:
-            c_dict = self.cosmo.cosmo_dict
-        self.__init__(redshift=z, cosmo_dict=c_dict,
-                      halo_dict=self.halo_dict)
+    def set_redshift(self, redshift, cosmo_dict=None):
+        """
+        Reset mass function parameters at redshift.
 
-    def set_cosmology(self, c_dict, z = None):
-        if z is None:
-            z = self.redshift
-        self.__init__(redshift=z, cosmo_dict=c_dict, 
-                      halo_dict=self.halo_dict)
+        Args:
+            redshift: float value of redshift
+            cosmo_dict: dictionary of floats defining a cosmology (see
+                defaults.py for details)
+        """
+        if cosmo_dict is None:
+            cosmo_dict = self.cosmo.cosmo_dict
+        self.__init__(redshift, cosmo_dict,
+                      self.halo_dict)
 
-    def set_halo(self, h_dict):
-        self.__init__(redshift=self.redshift, cosmo_dict=self.cosmo.cosmo_dict, 
-                      halo_dict=h_dict, **kws)
+    def set_cosmology(self, cosmo_dict, redshift = None):
+        """
+        Reset mass function parameters for cosmology cosmo_dict.
+
+        Args:
+            cosmo_dict: dictionary of floats defining a cosmology (see
+                defaults.py for details)
+            redshift: float value of redshift
+        """
+        if redshift is None:
+            redshift = self.redshift
+        self.__init__(redshift, cosmo_dict, 
+                      self.halo_dict)
+
+    def set_halo(self, halo_dict):
+        """
+        Reset mass function parameters for halo_dict.
+
+        Args:
+            halo_dict: dictionary of floats defining halos (see
+                defaults.py for details)
+        """
+        self.__init__(self.redshift, self.cosmo.cosmo_dict, 
+                      halo_dict)
 
     def _initialize_splines(self):
         self._nu_array = numpy.zeros_like(self._ln_mass_array)
@@ -133,38 +163,95 @@ class MassFunction(object):
         self.bias_norm = 1.0/norm
 
     def f_nu(self, nu):
+        """
+        Halo mass function as a function of normalized mass overdensity nu
+
+        Args:
+            nu: float array normalized mass overdensity nu
+        Returns:
+            float array number of halos
+        """
         nu_prime = nu*self.st_little_a
         return (
             self.f_norm*(1.0 + nu_prime**(-1.0*self.stq))*
             numpy.sqrt(nu_prime)*numpy.exp(-0.5*nu_prime)/nu)
 
     def f_m(self, mass):
+        """
+        Halo mass function as a function of halo mass
+
+        Args:
+            mass: float array halo mass
+        Returns:
+            float array number of halos
+        """
         return self.f_nu(self.nu(mass))
 
     def bias_nu(self, nu):
-        """Halo bias as a function of nu."""
+        """
+        Halo bias as a function of nu.
+
+        Args:
+            mass: float array mass overdensity mu
+        Returns:
+            float array halo bias
+        """
         nu_prime = nu*self.st_little_a
         return self.bias_norm*(
             1.0 + (nu - 1.0)/self.delta_c +
             2.0*self.stq/(self.delta_c*(1.0 + nu_prime**self.stq)))
 
     def bias_m(self, mass):
-        """Halo bias as a function of mass."""
+        """
+        Halo bias as a function of mass.
+
+        Args:
+            mass: float array halo mass
+        Returns:
+            float array halo bias
+        """
         return self.bias_nu(self.nu(mass))
 
     def nu(self, mass):
-        """nu as a function of halo mass."""
+        """
+        nu as a function of halo mass.
+
+        Args:
+            nu: float array mass M [M_Solar]
+        Returns:
+            float array 
+        """
         return self._nu_spline(numpy.log(mass))
 
     def ln_mass(self, nu):
-        """Natural log of halo mass as a function of nu."""
+        """
+        Natural log of halo mass as a function of nu.
+
+        Args:
+            nu: float array normalized mass overdensity
+        Returns:
+            float array natrual log mass [M_Solar]
+        """
         return self._ln_mass_spline(nu)
 
     def mass(self, nu):
-        """Halo mass as a function of nu."""
+        """
+        Halo mass as a function of nu.
+
+        Args:
+            nu: float array normalized mass overdensity
+        Returns:
+            float array halo mass [M_Solar]
+        """
         return numpy.exp(self.ln_mass(nu))
 
     def write(self, output_file_name):
+        """
+        Write current mass function values
+
+        Args:
+            output_file_name: string file name to write mass function parameters
+        """
         print "M* = 10^%1.4f M_sun" % numpy.log10(self.m_star)
         output_file = open(output_file_name, "w")
         for ln_mass, nu, in zip(self._ln_mass_array, self._nu_array):

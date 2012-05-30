@@ -26,6 +26,10 @@ class dNdz(object):
 
     This class handles all of the details of normalization and interpolation.
     Derived classes should be used for specific redshift distributions.
+
+    Attributes:
+        z_min: float minimum redshift
+        z_max: float maximum redshift
     """
     def __init__(self, z_min, z_max):
         self.z_min = z_min
@@ -33,6 +37,10 @@ class dNdz(object):
         self.norm = 1.0
 
     def normalize(self):
+        """
+        Compute the normalized PDF for the redshift distribution for the range
+        z_min - z_max.
+        """
         norm = In.romberg(
             self.dndz, self.z_min, self.z_max, vec_func=True,
             tol=defaults.default_precision["dNdz_precision"])
@@ -41,9 +49,25 @@ class dNdz(object):
         self.norm = 1.0/norm
 
     def raw_dndz(self, redshift):
+        """
+        Raw deffinition of the redshift distribution.
+
+        Args:
+            redshift: float array of redshift values
+        Returns:
+            float array of unnormalized dn/dz.
+        """
         return 1.0
 
     def dndz(self, redshift):
+        """
+        Normalized dn/dz PDF
+
+        Args:
+            redshift: float array of redshift values
+        Returns:
+            float array redshift PDF
+        """
         return numpy.where(numpy.logical_and(redshift <= self.z_max, 
                                              redshift >= self.z_min),
                            self.norm*self.raw_dndz(redshift), 0.0)
@@ -54,6 +78,11 @@ class dNdzGaussian(dNdz):
 
     dNdz ~ exp(-(z-z0)^2/sigma_z^2)
 
+    Attributes:
+        z_min: float minimum redshift
+        z_max: float maximum redshift
+        z0: float mean redshift of gausian
+        sigma_z: float standard deviation of gausian
     """
     def __init__(self, z_min, z_max, z0, sigma_z):
         dNdz.__init__(self, z_min, z_max)
@@ -70,12 +99,22 @@ class dNdChiGaussian(dNdz):
 
     dNdz ~ exp(-(chi-chi0)^2/sigma_chi^2)*dchi/dz
 
+    Make sure that chi_min and chi_max do not correspond to redshifts outside 
+    the range z=0.0-5.0
+
+    Attributes:
+        chi_min: float minimum comoving distance
+        chi_max: float maximum comoving distance
+        chi0: float mean comoving distance of gausian
+        sigma_chi: float standard deviation of gausian
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
     """
-    def __init__(self, chi_min, chi_max, chi0, sigma_chi,cosmo):
-        self.cosmo = cosmo
+    def __init__(self, chi_min, chi_max, chi0, sigma_chi, cosmo_dict=None):
+        self.cosmo = cosmology.MultiEpoch(0.0, 5.0, cosmo_dict)
         z_min = self.cosmo.redshift(chi_min)
         z_max = self.cosmo.redshift(chi_max)
-        dNdz.__init__(self, z_min, z_max)
+        dNdz.__init__(self, chi_min, chi_max)
         self.chi0 = chi0 
         self.sigma_chi = sigma_chi
 
@@ -91,6 +130,12 @@ class dNdzMagLim(dNdz):
 
     dNdz ~ z^a*exp(-(z/z0)^b)
 
+    Attributes:
+        z_min: float minimum redshift
+        z_max: float maximum redshift
+        a: float power law slope
+        z0: float "mean" redshift of distribution
+        b: float exponential decay slope
     """
     def __init__(self, z_min, z_max, a, z0, b):
         dNdz.__init__(self, z_min, z_max)
@@ -99,16 +144,22 @@ class dNdzMagLim(dNdz):
         self.b = b
 
     def raw_dndz(self, redshift):
-        return ((redshift**self.a)*numpy.exp(-1.0*redshift/self.z0**self.b))
+        return (numpy.power(redshift, self.a)*
+                numpy.exp(-1.0*numpy.power(redshift/self.z0, self.b)))
 
 
 class dNdzInterpolation(dNdz):
     """Derived class for a p(z) derived from real data assuming an array
     of redshifts with a corresponding array of probabilities for each
     redshift.
+
+    Attributes:
+        z_array: float array of redshifts
+        p_array: float array of weights
+        interpolation_order: order of spline interpolation
     """
 
-    def __init__(self, z_array, p_array,interpolation_order=2):
+    def __init__(self, z_array, p_array, interpolation_order=2):
         ## Need to impliment a test that throws out data at the begining or
         ## end of the z_array that has a value of zero for p_array
         dNdz.__init__(self, z_array[0], z_array[-1])
@@ -137,6 +188,12 @@ class WindowFunction(object):
     raw_window_function() method, which will be re-implemented by each of the
     derived classes and then the kernel object will sample the spline via the
     window_function() method.
+
+    Attributes:
+        z_min: mimimum redshift to define window function over
+        z_max: maximum redshift to define window function over
+        cosmo_dict: dictory of floats defining a cosmology (see defaults.py for
+            details)
     """
     def __init__(self, z_min, z_max, cosmo_dict=None, **kws):
         self.initialized_spline = False
@@ -157,6 +214,13 @@ class WindowFunction(object):
         self._wf_array = numpy.zeros_like(self._chi_array)
 
     def set_cosmology(self, cosmo_dict):
+        """
+        Reset cosmology to values in cosmo_dict
+
+        Args:
+            cosmo_dict: dictionary of floats defining a cosmology. (see 
+                defaults.py for details)
+        """
         self.cosmo = cosmology.MultiEpoch(self.z_min, self.z_max, cosmo_dict)
 
         self.initialized_spline = False
@@ -169,9 +233,25 @@ class WindowFunction(object):
         self.initialized_spline = True
 
     def raw_window_function(self, chi):
+        """
+        Raw, possibly computationally intensive, window function.
+
+        Args:
+            chi: float array comoving distance
+        Returns:
+            float array window function values
+        """
         return 1.0
 
     def window_function(self, chi):
+        """
+        Wrapper for splined window function.
+
+        Args:
+            chi: float array of comoving distance
+        Returns:
+            float array of window function values
+        """
         if not self.initialized_spline:
             self._initialize_spline()
 
@@ -180,6 +260,12 @@ class WindowFunction(object):
                            self._wf_spline(chi), 0.0)
 
     def write(self, output_file_name):
+        """
+        Output current values of the window function
+
+        Args:
+            output_file_name: string file name
+        """
         if not self.initialized_spline:
             self._initialize_spline()
         f = open(output_file_name, "w")
@@ -198,6 +284,12 @@ class WindowFunctionGalaxy(WindowFunction):
     W(chi) = dN/dz dz/dchi
 
     for comoving distance chi.
+
+    Attributes:
+        z_min: mimimum redshift to define window function over
+        z_max: maximum redshift to define window function over
+        cosmo_dict: dictory of floats defining a cosmology (see defaults.py for
+            details)
     """
     def __init__(self, redshift_dist,
                  cosmo_dict=None, **kws):
@@ -215,9 +307,9 @@ class WindowFunctionGalaxy(WindowFunction):
         return dzdchi*self._redshift_dist.dndz(z)
 
 class WindowFunctionConvergence(WindowFunction):
-    """WindowFunction class for magnification of a background sample.
+    """WindowFunction class for convergence of a background sample.
 
-    This derived class calculates the magnification effect of a background
+    This derived class calculates the convergence effect on a background
     sample as a function of comoving distance chi.  In essence, given a sample
     with redshift distribution dN/dz, what is the weighted fraction of that
     sample that is beyond chi:
@@ -226,10 +318,13 @@ class WindowFunctionConvergence(WindowFunction):
 
     and the window function is
 
-    W(chi) = 3*omega_m*g(chi)/a
+    W(chi) = 3/2*omega_m*g(chi)/a
 
-    where we have omitted the (2.5*s - 1) factor that is due to the number count
-    slope of the sample.
+    Attributes:
+        z_min: mimimum redshift to define window function over
+        z_max: maximum redshift to define window function over
+        cosmo_dict: dictory of floats defining a cosmology (see defaults.py for
+            details)
     """
     def __init__(self, redshift_dist, cosmo_dict=None, **kws):
         self._redshift_dist = redshift_dist
@@ -267,7 +362,7 @@ class WindowFunctionConvergence(WindowFunction):
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
-        return 3.0*self.cosmo.omega_m0*g_chi/a
+        return 3.0/2.0*self.cosmo.omega_m0*g_chi/a
 
     def _lensing_integrand(self, chi, chi0):
         z = self.cosmo.redshift(chi)
@@ -288,10 +383,9 @@ class WindowFunctionFlatConvergence(WindowFunction):
 
     and the window function is
 
-    W(chi) = 3*omega_m*g(chi)/a
+    W(chi) = 3/2*omega_m*g(chi)/a
 
-    where we have omitted the (2.5*s - 1) factor that is due to the number count
-    slope of the sample.
+    
     """
     def __init__(self, z_min, z_max, cosmo_dict=None, **kws):
         # Even though the input distribution may only extend between some bounds
@@ -306,12 +400,12 @@ class WindowFunctionFlatConvergence(WindowFunction):
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*1907.71
 
-        return 3.0*self.cosmo.omega_m0*g_chi
+        return 3.0/2.0*self.cosmo.omega_m0*g_chi
 
 class WindowFunctionConvergenceDelta(WindowFunction):
-    """WindowFunction class for magnification of a background sample.
+    """WindowFunction class for convergence of a background sample.
 
-    This derived class calculates the magnification effect of a background
+    This derived class calculates the convergence effect of a background
     sample as a function of comoving distance chi.  In essence, given a sample
     with redshift distribution dN/dz, what is the weighted fraction of that
     sample that is beyond chi:
@@ -320,10 +414,7 @@ class WindowFunctionConvergenceDelta(WindowFunction):
 
     and the window function is
 
-    W(chi) = 3*omega_m*g(chi)/a
-
-    where we have omitted the (2.5*s - 1) factor that is due to the number count
-    slope of the sample.
+    W(chi) = 3/2*omega_m*g(chi)/a
     """
     def __init__(self, redshift, cosmo_dict=None, **kws):
         self._redshift = redshift
@@ -334,26 +425,22 @@ class WindowFunctionConvergenceDelta(WindowFunction):
         # in redshift, the lensing kernel will extend across z = [0, z_max)
         WindowFunction.__init__(self, 0.0, redshift,
                                 cosmo_dict, **kws)
-        #self._g_chi_min = (
-        #    self.cosmo.comoving_distance(self._redshift_dist.z_min))
 
     def raw_window_function(self, chi):
         a = 1.0/(1.0 + self._redshift)
 
-        chi_bound = chi
+        chi_bound = numpy.min(chi)
         if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
 
         g_chi = self._lensing_integrand(chi)
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
-        return 3.0*self.cosmo.omega_m0*g_chi/a
+        return 3.0/2.0*self.cosmo.omega_m0*g_chi/a
 
     def _lensing_integrand(self, chi0):
         if chi0 > self.chi_max:
             return 0.0
-
-        #dzdchi = 1.0/self.cosmo.E(self._redshift)
 
         return (self.chi_max - chi0)/self.chi_max
 
@@ -371,6 +458,14 @@ class Kernel(object):
 
     In addition to providing the kernel function, a kernel object also
     calculates z_bar, the peak in the kernel redshift sensitivity.
+
+    Args:
+        ktheta_min: float k*theta minimum value for the kernel
+        ktheta_min: float k*theta maximum value for the kernel
+        window_function_a: first window function for kernel
+        window_function_b: second window function for kernel
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
     """
     def __init__(self, ktheta_min, ktheta_max,
                  window_function_a, window_function_b,
@@ -439,6 +534,13 @@ class Kernel(object):
         self.initialized_spline = True
 
     def set_cosmology(self, cosmo_dict):
+        """
+        Reset the cosmology
+
+        Args:
+            cosmo_dict: dictionary of floats defining a cosmology (see
+                defaults.py for details)
+        """
         self.initialized_spline = False
 
         self.window_function_a.set_cosmology(cosmo_dict)
@@ -460,6 +562,14 @@ class Kernel(object):
         self._find_z_bar()  
 
     def raw_kernel(self, ln_ktheta):
+        """
+        Raw kernel function. Projected power as a function of chi.
+
+        Args:
+            ln_ktheta: float array natural logathim of k*theta
+        Returns:
+            float array kernel value
+        """
         ktheta = numpy.exp(ln_ktheta)
 
         chi_max = self._j0_limit/ktheta
@@ -480,6 +590,14 @@ class Kernel(object):
                 D_z*D_z*S.j0(ktheta*chi))
 
     def kernel(self, ln_ktheta):
+        """
+        Wrapper function for the splined kernel function.
+
+        Args:
+            ln_ktheta: float array natural logathim of k*theta
+        Returns:
+            float array kernel value
+        """
         if not self.initialized_spline:
             self._initialize_spline()
 
@@ -488,6 +606,12 @@ class Kernel(object):
                            self._kernel_spline(ln_ktheta), 0.0)
 
     def write(self, output_file_name):
+        """
+        Output current values of the kernel
+
+        Args:
+            output_file_name: string file name
+        """
         if not self.initialized_spline:
             self._initialize_spline()
 
@@ -499,6 +623,21 @@ class Kernel(object):
 
 
 class GalaxyGalaxyLensingKernel(Kernel):
+    """Derived class for Galaxy-Galaxy lensing. The galaxy-galaxy lensing kernel
+    differes slightly from the standard kernel in that the Bessel function is
+    J_2 instead of J_0. Hence Delta_Sigma instead of Sigma for the measured
+    mass profile.
+
+    K(k, theta) = 4pi^2*int(0, inf, D^2(chi)*W_a(chi)*W_b(chi)*J_2(k*theta*chi))
+
+    Args:
+        ktheta_min: float k*theta minimum value for the kernel
+        ktheta_min: float k*theta maximum value for the kernel
+        window_function_a: first window function for kernel
+        window_function_b: second window function for kernel
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
+    """
 
     def __init__(self, ktheta_min, ktheta_max,
                  window_function_a, window_function_b,

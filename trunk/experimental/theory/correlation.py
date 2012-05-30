@@ -9,10 +9,17 @@ import numpy
 from scipy import special
 from scipy import integrate
 
-"""Classes describing different correlation functions
+"""
+Classes describing different correlation functions.
 
-Given a kernel function and halo model the class should produce a correlation as function of theta. The correlation should specifily the range of theta to be computed.
+Each correlation function can be defined as
 
+w(theta) = int(z, g_1(z)*g_2(z)*int(k, k/(2*pi) P_x(k, z) J(k*theta*chi(z))))
+
+where P_x is a power spectrum from halo, J is the bessel function, and g_1/g_2
+are window functions with redshift. This class is the final wrapper method uses
+each all of the combined classes of the code base together to predict observable
+correlations functions.
 """
 
 speed_of_light = 3*10**5
@@ -21,14 +28,30 @@ degToRad = numpy.pi/180.0
 __author__ = "Chris Morrison <morrison.chrisb@gmail.com>"
 
 class Correlation(object):
-
     """
-    Template class for correlation function, theta should be in radians. The integrand is over ln_k_theta. Choices of power spectra are 
-    'power_gg' - The galaxy-galaxy power spectrum,
-    'power_gm' - The galaxy-matter power spectrum,
-    'power_mm' - The matter-matter power spectrum,
-    'linear_power' - The linear power spectrum. 
-Defaults to linear_power
+    Bass class for correlation functions.
+
+    Given a maximum and minimum angular extent in radians, two window functions
+    from kernel.py, dictionaries defining the cosmology and halo properties,
+    an input HOD from hod.py, and a requested power spectrum type, 
+    returns the predicted correlation function.
+    
+    Derived classes should return an array of the projected variable (in this
+    case theta in radians) and return the value of the correlation w.
+
+    Attributes:
+        theta_min: minimum angular extent in radians
+        theta_max: maximum angular extent in radians
+        window_function_a: a window function object from kernel.py
+        window_function_b: a window function object from kernel.py
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
+        input_hod: an HOD object from hod.py
+        halo_dict: dictionary of floats defining halos (see defaults.py
+            for details)
+        powSpec: string defining a power spectrum
+        theta_array: array of theta values for computed correlation function
+        wtheta_array: array of computed correlation values at theta_array values
     """
 
     def __init__(self, theta_min, theta_max, 
@@ -76,16 +99,36 @@ Defaults to linear_power
             self.power_spec = self.halo.__getattribute__('linear_power')
 
     def set_redshift(self, redshift):
+        """
+        Force redshift of all objects to input value.
+
+        Args:
+            redshift: float value of redshift
+        """
         self.kernel.z_bar = redshift
         self.D_z = self.kernel.cosmo.growth_factor(self.kernel.z_bar)
         self.halo.set_redshift(self.kernel.z_bar)
             
     def set_cosmology(self, cosmo_dict):
+        """
+        Set all objects to the cosmology of cosmo_dict
+
+        Args:
+            cosmo_dict: dictionary of float values defining a cosmology (see
+                defaults.py for details)
+        """
         self.kernel.set_cosmology(cosmo_dict)
         self.D_z = self.kernel.cosmo.growth_factor(self.kernel.z_bar)
         self.halo.set_cosmology(cosmo_dict, self.kernel.z_bar)
 
     def set_power_spectrum(self, powSpec):
+        """
+        Set power spectrum to type specified in powSpec. Of powSpec is not a
+        member of the halo object return the linear powerspectrum.
+
+        Args:
+            powSpec: string name of power spectrum to use from halo.py object.
+        """
         try:
             self.power_spec = self.halo.__getattribute__(powSpec)
         except AttributeError or TypeError:
@@ -94,16 +137,42 @@ Defaults to linear_power
             self.power_spec = self.halo.__getattribute__('linear_power')
 
     def set_halo(self, halo_dict):
+        """
+        Reset halo parameters to halo_dict
+
+        Args:
+            halo_dict: dictionary of floats defining halos (see defaults.py
+                for details)
+        """
         self.halo.set_halo(halo_dict)
 
     def set_hod(self, input_hod):
+        """
+        Reset hod object to input_hod
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
+        Args:
+            input_hod: an HOD object from hod.py
+        """
         self.halo.set_hod(input_hod)
 
     def compute_correlation(self):
+        """
+        Compute the value of the correlation over the range
+        theta_min - theta_max
+        """
         for idx,theta in enumerate(self.theta_array):
             self.wtheta_array[idx] = self._correlation(theta)
 
-    def _correlation(self, theta):
+    @vectorize
+    def correlation(self, theta):
+        """
+        Compute the value of the correlation at array values theta
+
+        Args:
+            theta: float array of angular values in radians to compute the
+                correlation
+        """
         ln_kmin = numpy.log(self._k_min)
         ln_kmax = numpy.log(self._k_max)
         wtheta = integrate.romberg(
@@ -123,6 +192,26 @@ Defaults to linear_power
         f.close()
 
 class MagCorrelation(Correlation):
+    """
+    Derived class for computing the correlation induced from magnification.
+
+    Attributes:
+        theta_min: minimum angular extent in radians
+        theta_max: maximum angular extent in radians
+        window_function_galaxy: a window function object from kernel.py defining
+            the distribution of lens galaxies
+        window_function_convergnce: a window function object from kernel.py
+            defining the convergence of source galaxies.
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
+        input_hod: an HOD object from hod.py
+        halo_dict: dictionary of floats defining halos (see defaults.py
+            for details)
+        powSpec: string defining a power spectrum
+        theta_array: array of theta values for computed correlation function
+        wtheta_array: array of computed correlation values at theta_array values
+        
+    """
     def __init__(self, theta_min, theta_max, 
                  window_function_galaxy, window_function_convergence, 
                  cosmo_dict=None, input_hod=None, halo_dict=None, 
@@ -137,11 +226,29 @@ class MagCorrelation(Correlation):
         dln_k = 1.0
         k = numpy.exp(ln_k)
         dk = k*dln_k
-        return 1.0/(2.0*numpy.pi)*(
+        return 1.0/(numpy.pi)*(
             dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
             self.kernel.kernel(numpy.log(k*theta)))
 
 class AutoCorrelation(Correlation):
+     """
+    Derived class for computing the auto correlation from galaxy clustering.
+
+    Attributes:
+        theta_min: minimum angular extent in radians
+        theta_max: maximum angular extent in radians
+        window_function_galaxy: a window function object from kernel.py defining
+            the distribution of lens galaxies
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
+        input_hod: an HOD object from hod.py
+        halo_dict: dictionary of floats defining halos (see defaults.py
+            for details)
+        powSpec: string defining a power spectrum
+        theta_array: array of theta values for computed correlation function
+        wtheta_array: array of computed correlation values at theta_array values
+        
+    """
 
     def __init__(self, theta_min, theta_max, 
                  window_function_galaxy, 
@@ -162,6 +269,26 @@ class AutoCorrelation(Correlation):
             self.kernel.kernel(numpy.log(k*theta)))
 
 class GalaxyGalaxyLensing(Correlation):
+    """
+    Derived class for computing the shear correlation of galaxy-galaxy lensing.
+
+    Attributes:
+        theta_min: minimum angular extent in radians
+        theta_max: maximum angular extent in radians
+        window_function_galaxy: a window function object from kernel.py defining
+            the distribution of lens galaxies
+        window_function_convergnce: a window function object from kernel.py
+            defining the convergence of source galaxies.
+        cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
+            for details)
+        input_hod: an HOD object from hod.py
+        halo_dict: dictionary of floats defining halos (see defaults.py
+            for details)
+        powSpec: string defining a power spectrum
+        theta_array: array of theta values for computed correlation function
+        wtheta_array: array of computed correlation values at theta_array values
+        
+    """
 
     def __init__(self, theta_min, theta_max, 
                  window_function_galaxy, window_function_convergence, 
@@ -210,6 +337,6 @@ class GalaxyGalaxyLensing(Correlation):
         dln_k = 1.0
         k = numpy.exp(ln_k)
         dk = k*dln_k
-        return 1.0/(4.0*numpy.pi)*(
+        return 1.0/(2.0*numpy.pi)*(
             dk*k*self.power_spec(k)/(self.D_z*self.D_z)*
             self.kernel.kernel(numpy.log(k*theta)))
