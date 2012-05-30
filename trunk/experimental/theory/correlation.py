@@ -4,7 +4,6 @@ import halo
 import hod
 import kernel
 import defaults
-import param
 import numpy
 from scipy import special
 from scipy import integrate
@@ -87,7 +86,7 @@ class Correlation(object):
                       
         if halo_dict is None:
             halo_dict = defaults.default_halo_dict
-        self.halo = halo.HaloExclusion(input_hod, self.kernel.z_bar, 
+        self.halo = halo.Halo(input_hod, self.kernel.z_bar, 
                                        cosmo_dict, halo_dict)
         if powSpec==None:
             powSpec = 'linear_power'
@@ -162,9 +161,8 @@ class Correlation(object):
         theta_min - theta_max
         """
         for idx,theta in enumerate(self.theta_array):
-            self.wtheta_array[idx] = self._correlation(theta)
+            self.wtheta_array[idx] = self.correlation(theta)
 
-    @vectorize
     def correlation(self, theta):
         """
         Compute the value of the correlation at array values theta
@@ -231,14 +229,14 @@ class MagCorrelation(Correlation):
             self.kernel.kernel(numpy.log(k*theta)))
 
 class AutoCorrelation(Correlation):
-     """
-    Derived class for computing the auto correlation from galaxy clustering.
-
+    """
+    Derived class for computing the autocorrelation from galaxy clustering.
+     
     Attributes:
         theta_min: minimum angular extent in radians
         theta_max: maximum angular extent in radians
-        window_function_galaxy: a window function object from kernel.py defining
-            the distribution of lens galaxies
+        window_function_galaxy: a window function object from kernel.py 
+            defining the distribution of lens galaxies
         cosmo_dict: dictionary of floats defining a cosmology (see defaults.py
             for details)
         input_hod: an HOD object from hod.py
@@ -246,10 +244,9 @@ class AutoCorrelation(Correlation):
             for details)
         powSpec: string defining a power spectrum
         theta_array: array of theta values for computed correlation function
-        wtheta_array: array of computed correlation values at theta_array values
-        
+        wtheta_array: array of computed correlation values at theta_array
+            values
     """
-
     def __init__(self, theta_min, theta_max, 
                  window_function_galaxy, 
                  cosmo_dict=None, input_hod=None, halo_dict=None, 
@@ -322,7 +319,7 @@ class GalaxyGalaxyLensing(Correlation):
                       
         if halo_dict is None:
             halo_dict = defaults.default_halo_dict
-        self.halo = halo.HaloSatelliteCentral(input_hod, self.kernel.z_bar, 
+        self.halo = halo.Halo(input_hod, self.kernel.z_bar, 
                                               cosmo_dict, halo_dict)
         if powSpec==None:
             powSpec = 'linear_power'

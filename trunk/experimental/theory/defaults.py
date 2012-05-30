@@ -28,7 +28,7 @@ default_precision = {
     "halo_precision": 1.48-8,
     "halo_limit": 100,
     "kernel_npoints": 100,
-    "kernel_precision": 1.48e-8,
+    "kernel_precision": 1.48e-16,
     "mass_npoints": 50,
     "mass_precision": 1.48e-8,
     "window_npoints": 50,
