@@ -27,13 +27,47 @@ class HOD(object):
         self._hod[1] = self.first_moment
         self._hod[2] = self.second_moment
 
-    def first_moment(self, mass, z=None):
+    def first_moment(self, mass, redshift=None):
+        """
+        Expected number of galaxies per halo, <N> as a function of mass and 
+        redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N>
+        """
         return 1.0
 
     def second_moment(self, mass, z=None):
+        """
+        Expected number of galaxy pairs per halo, <N(N-1)> as a function of mass
+        and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N(N-1)>
+        """
         return 1.0
 
     def nth_moment(self, mass, z=None, n=3):
+        """
+        Expected number galaxy moment, <N(N-1)...(N-n+1)> as a function of mass
+        and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+            n: integer moment to compute
+        Returns:
+            float array of <N(N-1)...(N-n+1)>
+        """
         exp_nth = 0.0
         if n in self._hod:
             exp_nth = self._hod[n](mass, z)
@@ -98,12 +132,34 @@ class HODKravtsov(HOD):
         return self.satellite_second_moment(mass)
 
     def central_first_moment(self, mass):
+        """
+        Expected number of central galaxies in a halo, <N> as a function of 
+        mass and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N>
+        """
         if mass >= self.min_mass:
             return 1.0
         else:
             return 0.0
 
     def satellite_first_moment(self, mass):
+        """
+        Expected number of satellite galaxies in a halo, <N> as a function of 
+        mass and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N>
+        """
         return mass/self.mass_one*numpy.exp(-self.mass_cut/mass)
 
     def satellite_second_moment(self, mass):
@@ -129,10 +185,32 @@ class HODZheng(HOD):
         return (2 + n_sat)*n_sat
 
     def central_first_moment(self, mass):
+        """
+        Expected number of central galaxies in a halo, <N> as a function of 
+        mass and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N>
+        """
         return 0.5*(1+special.erf((numpy.log10(mass) - numpy.log10(self.M_min))/
                                   self.sigma))
     
     def satellite_first_moment(self, mass):
+        """
+        Expected number of satellite galaxies in a halo, <N> as a function of 
+        mass and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N>
+        """
         diff = mass - self.M_0
         return numpy.where(diff >= 0.0,
                            self.central_first_moment(mass)*
@@ -160,10 +238,32 @@ class HODMandelbaum(HOD):
         return (2 + n_sat)*n_sat
 
     def central_first_moment(self, mass, z=None):
+        """
+        Expected number of central galaxies in a halo, <N> as a function of 
+        mass and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N>
+        """
         return numpy.where(mass >= self.M0,
                            1.0, 0.0)
 
     def satellite_first_moment(self, mass, z=None):
+        """
+        Expected number of satellite galaxies in a halo, <N> as a function of 
+        mass and redshift.
+        
+        Args:
+            mass: float array Halo mass in M_Solar/h^2
+            redshift: float redshift to evalute the first moment if redshift
+                dependent
+        Returns:
+            float array of <N>
+        """
         return numpy.where(mass < self.M_min,
                            (mass/self.M_min)**2*self.w,
                            mass/self.M_min*self.w)

@@ -99,6 +99,8 @@ class Halo(object):
             cosmo_dict = self.cosmo_dict
         if redshift==None:
             redshift = self.redshift
+        self.cosmo_dict = cosmo_dict
+        self.redshift = redshift
         self.cosmo = cosmology.SingleEpoch(redshift, cosmo_dict)
         self.delta_v = self.cosmo.delta_v()
         self.rho_bar = self.cosmo.rho_bar()
@@ -107,7 +109,7 @@ class Halo(object):
         self.c0 = self.halo_dict["c0"]/(1.0 + redshift)
 
         self.mass = mass_function.MassFunction(
-            self.redshift, cosmo_dict, self.halo_dict)
+            self.redshift, self.cosmo_dict, self.halo_dict)
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
@@ -537,6 +539,18 @@ class HaloExclusion(Halo):
         self.v_r_min = numpy.exp(numpy.min(ln_r_v_array))
         self._initialized_h_m_ext = False
 
+    def power_mm_ext(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_m_ext:
+            self._initialize_h_m_ext()
+        if not self._initialized_h_g:
+            self._initialize_h_g()
+        if not self._initialized_pp_gm:
+            self._initialize_pp_gm()
+
+        return (self.power_mm(k)*self._h_m_ext(k)*self._h_m_ext(k) + 
+                self._pp_mm(k))
+
     def power_gm(self, k):
         """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
         if not self._initialized_h_m_ext:
@@ -564,10 +578,9 @@ class HaloExclusion(Halo):
                 self._pp_gg(k))
 
     def _h_m_ext(self, k):
-        if k >= self._k_min and k <= self._k_max:
-            return self._h_m_ext_spline(numpy.log(k))
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(k >= self._k_min, 
+                                             k <= self._k_max),
+                           self._h_m_ext_spline(numpy.log(k)), 0.0)
 
     def _initialize_h_m_ext(self):
         h_m_ext_array = numpy.zeros_like(self._ln_k_array)
@@ -584,10 +597,10 @@ class HaloExclusion(Halo):
             elif nu_max <= self.mass.nu_min:
                 nu_max = self.mass.nu_min
             
-            h_m, h_m_err = integrate.quad(
+            h_m = integrate.romberg(
                 self._h_m_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(nu_max),
-                limit=defaults.default_precision["halo_limit"],
+                numpy.log(nu_max), vec_func=True,
+                tol=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx],))
             h_m_ext_array[idx] = h_m
 
@@ -610,10 +623,10 @@ class HaloExclusion(Halo):
             elif nu_max <= self.mass.nu_min:
                 nu_max = self.mass.nu_min
 
-            h_g, h_g_err = integrate.quad(
+            h_g = integrate.romberg(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(nu_max),
-                limit=defaults.default_precision["halo_limit"],
+                numpy.log(nu_max), vec_func=True,
+                tol=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx],))
             h_g_array[idx] = h_g/self.n_bar_over_rho_bar
 
@@ -621,12 +634,22 @@ class HaloExclusion(Halo):
             self._ln_k_array, h_g_array)
         self._initialized_h_g = True
 
-class HaloSatelliteCentral(Halo):
+class HaloCentralSatellite(Halo):
 
     def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
                  halo_dict=None, use_camb=False, **kws):
         Halo.__init__(self, input_hod, redshift, cosmo_dict,
                       halo_dict, use_camb, **kws)
+
+    def power_gg(self, k):
+        """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
+        if not self._initialized_h_g:
+            self._initialize_h_g()
+        if not self._initialized_pp_gg:
+            self._initialize_pp_gg()
+
+        return (self.linear_power(k)*(self._h_g_cent(k)+self._h_g_sat(k))*
+                (self._h_g_cent(k)+self._h_g_sat(k)) + self._pp_gg(k))
 
     def power_gm(self, k):
         """Galaxy-matter cross-spectrum in comoving (Mpc/h)^3"""
@@ -668,37 +691,33 @@ class HaloSatelliteCentral(Halo):
         return self.power_gm(k)
 
     def _h_g_cent(self, k):
-        if k >= self._k_min and k <= self._k_max:
-            return self._h_g_cent_spline(numpy.log(k))
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(k >= self._k_min, 
+                                             k <= self._k_max),
+                           self._h_g_cent_spline(numpy.log(k)), 0.0)
 
     def _h_g_sat(self, k):
-        if k >= self._k_min and k <= self._k_max:
-            return self._h_g_sat_spline(numpy.log(k))
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(k >= self._k_min, 
+                                             k <= self._k_max),
+                           self._h_g_sat_spline(numpy.log(k)), 0.0)
 
     def _pp_gm_cent(self, k):
-        if k >= self._k_min and k <= self._k_max:
-            return self._pp_gm_cent_spline(numpy.log(k))
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(k >= self._k_min, 
+                                             k <= self._k_max),
+                           self._pp_gm_cent_spline(numpy.log(k)), 0.0)
 
     def _pp_gm_sat(self, k):
-        if k >= self._k_min and k <= self._k_max:
-            return self._pp_gm_sat_spline(numpy.log(k))
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(k >= self._k_min, 
+                                             k <= self._k_max),
+                           self._pp_gm_sat_spline(numpy.log(k)), 0.0)
 
     def _initialize_h_g(self):
         h_g_cent_array = numpy.zeros_like(self._ln_k_array)
 
         for idx in xrange(self._ln_k_array.size):
-            h_g_cent, h_g_cent_err = integrate.quad(
+            h_g_cent = integrate.romberg(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),
-                limit=defaults.default_precision["halo_limit"],
+                numpy.log(self.mass.nu_max), vec_func=True,
+                tol=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "central_first_moment"))
             h_g_cent_array[idx] = h_g_cent/self.n_bar_over_rho_bar
 
@@ -708,10 +727,10 @@ class HaloSatelliteCentral(Halo):
         h_g_sat_array = numpy.zeros_like(self._ln_k_array)
 
         for idx in xrange(self._ln_k_array.size):
-            h_g_sat, h_g_sat_err = integrate.quad(
+            h_g_sat = integrate.romberg(
                 self._h_g_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),
-                limit=defaults.default_precision["halo_limit"],
+                numpy.log(self.mass.nu_max), vec_func=True,
+                tol=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "satellite_first_moment"))
             h_g_sat_array[idx] = h_g_sat/self.n_bar_over_rho_bar
 
@@ -732,10 +751,10 @@ class HaloSatelliteCentral(Halo):
         pp_gm_cent_array = numpy.zeros_like(self._ln_k_array)
 
         for idx in xrange(self._ln_k_array.size):
-            pp_gm_cent, pp_gm_cent_err = integrate.quad(
+            pp_gm_cent = integrate.romberg(
                 self._pp_gm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),
-                limit=defaults.default_precision["halo_limit"],
+                numpy.log(self.mass.nu_max), vec_func=True,
+                tol=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "central_first_moment"))
             pp_gm_cent_array[idx] = pp_gm_cent/self.n_bar
 
@@ -745,14 +764,14 @@ class HaloSatelliteCentral(Halo):
         pp_gm_sat_array = numpy.zeros_like(self._ln_k_array)
 
         for idx in xrange(self._ln_k_array.size):
-            pp_gm_sat, pp_gm_sat_err = integrate.quad(
+            pp_gm_sat = integrate.romberg(
                 self._pp_gm_integrand, numpy.log(self.mass.nu_min),
-                numpy.log(self.mass.nu_max),
-                limit=defaults.default_precision["halo_limit"],
+                numpy.log(self.mass.nu_max), vec_func=True,
+                tol=defaults.default_precision["halo_precision"],
                 args=(self._ln_k_array[idx], "satellite_first_moment"))
             pp_gm_sat_array[idx] = pp_gm_sat/self.n_bar
 
-        self._pp_gm_sat_sat_spline = InterpolatedUnivariateSpline(
+        self._pp_gm_sat_spline = InterpolatedUnivariateSpline(
             self._ln_k_array, pp_gm_sat_array)
 
         self._initialized_pp_gm = True
@@ -763,10 +782,9 @@ class HaloSatelliteCentral(Halo):
         y = self.y(ln_k, mass)
         n_exp = self.local_hod.__getattribute__(moment)(self.mass.mass(nu))
 
-        if n_exp < 1:
-            return nu*self.mass.f_nu(nu)*n_exp*y
-        else:
-            return nu*self.mass.f_nu(nu)*n_exp*y*y
+        return numpy.where(n_exp < 1,
+                           nu*self.mass.f_nu(nu)*n_exp*y,
+                           nu*self.mass.f_nu(nu)*n_exp*y*y)
 
 
 class HaloAmiCentral(Halo):
