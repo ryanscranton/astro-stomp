@@ -1,14 +1,12 @@
-from scipy.interpolate import InterpolatedUnivariateSpline
+import camb
+import cosmology
+import defaults
+import hod
+import mass_function
+import numpy
 from scipy import integrate
 from scipy import special
-import copy
-import param  # cosmological parameter object from Cosmopy
-import defaults
-import numpy
-import cosmology
-import mass_function
-import camb
-import hod
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 """Classes for describing a basic halo model.
 
@@ -234,6 +232,9 @@ class Halo(object):
 
     def write(self, output_file_name):
         f = open(output_file_name, "w")
+        f.write("#ttype1 = k [Mpc/h]\n#ttype2 = linear_power [(Mpc/h)^3]\n"
+                "#ttype3 = power_mm\n#ttype4 = power_gg\n"
+                "#ttype5 = power_gm\n")
         for ln_k in self._ln_k_array:
             k = numpy.exp(ln_k)
             f.write("%1.10f %1.10f %1.10f %1.10f %1.10f\n" % (
@@ -247,6 +248,10 @@ class Halo(object):
         ln_k = numpy.log(k)
 
         f = open(output_file_name, "w")
+        f.write("#ttype1 = mass [M_solar/h]\n"
+                "#ttype2 = y(k, M), NFW Fourier Transform\n"
+                "#ttype3 = concentration\n#ttype4 = halo_norm\n"
+                "#ttype5 = virial_mass [M_solar/h]\n")
         for nu in self.mass._nu_array:
             mass = self.mass.mass(nu)
             f.write("%1.10f %1.10f %1.10f %1.10f %1.10f\n" % (
@@ -256,6 +261,11 @@ class Halo(object):
 
     def write_power_components(self, output_file_name):
         f = open(output_file_name, "w")
+        f.write("#ttype1 = k [Mpc/h]\n#ttype2 = 2 halo dark matter component\n"
+                "#ttype3 = dark matter poisson component\n"
+                "#ttype4 = 2 halo galaxy component\n"
+                "#ttype5 = matter-galaxy poisson component\n"
+                "#ttype6 = galaxy-galaxy poisson component\n")
         for ln_k in self._ln_k_array:
             k = numpy.exp(ln_k)
             f.write("%1.10f %1.10f %1.10f %1.10f %1.10f %1.10f\n" % (

@@ -1,9 +1,9 @@
-from scipy.interpolate import InterpolatedUnivariateSpline
-from scipy import integrate
-import param  # cosmological parameter object from Cosmopy
 import defaults
 import numpy
 import os
+import param  # cosmological parameter object from Cosmopy
+from scipy import integrate
+from scipy.interpolate import InterpolatedUnivariateSpline
 import types
 
 """Wrapper class for interfacing with the CAMB code.
@@ -126,10 +126,9 @@ class CambWrapper(object):
         if not self._initialized:
             self.run()
 
-        if k < self.k_max and k > self.k_min:
-            return numpy.exp(self._ln_power_spline(numpy.log(k)))
-        else:
-            return 0.0
+        return numpy.where(numpy.logical_and(k <= self.k_max,
+                                             k >= self.k_min),
+                           numpy.exp(self._ln_power_spline(numpy.log(k))))
 
     def sigma_r(self, scale):
         sigma2, sigma2_err = integrate.quad(

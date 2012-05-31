@@ -1,6 +1,4 @@
 import numpy
-import param
-from scipy import interpolate
 from scipy import special
 
 """Classes for implementing a halo occupation distribution.
@@ -73,7 +71,9 @@ class HOD(object):
             exp_nth = self._hod[n](mass, z)
         else:
             exp_nth = self.first_moment(mass, z)**n
-            alpha_m2 = self.second_moment(mass, z)/self.first_moment(mass, z)**2
+            alpha_m2 = numpy.where(
+                exp_nth > 0.0,
+                self.second_moment(mass, z)/self.first_moment(mass, z)**2, 0.0)
             for j in xrange(n):
                 exp_nth *= (j*alpha_m2 - j + 1)
         return exp_nth

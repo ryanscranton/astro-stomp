@@ -1,9 +1,9 @@
 import camb
 import cosmology
+import defaults
 import halo
 import hod
 import kernel
-import defaults
 import numpy
 from scipy import special
 from scipy import integrate
@@ -183,7 +183,14 @@ class Correlation(object):
         return 1.0
 
     def write(self, output_file_name):
+        """
+        Write out current values of the correlation object.
+
+        Args:
+            output_file_name: string name of file to output
+        """
         f = open(output_file_name, "w")
+        f.write("#ttype1 = theta [deg]\n#ttype2 = wtheta")
         for theta, wtheta in zip(
             self.theta_array, self.wtheta_array):
             f.write("%1.10f %1.10f\n" % (theta/degToRad, wtheta))
