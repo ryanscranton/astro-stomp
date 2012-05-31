@@ -1,11 +1,9 @@
-from scipy.interpolate import InterpolatedUnivariateSpline
-from scipy import integrate as In
-from scipy import special as S
-import defaults
-import param  # cosmological parameter object from Cosmopy
 import cosmology
+import defaults
 import numpy
-import copy
+from scipy import integrate
+from scipy import special
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 """This is a set of classes for constructing an angular correlation kernel.
 
@@ -41,7 +39,7 @@ class dNdz(object):
         Compute the normalized PDF for the redshift distribution for the range
         z_min - z_max.
         """
-        norm = In.romberg(
+        norm = integrate.romberg(
             self.dndz, self.z_min, self.z_max, vec_func=True,
             tol=defaults.default_precision["dNdz_precision"])
         print "dN/dz normalization = %1.10f" % (norm)
@@ -269,6 +267,7 @@ class WindowFunction(object):
         if not self.initialized_spline:
             self._initialize_spline()
         f = open(output_file_name, "w")
+        f.write("#ttype1 = chi [Mpc/h]/n#ttype2 = window function value\n")
         for chi, wf in zip(self._chi_array, self._wf_array):
             f.write("%1.10f %1.10f\n" % (chi, wf))
         f.close()
@@ -347,7 +346,7 @@ class WindowFunctionConvergence(WindowFunction):
                 chi_bound = value
                 if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
 
-                g_chi[idx] = In.romberg(
+                g_chi[idx] = integrate.romberg(
                     self._lensing_integrand, chi_bound,
                     self.chi_max, args=(value,), vec_func=True,
                     tol=defaults.default_precision["window_precision"])
@@ -355,7 +354,7 @@ class WindowFunctionConvergence(WindowFunction):
             chi_bound = chi
             if chi_bound < self._g_chi_min: chi_bound = self._g_chi_min
 
-            g_chi = In.romberg(
+            g_chi = integrate.romberg(
                 self._lensing_integrand, chi_bound,
                 self.chi_max, args=(chi,), vec_func=True,
                 tol=defaults.default_precision["window_precision"])
@@ -503,7 +502,7 @@ class Kernel(object):
             defaults.default_precision["kernel_npoints"])
         self._kernel_array = numpy.zeros_like(self._ln_ktheta_array)
 
-        self._j0_limit = S.jn_zeros(0,4)[-1]
+        self._j0_limit = special.jn_zeros(0,4)[-1]
 
         self._find_z_bar()
 
@@ -575,7 +574,7 @@ class Kernel(object):
         chi_max = self._j0_limit/ktheta
         if chi_max >= self.chi_max:
             chi_max = self.chi_max
-        kernel = In.romberg(
+        kernel = integrate.romberg(
             self._kernel_integrand, self.chi_min,
             chi_max, args=(ktheta,), vec_func=True,
             tol=defaults.default_precision["kernel_precision"])
@@ -587,7 +586,7 @@ class Kernel(object):
         
         return (self.window_function_a.window_function(chi)*
                 self.window_function_b.window_function(chi)*
-                D_z*D_z*S.j0(ktheta*chi))
+                D_z*D_z*special.j0(ktheta*chi))
 
     def kernel(self, ln_ktheta):
         """
@@ -616,6 +615,8 @@ class Kernel(object):
             self._initialize_spline()
 
         f = open(output_file_name, "w")
+        f.write("#ttype1 = k*theta [h/Mpc*Radians]\n"
+                "#ttype2 = kernel [(h/Mpc)^2]\n")
         for ln_ktheta, kernel in zip(
             self._ln_ktheta_array, self._kernel_array):
             f.write("%1.10f %1.10f\n" % (numpy.exp(ln_ktheta), kernel))
@@ -642,7 +643,7 @@ class GalaxyGalaxyLensingKernel(Kernel):
     def __init__(self, ktheta_min, ktheta_max,
                  window_function_a, window_function_b,
                  cosmo_dict=None, **kws):
-        self._j2_limit = S.jn_zeros(2,4)[-1]
+        self._j2_limit = special.jn_zeros(2,4)[-1]
         Kernel.__init__(self, ktheta_min, ktheta_max,
                         window_function_a, window_function_b,
                         cosmo_dict=None, **kws)
@@ -653,7 +654,7 @@ class GalaxyGalaxyLensingKernel(Kernel):
         chi_max = self._j2_limit/ktheta
         if chi_max >= self.chi_max:
             chi_max = self.chi_max
-        kernel = In.romberg(
+        kernel = integrate.romberg(
             self._kernel_integrand_j2, self.chi_min,
             chi_max, args=(ktheta,), vec_func=True,
             tol=defaults.default_precision["kernel_precision"])
@@ -665,4 +666,4 @@ class GalaxyGalaxyLensingKernel(Kernel):
 
         return (self.window_function_a.window_function(chi)*
                 self.window_function_b.window_function(chi)*
-                D_z*D_z*S.jn(2, ktheta*chi))
+                D_z*D_z*special.jn(2, ktheta*chi))

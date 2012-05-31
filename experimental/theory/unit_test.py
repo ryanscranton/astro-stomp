@@ -1,108 +1,101 @@
-from matplotlib import pyplot
 import numpy
 
 degToRad = numpy.pi/180.0
 
 def cosmology_unit_test():
     import cosmology
-    print "/n****************************"
+    print "\n****************************"
     print "*                          *"
     print "* Testing Cosmology Module *"
     print "*                          *"
-    print "****************************\n\n"
+    print "****************************\n"
     print "Testing Single Epoch"
     print "****************************"
 
     ### Create single epoch cosmologies at the redshift specified
     ### outputs to stdout
-    print "\tRedshift z=0.0"
     cosmo = cosmology.SingleEpoch(redshift=0.0)
     cosmo.write()
 
-    print "\tRedshift z=0.5"
     cosmo.set_redshift(redshift=0.5)
     cosmo.write()
 
-    print "\tRedshift z=1.0"
     cosmo.set_redshift(redshift=1.0)
     cosmo.write()
     
-    print "\tRedshift z=2.0"
     cosmo.set_redshift(redshift=2.0)
     cosmo.write()
 
-    print "\tRedshift z=3.0"
     cosmo.set_redshift(redshift=3.0)
     cosmo.write()
 
     ### Compute example multi epoch cosmologies from redshift z=0.0 to z=5.0
-    ### plotted are the computed distnaces as a funciton of redshift and
+    ### output are the computed comoving distnace as a funciton of redshift and
     ### several other cosmological variables (Omega_m(z), Omega_L(z), etc.)
     print "\nTesting Multi Epoch"
     print "****************************"
     cosmo = cosmology.MultiEpoch(z_min=0.0, z_max=5.0)
-    pyplot.figure(figsize=(10,8))
-    pyplot.semilogy(cosmo.comoving_distance(cosmo._z_array),label=r"$D_M$")
-    pyplot.semilogy(cosmo.angular_diameter_distance(cosmo._z_array),
-                    label=r"$D_A$")
-    pyplot.semilogy(cosmo.luminosity_distance(cosmo._z_array),
-                    label=r"$D_L$")
-    pyplot.legend(loc=0)
-    pyplot.xlabel('z')
-    pyplot.ylabel('Mpc/h')
-    pyplot.savefig('test_cosmology_distance.pdf')
+    z = 0.0
+    print ("Multi Epoch: (z, chi [Mpc/h], growth, omega_m(z), omega_l(z), "
+           "detla_c, delta_v, sigma_8)")
+    for z in [0.0, 0.5, 1.0, 2.0, 3.0]:
+        print (z, cosmo.comoving_distance(z), cosmo.growth_factor(z),
+               cosmo.omega_m(z), cosmo.omega_l(z), cosmo.delta_c(z),
+               cosmo.delta_v(z), cosmo.sigma_r(8.0, z))
+    print ""
     
-    cosmo = cosmology.MultiEpoch(0.0, 5.0)
-    pyplot.figure(figsize=(10,8))
-    pyplot.semilogy(cosmo._z_array, 
-                    cosmo.growth_factor(cosmo._z_array),label=r"Growth(z)")
-    pyplot.semilogy(cosmo._z_array,
-                    cosmo.omega_m(cosmo._z_array),
-                    label=r"$\Omega_m$")
-    pyplot.semilogy(cosmo._z_array,
-                    cosmo.omega_l(cosmo._z_array),
-                    label=r"$\Omega_{\Lambda}$")
-    pyplot.semilogy(cosmo._z_array, 
-                    cosmo.delta_c(cosmo._z_array),
-                    label=r"$\delta_c(z)$")
-    pyplot.semilogy(cosmo._z_array, 
-                    cosmo.sigma_r(8.0, cosmo._z_array),
-                    label=r"$\sigma_8(z)$")
-    pyplot.legend(loc=0)
-    pyplot.xlabel('z')
-    pyplot.savefig('test_cosmology_misc.pdf')
-    
+    ### Backup write command if more information is needed
+    # cosmo.write('test_cosmology.ascii')
 
 def mass_function_unit_test():
     import mass_function
-    print "/n********************************"
+    print "\n********************************"
     print "*                              *"
     print "* Testing Mass Function Module *"
     print "*                              *"
-    print "********************************\n\n"
+    print "********************************\n"
     
     ### Compute the mass function at redshift z=0.0
     mass_func = mass_function.MassFunction(redshift=0.0)
-    mass_array = numpy.exp(mass_func._ln_mass_array)
+    mass_array = numpy.logspace(9, 16, 5)
+    print "Mass Funct: (mass [M_solar/h], nu, dN/dM)"
+    for mass in mass_array:
+        print "\t", (mass, mass_func.nu(mass), mass_func.f_m(mass))
+    print ""
 
-    ### Plot the normalized overdensity nu, the mass function f_m, and the
-    ### halo bias.
-    pyplot.figure(figsize=(10, 8))
-    pyplot.loglog(mass_array, mass_func.nu(mass_array), label=r"$\nu(M)$")
-    pyplot.loglog(mass_array, mass_func.f_m(mass_array), label="dN/dM")
-    pyplot.loglog(mass_array, mass_func.bias_m(mass_array), label="b(M)")
-    pyplot.legend(loc=0)
-    pyplot.xlabel('Mass [$M_{\odot}/h^2$]')
-    pyplot.savefig('test_mass_function.pdf')
+    ### Backup write command if more information is needed
+    # mass_func.write('test_mass_function.ascii')
+
+def hod_unit_test():
+    import hod
+    print "\n********************"
+    print "*                    *"
+    print "* Testing HOD Module *"
+    print "*                    *"
+    print "**********************\n"
+    ### Create a Zheng et al. 2007 HOD object with central mass 10**13, 
+    ### satellite mass difference. The other parameters are fixed M_0 = M_min,
+    ### alpha = 1.0, log_sigma_m = 0.15
+    zheng = hod.HODZheng(10**12, 0.15, 10**12, 10**13, 1.0)
+    mass_array = numpy.logspace(9, 16, 5)
+    ### compute the first three moments of the HOD and print to screen
+    print "HOD: (mass [M_solar/h], <N>, <N(N-1)>, <N(N-1)(N-2)>)"
+    for mass in mass_array:
+        print "\t", (mass, zheng.first_moment(mass), zheng.second_moment(mass),
+                     zheng.nth_moment(mass, 3))
+    print ""
+
+def camb_unit_test():
+    pass
 
 def halo_unit_test():
     import halo
     import hod
-    print "/n***********************"
+    print "\n***********************"
     print "*                     *"
     print "* Testing Halo Module *"
     print "*                     *"
-    print "***********************\n\n"
+    print "***********************\n"
     
 
     ### We test each of the 4 avalible power spectra as a function of redshift
@@ -110,62 +103,33 @@ def halo_unit_test():
     zheng = hod.HODZheng(10**13.0, 0.15, 10**13.0, 10**14.0, 1.0)
     ### initialize the halo model object at z=0.0 with the Zheng HOD
     h = halo.Halo(redshift=0.0, input_hod=zheng)
-    ### define the k space range to plot
-    k_array = numpy.logspace(-3, 2, 200)
-    pyplot.figure(figsize=(10,8))
-    ### We all power spectrum as the unitless Delta^2(k)-P(k)*k**3
-    ### Linear Power Spectrum
-    pyplot.loglog(k_array, h.linear_power(k_array)*k_array**3/(4*numpy.pi),
-                  'b--', label='Linear')
-    ### Matter-Matter Non-Linear Power Spectrum
-    pyplot.loglog(k_array, h.power_mm(k_array)*k_array**3/(4*numpy.pi),
-                  'r', label='Matter-Matter')
-    ### Galaxy-Matter cross power spectrum using the Zheng HOD
-    pyplot.loglog(k_array, h.power_gm(k_array)*k_array**3/(4*numpy.pi),
-                  'g-.', label='Galaxy-Matter')
-    ### Galaxy-Galaxy auto power using the Zheng HOD
-    pyplot.loglog(k_array, h.power_gg(k_array)*k_array**3/(4*numpy.pi),
-                  'm:', label='Galaxy-Galaxy')
-    
-    ### recompute the redshift of the halo model for the redshifts in the loop
-    ### below
-    for z in [0.5, 1.0, 2.0, 3.0]:
-        ### set the halo model redshif to z
-        h.set_redshift(z)
-        ### recompute and plot the power spectra as before
-        pyplot.loglog(k_array, h.linear_power(k_array)*k_array**3/(4*numpy.pi),
-                      'b--')
-        pyplot.loglog(k_array, h.power_mm(k_array)*k_array**3/(4*numpy.pi),
-                      'r')
-        pyplot.loglog(k_array, h.power_gm(k_array)*k_array**3/(4*numpy.pi),
-                      'g-.')
-        pyplot.loglog(k_array, h.power_gg(k_array)*k_array**3/(4*numpy.pi),
-                      'm:')
-    pyplot.xlim(10**-2, 100)
-    pyplot.ylim(10**-2, 10**4)
-    pyplot.legend(loc=0)
-    pyplot.xlabel('k [h/Mpc]')
-    pyplot.ylabel(r'$\Delta^2(k)$')
-    pyplot.savefig('test_halo.pdf')
+    print ("Halo: (k [Mpc/h], linear_power, power_mm, "
+           "power_gm, power_gg [(Mpc/h)^3])")
+    k_array = numpy.logspace(-3, 2, 5)
+    for k in k_array:
+        print"\t", (k , h.linear_power(k), h.power_mm(k),
+                    h.power_gm(k), h.power_gg(k))
+    print ""
+
+    ### Backup write commands if more information is needed
+    # h.write('test_halo_power_spectra.ascii')
+    # h.write_halo('test_halo_properties.ascii')
+    # h.write_power_components('test_halo_power_components.ascii')
 
 def kernel_unit_test():
     import cosmology
     import kernel
-    print "/n*************************"
+    print "\n*************************"
     print "*                       *"
     print "* Testing kernel Module *"
     print "*                       *"
-    print "*************************\n\n"
+    print "*************************\n"
 
     print "Testing dNdz"
     print "*************************"
 
     ### To define a Kernel object we need several things first. We need redshift
     ### distributions as well as the corresponding window functions.
-    
-    ### initialize a array of redshift and cosmologies for plotting purposes
-    z_array = numpy.linspace(0.0, 2.0, 100)
-    cosmo = cosmology.MultiEpoch(0.0, 2.0)
     
     ### initilized to galaxy redshift distributions one as a magnitude limited
     ### sample, the other a Guassian with mean z=1.0
@@ -175,83 +139,79 @@ def kernel_unit_test():
     lens_dist.normalize()
     source_dist.normalize()
 
-    ### plot
-    pyplot.figure(figsize=(10, 8))
-    pyplot.plot(z_array, lens_dist.dndz(z_array), label="Lens dN/dz")
-    pyplot.plot(z_array, source_dist.dndz(z_array), label="Source dN/dz")
-    pyplot.legend(loc=0)
-    pyplot.savefig('test_dndz.pdf')
+    z_array = numpy.linspace(0.0, 2.0, 5)
+    print "Lens dNdz: (z, p(z)dz)"
+    for z in z_array:
+        print "\t",(z, lens_dist.dndz(z))
+
+    print "Source dNdz: (z, p(z)dz)"
+    for z in z_array:
+        print "\t",(z, source_dist.dndz(z))
+    print ""
 
     print "Testing WindowFunction"
     print "*************************"
+    cosmo = cosmology.MultiEpoch(0.0, 2.0)
 
     ### using the distributions defined above compute the distance weighted
     ### window functions for use in projecting a powerspectrum
     ### Define a galaxy window function
+    chi_array = cosmo.comoving_distance(z_array)
     lens_window = kernel.WindowFunctionGalaxy(redshift_dist=lens_dist)
+    print "Lens Window: (chi [Mpc/h], window value [h/Mpc])"
+    for chi in chi_array:
+        print "\t",(chi, lens_window.window_function(chi))
+    ### Backup write command if more information is needed
+    # lens_window.write('test_galaxy_window_function.ascii')
+
     ### Define a lensed population of galaxies
     source_window = kernel.WindowFunctionConvergence(redshift_dist=source_dist)
-    
-    ### plot the window functions as a function of redshift
-    chi_array = cosmo.comoving_distance(z_array)
-    pyplot.figure(figsize=(10, 8))
-    pyplot.plot(z_array, lens_window.window_function(chi_array),
-                label="Lens Window")
-    pyplot.plot(z_array, source_window.window_function(chi_array),
-                label="Source Window(Convergence)")
-    pyplot.legend(loc=0)
-    pyplot.xlabel('z')
-    pyplot.savefig('test_window.pdf')
+    print "Source Window: (chi [Mpc/h], window value [h/Mpc])"
+    for chi in chi_array:
+        print "\t",(chi, source_window.window_function(chi))
+
+    ### Backup write command if more information is needed
+    # source_window.write('test_convergence_window_function.ascii')
 
     print "Testing Kernel"
     print "*************************"
     
     ### Initialize the kernel objects for projecting a power spectrum in z space
     ### Initilize the kernel for galaxy clustering
+    ln_ktheta_array = numpy.linspace(-15, -1, 5)
     k_Auto = kernel.Kernel(ktheta_min=0.001*degToRad*0.001, 
                            ktheta_max=1.0*degToRad*100.0,
                            window_function_a=lens_window, 
                            window_function_b=lens_window)
+    print "Auto Kernel: (k*theta [h/Mpc*Radians], kernel value [(h/Mpc)^2])"
+    for ln_ktheta in ln_ktheta_array:
+        print "\t",(numpy.exp(ln_ktheta), k_Auto.kernel(ln_ktheta))
+    ### Backup write command if more information is needed
+    # k_Auto.write('test_clustering_kernel.ascii')
+
     ### Kernel computing lensing convergence
     k_Con = kernel.Kernel(0.001*degToRad*0.001, 1.0*degToRad*100.0,
-                                  lens_window, source_window)
-    ### Kernel for computing galaxy-galaxy lensing
-    k_Shear = kernel.GalaxyGalaxyLensingKernel(0.001*degToRad*0.001,
-                                               1.0*degToRad*100.0,
-                                               lens_window, source_window)
-
-    ### plot results. If the kernels are numericaly noisy for large k*theta
-    ### decrease the value (increase the prescision) of the varriable 
-    ### kernel_precision in defaults.py
-    pyplot.figure(figsize=(10, 8))
-    pyplot.semilogx(numpy.exp(k_Auto._ln_ktheta_array)/degToRad,
-                    k_Auto.kernel(k_Auto._ln_ktheta_array),
-                    label="Autocorrelation Kernel")
-    pyplot.semilogx(numpy.exp(k_Con._ln_ktheta_array)/degToRad,
-                    k_Con.kernel(k_Con._ln_ktheta_array),
-                    label="Convergence Kernel")
-    pyplot.semilogx(numpy.exp(k_Shear._ln_ktheta_array)/degToRad,
-                    k_Shear.kernel(k_Shear._ln_ktheta_array),
-                    label="Shear Kernel")
-    pyplot.legend(loc=0)
-    pyplot.xlabel(r'$k*\theta$ [h*deg/Mpc]')
-    pyplot.savefig('test_kernel.pdf')
-
+                          lens_window, source_window)
+    print ("Convergence Kernel: (k*theta [h/Mpc*Radians], "
+           "kernel value [(h/Mpc)^2])")
+    for ln_ktheta in ln_ktheta_array:
+        print "\t",(numpy.exp(ln_ktheta), k_Con.kernel(ln_ktheta))
+    print ""
+    ### Backup write command if more information is needed
+    # k_Con.write("test_convergence_kernel.ascii")    
+    
     ### Print out the redshifts for which the kernel is maximaly sensitive
-    print "Redshifts:", k_Auto.z_bar, k_Con.z_bar,k_Shear.z_bar
-
-def hod_unit_test():
-    pass
+    print "Peak Sensitivity at Redshifts:", k_Auto.z_bar, k_Con.z_bar
 
 def correlation_unit_test():
     import correlation
     import hod
     import kernel
-    print "/n******************************"
+    print "\n******************************"
     print "*                            *"
     print "* Testing Correlation Module *"
     print "*                            *"
-    print "******************************\n\n"
+    print "******************************\n"
 
     ### Definining a correlation object requires first two window functions
     ### (these could in principle be the same window function), theta bounds to
@@ -276,60 +236,32 @@ def correlation_unit_test():
     ### and power_gg which is the galaxy-galaxy power spectrum.
     ### Here we define the correlation function of galaxy clustering, note that
     ### it takes only one window function as the second is assumed identical
+    theta_array = numpy.logspace(-3, 0, 5)
     auto = correlation.AutoCorrelation(theta_min=0.001*degToRad,
                                        theta_max=1.0*degToRad, 
                                        window_function_galaxy=lens_window,
                                        input_hod=zheng,
                                        powSpec='power_mm')
+    print "Auto Correlation: (theta [deg], wtheta)"
+    for theta in theta_array:
+        print "\t",(theta, auto.correlation(theta*degToRad))
     ### Define the correlation for galaxy-galaxy magnification. Note it takes
     ### and WindowFunctionGalaxy object and a WindowFunctionConvergence Object
     mag = correlation.MagCorrelation(0.001*degToRad, 1.0*degToRad, 
                                      lens_window, source_window,
                                      input_hod=zheng,
                                      powSpec='power_mm')
-    ### Define the correlation for galaxy-galaxy shear. Note it takes
-    ### and WindowFunctionGalaxy object and a WindowFunctionConvergence Object
-    shear = correlation.GalaxyGalaxyLensing(0.001*degToRad, 1.0*degToRad, 
-                                            lens_window, source_window,
-                                            input_hod=zheng,
-                                            powSpec='power_mm')
+    print "Convergence Correlation: (theta [deg], wtheta)"
+    for theta in theta_array:
+        print "\t",(theta, mag.correlation(theta*degToRad))
+    print ""
+   
+    ### Backup write command if more information is needed
     ### Compute the correlation functions between the angular bounds
-    auto.compute_correlation()
-    mag.compute_correlation()
-    shear.compute_correlation()
-
-    ### Plot the dark matter correlations as a function of theta.
-    pyplot.figure(figsize=(10, 8))
-    pyplot.loglog(auto.theta_array/degToRad, auto.wtheta_array,
-                  label="Autocorrelation")
-    pyplot.loglog(mag.theta_array/degToRad, mag.wtheta_array/2.0,
-                  label="Convergence")
-    pyplot.loglog(shear.theta_array/degToRad, shear.wtheta_array,
-                  label="Galaxy-Galaxy Lensing")
-    pyplot.ylim(10**-4, 10**0)
-    pyplot.legend(loc=0)
-    pyplot.savefig('test_correlation_matter.pdf')
-
-    ### Reset the power spectra in each correlation object to the approrate
-    ### galaxy power spectrum and recompute
-    auto.set_power_spectrum('power_gg')
-    mag.set_power_spectrum('power_gm')
-    shear.set_power_spectrum('power_gm')
-    auto.compute_correlation()
-    mag.compute_correlation()
-    shear.compute_correlation()
-
-    ### Plot the glaxy correlation functions. 
-    pyplot.figure(figsize=(10, 8))
-    pyplot.loglog(auto.theta_array/degToRad, auto.wtheta_array,
-                  label="Autocorrelation")
-    pyplot.loglog(mag.theta_array/degToRad, mag.wtheta_array/2.0,
-                  label="Convergence")
-    pyplot.loglog(shear.theta_array/degToRad, shear.wtheta_array,
-                  label="Galaxy-Galaxy Lensing")
-    pyplot.ylim(10**-4, 10**0)
-    pyplot.legend(loc=0)
-    pyplot.savefig('test_correlation_galaxy.pdf')
+    # auto.compute_correlation()
+    # mag.compute_correlation()
+    # auto.write('test_clustering_correlation.ascii')
+    # mag.write('test_convergence_correlation.ascii')
     
 def camb_unit_test():
     pass
@@ -337,8 +269,8 @@ def camb_unit_test():
 if __name__ == "__main__":
     cosmology_unit_test()
     mass_function_unit_test()
+    hod_unit_test()
     halo_unit_test()
     kernel_unit_test()
-    hod_unit_test()
     correlation_unit_test()
     camb_unit_test()

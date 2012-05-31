@@ -1,8 +1,8 @@
-from scipy.interpolate import InterpolatedUnivariateSpline
-from scipy import integrate
-import numpy
 import cosmology
 import defaults
+import numpy
+from scipy import integrate
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 """Classes for encoding basic cosmological parameters and quantities.
 
@@ -68,7 +68,7 @@ class MassFunction(object):
                 continue
             mass_limit_not_set = False
 
-        print "Mass Limits:",mass_min*(0.95),"-",mass_max*(1.05)
+        #print "Mass Limits:",mass_min*(0.95),"-",mass_max*(1.05)
 
         self.ln_mass_max = numpy.log(mass_max*(0.95))
         self.ln_mass_min = numpy.log(mass_min*(1.05))
@@ -137,7 +137,7 @@ class MassFunction(object):
         self.nu_min = 1.001*self._nu_array[0]
         self.nu_max = 0.999*self._nu_array[-1]
 
-        print "nu_min:",self.nu_min,"nu_max:",self.nu_max
+        #print "nu_min:",self.nu_min,"nu_max:",self.nu_max
 
         self._nu_spline = InterpolatedUnivariateSpline(
             self._ln_mass_array, self._nu_array)
@@ -253,6 +253,8 @@ class MassFunction(object):
         """
         print "M* = 10^%1.4f M_sun" % numpy.log10(self.m_star)
         output_file = open(output_file_name, "w")
+        output_file.write("#ttype1 = mass [M_solar/h]\n#ttype2 = nu\n"
+                          "#ttype3 = f(nu)\n#ttype4 = bias(nu)\n")
         for ln_mass, nu, in zip(self._ln_mass_array, self._nu_array):
             output_file.write("%1.10f %1.10f %1.10f %1.10f\n" % (
                 numpy.exp(ln_mass), nu, self.f_nu(nu), self.bias_nu(nu)))

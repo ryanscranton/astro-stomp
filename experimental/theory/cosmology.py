@@ -508,6 +508,7 @@ class SingleEpoch(object):
             ln_k_min = numpy.log(self.k_min) - dln_k
 
             f = open(output_power_file_name, "w")
+            f.write("#ttype1 = k [Mpc/h]\n#ttype2 = P(k) [(Mpc/h)^3]\n")
             for ln_k in numpy.arange(ln_k_min, ln_k_max + dln_k, dln_k):
                 k = numpy.exp(ln_k)
                 f.write("%1.10f %1.10f\n" % (k, self.linear_power(k)))
@@ -905,6 +906,9 @@ class MultiEpoch(object):
             None
         """
         f = open(output_file_name, "w")
+        f.write("#ttype1 = z\n#ttype2 = chi [Mpc/h]\n#ttype3 = growth\n"
+                "#ttype4 = omega_m\n#ttype5 = omega_l\n#ttype6 = delta_c\n"
+                "#ttype7 = delta_v\n#ttype8 = sigma_8\n")
         for z, chi, growth in zip(
             self._z_array, self._chi_array, self._growth_array):
             if z <= self.z_max:
@@ -912,7 +916,7 @@ class MultiEpoch(object):
                     "%1.10f %1.10f %1.10f %1.10f "
                     "%1.10f %1.10f %1.10f %1.10f\n" % (
                     z, chi, growth, self.omega_m(z), self.omega_l(z),
-                    self.delta_v(z), self.delta_c(z), self.sigma_r(8.0, z)))
+                    self.delta_c(z), self.delta_v(z), self.sigma_r(8.0, z)))
         f.close()
 
         if not output_power_file_name is None:
