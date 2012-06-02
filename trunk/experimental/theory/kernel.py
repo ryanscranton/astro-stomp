@@ -361,7 +361,7 @@ class WindowFunctionConvergence(WindowFunction):
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
-        return 3.0/2.0*self.cosmo.omega_m0*g_chi/a
+        return 3.0/2.0*self.cosmo._omega_m0*g_chi/a
 
     def _lensing_integrand(self, chi, chi0):
         z = self.cosmo.redshift(chi)
@@ -399,7 +399,7 @@ class WindowFunctionFlatConvergence(WindowFunction):
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*1907.71
 
-        return 3.0/2.0*self.cosmo.omega_m0*g_chi
+        return 3.0/2.0*self.cosmo._omega_m0*g_chi
 
 class WindowFunctionConvergenceDelta(WindowFunction):
     """WindowFunction class for convergence of a background sample.
@@ -435,7 +435,7 @@ class WindowFunctionConvergenceDelta(WindowFunction):
 
         g_chi *= self.cosmo.H0*self.cosmo.H0*chi
 
-        return 3.0/2.0*self.cosmo.omega_m0*g_chi/a
+        return 3.0/2.0*self.cosmo._omega_m0*g_chi/a
 
     def _lensing_integrand(self, chi0):
         if chi0 > self.chi_max:
