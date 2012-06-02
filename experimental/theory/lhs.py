@@ -56,6 +56,7 @@ class LHS(object):
         for junk in xrange(self._n_dim):
             self._indexes.append(range(self._n_samples))
 
+
 class OLHS(LHS):
     """
     Generates samples from an Othoginal Latin Hypercube given the imput 

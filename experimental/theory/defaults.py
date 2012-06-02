@@ -7,7 +7,8 @@ default_cosmo_dict = {
     "h"       : 0.7,
     "sigma_8" : 0.811,
     "n_scalar": 0.960,
-    "w"       : -1
+    "w0"      : -1.0,
+    "wa"      : 0.0
     }
 
 default_halo_dict = {

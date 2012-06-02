@@ -86,8 +86,8 @@ class Correlation(object):
                       
         if halo_dict is None:
             halo_dict = defaults.default_halo_dict
-        self.halo = halo.Halo(input_hod, self.kernel.z_bar, 
-                                       cosmo_dict, halo_dict)
+        self.halo = halo.Halo(self.kernel.z_bar, input_hod, 
+                              cosmo_dict, halo_dict)
         if powSpec==None:
             powSpec = 'linear_power'
         try:

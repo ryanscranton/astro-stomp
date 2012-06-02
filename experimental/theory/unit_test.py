@@ -68,7 +68,7 @@ def mass_function_unit_test():
 
 def hod_unit_test():
     import hod
-    print "\n********************"
+    print "\n**********************"
     print "*                    *"
     print "* Testing HOD Module *"
     print "*                    *"

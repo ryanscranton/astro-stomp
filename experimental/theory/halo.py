@@ -28,8 +28,20 @@ class Halo(object):
     galaxies or their cross-spectrum.  It should also be able to return
     the halo profile as a function of mass and radius and its Fourier transform
     as a function of mass and wavenumber.
+
+    Attributes:
+         redshift: float redshift at which to compute the halo model
+         input_hod: HOD object from hod.py. Determains how galaxies populate 
+             halos
+         cosmo_dict: dictionary of floats defining a cosmology. (see defaults.py
+             for details)
+         halo_dict: dictionary of floats defining halo properties. (see 
+             defaults.py for details)
+         use_camb: boolean defining if the code should use CAMB to produce a
+             linear power spectrum. Defaults to the linear power from the
+             cosmology module (E+H98 transfer function)
     """
-    def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
+    def __init__(self, redshift=0.0, input_hod=None, cosmo_dict=None,
                  halo_dict=None, use_camb=False, **kws):
         # Hard coded, but we shouldn't expect halos outside of this range.
         self._k_min = 0.001
@@ -37,11 +49,11 @@ class Halo(object):
         ln_mass_min = numpy.log(1.0e9)
         ln_mass_max = numpy.log(5.0e16)
         
-        self.ln_k_max = numpy.log(self._k_max)
-        self.ln_k_min = numpy.log(self._k_min)
+        self._ln_k_max = numpy.log(self._k_max)
+        self._ln_k_min = numpy.log(self._k_min)
 
         self._ln_k_array = numpy.linspace(
-            self.ln_k_min, self.ln_k_max,
+            self._ln_k_min, self._ln_k_max,
             defaults.default_precision["halo_npoints"])
 
         if cosmo_dict is None:
@@ -53,9 +65,9 @@ class Halo(object):
         self.halo_dict = halo_dict
 
         if redshift is None: redshift = 0.0
-        self.redshift = redshift
+        self._redshift = redshift
 
-        self.c0 = halo_dict["c0"]/(1.0 + self.redshift)
+        self.c0 = halo_dict["c0"]/(1.0 + self._redshift)
         self.beta = halo_dict["beta"]
 
         # If we hard-code to an NFW profile, then we can use an analytic
@@ -63,13 +75,13 @@ class Halo(object):
         # self.alpha = -1.0*halo_dict.dpalpha
         self.alpha = -1.0
 
-        self.cosmo = cosmology.SingleEpoch(self.redshift, cosmo_dict)
+        self.cosmo = cosmology.SingleEpoch(self._redshift, cosmo_dict)
         self.delta_v = self.cosmo.delta_v()
         self.rho_bar = self.cosmo.rho_bar()
-        self.h = self.cosmo.h
+        self._h = self.cosmo._h
 
         self.mass = mass_function.MassFunction(
-            self.redshift, cosmo_dict, halo_dict)
+            self._redshift, cosmo_dict, halo_dict)
 
         if input_hod is None:
             input_hod = hod.HODZheng()
@@ -92,22 +104,30 @@ class Halo(object):
         self._initialized_pp_gm = False
         self._initialized_pp_gg = False
 
-    def set_cosmology(self, cosmo_dict=None, redshift=None):
-        if cosmo_dict==None:
-            cosmo_dict = self.cosmo_dict
+    def set_cosmology(self, cosmo_dict, redshift=None):
+        """
+        Reset the internal cosmology to the values in cosmo_dict and 
+        re-initialize the internal splines. Optimaly reset the internal
+        redshift value.
+
+        Args:
+            cosmo_dict: dictionary of floats defining a cosmology. (see
+                defaults.py for details)
+            redshift: float redshift to compute halo model.
+        """
         if redshift==None:
-            redshift = self.redshift
+            redshift = self._redshift
         self.cosmo_dict = cosmo_dict
-        self.redshift = redshift
+        self._redshift = redshift
         self.cosmo = cosmology.SingleEpoch(redshift, cosmo_dict)
         self.delta_v = self.cosmo.delta_v()
         self.rho_bar = self.cosmo.rho_bar()
-        self.h = self.cosmo.h
+        self._h = self.cosmo.h
 
         self.c0 = self.halo_dict["c0"]/(1.0 + redshift)
 
         self.mass = mass_function.MassFunction(
-            self.redshift, self.cosmo_dict, self.halo_dict)
+            self._redshift, self.cosmo_dict, self.halo_dict)
 
         self._calculate_n_bar()
         self._initialize_halo_splines()
@@ -126,6 +146,13 @@ class Halo(object):
             self.camb.normalize(self.cosmo.sigma_8*self.cosmo._growth)
 
     def set_hod(self, input_hod):
+        """
+        Reset the internal HOD object to input_hod and re-initialize splines.
+
+        Args:
+            input_hod: a HOD object from hod.py defining the occupation
+                distribution of galaxies.
+        """
         self.local_hod = input_hod
 
         self._calculate_n_bar()
@@ -138,17 +165,32 @@ class Halo(object):
         self._initialized_pp_gg = False
 
     def set_halo(self, halo_dict=None):
-        self.c0 = halo_dict["c0"]/(1.0 + self.redshift)
+        """
+        Reset the internal halo properties to the values in halo_dict and 
+        re-initialize the class splines.
+
+        Args:
+            halo_dict: dictionary of floats defining halo properties. (see
+                defaults.py for details)
+        """
+        self.c0 = halo_dict["c0"]/(1.0 + self._redshift)
         self.beta = halo_dict["beta"]
         self.alpha = -1.0
 
         self.mass = mass_function.MassFunction(
-            self.redshift, self.cosmo_dict, halo_dict)
+            self._redshift, self.cosmo_dict, halo_dict)
 
         self.local_hod.set_halo(halo_dict)
         self.set_hod(self.local_hod)
         
     def set_redshift(self, redshift):
+        """
+        Reset the internal redshift to the value redshift and 
+        re-initialize the class splines.
+
+        Args:
+            redshift: float value redshift at which to compute the halo model
+        """
         self.set_cosmology(self.cosmo_dict, redshift)
 
     def linear_power(self, k):
@@ -217,7 +259,7 @@ class Halo(object):
         White (2001).  This is only valid for an NFW profile.
         """
 
-        k = numpy.exp(ln_k)/self.h
+        k = numpy.exp(ln_k)/self._h
         con = self.concentration(mass)
         con_plus = 1.0 + con
         z = k*self.virial_radius(mass)/con
@@ -347,21 +389,21 @@ class Halo(object):
         self._ln_halo_norm_spline = InterpolatedUnivariateSpline(
             self.mass._ln_mass_array, ln_halo_norm_array)
 
-    def a_c(self, mass):
-        """Formation epoch definition from Wechsler et al. 2002
-        """
-        a_c = 0.1*numpy.log10(mass)-0.9
-        if a_c > 0.01:
-            return 0.1*numpy.log10(mass)-0.9
-        elif a_c <=0.01:
-            return 0.01
+    # def _a_c(self, mass):
+    #     """Formation epoch definition from Wechsler et al. 2002
+    #     """
+    #     a_c = 0.1*numpy.log10(mass)-0.9
+    #     if a_c > 0.01:
+    #         return 0.1*numpy.log10(mass)-0.9
+    #     elif a_c <=0.01:
+    #         return 0.01
 
     # def _concentration(self, mass):
     #     """Halo concentration as a function of halo mass.
 
     #     Functional form from Wechsler et al. 2002
     #     """
-    #     return 4.1/(self.a_c(mass)*(1+self.redshift))
+    #     return 4.1/(self._a_c(mass)*(1+self._redshift))
 
     def _concentration(self, mass):
         """Halo concentration as a function of halo mass.
@@ -801,7 +843,7 @@ class HaloAmiCentral(Halo):
 
     def __init__(self, input_hod=None, redshift=None, cosmo_dict=None,
                  halo_dict=None, use_camb=False, B=1.0, **kws):
-        self.B = B
+        self._B = B
         Halo.__init__(self, input_hod=None, redshift=None, cosmo_dict=None,
                       halo_dict=None, use_camb=False, **kws)
 
@@ -812,8 +854,8 @@ class HaloAmiCentral(Halo):
         if not self._initialized_pp_mm:
             self._initialize_pp_mm()
 
-        return (self.linear_power(k)*self.B*self._h_m(k)*self._h_m(k) + 
+        return (self.linear_power(k)*self._B*self._h_m(k)*self._h_m(k) + 
                 self._pp_mm(k))
 
     def set_B(self, B):
-        self.B = B
+        self._B = B
