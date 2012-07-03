@@ -8,32 +8,23 @@
 // a way as to make the analysis of that data as algorithmically efficient as
 // possible.
 //
-// This header file contains the abstract BaseMap class that serves as the
-// basis for all of the *Map objects.  BaseMap sets out the basic functionality
-// that all of the *Map classes need to describe a given region on the sky and
-// do some basic internal maintenance.  Additionally, BaseMap provides a
-// common set of methods for dividing that area up into nearly equal-area,
-// similarly-shaped regions.  This functionality is the basis for calculating
-// jack-knife errors for our various statistical analyses.
+// While the general principle of the library is to describe regions on the
+// sphere as collections of pixels, it can occasionally be useful to have a
+// simple geometric description of a region as well.  The GeometricBound class
+// and its derivatives fills this role.  Each GeometricBound instance must be
+// able to return its bounded area, its angular bounds (in survey coordinates)
+// and indicate whether an input point is inside or outside of its allowed
+// area.  For more complicated geometric tasks (like finding the intersection
+// of two bounds), the proper procedure would be to create Maps from the
+// GeometricBound objects (with the appropriate constructor) and perform those
+// operations on their pixelized counterparts.
 
-#ifndef BASE_BOUND_H_
-#define BASE_BOUND_H_
-
-#include <stdint.h>
-#include <vector>
-#include <map>
-#include "stomp_core.h"
-#include "stomp_geometry.h"
-#include "stomp_pixel.h"
+#ifndef GEOMETRIC_BOUND_H_
+#define GEOMETRIC_BOUND_H_
 
 namespace s2omp {
 
-class point;  // class declaration in stomp_angular_coordinate.h
-class pixel;              // class declaration in stomp_pixel.h
-class circle_bound;
-class base_bound;
-
-class base_bound {
+class geometric_bound {
 public:
   virtual bool is_empty();
   virtual long size();
@@ -42,7 +33,7 @@ public:
 
   virtual bool contains(point& p);
   virtual bool contains(pixel& pix);
-  virtual bool contains(base_bound& b);
+  virtual bool contains(geometric_bound& b);
 
   virtual double contained_area(pixel& pix);
   virtual bool may_intersect(pixel& pix);
@@ -58,10 +49,14 @@ public:
   virtual void get_random_points(long n_points, pixel_vector& points);
 
 private:
-  base_bound();
-  virtual ~base_bound();
+  geometric_bound();
+  virtual ~geometric_bound();
+
 };
 
 
+
 } // end namespace s2omp
-#endif /* BASE_BOUND_H_ */
+
+
+#endif /* GEOMETRIC_BOUND_H_ */
