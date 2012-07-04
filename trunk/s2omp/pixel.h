@@ -44,47 +44,47 @@ class pixel {
   // instantiated with no particular location.
 
  public:
-  pixel(uint64 id);
+	explicit pixel(uint64 id);
+  virtual ~pixel();
 
-  static pixel* from_point(point& p);
-  static pixel* from_point(point& p, int level);
+  static pixel from_point(const point& p);
+  static pixel from_point(const point& p, int level);
 
-  uint64 id();
-  int level();
+  uint64 id() const;
+  int level() const;
 
-  bool is_leaf();
-  bool is_face();
-  pixel parent();
-  pixel parent(int level);
-  pixel_vector* children();
-  pixel_vector* children(int level);
-  pixel child_begin();
-  pixel child_begin(int level);
-  pixel child_end();
-  pixel child_end(int level);
+  bool is_leaf() const;
+  bool is_face() const;
+  pixel parent() const;
+  pixel parent(int level) const;
+  void children(pixel_vector& child_pixels) const;
+  void children(int level, pixel_vector& child_pixels) const;
+  pixel child_begin() const;
+  pixel child_begin(int level) const;
+  pixel child_end() const;
+  pixel child_end(int level) const;
 
-  pixel next();
-  pixel next_wrap();
-  pixel prev();
-  pixel prev_wrap();
+  pixel next() const;
+  pixel next_wrap() const;
+  pixel prev() const;
+  pixel prev_wrap() const;
 
   static double average_area(int level);
-  double average_area();
-  double exact_area();
+  double average_area() const;
+  double exact_area() const;
 
-  bool contains(point& p);
-  bool contains(pixel& pix);
+  bool contains(point& p) const;
+  bool contains(pixel& pix) const;
 
-  point center_point();
-  point vertex(int k);
-  point edge(int k);
+  point center_point() const;
+  point vertex(int k) const;
+  point edge(int k) const;
 
-  pixel_vector* neighbors();
-  pixel_vector* neighbors(int level);
+  pixel_vector* neighbors() const;
+  pixel_vector* neighbors(int level) const;
 
  private:
   pixel();
-  virtual ~pixel();
 
   S2::S2CellId id_;
   S2::S2Cell* cell_;
