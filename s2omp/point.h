@@ -50,14 +50,24 @@ public:
 	};
 
 public:
-	point(double x, double y, double z);
+	point(double x, double y, double z, double weight);
 	virtual ~point();
 
 	static point from_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
+	static point from_latlon_degrees(double lat_deg, double lon_deg, Sphere s,
+			double weight);
 	static point from_latlon_radians(double lat_rad, double lon_rad, Sphere s);
+	static point from_latlon_radians(double lat_rad, double lon_rad, Sphere s,
+			double weight);
 
 	static point from_radec_degrees(double ra_deg, double dec_deg);
-	static point from_radec_radians(double ra_rad, double dec_deg);
+	static point from_radec_degrees(double ra_deg, double dec_deg, double weight);
+	static point from_radec_radians(double ra_rad, double dec_rad);
+	static point from_radec_radians(double ra_rad, double dec_rad, double weight);
+
+	void set_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
+	void set_latlon_radians(double lat_rad, double lon_rad, Sphere s);
+	void set_xyz(double x, double y, double z);
 
 	double lat_deg(Sphere s) const;
 	double lon_deg(Sphere s) const;

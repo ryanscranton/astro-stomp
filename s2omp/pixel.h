@@ -47,11 +47,16 @@ class pixel {
 	explicit pixel(uint64 id);
   virtual ~pixel();
 
-  static pixel from_point(const point& p);
-  static pixel from_point(const point& p, int level);
+  static pixel* from_point(const point& p);
+  static pixel* from_point(const point& p, int level);
+
+  static uint64 point_to_id(const point& p);
+  static uint64 point_to_id(const point& p, int level);
 
   uint64 id() const;
   int level() const;
+
+  void set_id(uint64 id);
 
   bool is_leaf() const;
   bool is_face() const;

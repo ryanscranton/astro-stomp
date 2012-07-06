@@ -26,37 +26,34 @@ namespace s2omp {
 
 class geometric_bound {
 public:
+  virtual ~geometric_bound();
+
   virtual bool is_empty();
   virtual long size();
   virtual void clear();
   virtual void area();
 
-  virtual bool contains(point& p);
-  virtual bool contains(pixel& pix);
-  virtual bool contains(geometric_bound& b);
+  virtual bool contains(const point& p);
+  virtual bool contains(const pixel& pix);
+  virtual bool contains(const geometric_bound& b);
 
-  virtual double contained_area(pixel& pix);
-  virtual bool may_intersect(pixel& pix);
+  virtual double contained_area(const pixel& pix);
+  virtual bool may_intersect(const pixel& pix);
 
-  virtual void covering(pixel_vector& pixels);
-  virtual void covering(int max_pixels, pixel_vector& pixels);
-  virtual void covering(double fractional_area_tolerance, pixel_vector& pixels);
-  virtual void simple_covering(int level, pixel_vector& pixels);
+  virtual void covering(pixel_vector* pixels);
+  virtual void covering(int max_pixels, pixel_vector* pixels);
+  virtual void covering(double fractional_area_tolerance, pixel_vector* pixels);
+  virtual void simple_covering(int level, pixel_vector* pixels);
 
   virtual circle_bound get_bound();
 
   virtual point get_random_point();
-  virtual void get_random_points(long n_points, pixel_vector& points);
+  virtual void get_random_points(long n_points, pixel_vector* points);
 
 private:
   geometric_bound();
-  virtual ~geometric_bound();
-
 };
 
-
-
 } // end namespace s2omp
-
 
 #endif /* GEOMETRIC_BOUND_H_ */
