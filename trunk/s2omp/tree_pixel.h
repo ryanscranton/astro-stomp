@@ -18,27 +18,25 @@
 #define TREE_PIXEL_H_
 
 namespace s2omp {
-class AngularBin; // class definition in stomp_angular_bin.h
-class AngularCorrelation; // class definition in stomp_angular_correlation.h
-class RadialBin;
-class TreePixel;
-class TreeNeighbor;
-class NearestNeighborPixel;
-class NearestNeighborPoint;
+class annulus_bound; // class definition in stomp_angular_bin.h
+class tree_pixel;
+class tree_neighbor;
+class nearest_neighbor_pixel;
+class nearest_neighbor_point;
 
-typedef std::vector<TreePixel> TreeVector;
-typedef TreeVector::iterator TreeIterator;
-typedef std::pair<TreeIterator, TreeIterator> TreePair;
-typedef std::vector<TreePixel *> TreePtrVector;
-typedef TreePtrVector::iterator TreePtrIterator;
+typedef std::vector<tree_pixel> tree_vector;
+typedef tree_vector::iterator tree_iterator;
+typedef std::pair<tree_iterator, tree_iterator> tree_pair;
+typedef std::vector<tree_pixel *> tree_ptr_vector;
+typedef tree_ptr_vector::iterator tree_ptr_iterator;
 
-typedef std::pair<double, TreePixel*> DistancePixelPair;
-typedef std::priority_queue<DistancePixelPair, std::vector<DistancePixelPair>,
-		NearestNeighborPixel> PixelQueue;
+typedef std::pair<double, tree_pixel*> distance_pixel_pair;
+typedef std::priority_queue<distance_pixel_pair, std::vector<
+		distance_pixel_pair>, nearest_neighbor_pixel> pixel_queue;
 
-typedef std::pair<double, WeightedAngularCoordinate*> DistancePointPair;
-typedef std::priority_queue<DistancePointPair, std::vector<DistancePointPair>,
-		NearestNeighborPoint> PointQueue;
+typedef std::pair<double, point*> distance_point_pair;
+typedef std::priority_queue<distance_point_pair, std::vector<
+		distance_point_pair>, nearest_neighbor_point> point_queue;
 
 class tree_pixel: public pixel {
 	// Our second variation on the Pixel.  Like ScalarPixel, the idea
@@ -80,10 +78,10 @@ public:
 	// copy of a point in the tree, then that point will be included in the
 	// returned vector of points.
 	uint16_t find_k_nearest_neighbors(const point& p, uint8_t n_neighbors,
-			point_vector& neighbors) const;
+			point_vector* neighbors) const;
 
 	// The special case where we're only interested in the nearest matching point.
-	uint16_t find_nearest_neighbor(const point& p, point& neighbor) const;
+	uint16_t find_nearest_neighbor(const point& p, point* neighbor) const;
 
 	// In some cases, we're only interested in the distance to the kth nearest
 	// neighbor.  The return value will be the angular distance in degrees.
@@ -92,7 +90,7 @@ public:
 
 	// Or in the distance to the nearest neighbor.
 	double
-			nearest_neighbor_distance(const point& p, uint16_t& nodes_visited) const;
+	nearest_neighbor_distance(const point& p, uint16_t& nodes_visited) const;
 
 	// Alternatively, we could be less interested in the nearest neighbor and
 	// more interested in finding a direct match to our input point.  The
@@ -103,7 +101,7 @@ public:
 	// point is within the specified radius and the maximum distance is
 	// in degrees.
 	bool
-			closest_match(const point& p, double max_angular_distance, point& match) const;
+	closest_match(const point& p, double max_angular_distance, point* match) const;
 
 	// Return the number of points contained in the current pixel and all
 	// sub-pixels.
@@ -131,11 +129,11 @@ public:
 
 	// If we want to extract a copy of all of the points that have been added
 	// to this pixel, this method allows for that.
-	void points(point_vector& points) const;
+	void points(point_vector* points) const;
 
 	// And an associated method that will extract a copy of the points associated
 	// with an input pixel.
-	void points(const pixel& pix, point_vector& points) const;
+	void points(const pixel& pix, point_vector* points) const;
 
 	// Recurse through the nodes below this one to return the number of nodes in
 	// the tree.
@@ -164,11 +162,11 @@ public:
 private:
 	tree_pixel();
 
-	bool _initialize_children();
-	void _add_children(uint16_t& n_nodes);
+	bool initialize_children();
+	void add_children(uint16_t& n_nodes);
 	uint32_t direct_pair_count(annulus_bound& bound);
 	double direct_weighted_pairs(annulus_bound& bound);
-	void _neighbor_recursion(point& p, tree_neighbor& neighbor);
+	void neighbor_recursion(point& p, tree_neighbor& neighbor);
 
 	point_ptr_vector points_;
 	uint16_t maximum_points_;
@@ -178,25 +176,25 @@ private:
 	tree_ptr_vector children_;
 };
 
-class NearestNeighborPixel {
+class nearest_neighbor_pixel {
 	// Convenience class for sorting nearest neighbor pixels in our queue.
 public:
-	int operator()(const DistancePixelPair& x, const DistancePixelPair& y) {
+	int operator()(const distance_pixel_pair& x, const distance_pixel_pair& y) {
 		// This has the opposite ordering since we want pixels ordered with the
 		// closest at the top of the heap.
 		return x.first > y.first;
 	}
 };
 
-class NearestNeighborPoint {
+class nearest_neighbor_point {
 	// Convenience class for sorting nearest neighbor points in our queue.
 public:
-	int operator()(const DistancePointPair& x, const DistancePointPair& y) {
+	int operator()(const distance_point_pair& x, const distance_point_pair& y) {
 		return x.first < y.first;
 	}
 };
 
-class TreeNeighbor {
+class tree_neighbor {
 	// In order to do the nearest neighbor finding in the TreePixel class, we
 	// need a secondary class to handle storage of the nearest neighbor list.
 	// The natural data structure for that list is a priority queue, which we're
@@ -204,43 +202,43 @@ class TreeNeighbor {
 	// distance to a reference point means that we need a little extra plumbing
 	// in order to pull that off.  Hence, the TreeNeighbor class.
 public:
-	friend class NearestNeighborPoint;
-	TreeNeighbor(AngularCoordinate& reference_ang, uint8_t n_neighbors = 1);
-	TreeNeighbor(AngularCoordinate& reference_ang, uint8_t n_neighbors,
+	friend class nearest_neighbor_point;
+	tree_neighbor(const point& reference_point);
+	tree_neighbor(const point& reference_point, uint8_t n_neighbors,
 			double max_distance);
-	~TreeNeighbor();
+	~tree_neighbor();
 
 	// Return a list of the nearest neighbors found so far.
-	void NearestNeighbors(WAngularVector& w_ang, bool save_neighbors = true);
+	void nearest_neighbors(const point& w_ang, bool save_neighbors);
 
 	// Return the number of neighbors in the list.  This should always be at most
 	// the value used to instantiate the class, which is returned by calling
 	// MaxNeighbors()
-	uint8_t Neighbors();
-	uint8_t MaxNeighbors();
+	uint8_t n_neighbors();
+	uint8_t max_neighbors();
 
 	// Submit a point for possible inclusion.  Return value indicates whether the
 	// point was successfully included in the list (i.e., the distance between
 	// the input point and the reference point was smaller than the current most
 	// distant point in the list) or not.
-	bool TestPoint(WeightedAngularCoordinate* test_ang);
+	bool test_point(point* test_point);
 
 	// Return the maximum distance of the current list.
-	double MaxDistance();
+	double max_distance();
 
 	// The default distance returned is in sin^2(theta) units since that's what
 	// the edge detection code uses.  If we're interested in human units, this
 	// provides that distance in degrees.
-	double MaxAngularDistance();
+	double max_angular_distance();
 
 	// For accounting purposes, it can be useful to keep track of how many nodes
 	// we have visited during our traversal through the tree.
-	uint16_t NodesVisited();
-	void AddNode();
+	uint16_t nodes_visited();
+	void add_node();
 
 private:
-	AngularCoordinate reference_ang_;
-	PointQueue ang_queue_;
+	point reference_point_;
+	point_queue point_queue_;
 	uint8_t n_neighbors_;
 	uint16_t n_nodes_visited_;
 	double max_distance_;
