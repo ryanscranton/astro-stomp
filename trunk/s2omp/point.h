@@ -26,7 +26,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <map>
+#include "core.h"
+#include "pixel.h"
 
 namespace s2omp {
 
@@ -46,28 +47,24 @@ class point {
 	// coordinate system in mind or that can be set later on.
 public:
 	enum Sphere {
-		EQUATORIAL, GALACTIC, GEOCENTRIC, HELIOCENTRIC
+		EQUATORIAL, GALACTIC, ECLIPTIC
 	};
 
 public:
 	point(double x, double y, double z, double weight);
 	virtual ~point();
 
-	static point from_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
-	static point from_latlon_degrees(double lat_deg, double lon_deg, Sphere s,
+	static point* from_latlon_deg(double lat_deg, double lon_deg, Sphere s);
+	static point* from_latlon_deg(double lat_deg, double lon_deg, Sphere s,
 			double weight);
-	static point from_latlon_radians(double lat_rad, double lon_rad, Sphere s);
-	static point from_latlon_radians(double lat_rad, double lon_rad, Sphere s,
+	static point* from_latlon_rad(double lat_rad, double lon_rad, Sphere s);
+	static point* from_latlon_rad(double lat_rad, double lon_rad, Sphere s,
 			double weight);
 
-	static point from_radec_degrees(double ra_deg, double dec_deg);
-	static point from_radec_degrees(double ra_deg, double dec_deg, double weight);
-	static point from_radec_radians(double ra_rad, double dec_rad);
-	static point from_radec_radians(double ra_rad, double dec_rad, double weight);
-
-	void set_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
-	void set_latlon_radians(double lat_rad, double lon_rad, Sphere s);
-	void set_xyz(double x, double y, double z);
+	static point* from_radec_deg(double ra_deg, double dec_deg);
+	static point* from_radec_deg(double ra_deg, double dec_deg, double weight);
+	static point* from_radec_rad(double ra_rad, double dec_rad);
+	static point* from_radec_rad(double ra_rad, double dec_rad, double weight);
 
 	double lat_deg(Sphere s) const;
 	double lon_deg(Sphere s) const;
@@ -79,20 +76,30 @@ public:
 	double ra_rad() const;
 	double dec_rad() const;
 
-	double unit_sphere_x() const;
-	double unit_sphere_y() const;
-	double unit_sphere_z() const;
+	inline double unit_sphere_x() const {
+		return point_.x();
+	}
+	inline double unit_sphere_y() const {
+		return point_.y();
+	}
+	inline double unit_sphere_z() const {
+		return point_.z();
+	}
 
-	double weight() const;
-	double set_weight(double weight);
+	inline double weight() const {
+		return weight_;
+	}
+	inline double set_weight(double weight) :
+		weight_(weight) {
+	}
 
 	double angular_distance(const point& p) const;
 	double angular_distance(const point* p) const;
 	static double angular_distance(const point& a, const point& b);
 
-	double dot(const point& p);
-	double dot(const point* p);
-	static double dot(const point& a, const point& b);
+	inline double dot(const point& p);
+	inline double dot(const point* p);
+	inline static double dot(const point& a, const point& b);
 
 	point cross(const point& p);
 	point cross(const point* p);
@@ -105,12 +112,18 @@ public:
 	static double position_angle(const point& center, const point& target,
 			Sphere s);
 
-	void rotate_about(point& axis, double rotation_angle_degrees, Sphere s);
-	static point rotate_about(point& p, point& axis, double rotation_angle,
-			Sphere s);
+	void rotate_about(const point& axis, double rotation_angle_degrees, Sphere s);
+	static point rotate_about(const point& p, const point& axis,
+			double rotation_angle, Sphere s);
 
-	pixel to_pixel();
-	pixel to_pixel(int level);
+	inline uint64 id() const;
+	inline pixel to_pixel() const;
+	inline pixel to_pixel(int level) const;
+
+protected:
+	void set_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
+	void set_latlon_radians(double lat_rad, double lon_rad, Sphere s);
+	void set_xyz(double x, double y, double z);
 
 private:
 	point();
@@ -123,6 +136,57 @@ private:
 	S2::SPoint point_;
 	double weight_;
 };
+
+inline bool operator==(point const& a, point const& b) {
+	return a.id() == b.id();
+}
+
+inline bool operator!=(point const& a, point const& b) {
+	return a.id() != b.id();
+}
+
+inline bool operator<(point const& a, point const& b) {
+	return a.id() < b.id();
+}
+
+inline bool operator>(point const& a, point const& b) {
+	return a.id() > b.id();
+}
+
+inline bool operator<=(point const& a, point const& b) {
+	return a.id() <= b.id();
+}
+
+inline bool operator>=(point const& a, point const& b) {
+	return a.id() >= b.id();
+}
+
+inline double point::dot(const point& p) {
+	return point_.x() * p.unit_sphere_x() + point_.y() * p.unit_sphere_y()
+			+ point_.z() * p.unit_sphere_z();
+}
+
+inline double point::dot(const point* p) {
+	return point_.x() * p->unit_sphere_x() + point_.y() * p->unit_sphere_y()
+			+ point_.z() * p->unit_sphere_z();
+}
+
+inline static double dot(const point& a, const point& b) {
+	return a.unit_sphere_x() * b.unit_sphere_x() + a.unit_sphere_y()
+			* b.unit_sphere_y() + a.unit_sphere_z() * b.unit_sphere_z();
+}
+
+inline uint64 point::id() {
+	return S2::S2CellId.FromPoint(point_).id();
+}
+
+inline pixel point::to_pixel() {
+	return pixel(id());
+}
+
+inline pixel point::to_pixel(int level) {
+	return to_pixel().parent(level);
+}
 
 } // end namespace s2omp
 #endif /* POINT_H_ */

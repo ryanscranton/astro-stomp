@@ -16,6 +16,7 @@
 #define CORE_H_
 
 #include <stdint.h>
+#include <math.h>
 
 namespace s2omp {
 
@@ -23,18 +24,32 @@ namespace s2omp {
 // used throughout all of the other library classes.
 
 // First some trigonometric values.
-extern const double PI;
-extern const double DEG_TO_RAD;
-extern const double RAD_TO_DEG;
-extern const double STRAD_TO_DEG2;
+extern const double PI = 2.0*asin(1.0);
+extern const double DEG_TO_RAD = PI/180.0;
+extern const double RAD_TO_DEG = 180.0/PI;
+extern const double STRAD_TO_DEG2 = 180.0*180.0/(PI*PI);
 
-extern const int MAX_LEVEL;
+extern const int MAX_LEVEL = 30;
 
-bool DoubleLT(double a, double b);
-bool DoubleLE(double a, double b);
-bool DoubleGT(double a, double b);
-bool DoubleGE(double a, double b);
-bool DoubleEQ(double a, double b);
+inline bool double_lt(double a, double b) {
+	return a < b - 1.0e-15 ? true : false;
+}
+
+inline bool double_le(double a, double b) {
+	return a <= b - 1.0e-15 ? true : false;
+}
+
+inline bool double_gt(double a, double b) {
+	return a > b + 1.0e-15 ? true : false;
+}
+
+inline bool double_ge(double a, double b) {
+  return a >= b - 1.0e-15 ? true : false;
+}
+
+inline bool double_eq(double a, double b) {
+	return double_le(a, b) && double_ge(a, b) ? true : false;
+}
 
 } // end namespace s2omp
 

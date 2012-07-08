@@ -40,13 +40,34 @@ public:
 	static scalar_pixel from_point(point p, int level, double intensity,
 			double weight, uint32_t n_points);
 
-	double intensity() const;
-	double weight() const;
-	uint32_t n_points() const;
+	inline double intensity() const {
+		return intensity_;
+	}
+	inline double weight() const {
+		return weight_;
+	}
+	inline uint32_t n_points() const {
+		return n_points_;
+	}
+	inline double unit_sphere_x() const {
+		return unit_sphere_x_;
+	}
+	inline double unit_sphere_y() const {
+		return unit_sphere_y_;
+	}
+	inline double unit_sphere_z() const {
+		return unit_sphere_z_;
+	}
 
-	void set_intensity(double intensity);
-	void set_weight(double weight);
-	void set_n_points(uint32_t n_points);
+	inline void set_intensity(double intensity) :
+		intensity_(intensity) {
+	}
+	inline void set_weight(double weight) :
+		weight_(weight) {
+	}
+	inline void set_n_points(uint32_t n_points) :
+		n_points_(n_points) {
+	}
 
 	double mean_intensity() const;
 	void add_to_intensity(const double intensity, const uint32_t n_point);
@@ -60,12 +81,10 @@ public:
 	void convert_from_overdensity(double expected_intensity);
 	void convert_from_fractional_overdensity(double expected_intensity);
 
-	double unit_sphere_x() const;
-	double unit_sphere_y() const;
-	double unit_sphere_z() const;
-
 	// Finally, a method to tell us whether we're in over-density mode or not.
-	bool is_overdensity() const;
+	bool is_overdensity() const {
+		return is_overdensity_;
+	}
 
 private:
 	scalar_pixel();

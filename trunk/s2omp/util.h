@@ -126,8 +126,6 @@ inline double cosmology::projected_angle(double z, double radius) {
   return RAD_TO_DEG*radius/angular_diameter_distance(z);
 }
 
-
-
 } // end namespace s2omp
 
 #endif /* UTIL_H_ */
