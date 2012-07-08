@@ -16,8 +16,8 @@
 // similarly-shaped regions.  This functionality is the basis for calculating
 // jack-knife errors for our various statistical analyses.
 
-#ifndef ANALYTIC_BOUND_H_
-#define ANALYTIC_BOUND_H_
+#ifndef PIXELIZED_BOUND_INTERFACE_H_
+#define PIXELIZED_BOUND_INTERFACE_H_
 
 typedef std::map<const uint64, int16_t> region_dict;
 typedef region_dict::iterator region_iterator;
@@ -35,7 +35,8 @@ public:
 	virtual ~region_map();
 
 	uint16_t initialize(uint16_t n_region, pixelized_bound* bound);
-	uint16_t initialize(uint16_t n_region, uint32_t level, pixelized_bound* bound);
+	uint16_t
+			initialize(uint16_t n_region, uint32_t level, pixelized_bound* bound);
 
 	bool initialize(pixelized_bound& reference_bound, pixelized_bound* bound);
 
@@ -51,13 +52,23 @@ public:
 	double region_area(int16_t region);
 
 	// Some getter methods to describe the state of the RegionMap.
-	uint16_t n_region();
-	uint32_t level();
-	bool initialized();
+	inline uint16_t n_region() const {
+		return n_region_;
+	}
+	inline uint32_t level() const {
+		return level_;
+	}
+	inline bool is_initialized() const {
+		return !region_map_.empty();
+	}
 
 	// Return iterators for the set of RegionMap objects.
-	region_iterator begin();
-	region_iterator end();
+	inline region_iterator begin() {
+		return region_map_.begin();
+	}
+	inline region_iterator end() {
+		return region_map_.end();
+	}
 
 private:
 	int find_regionation_level(analytic_bound* bound, uint16_t n_region);
@@ -95,19 +106,45 @@ public:
 
 	// These methods all act as wrappers for the RegionMapper object contained
 	// in the class.  See that class for documentation.
-	uint16_t initialize_regions(uint16_t n_regions);
-	uint16_t initialize_regions(uint16_t n_regions, int region_level);
-	bool initialize_regions(pixelized_bound* bound);
-	int16_t find_region(const point& p) const;
-	int16_t find_region(const pixel& pix) const;
-	void clear_regions();
-	void region_covering(int16_t region, pixel_vector* pixels) const;
-	double region_area(int16_t region) const;
-	uint16_t n_region() const;
-	uint32_t region_level() const;
-	bool regions_initialized() const;
-	region_iterator region_begin();
-	region_terator region_end();
+	inline uint16_t initialize_regions(uint16_t n_regions) {
+		return region_map_.initialize_regions(n_regions);
+	}
+	inline uint16_t initialize_regions(uint16_t n_regions, int region_level) {
+		return region_map_.initialize_regions(n_regions, region_level);
+	}
+	inline bool initialize_regions(pixelized_bound* bound) {
+		return region_map_.initialize_regions(bound);
+	}
+	inline int16_t find_region(const point& p) const {
+		return region_map_.find_region(p);
+	}
+	inline int16_t find_region(const pixel& pix) const {
+		return region_map_.find_region(pix);
+	}
+	inline void clear_regions() {
+		return region_map_.clear();
+	}
+	inline void region_covering(int16_t region, pixel_vector* pixels) const {
+		region_map_.region_covering(region, pixels);
+	}
+	inline double region_area(int16_t region) const {
+		return region_map_.region_arae(region);
+	}
+	inline uint16_t n_region() const {
+		return region_map_.n_region();
+	}
+	inline uint32_t region_level() const {
+		return region_map_.level();
+	}
+	inline bool regions_initialized() const {
+		return region_map_.is_initialized();
+	}
+	inline region_iterator region_begin() {
+		return region_map_.begin();
+	}
+	inline region_terator region_end() {
+		return region_map_.end();
+	}
 
 private:
 	pixelized_bound_interface();
@@ -116,4 +153,4 @@ private:
 
 } // end namespace s2omp
 
-#endif /* ANALYTIC_BOUND_H_ */
+#endif /* PIXELIZED_BOUND_INTERFACE_H_ */

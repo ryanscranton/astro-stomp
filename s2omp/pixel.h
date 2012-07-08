@@ -37,63 +37,141 @@ typedef std::vector<pixel *> pixel_ptr_vector;
 typedef pixel_ptr_vector::iterator pixel_ptr_iterator;
 
 class pixel {
-  // The core class for this library.  An instance of this class represents
-  // a single pixel covering a particular region of the sky, with a particular
-  // weight represented by a float.  Pixels can be instantiated with an
-  // AngularCoordinate and resolution level or pixel indices or just
-  // instantiated with no particular location.
+	// The core class for this library.  An instance of this class represents
+	// a single pixel covering a particular region of the sky.  The bulk of the
+	// class functionality is based on an S2::S2CellId, but it also combines some
+	// the S2::S2Region-like behavior of the S2::S2Cell class.
 
- public:
+public:
+	// The default constructor requires a 64-bit integer (based on the S2
+	// pixelization).
 	explicit pixel(uint64 id);
-  virtual ~pixel();
+	virtual ~pixel();
 
-  static pixel* from_point(const point& p);
-  static pixel* from_point(const point& p, int level);
+	// Static constructors are also available to instantiate
+  // from point objects (either at a specific input level or at the maximum
+	// resolution).
+	static pixel* from_point(const point& p);
+	static pixel* from_point(const point& p, int level);
 
-  static uint64 point_to_id(const point& p);
-  static uint64 point_to_id(const point& p, int level);
+	// Since our default constructor is explicit, we can also use a static
+	// method that returns our pixel index from an input point (and level) in
+	// place of an argument that would take a pixel object.
+	static uint64 point_to_id(const point& p);
+	static uint64 point_to_id(const point& p, int level);
 
-  uint64 id() const;
-  int level() const;
+	// Accessor methods for our basic paramters.
+	inline uint64 id() const {
+		return id_.id();
+	}
+	inline int level() const {
+		return id_.level();
+	}
 
-  void set_id(uint64 id);
+	// Simple methods for checking whether our pixel is at the top or the
+	// bottom of our resolution limits (roughly 1/6th of the sky down to about
+	// 0.00015 arcseconds).
+	inline bool is_leaf() const {
+		return id_.is_leaf();
+	}
+	inline bool is_face() const {
+		return id_.is_face();
+	}
 
-  bool is_leaf() const;
-  bool is_face() const;
-  pixel parent() const;
-  pixel parent(int level) const;
-  void children(pixel_vector& child_pixels) const;
-  void children(int level, pixel_vector& child_pixels) const;
-  pixel child_begin() const;
-  pixel child_begin(int level) const;
-  pixel child_end() const;
-  pixel child_end(int level) const;
+	// Our basic methods for transversing the pixelization hierarchy.  In both
+	// cases, we can either access the parent or child cells directly above or
+	// below our current level or at an input level.
+	pixel parent() const;
+	pixel parent(int level) const;
+	void children(pixel_vector* child_pixels) const;
+	void children(int level, pixel_vector* child_pixels) const;
 
-  pixel next() const;
-  pixel next_wrap() const;
-  pixel prev() const;
-  pixel prev_wrap() const;
+	// Alternatively, if want to avoid allocating the memory for our child
+	// pixels in one go, we can iterate through them.  The syntax for this is
+	// similar to the corresponding methods for S2::S2CellId:
+	//
+	// for (pixel c = pix.child_begin(); c != pix.child_end(); c = c.next()) {
+	// ...
+	//
+	// As with S2::S2CellId, the iterator method should be called rather than
+	// ++c.
+	pixel child_begin() const;
+	pixel child_begin(int level) const;
+	pixel child_end() const;
+	pixel child_end(int level) const;
 
-  static double average_area(int level);
-  double average_area() const;
-  double exact_area() const;
+	// Iterator methods for moving along the Hilbert curve at our pixel's current
+	// level.  The *_wrap() methods allow the iterators to move across the pixel
+	// index discontinuity.
+	pixel next() const;
+	pixel prev() const;
+	pixel next_wrap() const;
+	pixel prev_wrap() const;
 
-  bool contains(point& p) const;
-  bool contains(pixel& pix) const;
+	// Our first methods using the functionality from S2::S2Cell.  Since S2 cells
+	// are only roughly equal-area, there is some small difference between the
+	// average area of a cell at a given level at the exact area of a given cell.
+	static double average_area(int level);
+	double average_area() const;
+	double exact_area() const;
 
-  point center_point() const;
-  point vertex(int k) const;
-  point edge(int k) const;
+	// Return true if the input point or pixel is inside our current pixel.
+	bool contains(point& p) const;
+	bool contains(pixel& pix) const;
 
-  pixel_vector* neighbors() const;
-  pixel_vector* neighbors(int level) const;
+	// Methods for extracting the points that define the center, vertices and
+	// edges of our pixel.  The pixel edges are defined by great circles, so the
+	// returned points are the vectors orthogonal to a given great circle,
+	// pointed interior to the pixel.  The ordering of the vertices and edges
+	// are such that edge(0) runs from from vertex(0) to vertex(1).
+	point center_point() const;
+	point vertex(int k) const;
+	point edge(int k) const;
 
- private:
-  pixel();
+	// Return a vector of pixels containing the neighbors of this pixel.  In the
+	// second case, we return the neighboring pixels at an input level.
+	void neighbors(pixel_vector* pixels) const;
+	void neighbors(int level, pixel_vector* pixels) const;
 
-  S2::S2CellId id_;
-  S2::S2Cell* cell_;
+	// Return a Poisson-random point (or multiple such points) from the area
+	// covered by this pixel
+	point get_random_point() const;
+	void get_random_points(long n_points, pixel_vector* points) const;
+
+protected:
+	void set_id(uint64 id);
+
+private:
+	pixel();
+
+	S2::S2CellId id_;
+	S2::S2Cell* cell_;
 };
+
+inline bool operator==(pixel const& a, pixel const& b) {
+  return a.id() == b.id();
+}
+
+inline bool operator!=(pixel const& a, pixel const& b) {
+  return a.id() != b.id();
+}
+
+inline bool operator<(pixel const& a, pixel const& b) {
+  return a.id() < b.id();
+}
+
+inline bool operator>(pixel const& a, pixel const& b) {
+  return a.id() > b.id();
+}
+
+inline bool operator<=(pixel const& a, pixel const& b) {
+  return a.id() <= b.id();
+}
+
+inline bool operator>=(pixel const& a, pixel const& b) {
+  return a.id() >= b.id();
+}
+
 
 } // end namespace s2omp
 

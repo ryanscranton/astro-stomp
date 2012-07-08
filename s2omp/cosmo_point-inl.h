@@ -22,22 +22,29 @@
 
 namespace s2omp {
 
+class cosmo_point;
+
+typedef std::vector<cosmo_point> cosmo_vector;
+typedef cosmo_vector::iterator cosmo_iterator;
+typedef std::vector<cosmo_point *> cosmo_ptr_vector;
+typedef cosmo_ptr_vector::iterator cosmo_ptr_iterator;
+
 class cosmo_point: public point {
 public:
-	cosmo_point(double x, double y, double z, double weight, double redshift);
+	inline cosmo_point(double x, double y, double z, double weight, double redshift);
 
-	static cosmo_point* from_radec_deg(double ra_deg, double dec_deg,
+	inline static cosmo_point* from_radec_deg(double ra_deg, double dec_deg,
 			double redshift);
-	static cosmo_point* from_radec_deg(double ra_deg, double dec_deg,
+	inline static cosmo_point* from_radec_deg(double ra_deg, double dec_deg,
 			double weight, double redshift);
-	static cosmo_point* from_radec_rad(double ra_rad, double dec_rad,
+	inline static cosmo_point* from_radec_rad(double ra_rad, double dec_rad,
 			double redshift);
-	static cosmo_point* from_radec_rad(double ra_rad, double dec_rad,
+	inline static cosmo_point* from_radec_rad(double ra_rad, double dec_rad,
 			double weight, double redshift);
-	static cosmo_point* from_point(const point& p, double redshift);
+	inline static cosmo_point* from_point(const point& p, double redshift);
 
-	double redshift() const;
-	void set_redshift(double redshift);
+	inline double redshift() const {return redshift_;}
+	inline void set_redshift(double redshift) : redshift_(redshift) {}
 
 	// Since we have a redshift attached to the location, we can now attach some
 	// functionality related to the 3-D coordinates.  Start with some conversions
@@ -45,18 +52,18 @@ public:
 	// the projected radius at our coordinate's redshift.  Since we're getting
 	// this data out of the cosmology class, we follow that class's convention
 	// of giving distance in comoving Mpc/h
-	double projected_radius(const point& p) const;
-	double projected_radius(const point* p) const;
+	inline double projected_radius(const point& p) const;
+	inline double projected_radius(const point* p) const;
 
 	// We can also offer variations on the dot product that takes
 	// CosmoCoordinates and do their calculations with the full 3-D vectors
-	double dot(const cosmo_point& p) const;
-	double dot(const cosmo_point* p) const;
+	inline double dot(const cosmo_point& p) const;
+	inline double dot(const cosmo_point* p) const;
 
 	// Some methods for accessing the distance values implied by our redshift.
-	double comoving_distance() const;
-	double angular_diameter_distance() const;
-	double luminosity_distance() const;
+	inline double comoving_distance() const;
+	inline double angular_diameter_distance() const;
+	inline double luminosity_distance() const;
 
 private:
 	double redshift_;
@@ -96,14 +103,6 @@ inline cosmo_point* cosmo_point::from_radec_rad(double ra_rad, double dec_rad,
 inline cosmo_point* cosmo_point::from_point(const point& p, double redshift) {
 	return new cosmo_point(p.unit_sphere_x(), p.unit_sphere_y(),
 			p.unit_sphere_z(), p.weight(), redshift);
-}
-
-inline double cosmo_point::redshift() {
-	return redshift_;
-}
-
-inline void cosmo_point::set_redshift(double redshift) {
-	redshift_ = redshift;
 }
 
 inline double cosmo_point::projected_radius(const point& p) {
