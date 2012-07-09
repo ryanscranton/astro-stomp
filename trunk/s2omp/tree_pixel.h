@@ -39,12 +39,12 @@ typedef std::priority_queue<distance_point_pair, std::vector<
 		distance_point_pair>, nearest_neighbor_point> point_queue;
 
 class tree_pixel: public pixel {
-	// Our second variation on the Pixel.  Like ScalarPixel, the idea
-	// here is to use the Pixel as a scaffold for sampling a field over an
-	// area.  Instead of storing a density, however, TreePixel stores a
-	// vector of WeightedAngularCoordinates and the weight stored in the pixel
-	// is the sum of the weights of the WeightedAngularCoordinates.  Finally,
-	// the TreePixel contains pointers to its sub-pixels.  When a point is
+	// Our second variation on the pixel.  Like scalar_pixel, the idea
+	// here is to use the pixel as a scaffold for sampling a field over an
+	// area.  Instead of storing a density, however, tree_pixel stores a
+	// vector of points and the weight stored in the pixel
+	// is the sum of the weights of the points.  Finally,
+	// the tree_pixel contains pointers to its child-pixels.  When a point is
 	// added to the pixel, it checks the number of points against the total
 	// allowed for the pixel (specified on construction).  If the pixel is at
 	// capacity, it passes the point along to the sub-pixels, generating a tree
@@ -57,8 +57,8 @@ public:
 	virtual ~tree_pixel();
 
 	static tree_pixel from_point(const point& p, int level,
-			uint16_t maximum_points);
-	static tree_pixel from_pixel(const pixel& pix, uint16_t maximum_points);
+			uint16_t max_points);
+	static tree_pixel from_pixel(const pixel& pix, uint16_t max_points);
 
 	// Add a given point on the sphere to either this pixel (if the capacity for
 	// this pixel hasn't been reached) or one of the sub-pixels.  Return true
@@ -94,8 +94,8 @@ public:
 
 	// Alternatively, we could be less interested in the nearest neighbor and
 	// more interested in finding a direct match to our input point.  The
-	// difference is subtle, but whereas NearestNeighbor will always return a
-	// point from our tree, ClosestMatch has an angular threshold, beyond which
+	// difference is subtle, but whereas nearest_neighbor will always return a
+	// point from our tree, closest_match has an angular threshold, beyond which
 	// we're not interested in the nearest neighbor because it's not a match to
 	// our input point.  The returned boolean indicates whether the returned
 	// point is within the specified radius and the maximum distance is
@@ -113,14 +113,14 @@ public:
 	uint32_t n_points(const pixel& pix) const;
 	double weight(const pixel& pix) const;
 
-	// The downside of the TreePixel is that it doesn't really encode geometry
-	// in the same way that Pixels and ScalarPixels do.  This makes it hard to
-	// do things like split TreeMaps (defined below) into roughly equal areas
-	// like we can do with Maps and ScalarMaps.  Coverage attempts to do this
+	// The downside of the tree_pixel is that it doesn't really encode geometry
+	// in the same way that pixels and scalar_pixels do.  This makes it hard to
+	// do things like split tree_unions (defined below) into roughly equal areas
+	// like we can do with pixel_unions and scalar_unions.  Coverage attempts to do this
 	// based on the number of sub-nodes with data in them.  The first version
 	// works on the pixel itself.  The second does the same calculation for
 	// another pixel, based on the data in the current pixel.  Like the unmasked
-	// fraction measures for Pixels and ScalarPixels, the return values cover
+	// fraction measures for pixels and scalar_pixels, the return values cover
 	// the range [0,1].  However, the accuracy of the measure is going to be a
 	// function of how many points are in the pixel (and sub-pixels) and how
 	// localized they are.
@@ -161,6 +161,8 @@ public:
 
 private:
 	tree_pixel();
+
+	void add_to_weight(const double weight);
 
 	bool initialize_children();
 	void add_children(uint16_t& n_nodes);
@@ -204,12 +206,13 @@ class tree_neighbor {
 public:
 	friend class nearest_neighbor_point;
 	tree_neighbor(const point& reference_point);
+	tree_neighbor(const point& reference_point, uint8_t n_neighbors);
 	tree_neighbor(const point& reference_point, uint8_t n_neighbors,
 			double max_distance);
 	~tree_neighbor();
 
 	// Return a list of the nearest neighbors found so far.
-	void nearest_neighbors(const point& w_ang, bool save_neighbors);
+	void nearest_neighbors(const point& p, bool save_neighbors);
 
 	// Return the number of neighbors in the list.  This should always be at most
 	// the value used to instantiate the class, which is returned by calling
