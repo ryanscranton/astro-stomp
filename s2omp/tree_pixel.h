@@ -64,6 +64,7 @@ public:
 	// this pixel hasn't been reached) or one of the sub-pixels.  Return true
 	// if the point was successfully added (i.e. the point was contained in the
 	// bounds of the current pixel); false, otherwise.
+	bool add_point(const point* p);
 	bool add_point(const point& p);
 
 	uint32_t find_pairs(const annulus_bound& bound) const;
@@ -129,17 +130,21 @@ public:
 
 	// If we want to extract a copy of all of the points that have been added
 	// to this pixel, this method allows for that.
-	void points(point_vector* points) const;
+	void points(point_vector& p_vect) const;
+	// void points(point_vector* p_vect) const;
 
 	// And an associated method that will extract a copy of the points associated
 	// with an input pixel.
-	void points(const pixel& pix, point_vector* points) const;
+	void points(const pixel& pix, point_vector& p_vect) const;
+	// void points(const pixel& pix, point_vector* p_vect) const;
 
 	// Recurse through the nodes below this one to return the number of nodes in
 	// the tree.
 	uint16_t n_nodes() const;
 
-	uint16_t pixel_capacity() const;
+	inline uint16_t pixel_capacity() const {
+		return maximum_points_;
+	}
 
 	// Occasionally, it can be useful for outside code to be able to traverse
 	// the tree structure contained in the pixel and sub-nodes.  These hooks allow
@@ -151,8 +156,14 @@ public:
 
 	// And a pair of methods for indicating if the node contains points or
 	// sub-nodes.
-	bool has_points() const;
-	bool has_nodes() const;
+	inline bool has_points() const {
+		if (!initialized_children_ && point_count_ > 0)
+			return true;
+		return false;
+	}
+	inline bool has_nodes() const {
+		return initialized_children_;
+	}
 
 	// Since we're storing pointers to the WeightedAngularCoordinates, we need
 	// to explicitly delete them to clear all of the memory associated with the
@@ -162,10 +173,8 @@ public:
 private:
 	tree_pixel();
 
-	void add_to_weight(const double weight);
-
 	bool initialize_children();
-	void add_children(uint16_t& n_nodes);
+	void add_children(uint16_t& n_nodes); // do we need this?
 	uint32_t direct_pair_count(annulus_bound& bound);
 	double direct_weighted_pairs(annulus_bound& bound);
 	void neighbor_recursion(point& p, tree_neighbor& neighbor);
