@@ -569,7 +569,7 @@ bool tree_neighbor::test_point(point* test_point) {
 }
 
 double tree_neighbor::max_angular_distance() {
-
+	return RAD_TO_DEG*asin(sqrt(fabs(max_distance_)));
 }
 
 } //end namespace s2omp
