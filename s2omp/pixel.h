@@ -128,6 +128,11 @@ public:
 	point vertex(int k) const;
 	point edge(int k) const;
 
+	// For some uses of the code we would like to know both the distance to
+	// the closest and farthest edge given an external point.
+	double nearest_edge_distance(point& p);
+	double farthest_edge_distance(point& p);
+
 	// Return a vector of pixels containing the neighbors of this pixel.  In the
 	// second case, we return the neighboring pixels at an input level.
 	void neighbors(pixel_vector* pixels) const;

@@ -58,7 +58,7 @@ tree_pixel* tree_pixel::from_point(const point& p, int level,
 }
 
 tree_pixel* tree_pixel::from_pixel(const pixel& pix, uint16_t max_points) {
-	return new tree_poixel(pix.id(), max_points);
+	return new tree_pixel(pix.id(), max_points);
 }
 
 bool tree_pixel::add_point(const point* p) {
@@ -81,7 +81,6 @@ bool tree_pixel::add_point(const point* p) {
 					iter != children_.end(); iter++) {
 				if ((*iter)->contains(*p)) {
 					added_to_pixel = (*iter)->add_point(p);
-					if (added_to_pixel) points_.push_back(p);
 					break;
 				}
 			} //end children loop
@@ -273,7 +272,7 @@ double tree_pixel::covering_fraction() const {
 
 	if (point_count_ > 0) {
 		if (!initialized_children_) {
-			covered_area += exact_area();
+			covered_area += total_area;
 		} else if (initialized_children_) {
 			for (tree_ptr_iterator iter = children_.begin();
 					iter != children_.end(); iter++) {
@@ -292,10 +291,10 @@ double tree_pixel::covering_fraction(pixel& pix) const {
 		// case 1, pix is larger than the current tree pixel (or equal to)
 		covered_fraction += exact_area()*covering_fraction()/pix.exact_area();
 	} else if (contains(pix) && point_count_ > 0) {
-		//case 2, this tree pixel contains pix and has points
+		// case 2, this tree pixel contains pix and has points
 		if (!initialized_children_) {
-			//case 2.1, pixel is contained but tree_pixel has no children
-			//we then need to loop over all the points and see if pixel contains any
+			// case 2.1, pixel is contained but tree_pixel has no children
+			// we then need to loop over all the points and see if pixel contains any
 			for (point_ptr_iterator iter = points_.begin();
 					iter != points_.end(); iter++) {
 				if (pix.contains(*(*iter))) {
@@ -315,21 +314,23 @@ double tree_pixel::covering_fraction(pixel& pix) const {
 
 void tree_pixel::points(point_vector* point_vec) const {
 	if (!point_vec->empty()) point_vec->clear();
-	point_vec->reserve(point_count_);
 
-	if (!initialized_children_) {
-		for (point_ptr_iterator iter = points_.begin();
-				iter != points_.end(); iter++) {
-			point_vec->push_back(*(*iter));
-		}
-	} else {
-		for (tree_ptr_iterator iter = children_.begin();
-				iter != children_.end(); iter++) {
-			point_vector tmp_points;
-			(*iter)->points(&tmp_points);
-			for (point_iterator p_iter = tmp_points.begin();
-					p_iter != tmp_points.end(); p_iter++) {
-				point_vec->push_back(*p_iter);
+	if (point_count_ > 0) {
+		point_vec->reserve(point_count_);
+		if (!initialized_children_) {
+			for (point_ptr_iterator iter = points_.begin();
+					iter != points_.end(); iter++) {
+				point_vec->push_back(*(*iter));
+			}
+		} else if (initialized_children_) {
+			for (tree_ptr_iterator iter = children_.begin();
+					iter != children_.end(); iter++) {
+				point_vector tmp_points;
+				(*iter)->points(&tmp_points);
+				for (point_iterator p_iter = tmp_points.begin();
+						p_iter != tmp_points.end(); p_iter++) {
+					point_vec->push_back(*p_iter);
+				}
 			}
 		}
 	}
@@ -337,9 +338,9 @@ void tree_pixel::points(point_vector* point_vec) const {
 
 void tree_pixel::points(pixel& pix, point_vector* point_vec) const {
 	if (!point_vec->empty()) point_vec->clear();
-	point_vec->reserve(point_count_);
 
 	if (point_count_ > 0) {
+		point_vec->reserve(point_count_);
 		if (pix.contains(*this)) {
 			points(point_vec);
 		} else if (contains(pix)) {
@@ -355,7 +356,7 @@ void tree_pixel::points(pixel& pix, point_vector* point_vec) const {
 					(*iter)->points(&tmp_points);
 					for (point_iterator p_iter = tmp_points.begin();
 							p_iter != tmp_points.end(); p_iter++) {
-						p_vect.push_back(*p_iter);
+						point_vec.push_back(*p_iter);
 					}
 				}
 			}
@@ -383,6 +384,7 @@ void tree_pixel::clear() {
 		}
 	}
 	points_.clear();
+
 	if (initialized_children_) {
 		for (tree_ptr_iterator iter = children_.begin();
 				iter != children_.end(); ++iter) {
@@ -396,10 +398,10 @@ void tree_pixel::clear() {
 bool tree_pixel::initialize_children() {
 	initialized_children_ = false;
 	if (!is_leaf()) {
-		pixel_vector* tmp_children;
 		children_.reserve(4);
-		children(tmp_children);
 
+		pixel_vector* tmp_children;
+		children(tmp_children);
 		for (pixel_iterator iter = tmp_children->begin();
 				iter != tmp_children->end(); ++iter) {
 			tree_pixel t_pix =
@@ -407,7 +409,7 @@ bool tree_pixel::initialize_children() {
 			children_.push_back(t_pix);
 		}
 		initialized_children_ = true;
-
+		/*
 		bool transferred_point_to_children = false;
 		for (point_ptr_iterator p_iter = points_.begin();
 				p_iter != points_.end(); ++p_iter) {
@@ -415,10 +417,25 @@ bool tree_pixel::initialize_children() {
 			for (tree_ptr_iterator iter = children_.begin();
 					iter != children_.end(); ++iter) {
 				if ((*iter)->add_point(p_iter))
+					// pretty sure I copied this over the same but it looks like there is
+					// a bug here. If an early point fails and a later point succeeds
+					// then the output of this loop will still be true. Look below for
+					// better version?
 					transferred_point_to_children = true;
 			}
+		}*/
+		bool transferred_points_to_children = true;
+		point_ptr_iterator p_iter = points_.begin();
+		while (p_iter != points_.end() && transferred_points_to_children) {
+			transferred_points_to_children = false;
+			for (tree_ptr_iterator iter = children_.begin();
+					iter != children_.end(); ++iter) {
+				if ((*iter)->add_point(p_iter))
+					transferred_points_to_children = true;
+			}
+			++p_iter;
 		}
-		if (!transferred_point_to_children) initialized_children_ = false;
+		if (!transferred_points_to_children) initialized_children_ = false;
 	} // end is_leaf check
 	return initialized_children_;
 }
@@ -443,29 +460,117 @@ double tree_pixel::direct_weighted_pairs(annulus_bound& bound) {
 	return pair_weight;
 }
 
-/* Don't have all the methods neede for this.
 void tree_pixel::neighbor_recursion(point& p, tree_neighbor& neighbor) {
 	neighbor.add_node();
 
-	if (!points_.empty()) {
+	if (!initialized_children_) {
+		// We have no sub-nodes in this tree, so we'll just iterate over the
+		// points here and take the nearest N neighbors.
 		for (point_ptr_iterator iter = points_.begin();
 				iter != points_.end(); ++iter) {
 			neighbor.test_point(*iter);
 		}
 	} else {
+		// This node is the root node for our tree, so we first find the sub-node
+		// that contains the point and start recursing there.
+		//
+		// While we iterate through the nodes, we'll also calculate the edge
+		// distances for those nodes that don't contain the point and store them
+		// in a priority queue.  This will let us do a follow-up check on nodes in
+		// the most productive order.
 		pixel_queue pix_queue;
 		for (tree_ptr_iterator iter = children_.begin();
 				iter != children_.end(); ++iter) {
 			if ((*iter)->contains(p)) {
 				(*iter)->neighbor_recursion(ang, neighbor);
 			} else {
-				double min_edge_distance, max_edge_distance;
-				(*iter)->
+				distance_pixel_pair dist_pair((*iter)->nearest_edge_distance(p),
+						(*iter));
+				pix_queue.push(dist_pair);
 			}
+		}
+
+		// That should give us back a TreeNeighbor object that contains a workable
+		// set of neighbors and a search radius for possible matches.  Now we just
+		// need to iterate over those sub-nodes that didn't contain the input point
+		// to verify that there can't be any points in their sub-nodes which might
+		// be closer to the input point.
+		//
+		// There's also the possibility that the input point is completely outside
+		// our tree.  In that case (where the number of neighbors in the
+		// TreeNeighbor object is less than the maximum), we want to check
+		// all nodes.
+		while (!pix_queue.empty()) {
+			double pix_distance = pix_queue.top().first;
+			tree_pixel* pix_iter = pix_queue.top().second;
+			if (pix_distance < neighbor.max_distance()) {
+				pix_iter->neighbor_recursion(p, neighbor);
+			}
+			pix_queue.pop();
 		}
 	}
 }
-*/
+
+tree_neighbor::tree_neighbor(const point& reference_point) {
+	tree_neighbor(point, 1, 100.0);
+}
+
+tree_neighbor::tree_neighbor(const point& reference_point,
+		uint8_t n_neighbors) {
+	tree_neighbor(reference_point_, n_neighbors, 100.0);
+}
+
+tree_neighbor::tree_neighbor(const point& reference_point, uint8_t n_neighbors,
+			double max_distance) {
+	reference_point_ = reference_point;
+	n_neighbors_ = n_neighbors;
+	max_distance_ = max_distance;
+	n_nodes_visited_ = 0;
+}
+
+void tree_neighbor::nearest_neighbors(const point_vector& p_vect,
+		bool save_neighbors) {
+	if (!p_vect.empty()) p_vect.clear();
+	std::vector<distance_point_pair> backup_copy;
+
+	while(!point_queue_.empty()) {
+		distance_point_pair dist_pair = point_queue_.top();
+		point_queue_.pop();
+
+		point tmp_point(dist_pair.second->unit_sphere_x(),
+				dist_pair.second->unit_sphere_y(),
+				dist_pair.second->unit_sphere_z(),
+				dist_pair.second->weight());
+
+		p_vect.push_back(tmp_point);
+		backup_copy.push_back(dist_pair);
+	}
+
+	if (save_neighbors) {
+		for (uint8_t i=0; i < backup_copy.size(); i++) {
+			point_queue_.push(backup_copy[i]);
+		}
+	}
+}
+
+bool tree_neighbor::test_point(point* test_point) {
+	bool kept_point = false;
+	double costheta = reference_point_.dot(test_point);
+	double sin2theta = 1.0 - costheta*costheta;
+
+	if (sin2theta < max_distance_ || n_neighbors() < max_neighbors()) {
+		kept_point = true;
+		if (n_neighbors() == max_neighbors) point_queue_.pop();
+		distance_point_pair dist_pair(sin2theta, test_point);
+		point_queue_.push(dist_pair);
+		max_distance_ = point_queue_.top().first;
+	}
+	return kept_point;
+}
+
+double tree_neighbor::max_angular_distance() {
+
+}
 
 } //end namespace s2omp
 
