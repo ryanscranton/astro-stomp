@@ -26,19 +26,10 @@
 namespace s2omp {
 
 tree_pixel::tree_pixel() {
-	initialized_children_ = false;
-	weight_ = 0.0;
-	maximum_points_ = 0;
-	point_count_ = 0;
+	// The default constructor is an invalid pixel.
 }
 
-explicit tree_pixel::tree_pixel(uint64 id) {
-	tree_pixel(id, 200);
-}
-
-tree_pixel::tree_pixel(uint64 id, uint16_t max_points) {
-
-	set_id(id);
+void tree_pixel::initialize_node(uint16_t max_points) {
 	initialized_children_ = false;
 	weight_ = 0.0;
 	maximum_points_ = 0;
@@ -47,22 +38,30 @@ tree_pixel::tree_pixel(uint64 id, uint16_t max_points) {
 	point_count_ = 0;
 }
 
-tree_pixel tree_pixel::from_point(const point& p, int level,
-		uint16_t max_points) {
-
-	uint64 id = point_to_id(p, level);
-	tree_pixel t_pix(id, max_points);
-	return t_pix;
+explicit tree_pixel::tree_pixel(uint64 id) {
+	set_id(id);
+	initialize_node(kDefaultMaxPoints);
 }
 
-tree _pixel tree_pixel::from_pixel(const pixel& pix, uint16_t max_points) {
+tree_pixel::tree_pixel(uint64 id, uint16_t max_points) {
+	set_id(id);
+	initialize_node(max_points);
+}
 
-	tree_pixel t_pix(pix.id(), max_points);
-	return t_pix;
+tree_pixel::~treel_pixel() {
+	clear();
+}
+
+tree_pixel* tree_pixel::from_point(const point& p, int level,
+		uint16_t max_points) {
+	return new tree_pixel(point_to_id(p, level), max_points);
+}
+
+tree_pixel* tree_pixel::from_pixel(const pixel& pix, uint16_t max_points) {
+	return new tree_poixel(pix.id(), max_points);
 }
 
 bool tree_pixel::add_point(const point* p) {
-
 	bool added_to_pixel = false;
 	if (contains(*p)) {
 		if (point_count_ < maximum_points_ || is_leaf()) {
@@ -132,8 +131,8 @@ uint32_t tree_pixel::find_pairs(const annulus_bound& bound) const {
 	return pair_count;
 }
 
-uint32_t tree_pixel::find_pairs(const annulus_bound& bound) const {
-	uint32_t pair_weight = 0;
+double tree_pixel::find_weighted_pairs(const annulus_bound& bound) const {
+	double pair_weight = 0;
 
 	if (bound.may_intersect(*this)) {
 		if (bound.contains(*this)) {
@@ -147,7 +146,7 @@ uint32_t tree_pixel::find_pairs(const annulus_bound& bound) const {
 			} else {
 				for (tree_ptr_iterator iter = children_.begin();
 						iter != children_.end(); iter++) {
-					pair_weight += (*iter)->find_pairs(bound);
+					pair_weight += (*iter)->find_weighted_pairs(bound);
 				}
 			}
 		}
@@ -314,48 +313,48 @@ double tree_pixel::covering_fraction(pixel& pix) const {
 	return covered_fraction;
 }
 
-void tree_pixel::points(point_vector& p_vect) const {
-	if (!p_vect.empty()) p_vect.clear();
-	p_vect.reserve(point_count_);
+void tree_pixel::points(point_vector* point_vec) const {
+	if (!point_vec->empty()) point_vec->clear();
+	point_vec->reserve(point_count_);
 
 	if (!initialized_children_) {
 		for (point_ptr_iterator iter = points_.begin();
 				iter != points_.end(); iter++) {
-			p_vect.push_back(*(*iter));
+			point_vec->push_back(*(*iter));
 		}
 	} else {
 		for (tree_ptr_iterator iter = children_.begin();
 				iter != children_.end(); iter++) {
-			point_vector tmp_p_vect;
-			(*iter)->points(tmp_p_vect);
-			for (point_iterator p_iter = tmp_p_vect.begin();
-					p_iter != tmp_p_vect.end(); p_iter++) {
-				p_vect.push_back(*p_iter);
+			point_vector tmp_points;
+			(*iter)->points(&tmp_points);
+			for (point_iterator p_iter = tmp_points.begin();
+					p_iter != tmp_points.end(); p_iter++) {
+				point_vec->push_back(*p_iter);
 			}
 		}
 	}
 }
 
-void tree_pixel::points(pixel& pix, point_vector& p_vect) const {
-	if (!p_vect.empty()) p_vect.clear();
-	p_vect.reserve(point_count_);
+void tree_pixel::points(pixel& pix, point_vector* point_vec) const {
+	if (!point_vec->empty()) point_vec->clear();
+	point_vec->reserve(point_count_);
 
 	if (point_count_ > 0) {
 		if (pix.contains(*this)) {
-			points(p_vect);
+			points(point_vec);
 		} else if (contains(pix)) {
 			if (!initialized_children_) {
 				for (point_ptr_iterator iter = points_.begin();
 						iter != points_.end(); iter++) {
-					if (pix.contains(*(*iter))) p_vect.push_back(*(*iter));
+					if (pix.contains(*(*iter))) point_vec->push_back(*(*iter));
 				}
 			} else if (initialized_children_) {
 				for (tree_ptr_iterator iter = children_.begin();
 						iter != children_.end(); iter++) {
-					point_vector tmp_p_vect;
-					(*iter)->points(tmp_p_vect);
-					for (point_iterator p_iter = tmp_p_vect.begin();
-							p_iter != tmp_p_vect.end(); p_iter++) {
+					point_vector tmp_points;
+					(*iter)->points(&tmp_points);
+					for (point_iterator p_iter = tmp_points.begin();
+							p_iter != tmp_points.end(); p_iter++) {
 						p_vect.push_back(*p_iter);
 					}
 				}
@@ -379,14 +378,17 @@ uint16_t tree_pixel::n_nodes() const {
 void tree_pixel::clear() {
 	if (!points_.empty()) {
 		for (point_ptr_iterator iter = points_.begin();
-				iter != points_.end(); iter++)
+				iter != points_.end(); iter++) {
 			delete *iter;
+		}
 	}
 	points_.clear();
 	if (initialized_children_) {
 		for (tree_ptr_iterator iter = children_.begin();
-				iter != children_.end(); ++iter)
+				iter != children_.end(); ++iter) {
+			iter->clear();
 			delete *iter;
+		}
 	}
 	children_.clear();
 }

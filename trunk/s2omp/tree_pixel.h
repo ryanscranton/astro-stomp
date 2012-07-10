@@ -17,6 +17,10 @@
 #ifndef TREE_PIXEL_H_
 #define TREE_PIXEL_H_
 
+#include "core.h"
+#include "pixel.h"
+#include "point.h"
+
 namespace s2omp {
 class annulus_bound; // class definition in stomp_angular_bin.h
 class tree_pixel;
@@ -51,14 +55,14 @@ class tree_pixel: public pixel {
 	// structure which can be traversed later on for operations like
 	// pair-counting.
 public:
+	static uint16_t const kDefaultMaxPoints = 200;
 	friend class nearest_neighbor_pixel;
 	explicit tree_pixel(uint64 id);
 	tree_pixel(uint64 id, uint16_t max_points);
 	virtual ~tree_pixel();
 
-	static tree_pixel from_point(const point& p, int level,
-			uint16_t max_points);
-	static tree_pixel from_pixel(const pixel& pix, uint16_t max_points);
+	static tree_pixel* from_point(const point& p, int level, uint16_t max_points);
+	static tree_pixel* from_pixel(const pixel& pix, uint16_t max_points);
 
 	// Add a given point on the sphere to either this pixel (if the capacity for
 	// this pixel hasn't been reached) or one of the sub-pixels.  Return true
@@ -90,8 +94,8 @@ public:
 			uint16_t& nodes_visited) const;
 
 	// Or in the distance to the nearest neighbor.
-	double
-	nearest_neighbor_distance(const point& p, uint16_t& nodes_visited) const;
+	double nearest_neighbor_distance(const point& p,
+			uint16_t& nodes_visited) const;
 
 	// Alternatively, we could be less interested in the nearest neighbor and
 	// more interested in finding a direct match to our input point.  The
@@ -101,8 +105,8 @@ public:
 	// our input point.  The returned boolean indicates whether the returned
 	// point is within the specified radius and the maximum distance is
 	// in degrees.
-	bool
-	closest_match(const point& p, double max_angular_distance, point* match) const;
+	bool closest_match(const point& p, double max_angular_distance,
+			point* match) const;
 
 	// Return the number of points contained in the current pixel and all
 	// sub-pixels.
@@ -130,12 +134,12 @@ public:
 
 	// If we want to extract a copy of all of the points that have been added
 	// to this pixel, this method allows for that.
-	void points(point_vector& p_vect) const;
+	void points(point_vector* points_vec) const;
 	// void points(point_vector* p_vect) const;
 
 	// And an associated method that will extract a copy of the points associated
 	// with an input pixel.
-	void points(const pixel& pix, point_vector& p_vect) const;
+	void points(const pixel& pix, point_vector* points_vec) const;
 	// void points(const pixel& pix, point_vector* p_vect) const;
 
 	// Recurse through the nodes below this one to return the number of nodes in
@@ -173,6 +177,7 @@ public:
 private:
 	tree_pixel();
 
+	void initialize_node(int max_points);
 	bool initialize_children();
 	void add_children(uint16_t& n_nodes); // do we need this?
 	uint32_t direct_pair_count(annulus_bound& bound);
