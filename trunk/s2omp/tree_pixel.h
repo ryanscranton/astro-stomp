@@ -226,13 +226,17 @@ public:
 	~tree_neighbor();
 
 	// Return a list of the nearest neighbors found so far.
-	void nearest_neighbors(const point& p, bool save_neighbors);
+	void nearest_neighbors(const point_vector& p, bool save_neighbors);
 
 	// Return the number of neighbors in the list.  This should always be at most
 	// the value used to instantiate the class, which is returned by calling
 	// MaxNeighbors()
-	uint8_t n_neighbors();
-	uint8_t max_neighbors();
+	inline uint8_t n_neighbors() {
+		return point_queue_.size();
+	}
+	inline uint8_t max_neighbors() {
+		return n_neighbors_;
+	}
 
 	// Submit a point for possible inclusion.  Return value indicates whether the
 	// point was successfully included in the list (i.e., the distance between
@@ -241,7 +245,9 @@ public:
 	bool test_point(point* test_point);
 
 	// Return the maximum distance of the current list.
-	double max_distance();
+	inline double max_distance() {
+		return max_distance_;
+	}
 
 	// The default distance returned is in sin^2(theta) units since that's what
 	// the edge detection code uses.  If we're interested in human units, this
@@ -250,8 +256,12 @@ public:
 
 	// For accounting purposes, it can be useful to keep track of how many nodes
 	// we have visited during our traversal through the tree.
-	uint16_t nodes_visited();
-	void add_node();
+	inline uint16_t nodes_visited() {
+		return n_nodes_visited_;
+	}
+	inline void add_node() {
+		n_nodes_visited_++;
+	}
 
 private:
 	point reference_point_;
