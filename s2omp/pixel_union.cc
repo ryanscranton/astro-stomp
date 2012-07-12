@@ -32,6 +32,8 @@ void pixel_union::init(const pixel_vector& pixels) {
 
   max_level_ = -1;
   min_level_ = 64;
+  area_ = 0.0
+
   while (!pixels.empty()) {
     int level = 64;
     uint64 id = 2^64;
@@ -44,6 +46,9 @@ void pixel_union::init(const pixel_vector& pixels) {
           level = iter->level();
           id = iter->id();
           idx = idx_run;
+          if (level < min_level_) min_level_ = level;
+          if (level > max_level_) max_level_ = level;
+          area_ += iter->exact_area();
         }
       }
       ++idx_run;
@@ -52,19 +57,43 @@ void pixel_union::init(const pixel_vector& pixels) {
   }
 }
 
-void soften() {
+void pixel_union::soften(int max_level) {
 	// Since init has already given us an ordered set of pixels all we need to do
-	// is loop through the pixels until we hit the resolution we are intrested in
+	// is loop through the pixels until we hit the resolution we are interested in
 	// softening to. Starting from the end of the vector and looping backwards
 	// sounds like the best bet here.
+
+  pixel_vector pixels;
+  for (pixel_iterator iter = begin(); iter != end(); ++iter) {
+    if (iter->level() >= max_level) pixels.push_back(*iter);
+    else {
+      // We need to both put this pixel up to a higher resolution and also test
+      // if it is currently contained in our pixel vector.
+      pixel pix = iter->parent(max_level);
+      bool add_pixel = true;
+      for (pixel_iterator pix_iter = pixels.begin();
+          pix_iter != pixels.end(); ++pix_iter) {
+        if (pix_iter->contains(pix)) add_pixel = false;
+      }
+      if (add_pixel) pixels.push_back(pix);
+    }
+  }
+  init(pixels);
 }
 
-void combine(const pixel_union& u) {
+void pixel_union::combine(const pixel_union& u) {
 	// This method is easy enough. We can simply concatenate the two pixel vectors
 	// in each union and re-initialize the map. This may not be the best plan as
 	// since both maps are already unions they should conform to the ordering in
 	// init. Using this assumption could simplify things.
 
+  pixel_vectors pixels;
+  pixels.reserve(size() + u.size());
+  for (pixel_iterator iter = begin(); iter != end(); ++iter)
+    pixels.push_back(*iter);
+  for (pixel_iterator iter = u.begin(); iter != u.end(); ++iter)
+    pixels.push_back(*iter);
+  init(pixels);
 }
 
 void pixel_union::intersect(const pixel_union& u) {
@@ -102,7 +131,13 @@ void pixel_union::exclude(const pixel_union& u) {
 
 void pixel_union::init_from_combination(const pixel_union& a,
 		const pixel_union& b) {
-	// blah blah same as above.
+  pixel_vectors pixels;
+  pixels.reserve(a.size() + b.size());
+  for (pixel_iterator iter = a.begin(); iter != a.end(); ++iter)
+    pixels.push_back(*iter);
+  for (pixel_iterator iter = b.begin(); iter != b.end(); ++iter)
+    pixels.push_back(*iter);
+  init(pixels);
 }
 
 void pixel_union::init_from_intersection(const pixel_union& a,
@@ -171,6 +206,13 @@ pixel_vector pixel_union::pixel_exclusion(pixel& pix) {
     }
   }
   return pixels;
+}
+
+virtual bool may_intersect(const pixel& pix) const {
+  bool intersected = false;
+  for (pixel_iterator iter = begin(); iter != end(); ++iter)
+    if (iter->may_intersect()) intersected = true;
+  return intersected;
 }
 
 
