@@ -33,6 +33,9 @@
 
 namespace s2omp {
 
+class pixel;
+class point;
+
 class pixel_union: public pixelized_bound_interface {
 public:
 	// Like the S2CellUnion and Stomp::Map classes, the pixels that comprise
@@ -44,7 +47,11 @@ public:
 
 	// Alternatively, one can use this static method to return a pointer
 	// to a normalized pixel_union from a vector of pixels.
-	inline static pixel_union* from_covering(const pixel_vector& pixels);
+	inline static pixel_union* from_covering(const pixel_vector& pixels) {
+		pixel_union* p_union = new pixel_union();
+		p_union->init(pixels);
+		return p_union;
+	}
 
 	// Use the input vector of pixels to initialize this pixel_union.  These
 	// pixels will be sorted by index and child pixels will be combined into
@@ -52,7 +59,7 @@ public:
 	void init(const pixel_vector& pixels);
 
 	// In some cases, we may wish to soften the edges of our pixel_union (for
-	// instance of the current union is formed from combining multiple high
+	// instance if the current union is formed from combining multiple high
 	// resolution unions producing a union that is unweidly).  In this case,
 	// we combine all pixels smaller than the input level, producing a parent
 	// pixel at max_level if more than half its area was in the original union.
@@ -71,6 +78,10 @@ public:
 	void init_from_combination(const pixel_union& a, const pixel_union& b);
 	void init_from_intersection(const pixel_union& a, const pixel_union& b);
 	void init_from_exclusion(const pixel_union& a, const pixel_union& b);
+
+	// Method for returning the child pixels that intersect with the union
+	static pixel_vector pixel_intersection(pixel& pix);
+	static pixel_vector pixel_exclusion(pixel& pix);
 
 	// Return a Poisson-random point (or multiple such points) from the area
 	// covered by this pixel_union
@@ -111,7 +122,8 @@ private:
 	bool initialized_;
 };
 
-inline static pixel_union* pixel_union::from_covering(const pixel_vector& pixels) {
+inline static pixel_union* pixel_union::from_covering(
+		const pixel_vector& pixels) {
 	pixel_union* p = new pixel_union();
 	p->init(pixels);
 	return p;
