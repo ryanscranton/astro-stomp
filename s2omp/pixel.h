@@ -29,6 +29,7 @@ namespace s2omp {
 
 class point;
 class pixel;
+class circle_bound;
 
 typedef std::vector<pixel> pixel_vector;
 typedef pixel_vector::iterator pixel_iterator;
