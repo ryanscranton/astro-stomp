@@ -55,12 +55,6 @@ public:
   static pixel* from_point(const point& p);
   static pixel* from_point(const point& p, int level);
 
-  // Since our default constructor is explicit, we can also use a static
-  // method that returns our pixel index from an input point (and level) in
-  // place of an argument that would take a pixel object.
-  static uint64 point_to_id(const point& p);
-  static uint64 point_to_id(const point& p, int level);
-
   // Accessor methods for our basic parameters.
   inline uint64 id() const {
     return id_.id();
@@ -155,9 +149,11 @@ protected:
 
 private:
   pixel();
+  S2::S2Cell get_cell() const;
+  static point s2point_to_point(const S2::S2Point& p) const;
+  static S2::S2Point point_to_s2point(const point& p) const;
 
   S2::S2CellId id_;
-  S2::S2Cell* cell_;
 };
 
 inline bool operator==(pixel const& a, pixel const& b) {
