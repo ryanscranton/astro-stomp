@@ -98,7 +98,7 @@ public:
 	inline virtual bool is_empty() const {return !pixels_.empty();}
 	inline virtual long size() const {return pixels_.size();}
 	virtual void clear() const;
-	inline virtual void area() const {return area_;}
+	inline virtual double area() const {return area_;}
 
 	virtual bool contains(const point& p) const;
 	virtual bool contains(const pixel& pix) const;
