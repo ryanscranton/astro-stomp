@@ -50,7 +50,7 @@ public:
 	virtual ~pixel();
 
 	// Static constructors are also available to instantiate
-  // from point objects (either at a specific input level or at the maximum
+	// from point objects (either at a specific input level or at the maximum
 	// resolution).
 	static pixel* from_point(const point& p);
 	static pixel* from_point(const point& p, int level);
@@ -61,7 +61,7 @@ public:
 	static uint64 point_to_id(const point& p);
 	static uint64 point_to_id(const point& p, int level);
 
-	// Accessor methods for our basic paramters.
+	// Accessor methods for our basic parameters.
 	inline uint64 id() const {
 		return id_.id();
 	}
@@ -117,8 +117,8 @@ public:
 	double exact_area() const;
 
 	// Return true if the input point or pixel is inside our current pixel.
-	bool contains(point& p) const;
-	bool contains(pixel& pix) const;
+	bool contains(const point& p) const;
+	bool contains(const pixel& pix) const;
 
 	// Methods for extracting the points that define the center, vertices and
 	// edges of our pixel.  The pixel edges are defined by great circles, so the
@@ -131,8 +131,14 @@ public:
 
 	// For some uses of the code we would like to know both the distance to
 	// the closest and farthest edge given an external point.
-	double nearest_edge_distance(point& p);
-	double farthest_edge_distance(point& p);
+	double nearest_edge_distance(const point& p) const;
+	double farthest_edge_distance(const point& p) const;
+
+  // Alternatively, we can get both edge distances in a single call.  The
+  // returned boolean tells us whether the distances are to pixel edges (true)
+  // or pixel corners (false).
+  bool edge_distances(const point& p, double& near_edge_distance,
+		     double& far_edge_distance);
 
 	// Return a vector of pixels containing the neighbors of this pixel.  In the
 	// second case, we return the neighboring pixels at an input level.
@@ -155,29 +161,28 @@ private:
 };
 
 inline bool operator==(pixel const& a, pixel const& b) {
-  return a.id() == b.id();
+	return a.id() == b.id();
 }
 
 inline bool operator!=(pixel const& a, pixel const& b) {
-  return a.id() != b.id();
+	return a.id() != b.id();
 }
 
 inline bool operator<(pixel const& a, pixel const& b) {
-  return a.id() < b.id();
+	return a.id() < b.id();
 }
 
 inline bool operator>(pixel const& a, pixel const& b) {
-  return a.id() > b.id();
+	return a.id() > b.id();
 }
 
 inline bool operator<=(pixel const& a, pixel const& b) {
-  return a.id() <= b.id();
+	return a.id() <= b.id();
 }
 
 inline bool operator>=(pixel const& a, pixel const& b) {
-  return a.id() >= b.id();
+	return a.id() >= b.id();
 }
-
 
 } // end namespace s2omp
 
