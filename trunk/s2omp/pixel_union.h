@@ -36,6 +36,9 @@ namespace s2omp {
 class pixel;
 class point;
 
+typedef std::map<const uint64, pixel> pixel_map;
+typedef pixel_map::iterator pixel_map_iterator;
+
 class pixel_union: public pixelized_bound_interface {
 public:
 	// Like the S2CellUnion and Stomp::Map classes, the pixels that comprise
@@ -57,6 +60,7 @@ public:
 	// pixels will be sorted by index and child pixels will be combined into
 	// parent pixels where possible.
 	void init(const pixel_vector& pixels);
+	void init_swap(pixel_vector* pixels);
 
 	// In some cases, we may wish to soften the edges of our pixel_union (for
 	// instance if the current union is formed from combining multiple high
@@ -79,10 +83,6 @@ public:
 	void init_from_intersection(const pixel_union& a, const pixel_union& b);
 	void init_from_exclusion(const pixel_union& a, const pixel_union& b);
 
-	// Method for returning the child pixels that intersect with the union
-	static pixel_vector pixel_intersection(pixel& pix);
-	static pixel_vector pixel_exclusion(pixel& pix);
-
 	// Return a Poisson-random point (or multiple such points) from the area
 	// covered by this pixel_union
 	point get_random_point() const;
@@ -102,24 +102,32 @@ public:
 
 	virtual bool contains(const point& p) const;
 	virtual bool contains(const pixel& pix) const;
+	virtual bool intersects(const pixel& pix) const;
 
 	virtual double contained_area(const pixel& pix) const;
-	virtual bool may_intersect(const pixel& pix) const;
 
 	virtual void covering(pixel_vector* pixels) const;
 	virtual void covering(int max_pixels, pixel_vector* pixels) const;
 	virtual void simple_covering(int level, pixel_vector* pixels) const;
 
-	virtual circle_bound* get_bound() const;
+	inline virtual circle_bound get_bound() const {
+	  if (!initialized_bound_) initialize_bound();
+	  return bound_;
+	}
 
 private:
 	void generate_basic_covering(int level);
+	void initialize_bound();
+
+	void pixel_intersection(pixel& pix, pixel_union* u, pixel_vector* pixels);
+	void pixel_exclusion(pixel& pix, pixel_union* u, pixel_vector* pixels);
 
 	pixel_vector pixels_;
 	pixel_vector covering_;
+	circle_bound bound_;
 	int min_level_, max_level_;
 	double area_;
-	bool initialized_;
+	bool initialized_, initialized_bound_;
 };
 
 inline static pixel_union* pixel_union::from_covering(

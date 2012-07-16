@@ -32,6 +32,9 @@ public:
 	static circle_bound* from_radius(const point& axis, double radius_degrees);
 	static circle_bound* from_height(const point& axis, double height);
 
+	inline point axis() {return axis_;}
+	inline double radius() {return radius_;}
+
 	// API from geometric_bound
 	virtual bool is_empty();
 	virtual long size();
