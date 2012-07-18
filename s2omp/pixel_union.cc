@@ -1,27 +1,40 @@
-/*
- * pixel_union.cc
- *
- *  Created on: Jul 11, 2012
- *      Author: cbmorrison
- */
-
+// Copyright 2012  All Rights Reserved.
+// Author: ryan.scranton@gmail.com (Ryan Scranton)
+//         cmmorrison@gmail.com (Chris Morrison)
+//
+// STOMP is a set of libraries for doing astrostatistical analysis on the
+// celestial sphere.  The goal is to enable descriptions of arbitrary regions
+// on the sky which may or may not encode futher spatial information (galaxy
+// density, CMB temperature, observational depth, etc.) and to do so in such
+// a way as to make the analysis of that data as algorithmically efficient as
+// possible.
+//
+// This file contains the Map class.  Maps are intended to describe an
+// arbitrary area on the sky as precisely as possible, given the limits of
+// pixel resolution, physical memory, etc.  Internally, this information is
+// encoded using pixels at a range of resolutions, depending on how the
+// boundaries of the area in question and the pixelization scheme interact.
+// However, the goal of the class is to abstract away those details, allowing
+// the user to treat Maps as a pure representative of spherical geometry.
 
 #include "pixel_union.h"
+#include "core.h"
 
 pixel_union::pixel_union() {
-	min_level_ = 100;
-	max_level_ = -1;
-	double area_ = 0.0;
-	bool initialized_ = false;
+  min_level_ = MAX_LEVEL;
+  max_level_ = 0;
+  double area_ = 0.0;
+  bool initialized_ = false;
 }
 
 void pixel_union::init(const pixel_vector& pixels) {
   // Most of this method is from S2CellUnion Normalize().
-  if (!pixels_.empty()) pixels_.clear();
+  if (!pixels_.empty())
+    pixels_.clear();
   pixels_.reserve(pixels.size());
   initialized_ = false;
-  int min_level = 100;
-  int max_level = -1;
+  int min_level = MAX_LEVEL;
+  int max_level = 0;
   double area = 0.0;
 
 	// To make the process of combining and throwing out duplicate pixels we need
@@ -90,10 +103,10 @@ void pixel_union::init_swap(pixel_vector* pixels) {
 }
 
 void pixel_union::soften(int max_level) {
-	// Since init has already given us an ordered set of pixels all we need to do
-	// is loop through the pixels until we hit the resolution we are interested in
-	// softening to. Starting from the end of the vector and looping backwards
-	// sounds like the best bet here.
+  // Since init has already given us an ordered set of pixels all we need to do
+  // is loop through the pixels until we hit the resolution we are interested in
+  // softening to. Starting from the end of the vector and looping backwards
+  // sounds like the best bet here.
 
   pixel_vector pixels;
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {
@@ -111,10 +124,10 @@ void pixel_union::soften(int max_level) {
 }
 
 void pixel_union::combine(const pixel_union& u) {
-	// This method is easy enough. We can simply concatenate the two pixel vectors
-	// in each union and re-initialize the map. This may not be the best plan as
-	// since both maps are already unions they should conform to the ordering in
-	// init. Using this assumption could simplify things.
+  // This method is easy enough. We can simply concatenate the two pixel vectors
+  // in each union and re-initialize the map. This may not be the best plan as
+  // since both maps are already unions they should conform to the ordering in
+  // init. Using this assumption could simplify things.
 
   // This method has the current problem that duplicate area may be covered by
   // pixels at different resolutions.
@@ -175,8 +188,8 @@ void pixel_union::intersect(const pixel_union& u) {
 
 
 void pixel_union::exclude(const pixel_union& u) {
-	// same as above but we want to flip the tests so that if a pixel in our
-	// current union is within the input union we want to drop that pixel.
+  // same as above but we want to flip the tests so that if a pixel in our
+  // current union is within the input union we want to drop that pixel.
 
   pixel_vector* pixels;
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {
@@ -186,7 +199,7 @@ void pixel_union::exclude(const pixel_union& u) {
 }
 
 void pixel_union::init_from_combination(const pixel_union& a,
-		const pixel_union& b) {
+    const pixel_union& b) {
 
   pixel_vector pixels;
   pixels.reserve(a.size() + b.size());
@@ -214,7 +227,7 @@ void pixel_union::init_from_combination(const pixel_union& a,
 }
 
 void pixel_union::init_from_intersection(const pixel_union& a,
-		const pixel_union& b) {
+    const pixel_union& b) {
 
   pixel_vector pixels;
   pixel_iterator a_iter = a.begin();
@@ -241,7 +254,7 @@ void pixel_union::init_from_intersection(const pixel_union& a,
 }
 
 void pixel_union::init_from_exclusion(const pixel_union& a,
-		const pixel_union& b) {
+    const pixel_union& b) {
   pixel_vector* pixels;
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {
     a.pixel_exclusion(*iter, &b, pixels);
@@ -395,8 +408,8 @@ void pixel_union::pixel_intersection(const pixel& pix, const pixel_union& u,
     if (u->contains(pix)) {
       pixels->push_back(pix);
     } else if (!pix.is_leaf()) {
-      for (pixel_iterator child_iter = pix.child_begin();
-          child_iter != pix.child_end(); ++child_iter) {
+      for (pixel_iterator child_iter = pix.child_begin(); child_iter
+          != pix.child_end(); ++child_iter) {
         pixel_intersection(*child_iter, u, pixels);
       }
     }
@@ -409,10 +422,18 @@ void pixel_union::pixel_exclusion(const pixel& pix, const pixel_union& u,
     if (!u->intersects(pix)) {
       pixels->push_back(pix);
     } else if (!pix.is_leaf()) {
-      for (pixel_iterator child_iter = pix.child_begin();
-          child_iter != pix.child_end(); ++child_iter) {
+      for (pixel_iterator child_iter = pix.child_begin(); child_iter
+          != pix.child_end(); ++child_iter) {
         pixel_exclusion(*child_iter, u, pixels);
       }
     }
   }
+}
+
+virtual bool may_intersect(const pixel& pix) const {
+  bool intersected = false;
+  for (pixel_iterator iter = begin(); iter != end(); ++iter)
+    if (iter->may_intersect())
+      intersected = true;
+  return intersected;
 }
