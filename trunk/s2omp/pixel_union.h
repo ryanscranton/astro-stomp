@@ -36,8 +36,8 @@ namespace s2omp {
 class pixel;
 class point;
 
-typedef std::map<const uint64, pixel> pixel_map;
-typedef pixel_map::iterator pixel_map_iterator;
+typedef std::map<const uint64, unit16_t> region_dict;
+typedef pixel_map::iterator region_dict_iterator;
 
 class pixel_union: public pixelized_bound_interface {
 public:
@@ -99,6 +99,7 @@ public:
 	inline virtual long size() const {return pixels_.size();}
 	virtual void clear() const;
 	inline virtual double area() const {return area_;}
+	virtual double aveage_area() const;
 
 	virtual bool contains(const point& p) const;
 	virtual bool contains(const pixel& pix) const;
@@ -119,8 +120,12 @@ private:
 	void generate_basic_covering(int level);
 	void initialize_bound();
 
-	void pixel_intersection(pixel& pix, pixel_union* u, pixel_vector* pixels);
-	void pixel_exclusion(pixel& pix, pixel_union* u, pixel_vector* pixels);
+	void pixel_intersection(const pixel& pix, const pixel_union& u,
+	    pixel_vector* pixels);
+	void pixel_exclusion(const pixel& pix, const pixel_union& u,
+	    pixel_vector* pixels);
+	// For automatic regionation is is useful to know what the average area of
+	// a pixel is in our union.
 
 	pixel_vector pixels_;
 	pixel_vector covering_;
@@ -128,6 +133,7 @@ private:
 	int min_level_, max_level_;
 	double area_;
 	bool initialized_, initialized_bound_;
+	region_map region_map_;
 };
 
 inline static pixel_union* pixel_union::from_covering(

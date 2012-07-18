@@ -9,7 +9,7 @@
 #include "pixel_union.h"
 
 pixel_union::pixel_union() {
-	min_level_ = 100; // don't know if these numbers are right, should look this up
+	min_level_ = 100;
 	max_level_ = -1;
 	double area_ = 0.0;
 	bool initialized_ = false;
@@ -29,8 +29,8 @@ void pixel_union::init(const pixel_vector& pixels) {
   sort(pixels.begin(), pixels.end());
 
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    // Like S2CellUnion we first check if this is a duplicate or contained within
-    // a previous pixel;
+    // Like S2CellUnion we first check if this is a duplicate or contained
+    //within a previous pixel;
     // If the previous pixel contains this pixel, go to next position in the
     // pixel_vector.
     if (!pixels_.empty() && pixels_.back().contains(*iter)) continue;
@@ -43,7 +43,8 @@ void pixel_union::init(const pixel_vector& pixels) {
     while (pixels_.size() >= 3) {
       // Now we begin the check to combine pixels that are children of the same
       // parent. Like in S2 we first test if the pixels are exclusive
-      if ((pixels_.end()[-3] ^ pixels_.end()[-2] ^ pixels.back()) != *iter)
+      if ((pixels_.end()[-3].id() ^ pixels_.end()[-2].id() ^
+          pixels.back().id()) != iter->id())
         break;
 
       // Now that we've found that the pixels are exclusive we need to perform
@@ -128,7 +129,7 @@ void pixel_union::combine(const pixel_union& u) {
       pixels.push_back(*iter);
       ++iter;
       continue;
-    } else if (iter == end || iter->id() > u_iter->id()) {
+    } else if (iter != end || iter->id() > u_iter->id()) {
       pixels.push_back(*u_iter);
       ++u_iter;
       continue;
@@ -179,7 +180,7 @@ void pixel_union::exclude(const pixel_union& u) {
 
   pixel_vector* pixels;
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {
-    pixel_exclusion(*iter, &u, pixels);
+    pixel_exclusion(*iter, u, pixels);
   }
   init(*pixels);
 }
@@ -290,19 +291,18 @@ void pixel_union::initialzie_bound() {
 point pixel_union::get_random_point() const {
   if (!initialized_bound_) initialze_bound();
 
+  // move to circle bound
+
   MTRand mtrand;
   mtrand.seed();
 
   bool kept_point = false;
   point rand_point;
   double rot_angle_x = acos(bound.axis().dot(point(0,0,1,1)));
-  double norm = sqrt(
-      bound.axis().unit_sphere_x()*bound.axis().unit_sphere_x()+
-      bound.axis().unit_shpere_y()*bound.axis().unit_shpere_y());
-  double rot_angle_z = acos(point(bound.center.unit_sphere_x()/norm,
-      bound.center.unit_sphere_y()/norm, 0.0).dot(point(1,0,0,1)));
+  double rot_angle_z = acos(point(bound.axis.unit_sphere_x(),
+      bound.center.unit_sphere_y(), 0.0).dot(point(1,0,0,1)));
   while (!kept_point) {
-    double x = mtrand.rand(1 - cos(bound.radius())) + cos(bound.radius());
+    double x = mtrand.rand(1 - bound_.height()) + bound_.height();
     double phi = mtrand.rand(2.0*PI);
 
     double sintheta = sin(acos(x));
@@ -312,7 +312,7 @@ point pixel_union::get_random_point() const {
     // now i need to rotate the point to the correct coordinate system.
     rand_point.rotate_about(point(1,0,0,1), rot_angle_x);
     rand_point.rotate_about(point(0,0,1,1), rot_angle_z);
-    if (contains(rand_point.normalize())) kept_point = true;
+    if (contains(rand_point)) kept_point = true;
   }
   return rand_point;
 }
@@ -326,13 +326,10 @@ void pixel_union::get_random_points(long n_points, pixel_vector* points) const {
   mtrand.seed();
 
   double rot_angle_x = acos(bound.axis().dot(point(0,0,1,1)));
-  double norm = sqrt(
-      bound.axis().unit_sphere_x()*bound.axis().unit_sphere_x() +
-      bound.axis().unit_shpere_y()*bound.axis().unit_shpere_y());
-  double rot_angle_z = acos(point(bound.center.unit_sphere_x()/norm,
-      bound.center.unit_sphere_y()/norm, 0.0).dot(point(1,0,0,1)));
+  double rot_angle_z = acos(point(bound.axis.unit_sphere_x(),
+      bound.center.unit_sphere_y(), 0.0).dot(point(1,0,0,1)));
   while (points.size() < n_points) {
-    double x = mtrand.rand(1 - cos(bound.radius())) + cos(bound.radius());
+    double x = mtrand.rand(1 - bound_.height()) + bound_.height();
     double phi = mtrand.rand(2.0*PI);
 
     double sintheta = sin(acos(x));
@@ -346,7 +343,32 @@ void pixel_union::get_random_points(long n_points, pixel_vector* points) const {
   }
 }
 
+virtual void covering(pixel_vector* pixels) const {
+  if (!pixels->empty()) pixels->clear();
+  simple_covering(min_level_, pixels);
+}
+
+virtual void covering(int max_pixels, pixel_vector* pixels) const {
+  if (!pixels->empty()) pixels->clear();
+  double average_area = area_/(1.0*max_pixels);
+  int level = MAX_LEVEL;
+  double pixel_average = -1.0;
+
+  while (pixel.average_area(level) < average_area) {
+    if (level == 0) break;
+    level--;
+  }
+  if (level < 30) level++;
+
+  while (pixels->empty() || pixels->size() > max_pixels) {
+    pixels->clear();
+    simple_covering(level, pixels);
+    level--;
+  }
+}
+
 void pixel_union::simple_covering(int level, pixel_vector* pixels) const {
+  // flood fill.
   if (!pixels->empty()) pixels->clear();
 
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {
@@ -367,7 +389,7 @@ void pixel_union::simple_covering(int level, pixel_vector* pixels) const {
   }
 }
 
-void pixel_union::pixel_intersection(pixel& pix, pixel_union* u,
+void pixel_union::pixel_intersection(const pixel& pix, const pixel_union& u,
     pixel_vector* pixels) {
   if (u->intersects(pix)) {
     if (u->contains(pix)) {
@@ -381,7 +403,7 @@ void pixel_union::pixel_intersection(pixel& pix, pixel_union* u,
   }
 }
 
-void pixel_union::pixel_exclusion(pixel& pix, pixel_union* u,
+void pixel_union::pixel_exclusion(const pixel& pix, const pixel_union& u,
     pixel_vector* pixels) {
   if (!u->contains(pix)) {
     if (!u->intersects(pix)) {
