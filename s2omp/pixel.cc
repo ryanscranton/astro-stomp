@@ -117,7 +117,19 @@ bool pixel::contains(const point& p) const {
 }
 
 bool pixel::contains(const pixel& pix) const {
-  return get_cell().Contains(S2CellId(pix.id()));
+  return id_.contains(S2CellId(pix.id()));
+}
+
+bool pixel::intersects(const pixel& pix) const {
+  return id_.intersects(S2CellId(pix.id()));
+}
+
+pixel pixel::range_min() const {
+  return pixel(id_.range_min().id());
+}
+
+pixel pixel::range_max() const {
+  return pixel(id_.range_max().id());
 }
 
 point pixel::center_point() const {
@@ -168,12 +180,14 @@ bool pixel::edge_distances(point& p, double& near_edge_distance,
   bool nearest_point_on_edge = false;
   for (int k = 0; k < 2; k++) {
     if (edge_caps[k].contains(p) && edge_caps[k + 2].contains(p)) {
-      // To find the nearest point on an edge, we need to find the normal to
-      // the edge great circle that runs through p.  To find this, we solve
+      // To find the nearest point on an edge (x), we need to find the normal
+      // to the edge great circle that runs through p.  To find this, we solve
       // the following equations:
       //
       // edge(k).dot(p.cross(x)) == 0 && edge(k).dot(x) == 0.
       //
+      // (i.e., the great circle that runs through p and x needs to be normal
+      // to the edge great circle and x needs to be on the edge great circle).
       // The solution is x = edge(k).cross(p.cross(edge(k))).
       point nearest_point = edge[k].cross(p.cross(edge[k])); // normalize?
       double costheta = nearest_point.dot(p);

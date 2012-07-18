@@ -114,6 +114,17 @@ public:
   bool contains(const point& p) const;
   bool contains(const pixel& pix) const;
 
+  // In addition, we can also check to see if we are contained by another
+  // pixel.
+  bool intersects(const pixel& pix) const;
+
+  // The real work for these containment methods is actually done by
+  // range_min() and range_max(), which return the pixels that bound our pixel
+  // at all levels.  If a second pixel has an id between range_min() and
+  // range_max(), then we know that it is contained by our pixel.
+  inline pixel range_min() const;
+  inline pixel range_max() const;
+
   // Methods for extracting the points that define the center, vertices and
   // edges of our pixel.  The pixel edges are defined by great circles, so the
   // returned points are the vectors orthogonal to a given great circle,
