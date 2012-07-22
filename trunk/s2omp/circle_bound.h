@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "core.h"
 #include "geometric_bound_interface.h"
+#include "MersenneTwister.h"
 
 namespace s2omp {
 class point;  // class declaration in stomp_angular_coordinate.h
@@ -34,6 +35,7 @@ public:
 
 	inline point axis() {return axis_;}
 	inline double radius() {return radius_;}
+	inline double height() {return height_;}
 
 	// API from geometric_bound
 	virtual bool is_empty();
@@ -60,9 +62,19 @@ public:
 
 private:
 	circle_bound();
+	void initialize_random();
+
 	S2::S2Cap cap_;
 	point axis_;
-	double radius_;
+  bool initialized_random_;
+	double radius_, height_;
+
+	//These variables below are for generating random points and will not be
+	// initialized unti initialize_random() is called.
+	point great_cirlce_norm_;
+	double rotate_;
+	bool initialized_random_;
+	MTRand mtrand;
 };
 
 } // end namespace s2omp
