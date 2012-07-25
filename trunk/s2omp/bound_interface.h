@@ -22,38 +22,74 @@
 #ifndef BOUND_INTERFACE_H_
 #define BOUND_INTERFACE_H_
 
+#include <stdint.h>
+#include <vector>
+#include <map>
+#include "core.h"
+#include "circle_bound.h"
+#include "pixel.h"
+#include "point.h"
+#include "region_map.h"
+
 namespace s2omp {
 
 class bound_interface {
 public:
   virtual ~bound_interface();
 
-  virtual bool is_empty();
-  virtual long size();
+  // All bound objects should implement versions of these basic methods.  We
+  // don't expect that all of them will necessarily make sense for all
+  // derived classes (e.g., what is the size of a circle_bound?), but enough
+  // should to justify each method.  We start with the basics: is a bound
+  // empty and, if not, what's its area.
+  virtual bool is_empty() const;
+  virtual long size() const;
   virtual void clear();
-  virtual void area();
+  virtual void area() const;
 
-  virtual bool contains(const point& p);
-  virtual bool contains(const pixel& pix);
-  virtual bool contains(const bound& b);
+  // As bound-derived objects represent regions on the sky, we should be able
+  // to do some common tasks with them.  In particular, we should be able to
+  // create a low-resolution covering of the bound that gives an approximation
+  // of the area.  Likewise, we should be able to split the area covered by
+  // the bound into roughly equal-area pieces.  Finally, we should be able to
+  // generate random points over the bound's extent.
 
-  virtual double contained_area(const pixel& pix);
-  virtual bool may_intersect(const pixel& pix);
+  // For these tasks, we need a few common methods whose implementations will
+  // vary based on the details of the different bound objects.  First, we need
+  // to be able to know if a pixel or point is contained within the bound.
+  virtual bool contains(const point& p) const;
+  virtual bool contains(const pixel& pix) const;
 
-  virtual void covering(pixel_vector* pixels);
-  virtual void covering(int max_pixels, pixel_vector* pixels);
-  virtual void covering(double fractional_area_tolerance, pixel_vector* pixels);
-  virtual void simple_covering(int level, pixel_vector* pixels);
+  // For regionation, we need to know how much of a given pixel is contained
+  // within the bound.
+  virtual double contained_area(const pixel& pix) const;
 
-  virtual circle_bound get_bound();
+  // Since generating a covering is somewhat inexact, we only need to know if
+  // a pixel might intersect our bound, which is generally something we can
+  // calculate faster than containment.
+  virtual bool may_intersect(const pixel& pix) const;
 
-  virtual point get_random_point();
-  virtual void get_random_points(long n_points, pixel_vector* points);
+  // Finally, for the purposes of generating random points, we need to be able
+  // to create a circle_bound that encompasses the bound.
+  virtual circle_bound get_bound() const;
+
+  void covering(pixel_vector* pixels);
+  void covering(int max_pixels, pixel_vector* pixels);
+  void covering(double fractional_area_tolerance, pixel_vector* pixels);
+  void simple_covering(int level, pixel_vector* pixels);
+
+  point get_random_point();
+  void get_random_points(long n_points, point_vector* points);
+
+protected:
+  bound_interface();
 
 private:
-  bound_interface();
+
+
+
 };
 
 } // end namespace s2omp
 
-#endif /* _H_ */
+#endif /* BOUND_INTERFACE_H_ */
