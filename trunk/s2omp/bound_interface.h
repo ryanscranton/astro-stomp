@@ -19,14 +19,14 @@
 // GeometricBound objects (with the appropriate constructor) and perform those
 // operations on their pixelized counterparts.
 
-#ifndef GEOMETRIC_BOUND_H_
-#define GEOMETRIC_BOUND_H_
+#ifndef BOUND_INTERFACE_H_
+#define BOUND_INTERFACE_H_
 
 namespace s2omp {
 
-class geometric_bound {
+class bound_interface {
 public:
-  virtual ~geometric_bound();
+  virtual ~bound_interface();
 
   virtual bool is_empty();
   virtual long size();
@@ -35,7 +35,7 @@ public:
 
   virtual bool contains(const point& p);
   virtual bool contains(const pixel& pix);
-  virtual bool contains(const geometric_bound& b);
+  virtual bool contains(const bound& b);
 
   virtual double contained_area(const pixel& pix);
   virtual bool may_intersect(const pixel& pix);
@@ -51,9 +51,9 @@ public:
   virtual void get_random_points(long n_points, pixel_vector* points);
 
 private:
-  geometric_bound();
+  bound_interface();
 };
 
 } // end namespace s2omp
 
-#endif /* GEOMETRIC_BOUND_H_ */
+#endif /* _H_ */

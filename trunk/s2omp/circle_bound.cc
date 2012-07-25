@@ -70,7 +70,25 @@ point circle_bound::generate_random_point() {
 
 void cirlce_bound::generate_random_points(long n_points, point_vector* points) {
   if (!points->empty()) points->clear();
+  points->reserve(n_points);
   for (long i = 0; i < n_points; ++i) {
     points->push_back(generate_random_point());
+  }
+}
+
+point circle_bound::generate_weighted_random_point(const point_vector& points) {
+  point p = generate_random_point();
+  p.set_weight(mtrand.randInt(points.size()));
+  return p;
+}
+
+void circle_bound::generate_weighted_random_points(long n_points,
+    point_vector* points, const point_vector& input_points) {
+  if (!points->empty()) points->clear();
+
+  for (long i = 0; i < n_points; ++i) {
+    point p = generate_random_point();
+    p.set_weight(mtrand.randInt(input_points.size()));
+    points->push_back(p);
   }
 }

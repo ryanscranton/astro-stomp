@@ -301,67 +301,54 @@ void pixel_union::initialzie_bound() {
   bound_ = bound;
 }
 
-point pixel_union::get_random_point() const {
+point pixel_union::generate_random_point() const {
   if (!initialized_bound_) initialze_bound();
 
-  // move to circle bound
-
-  MTRand mtrand;
-  mtrand.seed();
-
-  bool kept_point = false;
-  point rand_point;
-  double rot_angle_x = acos(bound.axis().dot(point(0,0,1,1)));
-  double rot_angle_z = acos(point(bound.axis.unit_sphere_x(),
-      bound.center.unit_sphere_y(), 0.0).dot(point(1,0,0,1)));
-  while (!kept_point) {
-    double x = mtrand.rand(1 - bound_.height()) + bound_.height();
-    double phi = mtrand.rand(2.0*PI);
-
-    double sintheta = sin(acos(x));
-
-    rand_point = point(sintheta*cos(phi), sintheta*sin(phi), x);
-
-    // now i need to rotate the point to the correct coordinate system.
-    rand_point.rotate_about(point(1,0,0,1), rot_angle_x);
-    rand_point.rotate_about(point(0,0,1,1), rot_angle_z);
-    if (contains(rand_point)) kept_point = true;
+  point p = bound_.generate_random_point();
+  while (!contains(p)) {
+    p = bound_.generate_random_point();
   }
-  return rand_point;
+  return p;
 }
 
-void pixel_union::get_random_points(long n_points, pixel_vector* points) const {
-  if (!initialized_bound_) initialize_bound();
+void pixel_union::generate_random_points(long int n_points,
+    points_vector* points) const {
   if (!points->empty()) points->clear();
-  points->reserve(n_points);
 
-  MTRand mtrand;
-  mtrand.seed();
+  for (long int i = 0; i < n_points; ++i) {
+    points->push_back(generate_random_point());
+  }
+}
 
-  double rot_angle_x = acos(bound.axis().dot(point(0,0,1,1)));
-  double rot_angle_z = acos(point(bound.axis.unit_sphere_x(),
-      bound.center.unit_sphere_y(), 0.0).dot(point(1,0,0,1)));
-  while (points.size() < n_points) {
-    double x = mtrand.rand(1 - bound_.height()) + bound_.height();
-    double phi = mtrand.rand(2.0*PI);
+void pixel_union::generate_weighted_random_point(const point_vector& points) {
+  if (!initialized_bound_) initialze_bound();
 
-    double sintheta = sin(acos(x));
+  point p = bound_.generate_weighted_random_point(points);
+  while (!contains(p)) {
+    p = bound_.generate_weighted_random_point(points);
+  }
+  return p;
+}
 
-    point rand_point = point(sintheta*cos(phi), sintheta*sin(phi), x);
+void pixel_union::generate_weighted_random_points(long n_points,
+    const point_vector& points, point_vector* points) {
+  if (!points->empty()) points->clear();
 
-    // now we need to rotate the point to the correct coordinate system.
-    rand_point.rotate_about(point(1,0,0,1), rot_angle_x);
-    rand_point.rotate_about(point(0,0,1,1), rot_angle_z);
-    if (contains(rand_point)) points->push_back(point);
+  for (long int i = 0; i < n_points; ++i) {
+    points->push_back(generate_weighted_random_point());
   }
 }
 
 virtual void covering(pixel_vector* pixels) const {
-  if (!pixels->empty()) pixels->clear();
-  simple_covering(min_level_, pixels);
+  // this is the default mode for a pixel covering. For this as for other
+  // coverings we use only 8 pixels at max to cover our union.
+  covering(8, pixels);
 }
 
 virtual void covering(int max_pixels, pixel_vector* pixels) const {
+  // For this class we want to keep as few pixels as possible (defined by
+  // max_pixels) and retain a close approximation of the area contained by the
+  // union.
   if (!pixels->empty()) pixels->clear();
   double average_area = area_/(1.0*max_pixels);
   int level = MAX_LEVEL;
@@ -381,7 +368,10 @@ virtual void covering(int max_pixels, pixel_vector* pixels) const {
 }
 
 void pixel_union::simple_covering(int level, pixel_vector* pixels) const {
-  // flood fill.
+  // For a simple covering of a pixel_union we don't need anything fancy like
+  // FloodFill from S2 (at least for this method). If we want a simple covering
+  // of a pixel_union then we just need to loop through the pixels, make parents
+  // out of children
   if (!pixels->empty()) pixels->clear();
 
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {

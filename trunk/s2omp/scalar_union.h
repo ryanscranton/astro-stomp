@@ -21,7 +21,7 @@
 
 namespace s2omp {
 
-class scalar_union: public pixelized_bound_interface {
+class scalar_union: public bound_interface {
 public:
 	enum ScalarType {
 		SCALAR_FIELD, DENSITY_FIELD, SAMPLED_FIELD
