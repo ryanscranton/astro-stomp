@@ -13,7 +13,7 @@
 #include <vector>
 #include <algorithm>
 #include "core.h"
-#include "geometric_bound_interface.h"
+#include "bound_interface.h"
 #include "MersenneTwister.h"
 
 namespace s2omp {
@@ -24,7 +24,7 @@ class circle_bound;
 typedef std::vector<circle_bound> circle_vector;
 typedef circle_vector::iterator circle_iterator;
 
-class circle_bound: public geometric_bound {
+class circle_bound: public bound_interface {
 public:
 	virtual ~circle_bound();
 

@@ -10,9 +10,9 @@
 
 namespace s2omp {
 
-class annulus_bound: public geometric_bound {
+class annulus_bound: public bound_interface {
 public:
-	virtual ~annlus_bound();
+	virtual ~annulus_bound();
 
 	static annulus_bound* from_radii(const point& axis,
 			double inner_theta_degrees, double outer_theta_degrees);

@@ -39,7 +39,7 @@ class point;
 typedef std::map<const uint64, unit16_t> region_dict;
 typedef pixel_map::iterator region_dict_iterator;
 
-class pixel_union: public pixelized_bound_interface {
+class pixel_union: public bound_interface {
 public:
   // Like the S2CellUnion and Stomp::Map classes, the pixels that comprise
   // a pixel_union need to be properly normalized to make the remainder of

@@ -43,7 +43,7 @@ typedef std::map<const uint64, tree_pixel *> tree_map;
 typedef tree_map::iterator tree_map_iterator;
 typedef std::pair<tree_map_iterator, tree_map_iterator> tree_map_pair;
 
-class tree_union : public pixelized_bound_interface {
+class tree_union : public bound_interface {
 public:
 	friend class nearest_neighbor_pixel;
 
