@@ -90,11 +90,12 @@ void pixel_union::init(const pixel_vector& pixels) {
   if (pixels_.size() < pixels.size()) {
     init_swap(&pixels_);
   }
-  if (!pixels_.empty())
+  if (!pixels_.empty()) {
     initialized_ = true;
     max_level_ = max_level;
     min_level_ = min_level;
     area_ = area;
+  }
 }
 
 void pixel_union::init_swap(pixel_vector* pixels) {

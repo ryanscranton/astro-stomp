@@ -15,19 +15,18 @@ typedef std::map<const int16_t, double> region_area;
 
 namespace s2omp {
 class region_map {
-  // This class provides the functionality for dividing the area subtended by a
-  // BaseMap-derived object into roughly equal-area, equal-sized regions.  The
-  // class is not intended to be instantiated outside of the BaseMap class.
+  // A region_map splits a bound_interface object into roughly equal-area
+  // sections.  Once that is done, one can determine the region number at a
+  // given point or pixel (provided that the input pixel is at a finer
+  // resolution than those used to split the bound's area).
 
 public:
   region_map();
   virtual ~region_map();
 
-  uint16_t initialize(uint16_t n_region, pixelized_bound* bound);
-  uint16_t
-      initialize(uint16_t n_region, uint32_t level, pixelized_bound* bound);
-
-  bool initialize(pixelized_bound& reference_bound, pixelized_bound* bound);
+  // There are two options for
+  uint16_t init(uint16_t n_region, bound_interface* bound);
+  uint16_t init(uint16_t n_region, int level, bound_interface* bound);
 
   int16_t find_region(const point& p);
 
@@ -60,9 +59,9 @@ public:
   }
 
 private:
-  int find_regionation_level(analytic_bound* bound, uint16_t n_region);
+  int find_regionation_level(const bound_interface& bound, uint16_t n_region);
 
-  void regionate(analytic_bound* bound, uint16_t n_region, int level);
+  void regionate(const bound_interface& bound, uint16_t n_region, int level);
 
   bool verify_regionation(uint16_t n_region);
 
