@@ -24,33 +24,52 @@ public:
   region_map();
   virtual ~region_map();
 
-  // There are two options for
-  uint16_t init(uint16_t n_region, bound_interface* bound);
-  uint16_t init(uint16_t n_region, int level, bound_interface* bound);
+  // By default, initialization will be done by specifying a target number
+  // of regions and the code will automatically determine the appropriate
+  // level to use based on the area of the bound and requested number of
+  // regions.  The return value will indicate the actual number of regions
+  // created.
+  uint16_t init(const bound_interface& bound, uint16_t n_region);
 
+  // Alternatively, the level for regionation can be set on initialization,
+  // with the return value being the number of regions.  This method is more
+  // likely to diverge from the specified number of regions if the input
+  // level is not appropriate.
+  uint16_t init(const bound_interface& bound, uint16_t n_region, int level);
+
+  // Given an input point, return the region containing it (which does not
+  // necessarily mean that it is contained in the bound used to generate the
+  // region_map).  If the input point is outside the region map, the return
+  // value is -1.
   int16_t find_region(const point& p);
 
+  // Return the region for the input pixel.  If the pixel is outside the
+  // region_map or if pix.level() < region_map.level(), the return value is -1.
   int16_t find_region(const pixel& pix);
-
-  void clear();
 
   void region_covering(int16_t region, pixel_vector* pixels);
 
   // Given a region index, return the area associated with that region.
   double region_area(int16_t region);
 
-  // Some getter methods to describe the state of the RegionMap.
+  // Some getter methods to describe the state of the region_map.
   inline uint16_t n_region() const {
     return n_region_;
   }
   inline uint32_t level() const {
     return level_;
   }
-  inline bool is_initialized() const {
-    return !region_map_.empty();
+  inline bool is_empty() const {
+    return region_map_.empty();
+  }
+  inline void clear() {
+    region_map_.clear();
+    region_area_.clear();
+    level_ = -1;
+    n_region_ = 0;
   }
 
-  // Return iterators for the set of RegionMap objects.
+  // Return iterators for the set of region_map objects.
   inline region_iterator begin() {
     return region_map_.begin();
   }
@@ -60,10 +79,7 @@ public:
 
 private:
   int find_regionation_level(const bound_interface& bound, uint16_t n_region);
-
-  void regionate(const bound_interface& bound, uint16_t n_region, int level);
-
-  bool verify_regionation(uint16_t n_region);
+  int validate_level(double bound_area, uint16_t n_region, int level);
 
   region_dict region_map_;
   region_area region_area_;

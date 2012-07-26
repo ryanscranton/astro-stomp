@@ -16,8 +16,12 @@ public:
   coverer();
   virtual ~coverer();
 
-private:
+  static void get_simple_covering(const bound_interface& bound, int level,
+      pixel_vector* pixels);
 
+private:
+  int min_level_, max_level_;
+  uint32_t max_pixels_;
 };
 
 } // end namespace s2omp
