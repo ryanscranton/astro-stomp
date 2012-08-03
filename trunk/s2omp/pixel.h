@@ -110,6 +110,14 @@ public:
   double average_area() const;
   double exact_area() const;
 
+  // For some methods we need would like a way to calculate the level at which
+  // the average area of the level is less than the input area. This function
+  // will return levels less than 0 and greater than 30 so it must be tested
+  // after calling if a valid level is needed.
+  inline static int get_level_from_area(double area) {
+    return int(std::ceil(log(21600.0/(PI*area))/log(4.0)));
+  }
+
   // Return true if the input point or pixel is inside our current pixel.
   bool contains(const point& p) const;
   bool contains(const pixel& pix) const;
