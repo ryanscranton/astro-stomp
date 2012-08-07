@@ -9,6 +9,12 @@
 
 namespace s2omp {
 
+struct coverer::compare_pixels : public less<pixel_entry> {
+  bool operator()(pixel_entry const& x, pixel_entry const& y) {
+    return x.first < y.first;
+  }
+};
+
 coverer::coverer() {
   coverer(0, MAX_LEVEL);
 }
@@ -16,131 +22,47 @@ coverer::coverer() {
 coverer::coverer(int min_level, int max_level) {
   min_level_ = min_level;
   max_level_ = max_level;
-  max_pixels_ = 8;
 }
 
 uint32_t coverer::get_covering(const bound_interface& bound,
     pixel_vector* pixels) {
-  return covering(8, bound, pixels);
+  return generate_covering(bound, 8, false, -1.0, pixels);
 }
 
-uint32_t coverer::get_covering(uint32_t max_pixels,
+bool coverer::get_covering(uint32_t max_pixels,
     const bound_interface& bound, pixel_vector* pixels) {
-  // We first clear our input pixel vector and our priority queue.
-  if (!pixels->empty())
-    pixels->clear();
-  if (!pix_q_.empty())
-    pix_q_.clear();
-
-  // Next we grab a list of initial candidates that cover the circle bound for
-  // our target bound.
-  pixel_vector initial_candidates;
-  get_initial_covering(bound.get_bound(), &initial_candidates);
-
-  // Need something here to test if initial_candidates is empty and if so start
-  // with the face pixels and test may_intersect
-
-  // If we have already met or exceeded the number of pixels with the initial
-  // candidates then there is no need to continue
-  if (initial_candidates.size() >= max_pixels) {
-    while (!initial_candidates.empty()) {
-      pixels->push_back(initial_candidates.pop_back());
-    }
-  }
-
-  // We score these initial pixels and store them in the the priority queue
-  // based on score from low to high (low being the best score).
-  for (pixel_iterator iter = initial_candidates.begin(); iter
-      != initial_candidates.end(); ++iter) {
-    pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-  }
-
-  // While we still have candidates left in the queue, iterate through the queue
-  // and test those pixels.
-  while (!pix_q_.empty()) {
-    // Pop the current highest priority pixel out of the queue.
-    pixel candidate = pix_q_.top().second;
-    pix_q_.pop();
-
-    // If the pixel we are considering is at lower level than the min_level
-    // specified. Break up the pixel into it's children, add them to the queue
-    // and continue.
-    // Note this could cause more pixels to be returned than requested.
-    if (candidate.level() < min_level_) {
-      for (pixel_iterator iter = candidate.child_begin(min_level_); iter
-          != candidate.child_end(min_level_); ++iter) {
-        if (bound.may_intersect(*iter)) {
-          pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-        }
-      }
-      continue;
-    }
-
-    // We test to see if the number of pixels left in the queue plus those we
-    // have already stored is enough meet the max number of pixels requested.
-    // If it is we flush the pixel queue and store the pixels.
-    if (pix_q_.size() + pixels->size() + 1 >= max_pixels) {
-      pixels->push_back(candidate);
-      flush_queue(pixels);
-    } else {
-      // We check to see if this pixel is already at the maximum level or if it
-      // is fully contained within the bound. In either case we add it to the
-      // output.
-      if (candidate.level() + 1 > max_level_ || bound.contains(candidate)) {
-        pixels->push_back(candidate);
-      } else {
-        // If we can't add the pixel outright we get all of this pixels children
-        // and test for may_intersect.
-        pixel_vector child_candidates;
-        for (pixel_iterator iter = candidate.child_begin(); iter
-            != candidate.child_end(); ++iter) {
-          if (bound.may_intersect(*iter)) {
-            child_candidates.push_back(*iter);
-          }
-        }
-
-        // If the number of intersecting children in this pixel, plus the those
-        // already stored, plus those left in the queue exceed the number of
-        // pixels requested, add this candidate pixel to the output.
-        if (child_candidates.size() + pix_q_.size() + pixels->size()
-            > max_pixels) {
-          pixels->push_back(candidate);
-        } else {
-          // If we won't exceed max_pixels with these children then we score
-          // them and add them to the queue.
-          for (pixel_iterator iter = child_candidates.begin(); iter
-              != child_candidates.end(); ++iter) {
-            pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-          }
-        }
-      }
-    }
-  }
-  return pixels->size();
+  return generate_covering(bound, max_pixels, false, -1.0, pixels);
 }
 
 bool coverer::get_covering(double fractional_area_tolerace,
     const bound_interface& bound, pixel_vector* pixels) {
+  return generate_covering(bound, 0, false, fractional_area_tolerace,
+      pixels);
+}
+
+bool coverer::get_interior_covering(const bound_interface& bound,
+    pixel_vector* pixels) {
+  return generate_covering(bound, 0, true, -1.0, pixels);
+}
+
+bool coverer::get_interior_covering(double fractional_area_tolerace,
+    const bound_interface& bound, pixel_vector* pixels) {
+  return generate_covering(bound, 0, true, fractional_area_tolerace, pixels);
+}
+
+bool coverer::generate_covering(const bound_interface& bound,
+    uint32_t max_pixels, bool interior, double fraction, pixel_vector* pixels) {
   // We first clear our input pixel vector and our priority queue.
   if (!pixels->empty())
     pixels->clear();
   if (!pix_q_.empty())
     pix_q_.clear();
 
-  // In order to compute the current fractional area we need to store both the
-  // area of the bound as well as a running tally of both the pixels already
-  // stored in the output and those within the queue.
+  // Define a few convenience variables for storing the bound area and the
+  // current area of the stored pixels. We will use these if fractional is
+  // requested.
   double bound_area = bound.area();
   double covered_area = 0.0;
-
-  // If the user has specified a fractional tolerance that is not achievable
-  // given the mass pixels we exit without returning a covering.
-  if (pixel.get_level_from_area(fractional_area_tolerace * bound_area)
-      > max_level_) {
-    std::cout << "coverer::covering - Fractional area tolerance not "
-        << "achievable with specified max_level.\n\tExiting";
-    exit(2);
-  }
 
   // Next we grab a list of initial candidates that cover the circle bound for
   // our target bound.
@@ -150,245 +72,151 @@ bool coverer::get_covering(double fractional_area_tolerace,
   // Need something here to test if initial_candidates is empty and if so start
   // with the face pixels and test may_intersect
 
-  // We start by adding up the total area covered so far given the initial list
-  // of candidates.
-  for (pixel_iterator iter = initial_candidates.begin(); initial_candidates.end(); ++iter) {
-    covered_area += iter->exact_area();
-  }
-
-  // If we have already met or exceeded the tolerance with the initial
-  // candidates then there is no need to continue. We simply push those to the
-  // output. Note that for a covering of this type (as in not interior) the
-  // covered area will always exceed the bound area.
-  if ((covered_area - bound_area) / bound_area <= fractional_area_tolerace) {
-    while (!initial_candidates.empty()) {
-      pixels->push_back(initial_candidates.pop_back());
-    }
-
-    // The initial candidate list is now empty. So the for loop and while loops
-    // that are next will not run.
-  }
-
   // We score these initial pixels and store them in the the priority queue
   // based on score from low to high (low being the best score).
   for (pixel_iterator iter = initial_candidates.begin(); iter
       != initial_candidates.end(); ++iter) {
-    pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
+    new_candidate(bound, *iter);
+    if (!interior && fraction > 0.0)
+      covered_area += iter->area();
+  }
+
+  // If we have already reached our convergence criteria for a non-interior
+  // covering, we flush the queue and output the initial candidates. We
+  // test if the max pixels have been reached or if a fractional area has been
+  // requested, we test if this tolerance has been reached.
+  if (!interior) {
+    if (fraction < 0.0 && initial_candidates.size() >= max_pixels) {
+      flush_queue(pixels);
+    } else if (fraction >= 0.0 &&
+        (covered_area - bound_area)/bound_area <= fraction) {
+      flush_queue(pixels);
+    }
   }
 
   // While we still have candidates left in the queue, iterate through the queue
   // and test those pixels.
   while (!pix_q_.empty()) {
+
+    // If we have an interior covering and we have already reached the precision
+    // set in fraction, we quit and clear the queue.
+    if (interior && fraction > 0.0 &&
+        (bound_area - covered_area)/bound_area < fraction) {
+      pix_q_.clear();
+      break;
+    }
+
+    // Pop the current highest priority pixel out of the queue and if our
+    // covering is not interior we subtract it's area from the total in case we
+    // refine the pixel later.
+    pixel_candidate candidate = pix_q_.top().second;
+    pix_q_.pop();
+    if (!interior && fraction > 0.0)
+      covered_area -= candidate.pix.exact_area();
+
     // If the pixel we are considering is at lower level than the min_level
-    // specified. Break up the pixel into it's children, add them to the queue
+    // specified. Break up the pixel into it's children, add them to the queue,
     // and continue.
-    // Note this could cause the actual tolerance to exceed the fractional
-    // tolerance.
-    if (pix_q_.top().second.level() < min_level_) {
-      pixel candidate = pix_q_.top().second;
-      pix_q_.pop();
-      covered_area -= candidate.exact_area();
-      for (pixel_iterator iter = candidate.child_begin(min_level_); iter
-          != candidate.child_end(min_level_); ++iter) {
+    // Note this could cause more pixels to be returned or a smaller fraction
+    // than initially requested if those are the modes.
+    if (candidate.pix.level() < min_level_) {
+      for (pixel_iterator iter = candidate.pix.child_begin(min_level_); iter
+          != candidate.pix.child_end(min_level_); ++iter) {
         if (bound.may_intersect(*iter)) {
-          pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-          covered_area += iter->exact_area();
+          new_candidate(*iter);
+          if (!interior && fraction > 0.0)
+            covered_area += iter->exact_area();
         }
       }
       continue;
     }
 
-    // If we have reached the desired tolerance there is no need to continue
-    // and hence we flush the pixels from the queue and add them to the output.
-    // Note that for this covering the covered_area will always be greater than
-    // the bound area.
-    if ((covered_area - bound_area) / bound_area <= fractional_area_tolerace) {
-      flush_queue(pixels);
-    } else {
-      // Now we pop the highest priority candidate from the queue.
-      pixel candidate = pix_q_.top().second;
-      pix_q_.pop();
+    // The cases for non-interior coverings are more complicated, though less
+    // computationally intensive, hence we tackle those first.
+    if (!interior) {
 
-      // Since we've taken the pixel candidate out of the queue, we need to
-      // remove its area from the the running tally. If the pixel is at the max
-      // level or it is fully contained within the bound we add the area back
-      // in. If these conditions are not met then we will add back in the
-      // the area of the children of this candidate that intersect the area.
-      double candidate_area = candidate.exact_area();
-      covered_area -= candidate_area;
+      // We first see if with the current pixels both in the output and in the
+      // queue we have reached our goal tolerance in max_pixels or area. If
+      // we have we add the current and all remaining candidates to the output,
+      // clearing the queue.
+      if ((fraction <= 0.0 &&
+            pix_q_.size() + pixels->size() + 1 >= max_pixels) ||
+          (fraction > 0.0 &&
+            (covered_area + candidate.pix.exact_area() - bound_area)/
+            bound_area < fraction)) {
+        pixels->push_back(candidate.pix);
+        flush_queue(pixels);
+        break;
+      }
 
-      // If our candidate is at the max level or fully contained by the bound
-      // we add it to the output and add it's area back to the running tally.
-      if (candidate.level() + 1 > max_level_ || bound.contains(candidate)) {
-        pixels->push_back(candidate);
-        covered_area += candidate_area;
+      // If we haven't reached our goal yet we test if this pixel can be added.
+      // We test is_terminal which says that all of the child pixels of this
+      // candidate are intersecting and are either contained or at max_level_ or
+      // the candidate is at max_level_. For a non-interior covering we then
+      // add this pixel.
+      if (candidate.is_terminal) {
+        pixels->push_back(candidate.pix);
+        if (fraction > 0.0)
+          covered_area += candidate.pix.exact_area();
       } else {
-        // If we can't add the pixel outright we get all of this pixels children
-        // and test for may_intersect. If the child intersects we score it and
-        // add it to the priority queue. We also add it's area into the covered
-        // area tally.
-        for (pixel_iterator iter = candidate.child_begin(); iter
-            != candidate.child_end(); ++iter) {
+
+        // Since we can't add this pixel outright, we first test to see, for a
+        // non-fractional covering, if adding this pixel's children to the queue
+        // will exceed our max points. If it does we add this candidate, if it
+        // doesn't we resolve it to the next level.
+        if (fraction <= 0.0 && pixels->size() + pix_q_.size() +
+            candidate.n_children >= max_pixels) {
+          pixels->push_back(candidate.pix);
+        } else {
+          for (pixel_iterator iter = candidate.pix.child_begin(); iter
+              != candidate.pix.child_end(); ++iter) {
+            if (bound.may_intersect(*iter)) {
+              new_candidate(bound, *iter);
+              if (fraction > 0.0)
+                covered_area += iter->exact_area();
+            }
+          }
+        }
+      }
+    } else {
+
+      //The interior covering is a bit simpler if more expensive
+      // computationally. We first test if the pixel is fully contained. If it
+      // is we add it to the output and, if a fractional area is specified, we
+      // add this pixel's area to the total.
+      if (bound.contains(candidate.pix)) {
+        pixels->push_back(candidate.pix);
+        if (fraction > 0.0)
+          covered_area += candidate.pix.exact_area();
+      } else {
+
+        // If we can't add this pixel, we resolve it's children and add them to
+        // the queue.
+        for (pixel_iterator iter = candidate.pix.child_begin(); iter
+            != candidate.pix.child_end(); ++iter) {
           if (bound.may_intersect(*iter)) {
-            pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-            covered_area += iter->exact_area();
+            new_candidate(bound, *iter);
           }
         }
       }
     }
   }
 
-  // Since we don't have a goal number of pixels to reach we instead return a
-  // boolean specifying if the desired tolerance was reached or not.
-  return fabs(covered_area - bound_area) / bound_area
-      < fractional_area_tolerace;
-}
-
-uint32_t coverer::get_interior_covering(const bound_interface& bound,
-    pixel_vector* pixels) {
-  // We first clear our input pixel vector and our priority queue.
-  if (!pixels->empty())
-    pixels->clear();
-  if (!pix_q_.empty())
-    pix_q_.clear();
-
-  // Next we grab a list of initial candidates that cover the circle bound for
-  // our target bound.
-  pixel_vector initial_candidates;
-  get_initial_covering(bound.get_bound(), &initial_candidates);
-
-  // Need something here to test if initial_candidates is empty and if so start
-  // with the face pixels and test may_intersect
-
-  // We score these initial pixels and store them in the the priority queue
-  // based on score from low to high (low being the best score).
-  for (pixel_iterator iter = initial_candidates.begin(); iter
-      != initial_candidates.end(); ++iter) {
-    pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
+  // We define "success" if a) we return fewer than or equal to the number of
+  // pixels requested b) we have reached the fractional area tolerance or
+  // c), for interior coverings only, we return a non-empty vector.
+  bool success = false;
+  if (!interior && fraction <= 0.0) {
+    if (!pixels->empty() && pixels->size() <= max_pixels)
+      success = true;
+  } else if (fraction > 0.0) {
+    if (!pixels->empty() &&
+        std::fabs(bound_area - covered_area)/bound_area < fraction)
+      success = true;
+  } else {
+    success = !pixels->empty();
   }
-
-  // While we still have candidates left in the queue, iterate through the queue
-  // and test those pixels.
-  while (!pix_q_.empty()) {
-    pixel candidate = pix_q_.top().second;
-    pix_q_.pop();
-
-    // If the pixel we are considering is at lower level than the min_level
-    // specified. Break up the pixel into it's children, add them to the queue
-    // and continue. Since we are just adding it the children into the queue, we
-    // don't need to test for contains just yet.
-    if (candidate.level() < min_level_) {
-      for (pixel_iterator iter = candidate.child_begin(min_level_); iter
-          != candidate.child_end(min_level_); ++iter) {
-        if (bound.may_intersect(*iter)) {
-          pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-        }
-      }
-      continue;
-    }
-
-    // For an interior covering, we only add pixels to the output if they are
-    // fully contained within the bound.
-    if (bound.contains(candidate)) {
-      pixels->push_back(candidate);
-    } else if (candidate.level() < max_level_) {
-      // If the candidate pixel is not contained and is less than the max level
-      // we immediately refine it into it's children and add those children that
-      // may intersect into the queue.
-      for (pixel_iterator iter = candidate.child_begin(); iter
-          != candidate.child_end(); ++iter) {
-        if (bound.may_intersect(*iter)) {
-          pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-        }
-      }
-    }
-  }
-
-  // Return the number of pixels used in the covering.
-  return pixels->size();
-}
-
-bool coverer::get_interior_covering(double fractional_area_tolerace,
-    const bound_interface& bound, pixel_vector* pixels) {
-  // We first clear our input pixel vector and our priority queue.
-  if (!pixels->empty())
-    pixels->clear();
-  if (!pix_q_.empty())
-    pix_q_.clear();
-  double bound_area = bound.area();
-  double covered_area = 0.0;
-
-  if (pixel.get_level_from_area(fractional_area_tolerace * bound_area)
-      > max_level_) {
-    std::cout << "coverer::interior_covering - Fractional area tolerance not "
-        << "achievable with specified max_level.\n\tExiting";
-    exit(2);
-  }
-
-  // Next we grab a list of initial candidates that cover the circle bound for
-  // our target bound.
-  pixel_vector initial_candidates;
-  get_initial_covering(bound.get_bound(), &initial_candidates);
-
-  // We score these initial pixels and store them in the the priority queue
-  // based on score from low to high (low being the best score).
-  for (pixel_iterator iter = initial_candidates.begin(); iter
-      != initial_candidates.end(); ++iter) {
-    pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-  }
-
-  // While we still have candidates left in the queue and the fractional
-  // tolerance has not been met, iterate through the queue and test the pixels
-  // in the queue. Note that for an interior covering the covered area will
-  // always be less than the true area of the bound.
-  while (!pix_q_.empty() && (bound_area - covered_area) / bound_area
-      > fractional_area_tolerace) {
-    pixel candidate = pix_q_.top().second;
-    pix_q_.pop();
-
-    // If the pixel we are considering is at lower level than the min_level
-    // specified. Break up the pixel into it's children, add them to the queue
-    // and continue. Since we are just adding it the children into the queue, we
-    // don't need to test for contains just yet.
-    if (candidate.level() < min_level_) {
-      for (pixel_iterator iter = candidate.child_begin(min_level_); iter
-          != candidate.child_end(min_level_); ++iter) {
-        if (bound.may_intersect(*iter)) {
-          pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-        }
-      }
-      continue;
-    }
-
-    // If the candidate pixel is fully contained within the bound we add it to
-    // the output and add the area to the running tally.
-    if (bound.contains(candidate)) {
-      pixels->push_back(candidate);
-      covered_area += candidate->exact_area();
-    } else if (candidate.level() < max_level_) {
-      // If we can't add the pixel outright we get all of this pixel's children
-      // and test for may_intersect. If the child intersects the bound we score
-      // it and add it to the queue.
-      for (pixel_iterator iter = candidate.child_begin(); iter
-          != candidate.child_end(); ++iter) {
-        if (bound.may_intersect(*iter)) {
-          pix_q_.push(pixel_pair(score_pixel(bound, *iter), *iter));
-        }
-      }
-    }
-  }
-
-  // This is the only method where we are not guaranteed to clear the pixel
-  // queue before exiting the while loop. As such, if we want to free up some
-  // memory and keep this coverer around we need to clear the queue by hand.
-  if (!pix_q_.empty())
-    pix_q_.clear();
-
-  // Again, instead of returning the number of pixels we instead return a
-  // boolean specifying if the fractional tolerance was met before reaching max
-  // level.
-  return fabs(bound_area - covered_area) / bound_area
-      > fractional_area_tolerace;
+  return success;
 }
 
 void coverer::get_simple_covering(const bound_interface& bound, int level,
@@ -427,6 +255,16 @@ void coverer::get_simple_covering(const bound_interface& bound, int level,
   }
 }
 
+bool coverer::set_min_max_level(int min, int max) {
+  if (min <= max && min >= 0 && min <= MAX_LEVEL &&
+      max >= 0 && max < MAX_LEVEL) {
+    min_level_ = min;
+    max_level_ = max;
+    return true;
+  }
+  return false;
+}
+
 void coverer::get_initial_covering(const circle_bound& bound,
     pixel_vector* pixels) {
   if (!pixels.empty())
@@ -442,13 +280,42 @@ void coverer::get_initial_covering(const circle_bound& bound,
   get_simple_covering(bound, level, pixels);
 }
 
-int coverer::score_pixel(const bound_interface& bound, const pixel& pix) {
+void coverer::flush_queue(pixel_vector* pixels) {
+  while (!pix_q_.empty()) {
+    pixels->push_back(pix_q_.top().second.pix);
+    pix_q_.pop();
+  }
+}
+
+void coverer::new_candidate(const bound_interface& bound,
+    const pixel& pix) {
+
+  // Create the pixel_candidate object and initialize default values.
+  pixel_candidate pix_cand;
+  pix_cand.pix = pix;
+  pix_cand.n_children = 0;
+  pix_cand.is_terminal = false;
+
+  // We use score pixel in a two fold sense. First it tells us where to place
+  // this candidate in the priority queue. Second, it computes both the total
+  // number of children that may intersect the bound as well as computing if
+  // this pixel is terminal that is pix.level > max_leve_ or pix.contains().
+  int score = score_pixel(bound, &pix_cand);
+
+  // Once we have our candidate scored and initialized we add it too the queue.
+  pix_q_.push(pixel_pair(score, pix_cand));
+}
+
+int coverer::score_pixel(const bound_interface& bound,
+    pixel_candidate* pix_cand) {
+
   // We want to sort the pixels in our priority queue first by their size,
   // next by the number of children that may_intersect the bound, and then
   // by the number of children that are terminal (for non-interior coverings
   /// this means child.level() == max_level or bound.contains(child))
-  int n_children, n_terminals = 0;
-  for (pixel_iterator iter = pix.child_begin(); iter != pix.child_end(); ++iter) {
+  uint8_t n_children, n_terminals = 0;
+  for (pixel_iterator iter = pix_cand->pix.child_begin();
+      iter != pix_cand->pix.child_end(); ++iter) {
     if (bound.may_intersect(*iter)) {
       n_children++;
       if (iter->level() + 1 > max_level_ || bound.contains(*iter)) {
@@ -456,6 +323,10 @@ int coverer::score_pixel(const bound_interface& bound, const pixel& pix) {
       }
     }
   }
+  pix_cand->n_children = n_children;
+  if (pix_cand->pix.level() + 1 > max_level_ || n_terminals == 4)
+    pix_cand->is_terminal = true;
+
 
   // This is the value that is used within the priority queue. First we
   // compute the level of the pixel and shift by 2 bits (since there at most 4
@@ -464,14 +335,7 @@ int coverer::score_pixel(const bound_interface& bound, const pixel& pix) {
   // a pixel with a low level, most children, and most terminals will be
   // checked first in the queue. The pixel with the highest possible priority
   // would be one at level 0 with only one child that may_intersect the bound.
-  return -(((pix.level() << 2) + n_children << 2) + n_terminals);
-}
-
-void coverer::flush_queue(pixel_vector* pixels) {
-  while (!pix_q_.empty()) {
-    pixels->push_back(pix_q_.top().second);
-    pix_q_.pop();
-  }
+  return -(((pix_cand->pix.level() << 2) + n_children << 2) + n_terminals);
 }
 
 } // end namespace s2omp
