@@ -10,25 +10,56 @@
 
 #include "circle_bound.h"
 
+namespace s2omp {
+
 circle_bound::circle_bound() {
-  radius_ = -1.0;
-  height_ = 100;
-  initialized_random_ = false;
+  cap_ = S2::S2Cap();
 }
 
 circle_bound* circle_bound::from_radius(point& axis, double radius_degrees) {
+  circle_bound* circle = new circle_bound();
+  circle_bound->cap_ = S2::S2Cap.FromAxisAngle(axis.s2point(),
+      S2::S1Angle.Degrees(radius_degrees));
+  return circle;
+}
+
+cirlce_bound* circle_bound::from_height(point& axis, double height) {
+  circle_bound* circle = new circle_bound();
+  circle_bound->cap_ = S2::S2Cap.FromAxisHeight(axis.s2point(),height);
+  return circle;
+}
+
+point circle_bound::axis() {
+  return point.from_s2point(cap_.axis(), 1.0);
+}
+
+virtual bool circle_bound::is_empty() {
+  return cap_.is_empty();
+}
+
+virtual long circle_bound::size() {
+  if (is_empty())
+    return 0;
+  return 1;
+}
+
+virtual double circle_bound::area() {
+  return cap_.area();
+}
+
+virtual circle_bound circle_bound::get_bound() {
+  return *this;
 }
 
 bool circle_bound::contains(const point& p) {
-  return axis_.dot(p) >= height_;
+  return cap_.Contains(p.s2point());
 }
 
 bool circle_bound::contains(const pixel& pix) {
-  // maybe check all the vertices an that is sufficient?
-  // or return the cap associated with the pixel and check contains?
+  return cap_.Contains(S2::S2Cell(pix.id()));
 }
 
-double circle_bound::contained_area(const pixel& px) {
+double circle_bound::contained_area(const pixel& pix) {
  double area = 0.0;
  if (contains(pix)) {
    area += pix.exact_area();
@@ -41,7 +72,11 @@ double circle_bound::contained_area(const pixel& px) {
  return area;
 }
 
-point circle_bound::generate_random_point() {
+bool circle_bound::may_intersect(const pixel& pix) {
+  return cap_.MayIntersect(S2::S2Cell(pix.id()));
+}
+
+virtual point circle_bound::get_random_point() {
   if (!initialized_random_) {
     initialize_random();
   }
@@ -52,7 +87,7 @@ point circle_bound::generate_random_point() {
   // Generate our random values. We first generate a point uniform in
   // cos(theta) from the lowest point on the cap to the highest. Next we
   // generate a point uniform in phi.
-  double z = mtrand.rand(1.0 - height_) + height_;
+  double z = mtrand.rand(cap_.height()) + 1 - cap_.height();
   double phi = mtrand.rand(2.0*PI);
 
   // To turn our angles into x,y,z coordinates we need to now the sin as well.
@@ -63,32 +98,43 @@ point circle_bound::generate_random_point() {
   // to the great circle defined by the z axis and the cap axis. We rotate by
   // the angle the cap axis makes with the z axis.
   point p = point(sintheta*cos(phi), sintheta*sin(phi), z);
-  p.rotate_about(great_norm_, rotate_);
+  p.rotate_about(great_circle_norm_, rotate_);
 
   return p;
 }
 
-void cirlce_bound::generate_random_points(long n_points, point_vector* points) {
-  if (!points->empty()) points->clear();
+void void circle_bound::get_random_points(long n_points,
+    point_vector* points) {
+  if (!points->empty())
+    points->clear();
   points->reserve(n_points);
+
   for (long i = 0; i < n_points; ++i) {
-    points->push_back(generate_random_point());
+    points->push_back(get_random_point());
   }
 }
 
-point circle_bound::generate_weighted_random_point(const point_vector& points) {
-  point p = generate_random_point();
-  p.set_weight(mtrand.randInt(points.size()));
+point circle_bound::get_weighted_random_point(const point_vector& points) {
+  point p = get_random_point();
+  p.set_weight(points[mtrand.randInt(points.size())].weight());
   return p;
 }
 
-void circle_bound::generate_weighted_random_points(long n_points,
+void circle_bound::get_weighted_random_points(long n_points,
     point_vector* points, const point_vector& input_points) {
   if (!points->empty()) points->clear();
 
   for (long i = 0; i < n_points; ++i) {
-    point p = generate_random_point();
+    point p = get_random_point();
     p.set_weight(mtrand.randInt(input_points.size()));
     points->push_back(p);
   }
 }
+
+void circle_bound::initialize_random() {
+  mtrand.seed();
+  rotate_ = acos(cap_.axis()[2]);
+  great_circle_norm_ = point(-cap_.axis[1], cap_.axis[0], 0.0, 1.0);
+}
+
+} //end namspace s2omp
