@@ -33,21 +33,21 @@ public:
 	static circle_bound* from_radius(const point& axis, double radius_degrees);
 	static circle_bound* from_height(const point& axis, double height);
 
-	inline point axis() {return axis_;}
-	inline double radius() {return radius_;}
-	inline double height() {return height_;}
+	point axis();
+	inline double radius() {return acos(1 - cap_.height())*DEG_TO_RAD;}
+	inline double height() {return cap_.height();}
 
 	// API from geometric_bound
 	virtual bool is_empty();
 	virtual long size();
 	virtual void clear();
-	virtual void area();
+	virtual double area();
 
 	virtual bool contains(const point& p);
 	virtual bool contains(const pixel& pix);
 	virtual bool contains(const geometric_bound& b);
-
 	virtual double contained_area(const pixel& pix);
+
 	virtual bool may_intersect(const pixel& pix);
 
 	virtual void covering(pixel_vector* pixels);
@@ -58,20 +58,20 @@ public:
 	virtual circle_bound get_bound();
 
 	virtual point get_random_point();
-	virtual void get_random_points(long n_points, pixel_vector* points);
+	virtual void get_random_points(long n_points, point_vector* points);
+	virtual point get_weighted_random_point(const point_vector& points);
+	virtual void get_weighted_random_points(long n_points, point_vector* points,
+	    const point_vector& input_points);
 
 private:
 	circle_bound();
 	void initialize_random();
 
 	S2::S2Cap cap_;
-	point axis_;
-  bool initialized_random_;
-	double radius_, height_;
 
 	//These variables below are for generating random points and will not be
-	// initialized unti initialize_random() is called.
-	point great_cirlce_norm_;
+	// initialized until initialize_random() is called.
+	point great_circle_norm_;
 	double rotate_;
 	bool initialized_random_;
 	MTRand mtrand;
