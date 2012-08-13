@@ -16,10 +16,13 @@ circle_bound::circle_bound() {
   cap_ = S2::S2Cap();
 }
 
+circle_bound::circle_bound(const point& axis, double height) {
+  cap_ = S2::S2Cap.FromAxisHeight(axis.s2point(), height);
+}
+
 circle_bound* circle_bound::from_radius(point& axis, double radius_degrees) {
-  circle_bound* circle = new circle_bound();
-  circle_bound->cap_ = S2::S2Cap.FromAxisAngle(axis.s2point(),
-      S2::S1Angle.Degrees(radius_degrees));
+  double height = 1.0 - cos(radius_degrees*DEG_TO_RAD);
+  circle_bound* circle = new circle_bound(axis, height);
   return circle;
 }
 
@@ -44,7 +47,7 @@ virtual long circle_bound::size() {
 }
 
 virtual double circle_bound::area() {
-  return cap_.area();
+  return cap_.area()*RAD_TO_DEG;
 }
 
 virtual circle_bound circle_bound::get_bound() {
@@ -55,6 +58,8 @@ bool circle_bound::contains(const point& p) {
   return cap_.Contains(p.s2point());
 }
 
+// TODO(cbmorrison) the intermediate S2Cell creation may be expensive and slow.
+// If needed create an s2omp class instead of wrapping cap_.contains.
 bool circle_bound::contains(const pixel& pix) {
   return cap_.Contains(S2::S2Cell(pix.id()));
 }
@@ -62,7 +67,7 @@ bool circle_bound::contains(const pixel& pix) {
 double circle_bound::contained_area(const pixel& pix) {
  double area = 0.0;
  if (contains(pix)) {
-   area += pix.exact_area();
+   return pix.exact_area();
  } else if (may_intersect(pix)) {
    for (pixel_iterator iter = pix.child_begin();
        iter != pix.child_end(); ++iter) {
@@ -72,6 +77,8 @@ double circle_bound::contained_area(const pixel& pix) {
  return area;
 }
 
+// TODO(cbmorrison) the intermediate S2Cell creation may be expensive and slow.
+// If needed create an s2omp class instead of wrapping cap_.may_intersect.
 bool circle_bound::may_intersect(const pixel& pix) {
   return cap_.MayIntersect(S2::S2Cell(pix.id()));
 }
@@ -129,6 +136,10 @@ void circle_bound::get_weighted_random_points(long n_points,
     p.set_weight(mtrand.randInt(input_points.size()));
     points->push_back(p);
   }
+}
+
+circle_bound::circle_bound(const point& axis, double height) {
+  cap_ = S2::S2Cap.FromAxisHeight(axis.s2point(), height);
 }
 
 void circle_bound::initialize_random() {

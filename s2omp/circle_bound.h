@@ -65,6 +65,7 @@ public:
 
 private:
 	circle_bound();
+	circle_bound(const point& axis, double height);
 	void initialize_random();
 
 	S2::S2Cap cap_;
