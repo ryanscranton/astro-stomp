@@ -45,7 +45,7 @@ public:
   virtual bool is_empty() const;
   virtual long size() const;
   virtual void clear();
-  virtual void area() const;
+  virtual double area() const;
 
   // As bound-derived objects represent regions on the sky, we should be able
   // to do some common tasks with them.  In particular, we should be able to

@@ -16,8 +16,8 @@ public:
 
 	static annulus_bound* from_radii(const point& axis,
 			double inner_theta_degrees, double outer_theta_degrees);
-	static annulus_bound* from_cosradii(const point& axis,
-			double inner_costheta, double outer_costheta);
+	static annulus_bound* from_heights(const point& axis,
+			double inner_height, double outer_height);
 
 	// API from geometric_bound
 	virtual bool is_empty();
@@ -27,9 +27,8 @@ public:
 
 	virtual bool contains(const point& p);
 	virtual bool contains(const pixel& pix);
-	virtual bool contains(const geometric_bound& b);
-
 	virtual double contained_area(const pixel& pix);
+
 	virtual bool may_intersect(const pixel& pix);
 
 	virtual void covering(pixel_vector* pixels);
@@ -37,16 +36,16 @@ public:
 	virtual void covering(double fractional_area_tolerance, pixel_vector* pixels);
 	virtual void simple_covering(int level, pixel_vector* pixels);
 
-	virtual circle_bound get_bound();
+	virtual circle_bound* get_bound();
 
 	virtual point get_random_point();
 	virtual void get_random_points(long n_points, pixel_vector* points);
 
 private:
 	annulus_bound();
-	S2Cap inner_cap_, outer_cap_;
-	point axis_;
-	double inner_radius_, outer_radius_;
+	annulus_bound(const point& axis, double inner_height,
+	    double outer_height);
+	S2::S2Cap inner_cap_, outer_cap_;
 };
 
 } // end namespace s2omp
