@@ -121,6 +121,8 @@ public:
   inline pixel to_pixel() const;
   inline pixel to_pixel(int level) const;
 
+  inline S2::S2Point s2point() {return point_;}
+
 protected:
   void set_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
   void set_latlon_radians(double lat_rad, double lon_rad, Sphere s);
@@ -161,6 +163,13 @@ inline bool operator<=(point const& a, point const& b) {
 inline bool operator>=(point const& a, point const& b) {
   return a.id() >= b.id();
 }
+
+inline point operator-() {
+  return point(-unit_sphere_x(), -unit_sphere_y(),
+      -unit_sphere_z(), a.weight());
+}
+
+// need an operator-
 
 inline double point::dot(const point& p) {
   return point_.x() * p.unit_sphere_x() + point_.y() * p.unit_sphere_y()

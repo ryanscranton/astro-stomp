@@ -20,6 +20,13 @@ circle_bound::circle_bound(const point& axis, double height) {
   cap_ = S2::S2Cap.FromAxisHeight(axis.s2point(), height);
 }
 
+static circle_bound* cirlce_bound::from_angular_bin(const point& axis,
+      const angular_bin& bin) {
+  circle_bound* circle = new circle_bound(axis,
+      1.0 - cos(bin.theta_max()*DEG_TO_RAD));
+  return circle;
+}
+
 circle_bound* circle_bound::from_radius(point& axis, double radius_degrees) {
   double height = 1.0 - cos(radius_degrees*DEG_TO_RAD);
   circle_bound* circle = new circle_bound(axis, height);
@@ -47,7 +54,7 @@ virtual long circle_bound::size() {
 }
 
 virtual double circle_bound::area() {
-  return cap_.area()*RAD_TO_DEG;
+  return cap_.area()*STRAD_TO_DEG2;
 }
 
 virtual circle_bound circle_bound::get_bound() {
@@ -136,10 +143,6 @@ void circle_bound::get_weighted_random_points(long n_points,
     p.set_weight(mtrand.randInt(input_points.size()));
     points->push_back(p);
   }
-}
-
-circle_bound::circle_bound(const point& axis, double height) {
-  cap_ = S2::S2Cap.FromAxisHeight(axis.s2point(), height);
 }
 
 void circle_bound::initialize_random() {
