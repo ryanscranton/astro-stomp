@@ -29,13 +29,13 @@ public:
 	virtual ~circle_bound();
 
 	static circle_bound* from_angular_bin(const point& axis,
-			const angular_bin bin);
+			const angular_bin& bin);
 	static circle_bound* from_radius(const point& axis, double radius_degrees);
 	static circle_bound* from_height(const point& axis, double height);
 
-	point axis();
-	inline double radius() {return acos(1 - cap_.height())*DEG_TO_RAD;}
-	inline double height() {return cap_.height();}
+	inline point axis() {return axis_;}
+	inline double radius() {return acos(1 - height_)*DEG_TO_RAD;}
+	inline double height() {return height_;}
 
 	// API from geometric_bound
 	virtual bool is_empty();
@@ -45,7 +45,6 @@ public:
 
 	virtual bool contains(const point& p);
 	virtual bool contains(const pixel& pix);
-	virtual bool contains(const geometric_bound& b);
 	virtual double contained_area(const pixel& pix);
 
 	virtual bool may_intersect(const pixel& pix);
@@ -67,12 +66,16 @@ public:
 private:
 	circle_bound();
 	circle_bound(const point& axis, double height);
-	void initialize_random();
 
-	S2::S2Cap cap_;
+	bool intersects(const pixel& pix, const point_vector& vertices);
+	circle_bound* complement();
+
+	point axis_;
+	double height_;
 
 	//These variables below are for generating random points and will not be
 	// initialized until initialize_random() is called.
+	void initialize_random();
 	point great_circle_norm_;
 	double rotate_;
 	bool initialized_random_;

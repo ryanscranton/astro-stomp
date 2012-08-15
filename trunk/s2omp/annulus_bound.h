@@ -25,7 +25,7 @@ public:
 	virtual bool is_empty();
 	virtual long size();
 	virtual void clear();
-	virtual void area();
+	virtual double area();
 
 	virtual bool contains(const point& p);
 	virtual bool contains(const pixel& pix);
@@ -54,8 +54,8 @@ private:
 	bool intersects(const pixel& pix, point_vector verticies, double height);
 	circle_bound* complement(double height);
 
-	point axis_;
-	double inner_height_, outer_height_;
+	circle_bound* outer_bound_;
+	circle_bound* inner_bound_;
 };
 
 } // end namespace s2omp
