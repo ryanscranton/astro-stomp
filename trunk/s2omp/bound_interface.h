@@ -76,6 +76,7 @@ public:
   void covering(pixel_vector* pixels);
   void covering(int max_pixels, pixel_vector* pixels);
   void covering(double fractional_area_tolerance, pixel_vector* pixels);
+  void interior_covering(int max_level, pixel_vector* pixels);
   void simple_covering(int level, pixel_vector* pixels);
 
   point get_random_point();
