@@ -73,11 +73,12 @@ public:
   // to create a circle_bound that encompasses the bound.
   virtual circle_bound get_bound() const;
 
-  void covering(pixel_vector* pixels);
-  void covering(int max_pixels, pixel_vector* pixels);
-  void covering(double fractional_area_tolerance, pixel_vector* pixels);
-  void interior_covering(int max_level, pixel_vector* pixels);
-  void simple_covering(int level, pixel_vector* pixels);
+  inline void get_covering(pixel_vector* pixels);
+  inline void get_covering(const uint32_t max_pixels, pixel_vector* pixels);
+  inline void get_covering(double fractional_area_tolerance,
+      pixel_vector* pixels);
+  inline void get_interior_covering(int max_level, pixel_vector* pixels);
+  inline void get_simple_covering(int level, pixel_vector* pixels);
 
   point get_random_point();
   void get_random_points(long n_points, point_vector* points);
@@ -87,9 +88,54 @@ protected:
 
 private:
 
-
-
 };
+
+inline void covering(pixel_vector* pixels) {
+  if (!pixels->empty()) pixels->clear();
+  coverer cover = coverer();
+
+  cover.get_covering(*this, pixels);
+};
+
+inline void bound_interface::get_covering(pixel_vector* pixels) {
+  if (!pixels->empty()) pixels->clear();
+  coverer cover = coverer();
+
+  cover.get_covering(*this, pixels);
+};
+
+inline void bound_interface::get_covering(const uint32_t max_pixels,
+    pixel_vector* pixels) {
+  if (!pixels->empty()) pixels->clear();
+  coverer cover = coverer();
+
+  cover.get_covering(max_pixels, *this, pixels);
+};
+
+inline void bound_interface::get_covering(double fractional_area_tolerance,
+    pixel_vector* pixels) {
+  if (!pixels->empty()) pixels->clear();
+  coverer cover = coverer();
+
+  cover.get_covering(fractional_area_tolerance, *this, pixels);
+};
+
+inline void bound_interface::get_interior_covering(int max_level,
+    pixel_vector* pixels) {
+  if (!pixels->empty()) pixels->clear();
+  coverer cover = coverer(0, max_level);
+
+  cover.get_interior_covering(*this, pixels);
+};
+
+// We may want to overwrite this covering over other bounds.
+inline void bound_interface::get_simple_covering(int level,
+    pixel_vector* pixels) {
+  if (!pixels->empty()) pixels->clear();
+  coverer cover = coverer();
+
+  cover.get_simple_covering(*this, level, pixels);
+}
 
 } // end namespace s2omp
 
