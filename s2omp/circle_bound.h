@@ -53,6 +53,7 @@ public:
 	virtual void covering(pixel_vector* pixels);
 	virtual void covering(int max_pixels, pixel_vector* pixels);
 	virtual void covering(double fractional_area_tolerance, pixel_vector* pixels);
+	virtual void interior_covering(int max_level, pixel_vector* pixels);
 	virtual void simple_covering(int level, pixel_vector* pixels);
 
 	virtual circle_bound get_bound();

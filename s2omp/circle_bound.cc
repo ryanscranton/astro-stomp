@@ -57,8 +57,8 @@ virtual double circle_bound::area() {
   return cap_.area()*STRAD_TO_DEG2;
 }
 
-virtual circle_bound circle_bound::get_bound() {
-  return *this;
+virtual circle_bound* circle_bound::get_bound() {
+  return this;
 }
 
 bool circle_bound::contains(const point& p) {
