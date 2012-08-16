@@ -15,16 +15,16 @@
 // on the sphere into pixel index, increasing and decreasing pixel resolution,
 // finding neighboring pixels and so on.
 
-#include "core.h"
 #include "pixel.h"
-#include "point.h"
-#include "circle_bound.h"
+#include "s2.h"
 
-pixel* pixel::from_point(point& p) {
+namespace s2omp {
+
+pixel* pixel::from_point(const point& p) {
   return new pixel(p.id());
 }
 
-static pixel* from_point(const point& p, int level) {
+pixel* pixel::from_point(const point& p, int level) {
   return new pixel(p.id(level));
 }
 
@@ -49,7 +49,7 @@ void pixel::children(pixel_vector* child_pixels) const {
 void pixel::children(int level, pixel_vector* child_pixels) const {
   child_pixels->clear();
   if (!is_leaf() && level <= MAX_LEVEL) {
-    for (pixel c = pix.child_begin(level); c != pix.child_end(level); c
+    for (pixel c = child_begin(level); c != child_end(level); c
         = c.next()) {
       child_pixels->push_back(c);
     }
@@ -88,27 +88,27 @@ pixel pixel::prev_wrap() const {
   return pixel(id_.prev_wrap().id());
 }
 
-S2::S2Cell pixel::get_cell() const {
-  return S2::S2Cell(id_);
+S2Cell pixel::get_cell() const {
+  return S2Cell(id_);
 }
 
-point pixel::s2point_to_point(const S2::S2Point& p) const {
-  return point(p.x(), p.y(), p.z(), 1.0);
+point pixel::s2point_to_point(const S2Point& p) {
+  return point(p[0], p[1], p[2], 1.0);
 }
 
-S2::S2Point pixel::point_to_s2point(const point& p) const {
-  return S2::S2Point(p.unit_sphere_x(), p.unit_sphere_y(), p.unit_sphere_z());
+S2Point pixel::point_to_s2point(const point& p) {
+  return S2Point(p.unit_sphere_x(), p.unit_sphere_y(), p.unit_sphere_z());
 }
 
 double pixel::average_area(int level) {
-  return S2::S2Cell.AverageArea(level) * STRAD_TO_DEG2;
+  return get_cell().AverageArea(level) * STRAD_TO_DEG2;
 }
 
-double pixel::average_area() const {
+double pixel::average_area() {
   return get_cell().AverageArea() * STRAD_TO_DEG2;
 }
 
-double pixel::exact_area() const {
+double pixel::exact_area() {
   return get_cell().ApproxArea() * STRAD_TO_DEG2;
 }
 
@@ -144,12 +144,12 @@ point pixel::edge(int k) const {
   return s2point_to_point(get_cell().GetEdgeRaw(k));
 }
 
-bool pixel::edge_distances(point& p, double& near_edge_distance,
+bool pixel::edge_distances(const point& p, double& near_edge_distance,
     double& far_edge_distance) {
   // First, find the nearest vertex.
-  S2::S2Cell cell = get_cell();
-  double near_edge_distance = 100.0;
-  double far_edge_distance = -100.0;
+  S2Cell cell = get_cell();
+  near_edge_distance = 100.0;
+  far_edge_distance = -100.0;
   for (int k = 0; k < 4; k++) {
     double costheta = s2point_to_point(cell.GetVertexRaw(k)).dot(p);
     if (1.0 - costheta * costheta < near_edge_distance) {
@@ -170,7 +170,7 @@ bool pixel::edge_distances(point& p, double& near_edge_distance,
   edges.reserve(4);
   edge_caps.reserve(4);
   for (int k = 0; k < 4; k++) {
-    point edge = s2point_to_point(cell.getRawEdge(k));
+    point edge = s2point_to_point(cell.GetEdgeRaw(k));
     edges.push_back(edge);
     edge_caps.push_back(circle_bound.from_height(edge, 0.0));
   }
@@ -189,7 +189,7 @@ bool pixel::edge_distances(point& p, double& near_edge_distance,
       // (i.e., the great circle that runs through p and x needs to be normal
       // to the edge great circle and x needs to be on the edge great circle).
       // The solution is x = edge(k).cross(p.cross(edge(k))).
-      point nearest_point = edge[k].cross(p.cross(edge[k])); // normalize?
+      point nearest_point = edges[k].cross(p.cross(edges[k])); // normalize?
       double costheta = nearest_point.dot(p);
       if (1.0 - costheta * costheta < near_edge_distance) {
         near_edge_distance = 1.0 - costheta * costheta;
@@ -199,7 +199,7 @@ bool pixel::edge_distances(point& p, double& near_edge_distance,
         far_edge_distance = 1.0 - costheta * costheta;
       }
 
-      nearest_point = edge[k + 2].cross(p.cross(edge[k + 2])); // normalize?
+      nearest_point = edges[k + 2].cross(p.cross(edges[k + 2])); // normalize?
       costheta = nearest_point.dot(p);
       if (1.0 - costheta * costheta < near_edge_distance) {
         near_edge_distance = 1.0 - costheta * costheta;
@@ -214,14 +214,14 @@ bool pixel::edge_distances(point& p, double& near_edge_distance,
   return nearest_point_on_edge;
 }
 
-double pixel::nearest_edge_distance(point& p) {
+double pixel::nearest_edge_distance(const point& p) {
   double sin2theta_min, sin2theta_max;
   edge_distances(p, sin2theta_min, sin2theta_max);
 
   return sin2theta_min;
 }
 
-double pixel::farthest_edge_distance(point& p) {
+double pixel::farthest_edge_distance(const point& p) {
   double sin2theta_min, sin2theta_max;
   edge_distances(p, sin2theta_min, sin2theta_max);
 
@@ -234,7 +234,7 @@ void pixel::neighbors(pixel_vector* pixels) const {
 
 void pixel::neighbors(int level, pixel_vector* pixels) const {
   if (level <= MAX_LEVEL) {
-    vector<S2::S2CellId> neighbor_ids;
+    vector<S2CellId> neighbor_ids;
     id_.AppendAllNeighbors(level, &neighbor_ids);
     pixels->clear();
     for (int k = 0; k < neighbor_ids.size(); k++) {
@@ -250,3 +250,5 @@ point pixel::get_random_point() const {
 void pixel::get_random_points(long n_points, pixel_vector* points) const {
   return;
 }
+
+} // end namespace s2omp

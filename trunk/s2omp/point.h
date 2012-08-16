@@ -28,6 +28,8 @@
 #include <vector>
 #include "core.h"
 #include "pixel.h"
+#include "s2.h"
+#include "s2cellid.h"
 
 namespace s2omp {
 
@@ -89,8 +91,8 @@ public:
   inline double weight() const {
     return weight_;
   }
-  inline double set_weight(double weight) :
-    weight_(weight) {
+  inline void set_weight(double weight) {
+    weight_ = weight;
   }
 
   double angular_distance(const point& p) const;
@@ -118,10 +120,12 @@ public:
 
   inline uint64 id() const;
   inline uint64 id(int level) const;
-  inline pixel to_pixel() const;
-  inline pixel to_pixel(int level) const;
+  inline pixel* to_pixel() const;
+  inline pixel* to_pixel(int level) const;
 
-  inline S2::S2Point s2point() {return point_;}
+  inline S2Point s2point() {return point_;}
+
+  inline point operator -() const;
 
 protected:
   void set_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
@@ -136,7 +140,7 @@ private:
   void rotate_about(point& axis, double rotation_angle_degrees, Sphere s,
       double& unit_sphere_x, double& unit_sphere_y, double& unit_sphere_z);
 
-  S2::SPoint point_;
+  S2Point point_;
   double weight_;
 };
 
@@ -164,12 +168,10 @@ inline bool operator>=(point const& a, point const& b) {
   return a.id() >= b.id();
 }
 
-inline point operator-() {
+inline point point::operator-() const{
   return point(-unit_sphere_x(), -unit_sphere_y(),
-      -unit_sphere_z(), a.weight());
+      -unit_sphere_z(), weight());
 }
-
-// need an operator-
 
 inline double point::dot(const point& p) {
   return point_.x() * p.unit_sphere_x() + point_.y() * p.unit_sphere_y()
@@ -186,19 +188,19 @@ inline static double dot(const point& a, const point& b) {
       * b.unit_sphere_y() + a.unit_sphere_z() * b.unit_sphere_z();
 }
 
-inline uint64 point::id() {
-  return S2::S2CellId.FromPoint(point_).id();
+inline uint64 point::id() const {
+  return S2CellId::FromPoint(point_).id();
 }
 
-inline uint64 point::id(int level) {
-  return S2::S2CellId.FromPoint(point_).parent(level).id();
+inline uint64 point::id(int level) const {
+  return S2CellId::FromPoint(point_).parent(level).id();
 }
 
-inline pixel* point::to_pixel() {
+inline pixel* point::to_pixel() const {
   return new pixel(id());
 }
 
-inline pixel* point::to_pixel(int level) {
+inline pixel* point::to_pixel(int level) const {
   return to_pixel()->parent(level);
 }
 
