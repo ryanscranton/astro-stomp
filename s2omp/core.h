@@ -17,6 +17,7 @@
 
 #include <stdint.h>
 #include <math.h>
+#include <base/integral_types.h>
 
 namespace s2omp {
 

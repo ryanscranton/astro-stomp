@@ -25,11 +25,15 @@
 #include "point.h"
 #include "MersenneTwister.h"
 
+// S2 Includes for pixel.h
+#include <s2.h>
+#include <s2cellid.h>
+#include <s2cell.h>
+
 namespace s2omp {
 
 class point;
 class pixel;
-class circle_bound;
 
 typedef std::vector<pixel> pixel_vector;
 typedef pixel_vector::iterator pixel_iterator;
@@ -46,7 +50,7 @@ class pixel {
 public:
   // The default constructor requires a 64-bit integer (based on the S2
   // pixelization).
-  explicit pixel(uint64 id);
+  explicit pixel(uint64 id) : id_(S2CellId(id)) {}
   virtual ~pixel();
 
   // Static constructors are also available to instantiate
@@ -106,16 +110,16 @@ public:
   // Our first methods using the functionality from S2::S2Cell.  Since S2 cells
   // are only roughly equal-area, there is some small difference between the
   // average area of a cell at a given level at the exact area of a given cell.
-  static double average_area(int level);
-  double average_area() const;
-  double exact_area() const;
+  double average_area(int level);
+  double average_area();
+  double exact_area();
 
   // For some methods we need would like a way to calculate the level at which
   // the average area of the level is less than the input area. This function
   // will return levels less than 0 and greater than 30 so it must be tested
   // after calling if a valid level is needed.
   inline static int get_level_from_area(double area) {
-    return int(std::ceil(log(21600.0/(PI*area))/log(4.0)));
+    return int(ceil(log(21600.0/(PI*area))/log(4.0)));
   }
 
   // Return true if the input point or pixel is inside our current pixel.
@@ -144,8 +148,8 @@ public:
 
   // For some uses of the code we would like to know both the distance to
   // the closest and farthest edge given an external point.
-  double nearest_edge_distance(const point& p) const;
-  double farthest_edge_distance(const point& p) const;
+  double nearest_edge_distance(const point& p);
+  double farthest_edge_distance(const point& p);
 
   // Alternatively, we can get both edge distances in a single call.  The
   // returned boolean tells us whether the distances are to pixel edges (true)
@@ -168,11 +172,11 @@ protected:
 
 private:
   pixel();
-  S2::S2Cell get_cell() const;
-  static point s2point_to_point(const S2::S2Point& p) const;
-  static S2::S2Point point_to_s2point(const point& p) const;
+  S2Cell get_cell() const;
+  static point s2point_to_point(const S2Point& p);
+  static S2Point point_to_s2point(const point& p);
 
-  S2::S2CellId id_;
+  S2CellId id_;
 };
 
 inline bool operator==(pixel const& a, pixel const& b) {
