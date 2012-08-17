@@ -13,23 +13,17 @@
 #include <vector>
 #include <algorithm>
 #include "core.h"
-
-#include "bound_interface.h"
-#include "pixel.h"
 #include "point.h"
-
 #include "MersenneTwister.h"
 
 namespace s2omp {
 
-typedef std::vector<circle_bound *> circle_ptr_vector;
-typedef circle_ptr_vector::iterator circle_ptr_iterator;
-
 class angular_bin;
 class bound_interface;
 class circle_bound;
-class pixel;
-class point;
+
+typedef std::vector<circle_bound *> circle_ptr_vector;
+typedef circle_ptr_vector::iterator circle_ptr_iterator;
 
 class circle_bound: public bound_interface {
 public:
@@ -40,7 +34,8 @@ public:
 	static circle_bound* from_radius(const point& axis, double radius_degrees);
 	static circle_bound* from_height(const point& axis, double height);
 
-	inline point axis() {return axis_;}
+	inline point axis();
+	// inline void set_axis(const point& p);
 	inline double radius() {return acos(1 - height_)*DEG_TO_RAD;}
 	inline double height() {return height_;}
 
@@ -83,7 +78,7 @@ private:
 	//These variables below are for generating random points and will not be
 	// initialized until initialize_random() is called.
 	void initialize_random();
-	point great_circle_norm_;
+	point great_circle_norm_ ;
 	double rotate_;
 	bool initialized_random_;
 	MTRand mtrand;
