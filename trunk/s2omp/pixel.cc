@@ -15,7 +15,9 @@
 // on the sphere into pixel index, increasing and decreasing pixel resolution,
 // finding neighboring pixels and so on.
 
+#include "circle_bound.h"
 #include "pixel.h"
+#include "point.h"
 
 namespace s2omp {
 

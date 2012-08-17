@@ -28,8 +28,6 @@
 #include <vector>
 #include "core.h"
 
-#include "pixel.h"
-
 // From S2
 #include "s2.h"
 #include "s2cellid.h"
@@ -39,8 +37,6 @@ namespace s2omp {
 class pixel; // class declaration in pixel.h
 class point;
 
-typedef std::vector<point> point_vector;
-typedef point_vector::iterator point_iterator;
 typedef std::vector<point *> point_ptr_vector;
 typedef point_ptr_vector::iterator point_ptr_iterator;
 

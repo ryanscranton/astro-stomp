@@ -10,14 +10,22 @@
 
 namespace s2omp {
 
+class bound_interface;
+
+struct pixel_candidate {
+    pixel pix;
+    bool is_terminal;
+    uint8_t n_children;
+  };
+
 typedef std::map<const uint64, pixel> pixel_map;
 typedef pixel_map::iterator pixel_map_iterator;
 
 typedef std::pair<int, pixel_candidate> pixel_entry;
 typedef std::vector<pixel_entry> pixel_entry_vector;
 typedef pixel_entry_vector::iterator pixel_entry_iterator;
-
 struct compare_pixels;
+
 typedef std::priority_queue<pixel_entry, pixel_entry_vector,
                             compare_pixels> pixel_queue;
 
@@ -103,11 +111,6 @@ public:
   bool set_min_max_level(int min, int max);
 
 private:
-  struct pixel_candidate {
-    pixel pix;
-    bool is_terminal;
-    uint8_t n_children;
-  };
 
   bool generate_covering(const bound_interface& bound, uint32_t max_pixels,
       bool interior, double fraction, pixel_vector* pixels);
