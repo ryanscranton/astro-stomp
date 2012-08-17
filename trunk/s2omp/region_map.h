@@ -8,12 +8,13 @@
 #ifndef REGION_MAP_H_
 #define REGION_MAP_H_
 
+namespace s2omp {
+
 typedef std::map<const uint64, int16_t> region_dict;
 typedef region_dict::iterator region_iterator;
 typedef std::pair<region_iterator, region_iterator> region_pair;
 typedef std::map<const int16_t, double> region_area;
 
-namespace s2omp {
 class region_map {
   // A region_map splits a bound_interface object into roughly equal-area
   // sections.  Once that is done, one can determine the region number at a

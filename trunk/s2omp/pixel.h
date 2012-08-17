@@ -21,18 +21,27 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
+
 #include "core.h"
 #include "point.h"
+#include "circle_bound.h"
 #include "MersenneTwister.h"
 
 // S2 Includes for pixel.h
-#include <s2.h>
-#include <s2cellid.h>
-#include <s2cell.h>
+#include "s2.h"
+#include "s2cellid.h"
+#include "s2cell.h"
 
 namespace s2omp {
 
+typedef std::vector<pixel> pixel_vector;
+typedef pixel_vector::iterator pixel_iterator;
+typedef std::pair<pixel_iterator, pixel_iterator> pixel_pair;
+typedef std::vector<pixel *> pixel_ptr_vector;
+typedef pixel_ptr_vector::iterator pixel_ptr_iterator;
+
 class point;
+class circle_bound;
 class pixel;
 
 typedef std::vector<pixel> pixel_vector;

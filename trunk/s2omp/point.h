@@ -120,8 +120,8 @@ public:
 
   inline uint64 id() const;
   inline uint64 id(int level) const;
-  inline pixel* to_pixel() const;
-  inline pixel* to_pixel(int level) const;
+  pixel* to_pixel() const;
+  pixel* to_pixel(int level) const;
 
   inline S2Point s2point() {return point_;}
 
@@ -194,14 +194,6 @@ inline uint64 point::id() const {
 
 inline uint64 point::id(int level) const {
   return S2CellId::FromPoint(point_).parent(level).id();
-}
-
-inline pixel* point::to_pixel() const {
-  return new pixel(id());
-}
-
-inline pixel* point::to_pixel(int level) const {
-  return to_pixel()->parent(level);
 }
 
 } // end namespace s2omp
