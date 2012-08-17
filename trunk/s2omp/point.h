@@ -27,7 +27,10 @@
 #include <string>
 #include <vector>
 #include "core.h"
+
 #include "pixel.h"
+
+// From S2
 #include "s2.h"
 #include "s2cellid.h"
 
