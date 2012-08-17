@@ -16,7 +16,6 @@
 // finding neighboring pixels and so on.
 
 #include "pixel.h"
-#include "s2.h"
 
 namespace s2omp {
 
@@ -172,7 +171,7 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
   for (int k = 0; k < 4; k++) {
     point edge = s2point_to_point(cell.GetEdgeRaw(k));
     edges.push_back(edge);
-    edge_caps.push_back(circle_bound.from_height(edge, 0.0));
+    edge_caps.push_back(*circle_bound::from_height(edge, 0.0));
   }
 
   // Now iterate over the edge pairs, check containment and calculate the
@@ -189,7 +188,8 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
       // (i.e., the great circle that runs through p and x needs to be normal
       // to the edge great circle and x needs to be on the edge great circle).
       // The solution is x = edge(k).cross(p.cross(edge(k))).
-      point nearest_point = edges[k].cross(p.cross(edges[k])); // normalize?
+    	// point nearest_point = edges[k].cross(p.cross(edges[k])); // normalize?
+      point nearest_point = edges[k].cross(point::cross(p, edges[k]));
       double costheta = nearest_point.dot(p);
       if (1.0 - costheta * costheta < near_edge_distance) {
         near_edge_distance = 1.0 - costheta * costheta;
@@ -199,7 +199,8 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
         far_edge_distance = 1.0 - costheta * costheta;
       }
 
-      nearest_point = edges[k + 2].cross(p.cross(edges[k + 2])); // normalize?
+      nearest_point = edges[k + 2].cross(point::cross(p, edges[k + 2]));
+      // nearest_point = edges[k + 2].cross(p.cross(edges[k + 2])); // normalize?
       costheta = nearest_point.dot(p);
       if (1.0 - costheta * costheta < near_edge_distance) {
         near_edge_distance = 1.0 - costheta * costheta;

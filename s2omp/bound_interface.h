@@ -26,12 +26,17 @@
 #include <vector>
 #include <map>
 #include "core.h"
-#include "circle_bound.h"
 #include "pixel.h"
 #include "point.h"
-#include "region_map.h"
+#include "circle_bound.h"
 
 namespace s2omp {
+
+class pixel;
+class point;
+class circle_bound;
+
+class bound_interface;
 
 class bound_interface {
 public:
@@ -73,12 +78,12 @@ public:
   // to create a circle_bound that encompasses the bound.
   virtual circle_bound get_bound() const;
 
-  inline void get_covering(pixel_vector* pixels);
-  inline void get_covering(const uint32_t max_pixels, pixel_vector* pixels);
-  inline void get_covering(double fractional_area_tolerance,
+  virtual void get_covering(pixel_vector* pixels);
+  virtual void get_covering(const uint32_t max_pixels, pixel_vector* pixels);
+  virtual void get_covering(double fractional_area_tolerance,
       pixel_vector* pixels);
-  inline void get_interior_covering(int max_level, pixel_vector* pixels);
-  inline void get_simple_covering(int level, pixel_vector* pixels);
+  virtual void get_interior_covering(int max_level, pixel_vector* pixels);
+  virtual void get_simple_covering(int level, pixel_vector* pixels);
 
   point get_random_point();
   void get_random_points(long n_points, point_vector* points);
@@ -89,7 +94,7 @@ protected:
 private:
 
 };
-
+/*
 inline void covering(pixel_vector* pixels) {
   if (!pixels->empty()) pixels->clear();
   coverer cover = coverer();
@@ -136,6 +141,7 @@ inline void bound_interface::get_simple_covering(int level,
 
   cover.get_simple_covering(*this, level, pixels);
 }
+*/
 
 } // end namespace s2omp
 
