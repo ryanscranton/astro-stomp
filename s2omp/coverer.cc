@@ -5,11 +5,13 @@
  *      Author: cbmorrison
  */
 
+#include "bound_interface.h"
 #include "coverer.h"
+#include "pixel.h"
 
 namespace s2omp {
 
-struct coverer::compare_pixels : public less<pixel_entry> {
+struct compare_pixels : public less<pixel_entry> {
   bool operator()(pixel_entry const& x, pixel_entry const& y) {
     return x.first < y.first;
   }
@@ -211,7 +213,7 @@ bool coverer::generate_covering(const bound_interface& bound,
       success = true;
   } else if (fraction > 0.0) {
     if (!pixels->empty() &&
-        std::fabs(bound_area - covered_area)/bound_area < fraction)
+        fabs(bound_area - covered_area)/bound_area < fraction)
       success = true;
   } else {
     success = !pixels->empty();

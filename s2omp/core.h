@@ -24,6 +24,17 @@ namespace s2omp {
 // Here we're going to define the basic constants and methods that will be
 // used throughout all of the other library classes.
 
+// As these are the two core classes of the library we define their existence
+// now as well vectors of these quantities.
+class pixel;
+class point;
+
+typedef std::vector<pixel> pixel_vector;
+typedef pixel_vector::iterator pixel_iterator;
+
+typedef std::vector<point> point_vector;
+typedef point_vector::iterator point_iterator;
+
 // First some trigonometric values.
 extern const double PI = 2.0*asin(1.0);
 extern const double DEG_TO_RAD = PI/180.0;
