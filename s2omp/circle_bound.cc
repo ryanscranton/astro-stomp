@@ -6,9 +6,11 @@
  */
 
 
-
-
+#include "angular_bin-inl.h"
+#include "bound_interface.h"
 #include "circle_bound.h"
+#include "pixel.h"
+#include "point.h"
 
 namespace s2omp {
 
@@ -17,11 +19,11 @@ circle_bound::circle_bound() {
 }
 
 circle_bound::circle_bound(const point& axis, double height) {
-  axis_ = axis;
+	axis_ = axis;
   height_ = height;
 }
 
-static circle_bound* circle_bound::from_angular_bin(const point& axis,
+circle_bound* circle_bound::from_angular_bin(const point& axis,
       const angular_bin& bin) {
   circle_bound* bound = new circle_bound(axis, 1.0 - bin.cos_theta_max());
   return bound;
@@ -38,17 +40,17 @@ circle_bound* circle_bound::from_height(const point& axis, double height) {
   return bound;
 }
 
-virtual bool circle_bound::is_empty() {
+bool circle_bound::is_empty() {
   return height_ < 0;
 }
 
-virtual long circle_bound::size() {
+long circle_bound::size() {
   if (is_empty())
     return 0;
   return 1;
 }
 
-virtual double circle_bound::area() {
+double circle_bound::area() {
   if (!is_empty())
     return 2*PI*height_;
   return 0.0;
@@ -74,9 +76,9 @@ double circle_bound::contained_area(const pixel& pix) {
  if (contains(pix)) {
    return pix.exact_area();
  } else if (may_intersect(pix)) {
-   for (pixel_iterator iter = pix.child_begin();
-       iter != pix.child_end(); ++iter) {
-     area += contained_area(*iter);
+   for (pixel child_pix = pix.child_begin();
+       child_pix != pix.child_end(); child_pix.next()) {
+     area += contained_area(child_pix);
    }
  }
  return area;
