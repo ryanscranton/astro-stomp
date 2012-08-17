@@ -13,22 +13,23 @@
 #include <vector>
 #include <algorithm>
 #include "core.h"
+
+#include "bound_interface.h"
 #include "pixel.h"
 #include "point.h"
-#include "bound_interface.h"
+
 #include "MersenneTwister.h"
 
 namespace s2omp {
 
-typedef std::vector<circle_bound> circle_vector;
-typedef circle_vector::iterator circle_iterator;
+typedef std::vector<circle_bound *> circle_ptr_vector;
+typedef circle_ptr_vector::iterator circle_ptr_iterator;
 
-class pixel;
-class point;  // class declaration in stomp_angular_coordinate.h
-class angular_bin;         // class declaration in stomp_angular_bin.h
+class angular_bin;
 class bound_interface;
-
 class circle_bound;
+class pixel;
+class point;
 
 class circle_bound: public bound_interface {
 public:

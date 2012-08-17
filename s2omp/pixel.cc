@@ -165,20 +165,20 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
   // Finding this point is more expensive than finding the nearest vertex, so
   // we check containment first.
   point_vector edges;
-  circle_vector edge_caps;
+  circle_ptr_vector edge_caps;
   edges.reserve(4);
   edge_caps.reserve(4);
   for (int k = 0; k < 4; k++) {
     point edge = s2point_to_point(cell.GetEdgeRaw(k));
     edges.push_back(edge);
-    edge_caps.push_back(*circle_bound::from_height(edge, 0.0));
+    edge_caps.push_back(circle_bound::from_height(edge, 0.0));
   }
 
   // Now iterate over the edge pairs, check containment and calculate the
   // distance if contained.
   bool nearest_point_on_edge = false;
   for (int k = 0; k < 2; k++) {
-    if (edge_caps[k].contains(p) && edge_caps[k + 2].contains(p)) {
+    if ((edge_caps[k])->contains(p) && (edge_caps[k + 2])->contains(p)) {
       // To find the nearest point on an edge (x), we need to find the normal
       // to the edge great circle that runs through p.  To find this, we solve
       // the following equations:

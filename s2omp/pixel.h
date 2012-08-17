@@ -21,10 +21,10 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
-
 #include "core.h"
-#include "point.h"
+
 #include "circle_bound.h"
+#include "point.h"
 #include "MersenneTwister.h"
 
 // S2 Includes for pixel.h
@@ -40,9 +40,9 @@ typedef std::pair<pixel_iterator, pixel_iterator> pixel_pair;
 typedef std::vector<pixel *> pixel_ptr_vector;
 typedef pixel_ptr_vector::iterator pixel_ptr_iterator;
 
-class point;
 class circle_bound;
 class pixel;
+class point;
 
 typedef std::vector<pixel> pixel_vector;
 typedef pixel_vector::iterator pixel_iterator;
