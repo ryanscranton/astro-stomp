@@ -52,8 +52,9 @@ public:
   };
 
 public:
+  point();
   point(double x, double y, double z, double weight);
-  virtual ~point();
+  virtual ~point() {};
 
   static point* from_latlon_deg(double lat_deg, double lon_deg, Sphere s);
   static point* from_latlon_deg(double lat_deg, double lon_deg, Sphere s,
@@ -95,24 +96,22 @@ public:
   }
 
   double angular_distance(const point& p) const;
-  double angular_distance(const point* p) const;
   static double angular_distance(const point& a, const point& b);
 
-  inline double dot(const point& p);
-  inline double dot(const point* p);
-  inline static double dot(const point& a, const point& b);
+  inline double dot(const point& p) const;
+  static double dot(const point& a, const point& b);
 
-  point cross(const point& p);
-  point cross(const point* p);
+  point cross(const point& p) const;
   static point cross(const point& a, const point& b);
 
-  point great_circle(const point& p, Sphere s);
-  static point great_circle(const point& a, const point& b, Sphere s);
+  point great_circle(const point& p);
+  static point great_circle(const point& a, const point& b);
 
   double position_angle(const point& p, Sphere s);
   static double position_angle(const point& center, const point& target,
       Sphere s);
 
+  void rotate_about(const point& axis, double rotation_angle_degrees);
   void rotate_about(const point& axis, double rotation_angle_degrees, Sphere s);
   static point rotate_about(const point& p, const point& axis,
       double rotation_angle, Sphere s);
@@ -132,7 +131,6 @@ protected:
   void set_xyz(double x, double y, double z);
 
 private:
-  point();
 
   double cos_position_angle(point& p, Sphere s);
   double sin_position_angle(point& p, Sphere s);
@@ -172,19 +170,9 @@ inline point point::operator-() const{
       -unit_sphere_z(), weight());
 }
 
-inline double point::dot(const point& p) {
+inline double point::dot(const point& p) const {
   return point_.x() * p.unit_sphere_x() + point_.y() * p.unit_sphere_y()
       + point_.z() * p.unit_sphere_z();
-}
-
-inline double point::dot(const point* p) {
-  return point_.x() * p->unit_sphere_x() + point_.y() * p->unit_sphere_y()
-      + point_.z() * p->unit_sphere_z();
-}
-
-inline static double dot(const point& a, const point& b) {
-  return a.unit_sphere_x() * b.unit_sphere_x() + a.unit_sphere_y()
-      * b.unit_sphere_y() + a.unit_sphere_z() * b.unit_sphere_z();
 }
 
 inline uint64 point::id() const {

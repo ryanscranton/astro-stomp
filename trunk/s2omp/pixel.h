@@ -17,11 +17,9 @@
 #ifndef PIXEL_H_
 #define PIXEL_H_
 
-#include <stdint.h>
-#include <math.h>
-#include <vector>
-#include <algorithm>
+#include <utility>
 #include "core.h"
+
 
 #include "MersenneTwister.h"
 
@@ -49,8 +47,9 @@ class pixel {
 public:
   // The default constructor requires a 64-bit integer (based on the S2
   // pixelization).
+	pixel();
   explicit pixel(uint64 id) : id_(S2CellId(id)) {}
-  virtual ~pixel();
+  virtual ~pixel() {};
 
   // Static constructors are also available to instantiate
   // from point objects (either at a specific input level or at the maximum
@@ -109,9 +108,9 @@ public:
   // Our first methods using the functionality from S2::S2Cell.  Since S2 cells
   // are only roughly equal-area, there is some small difference between the
   // average area of a cell at a given level at the exact area of a given cell.
-  double average_area(int level);
-  double average_area();
-  double exact_area();
+  double average_area(int level) const;
+  double average_area() const;
+  double exact_area() const;
 
   // For some methods we need would like a way to calculate the level at which
   // the average area of the level is less than the input area. This function
@@ -166,14 +165,14 @@ public:
   point get_random_point() const;
   void get_random_points(long n_points, pixel_vector* points) const;
 
+  S2Cell get_cell() const;
+  static point s2point_to_point(const S2Point& p);
+  static S2Point point_to_s2point(const point& p);
+
 protected:
   void set_id(uint64 id);
 
 private:
-  pixel();
-  S2Cell get_cell() const;
-  static point s2point_to_point(const S2Point& p);
-  static S2Point point_to_s2point(const point& p);
 
   S2CellId id_;
 };

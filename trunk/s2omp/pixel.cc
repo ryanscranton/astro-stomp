@@ -15,11 +15,16 @@
 // on the sphere into pixel index, increasing and decreasing pixel resolution,
 // finding neighboring pixels and so on.
 
+#include "bound_interface.h"
 #include "circle_bound.h"
 #include "pixel.h"
 #include "point.h"
 
 namespace s2omp {
+
+pixel::pixel() {
+	id_ = S2CellId(0);
+}
 
 pixel* pixel::from_point(const point& p) {
   return new pixel(p.id());
@@ -101,15 +106,15 @@ S2Point pixel::point_to_s2point(const point& p) {
   return S2Point(p.unit_sphere_x(), p.unit_sphere_y(), p.unit_sphere_z());
 }
 
-double pixel::average_area(int level) {
+double pixel::average_area(int level) const {
   return get_cell().AverageArea(level) * STRAD_TO_DEG2;
 }
 
-double pixel::average_area() {
+double pixel::average_area() const {
   return get_cell().AverageArea() * STRAD_TO_DEG2;
 }
 
-double pixel::exact_area() {
+double pixel::exact_area() const {
   return get_cell().ApproxArea() * STRAD_TO_DEG2;
 }
 
@@ -240,7 +245,7 @@ void pixel::neighbors(int level, pixel_vector* pixels) const {
     vector<S2CellId> neighbor_ids;
     id_.AppendAllNeighbors(level, &neighbor_ids);
     pixels->clear();
-    for (int k = 0; k < neighbor_ids.size(); k++) {
+    for (unsigned int k = 0; k < neighbor_ids.size(); k++) {
       pixels->push_back(pixel(neighbor_ids[k].id()));
     }
   }

@@ -15,8 +15,10 @@
 #ifndef CORE_H_
 #define CORE_H_
 
+#include <algorithm>
 #include <stdint.h>
 #include <math.h>
+#include <vector>
 #include <base/integral_types.h>
 
 namespace s2omp {

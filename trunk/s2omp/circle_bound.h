@@ -29,8 +29,8 @@ class circle_bound: public bound_interface {
 public:
 	virtual ~circle_bound();
 
-	static circle_bound* from_angular_bin(const point& axis,
-			const angular_bin& bin);
+	// static circle_bound* from_angular_bin(const point& axis,
+	//		const angular_bin& bin);
 	static circle_bound* from_radius(const point& axis, double radius_degrees);
 	static circle_bound* from_height(const point& axis, double height);
 
@@ -57,7 +57,7 @@ public:
 	virtual void interior_covering(int max_level, pixel_vector* pixels);
 	virtual void simple_covering(int level, pixel_vector* pixels);
 
-	virtual circle_bound get_bound();
+	virtual circle_bound* get_bound();
 
 	virtual point get_random_point();
 	virtual void get_random_points(long n_points, point_vector* points);
