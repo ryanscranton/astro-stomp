@@ -11,12 +11,6 @@
 
 namespace s2omp {
 
-struct compare_pixels : public less<pixel_entry> {
-  bool operator()(pixel_entry const& x, pixel_entry const& y) {
-    return x.first < y.first;
-  }
-};
-
 coverer::coverer() {
   coverer(0, MAX_LEVEL);
 }
@@ -26,7 +20,7 @@ coverer::coverer(int min_level, int max_level) {
   max_level_ = max_level;
 }
 
-uint32_t coverer::get_covering(const bound_interface& bound,
+bool coverer::get_covering(const bound_interface& bound,
     pixel_vector* pixels) {
   return generate_covering(bound, 8, false, -1.0, pixels);
 }

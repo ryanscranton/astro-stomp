@@ -5,13 +5,18 @@
  *      Author: cbmorrison
  */
 
-
+#include <stdint.h>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include "bound_interface.h"
 #include "circle_bound.h"
-#include "core.h"
 #include "pixel.h"
 #include "point.h"
-#include "s2.h"
-#include "s2cell.h"
+
+using namespace s2omp;
 
 void test_pixel_construction() {
   std::cout << "Testing Pixel Construction...\n";
@@ -68,50 +73,50 @@ void test_pixel_refinement() {
 
   //First we create a face pixel.
   pixel* pix = pixel::from_point(point(1, 0, 0, 0), 0);
-  pixel_vector* pixels;
+  pixel_vector pixels;
 
   // Now we fill the pixels up with a resonable level so we can test that it is
   // the right length.
-  pix->children(pixels);
-  if (pixels->size() == 4) {
+  pix->children(&pixels);
+  if (pixels.size() == 4) {
     std::cout << "\t\tSuccessfully created child pixels.\n";
   } else {
     std::cout << "\t\tFailed to create expected number of child pixels.\n"
         << "\t\tCheck children method in pixel.";
-    std::cout << "\t\tExpected 4, Got " << pixel->size() << "\n";
+    std::cout << "\t\tExpected 4, Got " << pixels.size() << "\n";
   }
 
   // Now we fill the pixels up with a resonable level so we can test that it is
   // the right length.
-  pix->children(5, pixels);
-  if (pixels->size() == 1024) {
+  pix->children(5, &pixels);
+  if (pixels.size() == 1024) {
     std::cout << "Successfully created child pixels.\n";
   } else {
     std::cout << "\t\tFailed to create expected number of child pixels.\n"
               << "\t\tCheck children method in pixel.\n";
-    std::cout << "\t\tExpected 1024, Got " << pixel->size() << "\n";
+    std::cout << "\t\tExpected 1024, Got " << pixels.size() << "\n";
   }
 
   std::cout << "\tTesting Parents...\n";
   // Now we test so see if you can successfully create parent pixels.
-  delete pix;
-  pixel* pix = pixel::from_point(point(1, 0, 0, 0), 30);
-  pixel parent = pix->parent();
+	delete pix;
+  pixel* pix2 = pixel::from_point(point(1, 0, 0, 0), 30);
+  pixel parent = pix2->parent();
   std::cout << "\t\tParent level is " << parent.level();
-  std::cout << "\t\tparent id | child id:"
-      << parent.id() " | " << pix.id() << "\n";
+  std::cout << "\t\tParent id | child id:"
+      << parent.id() << " | " << pix2->id() << "\n";
 
-  pixel parent = pix->parent(10);
-  std::cout << "\t\tParent level is " << parent.level();
-  std::cout << "\t\tparent id | child id:"
-      << parent.id() " | " << pix.id() << "\n";
-  delete pix;
+  pixel parent2 = pix2->parent(10);
+  std::cout << "\t\tParent level is " << parent2.level();
+  std::cout << "\t\tParent id | child id:"
+      << parent2.id() << " | " << pix2->id() << "\n";
+  delete pix2;
 
   std::cout << "\tTesting Child Iteration...\n";
-  pixel* pix = pixel::from_point(point(1, 0, 0, 0), 15);
+  pixel* pix3 = pixel::from_point(point(1, 0, 0, 0), 15);
   int n_child = 0;
-  pixel end = pix->child_end();
-  pxiel child = pix->child_begin();
+  pixel end = pix3->child_end();
+  pixel child = pix3->child_begin();
   while (child != end) {
     n_child++;
     child.next();
@@ -125,13 +130,13 @@ void test_pixel_refinement() {
   }
 
   std::cout << "\tTesting Neighbors...\n";
-  pix->neighbors(pixels);
-  if (pixels->size() == 4) {
+  pix3->neighbors(&pixels);
+  if (pixels.size() == 4) {
     std::cout << "\t\tSuccessfully created 4 neighbors.";
   } else {
     std::cout << "\t\tFailed to create 4 children. "
         << "Check next and child_end/begin.\n"
-        << "Expected 4, Got " << pixels->size() << "\n";
+        << "Expected 4, Got " << pixels.size() << "\n";
   }
 }
 
@@ -139,33 +144,33 @@ void test_pixel_geometry() {
   std::cout << "Testing Pixel Geometry...\n";
   std::cout << "\tTesting Pixel Area...\n";
   pixel* pix = pixel::from_point(point(0, 1, 0, 0));
-  std::cout << "\t\tAverage are at level 15: " << pix.average_area() <<
-      " 14: " << pix.average_area(14) <<
-      " 16: " << pix.average_area(16) << "\n";
+  std::cout << "\t\tAverage are at level 15: " << pix->average_area() <<
+      " 14: " << pix->average_area(14) <<
+      " 16: " << pix->average_area(16) << "\n";
 
   std::cout << "\tTesting Pixel Contains/Intersect...\n";
   pixel child_end = pix->child_end(17);
-  if (pix.contains(point(0, 1, 0, 0))) {
+  if (pix->contains(point(0, 1, 0, 0))) {
     std::cout << "\t\tSuccessfully Contains point.";
 
   } else {
-    std::cout << "\t\Faield on contains point.";
+    std::cout << "\t\tFaield on contains point.";
   }
   if (pix->contains(child_end)) {
     std::cout << "\t\tSuccessfully Contains point.";
   } else {
-    std::cout << "\t\Faield on contains pixel.";
+    std::cout << "\t\tFaield on contains pixel.";
   }
-  pixel parent = pix->parent(4)
-  if (pix->intersect(parent)) {
+  pixel parent = pix->parent(4);
+  if (pix->intersects(parent)) {
     std::cout << "\t\tSuccessfully Contains point.";
   } else {
-    std::cout << "\t\Faield on intersect pixel.";
+    std::cout << "\t\tFaield on intersect pixel.";
   }
 
   std::cout << "\tTesting Pixel Vertices/Edges...\n";
   point_vector vertices;
-  ppint_vector edges;
+  point_vector edges;
   for (int k = 0; k < 4; ++k) {
     vertices.push_back(pix->vertex(k));
     edges.push_back(pix->edge(k));
@@ -174,13 +179,13 @@ void test_pixel_geometry() {
   if (vertices.size() == 4) {
     std::cout << "\t\tSuccessfully Created 4 Vertices.";
   } else {
-    std::cout << "\t\Failed on create vertices.";
+    std::cout << "\t\tFailed on create vertices.";
   }
 
   if (edges.size() == 4) {
     std::cout << "\t\tSuccessfully Created 4 Edges.";
   } else {
-    std::cout << "\t\Failed on create edges.";
+    std::cout << "\t\tFailed on create edges.";
   }
 
   std::cout << "\tTesting Pixel Edge Distances...\n";
@@ -189,10 +194,12 @@ void test_pixel_geometry() {
   std::cout << "\t\tFarthest Edge distance, should be about 1 :"
         << pix->farthest_edge_distance(point(1, 0, 0, 0)) << "\n";
 
-  if (pix->edge_distances(point(1, 0, 0, 0))) {
-    std::cout << "\t\tSuccessful edge distance type\n"
+	double near;
+	double far;
+  if (pix->edge_distances(point(1, 0, 0, 0), near, far)) {
+    std::cout << "\t\tSuccessful edge distance type\n";
   } else {
-    std::cout << "\t\Failed edge distance type\n"
+    std::cout << "\t\tFailed edge distance type\n";
   }
 }
 
@@ -205,4 +212,10 @@ void pixel_unit_tests() {
   test_pixel_geometry(); // Test that all pixel methods for accessing
                          // vertices/edges as well as contains and may_intersect
 
+}
+
+int main(int argc, char **argv) {
+	pixel_unit_tests();
+
+	return 0;
 }

@@ -8,6 +8,12 @@
 #ifndef COVERER_H_
 #define COVERER_H_
 
+#include <queue>
+#include <utility>
+#include "core.h"
+
+#include "pixel.h"
+
 namespace s2omp {
 
 class bound_interface;
@@ -24,7 +30,12 @@ typedef pixel_map::iterator pixel_map_iterator;
 typedef std::pair<int, pixel_candidate> pixel_entry;
 typedef std::vector<pixel_entry> pixel_entry_vector;
 typedef pixel_entry_vector::iterator pixel_entry_iterator;
-struct compare_pixels;
+
+struct compare_pixels : public std::less<pixel_entry> {
+  bool operator()(pixel_entry const& x, pixel_entry const& y) {
+    return x.first < y.first;
+  }
+};
 
 typedef std::priority_queue<pixel_entry, pixel_entry_vector,
                             compare_pixels> pixel_queue;

@@ -6,11 +6,12 @@
  */
 
 
-#include "angular_bin-inl.h"
+// #include "angular_bin-inl.h"
 #include "bound_interface.h"
 #include "circle_bound.h"
 #include "pixel.h"
 #include "point.h"
+#include "s2cell.h"
 
 namespace s2omp {
 
@@ -23,11 +24,15 @@ circle_bound::circle_bound(const point& axis, double height) {
   height_ = height;
 }
 
+// TODO(cbmorrison) Commeting this out for now as we are just testing the
+// core methods.
+/*
 circle_bound* circle_bound::from_angular_bin(const point& axis,
       const angular_bin& bin) {
   circle_bound* bound = new circle_bound(axis, 1.0 - bin.cos_theta_max());
   return bound;
 }
+*/
 
 circle_bound* circle_bound::from_radius(const point& axis, double radius_degrees) {
   circle_bound* circle = new circle_bound(axis,
@@ -62,8 +67,9 @@ bool circle_bound::contains(const point& p) {
 }
 
 bool circle_bound::contains(const pixel& pix) {
+	S2Cell cell = pix.get_cell();
   for (int k = 0; k < 4; ++k) {
-    if (!contains(pix.vertex(k))) return false;
+    if (!contains(pixel::s2point_to_point(cell.GetVertexRaw(k)))) return false;
   }
   circle_bound* comp = complement();
   bool ans = !comp->may_intersect(pix);
@@ -71,13 +77,17 @@ bool circle_bound::contains(const pixel& pix) {
   return ans;
 }
 
+// TODO(cbmorrison) this may be a little bit slower than we want. Is there some
+// way of just to make this better by returning a vector of pixels for the
+// children?
 double circle_bound::contained_area(const pixel& pix) {
  double area = 0.0;
  if (contains(pix)) {
    return pix.exact_area();
  } else if (may_intersect(pix)) {
+	 pixel child_end = pix.child_end();
    for (pixel child_pix = pix.child_begin();
-       child_pix != pix.child_end(); child_pix.next()) {
+       child_pix != child_end; child_pix.next()) {
      area += contained_area(child_pix);
    }
  }
@@ -87,10 +97,11 @@ double circle_bound::contained_area(const pixel& pix) {
 // TODO(cbmorrison) the intermediate S2Cell creation may be expensive and slow.
 // If needed create an s2omp class instead of wrapping cap_.may_intersect.
 bool circle_bound::may_intersect(const pixel& pix) {
+	S2Cell cell = pix.get_cell();
   point_vector vertices;
   vertices.reserve(4);
   for (int k = 0; k < 4; ++k) {
-    vertices.push_back(pix.vertex(4));
+    vertices.push_back(pixel::s2point_to_point(cell.GetVertexRaw(k)));
     if (contains(vertices.back())) return true;
   }
   return intersects(pix, vertices);
@@ -100,7 +111,7 @@ circle_bound* circle_bound::get_bound() {
   return this;
 }
 
-virtual point circle_bound::get_random_point() {
+point circle_bound::get_random_point() {
   if (!initialized_random_) {
     initialize_random();
   }
@@ -121,13 +132,13 @@ virtual point circle_bound::get_random_point() {
   // position on the sphere. We do this by rotating the point around the normal
   // to the great circle defined by the z axis and the cap axis. We rotate by
   // the angle the cap axis makes with the z axis.
-  point p = point(sintheta*cos(phi), sintheta*sin(phi), z);
+  point p = point(sintheta*cos(phi), sintheta*sin(phi), z, 1.0);
   p.rotate_about(great_circle_norm_, rotate_);
 
   return p;
 }
 
-void void circle_bound::get_random_points(long n_points,
+void circle_bound::get_random_points(long n_points,
     point_vector* points) {
   if (!points->empty())
     points->clear();
