@@ -192,6 +192,8 @@ class ScalarMap : public BaseMap {
 		       double theta_min = -1.0);
   double FindLocalIntensity(AngularCoordinate& ang, double theta_max,
 			    double theta_min = -1.0);
+  double FindLocalAverageIntensity(AngularCoordinate& ang,
+    															 double theta_max, double theta_min = -1.0);
   double FindLocalDensity(AngularCoordinate& ang, double theta_max,
 			  double theta_min = -1.0);
   double FindLocalPointDensity(AngularCoordinate& ang, double theta_max,
