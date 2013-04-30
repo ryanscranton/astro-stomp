@@ -66,10 +66,10 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
       if (unmasked_fraction > unmasked_fraction_minimum_) {
         if (use_map_weight_as_intensity)
           initial_intensity = stomp_map.FindAverageWeight(*sub_iter);
-	ScalarPixel tmp_pix(sub_iter->PixelX(), sub_iter->PixelY(),
+					ScalarPixel tmp_pix(sub_iter->PixelX(), sub_iter->PixelY(),
 			    sub_iter->Resolution(), unmasked_fraction,
 			    initial_intensity, 0);
-	pix_.push_back(tmp_pix);
+					pix_.push_back(tmp_pix);
       }
     }
   }
@@ -225,6 +225,75 @@ ScalarMap::~ScalarMap() {
   total_intensity_ = 0.0;
   if (!pix_.empty()) pix_.clear();
   ClearRegions();
+}
+
+bool ScalarMap::Read(const std::string& InputFile,
+		double min_unmasked_fraction) {
+  Clear();
+
+  std::ifstream input_file(InputFile.c_str());
+
+  uint32_t hpixnum, superpixnum;
+  double unmask, intensity;
+  int npoints;
+  int resolution;  // have to use an int here because of old map formats
+  bool found_file = false;
+
+  uint32_t x, y;
+
+  ScalarVector pix;
+
+  if (input_file) {
+  	found_file = true;
+    while (!input_file.eof()) {
+    	input_file >> hpixnum >> superpixnum >> resolution >> unmask
+    						 >> intensity >> npoints;
+      if (!input_file.eof() && (resolution % 2 == 0) &&
+      		(resolution > 0)) {
+      	Pixel::HPix2XY(static_cast<uint32_t>(resolution), hpixnum, superpixnum,
+      								 x, y);
+      	pix.push_back(
+      			ScalarPixel(x, y, static_cast<uint32_t>(resolution),
+      			            unmask, intensity, npoints));
+      }
+    }
+
+    input_file.close();
+
+  } else {
+    std::cout << "Stomp::ScalarMap::Read - " << InputFile <<
+      " does not exist!.  No Map ingested\n";
+  }
+
+  resolution_ = pix[0].Resolution();
+  unmasked_fraction_minimum_ = min_unmasked_fraction;
+  map_type_ = ScalarField;
+
+	pix_.reserve(pix.size());
+
+	area_ = 0.0;
+	total_intensity_ = 0.0;
+	total_points_ = 0;
+	for (ScalarIterator iter=pix.begin();iter!=pix.end();++iter) {
+		if (iter->Resolution() != resolution_) {
+			std::cout << "Stomp::ScalarMap::ScalarMap - " <<
+					"Incompatible resolutions in input Map file.  Exiting.\n";
+			exit(2);
+		}
+
+		area_ += iter->Area()*iter->Weight();
+		total_intensity_ += iter->Intensity();
+		total_points_ += iter->NPoints();
+		pix_.push_back(*iter);
+	}
+
+	sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
+	mean_intensity_ = 0.0;
+	converted_to_overdensity_ = false;
+	calculated_mean_intensity_ = false;
+	use_local_mean_intensity_ = false;
+
+  return found_file;
 }
 
 void ScalarMap::SetResolution(uint32_t resolution) {

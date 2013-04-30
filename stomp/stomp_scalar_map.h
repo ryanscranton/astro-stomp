@@ -106,6 +106,12 @@ class ScalarMap : public BaseMap {
 	    double theta_min = -1.0);
   virtual ~ScalarMap();
 
+  // Read an ascii file defining a constant resolution scalar map. The file
+  // format assumed is:
+  // 		hpixnum, superpixnum, resolution, unmasked fraction, intensity, npoints
+  bool Read(const std::string& InputFile,
+  		double min_unmasked_fraction = 0.0000001);
+
   // This is generally set through the constructor.  However, if
   // you want to re-initialize the same object with different parameters or
   // use the constructor without any arguments, this will set the
