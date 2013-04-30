@@ -769,6 +769,32 @@ double ScalarMap::FindLocalArea(AngularCoordinate& ang,
   }
 }
 
+double ScalarMap::FindLocalAverageIntensity(AngularCoordinate& ang,
+				   double theta_max, double theta_min) {
+  Pixel center_pix(ang,resolution_,0.0);
+
+  PixelVector pixVec;
+  if (theta_min < 0.0) {
+    center_pix.WithinRadius(theta_max, pixVec);
+  } else {
+    center_pix.WithinAnnulus(theta_min, theta_max, pixVec);
+  }
+
+  double total_area = 0.0;
+  double total_intensity = 0.0;
+  for (PixelIterator iter=pixVec.begin();iter!=pixVec.end();++iter) {
+  	double unmasked = FindUnmaskedFraction(*iter);
+    total_area += unmasked;
+    total_intensity += unmasked*FindIntensity(*iter);
+  }
+
+  if (total_area > 0.0000001) {
+    return total_intensity/(total_area*center_pix.Area());
+  } else {
+    return 0.0;
+  }
+}
+
 double ScalarMap::FindLocalIntensity(AngularCoordinate& ang,
 				     double theta_max, double theta_min) {
   Pixel center_pix(ang,resolution_,0.0);
