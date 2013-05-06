@@ -15,7 +15,6 @@
 // on the sphere into pixel index, increasing and decreasing pixel resolution,
 // finding neighboring pixels and so on.
 
-#include "bound_interface.h"
 #include "circle_bound.h"
 #include "pixel.h"
 #include "point.h"
@@ -23,7 +22,7 @@
 namespace s2omp {
 
 pixel::pixel() {
-	id_ = S2CellId(0);
+  id_ = S2CellId(0);
 }
 
 pixel* pixel::from_point(const point& p) {
@@ -104,10 +103,6 @@ point pixel::s2point_to_point(const S2Point& p) {
 
 S2Point pixel::point_to_s2point(const point& p) {
   return S2Point(p.unit_sphere_x(), p.unit_sphere_y(), p.unit_sphere_z());
-}
-
-double pixel::average_area(int level) const {
-  return get_cell().AverageArea(level) * STRAD_TO_DEG2;
 }
 
 double pixel::average_area() const {
@@ -195,7 +190,7 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
       // (i.e., the great circle that runs through p and x needs to be normal
       // to the edge great circle and x needs to be on the edge great circle).
       // The solution is x = edge(k).cross(p.cross(edge(k))).
-    	// point nearest_point = edges[k].cross(p.cross(edges[k])); // normalize?
+      // point nearest_point = edges[k].cross(p.cross(edges[k])); // normalize?
       point nearest_point = edges[k].cross(point::cross(p, edges[k]));
       double costheta = nearest_point.dot(p);
       if (1.0 - costheta * costheta < near_edge_distance) {
@@ -207,7 +202,8 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
       }
 
       nearest_point = edges[k + 2].cross(point::cross(p, edges[k + 2]));
-      // nearest_point = edges[k + 2].cross(p.cross(edges[k + 2])); // normalize?
+      // nearest_point = edges[k + 2].cross(p.cross(edges[k + 2]));
+      // normalize?
       costheta = nearest_point.dot(p);
       if (1.0 - costheta * costheta < near_edge_distance) {
         near_edge_distance = 1.0 - costheta * costheta;

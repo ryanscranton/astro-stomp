@@ -20,7 +20,6 @@
 #include <utility>
 #include "core.h"
 
-
 #include "MersenneTwister.h"
 
 // S2 Includes for pixel.h
@@ -108,7 +107,9 @@ public:
   // Our first methods using the functionality from S2::S2Cell.  Since S2 cells
   // are only roughly equal-area, there is some small difference between the
   // average area of a cell at a given level at the exact area of a given cell.
-  double average_area(int level) const;
+  inline static double average_area(int level) {
+    return S2Cell::AverageArea(level) * STRAD_TO_DEG2;
+  }
   double average_area() const;
   double exact_area() const;
 

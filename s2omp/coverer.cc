@@ -8,6 +8,7 @@
 #include "bound_interface.h"
 #include "coverer.h"
 #include "pixel.h"
+#include "point.h"
 
 namespace s2omp {
 
@@ -49,10 +50,12 @@ bool coverer::get_interior_covering(double fractional_area_tolerace,
 bool coverer::generate_covering(const bound_interface& bound,
     uint32_t max_pixels, bool interior, double fraction, pixel_vector* pixels) {
   // We first clear our input pixel vector and our priority queue.
-  if (!pixels->empty())
+  if (!pixels->empty()) {
     pixels->clear();
-  if (!pix_q_.empty())
-    pix_q_.clear();
+  }
+  while (!pix_q_.empty()) {
+    pix_q_.pop();
+  }
 
   // Define a few convenience variables for storing the bound area and the
   // current area of the stored pixels. We will use these if fractional is
@@ -63,7 +66,7 @@ bool coverer::generate_covering(const bound_interface& bound,
   // Next we grab a list of initial candidates that cover the circle bound for
   // our target bound.
   pixel_vector initial_candidates;
-  get_initial_covering(bound.get_bound(), &initial_candidates);
+  get_initial_covering(bound, &initial_candidates);
 
   // Need something here to test if initial_candidates is empty and if so start
   // with the face pixels and test may_intersect
@@ -74,7 +77,7 @@ bool coverer::generate_covering(const bound_interface& bound,
       != initial_candidates.end(); ++iter) {
     new_candidate(bound, *iter);
     if (!interior && fraction > 0.0)
-      covered_area += iter->area();
+      covered_area += iter->exact_area();
   }
 
   // If we have already reached our convergence criteria for a non-interior
@@ -98,7 +101,9 @@ bool coverer::generate_covering(const bound_interface& bound,
     // set in fraction, we quit and clear the queue.
     if (interior && fraction > 0.0 &&
         (bound_area - covered_area)/bound_area < fraction) {
-      pix_q_.clear();
+      while (!pix_q_.empty()) {
+        pix_q_.pop();
+      }
       break;
     }
 
@@ -116,12 +121,12 @@ bool coverer::generate_covering(const bound_interface& bound,
     // Note this could cause more pixels to be returned or a smaller fraction
     // than initially requested if those are the modes.
     if (candidate.pix.level() < min_level_) {
-      for (pixel_iterator iter = candidate.pix.child_begin(min_level_); iter
-          != candidate.pix.child_end(min_level_); ++iter) {
-        if (bound.may_intersect(*iter)) {
-          new_candidate(*iter);
+      for (pixel child = candidate.pix.child_begin(min_level_); child
+               != candidate.pix.child_end(min_level_); child = child.next()) {
+        if (bound.may_intersect(child)) {
+          new_candidate(bound, child);
           if (!interior && fraction > 0.0)
-            covered_area += iter->exact_area();
+            covered_area += child.exact_area();
         }
       }
       continue;
@@ -164,12 +169,12 @@ bool coverer::generate_covering(const bound_interface& bound,
             candidate.n_children >= max_pixels) {
           pixels->push_back(candidate.pix);
         } else {
-          for (pixel_iterator iter = candidate.pix.child_begin(); iter
-              != candidate.pix.child_end(); ++iter) {
-            if (bound.may_intersect(*iter)) {
-              new_candidate(bound, *iter);
+          for (pixel child = candidate.pix.child_begin(); child
+                   != candidate.pix.child_end(); child = child.next()) {
+            if (bound.may_intersect(child)) {
+              new_candidate(bound, child);
               if (fraction > 0.0)
-                covered_area += iter->exact_area();
+                covered_area += child.exact_area();
             }
           }
         }
@@ -188,10 +193,10 @@ bool coverer::generate_covering(const bound_interface& bound,
 
         // If we can't add this pixel, we resolve it's children and add them to
         // the queue.
-        for (pixel_iterator iter = candidate.pix.child_begin(); iter
-            != candidate.pix.child_end(); ++iter) {
-          if (bound.may_intersect(*iter)) {
-            new_candidate(bound, *iter);
+        for (pixel child = candidate.pix.child_begin(); child
+                 != candidate.pix.child_end(); child = child.next()) {
+          if (bound.may_intersect(child)) {
+            new_candidate(bound, child);
           }
         }
       }
@@ -215,8 +220,8 @@ bool coverer::generate_covering(const bound_interface& bound,
   return success;
 }
 
-void coverer::get_simple_covering(const bound_interface& bound, int level,
-    pixel_vector* pixels) {
+void coverer::get_simple_covering(
+    const bound_interface& bound, int level, pixel_vector* pixels) {
   // Clear the input pixel vector.
   if (!pixels->empty())
     pixels->clear();
@@ -225,27 +230,29 @@ void coverer::get_simple_covering(const bound_interface& bound, int level,
   // and test it as well as it's neighbors (and neighbors neighbors) until the
   // bound is covered. The starting pixel we choose is the central point of the
   // circle bound that covers the input bound.
-  pixel start = bound.get_bound().axis().to_pixel(level);
-  while (!bound.may_intersect(start)) {
-    start = start.next_wrap();
+  pixel starting_pixel = bound.get_center().to_pixel(level);
+  while (!bound.may_intersect(starting_pixel)) {
+    starting_pixel = starting_pixel.next_wrap();
   }
-  pixel_map kept_map;
-  pixel_vector canidates;
-  canidates.push_back(start);
 
-  while (!canidates.empty()) {
-    pixel pix = (*canidates.back());
-    canidates.pop_back();
-    if (!bound.may_itersect(pix))
+  std::set<uint64> candidate_ids;
+  pixel_vector candidates;
+  candidates.push_back(starting_pixel);
+
+  while (!candidates.empty()) {
+    pixel pix = candidates.back();
+    candidates.pop_back();
+    if (!bound.may_intersect(pix))
       continue;
     pixels->push_back(pix);
 
     pixel_vector neighbors;
     pix.neighbors(&neighbors);
-    kept_map.insert(std::pair<uint64, pixel>(pix.id(), pix));
-    for (pixel_iterator iter = neighbors.begin(); iter != neighbors.end(); ++iter) {
-      if (kept_map.find(iter->id())->empty()) {
-        canidates.push_back(*iter);
+    candidate_ids.insert(pix.id());
+    for (pixel_iterator iter = neighbors.begin();
+         iter != neighbors.end(); ++iter) {
+      if (candidate_ids.find(iter->id()) != candidate_ids.end()) {
+        candidates.push_back(*iter);
       }
     }
   }
@@ -261,12 +268,12 @@ bool coverer::set_min_max_level(int min, int max) {
   return false;
 }
 
-void coverer::get_initial_covering(const circle_bound& bound,
-    pixel_vector* pixels) {
-  if (!pixels.empty())
-    pixels.clear();
+void coverer::get_initial_covering(
+    const bound_interface& bound, pixel_vector* pixels) {
+  if (!pixels->empty())
+    pixels->clear();
 
-  int level = pixel.get_level_from_area(bound.area());
+  int level = pixel::get_level_from_area(bound.area());
   if (level < 0) {
     level = 0;
   } else if (level > max_level_) {
@@ -299,7 +306,7 @@ void coverer::new_candidate(const bound_interface& bound,
   int score = score_pixel(bound, &pix_cand);
 
   // Once we have our candidate scored and initialized we add it too the queue.
-  pix_q_.push(pixel_pair(score, pix_cand));
+  pix_q_.push(pixel_entry(score, pix_cand));
 }
 
 int coverer::score_pixel(const bound_interface& bound,
@@ -310,11 +317,11 @@ int coverer::score_pixel(const bound_interface& bound,
   // by the number of children that are terminal (for non-interior coverings
   /// this means child.level() == max_level or bound.contains(child))
   uint8_t n_children, n_terminals = 0;
-  for (pixel_iterator iter = pix_cand->pix.child_begin();
-      iter != pix_cand->pix.child_end(); ++iter) {
-    if (bound.may_intersect(*iter)) {
+  for (pixel child = pix_cand->pix.child_begin();
+       child != pix_cand->pix.child_end(); child = child.next()) {
+    if (bound.may_intersect(child)) {
       n_children++;
-      if (iter->level() + 1 > max_level_ || bound.contains(*iter)) {
+      if (child.level() + 1 > max_level_ || bound.contains(child)) {
         n_terminals++;
       }
     }
