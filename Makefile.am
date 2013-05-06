@@ -3,12 +3,12 @@
 AUTOMAKE_OPTIONS = foreign
 
 #Build these directories
-SUBDIRS = stomp examples
+SUBDIRS = stomp s2 s2omp examples
 
 #Distribute these directories:
-DIST_SUBDIRS = stomp
+DIST_SUBDIRS = stomp s2 s2omp
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = stomp-1.0.pc
+pkgconfig_DATA = stomp-2.0.pc
 
 EXTRA_DIST=autogen.sh
