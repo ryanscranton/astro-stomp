@@ -19,6 +19,8 @@
 #include <stdint.h>
 #include <math.h>
 #include <vector>
+
+#include "s2.h"
 #include <base/integral_types.h>
 
 namespace s2omp {
@@ -38,12 +40,12 @@ typedef std::vector<point> point_vector;
 typedef point_vector::iterator point_iterator;
 
 // First some trigonometric values.
-extern const double PI = 2.0*asin(1.0);
-extern const double DEG_TO_RAD = PI/180.0;
-extern const double RAD_TO_DEG = 180.0/PI;
-extern const double STRAD_TO_DEG2 = 180.0*180.0/(PI*PI);
+static double const PI = 2.0*asin(1.0);
+static double const DEG_TO_RAD = PI/180.0;
+static double const RAD_TO_DEG = 180.0/PI;
+static double const STRAD_TO_DEG2 = 180.0*180.0/(PI*PI);
 
-extern const int MAX_LEVEL = 30;
+static int const MAX_LEVEL = S2::kMaxCellLevel;
 
 inline bool double_lt(double a, double b) {
 	return a < b - 1.0e-15 ? true : false;

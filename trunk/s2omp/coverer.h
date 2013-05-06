@@ -9,23 +9,22 @@
 #define COVERER_H_
 
 #include <queue>
+#include <set>
 #include <utility>
-#include "core.h"
 
+#include "core.h"
 #include "pixel.h"
 
 namespace s2omp {
 
 class bound_interface;
+class pixel;
 
 struct pixel_candidate {
-    pixel pix;
-    bool is_terminal;
-    uint8_t n_children;
-  };
-
-typedef std::map<const uint64, pixel> pixel_map;
-typedef pixel_map::iterator pixel_map_iterator;
+  pixel pix;
+  bool is_terminal;
+  uint8_t n_children;
+};
 
 typedef std::pair<int, pixel_candidate> pixel_entry;
 typedef std::vector<pixel_entry> pixel_entry_vector;
@@ -90,13 +89,14 @@ public:
   // will be empty if the max level specified has no pixels that are fully
   // contained within the bound.
   bool get_interior_covering(const bound_interface& bound,
-        pixel_vector* pixels);
+                             pixel_vector* pixels);
 
   // Similar to above only this time in addition to the max level, the method
   // will also terminate upon reaching a specified tolerance. The return boolean
   // specifies if this tolerance has been met.
-  bool get_interior_covering(double fractional_area_tolerace,
-    const bound_interface& bound, pixel_vector* pixels);
+  bool get_interior_covering(
+      double fractional_area_tolerace, const bound_interface& bound,
+      pixel_vector* pixels);
 
   // A simple covering is a set of contiguous at a single level that cover
   // a bound. Note that if bound is a discontinuous region on the sky or has
@@ -104,7 +104,7 @@ public:
   // simple covering will not return a covering for the whole area or will
   // return an empty vector of pixels.
   static void get_simple_covering(const bound_interface& bound, int level,
-      pixel_vector* pixels);
+                                  pixel_vector* pixels);
 
   inline int get_min_level() {
     return min_level_;
@@ -122,10 +122,9 @@ public:
   bool set_min_max_level(int min, int max);
 
 private:
-
   bool generate_covering(const bound_interface& bound, uint32_t max_pixels,
-      bool interior, double fraction, pixel_vector* pixels);
-  void get_initial_covering(const circle_bound& bound, pixel_vector* pixels);
+                         bool interior, double fraction, pixel_vector* pixels);
+  void get_initial_covering(const bound_interface& bound, pixel_vector* pixels);
   int score_pixel(const bound_interface& bound, pixel_candidate* pix);
   void flush_queue(pixel_vector* pixels);
   void new_candidate(const bound_interface& bound, const pixel& pix);

@@ -118,8 +118,8 @@ public:
 
   inline uint64 id() const;
   inline uint64 id(int level) const;
-  pixel* to_pixel() const;
-  pixel* to_pixel(int level) const;
+  pixel to_pixel() const;
+  pixel to_pixel(int level) const;
 
   inline S2Point s2point() {return point_;}
 

@@ -7,14 +7,47 @@
 
 
 #include "bound_interface.h"
-#include "circle_bound.h"
 #include "coverer.h"
 #include "pixel.h"
 #include "point.h"
 
 namespace s2omp {
 
-void bound_interface::get_covering(pixel_vector* pixels) {
+bound_interface::~bound_interface() {
+}
+
+bool bound_interface::is_empty() const {
+  return true;
+}
+
+long bound_interface::size() const {
+  return 0;
+}
+
+void bound_interface::clear() {
+}
+
+double bound_interface::area() const {
+  return 0.0;
+}
+
+bool bound_interface::contains(const point& p) const {
+  return false;
+}
+
+bool bound_interface::contains(const pixel& pix) const {
+  return false;
+}
+
+double bound_interface::contained_area(const pixel& pix) const {
+  return 0.0;
+}
+
+bool bound_interface::may_intersect(const pixel& pix) const {
+  return false;
+}
+
+void bound_interface::get_covering(pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover = coverer();
 
@@ -22,7 +55,7 @@ void bound_interface::get_covering(pixel_vector* pixels) {
 }
 
 void bound_interface::get_covering(const uint32_t max_pixels,
-    pixel_vector* pixels) {
+    pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover = coverer();
 
@@ -30,7 +63,7 @@ void bound_interface::get_covering(const uint32_t max_pixels,
 }
 
 void bound_interface::get_covering(double fractional_area_tolerance,
-    pixel_vector* pixels) {
+    pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover = coverer();
 
@@ -38,7 +71,7 @@ void bound_interface::get_covering(double fractional_area_tolerance,
 }
 
 void bound_interface::get_interior_covering(int max_level,
-    pixel_vector* pixels) {
+    pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover = coverer(0, max_level);
 
@@ -46,8 +79,8 @@ void bound_interface::get_interior_covering(int max_level,
 }
 
 // We may want to overwrite this covering over other bounds.
-void bound_interface::get_simple_covering(int level,
-    pixel_vector* pixels) {
+void bound_interface::get_simple_covering(
+    int level, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover = coverer();
 

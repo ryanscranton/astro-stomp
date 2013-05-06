@@ -7,7 +7,7 @@
 
 
 // #include "angular_bin-inl.h"
-#include "bound_interface.h"
+// #include "bound_interface.h"
 #include "circle_bound.h"
 #include "pixel.h"
 #include "point.h"
@@ -15,12 +15,16 @@
 
 namespace s2omp {
 
+// circle_bound::circle_bound() {
+//   axis_ = point();
+//   height_ = -1;
+// }
+
 circle_bound::circle_bound() {
-  height_ = -1;
 }
 
 circle_bound::circle_bound(const point& axis, double height) {
-	axis_ = axis;
+  axis_ = axis;
   height_ = height;
 }
 
@@ -34,60 +38,58 @@ circle_bound* circle_bound::from_angular_bin(const point& axis,
 }
 */
 
-circle_bound* circle_bound::from_radius(const point& axis, double radius_degrees) {
-  circle_bound* circle = new circle_bound(axis,
-      1.0 - cos(radius_degrees*DEG_TO_RAD));
-  return circle;
+circle_bound* circle_bound::from_radius(
+    const point& axis, double radius_degrees) {
+  return new circle_bound(axis, 1.0 - cos(radius_degrees * DEG_TO_RAD));
 }
 
 circle_bound* circle_bound::from_height(const point& axis, double height) {
-  circle_bound* bound = new circle_bound(axis, height);
-  return bound;
+  return new circle_bound(axis, height);
 }
 
-bool circle_bound::is_empty() {
+bool circle_bound::is_empty() const {
   return height_ < 0;
 }
 
-long circle_bound::size() {
+long circle_bound::size() const {
   if (is_empty())
     return 0;
   return 1;
 }
 
-double circle_bound::area() {
+double circle_bound::area() const {
   if (!is_empty())
     return 2*PI*height_;
   return 0.0;
 }
 
-bool circle_bound::contains(const point& p) {
+bool circle_bound::contains(const point& p) const {
   double p_height = 1.0 - axis_.dot(p);
   return height_ >= p_height;
 }
 
-bool circle_bound::contains(const pixel& pix) {
-	S2Cell cell = pix.get_cell();
+bool circle_bound::contains(const pixel& pix) const {
+  S2Cell cell = pix.get_cell();
   for (int k = 0; k < 4; ++k) {
     if (!contains(pixel::s2point_to_point(cell.GetVertexRaw(k)))) return false;
   }
-  circle_bound* comp = complement();
-  bool ans = !comp->may_intersect(pix);
-  delete comp;
+  circle_bound* complement = get_complement();
+  bool ans = !complement->may_intersect(pix);
+  delete complement;
   return ans;
 }
 
 // TODO(cbmorrison) this may be a little bit slower than we want. Is there some
 // way of just to make this better by returning a vector of pixels for the
 // children?
-double circle_bound::contained_area(const pixel& pix) {
+double circle_bound::contained_area(const pixel& pix) const {
  double area = 0.0;
  if (contains(pix)) {
    return pix.exact_area();
  } else if (may_intersect(pix)) {
-	 pixel child_end = pix.child_end();
+   pixel child_end = pix.child_end();
    for (pixel child_pix = pix.child_begin();
-       child_pix != child_end; child_pix.next()) {
+        child_pix != child_end; child_pix.next()) {
      area += contained_area(child_pix);
    }
  }
@@ -96,19 +98,28 @@ double circle_bound::contained_area(const pixel& pix) {
 
 // TODO(cbmorrison) the intermediate S2Cell creation may be expensive and slow.
 // If needed create an s2omp class instead of wrapping cap_.may_intersect.
-bool circle_bound::may_intersect(const pixel& pix) {
-	S2Cell cell = pix.get_cell();
+bool circle_bound::may_intersect(const pixel& pix) const {
+  S2Cell cell = pix.get_cell();
   point_vector vertices;
   vertices.reserve(4);
   for (int k = 0; k < 4; ++k) {
-    vertices.push_back(pixel::s2point_to_point(cell.GetVertexRaw(k)));
-    if (contains(vertices.back())) return true;
+    point vertex = pixel::s2point_to_point(cell.GetVertexRaw(k));
+    if (contains(vertex)) {
+      return true;
+    } else {
+      vertices.push_back(vertex);
+    }
   }
+
   return intersects(pix, vertices);
 }
 
-circle_bound* circle_bound::get_bound() {
-  return this;
+point circle_bound::get_center() const {
+  return axis_;
+}
+
+circle_bound circle_bound::get_bound() const {
+  return circle_bound(axis_, height_);
 }
 
 point circle_bound::get_random_point() {
@@ -149,7 +160,8 @@ void circle_bound::get_random_points(long n_points,
   }
 }
 
-point circle_bound::get_weighted_random_point(const point_vector& points) {
+point circle_bound::get_weighted_random_point(
+    const point_vector& points) {
   point p = get_random_point();
   p.set_weight(points[mtrand.randInt(points.size())].weight());
   return p;
@@ -166,7 +178,8 @@ void circle_bound::get_weighted_random_points(long n_points,
   }
 }
 
-bool circle_bound::intersects(const pixel& pix, const point_vector& vertices) {
+bool circle_bound::intersects(
+    const pixel& pix, const point_vector& vertices) const {
   // Much of this code is lifted from S2::S2Cap.Intersects
 
   // If the cap that we are considering is a hemisphere or larger, then since
@@ -213,7 +226,7 @@ bool circle_bound::intersects(const pixel& pix, const point_vector& vertices) {
   return false;
 }
 
-circle_bound* circle_bound::complement() {
+circle_bound* circle_bound::get_complement() const {
   if (is_empty())
     return from_height(-axis_, 2.0);
   return from_height(-axis_, 2.0 - height_);

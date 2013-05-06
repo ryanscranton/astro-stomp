@@ -70,25 +70,24 @@ public:
   // calculate faster than containment.
   virtual bool may_intersect(const pixel& pix) const;
 
+  // To facilitate generating a covering, we need a starting point.  This is
+  // generally going to be something like a centroid, but should be guaranteed
+  // to be contained within the bound if at all possible.
+  virtual point get_center() const = 0;
+
   // Finally, for the purposes of generating random points, we need to be able
   // to create a circle_bound that encompasses the bound.
-  virtual circle_bound get_bound() const;
+  virtual circle_bound get_bound() const = 0;
 
-  virtual void get_covering(pixel_vector* pixels);
-  virtual void get_covering(const uint32_t max_pixels, pixel_vector* pixels);
-  virtual void get_covering(double fractional_area_tolerance,
-      pixel_vector* pixels);
-  virtual void get_interior_covering(int max_level, pixel_vector* pixels);
-  virtual void get_simple_covering(int level, pixel_vector* pixels);
+  void get_covering(pixel_vector* pixels) const;
+  void get_covering(const uint32_t max_pixels, pixel_vector* pixels) const;
+  void get_covering(double fractional_area_tolerance,
+                    pixel_vector* pixels) const;
+  void get_interior_covering(int max_level, pixel_vector* pixels) const;
+  void get_simple_covering(int level, pixel_vector* pixels) const;
 
   point get_random_point();
   void get_random_points(long n_points, point_vector* points);
-
-protected:
-  bound_interface();
-
-private:
-
 };
 
 } // end namespace s2omp
