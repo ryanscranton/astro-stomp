@@ -60,13 +60,6 @@ public:
 
   virtual bool may_intersect(const pixel& pix) const;
 
-  virtual void covering(pixel_vector* pixels) const;
-  virtual void covering(int max_pixels, pixel_vector* pixels) const;
-  virtual void covering(double fractional_area_tolerance,
-                        pixel_vector* pixels) const;
-  virtual void interior_covering(int max_level, pixel_vector* pixels) const;
-  virtual void simple_covering(int level, pixel_vector* pixels) const;
-
   virtual point get_center() const;
   virtual circle_bound get_bound() const;
 

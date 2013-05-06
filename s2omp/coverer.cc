@@ -13,12 +13,16 @@
 namespace s2omp {
 
 coverer::coverer() {
-  coverer(0, MAX_LEVEL);
+  min_level_ = 0;
+  max_level_ = MAX_LEVEL;
 }
 
 coverer::coverer(int min_level, int max_level) {
   min_level_ = min_level;
   max_level_ = max_level;
+}
+
+coverer::~coverer() {
 }
 
 bool coverer::get_covering(const bound_interface& bound,

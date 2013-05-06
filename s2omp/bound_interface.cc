@@ -49,7 +49,7 @@ bool bound_interface::may_intersect(const pixel& pix) const {
 
 void bound_interface::get_covering(pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
-  coverer cover = coverer();
+  coverer cover;
 
   cover.get_covering(*this, pixels);
 }
@@ -57,7 +57,7 @@ void bound_interface::get_covering(pixel_vector* pixels) const {
 void bound_interface::get_covering(const uint32_t max_pixels,
     pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
-  coverer cover = coverer();
+  coverer cover;
 
   cover.get_covering(max_pixels, *this, pixels);
 }
@@ -65,7 +65,7 @@ void bound_interface::get_covering(const uint32_t max_pixels,
 void bound_interface::get_covering(double fractional_area_tolerance,
     pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
-  coverer cover = coverer();
+  coverer cover;
 
   cover.get_covering(fractional_area_tolerance, *this, pixels);
 }
@@ -73,7 +73,7 @@ void bound_interface::get_covering(double fractional_area_tolerance,
 void bound_interface::get_interior_covering(int max_level,
     pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
-  coverer cover = coverer(0, max_level);
+  coverer cover;
 
   cover.get_interior_covering(*this, pixels);
 }
@@ -82,7 +82,7 @@ void bound_interface::get_interior_covering(int max_level,
 void bound_interface::get_simple_covering(
     int level, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
-  coverer cover = coverer();
+  coverer cover;
 
   cover.get_simple_covering(*this, level, pixels);
 }
