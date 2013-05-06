@@ -52,7 +52,7 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROB_RANLIB
+AC_PROG_RANLIB
 AC_PROG_LIBTOOL
 AM_PROG_LIBTOOL
 AM_SANITY_CHECK
@@ -77,6 +77,16 @@ AC_TYPE_UINT8_T
 AC_HEADER_STDC
 AC_CHECK_FUNCS([floor gettimeofday pow sqrt])
 
+# If we're on OS X then we need to supply an additional flag for our S2
+# compilation
+case "$host" in
+  *-apple-darwin* | *-apple-macos*)
+    CFLAGS="$CFLAGS -DOS_MACOSX"
+    CXXFLAGS="$CXXFLAGS -DOS_MACOSX"
+    CPPFLAGS="$CPPFLAGS -DOS_MACOSX"
+  ;;
+esac
+
 # Location of gflags directories as input by user.
 gflags_dir_given="no"
 
@@ -95,6 +105,24 @@ if test "$gflags_dir_given" = "yes"; then
   LDFLAGS="$LDFLAGS -L$with_gflags_dir/lib"
 fi
 
+# Location of zlib directories as input by user.
+zlib_dir_given="no"
+
+AC_ARG_WITH(zlib_dir, AC_HELP_STRING([--with-zlib-dir=/usr],
+                                       [prefix directory containing zlib]),
+            [zlib_dir_given="yes"])
+
+if test "$zlib_dir_given" = "yes"; then
+  ZLIB_INCLUDE="-I$with_zlib_dir/include"
+  ZLIB_LIB="-L$with_zlib_dir/lib"
+  AC_SUBST(ZLIB_INCLUDE)
+  AC_SUBST(ZLIB_LIB)
+  CFLAGS="$CFLAGS -I$with_zlib_dir/include"
+  CPPFLAGS="$CPPFLAGS -I$with_zlib_dir/include"
+  CXXFLAGS="$CXXFLAGS -I$with_zlib_dir/include"
+  LDFLAGS="$LDFLAGS -L$with_zlib_dir/lib"
+fi
+
 # Checks for math library.
 AC_CHECK_LIB([m], [floor], [],
              [AC_MSG_ERROR([cannot find required math function])])
@@ -108,6 +136,7 @@ AC_LANG_CPLUSPLUS
 AC_CHECK_HEADER([string], [], [AC_MSG_ERROR([cannot find STL string])])
 AC_CHECK_HEADER([vector], [], [AC_MSG_ERROR([cannot find STL vector])])
 AC_CHECK_HEADER([map], [], [AC_MSG_ERROR([cannot find STL map])])
+AC_CHECK_HEADER([set], [], [AC_MSG_ERROR([cannot find STL set])])
 AC_CHECK_HEADER([queue], [], [AC_MSG_ERROR([cannot find STL queue])])
 AC_CHECK_HEADER([algorithm], [], [AC_MSG_ERROR([cannot find STL algorithms])])
 
@@ -117,8 +146,16 @@ AC_CHECK_HEADER(google/gflags.h, [], [AC_MSG_ERROR([cannot find gflags.h])])
 AC_CHECK_LIB([gflags], [main], [],
              [AC_MSG_ERROR([cannot find libgflags])])
 
+# Check for zlib
+AC_LANG_CPLUSPLUS
+AC_CHECK_HEADER(zlib.h, [], [AC_MSG_ERROR([cannot find zlib.h])])
+AC_CHECK_LIB([z], [main], [],
+             [AC_MSG_ERROR([cannot find libgflags])])
+
 AC_OUTPUT(Makefile \
           stomp-1.0.pc \
           stomp/Makefile \
+	  s2/Makefile \
+	  s2omp/Makefile \
 	  examples/Makefile
 )
