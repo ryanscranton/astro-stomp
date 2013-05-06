@@ -28,6 +28,9 @@ circle_bound::circle_bound(const point& axis, double height) {
   height_ = height;
 }
 
+circle_bound::~circle_bound() {
+}
+
 // TODO(cbmorrison) Commeting this out for now as we are just testing the
 // core methods.
 /*
@@ -55,6 +58,11 @@ long circle_bound::size() const {
   if (is_empty())
     return 0;
   return 1;
+}
+
+void circle_bound::clear() {
+  height_ = 0.0;
+  axis_ = point();
 }
 
 double circle_bound::area() const {
