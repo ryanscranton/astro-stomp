@@ -19,7 +19,7 @@ using std::vector;
 
 #include "base/integral_types.h"
 #include "base/logging.h"
-//#include "strings/strutil.h"
+#include "strings/strutil.h"
 #include "s2.h"
 #include "s2latlng.h"
 #include "util/math/mathutil.h"
@@ -165,7 +165,7 @@ S2CellId S2CellId::FromFacePosLevel(int face, uint64 pos, int level) {
   return cell.parent(level);
 }
 
-/* string S2CellId::ToToken() const {
+string S2CellId::ToToken() const {
   // Simple implementation: convert the id to hex and strip trailing zeros.
   // Using hex has the advantage that the tokens are case-insensitive, all
   // characters are alphanumeric, no characters require any special escaping
@@ -191,7 +191,7 @@ S2CellId S2CellId::FromToken(string const& token) {
   char digits[17] = "0000000000000000";
   memcpy(digits, token.data(), token.size());
   return S2CellId(ParseLeadingHex64Value(digits, 0));
-  } */
+}
 
 inline int S2CellId::STtoIJ(double s) {
   // Converting from floating-point to integers via static_cast is very slow
@@ -505,7 +505,7 @@ void S2CellId::AppendAllNeighbors(int nbr_level,
   }
 }
 
-/* string S2CellId::ToString() const {
+string S2CellId::ToString() const {
   if (!is_valid()) {
     return StringPrintf("Invalid: %016llx", id());
   }
@@ -518,4 +518,4 @@ void S2CellId::AppendAllNeighbors(int nbr_level,
 
 ostream& operator<<(ostream& os, S2CellId const& id) {
   return os << id.ToString();
-  } */
+}
