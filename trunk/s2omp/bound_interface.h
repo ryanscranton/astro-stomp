@@ -22,17 +22,9 @@
 #ifndef BOUND_INTERFACE_H_
 #define BOUND_INTERFACE_H_
 
-#include <stdint.h>
-#include <vector>
-#include <map>
 #include "core.h"
 
 namespace s2omp {
-
-class circle_bound;
-class coverer;
-class pixel;
-class point;
 
 class bound_interface {
 public:

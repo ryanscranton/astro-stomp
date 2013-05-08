@@ -8,6 +8,10 @@
 #ifndef REGION_MAP_H_
 #define REGION_MAP_H_
 
+#include <map>
+
+#include "core.h"
+
 namespace s2omp {
 
 typedef std::map<const uint64, int16_t> region_dict;

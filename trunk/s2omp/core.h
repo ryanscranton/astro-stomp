@@ -16,9 +16,10 @@
 #define CORE_H_
 
 #include <algorithm>
-#include <stdint.h>
 #include <math.h>
+#include <stdint.h>
 #include <vector>
+#include <utility>
 
 #include "s2.h"
 #include <base/integral_types.h>
@@ -33,11 +34,29 @@ namespace s2omp {
 class pixel;
 class point;
 
+class bound_interface;
+class circle_bound;
+class annulus_bound;
+
+class angular_bin;
+
+class coverer;
+class region_map;
+
 typedef std::vector<pixel> pixel_vector;
 typedef pixel_vector::iterator pixel_iterator;
 
 typedef std::vector<point> point_vector;
 typedef point_vector::iterator point_iterator;
+
+typedef std::vector<circle_bound *> circle_ptr_vector;
+typedef circle_ptr_vector::iterator circle_ptr_iterator;
+
+typedef std::vector<angular_bin> theta_vector;
+typedef theta_vector::iterator theta_iterator;
+typedef std::pair<theta_iterator, theta_iterator> theta_pair;
+typedef std::vector<angular_bin *> theta_ptr_vector;
+typedef theta_ptr_vector::iterator theta_ptr_iterator;
 
 // First some trigonometric values.
 static double const PI = 2.0*asin(1.0);

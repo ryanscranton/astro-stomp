@@ -17,7 +17,6 @@
 
 namespace s2omp {
 
-class bound_interface;
 class pixel;
 
 struct pixel_candidate {
