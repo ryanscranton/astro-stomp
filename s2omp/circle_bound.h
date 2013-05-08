@@ -19,21 +19,14 @@
 
 namespace s2omp {
 
-class angular_bin;
-class bound_interface;
-class circle_bound;
-class point;
-
-typedef std::vector<circle_bound *> circle_ptr_vector;
-typedef circle_ptr_vector::iterator circle_ptr_iterator;
-
 class circle_bound : public bound_interface {
 public:
   circle_bound();
+  circle_bound(const point& axis, double height);
   virtual ~circle_bound();
 
-  // static circle_bound* from_angular_bin(const point& axis,
-  //		const angular_bin& bin);
+  static circle_bound* from_angular_bin(const point& axis,
+                                        const angular_bin& bin);
   static circle_bound* from_radius(const point& axis, double radius_degrees);
   static circle_bound* from_height(const point& axis, double height);
 
@@ -60,8 +53,12 @@ public:
 
   virtual bool may_intersect(const pixel& pix) const;
 
-  virtual point get_center() const;
-  virtual circle_bound get_bound() const;
+  virtual point get_center() const {
+    return axis_;
+  }
+  virtual circle_bound get_bound() const {
+    return circle_bound(axis_, height_);
+  }
 
   virtual point get_random_point();
   virtual void get_random_points(long n_points, point_vector* points);
@@ -71,8 +68,6 @@ public:
       const point_vector& input_points);
 
 private:
-  circle_bound(const point& axis, double height);
-
   bool intersects(const pixel& pix, const point_vector& vertices) const;
   circle_bound* get_complement() const;
 

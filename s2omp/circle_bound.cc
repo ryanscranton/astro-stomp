@@ -5,9 +5,7 @@
  *      Author: cbmorrison
  */
 
-
-// #include "angular_bin-inl.h"
-// #include "bound_interface.h"
+#include "angular_bin-inl.h"
 #include "circle_bound.h"
 #include "pixel.h"
 #include "point.h"
@@ -15,12 +13,9 @@
 
 namespace s2omp {
 
-// circle_bound::circle_bound() {
-//   axis_ = point();
-//   height_ = -1;
-// }
-
 circle_bound::circle_bound() {
+  axis_ = point();
+  height_ = -1.0;
 }
 
 circle_bound::circle_bound(const point& axis, double height) {
@@ -31,15 +26,10 @@ circle_bound::circle_bound(const point& axis, double height) {
 circle_bound::~circle_bound() {
 }
 
-// TODO(cbmorrison) Commeting this out for now as we are just testing the
-// core methods.
-/*
 circle_bound* circle_bound::from_angular_bin(const point& axis,
       const angular_bin& bin) {
-  circle_bound* bound = new circle_bound(axis, 1.0 - bin.cos_theta_max());
-  return bound;
+  return new circle_bound(axis, 1.0 - bin.cos_theta_max());
 }
-*/
 
 circle_bound* circle_bound::from_radius(
     const point& axis, double radius_degrees) {
@@ -120,14 +110,6 @@ bool circle_bound::may_intersect(const pixel& pix) const {
   }
 
   return intersects(pix, vertices);
-}
-
-point circle_bound::get_center() const {
-  return axis_;
-}
-
-circle_bound circle_bound::get_bound() const {
-  return circle_bound(axis_, height_);
 }
 
 point circle_bound::get_random_point() {
