@@ -8,8 +8,8 @@ using std::ostream;
 using std::cout;
 using std::endl;
 
-//#incldue <string>
-//using std::string;
+#incldue <string>
+using std::string;
 
 #include <vector>
 using std::vector;
