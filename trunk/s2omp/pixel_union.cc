@@ -18,7 +18,9 @@
 // the user to treat Maps as a pure representative of spherical geometry.
 
 #include "pixel_union.h"
-#include "core.h"
+#include "pixel.h"
+#include "point.h"
+
 
 pixel_union::pixel_union() {
   min_level_ = MAX_LEVEL;
@@ -29,23 +31,23 @@ pixel_union::pixel_union() {
 
 void pixel_union::init(const pixel_vector& pixels) {
   // Most of this method is from S2CellUnion Normalize().
-  if (!pixels_.empty())
+  if (!pixels_.empty()) {
     pixels_.clear();
+  }
   pixels_.reserve(pixels.size());
   initialized_ = false;
   int min_level = MAX_LEVEL;
   int max_level = 0;
   double area = 0.0;
 
-	// To make the process of combining and throwing out duplicate pixels we need
+  // To make the process of combining and throwing out duplicate pixels we need
   // to assure that our input pixels are sorted by id.
   sort(pixels.begin(), pixels.end());
 
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     // Like S2CellUnion we first check if this is a duplicate or contained
-    //within a previous pixel;
-    // If the previous pixel contains this pixel, go to next position in the
-    // pixel_vector.
+    // within a previous pixel.  If the previous pixel contains this pixel,
+    // go to next position in the pixel_vector.
     if (!pixels_.empty() && pixels_.back().contains(*iter)) continue;
 
     // If this pixel contains any of the previous pixels, discard those.
@@ -110,11 +112,10 @@ void pixel_union::soften(int max_level) {
   // sounds like the best bet here.
 
   pixel_vector pixels;
-  for (pixel_iterator iter = begin(); iter != end(); ++iter) {
+  for (pixel_iterator iter = pixels_.begin(); iter != pixels_.end(); ++iter) {
     if (iter->level() <= max_level) {
       pixels.push_back(*iter);
-    }
-    else {
+    } else {
       if (!pixels.empty() && pixels.back().contains(iter->parent(max_level))) {
         continue;
       }
@@ -158,33 +159,33 @@ void pixel_union::combine(const pixel_union& u) {
 }
 
 void pixel_union::intersect(const pixel_union& u) {
-	// loop through of input union testing first for may_interect with each this
-	// union. The next test is contains and if it is then, we keep the pixel. If
-	// the test is only intersects then we break the pixel up and perform the
-	// same test on it's children until contains is true or intersects is
-	// false.
+  // loop through of input union testing first for may_interect with each this
+  // union. The next test is contains and if it is then, we keep the pixel. If
+  // the test is only intersects then we break the pixel up and perform the
+  // same test on it's children until contains is true or intersects is
+  // false.
 
-	pixel_vector pixels;
-	pixel_iterator iter = begin();
-	pixel_iterator u_iter = u.being();
+  pixel_vector pixels;
+  pixel_iterator iter = begin();
+  pixel_iterator u_iter = u.being();
 
-	while (iter != end() || u_iter != u.end()) {
-	  if (u_iter == u.end() || iter->id() < u_iter->id()) {
-	    if (u.contains(*iter)) pixels.push_back(*iter);
-	    ++iter;
-	    continue;
-	  } else if (iter == end() || iter->id() > u_iter->id()) {
-	    if (contains(*u_iter)) pixels.push_back(*u_iter);
-	    ++u_iter;
-	    continue;
-	  } else if (iter != end() && u_iter != u.end && iter->id() == u_iter->id()) {
-	    pixels.push_back(*iter);
-	    ++iter;
-	    ++u_iter;
-	    continue;
-	  }
-	}
-	init(pixels);
+  while (iter != end() || u_iter != u.end()) {
+    if (u_iter == u.end() || iter->id() < u_iter->id()) {
+      if (u.contains(*iter)) pixels.push_back(*iter);
+      ++iter;
+      continue;
+    } else if (iter == end() || iter->id() > u_iter->id()) {
+      if (contains(*u_iter)) pixels.push_back(*u_iter);
+      ++u_iter;
+      continue;
+    } else if (iter != end() && u_iter != u.end && iter->id() == u_iter->id()) {
+      pixels.push_back(*iter);
+      ++iter;
+      ++u_iter;
+      continue;
+    }
+  }
+  init(pixels);
 }
 
 
