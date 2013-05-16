@@ -9,6 +9,7 @@
 #define REGION_MAP_H_
 
 #include <map>
+#include <stdint.h>
 
 #include "core.h"
 
@@ -18,6 +19,7 @@ typedef std::map<const uint64, int16_t> region_dict;
 typedef region_dict::iterator region_iterator;
 typedef std::pair<region_iterator, region_iterator> region_pair;
 typedef std::map<const int16_t, double> region_area;
+typedef region_area::iterator region_area_iterator;
 
 class region_map {
   // A region_map splits a bound_interface object into roughly equal-area
@@ -52,10 +54,11 @@ public:
   // region_map or if pix.level() < region_map.level(), the return value is -1.
   int16_t find_region(const pixel& pix);
 
-  void region_covering(int16_t region, pixel_vector* pixels);
+  // Return a covering for the region indicated by the input index.
+  void get_covering(int16_t region_idx, pixel_vector* pixels);
 
   // Given a region index, return the area associated with that region.
-  double region_area(int16_t region);
+  double get_area(int16_t region_idx);
 
   // Some getter methods to describe the state of the region_map.
   inline uint16_t n_region() const {

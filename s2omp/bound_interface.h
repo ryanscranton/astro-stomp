@@ -65,11 +65,11 @@ public:
   // To facilitate generating a covering, we need a starting point.  This is
   // generally going to be something like a centroid, but should be guaranteed
   // to be contained within the bound if at all possible.
-  virtual point get_center() const = 0;
+  virtual point get_center() const;
 
   // Finally, for the purposes of generating random points, we need to be able
   // to create a circle_bound that encompasses the bound.
-  virtual circle_bound get_bound() const = 0;
+  virtual circle_bound get_bound() const;
 
   void get_covering(pixel_vector* pixels) const;
   void get_covering(const uint32_t max_pixels, pixel_vector* pixels) const;

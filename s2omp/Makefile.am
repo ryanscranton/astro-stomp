@@ -8,8 +8,8 @@ CXXFLAGS = @CXXFLAGS@ -Wall
 LDFLAGS = @LDFLAGS@ @GFLAGS_LIB@ -L@top_srcdir@/s2 -ls2
 INCLUDES = -I@top_srcdir@/s2omp -I@top_srcdir@/stomp -I@top_srcdir@/s2 @GFLAGS_INCLUDE@
 
-h_sources = point.h pixel.h bound_interface.h coverer.h circle_bound.h angular_bin-inl.h annulus_bound.h
-cc_sources = point.cc pixel.cc bound_interface.cc coverer.cc circle_bound.cc annulus_bound.cc
+h_sources = point.h pixel.h bound_interface.h coverer.h circle_bound.h angular_bin-inl.h annulus_bound.h region_map.h util.h cosmo_point-inl.h indexed_point-inl.h
+cc_sources = point.cc pixel.cc bound_interface.cc coverer.cc circle_bound.cc annulus_bound.cc region_map.cc
 
 library_includedir=$(includedir)/s2omp
 library_include_HEADERS = $(h_sources)

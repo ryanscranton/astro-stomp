@@ -27,9 +27,6 @@
 #include <string>
 #include <map>
 #include "core.h"
-#include "point.h"
-#include "pixel.h"
-#include "pixelized_bound_interface.h"
 
 namespace s2omp {
 
@@ -56,7 +53,7 @@ public:
   // pixels will be sorted by index and child pixels will be combined into
   // parent pixels where possible.
   void init(const pixel_vector& pixels);
-	void init_swap(pixel_vector* pixels);
+  void init_swap(pixel_vector* pixels);
 
   // In some cases, we may wish to soften the edges of our pixel_union (for
   // instance if the current union is formed from combining multiple high
@@ -95,14 +92,14 @@ public:
     return max_level_;
   }
 
-  // inline pixel_iterator begin() {
-  //  return pixels_.begin();
-  // }
-  // inline pixel_iterator end() {
-  //  return pixels_.end();
-  // }
+  inline pixel_iterator begin() {
+    return pixels_.begin();
+  }
+  inline pixel_iterator end() {
+    return pixels_.end();
+  }
 
-  // API from pixelized_bound_interface.h
+  // API from bound_interface.h
   inline virtual bool is_empty() const {
     return !pixels_.empty();
   }
@@ -113,11 +110,9 @@ public:
   inline virtual double area() const {
     return area_;
   }
-	virtual double aveage_area() const;
 
   virtual bool contains(const point& p) const;
   virtual bool contains(const pixel& pix) const;
-	virtual bool intersects(const pixel& pix) const;
 
   virtual double contained_area(const pixel& pix) const;
   virtual bool may_intersect(const pixel& pix) const;
@@ -126,30 +121,30 @@ public:
   virtual void covering(int max_pixels, pixel_vector* pixels) const;
   virtual void simple_covering(int level, pixel_vector* pixels) const;
 
-  // virtual circle_bound* get_bound() const;
-	inline virtual circle_bound get_bound() const {
-	  if (!initialized_bound_) initialize_bound();
-	  return bound_;
-	}
+  inline virtual circle_bound get_bound() const {
+    if (!initialized_bound_) initialize_bound();
+    return bound_;
+  }
+  virtual point get_center() const;
 
 private:
   void generate_basic_covering(int level);
-	void initialize_bound();
+  void initialize_bound();
 
-	void pixel_intersection(const pixel& pix, const pixel_union& u,
-	    pixel_vector* pixels);
-	void pixel_exclusion(const pixel& pix, const pixel_union& u,
-	    pixel_vector* pixels);
-	// For automatic regionation is is useful to know what the average area of
-	// a pixel is in our union.
+  void pixel_intersection(const pixel& pix, const pixel_union& u,
+                          pixel_vector* pixels);
+  void pixel_exclusion(const pixel& pix, const pixel_union& u,
+                       pixel_vector* pixels);
+  // For automatic regionation is is useful to know what the average area of
+  // a pixel is in our union.
 
-	pixel_vector pixels_;
-	pixel_vector covering_;
-	circle_bound bound_;
-	int min_level_, max_level_;
-	double area_;
-	bool initialized_, initialized_bound_;
-	region_map region_map_;
+  pixel_vector pixels_;
+  pixel_vector covering_;
+  circle_bound bound_;
+  int min_level_, max_level_;
+  double area_;
+  bool initialized_, initialized_bound_;
+  region_map region_map_;
 };
 
 inline static pixel_union* pixel_union::from_covering(

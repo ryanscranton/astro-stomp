@@ -7,6 +7,7 @@
 
 
 #include "bound_interface.h"
+#include "circle_bound.h"
 #include "coverer.h"
 #include "pixel.h"
 #include "point.h"
@@ -45,6 +46,14 @@ double bound_interface::contained_area(const pixel& pix) const {
 
 bool bound_interface::may_intersect(const pixel& pix) const {
   return false;
+}
+
+point bound_interface::get_center() const {
+  return point();
+}
+
+circle_bound bound_interface::get_bound() const {
+  return circle_bound();
 }
 
 void bound_interface::get_covering(pixel_vector* pixels) const {
