@@ -24,24 +24,44 @@ public:
   circle_bound();
   circle_bound(const point& axis, double height);
   virtual ~circle_bound();
+  static double get_height_for_angle(double theta_radians);
 
   static circle_bound* from_angular_bin(const point& axis,
                                         const angular_bin& bin);
   static circle_bound* from_radius(const point& axis, double radius_degrees);
   static circle_bound* from_height(const point& axis, double height);
 
-  inline point axis() {
+  inline point axis() const {
     return axis_;
   }
   // inline void set_axis(const point& p);
-  inline double radius() {
-    return acos(1.0 - height_) * DEG_TO_RAD;
+  inline double radius() const {
+    return 2.0 * asin(sqrt(0.5 * height_)) * RAD_TO_DEG;
   }
-  inline double height() {
+  inline double height() const {
     return height_;
   }
 
-  // API from geometric_bound
+  // circle_bound is the default object for describing the rough bound
+  // for any bound_interface-derived object.  In order to return a circle_bound,
+  // many objects will start with some center point at then expand the circle
+  // to enclose other points.  Calling this method will increase the circle
+  // height to enclose the input point.
+  void add_point(const point& p);
+
+  // Likewise, it can be useful to increase the bound to enclose other
+  // circle_bounds
+  void add_circle_bound(const circle_bound& bound);
+
+  // Generate a random point in the circle_bound.  This method will be the
+  // basis for the generic methods to generate random points for all
+  // bound_interface objects.
+  point create_random_point();
+
+  void get_weighted_random_points(
+      long n_points, point_vector* points, const point_vector& input_points);
+
+  // API from bound_interface
   virtual bool is_empty() const;
   virtual long size() const;
   virtual void clear();
@@ -60,27 +80,24 @@ public:
     return circle_bound(axis_, height_);
   }
 
-  virtual point get_random_point();
-  virtual void get_random_points(long n_points, point_vector* points);
-  virtual point get_weighted_random_point(const point_vector& points);
-  virtual void get_weighted_random_points(
-      long n_points, point_vector* points,
-      const point_vector& input_points);
+  virtual point get_random_point() {
+    return create_random_point();
+  }
 
 private:
   bool intersects(const pixel& pix, const point_vector& vertices) const;
   circle_bound* get_complement() const;
+  void initialize_random();
 
   point axis_;
   double height_;
 
   // The variables below are for generating random points and will not be
   // initialized until initialize_random() is called.
-  void initialize_random();
-  point great_circle_norm_ ;
+  point great_circle_norm_;
   double rotate_;
   bool initialized_random_;
-  MTRand mtrand;
+  MTRand mtrand_;
 };
 
 } // end namespace s2omp

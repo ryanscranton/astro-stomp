@@ -5,6 +5,14 @@
  *      Author: cbmorrison
  */
 
+#include <s2/s2.h>
+#if defined(OS_MACOSX)
+#include <ext/hash_set>
+#else
+#include <hash_set>
+#endif
+using __gnu_cxx::hash_set;
+
 #include "bound_interface.h"
 #include "coverer.h"
 #include "pixel.h"
@@ -25,34 +33,36 @@ coverer::coverer(int min_level, int max_level) {
 coverer::~coverer() {
 }
 
-bool coverer::get_covering(const bound_interface& bound,
-    pixel_vector* pixels) {
-  return generate_covering(bound, 8, false, -1.0, pixels);
+bool coverer::get_covering(const bound_interface& bound, pixel_vector* pixels) {
+  return generate_covering(bound, DEFAULT_COVERING_PIXELS, false, -1.0, pixels);
 }
 
-bool coverer::get_covering(uint32_t max_pixels,
-    const bound_interface& bound, pixel_vector* pixels) {
+bool coverer::get_covering(
+    long max_pixels, const bound_interface& bound, pixel_vector* pixels) {
   return generate_covering(bound, max_pixels, false, -1.0, pixels);
 }
 
-bool coverer::get_covering(double fractional_area_tolerace,
-    const bound_interface& bound, pixel_vector* pixels) {
+bool coverer::get_covering(
+    double fractional_area_tolerace, const bound_interface& bound,
+    pixel_vector* pixels) {
   return generate_covering(bound, 0, false, fractional_area_tolerace,
       pixels);
 }
 
-bool coverer::get_interior_covering(const bound_interface& bound,
-    pixel_vector* pixels) {
+bool coverer::get_interior_covering(
+    const bound_interface& bound, pixel_vector* pixels) {
   return generate_covering(bound, 0, true, -1.0, pixels);
 }
 
-bool coverer::get_interior_covering(double fractional_area_tolerace,
-    const bound_interface& bound, pixel_vector* pixels) {
+bool coverer::get_interior_covering(
+    double fractional_area_tolerace, const bound_interface& bound,
+    pixel_vector* pixels) {
   return generate_covering(bound, 0, true, fractional_area_tolerace, pixels);
 }
 
-bool coverer::generate_covering(const bound_interface& bound,
-    uint32_t max_pixels, bool interior, double fraction, pixel_vector* pixels) {
+bool coverer::generate_covering(
+    const bound_interface& bound, long max_pixels, bool interior,
+    double fraction, pixel_vector* pixels) {
   // We first clear our input pixel vector and our priority queue.
   if (!pixels->empty()) {
     pixels->clear();
@@ -173,8 +183,8 @@ bool coverer::generate_covering(const bound_interface& bound,
             candidate.n_children >= max_pixels) {
           pixels->push_back(candidate.pix);
         } else {
-          for (pixel child = candidate.pix.child_begin(); child
-                   != candidate.pix.child_end(); child = child.next()) {
+          for (pixel child = candidate.pix.child_begin();
+               child != candidate.pix.child_end(); child = child.next()) {
             if (bound.may_intersect(child)) {
               new_candidate(bound, child);
               if (fraction > 0.0)
@@ -227,8 +237,7 @@ bool coverer::generate_covering(const bound_interface& bound,
 void coverer::get_simple_covering(
     const bound_interface& bound, int level, pixel_vector* pixels) {
   // Clear the input pixel vector.
-  if (!pixels->empty())
-    pixels->clear();
+  if (!pixels->empty()) pixels->clear();
 
   // The simple covering starts with a single point which we convert to a pixel
   // and test it as well as it's neighbors (and neighbors neighbors) until the
@@ -239,27 +248,68 @@ void coverer::get_simple_covering(
     starting_pixel = starting_pixel.next_wrap();
   }
 
-  std::set<uint64> candidate_ids;
   pixel_vector candidates;
   candidates.push_back(starting_pixel);
+
+  hash_set<uint64> candidate_ids;
+  candidate_ids.insert(starting_pixel.id());
 
   while (!candidates.empty()) {
     pixel pix = candidates.back();
     candidates.pop_back();
-    if (!bound.may_intersect(pix))
-      continue;
+    if (!bound.may_intersect(pix)) continue;
     pixels->push_back(pix);
 
     pixel_vector neighbors;
     pix.neighbors(&neighbors);
-    candidate_ids.insert(pix.id());
     for (pixel_iterator iter = neighbors.begin();
          iter != neighbors.end(); ++iter) {
-      if (candidate_ids.find(iter->id()) != candidate_ids.end()) {
+      if (candidate_ids.insert(iter->id()).second) {
         candidates.push_back(*iter);
       }
     }
   }
+
+  sort(pixels->begin(), pixels->end());
+}
+
+void coverer::get_center_covering(
+    const bound_interface& bound, int level, pixel_vector* pixels) {
+  // Clear the input pixel vector.
+  if (!pixels->empty()) pixels->clear();
+
+  // Follow the same logic here as get_simple_covering, but check that
+  // the center of the candidate pixel is contained rather than if the
+  // pixel intersects.
+  pixel starting_pixel = bound.get_center().to_pixel(level);
+  while (!bound.contains(starting_pixel.center_point())) {
+    starting_pixel = starting_pixel.next_wrap();
+  }
+
+  pixel_vector candidates;
+  candidates.push_back(starting_pixel);
+
+  hash_set<uint64> candidate_ids;
+  candidate_ids.insert(starting_pixel.id());
+
+  while (!candidates.empty()) {
+    pixel pix = candidates.back();
+    candidates.pop_back();
+    if (!bound.contains(pix.center_point())) continue;
+
+    pixels->push_back(pix);
+
+    pixel_vector neighbors;
+    pix.neighbors(&neighbors);
+    for (pixel_iterator iter = neighbors.begin();
+         iter != neighbors.end(); ++iter) {
+      if (candidate_ids.insert(iter->id()).second) {
+        candidates.push_back(*iter);
+      }
+    }
+  }
+
+  sort(pixels->begin(), pixels->end());
 }
 
 bool coverer::set_min_max_level(int min, int max) {
@@ -320,7 +370,7 @@ int coverer::score_pixel(const bound_interface& bound,
   // next by the number of children that may_intersect the bound, and then
   // by the number of children that are terminal (for non-interior coverings
   /// this means child.level() == max_level or bound.contains(child))
-  uint8_t n_children, n_terminals = 0;
+  int n_children, n_terminals = 0;
   for (pixel child = pix_cand->pix.child_begin();
        child != pix_cand->pix.child_end(); child = child.next()) {
     if (bound.may_intersect(child)) {

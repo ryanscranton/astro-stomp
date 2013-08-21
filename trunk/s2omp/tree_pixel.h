@@ -17,6 +17,9 @@
 #ifndef TREE_PIXEL_H_
 #define TREE_PIXEL_H_
 
+#include <map>
+#include <queue>
+
 #include "core.h"
 #include "pixel.h"
 #include "point.h"
@@ -28,247 +31,289 @@ class tree_neighbor;
 class nearest_neighbor_pixel;
 class nearest_neighbor_point;
 
+typedef struct pair_weight {
+  pair_weight() : n_pairs(0), total_weight(0.0) {}
+  long n_pairs;
+  double total_weight;
+};
+
 typedef std::vector<tree_pixel> tree_vector;
-typedef tree_vector::iterator tree_iterator;
+typedef tree_vector::const_iterator tree_iterator;
 typedef std::pair<tree_iterator, tree_iterator> tree_pair;
-typedef std::vector<tree_pixel *> tree_ptr_vector;
-typedef tree_ptr_vector::iterator tree_ptr_iterator;
+typedef std::vector<tree_pixel*> tree_ptr_vector;
+typedef tree_ptr_vector::const_iterator tree_ptr_iterator;
 
 typedef std::pair<double, tree_pixel*> distance_pixel_pair;
-typedef std::priority_queue<distance_pixel_pair, std::vector<
-		distance_pixel_pair>, nearest_neighbor_pixel> pixel_queue;
+typedef std::priority_queue<distance_pixel_pair,
+    std::vector<distance_pixel_pair>, nearest_neighbor_pixel> pixel_queue;
 
 typedef std::pair<double, point*> distance_point_pair;
-typedef std::priority_queue<distance_point_pair, std::vector<
-		distance_point_pair>, nearest_neighbor_point> point_queue;
+typedef std::priority_queue<distance_point_pair,
+    std::vector<distance_point_pair>, nearest_neighbor_point> point_queue;
 
 class tree_pixel: public pixel {
-	// Our second variation on the pixel.  Like scalar_pixel, the idea
-	// here is to use the pixel as a scaffold for sampling a field over an
-	// area.  Instead of storing a density, however, tree_pixel stores a
-	// vector of points and the weight stored in the pixel
-	// is the sum of the weights of the points.  Finally,
-	// the tree_pixel contains pointers to its child-pixels.  When a point is
-	// added to the pixel, it checks the number of points against the total
-	// allowed for the pixel (specified on construction).  If the pixel is at
-	// capacity, it passes the point along to the sub-pixels, generating a tree
-	// structure which can be traversed later on for operations like
-	// pair-counting.
+  // Our second variation on the pixel.  Like scalar_pixel, the idea here is
+  // to use the pixel as a scaffold for sampling a field over an area.
+  // Instead of storing a density, however, tree_pixel stores a vector of
+  // points and the weight stored in the pixel is the sum of the weights of
+  // the points.  Finally, the tree_pixel contains pointers to its
+  // child-pixels.  When a point is added to the pixel, it checks the number
+  // of points against the total allowed for the pixel (specified on
+  // construction).  If the pixel is at capacity, it passes the point along
+  // to the sub-pixels, generating a tree structure which can be traversed
+  // later on for operations like pair-counting.
 public:
-	static uint16_t const kDefaultMaxPoints = 200;
-	friend class nearest_neighbor_pixel;
-	explicit tree_pixel(uint64 id);
-	tree_pixel(uint64 id, uint16_t max_points);
-	virtual ~tree_pixel();
+  friend class nearest_neighbor_pixel;
+  tree_pixel(uint64 id);
+  tree_pixel(uint64 id, uint max_points);
+  virtual ~tree_pixel();
 
-	static tree_pixel* from_point(const point& p, int level, uint16_t max_points);
-	static tree_pixel* from_pixel(const pixel& pix, uint16_t max_points);
+  static tree_pixel* from_point(const point& p, int level, uint max_points);
+  static tree_pixel* from_pixel(const pixel& pix, uint max_points);
 
-	// Add a given point on the sphere to either this pixel (if the capacity for
-	// this pixel hasn't been reached) or one of the sub-pixels.  Return true
-	// if the point was successfully added (i.e. the point was contained in the
-	// bounds of the current pixel); false, otherwise.
-	bool add_point(const point* p);
-	bool add_point(const point& p);
+  // Add a given point on the sphere to either this pixel (if the capacity for
+  // this pixel hasn't been reached) or one of the sub-pixels.  Return true
+  // if the point was successfully added (i.e. the point was contained in the
+  // bounds of the current pixel); false, otherwise.
+  bool add_point(point* p);
+  bool add_point(const point& p);
 
-	uint32_t find_pairs(const annulus_bound& bound) const;
-	double find_weighted_pairs(const annulus_bound& bound) const;
+  // The motivation for building a tree structure like the one in this class is
+  // to do fast pair finding by recursing down the tree structure.  The work
+  // of this recursion is done with _find_pairs_recursion, but the preferred
+  // interfaces are via find_pairs and find_weighted_pairs, which return the
+  // number of points within the input angular bin or the total weights of those
+  // points.
+  long find_pairs(const annulus_bound& bound) const;
+  double find_weighted_pairs(const annulus_bound& bound) const;
+  void _find_pairs_recursion(const annulus_bound& bound, pair_weight* pairs) const;
 
-	// In addition to pair finding, we can also use the tree structure we've
-	// built to do efficient nearest neighbor searches.  In the general case,
-	// we'll be finding the k nearest neighbors of an input point.  The return
-	// value is the number of nodes touched during the assemblage.
-	//
-	// NOTE: There is no duplication checking.  Hence, if the input point is a
-	// copy of a point in the tree, then that point will be included in the
-	// returned vector of points.
-	uint16_t find_k_nearest_neighbors(const point& p, uint8_t n_neighbors,
-			point_vector* neighbors) const;
+  // In addition to pair finding, we can also use the tree structure we've
+  // built to do efficient nearest neighbor searches.  In the general case,
+  // we'll be finding the k nearest neighbors of an input point.  The return
+  // value is the number of nodes touched during the assemblage.
+  //
+  // NOTE: There is no duplication checking.  Hence, if the input point is a
+  // copy of a point in the tree, then that point will be included in the
+  // returned vector of points.
+  //
+  // The central engine of our neighbor finding uses recursion through the
+  // nodes to find nearest matches.  However, we generally don't want to use
+  // the method directly, so we start the method with an underscore to indicate
+  // its semi-private nature.
+  void _neighbor_recursion(const point& p, tree_neighbor* neighbor) const;
 
-	// The special case where we're only interested in the nearest matching point.
-	uint16_t find_nearest_neighbor(const point& p, point* neighbor) const;
+  // Our first preferred method, return a vector of the nearest k neighbors
+  // to the input point.
+  long find_k_nearest_neighbors(
+      const point& p, uint n_neighbors, point_vector* neighbors) const;
 
-	// In some cases, we're only interested in the distance to the kth nearest
-	// neighbor.  The return value will be the angular distance in degrees.
-	double k_nearest_neighbor_distance(const point& p, uint8_t n_neighbors,
-			uint16_t& nodes_visited) const;
+  // The special case where we're only interested in the nearest point.
+  long find_nearest_neighbor(const point& p, point* neighbor) const;
 
-	// Or in the distance to the nearest neighbor.
-	double nearest_neighbor_distance(const point& p,
-			uint16_t& nodes_visited) const;
+  // In some cases, we're only interested in the distance to the kth nearest
+  // neighbor.  The return value will be the angular distance in degrees.
+  double k_nearest_neighbor_distance(
+      const point& p, uint n_neighbors, long& nodes_visited) const;
 
-	// Alternatively, we could be less interested in the nearest neighbor and
-	// more interested in finding a direct match to our input point.  The
-	// difference is subtle, but whereas nearest_neighbor will always return a
-	// point from our tree, closest_match has an angular threshold, beyond which
-	// we're not interested in the nearest neighbor because it's not a match to
-	// our input point.  The returned boolean indicates whether the returned
-	// point is within the specified radius and the maximum distance is
-	// in degrees.
-	bool closest_match(const point& p, double max_angular_distance,
-			point* match) const;
+  // Or in the distance to the nearest neighbor.
+  double nearest_neighbor_distance(
+      const point& p, long& nodes_visited) const;
 
-	// Return the number of points contained in the current pixel and all
-	// sub-pixels.
-	uint32_t n_points() const;
-	double weight() const;
+  // Alternatively, we could be less interested in the nearest neighbor and
+  // more interested in finding a direct match to our input point.  The
+  // difference is subtle, but whereas nearest_neighbor will always return a
+  // point from our tree, closest_match has an angular threshold, beyond which
+  // we're not interested in the nearest neighbor because it's not a match to
+  // our input point.  The returned boolean indicates whether the returned
+  // point is within the specified radius and the maximum distance is
+  // in degrees.
+  bool closest_match(
+      const point& p, double max_angular_distance, point* match) const;
 
-	// A variation on the above method, returns the number of points associated
-	// with the current pixel that are also contained in the input pixel.
-	uint32_t n_points(const pixel& pix) const;
-	double weight(const pixel& pix) const;
+  // Return the number of points contained in the current pixel and all
+  // sub-pixels.
+  inline long n_points() const {
+    return point_count_;
+  }
+  inline double weight() const {
+    return weight_;
+  }
 
-	// The downside of the tree_pixel is that it doesn't really encode geometry
-	// in the same way that pixels and scalar_pixels do.  This makes it hard to
-	// do things like split tree_unions (defined below) into roughly equal areas
-	// like we can do with pixel_unions and scalar_unions.  Coverage attempts to do this
-	// based on the number of sub-nodes with data in them.  The first version
-	// works on the pixel itself.  The second does the same calculation for
-	// another pixel, based on the data in the current pixel.  Like the unmasked
-	// fraction measures for pixels and scalar_pixels, the return values cover
-	// the range [0,1].  However, the accuracy of the measure is going to be a
-	// function of how many points are in the pixel (and sub-pixels) and how
-	// localized they are.
-	double covering_fraction() const;
-	double covering_fraction(const pixel& pix) const;
+  // A variation on the above method, returns the number of points associated
+  // with the current pixel that are also contained in the input pixel.
+  long n_points(const pixel& pix) const;
+  double weight(const pixel& pix) const;
 
-	// If we want to extract a copy of all of the points that have been added
-	// to this pixel, this method allows for that.
-	void points(point_vector* points_vec) const;
-	// void points(point_vector* p_vect) const;
+  // The downside of the tree_pixel is that it doesn't really encode geometry
+  // in the same way that pixels and scalar_pixels do.  This makes it hard to
+  // do things like split tree_unions (defined below) into roughly equal areas
+  // like we can do with pixel_unions and scalar_unions.  Coverage attempts to
+  // do this based on the number of sub-nodes with data in them.  The first
+  // version works on the pixel itself.  The second does the same calculation
+  // for another pixel, based on the data in the current pixel.  Like the
+  // unmasked fraction measures for pixels and scalar_pixels, the return values
+  // cover the range [0,1].  However, the accuracy of the measure is going to
+  // be a function of how many points are in the pixel (and sub-pixels) and how
+  // localized they are.
+  double covering_fraction() const;
+  double covering_fraction(const pixel& pix) const;
 
-	// And an associated method that will extract a copy of the points associated
-	// with an input pixel.
-	void points(const pixel& pix, point_vector* points_vec) const;
-	// void points(const pixel& pix, point_vector* p_vect) const;
+  // If we want to extract a copy of all of the points that have been added
+  // to this pixel, this method allows for that.
+  void points(point_vector* p) const;
 
-	// Recurse through the nodes below this one to return the number of nodes in
-	// the tree.
-	uint16_t n_nodes() const;
+  // And an associated method that will extract a copy of the points associated
+  // with an input pixel.
+  void points(const pixel& pix, point_vector* p) const;
 
-	inline uint16_t pixel_capacity() const {
-		return maximum_points_;
-	}
+  // Recurse through the nodes below this one to return the number of nodes in
+  // the tree.
+  long n_nodes() const;
 
-	// Occasionally, it can be useful for outside code to be able to traverse
-	// the tree structure contained in the pixel and sub-nodes.  These hooks allow
-	// for access to the pointers to the sub-nodes and any point data directly.
-	point_ptr_iterator points_begin();
-	point_ptr_iterator points_end();
-	tree_ptr_iterator nodes_begin();
-	tree_ptr_iterator nodes_end();
+  inline uint pixel_capacity() const {
+    return maximum_points_;
+  }
 
-	// And a pair of methods for indicating if the node contains points or
-	// sub-nodes.
-	inline bool has_points() const {
-		if (!initialized_children_ && point_count_ > 0)
-			return true;
-		return false;
-	}
-	inline bool has_nodes() const {
-		return initialized_children_;
-	}
+  // Occasionally, it can be useful for outside code to be able to traverse
+  // the tree structure contained in the pixel and sub-nodes.  These hooks allow
+  // for access to the pointers to the sub-nodes and any point data directly.
+  point_ptr_iterator points_begin() const {
+    return points_.begin();
+  }
+  point_ptr_iterator points_end() const {
+    return points_.end();
+  }
+  tree_ptr_iterator nodes_begin() const {
+    return subnodes_.begin();
+  }
+  tree_ptr_iterator nodes_end() const {
+    return subnodes_.end();
+  }
 
-	// Since we're storing pointers to the WeightedAngularCoordinates, we need
-	// to explicitly delete them to clear all of the memory associated with the
-	// pixel.
-	void clear();
+  // And a pair of methods for indicating if the node contains points or
+  // sub-nodes.
+  inline bool has_nodes() const {
+    return !subnodes_.empty();
+  }
+  inline bool has_points() const {
+    return !points_.empty();
+  }
+
+  // inherited API from bound_interface
+  virtual bool is_empty() const {
+    return point_count_ == 0;
+  }
+  virtual long size() const {
+    return point_count_;
+  }
+  virtual void clear();
+  virtual double area() const {
+    return exact_area() * covering_fraction();
+  }
+
+  virtual double contained_area(const pixel& pix) const {
+    return exact_area() * covering_fraction(pix);
+  }
 
 private:
-	tree_pixel();
+  tree_pixel();
 
-	void initialize_node(int max_points);
-	bool initialize_children();
-	void add_children(uint16_t& n_nodes); // do we need this?
-	uint32_t direct_pair_count(annulus_bound& bound);
-	double direct_weighted_pairs(annulus_bound& bound);
-	void neighbor_recursion(point& p, tree_neighbor& neighbor);
+  void initialize_node(uint max_points);
+  bool initialize_subnodes();
+  void direct_pair_count(const annulus_bound& bound, pair_weight* pairs) const;
 
-	point_ptr_vector points_;
-	uint16_t maximum_points_;
-	uint32_t point_count_;
-	double weight_;
-	bool initialized_children_;
-	tree_ptr_vector children_;
+  point_ptr_vector points_;
+  tree_ptr_vector subnodes_;
+  uint maximum_points_;
+  long point_count_;
+  double weight_;
 };
 
 class nearest_neighbor_pixel {
-	// Convenience class for sorting nearest neighbor pixels in our queue.
+  // Convenience class for sorting nearest neighbor pixels in our queue.
 public:
-	int operator()(const distance_pixel_pair& x, const distance_pixel_pair& y) {
-		// This has the opposite ordering since we want pixels ordered with the
-		// closest at the top of the heap.
-		return x.first > y.first;
-	}
+  int operator()(const distance_pixel_pair& x, const distance_pixel_pair& y) {
+    // This has the opposite ordering since we want pixels ordered with the
+    // closest at the top of the heap.
+    return x.first > y.first;
+  }
 };
 
 class nearest_neighbor_point {
-	// Convenience class for sorting nearest neighbor points in our queue.
+  // Convenience class for sorting nearest neighbor points in our queue.
 public:
-	int operator()(const distance_point_pair& x, const distance_point_pair& y) {
-		return x.first < y.first;
-	}
+  int operator()(const distance_point_pair& x, const distance_point_pair& y) {
+    return x.first < y.first;
+  }
 };
 
+// Default values for our nearest neigbhor finding.
+static uint const DEFAULT_N_NEIGHBORS = 1;
+static double const DEFAULT_MAX_NEIGHBOR_DISTANCE = 10.0;
+
 class tree_neighbor {
-	// In order to do the nearest neighbor finding in the TreePixel class, we
-	// need a secondary class to handle storage of the nearest neighbor list.
-	// The natural data structure for that list is a priority queue, which we're
-	// using, but the fact that our list of points is sorted based on their
-	// distance to a reference point means that we need a little extra plumbing
-	// in order to pull that off.  Hence, the TreeNeighbor class.
+  // In order to do the nearest neighbor finding in the TreePixel class, we
+  // need a secondary class to handle storage of the nearest neighbor list.
+  // The natural data structure for that list is a priority queue, which we're
+  // using, but the fact that our list of points is sorted based on their
+  // distance to a reference point means that we need a little extra plumbing
+  // in order to pull that off.  Hence, the TreeNeighbor class.
 public:
-	friend class nearest_neighbor_point;
-	tree_neighbor(const point& reference_point);
-	tree_neighbor(const point& reference_point, uint8_t n_neighbors);
-	tree_neighbor(const point& reference_point, uint8_t n_neighbors,
-			double max_distance);
-	~tree_neighbor();
+  friend class nearest_neighbor_point;
+  tree_neighbor(const point& reference_point);
+  tree_neighbor(const point& reference_point, uint n_neighbors);
+  tree_neighbor(const point& reference_point, uint n_neighbors,
+                double max_angular_distance);
+  ~tree_neighbor();
 
-	// Return a list of the nearest neighbors found so far.
-	void nearest_neighbors(const point_vector& p, bool save_neighbors);
+  // Return a list of the nearest neighbors found so far.
+  void nearest_neighbors(point_vector* p, bool save_neighbors);
 
-	// Return the number of neighbors in the list.  This should always be at most
-	// the value used to instantiate the class, which is returned by calling
-	// MaxNeighbors()
-	inline uint8_t n_neighbors() {
-		return point_queue_.size();
-	}
-	inline uint8_t max_neighbors() {
-		return n_neighbors_;
-	}
+  // Return a copy of the nearest neighbor found so far.
+  point nearest_neighbor() const;
 
-	// Submit a point for possible inclusion.  Return value indicates whether the
-	// point was successfully included in the list (i.e., the distance between
-	// the input point and the reference point was smaller than the current most
-	// distant point in the list) or not.
-	bool test_point(point* test_point);
+  // Return the number of neighbors in the list.  This should always be at most
+  // the value used to instantiate the class, which is returned by calling
+  // MaxNeighbors()
+  inline uint n_neighbors() {
+    return point_queue_.size();
+  }
+  inline uint max_neighbors() {
+    return n_neighbors_;
+  }
 
-	// Return the maximum distance of the current list.
-	inline double max_distance() {
-		return max_distance_;
-	}
+  // Submit a point for possible inclusion.  Return value indicates whether the
+  // point was successfully included in the list (i.e., the distance between
+  // the input point and the reference point was smaller than the current most
+  // distant point in the list) or not.
+  bool test_point(point* test_point);
 
-	// The default distance returned is in sin^2(theta) units since that's what
-	// the edge detection code uses.  If we're interested in human units, this
-	// provides that distance in degrees.
-	double max_angular_distance();
+  // Return the maximum distance of the current list.
+  inline double max_distance() {
+    return max_distance_;
+  }
 
-	// For accounting purposes, it can be useful to keep track of how many nodes
-	// we have visited during our traversal through the tree.
-	inline uint16_t nodes_visited() {
-		return n_nodes_visited_;
-	}
-	inline void add_node() {
-		n_nodes_visited_++;
-	}
+  // The default distance returned is in sin^2(theta) units since that's what
+  // the edge detection code uses.  If we're interested in human units, this
+  // provides that distance in degrees.
+  double max_angular_distance();
+
+  // For accounting purposes, it can be useful to keep track of how many nodes
+  // we have visited during our traversal through the tree.
+  inline long nodes_visited() {
+    return n_nodes_visited_;
+  }
+  inline void add_node() {
+    n_nodes_visited_++;
+  }
 
 private:
-	point reference_point_;
-	point_queue point_queue_;
-	uint8_t n_neighbors_;
-	uint16_t n_nodes_visited_;
-	double max_distance_;
+  point reference_point_;
+  point_queue point_queue_;
+  uint n_neighbors_;
+  long n_nodes_visited_;
+  double max_distance_;
 };
 
 } // end namespace s2omp

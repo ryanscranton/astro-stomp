@@ -97,14 +97,6 @@ S2Cell pixel::get_cell() const {
   return S2Cell(id_);
 }
 
-point pixel::s2point_to_point(const S2Point& p) {
-  return point(p[0], p[1], p[2], 1.0);
-}
-
-S2Point pixel::point_to_s2point(const point& p) {
-  return S2Point(p.unit_sphere_x(), p.unit_sphere_y(), p.unit_sphere_z());
-}
-
 double pixel::average_area() const {
   return get_cell().AverageArea() * STRAD_TO_DEG2;
 }
@@ -114,7 +106,7 @@ double pixel::exact_area() const {
 }
 
 bool pixel::contains(const point& p) const {
-  return get_cell().Contains(point_to_s2point(p));
+  return id_.contains(S2CellId(p.id()));
 }
 
 bool pixel::contains(const pixel& pix) const {
@@ -134,15 +126,16 @@ pixel pixel::range_max() const {
 }
 
 point pixel::center_point() const {
-  return s2point_to_point(id_.ToPointRaw()); // point will normalize itself.
+  // point will normalize itself.
+  return point::s2point_to_point(id_.ToPointRaw());
 }
 
 point pixel::vertex(int k) const {
-  return s2point_to_point(get_cell().GetVertexRaw(k));
+  return point::s2point_to_point(get_cell().GetVertexRaw(k));
 }
 
 point pixel::edge(int k) const {
-  return s2point_to_point(get_cell().GetEdgeRaw(k));
+  return point::s2point_to_point(get_cell().GetEdgeRaw(k));
 }
 
 bool pixel::edge_distances(const point& p, double& near_edge_distance,
@@ -152,7 +145,7 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
   near_edge_distance = 100.0;
   far_edge_distance = -100.0;
   for (int k = 0; k < 4; k++) {
-    double costheta = s2point_to_point(cell.GetVertexRaw(k)).dot(p);
+    double costheta = point::s2point_to_point(cell.GetVertexRaw(k)).dot(p);
     if (1.0 - costheta * costheta < near_edge_distance) {
       near_edge_distance = 1.0 - costheta * costheta;
     }
@@ -171,7 +164,7 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
   edges.reserve(4);
   edge_caps.reserve(4);
   for (int k = 0; k < 4; k++) {
-    point edge = s2point_to_point(cell.GetEdgeRaw(k));
+    point edge = point::s2point_to_point(cell.GetEdgeRaw(k));
     edges.push_back(edge);
     edge_caps.push_back(circle_bound::from_height(edge, 0.0));
   }
@@ -247,12 +240,59 @@ void pixel::neighbors(int level, pixel_vector* pixels) const {
   }
 }
 
-point pixel::get_random_point() const {
-  return point(0.0, 0.0, 1.0, 1.0);
+double pixel::contained_area(const pixel& pix) const {
+  if (contains(pix)) {
+    return pix.exact_area();
+  } else if (pix.contains(*this)) {
+    return exact_area();
+  }
+  return 0.0;
 }
 
-void pixel::get_random_points(long n_points, pixel_vector* points) const {
-  return;
+point pixel::get_center() const {
+  return center_point();
+}
+
+circle_bound pixel::get_bound() const {
+  circle_bound bound = circle_bound(center_point(), 0.0);
+  for (int k = 0; k < 4; k++) {
+    bound.add_point(vertex(k));
+  }
+  return bound;
+}
+
+void pixel::get_covering(pixel_vector* pixels) const {
+  if (!pixels->empty()) pixels->clear();
+  pixels->push_back(*this);
+}
+
+void pixel::get_covering(
+    const uint32_t max_pixels, pixel_vector* pixels) const {
+  get_covering(pixels);
+}
+
+void pixel::get_covering(
+    double fractional_area_tolerance, pixel_vector* pixels) const {
+  get_covering(pixels);
+}
+
+void pixel::get_interior_covering(int max_level, pixel_vector* pixels) const {
+  if (!pixels->empty()) pixels->clear();
+  if (level() <= max_level) {
+    get_covering(pixels);
+  }
+}
+
+void pixel::get_simple_covering(int level, pixel_vector* pixels) {
+  if (!pixels->empty()) pixels->clear();
+
+  if (level == this->level()) {
+    pixels->push_back(*this);
+  } else if (level > this->level()) {
+    children(level, pixels);
+  } else {
+    pixels->push_back(parent(level));
+  }
 }
 
 } // end namespace s2omp

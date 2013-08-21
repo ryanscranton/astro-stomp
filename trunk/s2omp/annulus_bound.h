@@ -27,17 +27,17 @@ public:
                                          const angular_bin& bin);
 
   // API from geometric_bound
-  virtual bool is_empty();
-  virtual long size();
+  virtual bool is_empty() const;
+  virtual long size() const;
   virtual void clear();
-  virtual double area();
+  virtual double area() const;
 
-  virtual bool contains(const point& p);
-  virtual bool contains(const pixel& pix);
-  virtual double contained_area(const pixel& pix);
+  virtual bool contains(const point& p) const;
+  virtual bool contains(const pixel& pix) const;
+  virtual double contained_area(const pixel& pix) const;
 
-  virtual bool may_intersect(const pixel& pix);
-  bool may_intersect_outer(const pixel& pix);
+  virtual bool may_intersect(const pixel& pix) const;
+  bool may_intersect_outer(const pixel& pix) const;
 
   virtual point get_center() const {
     return outer_bound_->axis();

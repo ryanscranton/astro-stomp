@@ -15,6 +15,14 @@
 #include "core.h"
 #include "pixel.h"
 
+namespace __gnu_cxx {
+
+template<> struct hash<uint64> {
+  size_t operator()(uint64 x) const { return static_cast<size_t>(x); }
+};
+
+} // end namespace __gnu_cxx
+
 namespace s2omp {
 
 class pixel;
@@ -70,7 +78,7 @@ public:
   //   median ratio:  5.33   3.32  2.73  2.34  1.98  1.66  1.42  1.11   1.01
   //   worst case:  215518  14.41  9.72  5.26  3.91  2.75  1.92  1.20   1.02"
   bool get_covering(const bound_interface& bound, pixel_vector* pixels);
-  bool get_covering(const uint32_t max_pixels, const bound_interface& bound,
+  bool get_covering(long max_pixels, const bound_interface& bound,
       pixel_vector* pixels);
 
   // This covering works by specifying a target fractional area tolerance. The
@@ -78,7 +86,7 @@ public:
   // achieved or no pixels at a level above max_level_ (that are not contained)
   // remain. The return is a boolean specifying if the tolerance was reached.
   bool get_covering(double fractional_area_tolerace,
-    const bound_interface& bound, pixel_vector* pixels);
+                    const bound_interface& bound, pixel_vector* pixels);
 
   // Interior coverings are different from the coverings above in that each
   // pixel in the covering is required to be fully contained within the bound.
@@ -97,13 +105,22 @@ public:
       double fractional_area_tolerace, const bound_interface& bound,
       pixel_vector* pixels);
 
-  // A simple covering is a set of contiguous at a single level that cover
-  // a bound. Note that if bound is a discontinuous region on the sky or has
-  // large holes in the bound, it is possible that for certain levels that
+  // A simple covering is a set of contiguous pixels at a single level that
+  // cover a bound. Note that if bound is a discontinuous region on the sky or
+  // has large holes in the bound, it is possible that for certain levels that
   // simple covering will not return a covering for the whole area or will
-  // return an empty vector of pixels.
-  static void get_simple_covering(const bound_interface& bound, int level,
-                                  pixel_vector* pixels);
+  // return an empty vector of pixels.  A simple covering is also guaranteed
+  // to be returned in sorted order.
+  static void get_simple_covering(
+      const bound_interface& bound, int level, pixel_vector* pixels);
+
+  // In some cases (e.g. calculating correlation functions), the overhead
+  // involved in the repeated calls to may_intersect may be more than we want
+  // if our ultimate test is simply whether or not a pixel center is contained
+  // within the bound.  In those cases, use get_center_covering; like with
+  // get_simple_covering, the resulting pixel_vector will be sorted.
+  static void get_center_covering(
+      const bound_interface& bound, int level, pixel_vector* pixels);
 
   inline int get_min_level() {
     return min_level_;
@@ -121,7 +138,7 @@ public:
   bool set_min_max_level(int min, int max);
 
 private:
-  bool generate_covering(const bound_interface& bound, uint32_t max_pixels,
+  bool generate_covering(const bound_interface& bound, long max_pixels,
                          bool interior, double fraction, pixel_vector* pixels);
   void get_initial_covering(const bound_interface& bound, pixel_vector* pixels);
   int score_pixel(const bound_interface& bound, pixel_candidate* pix);
