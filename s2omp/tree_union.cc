@@ -128,8 +128,7 @@ bool tree_union::find_pairs_with_regions(const point_vector& points,
   }
 
   pixel_vector pixels;
-  int point_region = region_map::INVALID_REGION_VALUE;
-  int node_region = region_map::INVALID_REGION_VALUE;
+  int point_region = INVALID_REGION_VALUE;
 
   for (point_iterator point_iter = points.begin(); point_iter != points.end(); ++point_iter) {
     // Find the covering pixels for an annulus bound defined by this point
@@ -140,34 +139,18 @@ bool tree_union::find_pairs_with_regions(const point_vector& points,
     // Set our point_region value based on the input region_map if we're using
     // it.  If we have a non-empty region_map and our region value is -1, then
     // we fail out of the iteration.
-    point_region = regions.is_empty() ? region_map::INVALID_REGION_VALUE
-        : regions.find_region(*point_iter);
-    if (!regions.is_empty() && point_region == region_map::INVALID_REGION_VALUE) {
-      std::cout << "s2omp::tree_union::find_pairs_with_regions - "
-          << "Failed to find region for input point; bailing\n";
-      return false;
-    }
+    point_region = region_map::find_region(regions, *point_iter);
 
     // Iterate over the covering pixels and find pairs for all of the
-    for (pixel_iterator cover_iter = pixels.begin(); cover_iter
-        != pixels.end(); ++cover_iter) {
+    for (pixel_iterator cover_iter = pixels.begin(); cover_iter != pixels.end(); ++cover_iter) {
       tree_map_iterator tree_iter = tree_map_.find(cover_iter->id());
       if (tree_iter == tree_map_.end())
         continue;
 
-      node_region = regions.is_empty() ? region_map::INVALID_REGION_VALUE
-          : regions.find_region(*cover_iter);
-      if (!regions.is_empty() && node_region
-          == region_map::INVALID_REGION_VALUE) {
-        std::cout << "s2omp::tree_union::find_pairs_with_regions - "
-            << "Failed to find region for tree_union node; bailing\n";
-        return false;
-      }
-
       pair_weight pairs;
       (*tree_iter).second->_find_pairs_recursion(*bound, &pairs);
       bin->add_to_pair_wtheta(pairs.total_weight, pairs.n_pairs, point_region,
-          node_region);
+          region_map::find_region(regions, *cover_iter));
     }
 
     delete bound;

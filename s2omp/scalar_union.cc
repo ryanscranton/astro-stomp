@@ -419,17 +419,6 @@ void scalar_union::convert_from_over_density() {
 
 // Moving private methods here since it acts as the engine for the various
 // correlation methods
-int get_region(const region_map& regions, const pixel& pix) {
-  int region = !regions.is_empty() ? regions.find_region(pix)
-      : region_map::INVALID_REGION_VALUE;
-  if (!regions.is_empty() && region == region_map::INVALID_REGION_VALUE) {
-    std::cout << "s2omp::scalar_union::get_region - "
-        << "Failed to find region for id\n";
-    exit(2);
-  }
-
-  return region;
-}
 
 bool scalar_union::correlate_unions(scalar_union& s, const region_map& regions,
     bool autocorrelate, angular_bin* theta) {
@@ -468,8 +457,7 @@ bool scalar_union::correlate_unions(scalar_union& s, const region_map& regions,
     bound->get_center_covering(level_, &covering);
 
     // Get the region for this pixel.
-    int iter_region = get_region(regions, *iter);
-    int cover_region = region_map::INVALID_REGION_VALUE;
+    int iter_region = region_map::find_region(regions, *iter);
 
     // Find the starting and ending points of the covering in the input
     // scalar_union.  If we're auto-correlating, then the starting point is
@@ -487,7 +475,8 @@ bool scalar_union::correlate_unions(scalar_union& s, const region_map& regions,
         if (bound->contains(cover_iter->center_point())) {
           theta->add_to_pixel_wtheta(iter->intensity() * iter->weight()
               * cover_iter->intensity() * cover_iter->weight(), iter->weight()
-              * cover_iter->weight(), iter_region, get_region(regions, *cover_iter));
+              * cover_iter->weight(), iter_region, region_map::find_region(
+              regions, *cover_iter));
         }
       }
     } else {
@@ -509,7 +498,7 @@ bool scalar_union::correlate_unions(scalar_union& s, const region_map& regions,
           theta->add_to_pixel_wtheta(iter->intensity() * iter->weight()
               * range_iter.first->intensity() * range_iter.first->weight(),
               iter->weight() * range_iter.first->weight(), iter_region,
-              get_region(regions, *cover_iter));
+              region_map::find_region(regions, *cover_iter));
         }
       }
     }

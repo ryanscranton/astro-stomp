@@ -28,10 +28,6 @@ class region_map {
   // resolution than those used to split the bound's area).
 
 public:
-  // Default region value to return if we can't find an input pixel or point in
-  // our region_map.
-  static int const INVALID_REGION_VALUE = -1;
-
   region_map();
   virtual ~region_map();
 
@@ -51,12 +47,20 @@ public:
   // Given an input point, return the region containing it (which does not
   // necessarily mean that it is contained in the bound used to generate the
   // region_map).  If the input point is outside the region map, the return
-  // value is -1.
+  // value is INVALID_REGION_VALUE.
   int find_region(const point& p) const;
 
   // Return the region for the input pixel.  If the pixel is outside the
-  // region_map or if pix.level() < region_map.level(), the return value is -1.
+  // region_map or if pix.level() < region_map.level(), the return value is
+  // INVALID_REGION_VALUE.
   int find_region(const pixel& pix) const;
+
+  // As a complement to the above methods, we also have static methods that
+  // take a region_map as one of their arguments.  The difference here is that,
+  // if the input region_maps are not empty, failure to find a valid region
+  // value results in an unrecoverable error.
+  static int find_region(const region_map& regions, const point& p);
+  static int find_region(const region_map& regions, const pixel& pix);
 
   // Return a covering for the region indicated by the input index.
   void get_covering(int region_idx, pixel_vector* pixels) const;

@@ -25,8 +25,7 @@ uint region_map::init(const bound_interface& bound, uint n_region) {
   return init(bound, n_region, find_regionation_level(bound, n_region));
 }
 
-uint region_map::init(
-    const bound_interface& bound, uint n_region, int level) {
+uint region_map::init(const bound_interface& bound, uint n_region, int level) {
   clear();
 
   // First, verify that our input level is valid.
@@ -93,6 +92,30 @@ int region_map::find_region(const pixel& pix) const {
   return iter != region_map_.end() ? iter->second : INVALID_REGION_VALUE;
 }
 
+int region_map::find_region(const region_map& regions, const point& p) {
+  int region = !regions.is_empty() ? regions.find_region(p)
+      : INVALID_REGION_VALUE;
+  if (!regions.is_empty() && region == INVALID_REGION_VALUE) {
+    std::cout << "s2omp::region_map::find_region - "
+        << "Failed to find region for input point; bailing\n";
+    exit(2);
+  }
+
+  return region;
+}
+
+int region_map::find_region(const region_map& regions, const pixel& pix) {
+  int region = !regions.is_empty() ? regions.find_region(pix)
+      : INVALID_REGION_VALUE;
+  if (!regions.is_empty() && region == INVALID_REGION_VALUE) {
+    std::cout << "s2omp::region_map::find_region - "
+        << "Failed to find region for input pixel; bailing\n";
+    exit(2);
+  }
+
+  return region;
+}
+
 void region_map::get_covering(int region_idx, pixel_vector* pixels) const {
   if (!pixels->empty()) {
     pixels->clear();
@@ -103,8 +126,7 @@ void region_map::get_covering(int region_idx, pixel_vector* pixels) const {
     return;
   }
 
-  for (region_iterator iter = region_map_.begin();
-       iter != region_map_.end(); ++iter) {
+  for (region_iterator iter = region_map_.begin(); iter != region_map_.end(); ++iter) {
     if (iter->second == region_idx) {
       pixels->push_back(pixel(iter->first));
     }
@@ -117,8 +139,8 @@ double region_map::get_area(int region) const {
   return iter != region_area_.end() ? iter->second : -1.0;
 }
 
-int region_map::find_regionation_level(
-    const bound_interface& bound, uint n_region) const {
+int region_map::find_regionation_level(const bound_interface& bound,
+    uint n_region) const {
 
   // To cleanly sub-divide our bound area (i.e., each region has approximately
   // the same area), we want on order 50 pixels per region.  Increase the level
@@ -132,8 +154,7 @@ int region_map::find_regionation_level(
   return level;
 }
 
-int region_map::validate_level(double bound_area, uint n_region,
-    int level) const {
+int region_map::validate_level(double bound_area, uint n_region, int level) const {
   // TODO(scranton): Refactor this so that we fail more gracefully.
   if (level > MAX_LEVEL) {
     std::cout << "region_map::init - Requested level > MAX_LEVEL."

@@ -88,6 +88,10 @@ static uint const DEFAULT_MAX_POINTS = 200;
 // infinite-precision result.
 static double const FLOAT_ROUND_UP = 1.0 + 1.0 / (uint64(1) << 52);
 
+// Default region value to return if we can't find an input pixel or point in
+// a region_map.
+static int const INVALID_REGION_VALUE = -1;
+
 inline bool double_lt(double a, double b) {
   return a < b - FLOAT_ROUND_UP;
 }
