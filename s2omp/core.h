@@ -19,9 +19,10 @@
 #include <math.h>
 #include <stdint.h>
 #include <vector>
+#include <set>
 #include <utility>
 
-#include "s2.h"
+#include <s2/s2.h>
 #include <base/integral_types.h>
 
 namespace s2omp {
@@ -44,19 +45,23 @@ class coverer;
 class region_map;
 
 typedef std::vector<pixel> pixel_vector;
-typedef pixel_vector::iterator pixel_iterator;
+typedef pixel_vector::const_iterator pixel_iterator;
+
+typedef std::set<pixel> pixel_set;
+typedef pixel_set::const_iterator pixel_set_iterator;
 
 typedef std::vector<point> point_vector;
-typedef point_vector::iterator point_iterator;
+typedef point_vector::const_iterator point_iterator;
 
 typedef std::vector<circle_bound *> circle_ptr_vector;
-typedef circle_ptr_vector::iterator circle_ptr_iterator;
+typedef circle_ptr_vector::const_iterator circle_ptr_iterator;
 
 typedef std::vector<angular_bin> theta_vector;
 typedef theta_vector::iterator theta_iterator;
+typedef theta_vector::const_iterator theta_const_iterator;
 typedef std::pair<theta_iterator, theta_iterator> theta_pair;
 typedef std::vector<angular_bin *> theta_ptr_vector;
-typedef theta_ptr_vector::iterator theta_ptr_iterator;
+typedef theta_ptr_vector::const_iterator theta_ptr_iterator;
 
 // First some trigonometric values.
 static double const PI = 2.0*asin(1.0);
@@ -64,26 +69,43 @@ static double const DEG_TO_RAD = PI/180.0;
 static double const RAD_TO_DEG = 180.0/PI;
 static double const STRAD_TO_DEG2 = 180.0*180.0/(PI*PI);
 
+// Defaults from S2 for the maximum pixel level and the default number of
+// pixels in an exterior covering.
 static int const MAX_LEVEL = S2::kMaxCellLevel;
+static long const DEFAULT_COVERING_PIXELS = 8;
+
+// It can be useful to define a default resolution level that should be useful
+// for a rough pixelization.  Level = 6 corresponds to roughly 24.5k pixels on
+// the sky with an average size of about 1.27 degrees on a side.
+static int const DEFAULT_LEVEL = 6;
+
+// For the tree_pixel and tree_union classes, it's also useful to define a
+// default carrying capacity for each node in the tree structure.
+static uint const DEFAULT_MAX_POINTS = 200;
+
+// From S2: Multiply a positive number by this constant to ensure that the
+// result of a floating point operation is at least as large as the true
+// infinite-precision result.
+static double const FLOAT_ROUND_UP = 1.0 + 1.0 / (uint64(1) << 52);
 
 inline bool double_lt(double a, double b) {
-	return a < b - 1.0e-15 ? true : false;
+  return a < b - FLOAT_ROUND_UP;
 }
 
 inline bool double_le(double a, double b) {
-	return a <= b - 1.0e-15 ? true : false;
+  return a <= b - FLOAT_ROUND_UP;
 }
 
 inline bool double_gt(double a, double b) {
-	return a > b + 1.0e-15 ? true : false;
+  return a > b + FLOAT_ROUND_UP;
 }
 
 inline bool double_ge(double a, double b) {
-  return a >= b - 1.0e-15 ? true : false;
+  return a >= b - FLOAT_ROUND_UP;
 }
 
 inline bool double_eq(double a, double b) {
-	return double_le(a, b) && double_ge(a, b) ? true : false;
+  return double_le(a, b) && double_ge(a, b);
 }
 
 } // end namespace s2omp

@@ -29,8 +29,8 @@
 #include "core.h"
 
 // From S2
-#include "s2.h"
-#include "s2cellid.h"
+#include <s2/s2.h>
+#include <s2/s2cellid.h>
 
 namespace s2omp {
 
@@ -38,7 +38,7 @@ class pixel; // class declaration in pixel.h
 class point;
 
 typedef std::vector<point *> point_ptr_vector;
-typedef point_ptr_vector::iterator point_ptr_iterator;
+typedef point_ptr_vector::const_iterator point_ptr_iterator;
 
 class point {
   // Our generic class for handling angular positions.  The idea is that
@@ -67,6 +67,9 @@ public:
   static point* from_radec_deg(double ra_deg, double dec_deg, double weight);
   static point* from_radec_rad(double ra_rad, double dec_rad);
   static point* from_radec_rad(double ra_rad, double dec_rad, double weight);
+
+  static point* copy_point(const point& p);
+  static point copy_point(point* p);
 
   double lat_deg(Sphere s) const;
   double lon_deg(Sphere s) const;
@@ -118,20 +121,28 @@ public:
 
   inline uint64 id() const;
   inline uint64 id(int level) const;
+  static inline uint64 point_to_id(const point& p);
+  static inline uint64 point_to_id(const point& p, int level);
+  static inline point s2point_to_point(const S2Point& p);
+  static inline S2Point point_to_s2point(const point& p);
   pixel to_pixel() const;
   pixel to_pixel(int level) const;
 
-  inline S2Point s2point() {return point_;}
+  inline S2Point s2point() const {
+    return point_;
+  }
 
-  inline point operator -() const;
+  inline point operator-() const;
 
 protected:
   void set_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
   void set_latlon_radians(double lat_rad, double lon_rad, Sphere s);
-  void set_xyz(double x, double y, double z);
+  void set_xyz(double x, double y, double z) {
+    point_ = S2Point(x, y, z);
+  }
 
 private:
-
+  point(S2Point s2point, double weight);
   double cos_position_angle(point& p, Sphere s);
   double sin_position_angle(point& p, Sphere s);
   void rotate_about(point& axis, double rotation_angle_degrees, Sphere s,
@@ -166,8 +177,7 @@ inline bool operator>=(point const& a, point const& b) {
 }
 
 inline point point::operator-() const{
-  return point(-unit_sphere_x(), -unit_sphere_y(),
-      -unit_sphere_z(), weight());
+  return point(-point_, weight_);
 }
 
 inline double point::dot(const point& p) const {
@@ -181,6 +191,22 @@ inline uint64 point::id() const {
 
 inline uint64 point::id(int level) const {
   return S2CellId::FromPoint(point_).parent(level).id();
+}
+
+inline uint64 point::point_to_id(const point& p) {
+  return S2CellId::FromPoint(p.s2point()).id();
+}
+
+inline uint64 point::point_to_id(const point& p, int level) {
+  return S2CellId::FromPoint(p.s2point()).parent(level).id();
+}
+
+inline point point::s2point_to_point(const S2Point& p) {
+  return point(p[0], p[1], p[2], 1.0);
+}
+
+inline S2Point point::point_to_s2point(const point& p) {
+  return S2Point(p.unit_sphere_x(), p.unit_sphere_y(), p.unit_sphere_z());
 }
 
 } // end namespace s2omp

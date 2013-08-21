@@ -67,19 +67,25 @@ public:
   // to be contained within the bound if at all possible.
   virtual point get_center() const;
 
-  // Finally, for the purposes of generating random points, we need to be able
+  // For the purposes of generating random points, we need to be able
   // to create a circle_bound that encompasses the bound.
   virtual circle_bound get_bound() const;
 
-  void get_covering(pixel_vector* pixels) const;
-  void get_covering(const uint32_t max_pixels, pixel_vector* pixels) const;
-  void get_covering(double fractional_area_tolerance,
-                    pixel_vector* pixels) const;
-  void get_interior_covering(int max_level, pixel_vector* pixels) const;
-  void get_simple_covering(int level, pixel_vector* pixels) const;
+  // For all derived instances of bound_interface, we implement a generic
+  // method for generating random points within that object's bound.  These
+  // should be over-ridden if the details of that object's implementation make
+  // calling get_bound() expensive.
+  virtual point get_random_point();
+  virtual void get_random_points(long n_points, point_vector* points);
 
-  point get_random_point();
-  void get_random_points(long n_points, point_vector* points);
+  virtual void get_covering(pixel_vector* pixels) const;
+  virtual void get_covering(
+      long max_pixels, pixel_vector* pixels) const;
+  virtual void get_covering(
+      double fractional_area_tolerance, pixel_vector* pixels) const;
+  virtual void get_interior_covering(int max_level, pixel_vector* pixels) const;
+  virtual void get_simple_covering(int level, pixel_vector* pixels) const;
+  virtual void get_center_covering(int level, pixel_vector* pixels) const;
 };
 
 } // end namespace s2omp

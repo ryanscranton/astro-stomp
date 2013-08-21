@@ -21,27 +21,24 @@ region_map::~region_map() {
   clear();
 }
 
-uint16_t region_map::init(const bound_interface& bound, uint16_t n_region) {
+uint region_map::init(const bound_interface& bound, uint n_region) {
   return init(bound, n_region, find_regionation_level(bound, n_region));
 }
 
-uint16_t region_map::init(const bound_interface& bound, uint16_t n_region,
-                          int level) {
+uint region_map::init(
+    const bound_interface& bound, uint n_region, int level) {
   clear();
 
   // First, verify that our input level is valid.
   double bound_area = bound.area();
   level = validate_level(bound_area, n_region, level);
 
-  // Find the pixels that cover this bound at the level requested.
+  // Find the pixels that cover this bound at the level requested.  The covering
+  // pixels will be returned sorted.
   pixel_vector pixels;
-  coverer::get_simple_covering(bound, level, &pixels);
+  bound.get_simple_covering(level, &pixels);
 
-  // Since coverings aren't guaranteed to give us an ordered list of pixels we
-  // need to sort the covering pixels.
-  sort(pixels.begin(), pixels.end());
-
-  uint16_t created_regions = 0;
+  uint created_regions = 0;
   double region_area = 0.0;
   double pixel_average_area = pixel::average_area(level);
   double target_region_area = bound_area / (1.0 * n_region);
@@ -79,27 +76,31 @@ uint16_t region_map::init(const bound_interface& bound, uint16_t n_region,
   return n_region_;
 }
 
-int16_t region_map::find_region(const point& p) {
+int region_map::find_region(const point& p) const {
   region_iterator iter = region_map_.find(p.id(level_));
-  if (iter != region_map_.end())
-    return iter->second;
-  return -1;
+  // If the point is within our region_map, return the region.
+  return iter != region_map_.end() ? iter->second : INVALID_REGION_VALUE;
 }
 
-int16_t region_map::find_region(const pixel& pix) {
-  if (pix.level() >= level_) {
-    region_iterator iter = region_map_.find(pix.parent(level_).id());
-    if (iter != region_map_.end()) {
-      return iter->second;
-    }
+int region_map::find_region(const pixel& pix) const {
+  // If the pixel is larger than our region_map level.
+  if (pix.level() < level_) {
+    return INVALID_REGION_VALUE;
   }
 
-  return -1;
+  // If the pixel is within our region_map, return the region.
+  region_iterator iter = region_map_.find(pix.parent(level_).id());
+  return iter != region_map_.end() ? iter->second : INVALID_REGION_VALUE;
 }
 
-void region_map::get_covering(int16_t region_idx, pixel_vector* pixels) {
+void region_map::get_covering(int region_idx, pixel_vector* pixels) const {
   if (!pixels->empty()) {
     pixels->clear();
+  }
+
+  // If the input region is outside our range, stop now.
+  if (region_idx < 0 || region_idx >= n_region_) {
+    return;
   }
 
   for (region_iterator iter = region_map_.begin();
@@ -110,17 +111,18 @@ void region_map::get_covering(int16_t region_idx, pixel_vector* pixels) {
   }
 }
 
-double region_map::get_area(int16_t region) {
+double region_map::get_area(int region) const {
+  // If the region index is valid, return the area.
   region_area_iterator iter = region_area_.find(region);
-  if (iter != region_area_.end()) {
-    return iter->second;
-  }
-
-  return -1.0;
+  return iter != region_area_.end() ? iter->second : -1.0;
 }
 
 int region_map::find_regionation_level(
-    const bound_interface& bound, uint16_t n_region) {
+    const bound_interface& bound, uint n_region) const {
+
+  // To cleanly sub-divide our bound area (i.e., each region has approximately
+  // the same area), we want on order 50 pixels per region.  Increase the level
+  // until we get to that resolution.
   double target_area = bound.area() / (50 * n_region);
   int level = 0;
   while ((pixel::average_area(level) > target_area) && (level < MAX_LEVEL)) {
@@ -130,8 +132,8 @@ int region_map::find_regionation_level(
   return level;
 }
 
-int region_map::validate_level(double bound_area, uint16_t n_region,
-    int level) {
+int region_map::validate_level(double bound_area, uint n_region,
+    int level) const {
   // TODO(scranton): Refactor this so that we fail more gracefully.
   if (level > MAX_LEVEL) {
     std::cout << "region_map::init - Requested level > MAX_LEVEL."

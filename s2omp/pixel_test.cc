@@ -96,6 +96,12 @@ void test_pixel_refinement() {
     std::cout << "\t\tExpected 1024, Got " << pixels.size() << "\n";
   }
 
+  if (pix->contains(*pix)) {
+    std::cout << "Pixel self-containment works\n";
+  } else {
+    std::cout << "Pixel doesn't contain itself.\n";
+  }
+
   std::cout << "\tTesting Parents...\n";
   // Now we test so see if you can successfully create parent pixels.
 	delete pix;
@@ -187,6 +193,61 @@ void test_pixel_geometry() {
   }
 }
 
+void test_pixel_filling_fraction() {
+  int level = 25;
+  pixel* pix = pixel::from_point(point(0, 1, 0, 0), level);
+
+  uint64 valid_pixels = 0;
+  uint64 range_min = pix->range_min().id();
+  uint64 range_max = pix->range_max().id();
+  uint64 range_ids = range_max - range_min + 1;
+  for (uint64 k = range_min; k <= range_max; k++) {
+    pixel test = pixel(k);
+    if (test.is_valid()) valid_pixels++;
+  }
+  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
+      100.0*valid_pixels/range_ids << " percent valid\n";
+
+  level = 20;
+  pixel parent = pix->parent(level);
+  valid_pixels = 0;
+  range_min = parent.range_min().id();
+  range_max = parent.range_max().id();
+  range_ids = range_max - range_min + 1;
+  for (uint64 k = range_min; k <= range_max; k++) {
+    pixel test = pixel(k);
+    if (test.is_valid()) valid_pixels++;
+  }
+  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
+      100.0*valid_pixels/range_ids << " percent valid\n";
+
+  level = 17;
+  parent = pix->parent(level);
+  valid_pixels = 0;
+  range_min = parent.range_min().id();
+  range_max = parent.range_max().id();
+  range_ids = range_max - range_min + 1;
+  for (uint64 k = range_min; k <= range_max; k++) {
+    pixel test = pixel(k);
+    if (test.is_valid()) valid_pixels++;
+  }
+  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
+      100.0*valid_pixels/range_ids << " percent valid\n";
+
+  level = 15;
+  parent = pix->parent(level);
+  valid_pixels = 0;
+  range_min = parent.range_min().id();
+  range_max = parent.range_max().id();
+  range_ids = range_max - range_min + 1;
+  for (uint64 k = range_min; k <= range_max; k++) {
+    pixel test = pixel(k);
+    if (test.is_valid()) valid_pixels++;
+  }
+  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
+      100.0*valid_pixels/range_ids << " percent valid\n";
+}
+
 void pixel_unit_tests() {
   test_pixel_construction(); // test all of pixels constructor methods and
                              // get/setters.
@@ -195,11 +256,11 @@ void pixel_unit_tests() {
                            // neighbor pixels.
   test_pixel_geometry(); // Test that all pixel methods for accessing
                          // vertices/edges as well as contains and may_intersect
-
+  test_pixel_filling_fraction();
 }
 
 int main(int argc, char **argv) {
-	pixel_unit_tests();
+  pixel_unit_tests();
 
-	return 0;
+  return 0;
 }

@@ -18,9 +18,24 @@
 
 #include <s2omp/core.h>
 #include <s2omp/pixel.h>
+#include <s2omp/scalar_pixel.h>
+#include <s2omp/tree_pixel.h>
+
 #include <s2omp/point.h>
+#include <s2omp/cosmo_point-inl.h>
+#include <s2omp/indexed_point-inl.h>
+
 #include <s2omp/bound_interface.h>
-#include <s2omp/center_bound.h>
+#include <s2omp/circle_bound.h>
+#include <s2omp/annulus_bound.h>
+
+#include <s2omp/pixel_union.h>
+#include <s2omp/scalar_union.h>
+#include <s2omp/tree_union.h>
+
+#include <s2omp/angular_bin-inl.h>
 #include <s2omp/coverer.h>
+#include <s2omp/region_map.h>
+#include <s2omp/util.h>
 
 #endif

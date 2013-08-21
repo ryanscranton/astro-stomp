@@ -21,6 +21,19 @@ point::point(double x, double y, double z, double weight) {
   point_ = S2Point(x/norm, y/norm, z/norm);
 }
 
+point::point(S2Point point, double weight) {
+  point_ = point;
+  weight_ = weight;
+}
+
+point* point::copy_point(const point& p) {
+  return new point(p.s2point(), p.weight());
+}
+
+point point::copy_point(point* p) {
+  return point(p->s2point(), p->weight());
+}
+
 double point::dot(const point& a, const point& b) {
   return a.unit_sphere_x() * b.unit_sphere_x() + a.unit_sphere_y()
       * b.unit_sphere_y() + a.unit_sphere_z() * b.unit_sphere_z();
@@ -38,9 +51,9 @@ double point::angular_distance(const point& a, const point& b) {
 // on the cross product of the points. Currently I return the weight of the
 // first point.
 point point::cross(const point& p) const {
-  double x =   point_.y()*p.unit_sphere_z() - point_.z()*p.unit_sphere_y();
-  double y = -(point_.x()*p.unit_sphere_z() - point_.z()*p.unit_sphere_x());
-  double z =   point_.x()*p.unit_sphere_y() - point_.x()*p.unit_sphere_y();
+  double x = point_.y()*p.unit_sphere_z() - point_.z()*p.unit_sphere_y();
+  double y = point_.z()*p.unit_sphere_x() - point_.x()*p.unit_sphere_z();
+  double z = point_.x()*p.unit_sphere_y() - point_.y()*p.unit_sphere_x();
 
   return point(x, y, z, weight_);
 }
@@ -81,5 +94,8 @@ pixel point::to_pixel(int level) const {
 void point::rotate_about(const point& axis, double rotation_angle_degrees) {
 	// Time to find that python code I wrote so I can make this easy.
 }
+
+
+
 
 } // end namespace s2omp

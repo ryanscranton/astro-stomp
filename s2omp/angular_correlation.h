@@ -90,12 +90,12 @@ public:
 	// Some wrapper methods for finding the auto-correlation and cross-correlations
 	void find_autocorrelation(const pixel_union& pixels,
 			const point_vector& points, uint8_t n_iterations, uint16_t n_regions);
-	void find_autocorrelation(const geometric_bound_interface& bound,
+	void find_autocorrelation(const bound_interface& bound,
 			const point_vector& points, uint8_t n_iterations, uint16_t n_regions);
 	void find_crosscorrelation(const pixel_union& pixels,
 			const point_vector& points_a, const point_vector& points_b,
 			uint8_t n_iterations, uint16_t n_regions);
-	void find_crosscorrelation(const geometric_bound_interface& bound,
+	void find_crosscorrelation(const bound_interface& bound,
 			const point_vector& points_a, const point_vector& points_b,
 			uint8_t n_iterations, uint16_t n_regions);
 
@@ -105,16 +105,19 @@ public:
 	// separately, these methods allow you to do this.  If the Map used
 	// to call these methods has initialized regions, then the estimators will
 	// use the region-based methods.
-	void FindPixelAutoCorrelation(Map& stomp_map, WAngularVector& galaxy);
-	void FindPixelAutoCorrelation(ScalarMap& stomp_map);
-	void FindPixelCrossCorrelation(Map& stomp_map, WAngularVector& galaxy_a,
-			WAngularVector& galaxy_b);
-	void
-	FindPixelCrossCorrelation(ScalarMap& stomp_map_a, ScalarMap& stomp_map_b);
-	void FindPairAutoCorrelation(Map& stomp_map, WAngularVector& galaxy,
+	void find_pixel_auto_correlation(
+	    const pixel_union& pix_union, const point_vector& galaxy);
+	void find_pixel_auto_correlation(scalar_union& s_union);
+	void find_pixel_cross_correlation(
+	    const pixel_union& pix_union, const point_vector& galaxy_a,
+	    const point_vector& galaxy_b);
+	void find_pixel_cross_correlation(
+	    scalar_union& union_a, scalar_union& union_b);
+	void find_pair_auto_correlation(const pixel_union& pix_union,
+	    const point_vector& galaxies, uint8_t random_iterations = 1);
+	void find_pair_cross_correlation(const pixel_union& pix_union,
+	    const point_vector& galaxy_a, const point_vector& galaxy_b,
 			uint8_t random_iterations = 1);
-	void FindPairCrossCorrelation(Map& stomp_map, WAngularVector& galaxy_a,
-			WAngularVector& galaxy_b, uint8_t random_iterations = 1);
 
 	// Once we're done calculating our correlation function, we can write it out
 	// to an ASCII file.  The output format will be
@@ -175,7 +178,7 @@ public:
 	theta_iterator bin_iterator(uint8_t bin_idx);
 
 	inline uint32_t n_bins() {
-		return theta_bin_.size();
+		return thetabin_.size();
 	}
 	inline uint32_t min_level() {
 		return min_level_;
