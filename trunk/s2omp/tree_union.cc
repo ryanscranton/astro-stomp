@@ -155,6 +155,8 @@ bool tree_union::find_pairs_with_regions(const point_vector& points,
 
     delete bound;
   }
+
+  return true;
 }
 
 void tree_union::_neighbor_recursion(const point& p, tree_neighbor* neighbors) const {

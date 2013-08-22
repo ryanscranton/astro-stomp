@@ -41,13 +41,13 @@ double circle_bound::get_height_for_angle(double theta_degrees) {
 }
 
 circle_bound* circle_bound::from_angular_bin(const point& axis,
-      const angular_bin& bin) {
+    const angular_bin& bin) {
 
   return new circle_bound(axis, get_height_for_angle(bin.theta_max()));
 }
 
-circle_bound* circle_bound::from_radius(
-    const point& axis, double radius_degrees) {
+circle_bound* circle_bound::from_radius(const point& axis,
+    double radius_degrees) {
   return new circle_bound(axis, get_height_for_angle(radius_degrees));
 }
 
@@ -62,13 +62,11 @@ void circle_bound::add_point(const point& p) {
   } else {
     // Calculate the chord distance between the input point and the central
     // axis.  Increase the height if this is larger than the current value.
-    double dist2=
-        (axis_.unit_sphere_x() - p.unit_sphere_x()) *
-        (axis_.unit_sphere_x() - p.unit_sphere_x()) +
-        (axis_.unit_sphere_y() - p.unit_sphere_y()) *
-        (axis_.unit_sphere_y() - p.unit_sphere_y()) +
-        (axis_.unit_sphere_z() - p.unit_sphere_z()) *
-        (axis_.unit_sphere_z() - p.unit_sphere_z());
+    double dist2 = (axis_.unit_sphere_x() - p.unit_sphere_x())
+        * (axis_.unit_sphere_x() - p.unit_sphere_x()) + (axis_.unit_sphere_y()
+        - p.unit_sphere_y()) * (axis_.unit_sphere_y() - p.unit_sphere_y())
+        + (axis_.unit_sphere_z() - p.unit_sphere_z()) * (axis_.unit_sphere_z()
+            - p.unit_sphere_z());
     height_ = max(height_, FLOAT_ROUND_UP * 0.5 * dist2);
   }
 }
@@ -97,7 +95,7 @@ point circle_bound::create_random_point() {
   // cos(theta) from the lowest point on the cap to the highest. Next we
   // generate a point uniform in phi.
   double z = mtrand_.rand(height_) + 1 - height_;
-  double phi = mtrand_.rand(2.0*PI);
+  double phi = mtrand_.rand(2.0 * PI);
 
   // To turn our angles into x,y,z coordinates we need to now the sin as well.
   double sintheta = sin(acos(z));
@@ -106,15 +104,16 @@ point circle_bound::create_random_point() {
   // position on the sphere. We do this by rotating the point around the normal
   // to the great circle defined by the z axis and the cap axis. We rotate by
   // the angle the cap axis makes with the z axis.
-  point p = point(sintheta*cos(phi), sintheta*sin(phi), z, 1.0);
+  point p = point(sintheta * cos(phi), sintheta * sin(phi), z, 1.0);
   p.rotate_about(great_circle_norm_, rotate_);
 
   return p;
 }
 
-void circle_bound::get_weighted_random_points(
-    long n_points, point_vector* points, const point_vector& input_points) {
-  if (!points->empty()) points->clear();
+void circle_bound::get_weighted_random_points(long n_points,
+    point_vector* points, const point_vector& input_points) {
+  if (!points->empty())
+    points->clear();
 
   for (long i = 0; i < n_points; ++i) {
     point p = create_random_point();
@@ -139,9 +138,7 @@ void circle_bound::clear() {
 }
 
 double circle_bound::area() const {
-  if (!is_empty())
-    return 2*PI*height_;
-  return 0.0;
+  return 2.0 * PI * height_ * STRAD_TO_DEG2;
 }
 
 bool circle_bound::contains(const point& p) const {
@@ -150,103 +147,34 @@ bool circle_bound::contains(const point& p) const {
 }
 
 bool circle_bound::contains(const pixel& pix) const {
-  S2Cell cell = pix.get_cell();
-  for (int k = 0; k < 4; ++k) {
-    if (!contains(point::s2point_to_point(cell.GetVertexRaw(k)))) return false;
-  }
-  circle_bound* complement = get_complement();
-  bool ans = !complement->may_intersect(pix);
-  delete complement;
-  return ans;
+  return get_s2cap().Contains(pix.get_cell());
 }
 
 // TODO(cbmorrison) this may be a little bit slower than we want. Is there some
 // way of just to make this better by returning a vector of pixels for the
 // children?
 double circle_bound::contained_area(const pixel& pix) const {
- double area = 0.0;
- if (contains(pix)) {
-   return pix.exact_area();
- } else if (may_intersect(pix)) {
-   pixel child_end = pix.child_end();
-   for (pixel child_pix = pix.child_begin();
-        child_pix != child_end; child_pix.next()) {
-     area += contained_area(child_pix);
-   }
- }
- return area;
+  double area = 0.0;
+  if (contains(pix)) {
+    return pix.exact_area();
+  } else if (may_intersect(pix)) {
+    pixel child_end = pix.child_end();
+    for (pixel child_pix = pix.child_begin(); child_pix != child_end; child_pix.next()) {
+      area += contained_area(child_pix);
+    }
+  }
+  return area;
 }
 
 // TODO(cbmorrison) the intermediate S2Cell creation may be expensive and slow.
 // If needed create an s2omp class instead of wrapping cap_.may_intersect.
 bool circle_bound::may_intersect(const pixel& pix) const {
-  S2Cell cell = pix.get_cell();
-  point_vector vertices;
-  vertices.reserve(4);
-  for (int k = 0; k < 4; ++k) {
-    point vertex = point::s2point_to_point(cell.GetVertexRaw(k));
-    if (contains(vertex)) {
-      return true;
-    } else {
-      vertices.push_back(vertex);
-    }
-  }
-
-  return intersects(pix, vertices);
+  return get_s2cap().MayIntersect(pix.get_cell());
 }
 
-bool circle_bound::intersects(
-    const pixel& pix, const point_vector& vertices) const {
-  // Much of this code is lifted from S2::S2Cap.Intersects
-
-  // If the cap that we are considering is a hemisphere or larger, then since
-  // there are no cells that would intersect this cell that would not already
-  // have a vertex contained.
-  if (height_ >= 1) return false;
-
-  // Check for empty caps before checking if the axis is contained by the
-  // pixel.
-  if (is_empty()) return false;
-
-  // If there are no vertices contained in the bound, but the axis is contained
-  // then this bound intersects the pixel.
-  if (pix.contains(axis_)) return true;
-
-  // Since the vertices aren't contained and the axis isn't contained then
-  // the only points left to test are those long the interior of an edge.
-
-  double sin2_angle = height_ * (2 - height_);
-  for (int k = 0; k < 4; ++k) {
-    point edge = pix.edge(k);
-    double dot = axis_.dot(edge);
-    if (dot > 0) {
-      // If the dot product is positive then the the current edge is not the
-      // edge of closest approach and, since no vertices are contained, we
-      // don't need to consider it.
-      continue;
-    }
-
-    if (dot * dot > sin2_angle){
-      // If this is the case then the closest point on the edge to the axis
-      // is outside that of the circle_bound that defines this region. We then
-      // return false.
-      return false;
-    }
-
-    // Since we've gone through the above tests we know that the edge passes
-    // through the bound at some point along the great cirlce. We now need to
-    // test if this point is between the two vertices of the edge.
-    point dir = edge.cross(axis_);
-    if (dir.dot(vertices[k]) < 0 && dir.dot(vertices[(k+1)&3]) > 0)
-      return true;
-  }
-  return false;
-}
-
-circle_bound* circle_bound::get_complement() const {
-  if (is_empty())
-    return from_height(-axis_, 2.0);
-  return from_height(-axis_, 2.0 - height_);
+circle_bound circle_bound::get_complement() const {
+  return is_empty() ? circle_bound(-axis_, 2.0) : circle_bound(-axis_, 2.0
+      - height_);
 }
 
 void circle_bound::initialize_random() {

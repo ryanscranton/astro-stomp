@@ -329,7 +329,10 @@ inline void angular_bin::init_regions(int n_regions) {
 inline void angular_bin::find_level() {
   level_ = -1;
   for (int level = 0; level < MAX_LEVEL; level++) {
-    double scale = sqrt(pixel::average_area(level));
+    // Regardless of the projection, the ratio of the largest pixel area to
+    // the smallest for a given level should be < 2, so we choose that as a
+    // worst case scenario for determining the scale we need to resolve.
+    double scale = sqrt(2.0 * pixel::average_area(level));
     if (is_within_bounds(scale)) {
       level_ = level;
       break;

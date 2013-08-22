@@ -12,6 +12,7 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
+#include <s2/s2cap.h>
 #include "core.h"
 #include "point.h"
 #include "bound_interface.h"
@@ -34,7 +35,6 @@ public:
   inline point axis() const {
     return axis_;
   }
-  // inline void set_axis(const point& p);
   inline double radius() const {
     return 2.0 * asin(sqrt(0.5 * height_)) * RAD_TO_DEG;
   }
@@ -85,8 +85,8 @@ public:
   }
 
 private:
-  bool intersects(const pixel& pix, const point_vector& vertices) const;
-  circle_bound* get_complement() const;
+  circle_bound get_complement() const;
+  inline S2Cap get_s2cap() const;
   void initialize_random();
 
   point axis_;
@@ -99,6 +99,10 @@ private:
   bool initialized_random_;
   MTRand mtrand_;
 };
+
+S2Cap circle_bound::get_s2cap() const {
+  return S2Cap::FromAxisHeight(axis_.s2point(), height_);
+}
 
 } // end namespace s2omp
 
