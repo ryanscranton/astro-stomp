@@ -84,6 +84,10 @@ case "$host" in
     CFLAGS="$CFLAGS -DOS_MACOSX"
     CXXFLAGS="$CXXFLAGS -DOS_MACOSX"
     CPPFLAGS="$CPPFLAGS -DOS_MACOSX"
+    CC="clang++"
+    CPP="clang++ -E"
+    CXX="clang++"
+    CXXCPP="clang++ -E"
   ;;
 esac
 

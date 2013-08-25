@@ -150,24 +150,27 @@ bool circle_bound::contains(const pixel& pix) const {
   return get_s2cap().Contains(pix.get_cell());
 }
 
-// TODO(cbmorrison) this may be a little bit slower than we want. Is there some
-// way of just to make this better by returning a vector of pixels for the
-// children?
 double circle_bound::contained_area(const pixel& pix) const {
-  double area = 0.0;
   if (contains(pix)) {
     return pix.exact_area();
-  } else if (may_intersect(pix)) {
-    pixel child_end = pix.child_end();
-    for (pixel child_pix = pix.child_begin(); child_pix != child_end; child_pix.next()) {
-      area += contained_area(child_pix);
-    }
   }
-  return area;
+
+  if (!may_intersect(pix)) {
+    return 0.0;
+  }
+
+  // TODO(scranton): This is something that could probably be done analytically,
+  // but for now, we'll do something simpler.
+  double total_area = 0.0;
+  int sampling_level = min(pix.level() + 5, MAX_LEVEL);
+  pixel child_end = pix.child_end(sampling_level);
+  for (pixel child_pix = pix.child_begin(sampling_level); child_pix
+      != child_end; child_pix.next()) {
+    total_area += contained_area(child_pix);
+  }
+  return total_area;
 }
 
-// TODO(cbmorrison) the intermediate S2Cell creation may be expensive and slow.
-// If needed create an s2omp class instead of wrapping cap_.may_intersect.
 bool circle_bound::may_intersect(const pixel& pix) const {
   return get_s2cap().MayIntersect(pix.get_cell());
 }

@@ -177,24 +177,24 @@ void tree_union::_neighbor_recursion(const point& p, tree_neighbor* neighbors) c
   // our tree.  In that case (where the number of neighbors in the
   // TreeNeighbor object is less than the maximum), we want to check
   // all nodes.
-  pixel_vector* pixels;
+  pixel_vector pixels;
   if (neighbors->n_neighbors() == neighbors->max_neighbors()) {
     // We've got a starting list of neighbors, so we only have to look at
     // nodes within our current bounding radius.
     circle_bound* bound = circle_bound::from_radius(p,
         neighbors->max_angular_distance());
-    bound->get_simple_covering(level_, pixels);
+    bound->get_simple_covering(level_, &pixels);
     delete bound;
   } else {
     for (pixel_set_iterator pix_iter = nodes_.begin(); pix_iter != nodes_.end(); ++pix_iter) {
-      pixels->push_back(*pix_iter);
+      pixels.push_back(*pix_iter);
     }
   }
 
   // Now we construct a priority queue so that we're search the nodes closest
   // to the input point first.
   pixel_queue pix_queue;
-  for (pixel_iterator pix_iter = pixels->begin(); pix_iter != pixels->end(); ++pix_iter) {
+  for (pixel_iterator pix_iter = pixels.begin(); pix_iter != pixels.end(); ++pix_iter) {
     iter = tree_map_.find(pix_iter->id());
     if (iter != tree_map_.end() && !pix_iter->contains(p)) {
       double min_edge_distance, max_edge_distance;
@@ -270,16 +270,16 @@ void tree_union::_match_recursion(const point& p, tree_neighbor* neighbors) cons
     return;
   }
 
-  pixel_vector* pixels;
+  pixel_vector pixels;
   circle_bound* bound = circle_bound::from_radius(p,
       neighbors->max_angular_distance());
-  bound->get_simple_covering(level_, pixels);
+  bound->get_simple_covering(level_, &pixels);
   delete bound;
 
   // Now we construct a priority queue so that we're search the nodes closest
   // to the input point first.
   pixel_queue pix_queue;
-  for (pixel_iterator pix_iter = pixels->begin(); pix_iter != pixels->end(); ++pix_iter) {
+  for (pixel_iterator pix_iter = pixels.begin(); pix_iter != pixels.end(); ++pix_iter) {
     iter = tree_map_.find(pix_iter->id());
     if (iter != tree_map_.end() && !pix_iter->contains(p)) {
       double min_edge_distance, max_edge_distance;
@@ -339,19 +339,17 @@ long tree_union::n_points(const pixel& pix) const {
     return 0;
   }
 
-  pixel_vector* pixels;
-  get_node_level_pixels(pix, pixels);
+  pixel_vector pixels;
+  get_node_level_pixels(pix, &pixels);
 
   // Scan over those pixels and gather the aggregate to return.
   long total_points = 0;
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
     if (t_iter != tree_map_.end()) {
       total_points = t_iter->second->n_points(*iter);
     }
   }
-
-  delete pixels;
 
   return total_points;
 }
@@ -361,19 +359,17 @@ double tree_union::weight(const pixel& pix) const {
     return 0.0;
   }
 
-  pixel_vector* pixels;
-  get_node_level_pixels(pix, pixels);
+  pixel_vector pixels;
+  get_node_level_pixels(pix, &pixels);
 
   // Scan over those pixels and gather the aggregate to return.
   double total_weight = 0;
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
     if (t_iter != tree_map_.end()) {
       total_weight = t_iter->second->weight(*iter);
     }
   }
-
-  delete pixels;
 
   return total_weight;
 }
@@ -383,15 +379,13 @@ void tree_union::points(point_vector* points) const {
     points->clear();
 
   for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
-    point_vector* tmp_points;
-    iter->second->points(tmp_points);
+    point_vector tmp_points;
+    iter->second->points(&tmp_points);
 
-    for (point_iterator p_iter = tmp_points->begin(); p_iter
-        != tmp_points->end(); ++p_iter) {
+    for (point_iterator p_iter = tmp_points.begin(); p_iter
+        != tmp_points.end(); ++p_iter) {
       points->push_back(*p_iter);
     }
-
-    delete tmp_points;
   }
 }
 
@@ -403,26 +397,22 @@ void tree_union::points(const pixel& pix, point_vector* points) const {
     return;
   }
 
-  pixel_vector* pixels;
-  get_node_level_pixels(pix, pixels);
+  pixel_vector pixels;
+  get_node_level_pixels(pix, &pixels);
 
   // Scan over those pixels and gather the aggregate to return.
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
     if (t_iter != tree_map_.end()) {
-      point_vector* tmp_points;
-      t_iter->second->points(*iter, tmp_points);
+      point_vector tmp_points;
+      t_iter->second->points(*iter, &tmp_points);
 
-      for (point_iterator p_iter = tmp_points->begin(); p_iter
-          != tmp_points->end(); ++p_iter) {
+      for (point_iterator p_iter = tmp_points.begin(); p_iter
+          != tmp_points.end(); ++p_iter) {
         points->push_back(*p_iter);
       }
-
-      delete tmp_points;
     }
   }
-
-  delete pixels;
 }
 
 void tree_union::clear() {
@@ -463,10 +453,10 @@ bool tree_union::contains(const point& p) const {
 }
 
 bool tree_union::contains(const pixel& pix) const {
-  pixel_vector* pixels;
-  get_node_level_pixels(pix, pixels);
+  pixel_vector pixels;
+  get_node_level_pixels(pix, &pixels);
 
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     if (!may_intersect(*iter)) {
       return false;
     }
@@ -480,20 +470,18 @@ double tree_union::contained_area(const pixel& pix) const {
     return 0.0;
   }
 
-  pixel_vector* pixels;
-  get_node_level_pixels(pix, pixels);
+  pixel_vector pixels;
+  get_node_level_pixels(pix, &pixels);
 
   // Scan over those pixels and gather the aggregate to return.
   double total_area = 0.0;
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
     if (t_iter != tree_map_.end()) {
       total_area = iter->exact_area()
           * t_iter->second->covering_fraction(*iter);
     }
   }
-
-  delete pixels;
 
   return total_area;
 }

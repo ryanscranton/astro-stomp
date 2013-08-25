@@ -9,7 +9,7 @@
 #include "annulus_bound.h"
 #include "bound_interface.h"
 #include "circle_bound.h"
-#include "pixel.h";
+#include "pixel.h"
 
 namespace s2omp {
 

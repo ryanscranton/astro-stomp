@@ -370,7 +370,7 @@ int coverer::score_pixel(const bound_interface& bound,
   // next by the number of children that may_intersect the bound, and then
   // by the number of children that are terminal (for non-interior coverings
   /// this means child.level() == max_level or bound.contains(child))
-  int n_children, n_terminals = 0;
+  int n_children = 0, n_terminals = 0;
   for (pixel child = pix_cand->pix.child_begin();
        child != pix_cand->pix.child_end(); child = child.next()) {
     if (bound.may_intersect(child)) {

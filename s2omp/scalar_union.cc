@@ -48,11 +48,11 @@ bool scalar_union::init(const bound_interface& bound, int level, ScalarType t) {
   type_ = t;
   level_ = level;
 
-  pixel_vector* pixels;
-  bound.get_simple_covering(level, pixels);
+  pixel_vector pixels;
+  bound.get_simple_covering(level, &pixels);
 
-  pixels_.reserve(pixels->size());
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  pixels_.reserve(pixels.size());
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     double weight = bound.contained_area(*iter);
     pixels_.push_back(scalar_pixel(iter->id(), 0.0, 0, weight));
 
@@ -121,11 +121,11 @@ bool scalar_union::init(const scalar_union& u, int level) {
   type_ = u.type();
   level_ = level;
 
-  pixel_vector* pixels;
-  u.get_simple_covering(level_, pixels);
+  pixel_vector pixels;
+  u.get_simple_covering(level_, &pixels);
 
-  pixels_.reserve(pixels->size());
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  pixels_.reserve(pixels.size());
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     scalar_pixel pix = u.resample(*iter);
 
     pixels_.push_back(pix);
@@ -256,11 +256,11 @@ double scalar_union::find_point_density(const pixel& pix) const {
 }
 
 double scalar_union::find_local_area(const annulus_bound& bound) const {
-  pixel_vector* pixels;
-  bound.get_center_covering(level_, pixels);
+  pixel_vector pixels;
+  bound.get_center_covering(level_, &pixels);
 
   double total_area = 0.0;
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     scalar_const_iterator s_iter = lower_bound(pixels_.begin(), pixels_.end(),
         *iter);
     if (s_iter == pixels_.end())
@@ -277,11 +277,11 @@ double scalar_union::find_local_area(const annulus_bound& bound) const {
 }
 
 double scalar_union::find_local_intensity(const annulus_bound& bound) const {
-  pixel_vector* pixels;
-  bound.get_center_covering(level_, pixels);
+  pixel_vector pixels;
+  bound.get_center_covering(level_, &pixels);
 
   double total_intensity = 0.0;
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     scalar_const_iterator s_iter = lower_bound(pixels_.begin(), pixels_.end(),
         *iter);
     if (s_iter == pixels_.end())
@@ -294,13 +294,13 @@ double scalar_union::find_local_intensity(const annulus_bound& bound) const {
 }
 
 double scalar_union::find_local_density(const annulus_bound& bound) const {
-  pixel_vector* pixels;
-  bound.get_center_covering(level_, pixels);
+  pixel_vector pixels;
+  bound.get_center_covering(level_, &pixels);
 
   double total_intensity = 0.0;
   double total_area = 0.0;
   long n_pixels = 0;
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     scalar_const_iterator s_iter = lower_bound(pixels_.begin(), pixels_.end(),
         *iter);
     if (s_iter == pixels_.end())
@@ -320,13 +320,13 @@ double scalar_union::find_local_density(const annulus_bound& bound) const {
 }
 
 double scalar_union::find_local_point_density(const annulus_bound& bound) const {
-  pixel_vector* pixels;
-  bound.get_center_covering(level_, pixels);
+  pixel_vector pixels;
+  bound.get_center_covering(level_, &pixels);
 
   double total_area = 0.0;
   long total_points = 0;
   long n_pixels = 0;
-  for (pixel_iterator iter = pixels->begin(); iter != pixels->end(); ++iter) {
+  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
     scalar_const_iterator s_iter = lower_bound(pixels_.begin(), pixels_.end(),
         *iter);
     if (s_iter == pixels_.end())
