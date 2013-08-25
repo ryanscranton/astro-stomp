@@ -215,11 +215,11 @@ void pixel_union::exclude(const pixel_union& u) {
   // same as above but we want to flip the tests so that if a pixel in our
   // current union is within the input union we want to drop that pixel.
 
-  pixel_vector* pixels;
+  pixel_vector pixels;
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {
-    pixel_exclusion(*iter, u, pixels);
+    pixel_exclusion(*iter, u, &pixels);
   }
-  init(*pixels);
+  init(pixels);
 }
 
 void pixel_union::init_from_combination(pixel_union& a, pixel_union& b) {
@@ -274,11 +274,11 @@ void pixel_union::init_from_intersection(pixel_union& a, pixel_union& b) {
 }
 
 void pixel_union::init_from_exclusion(pixel_union& a, pixel_union& b) {
-  pixel_vector* pixels;
+  pixel_vector pixels;
   for (pixel_iterator iter = begin(); iter != end(); ++iter) {
-    a.pixel_exclusion(*iter, b, pixels);
+    a.pixel_exclusion(*iter, b, &pixels);
   }
-  init(*pixels);
+  init(pixels);
 }
 
 bool pixel_union::intersects(const pixel& pix) const {

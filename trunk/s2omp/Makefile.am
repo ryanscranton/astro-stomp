@@ -4,7 +4,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 # Common flags.
-CXXFLAGS = @CXXFLAGS@ -Wall
+CXXFLAGS = @CXXFLAGS@ -Wall -std=c++0x -stdlib=libc++ -Wno-deprecated -DHASH_NAMESPACE=__gnu_cxx
 LDFLAGS = @LDFLAGS@ @GFLAGS_LIB@ -L@top_srcdir@/s2 -ls2
 INCLUDES = -I@top_srcdir@/s2omp -I@top_srcdir@/stomp -I@top_srcdir@/s2 @GFLAGS_INCLUDE@
 

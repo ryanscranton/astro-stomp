@@ -267,7 +267,7 @@ void pixel::get_covering(pixel_vector* pixels) const {
 }
 
 void pixel::get_covering(
-    const uint32_t max_pixels, pixel_vector* pixels) const {
+    const long max_pixels, pixel_vector* pixels) const {
   get_covering(pixels);
 }
 
@@ -283,7 +283,7 @@ void pixel::get_interior_covering(int max_level, pixel_vector* pixels) const {
   }
 }
 
-void pixel::get_simple_covering(int level, pixel_vector* pixels) {
+void pixel::get_simple_covering(int level, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
 
   if (level == this->level()) {
@@ -293,6 +293,10 @@ void pixel::get_simple_covering(int level, pixel_vector* pixels) {
   } else {
     pixels->push_back(parent(level));
   }
+}
+
+void pixel::get_center_covering(int level, pixel_vector* pixels) const {
+  get_simple_covering(level, pixels);
 }
 
 } // end namespace s2omp

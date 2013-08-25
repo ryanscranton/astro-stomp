@@ -35,8 +35,6 @@ stomp_local_density_SOURCES = stomp_local_density.cc
 
 stomp_pixelize_circles_SOURCES = stomp_pixelize_circles.cc
 
-stomp_projected_density_SOURCES = stomp_projected_density.cc
-
 stomp_stripe_filter_SOURCES = stomp_stripe_filter.cc
 
 stomp_sysmap_density_SOURCES = stomp_sysmap_density.cc

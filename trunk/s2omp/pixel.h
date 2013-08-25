@@ -215,11 +215,12 @@ public:
 
   virtual void get_covering(pixel_vector* pixels) const;
   virtual void get_covering(
-      const uint32_t max_pixels, pixel_vector* pixels) const;
+      const long max_pixels, pixel_vector* pixels) const;
   virtual void get_covering(
       double fractional_area_tolerance, pixel_vector* pixels) const;
   virtual void get_interior_covering(int max_level, pixel_vector* pixels) const;
-  virtual void get_simple_covering(int level, pixel_vector* pixels);
+  virtual void get_simple_covering(int level, pixel_vector* pixels) const;
+  virtual void get_center_covering(int level, pixel_vector* pixels) const;
 
 protected:
   void set_id(uint64 id);

@@ -366,10 +366,9 @@ class Map : public BaseMap {
 
   // generate random points in a circle or possibly sub-quadrant around the
   // input lambda,eta lambda,eta,R in degrees, quadrante in [0,3]
-  PyObject* GenerateRandomQuadrantPointsSurvey(double lambda_center, double eta_center, 
-          double R, uint32_t n_point, int quadrant=-1) 
-    throw (const char*);
-
+  PyObject* GenerateRandomQuadrantPointsSurvey(
+      double lambda_center, double eta_center, double R, uint32_t n_point,
+      int quadrant=-1) throw (const char*);
 
   // radius in degrees
   PyObject* Contains(PyObject* x1obj,PyObject* x2obj,const std::string& system,

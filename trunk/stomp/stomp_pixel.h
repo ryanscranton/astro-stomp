@@ -482,7 +482,7 @@ class Pixel {
 class PixelOrdering {
   // Convenience class so that we can use Pixels as keys for std::map objects.
  public:
-  int operator()(const Pixel& pix_a, const Pixel& pix_b) {
+  int operator()(const Pixel& pix_a, const Pixel& pix_b) const {
     // Same algorithm as Pixel::LocalOrder
     if (pix_a.Level() == pix_b.Level()) {
       if (pix_a.PixelY() == pix_b.PixelY()) {
