@@ -108,7 +108,7 @@ class ScalarMap : public BaseMap {
 
   // Read an ascii file defining a constant resolution scalar map. The file
   // format assumed is:
-  // 		hpixnum, superpixnum, resolution, unmasked fraction, intensity, npoints
+  // hpixnum, superpixnum, resolution, unmasked fraction, intensity, npoints
   bool Read(const std::string& InputFile,
   		double min_unmasked_fraction = 0.0000001);
 
@@ -193,7 +193,7 @@ class ScalarMap : public BaseMap {
   double FindLocalIntensity(AngularCoordinate& ang, double theta_max,
 			    double theta_min = -1.0);
   double FindLocalAverageIntensity(AngularCoordinate& ang,
-    															 double theta_max, double theta_min = -1.0);
+                                   double theta_max, double theta_min = -1.0);
   double FindLocalDensity(AngularCoordinate& ang, double theta_max,
 			  double theta_min = -1.0);
   double FindLocalPointDensity(AngularCoordinate& ang, double theta_max,
