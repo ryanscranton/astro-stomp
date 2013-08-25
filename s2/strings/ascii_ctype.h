@@ -87,9 +87,12 @@ static inline bool ascii_isascii(unsigned char c) {
 }
 #undef kApb
 
-extern const char kAsciiToLower[256];
+// Changing these to 128 elements to avoid c++11 narrowing errors.
+// extern const char kAsciiToLower[256];
+extern const char kAsciiToLower[128];
 static inline char ascii_tolower(unsigned char c) { return kAsciiToLower[c]; }
-extern const char kAsciiToUpper[256];
+//extern const char kAsciiToUpper[256];
+extern const char kAsciiToUpper[128];
 static inline char ascii_toupper(unsigned char c) { return kAsciiToUpper[c]; }
 
 #endif  // STRINGS_ASCII_CTYPE_H__

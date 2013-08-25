@@ -4,7 +4,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 # Common flags.
-CXXFLAGS = @CXXFLAGS@ -Wall -fPIC -O -I. -DARCH_K8 -Wno-deprecated -DHASH_NAMESPACE=__gnu_cxx
+CXXFLAGS = @CXXFLAGS@ -Wall -fPIC -O -I. -DARCH_K8 -std=c++0x -stdlib=libc++ -Wno-deprecated -DHASH_NAMESPACE=__gnu_cxx -Wc++11-narrowing
 LDFLAGS = @LDFLAGS@ -arch x86_64 -bundle -flat_namespace -undefined suppress @GFLAGS_LIB@ @ZLIB_LIB@
 INCLUDES = -I@top_srcdir@/s2/ @GFLAGS_INCLUDE@ @ZLIB_INCLUDE@
 

@@ -66,10 +66,10 @@ ScalarMap::ScalarMap(Map& stomp_map, uint32_t input_resolution,
       if (unmasked_fraction > unmasked_fraction_minimum_) {
         if (use_map_weight_as_intensity)
           initial_intensity = stomp_map.FindAverageWeight(*sub_iter);
-					ScalarPixel tmp_pix(sub_iter->PixelX(), sub_iter->PixelY(),
+        ScalarPixel tmp_pix(sub_iter->PixelX(), sub_iter->PixelY(),
 			    sub_iter->Resolution(), unmasked_fraction,
 			    initial_intensity, 0);
-					pix_.push_back(tmp_pix);
+        pix_.push_back(tmp_pix);
       }
     }
   }
@@ -269,29 +269,29 @@ bool ScalarMap::Read(const std::string& InputFile,
   unmasked_fraction_minimum_ = min_unmasked_fraction;
   map_type_ = ScalarField;
 
-	pix_.reserve(pix.size());
+  pix_.reserve(pix.size());
 
-	area_ = 0.0;
-	total_intensity_ = 0.0;
-	total_points_ = 0;
-	for (ScalarIterator iter=pix.begin();iter!=pix.end();++iter) {
-		if (iter->Resolution() != resolution_) {
-			std::cout << "Stomp::ScalarMap::ScalarMap - " <<
-					"Incompatible resolutions in input Map file.  Exiting.\n";
-			exit(2);
-		}
+  area_ = 0.0;
+  total_intensity_ = 0.0;
+  total_points_ = 0;
+  for (ScalarIterator iter=pix.begin();iter!=pix.end();++iter) {
+    if (iter->Resolution() != resolution_) {
+      std::cout << "Stomp::ScalarMap::ScalarMap - " <<
+          "Incompatible resolutions in input Map file.  Exiting.\n";
+      exit(2);
+    }
 
-		area_ += iter->Area()*iter->Weight();
-		total_intensity_ += iter->Intensity();
-		total_points_ += iter->NPoints();
-		pix_.push_back(*iter);
-	}
+    area_ += iter->Area()*iter->Weight();
+    total_intensity_ += iter->Intensity();
+    total_points_ += iter->NPoints();
+    pix_.push_back(*iter);
+  }
 
-	sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
-	mean_intensity_ = 0.0;
-	converted_to_overdensity_ = false;
-	calculated_mean_intensity_ = false;
-	use_local_mean_intensity_ = false;
+  sort(pix_.begin(), pix_.end(), Pixel::LocalOrder);
+  mean_intensity_ = 0.0;
+  converted_to_overdensity_ = false;
+  calculated_mean_intensity_ = false;
+  use_local_mean_intensity_ = false;
 
   return found_file;
 }
