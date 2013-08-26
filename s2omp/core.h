@@ -16,11 +16,13 @@
 #define CORE_H_
 
 #include <algorithm>
+#include <ctime>
 #include <math.h>
 #include <stdint.h>
-#include <vector>
+#include <random>
 #include <set>
 #include <utility>
+#include <vector>
 
 #include <s2/s2.h>
 #include <base/integral_types.h>
@@ -69,6 +71,12 @@ static double const DEG_TO_RAD = PI/180.0;
 static double const RAD_TO_DEG = 180.0/PI;
 static double const STRAD_TO_DEG2 = 180.0*180.0/(PI*PI);
 
+// Angle of obliquity for converting Equatorial to Ecliptic coordinates:
+// 23° 26′ 21.406″ from JPL (2000) in J2000.
+static double const OBLIQUITY_RAD = 23.439279444444445 * DEG_TO_RAD;
+static double const COS_OBLIQUITY = cos(OBLIQUITY_RAD);
+static double const SIN_OBLIQUITY = sin(OBLIQUITY_RAD);
+
 // Defaults from S2 for the maximum pixel level and the default number of
 // pixels in an exterior covering.
 static int const MAX_LEVEL = S2::kMaxCellLevel;
@@ -92,6 +100,11 @@ static double const FLOAT_ROUND_UP = 1.0 + 1.0 / (uint64(1) << 52);
 // a region_map.
 static int const INVALID_REGION_VALUE = -1;
 
+// For generating random numbers, we define a few static classes.
+static std::mt19937_64 MT_GENERATOR(std::time(0));
+static std::uniform_int_distribution<uint64> UNIFORM_UINT64;
+static std::uniform_real_distribution<double> UNIFORM_DOUBLE(0.0, 1.0);
+
 inline bool double_lt(double a, double b) {
   return a < b - FLOAT_ROUND_UP;
 }
@@ -110,6 +123,18 @@ inline bool double_ge(double a, double b) {
 
 inline bool double_eq(double a, double b) {
   return double_le(a, b) && double_ge(a, b);
+}
+
+inline int random_int(int max_value) {
+  return static_cast<int>(max_value * UNIFORM_DOUBLE(MT_GENERATOR));
+}
+
+inline double random_double() {
+  return UNIFORM_DOUBLE(MT_GENERATOR);
+}
+
+inline uint64 random_uint64() {
+  return UNIFORM_UINT64(MT_GENERATOR);
 }
 
 } // end namespace s2omp
