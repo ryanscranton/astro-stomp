@@ -40,46 +40,58 @@ class point;
 typedef std::vector<point *> point_ptr_vector;
 typedef point_ptr_vector::const_iterator point_ptr_iterator;
 
+// Our generic class for handling angular positions.  The idea is that
+// locations on the celestial sphere should be abstract objects from which
+// you can draw whatever angular coordinate pair is necessary for a given
+// use case.  points can be instantiated with a particular
+// coordinate system in mind or that can be set later on.
 class point {
-  // Our generic class for handling angular positions.  The idea is that
-  // locations on the celestial sphere should be abstract objects from which
-  // you can draw whatever angular coordinate pair is necessary for a given
-  // use case.  point's can be instantiated with a particular
-  // coordinate system in mind or that can be set later on.
+
 public:
-  enum Sphere {
+  // Public enum for defining the coordinate systems that point supports
+  enum Coordinate {
     EQUATORIAL, GALACTIC, ECLIPTIC
   };
 
 public:
   point();
   point(double x, double y, double z, double weight);
-  virtual ~point() {};
+  point(S2Point s2point, double weight); // Does not normalize the input point.
+  virtual ~point();
 
-  static point* from_latlon_deg(double lat_deg, double lon_deg, Sphere s);
-  static point* from_latlon_deg(double lat_deg, double lon_deg, Sphere s,
+  static point from_latlon_deg(double lat_deg, double lon_deg, Coordinate c);
+  static point from_latlon_deg(double lat_deg, double lon_deg, Coordinate c,
       double weight);
-  static point* from_latlon_rad(double lat_rad, double lon_rad, Sphere s);
-  static point* from_latlon_rad(double lat_rad, double lon_rad, Sphere s,
+  static point from_latlon_rad(double lat_rad, double lon_rad, Coordinate c);
+  static point from_latlon_rad(double lat_rad, double lon_rad, Coordinate c,
       double weight);
 
-  static point* from_radec_deg(double ra_deg, double dec_deg);
-  static point* from_radec_deg(double ra_deg, double dec_deg, double weight);
-  static point* from_radec_rad(double ra_rad, double dec_rad);
-  static point* from_radec_rad(double ra_rad, double dec_rad, double weight);
+  static point from_radec_deg(double ra_deg, double dec_deg);
+  static point from_radec_deg(double ra_deg, double dec_deg, double weight);
+  static point from_radec_rad(double ra_rad, double dec_rad);
+  static point from_radec_rad(double ra_rad, double dec_rad, double weight);
 
   static point* copy_point(const point& p);
   static point copy_point(point* p);
 
-  double lat_deg(Sphere s) const;
-  double lon_deg(Sphere s) const;
-  double lat_rad(Sphere s) const;
-  double lon_rad(Sphere s) const;
+  double lat_deg(Coordinate c) const;
+  double lon_deg(Coordinate c) const;
+  double lat_rad(Coordinate c) const;
+  double lon_rad(Coordinate c) const;
 
   double ra_deg() const;
   double dec_deg() const;
   double ra_rad() const;
   double dec_rad() const;
+
+  static void equatorial_to_galactic(double ra_rad, double dec_rad,
+      double* glon_rad, double* glat_rad);
+  static void galactic_to_equatorial(double glon_rad, double glat_rad,
+      double* ra_rad, double* dec_rad);
+  static void equatorial_to_ecliptic(double ra_rad, double dec_rad,
+      double* elon_rad, double* elat_rad);
+  static void ecliptic_to_equatorial(double elon_rad, double elat_rad,
+      double* ra_rad, double* dec_rad);
 
   inline double unit_sphere_x() const {
     return point_.x();
@@ -110,14 +122,15 @@ public:
   point great_circle(const point& p);
   static point great_circle(const point& a, const point& b);
 
-  double position_angle(const point& p, Sphere s);
+  double position_angle(const point& p, Coordinate c);
   static double position_angle(const point& center, const point& target,
-      Sphere s);
+      Coordinate c);
 
   void rotate_about(const point& axis, double rotation_angle_degrees);
-  void rotate_about(const point& axis, double rotation_angle_degrees, Sphere s);
+  void rotate_about(const point& axis, double rotation_angle_degrees,
+      Coordinate c);
   static point rotate_about(const point& p, const point& axis,
-      double rotation_angle, Sphere s);
+      double rotation_angle, Coordinate c);
 
   inline uint64 id() const;
   inline uint64 id(int level) const;
@@ -135,17 +148,16 @@ public:
   inline point operator-() const;
 
 protected:
-  void set_latlon_degrees(double lat_deg, double lon_deg, Sphere s);
-  void set_latlon_radians(double lat_rad, double lon_rad, Sphere s);
+  void set_latlon_degrees(double lat_deg, double lon_deg, Coordinate c);
+  void set_latlon_radians(double lat_rad, double lon_rad, Coordinate c);
   void set_xyz(double x, double y, double z) {
     point_ = S2Point(x, y, z);
   }
 
 private:
-  point(S2Point s2point, double weight);
-  double cos_position_angle(point& p, Sphere s);
-  double sin_position_angle(point& p, Sphere s);
-  void rotate_about(point& axis, double rotation_angle_degrees, Sphere s,
+  double cos_position_angle(point& p, Coordinate c);
+  double sin_position_angle(point& p, Coordinate c);
+  void rotate_about(point& axis, double rotation_angle_degrees, Coordinate c,
       double& unit_sphere_x, double& unit_sphere_y, double& unit_sphere_z);
 
   S2Point point_;
@@ -176,7 +188,7 @@ inline bool operator>=(point const& a, point const& b) {
   return a.id() >= b.id();
 }
 
-inline point point::operator-() const{
+inline point point::operator-() const {
   return point(-point_, weight_);
 }
 

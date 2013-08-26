@@ -26,10 +26,10 @@ void test_pixel_construction() {
   // For this pixel these tests should return the id(1), level(30),
   // is_leaf(true), is_face(false), and area(really tiny);
   std::cout << "\t\tPixel id=" << pix.id() << ": Should be 1\n"
-            << "\t\tPixel level=" << pix.level() << ": Should be 30\n"
-            << "\t\tis_leaf() : " << pix.is_leaf() << ": Should be true.\n"
-            << "\t\tis_face() : " << pix.is_face() << ": Should be false.\n"
-            << "\t\tarea=" << pix.exact_area() << " should be tiny\n";
+      << "\t\tPixel level=" << pix.level() << ": Should be 30\n"
+      << "\t\tis_leaf() : " << pix.is_leaf() << ": Should be true.\n"
+      << "\t\tis_face() : " << pix.is_face() << ": Should be false.\n"
+      << "\t\tarea=" << pix.exact_area() << " should be tiny\n";
 
   // Now that we've tested the default constructor we should test to see if we
   // can properly make a pixel from a point at various levels
@@ -43,18 +43,17 @@ void test_pixel_construction() {
   // are in the correct hemisphere and close to the z axis we declare success.
   // To do this we test that the dot product between the centers and the z axis
   // is greater than zero and also close to 1.
-  std::cout << "\t\tPixel Leaf: id=" << hex << pix_leaf->id() <<
-      "; level=" << dec << pix_leaf->level() <<
-      "; is_leaf=" << pix_leaf->is_leaf() <<
-      "; is_face=" << pix_leaf->is_face() << "\n";
-  std::cout << "\t\tPixel Mid: id=" << hex << pix_mid->id() <<
-      "; level=" << dec << pix_mid->level() << "\n";
-  std::cout << "\t\tPixel Face: id=" << hex << pix_face->id() <<
-      "; level=" << dec << pix_face->level() << "\n";
-  if (pix_leaf->center_point().dot(point(0, 0, 1, 0)) > 0 &&
-      pix_mid->center_point().dot(point(0, 0, 1, 0)) > 0 &&
-      pix_face->center_point().dot(point(0, 0, 1, 0)) > 0) {
-    std::cout << "Succefuly created pixels in the correct quadrant.\n";
+  std::cout << "\t\tPixel Leaf: id=" << hex << pix_leaf->id() << "; level="
+      << dec << pix_leaf->level() << "; is_leaf=" << pix_leaf->is_leaf()
+      << "; is_face=" << pix_leaf->is_face() << "\n";
+  std::cout << "\t\tPixel Mid: id=" << hex << pix_mid->id() << "; level="
+      << dec << pix_mid->level() << "\n";
+  std::cout << "\t\tPixel Face: id=" << hex << pix_face->id() << "; level="
+      << dec << pix_face->level() << "\n";
+  if (pix_leaf->center_point().dot(point(0, 0, 1, 0)) > 0
+      && pix_mid->center_point().dot(point(0, 0, 1, 0)) > 0
+      && pix_face->center_point().dot(point(0, 0, 1, 0)) > 0) {
+    std::cout << "Successfully created pixels in the correct quadrant.\n";
   } else {
     std::cout << "Failed to created pixels in the correct quadrant.\n"
         << "\tCheck pixel from point creation, point, or dot product.";
@@ -92,7 +91,7 @@ void test_pixel_refinement() {
     std::cout << "Successfully created child pixels.\n";
   } else {
     std::cout << "\t\tFailed to create expected number of child pixels.\n"
-              << "\t\tCheck children method in pixel.\n";
+        << "\t\tCheck children method in pixel.\n";
     std::cout << "\t\tExpected 1024, Got " << pixels.size() << "\n";
   }
 
@@ -104,17 +103,17 @@ void test_pixel_refinement() {
 
   std::cout << "\tTesting Parents...\n";
   // Now we test so see if you can successfully create parent pixels.
-	delete pix;
+  delete pix;
   pixel* pix2 = pixel::from_point(point(1, 0, 0, 0), 30);
   pixel parent = pix2->parent();
-  std::cout << "\t\tParent level is " << parent.level();
-  std::cout << "\t\tParent id | child id:"
-      << parent.id() << " | " << pix2->id() << "\n";
+  std::cout << "\t\tParent level is " << parent.level() << "\n";
+  std::cout << "\t\tParent id | child id:" << parent.id() << " | "
+      << pix2->id() << "\n";
 
   pixel parent2 = pix2->parent(10);
-  std::cout << "\t\tParent level is " << parent2.level();
-  std::cout << "\t\tParent id | child id:"
-      << parent2.id() << " | " << pix2->id() << "\n";
+  std::cout << "\t\tParent level is " << parent2.level() << "\n";
+  std::cout << "\t\tParent id | child id:" << parent2.id() << " | "
+      << pix2->id() << "\n";
   delete pix2;
 
   std::cout << "\tTesting Child Iteration...\n";
@@ -140,8 +139,8 @@ void test_pixel_refinement() {
     std::cout << "\t\tSuccessfully created 8 neighbors.";
   } else {
     std::cout << "\t\tFailed to create 8 children. "
-        << "Check next and child_end/begin.\n"
-        << "Expected 8, Got " << pixels.size() << "\n";
+        << "Check next and child_end/begin.\n" << "Expected 8, Got "
+        << pixels.size() << "\n";
   }
 }
 
@@ -149,9 +148,9 @@ void test_pixel_geometry() {
   std::cout << "Testing Pixel Geometry...\n";
   std::cout << "\tTesting Pixel Area...\n";
   pixel* pix = pixel::from_point(point(0, 1, 0, 0), 15);
-  std::cout << "\t\tAverage are at level 15: " << pix->average_area() <<
-      " 14: " << pix->average_area(14) <<
-      " 16: " << pix->average_area(16) << "\n";
+  std::cout << "\t\tAverage are at level 15: " << pix->average_area()
+      << " 14: " << pix->average_area(14) << " 16: " << pix->average_area(16)
+      << "\n";
 
   std::cout << "\tTesting Pixel Contains/Intersect...\n";
   pixel child_begin = pix->child_begin(17);
@@ -203,10 +202,11 @@ void test_pixel_filling_fraction() {
   uint64 range_ids = range_max - range_min + 1;
   for (uint64 k = range_min; k <= range_max; k++) {
     pixel test = pixel(k);
-    if (test.is_valid()) valid_pixels++;
+    if (test.is_valid())
+      valid_pixels++;
   }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
-      100.0*valid_pixels/range_ids << " percent valid\n";
+  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
+      * valid_pixels / range_ids << " percent valid\n";
 
   level = 20;
   pixel parent = pix->parent(level);
@@ -216,10 +216,11 @@ void test_pixel_filling_fraction() {
   range_ids = range_max - range_min + 1;
   for (uint64 k = range_min; k <= range_max; k++) {
     pixel test = pixel(k);
-    if (test.is_valid()) valid_pixels++;
+    if (test.is_valid())
+      valid_pixels++;
   }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
-      100.0*valid_pixels/range_ids << " percent valid\n";
+  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
+      * valid_pixels / range_ids << " percent valid\n";
 
   level = 17;
   parent = pix->parent(level);
@@ -229,10 +230,11 @@ void test_pixel_filling_fraction() {
   range_ids = range_max - range_min + 1;
   for (uint64 k = range_min; k <= range_max; k++) {
     pixel test = pixel(k);
-    if (test.is_valid()) valid_pixels++;
+    if (test.is_valid())
+      valid_pixels++;
   }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
-      100.0*valid_pixels/range_ids << " percent valid\n";
+  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
+      * valid_pixels / range_ids << " percent valid\n";
 
   level = 15;
   parent = pix->parent(level);
@@ -242,20 +244,21 @@ void test_pixel_filling_fraction() {
   range_ids = range_max - range_min + 1;
   for (uint64 k = range_min; k <= range_max; k++) {
     pixel test = pixel(k);
-    if (test.is_valid()) valid_pixels++;
+    if (test.is_valid())
+      valid_pixels++;
   }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " <<
-      100.0*valid_pixels/range_ids << " percent valid\n";
+  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
+      * valid_pixels / range_ids << " percent valid\n";
 }
 
 void pixel_unit_tests() {
   test_pixel_construction(); // test all of pixels constructor methods and
-                             // get/setters.
+  // get/setters.
   test_pixel_refinement(); // test get children and pixel area form the face
-                           // pixel to the leaf(and back) as well as accessing
-                           // neighbor pixels.
+  // pixel to the leaf(and back) as well as accessing
+  // neighbor pixels.
   test_pixel_geometry(); // Test that all pixel methods for accessing
-                         // vertices/edges as well as contains and may_intersect
+  // vertices/edges as well as contains and may_intersect
   test_pixel_filling_fraction();
 }
 
