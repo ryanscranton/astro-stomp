@@ -1,11 +1,3 @@
-/*
- * bound_interface.cc
- *
- *  Created on: Aug 17, 2012
- *      Author: morrison
- */
-
-
 #include "bound_interface.h"
 #include "circle_bound.h"
 #include "coverer.h"
@@ -100,7 +92,6 @@ void bound_interface::get_center_covering(
   coverer::get_center_covering(*this, level, pixels);
 }
 
-
 point bound_interface::get_random_point() {
   circle_bound cap = get_bound();
 
@@ -116,8 +107,15 @@ void bound_interface::get_random_points(
     long int n_points, point_vector* points) {
   if (!points->empty()) points->clear();
 
+  circle_bound cap = get_bound();
+
   for (long int i = 0; i < n_points; ++i) {
-    points->push_back(get_random_point());
+    point p = cap.create_random_point();
+    while (!contains(p)) {
+      p = cap.create_random_point();
+    }
+
+    points->push_back(p);
   }
 }
 
