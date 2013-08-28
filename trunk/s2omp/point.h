@@ -26,11 +26,13 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "core.h"
 
 // From S2
 #include <s2/s2.h>
 #include <s2/s2cellid.h>
+#include <s2/s2latlng.h>
+
+#include "core.h"
 
 namespace s2omp {
 
@@ -57,6 +59,7 @@ public:
   point();
   point(double x, double y, double z, double weight);
   point(S2Point s2point, double weight); // Does not normalize the input point.
+  point(S2LatLng s2latlng, double weight);
   virtual ~point();
 
   static point from_latlon_deg(double lat_deg, double lon_deg, Coordinate c);
@@ -103,6 +106,10 @@ public:
     return point_.z();
   }
 
+  double unit_sphere_x(Coordinate c) const;
+  double unit_sphere_y(Coordinate c) const;
+  double unit_sphere_z(Coordinate c) const;
+
   inline double weight() const {
     return weight_;
   }
@@ -119,10 +126,10 @@ public:
   point cross(const point& p) const;
   static point cross(const point& a, const point& b);
 
-  point great_circle(const point& p);
+  point great_circle(const point& p) const;
   static point great_circle(const point& a, const point& b);
 
-  double position_angle(const point& p, Coordinate c);
+  double position_angle(const point& p, Coordinate c) const;
   static double position_angle(const point& center, const point& target,
       Coordinate c);
 
@@ -130,7 +137,7 @@ public:
   void rotate_about(const point& axis, double rotation_angle_degrees,
       Coordinate c);
   static point rotate_about(const point& p, const point& axis,
-      double rotation_angle, Coordinate c);
+      double rotation_angle_degrees, Coordinate c);
 
   inline uint64 id() const;
   inline uint64 id(int level) const;
@@ -151,14 +158,15 @@ protected:
   void set_latlon_degrees(double lat_deg, double lon_deg, Coordinate c);
   void set_latlon_radians(double lat_rad, double lon_rad, Coordinate c);
   void set_xyz(double x, double y, double z) {
-    point_ = S2Point(x, y, z);
+    double norm = sqrt(x * x + y * y + z * z);
+    point_ = S2Point(x / norm, y / norm, z / norm);
   }
 
 private:
-  double cos_position_angle(point& p, Coordinate c);
-  double sin_position_angle(point& p, Coordinate c);
-  void rotate_about(point& axis, double rotation_angle_degrees, Coordinate c,
-      double& unit_sphere_x, double& unit_sphere_y, double& unit_sphere_z);
+  static double cos_position_angle(const point& center, const point& target,
+      Coordinate c);
+  static double sin_position_angle(const point& center, const point& target,
+      Coordinate c);
 
   S2Point point_;
   double weight_;
@@ -214,7 +222,7 @@ inline uint64 point::point_to_id(const point& p, int level) {
 }
 
 inline point point::s2point_to_point(const S2Point& p) {
-  return point(p[0], p[1], p[2], 1.0);
+  return point(p, 1.0);
 }
 
 inline S2Point point::point_to_s2point(const point& p) {

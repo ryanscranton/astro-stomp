@@ -87,27 +87,17 @@ point circle_bound::create_random_point() {
     initialize_random();
   }
 
-  // To generate a random point on the sphere we first generate the point as
-  // if this cap's axis is the z axis. We then rotate the point to the true
-  // position on the sphere.
+  // Generate our random values following s2testing::SamplePoint
+  double h = height_ * random_double();
+  double theta = 2.0 * PI * random_double();
+  double radius = sqrt(h * (2.0 - h)); // Radius of the circle.
 
-  // Generate our random values. We first generate a point uniform in
-  // cos(theta) from the lowest point on the cap to the highest. Next we
-  // generate a point uniform in phi.
-  double z = mtrand_.rand(height_) + 1 - height_;
-  double phi = mtrand_.rand(2.0 * PI);
+  // Now we re-project the point from the axis frame to the X-Y-Z frame
+  S2Point s2point = S2::FromFrame(frame_, S2Point(cos(theta) * radius,
+      sin(theta) * radius, 1.0 - h));
 
-  // To turn our angles into x,y,z coordinates we need to now the sin as well.
-  double sintheta = sin(acos(z));
-
-  // Now that we have the random point we need to rotate it to the correct
-  // position on the sphere. We do this by rotating the point around the normal
-  // to the great circle defined by the z axis and the cap axis. We rotate by
-  // the angle the cap axis makes with the z axis.
-  point p = point(sintheta * cos(phi), sintheta * sin(phi), z, 1.0);
-  p.rotate_about(great_circle_norm_, rotate_);
-
-  return p;
+  // And return the resulting point.
+  return point::s2point_to_point(s2point.Normalize());
 }
 
 void circle_bound::get_weighted_random_points(long n_points,
@@ -115,9 +105,13 @@ void circle_bound::get_weighted_random_points(long n_points,
   if (!points->empty())
     points->clear();
 
+  points->reserve(n_points);
   for (long i = 0; i < n_points; ++i) {
     point p = create_random_point();
-    p.set_weight(mtrand_.randInt(input_points.size()));
+
+    int idx = random_int(input_points.size());
+    p.set_weight(input_points[idx].weight());
+
     points->push_back(p);
   }
 }
@@ -166,13 +160,28 @@ double circle_bound::contained_area(const pixel& pix) const {
   pixel child_end = pix.child_end(sampling_level);
   for (pixel child_pix = pix.child_begin(sampling_level); child_pix
       != child_end; child_pix.next()) {
-    total_area += contained_area(child_pix);
+    total_area += contains(child_pix) ? child_pix.exact_area() : 0.0;
   }
+
   return total_area;
 }
 
 bool circle_bound::may_intersect(const pixel& pix) const {
   return get_s2cap().MayIntersect(pix.get_cell());
+}
+
+point circle_bound::get_random_point() {
+  return create_random_point();
+}
+
+void circle_bound::get_random_points(long n_points, point_vector* points) {
+  if (!points->empty())
+    points->clear();
+
+  points->reserve(n_points);
+  for (long i = 0; i < n_points; ++i) {
+    points->push_back(create_random_point());
+  }
 }
 
 circle_bound circle_bound::get_complement() const {
@@ -181,9 +190,7 @@ circle_bound circle_bound::get_complement() const {
 }
 
 void circle_bound::initialize_random() {
-  mtrand_.seed();
-  rotate_ = axis_.dot(point(0.0, 0.0, 1.0, 1.0));
-  great_circle_norm_ = point(0.0, 0.0, 1.0, 1.0).cross(axis_);
+  S2::GetFrame(point::point_to_s2point(axis_), &frame_);
 }
 
 } //end namspace s2omp

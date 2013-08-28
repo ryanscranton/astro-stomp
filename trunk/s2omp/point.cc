@@ -26,6 +26,11 @@ point::point(S2Point point, double weight) {
   weight_ = weight;
 }
 
+point::point(S2LatLng latlng, double weight) {
+  point_ = latlng.ToPoint();
+  weight_ = weight;
+}
+
 point::~point() {
 }
 
@@ -54,7 +59,7 @@ point point::from_latlon_rad(double lat_rad, double lon_rad, Coordinate c,
     galactic_to_equatorial(lon_rad, lat_rad, &ra_rad, &dec_rad);
     break;
   case ECLIPTIC:
-    galactic_to_ecliptic(lon_rad, lat_rad, &ra_rad, &dec_rad);
+    ecliptic_to_equatorial(lon_rad, lat_rad, &ra_rad, &dec_rad);
     break;
   }
 
@@ -163,7 +168,8 @@ void point::equatorial_to_galactic(double ra_rad, double dec_rad,
   double cbsa = cb * sin(a);
 
   b = -1.0 * STHETA * cbsa + CTHETA * sb;
-  if (b > 1.0) b = 1.0;
+  if (b > 1.0)
+    b = 1.0;
 
   double bo = asin(b);
 
@@ -171,11 +177,14 @@ void point::equatorial_to_galactic(double ra_rad, double dec_rad,
 
   double ao = (a + G_PSI + 4.0 * PI);
 
-  while (ao > 2.0 * PI) ao -= 2.0 * PI;
+  while (ao > 2.0 * PI)
+    ao -= 2.0 * PI;
 
   *glon_rad = ao;
-  if (*glon_rad < 0.0) *glon_rad += 2.0 * PI;
-  if (*glon_rad > 2.0 * PI) *glon_rad -= 2.0 * PI;
+  if (*glon_rad < 0.0)
+    *glon_rad += 2.0 * PI;
+  if (*glon_rad > 2.0 * PI)
+    *glon_rad -= 2.0 * PI;
 
   *glat_rad = bo;
 }
@@ -195,18 +204,22 @@ void point::galactic_to_equatorial(double glon_rad, double glat_rad,
   double cbsa = cb * sin(a);
 
   b = -1.0 * STHETA * cbsa + CTHETA * sb;
-  if (b > 1.0) b = 1.0;
+  if (b > 1.0)
+    b = 1.0;
 
   double bo = asin(b);
 
   a = atan2(CTHETA * cbsa + STHETA * sb, cb * cos(a));
 
   double ao = (a + G_PSI + 4.0 * PI);
-  while (ao > 2.0 * PI) ao -= 2.0 * PI;
+  while (ao > 2.0 * PI)
+    ao -= 2.0 * PI;
 
   *ra_rad = ao;
-  if (*ra_rad < 0.0) *ra_rad += 2.0 * PI;
-  if (*ra_rad > 2.0 * PI) *ra_rad -= 2.0 * PI;
+  if (*ra_rad < 0.0)
+    *ra_rad += 2.0 * PI;
+  if (*ra_rad > 2.0 * PI)
+    *ra_rad -= 2.0 * PI;
 
   *dec_rad = bo;
 }
@@ -239,6 +252,18 @@ void point::ecliptic_to_equatorial(double elon_rad, double elat_rad,
 
   *ra_rad = atan2(y_eq, x_eq);
   *dec_rad = acos(z_eq);
+}
+
+double point::unit_sphere_x(Coordinate c) const {
+  return c == EQUATORIAL ? unit_sphere_x() : cos(lon_rad(c)) * sin(lat_rad(c));
+}
+
+double point::unit_sphere_y(Coordinate c) const {
+  return c == EQUATORIAL ? unit_sphere_y() : sin(lon_rad(c)) * sin(lat_rad(c));
+}
+
+double point::unit_sphere_z(Coordinate c) const {
+  return c == EQUATORIAL ? unit_sphere_z() : cos(lat_rad(c));
 }
 
 double point::dot(const point& a, const point& b) {
@@ -278,7 +303,7 @@ point point::cross(const point& a, const point& b) {
 
 // TODO(cbmorrison) Currently great_circle is just a wrapper for cross that
 // sets the weight of the returned point to zero.
-point point::great_circle(const point& p) {
+point point::great_circle(const point& p) const {
   point great = cross(p);
   great.set_weight(0);
   return cross(great);
@@ -290,6 +315,66 @@ point point::great_circle(const point& a, const point& b) {
   return great;
 }
 
+// Moving private methods here since position angle relies on them.
+double point::cos_position_angle(const point& center, const point& target,
+    Coordinate c) {
+  double center_phi = center.lat_rad(c);
+
+  return cos(center_phi) * tan(target.lat_rad(c)) - sin(center_phi) * cos(
+      target.lon_rad(c) - center.lon_rad(c));
+}
+
+double point::sin_position_angle(const point& center, const point& target,
+    Coordinate c) {
+  return sin(target.lon_rad(c) - center.lon_rad(c));
+}
+
+double point::position_angle(const point& p, Coordinate c) const {
+  return position_angle(*this, p, c);
+}
+
+double point::position_angle(const point& center, const point& target,
+    Coordinate c) {
+  double pos_angle = RAD_TO_DEG * atan2(sin_position_angle(center, target, c),
+      cos_position_angle(center, target, c));
+  return double_ge(pos_angle, 0.0) ? pos_angle : pos_angle + 360.0;
+}
+
+void point::rotate_about(const point& axis, double rotation_angle_degrees) {
+  rotate_about(axis, rotation_angle_degrees, EQUATORIAL);
+}
+
+void point::rotate_about(const point& axis, double rotation_angle_degrees,
+    Coordinate c) {
+  point_ = rotate_about(*this, axis, rotation_angle_degrees, c).s2point();
+}
+
+point point::rotate_about(const point& p, const point& axis,
+    double rotation_angle_degrees, Coordinate c) {
+  double p_x = p.unit_sphere_x(c);
+  double p_y = p.unit_sphere_y(c);
+  double p_z = p.unit_sphere_z(c);
+
+  double a_x = axis.unit_sphere_x(c);
+  double a_y = axis.unit_sphere_y(c);
+  double a_z = axis.unit_sphere_z(c);
+
+  double sintheta = sin(rotation_angle_degrees * DEG_TO_RAD);
+  double costheta = cos(rotation_angle_degrees * DEG_TO_RAD);
+
+  double new_x = ((a_x * a_x * (1.0 - costheta) + costheta) * p_x + (a_x * a_y
+      * (1.0 - costheta) + a_z * sintheta) * p_y + (a_x * a_z
+      * (1.0 - costheta) - a_y * sintheta) * p_z);
+  double new_y = ((a_x * a_y * (1.0 - costheta) - a_z * sintheta) * p_x + (a_y
+      * a_y * (1.0 - costheta) + costheta) * p_y + (a_y * a_z
+      * (1.0 - costheta) + a_x * sintheta) * p_z);
+  double new_z = ((a_x * a_z * (1.0 - costheta) + a_y * sintheta) * p_x + (a_y
+      * a_z * (1.0 - costheta) - a_x * sintheta) * p_y + (a_z * a_z * (1.0
+      - costheta) + costheta) * p_z);
+
+  return point(new_x, new_y, new_z, p.weight());
+}
+
 pixel point::to_pixel() const {
   return pixel(id());
 }
@@ -298,8 +383,27 @@ pixel point::to_pixel(int level) const {
   return pixel(id(level));
 }
 
-void point::rotate_about(const point& axis, double rotation_angle_degrees) {
-  // Time to find that python code I wrote so I can make this easy.
+void point::set_latlon_degrees(double lat_deg, double lon_deg, Coordinate c) {
+  set_latlon_radians(lat_deg * DEG_TO_RAD, lon_deg * DEG_TO_RAD, c);
+}
+
+void point::set_latlon_radians(double lat_rad, double lon_rad, Coordinate c) {
+  double ra_rad = 0.0, dec_rad = 0.0;
+  switch (c) {
+  case EQUATORIAL:
+    ra_rad = lon_rad;
+    dec_rad = lat_rad;
+    break;
+  case GALACTIC:
+    galactic_to_equatorial(lon_rad, lat_rad, &ra_rad, &dec_rad);
+    break;
+  case ECLIPTIC:
+    ecliptic_to_equatorial(lon_rad, lat_rad, &ra_rad, &dec_rad);
+    break;
+  }
+
+  point_ = S2Point(sin(lat_rad) * cos(lon_rad), sin(lat_rad) * sin(lon_rad),
+      cos(lat_rad));
 }
 
 } // end namespace s2omp

@@ -12,11 +12,14 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
+
+#include <s2/s2.h>
 #include <s2/s2cap.h>
+#include <util/math/matrix3x3-inl.h>
+
 #include "core.h"
 #include "point.h"
 #include "bound_interface.h"
-#include "MersenneTwister.h"
 
 namespace s2omp {
 
@@ -80,9 +83,8 @@ public:
     return circle_bound(axis_, height_);
   }
 
-  virtual point get_random_point() {
-    return create_random_point();
-  }
+  virtual point get_random_point();
+  virtual void get_random_points(long n_points, point_vector* points);
 
 private:
   circle_bound get_complement() const;
@@ -94,10 +96,8 @@ private:
 
   // The variables below are for generating random points and will not be
   // initialized until initialize_random() is called.
-  point great_circle_norm_;
-  double rotate_;
+  Matrix3x3_d frame_;
   bool initialized_random_;
-  MTRand mtrand_;
 };
 
 S2Cap circle_bound::get_s2cap() const {

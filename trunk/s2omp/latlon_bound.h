@@ -8,40 +8,59 @@
 #ifndef LATLON_BOUND_H_
 #define LATLON_BOUND_H_
 
+#include <stdint.h>
+#include <math.h>
+#include <vector>
+#include <algorithm>
+
+#include <s2/s2.h>
+#include <s2/s2latlngrect.h>
+
+#include "core.h"
+#include "point.h"
+#include "bound_interface.h"
+
 namespace s2omp {
 
-class latlon_bound : public geometric_bound {
+class latlon_bound: public bound_interface {
 public:
+  latlon_bound();
+  latlon_bound(const point& hi, const point& lo);
   virtual ~latlon_bound();
 
-  static latlon_bound* from_points(const point& hi, const point& lo);
+  // Special case static constructors for bands of constant RA or DEC.
+  static latlon_bound from_ra_bounds(double ra_min_degrees,
+      double ra_max_degrees);
+  static latlon_bound from_dec_bounds(double dec_min_degrees,
+      double dec_max_degrees);
+
+  // Expand the current latlon_bound to include the input point.
+  void add_point(const point& p);
+
+  // Accessor for the bound vertices.
+  point vertex(int k) const;
+
+  // Returns true if the latitudinal and longitudinal bounds are valid.
+  bool is_valid() const;
 
   // API from geometric_bound
-  virtual bool is_empty();
-  virtual long size();
+  virtual bool is_empty() const;
+  virtual long size() const;
   virtual void clear();
-  virtual void area();
+  virtual double area() const;
 
-  virtual bool contains(const point& p);
-  virtual bool contains(const pixel& pix);
-  virtual bool contains(const geometric_bound& b);
+  virtual bool contains(const point& p) const;
+  virtual bool contains(const pixel& pix) const;
 
-  virtual double contained_area(const pixel& pix);
-  virtual bool may_intersect(const pixel& pix);
+  virtual double contained_area(const pixel& pix) const;
+  virtual bool may_intersect(const pixel& pix) const;
 
-  virtual void covering(pixel_vector* pixels);
-  virtual void covering(int max_pixels, pixel_vector* pixels);
-  virtual void covering(double fractional_area_tolerance, pixel_vector* pixels);
-  virtual void simple_covering(int level, pixel_vector* pixels);
-
-  virtual circle_bound get_bound();
-
-  virtual point get_random_point();
-  virtual void get_random_points(long n_points, pixel_vector* points);
+  virtual point get_center() const;
+  virtual circle_bound get_bound() const;
 
 private:
-  latlon_bound();
-  S2LatLonRect latlon_;
+  latlon_bound(S2LatLngRect bound);
+  S2LatLngRect latlon_;
 };
 
 } // end namespace s2omp
