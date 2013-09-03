@@ -17,11 +17,13 @@ namespace s2omp {
 circle_bound::circle_bound() {
   axis_ = point();
   height_ = -1.0;
+  initialized_random_ = false;
 }
 
 circle_bound::circle_bound(const point& axis, double height) {
   axis_ = axis;
   height_ = height;
+  initialized_random_ = false;
 }
 
 circle_bound::~circle_bound() {
@@ -62,11 +64,11 @@ void circle_bound::add_point(const point& p) {
   } else {
     // Calculate the chord distance between the input point and the central
     // axis.  Increase the height if this is larger than the current value.
-    double dist2 = (axis_.unit_sphere_x() - p.unit_sphere_x())
-        * (axis_.unit_sphere_x() - p.unit_sphere_x()) + (axis_.unit_sphere_y()
-        - p.unit_sphere_y()) * (axis_.unit_sphere_y() - p.unit_sphere_y())
-        + (axis_.unit_sphere_z() - p.unit_sphere_z()) * (axis_.unit_sphere_z()
-            - p.unit_sphere_z());
+    point p_norm = p;
+    p_norm.normalize();
+    double dist2 = (axis_.x() - p_norm.x()) * (axis_.x() - p_norm.x())
+        + (axis_.y() - p_norm.y()) * (axis_.y() - p_norm.y()) + (axis_.z()
+        - p_norm.z()) * (axis_.z() - p_norm.z());
     height_ = max(height_, FLOAT_ROUND_UP * 0.5 * dist2);
   }
 }
@@ -93,8 +95,8 @@ point circle_bound::create_random_point() {
   double radius = sqrt(h * (2.0 - h)); // Radius of the circle.
 
   // Now we re-project the point from the axis frame to the X-Y-Z frame
-  S2Point s2point = S2::FromFrame(frame_, S2Point(cos(theta) * radius,
-      sin(theta) * radius, 1.0 - h));
+  S2Point s2point = S2::FromFrame(frame_, S2Point(cos(theta) * radius, sin(
+      theta) * radius, 1.0 - h));
 
   // And return the resulting point.
   return point::s2point_to_point(s2point.Normalize());
@@ -121,9 +123,7 @@ bool circle_bound::is_empty() const {
 }
 
 long circle_bound::size() const {
-  if (is_empty())
-    return 0;
-  return 1;
+  return is_empty() ? 0 : 1;
 }
 
 void circle_bound::clear() {
@@ -153,13 +153,23 @@ double circle_bound::contained_area(const pixel& pix) const {
     return 0.0;
   }
 
+  // TODO(scranton): If the pixel is considerably larger than our bound, then
+  // we can't efficiently do sub-sampling to figure out the overlapping area.
+  // In that case, since we know that, at this point, the bound intersects
+  // the pixel, then the most likely case is that the bound is entirely
+  // contained by pixel.  This is a bit of a kludge, but lacking the ability to
+  // do this calculation analytically, we just return the area of the bound.
+  if (pix.exact_area() > 10.0 * area()) {
+    return area();
+  }
+
   // TODO(scranton): This is something that could probably be done analytically,
   // but for now, we'll do something simpler.
   double total_area = 0.0;
   int sampling_level = min(pix.level() + 5, MAX_LEVEL);
   pixel child_end = pix.child_end(sampling_level);
   for (pixel child_pix = pix.child_begin(sampling_level); child_pix
-      != child_end; child_pix.next()) {
+      != child_end; child_pix = child_pix.next()) {
     total_area += contains(child_pix) ? child_pix.exact_area() : 0.0;
   }
 
@@ -191,6 +201,7 @@ circle_bound circle_bound::get_complement() const {
 
 void circle_bound::initialize_random() {
   S2::GetFrame(point::point_to_s2point(axis_), &frame_);
+  initialized_random_ = true;
 }
 
 } //end namspace s2omp

@@ -106,19 +106,19 @@ static std::uniform_int_distribution<uint64> UNIFORM_UINT64;
 static std::uniform_real_distribution<double> UNIFORM_DOUBLE(0.0, 1.0);
 
 inline bool double_lt(double a, double b) {
-  return a < b - FLOAT_ROUND_UP;
+  return a < b * FLOAT_ROUND_UP;
 }
 
 inline bool double_le(double a, double b) {
-  return a <= b - FLOAT_ROUND_UP;
+  return a <= b * FLOAT_ROUND_UP;
 }
 
 inline bool double_gt(double a, double b) {
-  return a > b + FLOAT_ROUND_UP;
+  return a > b / FLOAT_ROUND_UP;
 }
 
 inline bool double_ge(double a, double b) {
-  return a >= b - FLOAT_ROUND_UP;
+  return a >= b / FLOAT_ROUND_UP;
 }
 
 inline bool double_eq(double a, double b) {

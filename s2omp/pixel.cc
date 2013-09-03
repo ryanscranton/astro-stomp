@@ -25,12 +25,12 @@ pixel::pixel() {
   id_ = S2CellId(0);
 }
 
-pixel* pixel::from_point(const point& p) {
-  return new pixel(p.id());
+pixel pixel::from_point(const point& p) {
+  return pixel(p.id());
 }
 
-pixel* pixel::from_point(const point& p, int level) {
-  return new pixel(p.id(level));
+pixel pixel::from_point(const point& p, int level) {
+  return pixel(p.id(level));
 }
 
 pixel pixel::parent() const {

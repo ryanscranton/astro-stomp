@@ -4,7 +4,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 # Common flags.
-CXXFLAGS = @CXXFLAGS@ -Wall -std=c++0x -stdlib=libc++ -Wno-deprecated -DHASH_NAMESPACE=__gnu_cxx
+CXXFLAGS = @CXXFLAGS@ -Wall -std=c++0x -stdlib=libc++ -Wno-deprecated -DHASH_NAMESPACE=__gnu_cxx -Wgnu
 LDFLAGS = @LDFLAGS@ @GFLAGS_LIB@ -L@top_srcdir@/s2 -ls2
 INCLUDES = -I@top_srcdir@/s2omp -I@top_srcdir@/stomp -I@top_srcdir@/s2 @GFLAGS_INCLUDE@
 
@@ -21,9 +21,9 @@ lib_LTLIBRARIES= libs2omp.la
 libs2omp_la_SOURCES= $(h_sources) $(cc_sources)
 libs2omp_la_LDFLAGS= -version-info $(GENERIC_LIBRARY_VERSION) -release $(GENERIC_RELEASE)
 
-check_PROGRAMS = pixel_test
-pixel_test_SOURCES = pixel_test.cc
-pixel_test_LDADD = libs2omp.la
+check_PROGRAMS = s2omp_test
+s2omp_test_SOURCES = s2omp_test.cc
+s2omp_test_LDADD = libs2omp.la -lgtest -lgtest_main -lpthread
 
 # Test programs run automatically by 'make check'
 TESTS = $(check_PROGRAMS)

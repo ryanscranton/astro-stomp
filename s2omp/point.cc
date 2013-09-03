@@ -63,8 +63,8 @@ point point::from_latlon_rad(double lat_rad, double lon_rad, Coordinate c,
     break;
   }
 
-  return point(sin(lat_rad) * cos(lon_rad), sin(lat_rad) * sin(lon_rad), cos(
-      lat_rad), weight);
+  return point(cos(dec_rad) * cos(ra_rad), cos(dec_rad) * sin(ra_rad), sin(
+      dec_rad), weight);
 }
 
 point point::from_radec_deg(double ra_deg, double dec_deg) {
@@ -104,7 +104,7 @@ double point::lon_deg(Coordinate c) const {
 double point::lat_rad(Coordinate c) const {
   switch (c) {
   case EQUATORIAL:
-    return acos(point_.z());
+    return asin(point_.z());
   case GALACTIC:
     double glon_rad, glat_rad;
     equatorial_to_galactic(ra_rad(), dec_rad(), &glon_rad, &glat_rad);
@@ -116,7 +116,7 @@ double point::lat_rad(Coordinate c) const {
   }
 
   // Default to equatorial.
-  return acos(point_.z());
+  return asin(point_.z());
 }
 
 double point::lon_rad(Coordinate c) const {
@@ -227,48 +227,89 @@ void point::galactic_to_equatorial(double glon_rad, double glat_rad,
 void point::equatorial_to_ecliptic(double ra_rad, double dec_rad,
     double* elon_rad, double* elat_rad) {
   double phi = 0.5 * PI - dec_rad;
-  double x_eq = cos(ra_rad) * cos(phi);
-  double y_eq = sin(ra_rad) * cos(phi);
-  double z_eq = sin(phi);
+  double x_eq = cos(ra_rad) * sin(phi);
+  double y_eq = sin(ra_rad) * sin(phi);
+  double z_eq = cos(phi);
 
   double x_ec = x_eq;
   double y_ec = COS_OBLIQUITY * y_eq + SIN_OBLIQUITY * z_eq;
   double z_ec = COS_OBLIQUITY * z_eq - SIN_OBLIQUITY * y_eq;
 
   *elon_rad = atan2(y_ec, x_ec);
-  *elat_rad = acos(z_ec);
+  *elat_rad = asin(z_ec);
 }
 
 void point::ecliptic_to_equatorial(double elon_rad, double elat_rad,
     double* ra_rad, double* dec_rad) {
   double phi = 0.5 * PI - elat_rad;
-  double x_ec = cos(elon_rad) * cos(phi);
-  double y_ec = sin(elon_rad) * cos(phi);
-  double z_ec = sin(phi);
+  double x_ec = cos(elon_rad) * sin(phi);
+  double y_ec = sin(elon_rad) * sin(phi);
+  double z_ec = cos(phi);
 
   double x_eq = x_ec;
   double y_eq = COS_OBLIQUITY * y_ec - SIN_OBLIQUITY * z_ec;
   double z_eq = COS_OBLIQUITY * z_ec + SIN_OBLIQUITY * y_ec;
 
   *ra_rad = atan2(y_eq, x_eq);
-  *dec_rad = acos(z_eq);
+  *dec_rad = asin(z_eq);
 }
 
-double point::unit_sphere_x(Coordinate c) const {
-  return c == EQUATORIAL ? unit_sphere_x() : cos(lon_rad(c)) * sin(lat_rad(c));
+void point::galactic_to_ecliptic(double glon_rad, double glat_rad,
+    double* elon_rad, double* elat_rad) {
+  double ra_rad, dec_rad;
+  galactic_to_equatorial(glon_rad, glat_rad, &ra_rad, &dec_rad);
+  equatorial_to_ecliptic(ra_rad, dec_rad, elon_rad, elat_rad);
 }
 
-double point::unit_sphere_y(Coordinate c) const {
-  return c == EQUATORIAL ? unit_sphere_y() : sin(lon_rad(c)) * sin(lat_rad(c));
+void point::ecliptic_to_galactic(double elon_rad, double elat_rad,
+    double* glon_rad, double* glat_rad) {
+  double ra_rad, dec_rad;
+  ecliptic_to_equatorial(elon_rad, elat_rad, &ra_rad, &dec_rad);
+  equatorial_to_galactic(ra_rad, dec_rad, glon_rad, glat_rad);
 }
 
-double point::unit_sphere_z(Coordinate c) const {
-  return c == EQUATORIAL ? unit_sphere_z() : cos(lat_rad(c));
+bool point::is_normalized() const {
+  double norm2 = point_.Norm2();
+  return norm2 <= 1.0 + NORMALIZATION_PRECISION && norm2 >= 1.0
+      - NORMALIZATION_PRECISION;
+}
+
+void point::normalize() {
+  point_ = point_.Normalize();
+}
+
+double point::unit_sphere_x() {
+  if (!is_normalized())
+    normalize();
+  return point_.x();
+}
+
+double point::unit_sphere_y() {
+  if (!is_normalized())
+    normalize();
+  return point_.y();
+}
+
+double point::unit_sphere_z() {
+  if (!is_normalized())
+    normalize();
+  return point_.z();
+}
+
+double point::unit_sphere_x(Coordinate c) {
+  return c == EQUATORIAL ? unit_sphere_x() : cos(lon_rad(c)) * cos(lat_rad(c));
+}
+
+double point::unit_sphere_y(Coordinate c) {
+  return c == EQUATORIAL ? unit_sphere_y() : sin(lon_rad(c)) * cos(lat_rad(c));
+}
+
+double point::unit_sphere_z(Coordinate c) {
+  return c == EQUATORIAL ? unit_sphere_z() : sin(lat_rad(c));
 }
 
 double point::dot(const point& a, const point& b) {
-  return a.unit_sphere_x() * b.unit_sphere_x() + a.unit_sphere_y()
-      * b.unit_sphere_y() + a.unit_sphere_z() * b.unit_sphere_z();
+  return a.x() * b.x() + a.y() * b.y() + a.z() * b.z();
 }
 
 double point::angular_distance(const point& p) const {
@@ -283,20 +324,13 @@ double point::angular_distance(const point& a, const point& b) {
 // on the cross product of the points. Currently I return the weight of the
 // first point.
 point point::cross(const point& p) const {
-  double x = point_.y() * p.unit_sphere_z() - point_.z() * p.unit_sphere_y();
-  double y = point_.z() * p.unit_sphere_x() - point_.x() * p.unit_sphere_z();
-  double z = point_.x() * p.unit_sphere_y() - point_.y() * p.unit_sphere_x();
-
-  return point(x, y, z, weight_);
+  return cross(*this, p);
 }
 
 point point::cross(const point& a, const point& b) {
-  double x = a.unit_sphere_y() * b.unit_sphere_z() - a.unit_sphere_z()
-      * b.unit_sphere_y();
-  double y = -(a.unit_sphere_x() * b.unit_sphere_z() - a.unit_sphere_z()
-      * b.unit_sphere_x());
-  double z = a.unit_sphere_x() * b.unit_sphere_y() - a.unit_sphere_y()
-      * b.unit_sphere_x();
+  double x = a.y() * b.z() - a.z() * b.y();
+  double y = a.z() * b.x() - a.x() * b.z();
+  double z = a.x() * b.y() - a.y() * b.x();
 
   return point(x, y, z, a.weight());
 }
@@ -304,9 +338,7 @@ point point::cross(const point& a, const point& b) {
 // TODO(cbmorrison) Currently great_circle is just a wrapper for cross that
 // sets the weight of the returned point to zero.
 point point::great_circle(const point& p) const {
-  point great = cross(p);
-  great.set_weight(0);
-  return cross(great);
+  return great_circle(*this, p);
 }
 
 point point::great_circle(const point& a, const point& b) {
@@ -351,13 +383,15 @@ void point::rotate_about(const point& axis, double rotation_angle_degrees,
 
 point point::rotate_about(const point& p, const point& axis,
     double rotation_angle_degrees, Coordinate c) {
-  double p_x = p.unit_sphere_x(c);
-  double p_y = p.unit_sphere_y(c);
-  double p_z = p.unit_sphere_z(c);
+  point p_copy = p;
+  double p_x = p_copy.unit_sphere_x(c);
+  double p_y = p_copy.unit_sphere_y(c);
+  double p_z = p_copy.unit_sphere_z(c);
 
-  double a_x = axis.unit_sphere_x(c);
-  double a_y = axis.unit_sphere_y(c);
-  double a_z = axis.unit_sphere_z(c);
+  point axis_copy = axis;
+  double a_x = axis_copy.unit_sphere_x(c);
+  double a_y = axis_copy.unit_sphere_y(c);
+  double a_z = axis_copy.unit_sphere_z(c);
 
   double sintheta = sin(rotation_angle_degrees * DEG_TO_RAD);
   double costheta = cos(rotation_angle_degrees * DEG_TO_RAD);

@@ -48,13 +48,13 @@ public:
   // divide the survey area up into equal area regions and use jack-knife
   // methods to estimate the variance on the correlation function.  This
   // constructor sets up the angular_bin object for that sort of operation.
-  inline angular_bin(double theta_deg_min, double theta_deg_max,
-                     int n_regions);
+  inline angular_bin(double theta_deg_min, double theta_deg_max, int n_regions);
 
   // These two methods do the work of clearing and initializing the variables
   // used to store the region-related data.
   inline void clear_regions();
   inline void init_regions(int n_regions);
+  inline bool regions_initialized() const;
 
   // There are two different methods for calculating the angular correlation
   // function, w(theta).  One is based on counting pairs separated by a given
@@ -97,7 +97,7 @@ public:
   // degree, the expected Poisson noise.
   inline double area();
   inline double poisson_noise(double objects_per_square_degree,
-                              double survey_area);
+      double survey_area);
 
   // For the pixel-based w(theta), we use two internal variables:
   //
@@ -106,8 +106,8 @@ public:
   //
   // w(theta) is then the ratio of these two numbers.
   inline void add_to_pixel_wtheta(double dwtheta, double dweight);
-  inline void add_to_pixel_wtheta(double dwtheta, double dweight,
-                                  int region_a, int region_b);
+  inline void add_to_pixel_wtheta(double dwtheta, double dweight, int region_a,
+      int region_b);
 
   // For the pair-counting, we use the methods in the tree_pixel and tree_union
   // classes.  Those methods are oblivious to the particular data sets they
@@ -119,8 +119,8 @@ public:
   inline void add_to_counter(long step);
   inline void add_to_counter(long step, int region_a, int region_b);
   inline void add_to_pair_wtheta(double weight, long step);
-  inline void add_to_pair_wtheta(double weight, long step,
-      int region_a, int region_b);
+  inline void add_to_pair_wtheta(double weight, long step, int region_a,
+      int region_b);
 
   // For calculating the pair-based w(theta), we use the Landy-Szalay estimator.
   // In the general case of a cross-correlation between two galaxy data sets,
@@ -221,11 +221,11 @@ public:
   // Finally, some static methods which the AngularCorrelation method will use
   // to order its vectors of angular_bin objects.
   inline static bool theta_order(const angular_bin& theta_a,
-                                 const angular_bin& theta_b);
+      const angular_bin& theta_b);
   inline static bool sin_theta_order(const angular_bin& theta_a,
-                                     const angular_bin& theta_b);
+      const angular_bin& theta_b);
   inline static bool reverse_level_order(const angular_bin& theta_a,
-                                         const angular_bin& theta_b);
+      const angular_bin& theta_b);
 
 private:
   angular_bin();
@@ -234,11 +234,11 @@ private:
   double pair_weight_, gal_gal_, gal_rand_, rand_gal_, rand_rand_;
   double pixel_wtheta_, pixel_weight_, wtheta_, wtheta_error_;
   long pair_count_;
-  std::vector<double> weight_region_, gal_gal_region_;
+  std::vector<double> pair_weight_region_, gal_gal_region_;
   std::vector<double> gal_rand_region_, rand_gal_region_, rand_rand_region_;
   std::vector<double> pixel_wtheta_region_, pixel_weight_region_;
   std::vector<double> wtheta_region_, wtheta_error_region_;
-  std::vector<long> counter_region_;
+  std::vector<long> pair_counts_region_;
   int level_;
   int n_region_;
   bool set_wtheta_error_, set_wtheta_;
@@ -257,16 +257,16 @@ inline angular_bin::angular_bin(double theta_min, double theta_max) {
 }
 
 inline angular_bin::angular_bin(double theta_min, double theta_max,
-                                int n_regions) {
+    int n_regions) {
   set_theta_min(theta_min);
   set_theta_max(theta_max);
-  pair_weight_ = gal_gal_ = gal_rand_ = rand_gal_ = rand_rand_ = 0.0;
-  pixel_wtheta_ = pixel_weight_ = wtheta_ = wtheta_error_ = 0.0;
+  pair_weight_ = 0.0;
   pair_count_ = 0;
+  gal_gal_ = gal_rand_ = rand_gal_ = rand_rand_ = 0.0;
+  pixel_wtheta_ = pixel_weight_ = 0.0;
+  wtheta_ = wtheta_error_ = 0.0;
   clear_regions();
-  if (n_regions > 0) {
-    init_regions(n_regions);
-  }
+  init_regions(n_regions);
   level_ = -1;
   set_wtheta_ = false;
   set_wtheta_error_ = false;
@@ -274,9 +274,11 @@ inline angular_bin::angular_bin(double theta_min, double theta_max,
 
 inline angular_bin::~angular_bin() {
   theta_min_ = theta_max_ = sin2theta_min_ = sin2theta_max_ = 0.0;
-  pair_weight_ = gal_gal_ = gal_rand_ = rand_gal_ = rand_rand_ = 0.0;
-  pixel_wtheta_ = pixel_weight_ = wtheta_ = wtheta_error_ = 0.0;
+  pair_weight_ = 0.0;
   pair_count_ = 0;
+  gal_gal_ = gal_rand_ = rand_gal_ = rand_rand_ = 0.0;
+  pixel_wtheta_ = pixel_weight_ = 0.0;
+  wtheta_ = wtheta_error_ = 0.0;
   clear_regions();
   level_ = 0;
   set_wtheta_ = false;
@@ -284,47 +286,99 @@ inline angular_bin::~angular_bin() {
 }
 
 inline void angular_bin::clear_regions() {
-  weight_region_.clear();
+  pair_weight_region_.clear();
+  pair_counts_region_.clear();
+
   gal_gal_region_.clear();
   gal_rand_region_.clear();
   rand_gal_region_.clear();
   rand_rand_region_.clear();
+
   pixel_wtheta_region_.clear();
   pixel_weight_region_.clear();
+
   wtheta_region_.clear();
   wtheta_error_region_.clear();
-  counter_region_.clear();
+
   n_region_ = 0;
 }
 
 inline void angular_bin::init_regions(int n_regions) {
   clear_regions();
-  if (n_regions > 0) {
-    n_region_ = n_regions;
-    weight_region_.reserve(n_regions);
-    gal_gal_region_.reserve(n_regions);
-    gal_rand_region_.reserve(n_regions);
-    rand_gal_region_.reserve(n_regions);
-    rand_rand_region_.reserve(n_regions);
-    pixel_wtheta_region_.reserve(n_regions);
-    pixel_weight_region_.reserve(n_regions);
-    wtheta_region_.reserve(n_regions);
-    wtheta_error_region_.reserve(n_regions);
-    counter_region_.reserve(n_regions);
-    for (uint k = 0; k < n_regions; k++) {
-      weight_region_[k] = 0.0;
-      gal_gal_region_[k] = 0.0;
-      gal_rand_region_[k] = 0.0;
-      rand_gal_region_[k] = 0.0;
-      rand_rand_region_[k] = 0.0;
-      pixel_wtheta_region_[k] = 0.0;
-      pixel_weight_region_[k] = 0.0;
-      wtheta_region_[k] = 0.0;
-      wtheta_error_region_[k] = 0.0;
-      counter_region_[k] = 0;
-    }
+
+  if (n_regions < 0) {
+    return;
+  }
+
+  n_region_ = n_regions;
+  pair_weight_region_.reserve(n_regions);
+  pair_counts_region_.reserve(n_regions);
+
+  gal_gal_region_.reserve(n_regions);
+  gal_rand_region_.reserve(n_regions);
+  rand_gal_region_.reserve(n_regions);
+  rand_rand_region_.reserve(n_regions);
+
+  pixel_wtheta_region_.reserve(n_regions);
+  pixel_weight_region_.reserve(n_regions);
+
+  wtheta_region_.reserve(n_regions);
+  wtheta_error_region_.reserve(n_regions);
+
+  for (uint k = 0; k < n_regions; k++) {
+    pair_weight_region_.push_back(0.0);
+    pair_counts_region_.push_back(0);
+
+    gal_gal_region_.push_back(0.0);
+    gal_rand_region_.push_back(0.0);
+    rand_gal_region_.push_back(0.0);
+    rand_rand_region_.push_back(0.0);
+
+    pixel_wtheta_region_.push_back(0.0);
+    pixel_weight_region_.push_back(0.0);
+
+    wtheta_region_.push_back(0.0);
+    wtheta_error_region_.push_back(0.0);
   }
 }
+
+bool angular_bin::regions_initialized() const {
+  if (pair_weight_region_.size() != n_region_) {
+    std::cout << "pair weight uninitialized\n";
+    exit(1);
+  }
+  if (pair_counts_region_.size() != n_region_) {
+    std::cout << "pair count uninitialized\n";
+    exit(1);
+  }
+  if (gal_gal_region_.size() != n_region_) {
+    std::cout << "gal_gal uninitialized\n";
+    exit(1);
+  }
+  if (gal_rand_region_.size() != n_region_) {
+    std::cout << "gal_rand uninitialized\n";
+    exit(1);
+  }
+  if (rand_gal_region_.size() != n_region_) {
+    std::cout << "rand_gal uninitialized\n";
+    exit(1);
+  }
+  if (rand_rand_region_.size() != n_region_) {
+    std::cout << "rand_rand uninitialized\n";
+    exit(1);
+  }
+  if (pixel_weight_region_.size() != n_region_) {
+    std::cout << "pixel_weight uninitialized\n";
+    exit(1);
+  }
+  if (pixel_wtheta_region_.size() != n_region_) {
+    std::cout << "pixel_wtheta uninitialized\n";
+    exit(1);
+  }
+
+  return true;
+}
+
 
 inline void angular_bin::find_level() {
   level_ = -1;
@@ -333,7 +387,7 @@ inline void angular_bin::find_level() {
     // the smallest for a given level should be < 2, so we choose that as a
     // worst case scenario for determining the scale we need to resolve.
     double scale = sqrt(2.0 * pixel::average_area(level));
-    if (is_within_bounds(scale)) {
+    if (is_within_bounds(scale) || scale < theta_min_) {
       level_ = level;
       break;
     }
@@ -353,18 +407,17 @@ inline void angular_bin::set_theta_max(double theta_max) {
 }
 
 inline bool angular_bin::is_within_bounds(double theta) {
-  return (double_ge(theta, theta_min_) && double_le(theta, theta_max_) ? true
-          : false);
+  return (double_ge(theta, theta_min_) && double_le(theta, theta_max_));
 }
 
 inline bool angular_bin::is_within_sin2_bounds(double sin2theta) {
-  return (double_ge(sin2theta, sin2theta_min_) &&
-          double_le(sin2theta, sin2theta_max_) ? true : false);
+  return (double_ge(sin2theta, sin2theta_min_) && double_le(sin2theta,
+      sin2theta_max_));
 }
 
 inline bool angular_bin::is_within_cos_bounds(double costheta) {
-  return (double_ge(costheta, costheta_min_) &&
-          double_le(costheta, costheta_max_) ? true : false);
+  return (double_ge(costheta, costheta_min_) && double_le(costheta,
+      costheta_max_));
 }
 
 inline double angular_bin::area() {
@@ -372,9 +425,9 @@ inline double angular_bin::area() {
 }
 
 inline double angular_bin::poisson_noise(double objects_per_square_degree,
-                                         double survey_area) {
+    double survey_area) {
   return 1.0 / sqrt(objects_per_square_degree * objects_per_square_degree
-                    * survey_area * area());
+      * survey_area * area());
 }
 
 inline void angular_bin::add_to_pixel_wtheta(double dwtheta, double dweight) {
@@ -382,8 +435,8 @@ inline void angular_bin::add_to_pixel_wtheta(double dwtheta, double dweight) {
   pixel_weight_ += dweight;
 }
 
-inline void angular_bin::add_to_pixel_wtheta(
-    double dwtheta, double dweight, int region_a, int region_b) {
+inline void angular_bin::add_to_pixel_wtheta(double dwtheta, double dweight,
+    int region_a, int region_b) {
   pixel_wtheta_ += dwtheta;
   pixel_weight_ += dweight;
 
@@ -401,13 +454,14 @@ inline void angular_bin::add_to_weight(double weight) {
   pair_weight_ += weight;
 }
 
-inline void angular_bin::add_to_weight(double weight, int region_a, int region_b) {
+inline void angular_bin::add_to_weight(double weight, int region_a,
+    int region_b) {
   pair_weight_ += weight;
 
   if (region_a != -1 && region_b != -1) {
     for (int k = 0; k < n_region_; k++) {
       if (k != region_a && k != region_b)
-        weight_region_[k] += weight;
+        pair_weight_region_[k] += weight;
     }
   }
 }
@@ -422,7 +476,7 @@ inline void angular_bin::add_to_counter(long step, int region_a, int region_b) {
   if (region_a != -1 && region_b != -1) {
     for (int k = 0; k < n_region_; k++) {
       if (k != region_a && k != region_b)
-        counter_region_[k] += step;
+        pair_counts_region_[k] += step;
     }
   }
 }
@@ -440,8 +494,8 @@ inline void angular_bin::add_to_pair_wtheta(double weight, long step,
   if (region_a != -1 && region_b != -1) {
     for (int k = 0; k < n_region_; k++) {
       if (k != region_a && k != region_b) {
-        weight_region_[k] += weight;
-        counter_region_[k] += step;
+        pair_weight_region_[k] += weight;
+        pair_counts_region_[k] += step;
       }
     }
   }
@@ -449,81 +503,86 @@ inline void angular_bin::add_to_pair_wtheta(double weight, long step,
 
 inline void angular_bin::move_weight(Counter c) {
   switch (c) {
-    case GAL_GAL:
-      gal_gal_ += pair_weight_;
-      break;
-    case GAL_RAND:
-      gal_rand_ += pair_weight_;
-      break;
-    case RAND_GAL:
-      rand_gal_ += pair_weight_;
-      break;
-    case RAND_RAND:
-      rand_rand_ += pair_weight_;
-      break;
+  case GAL_GAL:
+    gal_gal_ += pair_weight_;
+    break;
+  case GAL_RAND:
+    gal_rand_ += pair_weight_;
+    break;
+  case RAND_GAL:
+    rand_gal_ += pair_weight_;
+    break;
+  case RAND_RAND:
+    rand_rand_ += pair_weight_;
+    break;
   }
   pair_weight_ = 0.0;
 
   for (int k = 0; k < n_region_; k++) {
     switch (c) {
-      case GAL_GAL:
-        gal_gal_region_[k] += weight_region_[k];
-        break;
-      case GAL_RAND:
-        gal_rand_region_[k] += weight_region_[k];
-        break;
-      case RAND_GAL:
-        rand_gal_region_[k] += weight_region_[k];
-        break;
-      case RAND_RAND:
-        rand_rand_region_[k] += weight_region_[k];
-        break;
+    case GAL_GAL:
+      gal_gal_region_[k] += pair_weight_region_[k];
+      break;
+    case GAL_RAND:
+      gal_rand_region_[k] += pair_weight_region_[k];
+      break;
+    case RAND_GAL:
+      rand_gal_region_[k] += pair_weight_region_[k];
+      break;
+    case RAND_RAND:
+      rand_rand_region_[k] += pair_weight_region_[k];
+      break;
     }
-    weight_region_[k] = 0.0;
+    pair_weight_region_[k] = 0.0;
   }
 }
 
 inline void angular_bin::rescale_pair_counts(Counter c, double scale) {
   switch (c) {
-    case GAL_GAL:
-      gal_gal_ /= scale;
-      for (int k = 0; k < n_region_; k++)
-        gal_gal_region_[k] /= scale;
-      break;
-    case GAL_RAND:
-      gal_rand_ /= scale;
-      for (int k = 0; k < n_region_; k++)
-        gal_rand_region_[k] /= scale;
-      break;
-    case RAND_GAL:
-      rand_gal_ /= scale;
-      for (int k = 0; k < n_region_; k++)
-        rand_gal_region_[k] /= scale;
-      break;
-    case RAND_RAND:
-      rand_rand_ /= scale;
-      for (int k = 0; k < n_region_; k++)
-        rand_rand_region_[k] /= scale;
-      break;
+  case GAL_GAL:
+    gal_gal_ /= scale;
+    for (int k = 0; k < n_region_; k++)
+      gal_gal_region_[k] /= scale;
+    break;
+  case GAL_RAND:
+    gal_rand_ /= scale;
+    for (int k = 0; k < n_region_; k++)
+      gal_rand_region_[k] /= scale;
+    break;
+  case RAND_GAL:
+    rand_gal_ /= scale;
+    for (int k = 0; k < n_region_; k++)
+      rand_gal_region_[k] /= scale;
+    break;
+  case RAND_RAND:
+    rand_rand_ /= scale;
+    for (int k = 0; k < n_region_; k++)
+      rand_rand_region_[k] /= scale;
+    break;
   }
 }
 
 inline void angular_bin::reset() {
-  pair_weight_ = gal_gal_ = gal_rand_ = rand_gal_ = rand_rand_ = 0.0;
-  pixel_wtheta_ = pixel_weight_ = wtheta_ = wtheta_error_ = 0.0;
+  pair_weight_ = 0.0;
   pair_count_ = 0;
+  gal_gal_ = gal_rand_ = rand_gal_ = rand_rand_ = 0.0;
+  pixel_wtheta_ = pixel_weight_ = 0.0;
+  wtheta_ = wtheta_error_ = 0.0;
   if (n_region_ > 0) {
     for (int k = 0; k < n_region_; k++) {
-      weight_region_[k] = 0.0;
+      pair_weight_region_[k] = 0.0;
+      pair_counts_region_[k] = 0;
+
       gal_gal_region_[k] = 0.0;
       gal_rand_region_[k] = 0.0;
       rand_gal_region_[k] = 0.0;
       rand_rand_region_[k] = 0.0;
+
       pixel_wtheta_region_[k] = 0.0;
       pixel_weight_region_[k] = 0.0;
+
       wtheta_region_[k] = 0.0;
       wtheta_error_region_[k] = 0.0;
-      counter_region_[k] = 0;
     }
   }
 }
@@ -543,42 +602,42 @@ inline void angular_bin::reset_weight() {
   pair_weight_ = 0.0;
   if (n_region_ > 0)
     for (int k = 0; k < n_region_; k++)
-      weight_region_[k] = 0.0;
+      pair_weight_region_[k] = 0.0;
 }
 
 inline void angular_bin::reset_counter() {
   pair_count_ = 0;
   if (n_region_ > 0)
     for (int k = 0; k < n_region_; k++)
-      counter_region_[k] = 0;
+      pair_counts_region_[k] = 0;
 }
 
 inline void angular_bin::reset_pair_counts(Counter c) {
   switch (c) {
-    case GAL_GAL:
-      gal_gal_ = 0.0;
-      if (n_region_ > 0)
-        for (int k = 0; k < n_region_; k++)
-          gal_gal_region_[k] = 0.0;
-      break;
-    case GAL_RAND:
-      gal_rand_ = 0.0;
-      if (n_region_ > 0)
-        for (int k = 0; k < n_region_; k++)
-          gal_rand_region_[k] = 0.0;
-      break;
-    case RAND_GAL:
-      rand_gal_ = 0.0;
-      if (n_region_ > 0)
-        for (int k = 0; k < n_region_; k++)
-          rand_gal_region_[k] = 0.0;
-      break;
-    case RAND_RAND:
-      rand_rand_ = 0.0;
-      if (n_region_ > 0)
-        for (int k = 0; k < n_region_; k++)
-          rand_rand_region_[k] = 0.0;
-      break;
+  case GAL_GAL:
+    gal_gal_ = 0.0;
+    if (n_region_ > 0)
+      for (int k = 0; k < n_region_; k++)
+        gal_gal_region_[k] = 0.0;
+    break;
+  case GAL_RAND:
+    gal_rand_ = 0.0;
+    if (n_region_ > 0)
+      for (int k = 0; k < n_region_; k++)
+        gal_rand_region_[k] = 0.0;
+    break;
+  case RAND_GAL:
+    rand_gal_ = 0.0;
+    if (n_region_ > 0)
+      for (int k = 0; k < n_region_; k++)
+        rand_gal_region_[k] = 0.0;
+    break;
+  case RAND_RAND:
+    rand_rand_ = 0.0;
+    if (n_region_ > 0)
+      for (int k = 0; k < n_region_; k++)
+        rand_rand_region_[k] = 0.0;
+    break;
   }
 }
 
@@ -593,21 +652,18 @@ inline double angular_bin::wtheta() const {
 
 inline double angular_bin::wtheta(int region) const {
   if (set_wtheta_) {
-    return (region == -1 ? wtheta_
-            : (region < n_region_ ? wtheta_region_[region] : -1.0));
+    return (region == -1 ? wtheta_ : (region < n_region_
+        ? wtheta_region_[region] : -1.0));
   } else {
     if (level_ == -1) {
-      return (region == -1 ?
-              (gal_gal_ - gal_rand_ - rand_gal_ + rand_rand_) / rand_rand_ :
-              (region < n_region_ ?
-               (gal_gal_region_[region] - gal_rand_region_[region] -
-                rand_gal_region_[region] + rand_rand_region_[region]) /
-               rand_rand_region_[region] : -1.0));
+      return (region == -1 ? (gal_gal_ - gal_rand_ - rand_gal_ + rand_rand_)
+          / rand_rand_ : (region < n_region_ ? (gal_gal_region_[region]
+          - gal_rand_region_[region] - rand_gal_region_[region]
+          + rand_rand_region_[region]) / rand_rand_region_[region] : -1.0));
     } else {
-      return (region == -1 ?
-              pixel_wtheta_ / pixel_weight_ :
-              (region < n_region_ ? pixel_wtheta_region_[region]
-               / pixel_weight_region_[region] : -1.0));
+      return (region == -1 ? pixel_wtheta_ / pixel_weight_ : (region
+          < n_region_ ? pixel_wtheta_region_[region]
+          / pixel_weight_region_[region] : -1.0));
     }
   }
 }
@@ -622,17 +678,15 @@ inline double angular_bin::wtheta_error() const {
 
 inline double angular_bin::wtheta_error(int region) const {
   if (set_wtheta_error_) {
-    return (region == -1 ? wtheta_error_
-            : (region < n_region_ ? wtheta_error_region_[region] : -1.0));
+    return (region == -1 ? wtheta_error_ : (region < n_region_
+        ? wtheta_error_region_[region] : -1.0));
   } else {
     if (level_ == 0) {
-      return (region == -1 ? 1.0 / sqrt(gal_gal_) :
-              (region < n_region_ ? 1.0 / sqrt(gal_gal_region_[region]) :
-               -1.0));
+      return (region == -1 ? 1.0 / sqrt(gal_gal_) : (region < n_region_ ? 1.0
+          / sqrt(gal_gal_region_[region]) : -1.0));
     } else {
-      return (region == -1 ? 1.0 / sqrt(pixel_weight_) :
-              (region < n_region_ ? 1.0 / sqrt(pixel_weight_region_[region])
-               : -1.0));
+      return (region == -1 ? 1.0 / sqrt(pixel_weight_) : (region < n_region_
+          ? 1.0 / sqrt(pixel_weight_region_[region]) : -1.0));
     }
   }
 }
@@ -642,53 +696,57 @@ inline double angular_bin::weighted_cross_correlation() const {
 }
 
 inline double angular_bin::weighted_cross_correlation(int region) const {
-  return (region == -1 ? pair_weight_ / pair_count_ :
-          (region < n_region_ ? weight_region_[region] / counter_region_[region]
-           : -1.0));
+  return (region == -1 ? pair_weight_ / pair_count_ : (region < n_region_
+      ? pair_weight_region_[region] / pair_counts_region_[region] : -1.0));
 }
 
 inline double angular_bin::pixel_wtheta(int region) const {
-  return (region == -1 ? pixel_wtheta_ :
-          (region < n_region_ ? pixel_wtheta_region_[region] : -1.0));
+  return (region == -1 ? pixel_wtheta_ : (region < n_region_
+      ? pixel_wtheta_region_[region] : -1.0));
+}
+
+inline double angular_bin::pixel_weight(int region) const {
+  return (region == -1 ? pixel_weight_ : (region < n_region_
+      ? pixel_weight_region_[region] : -1.0));
 }
 
 inline double angular_bin::pair_weight(int region) const {
-  return (region == -1 ? pair_weight_ :
-          (region < n_region_ ? weight_region_[region] : -1.0));
+  return (region == -1 ? pair_weight_ : (region < n_region_
+      ? pair_weight_region_[region] : -1.0));
 }
 
 inline long angular_bin::pair_counts(int region) const {
-  return (region == -1 ? pair_count_ :
-          (region < n_region_ ? counter_region_[region] : -1));
+  return (region == -1 ? pair_count_ : (region < n_region_
+      ? pair_counts_region_[region] : -1));
 }
 
 inline double angular_bin::pair_weight(Counter c) const {
   switch (c) {
-    case GAL_GAL:
-      return gal_gal_;
-    case GAL_RAND:
-      return gal_rand_;
-    case RAND_GAL:
-      return rand_gal_;
-    case RAND_RAND:
-      return rand_rand_;
+  case GAL_GAL:
+    return gal_gal_;
+  case GAL_RAND:
+    return gal_rand_;
+  case RAND_GAL:
+    return rand_gal_;
+  case RAND_RAND:
+    return rand_rand_;
   }
 }
 
 inline double angular_bin::pair_weight(Counter c, int region) const {
   switch (c) {
-    case GAL_GAL:
-      return (region == -1 ? gal_gal_ :
-              (region < n_region_ ? gal_gal_region_[region] : -1.0));
-    case GAL_RAND:
-      return (region == -1 ? gal_rand_ :
-              (region < n_region_ ? gal_rand_region_[region] : -1.0));
-    case RAND_GAL:
-      return (region == -1 ? rand_gal_ :
-              (region < n_region_ ? rand_gal_region_[region] : -1.0));
-    case RAND_RAND:
-      return (region == -1 ? rand_rand_ :
-              (region < n_region_ ? rand_rand_region_[region] : -1.0));
+  case GAL_GAL:
+    return (region == -1 ? gal_gal_ : (region < n_region_
+        ? gal_gal_region_[region] : -1.0));
+  case GAL_RAND:
+    return (region == -1 ? gal_rand_ : (region < n_region_
+        ? gal_rand_region_[region] : -1.0));
+  case RAND_GAL:
+    return (region == -1 ? rand_gal_ : (region < n_region_
+        ? rand_gal_region_[region] : -1.0));
+  case RAND_RAND:
+    return (region == -1 ? rand_rand_ : (region < n_region_
+        ? rand_rand_region_[region] : -1.0));
   }
 }
 
@@ -704,15 +762,15 @@ inline double angular_bin::mean_wtheta_error() const {
   double mean_wtheta_error = 0.0;
   for (int k = 0; k < n_region_; k++)
     mean_wtheta_error += (avg_wtheta - wtheta(k)) * (avg_wtheta - wtheta(k));
-  return (n_region_ == 0 ? 0.0 :
-          (n_region_ - 1.0) * sqrt(mean_wtheta_error) / n_region_);
+  return (n_region_ == 0 ? 0.0 : (n_region_ - 1.0) * sqrt(mean_wtheta_error)
+      / n_region_);
 }
 
 inline double angular_bin::mean_weighted_cross_correlation() const {
   double mean_weight_cross_correlation = 0.0;
   for (int k = 0; k < n_region_; k++)
-    mean_weight_cross_correlation += 1.0 * weight_region_[k]
-        / counter_region_[k] / (1.0 * n_region_);
+    mean_weight_cross_correlation += 1.0 * pair_weight_region_[k]
+        / pair_counts_region_[k] / (1.0 * n_region_);
   return mean_weight_cross_correlation;
 }
 
@@ -720,63 +778,62 @@ inline double angular_bin::mean_weighted_cross_correlation_error() const {
   double avg_weighted_cross_correlation = mean_weighted_cross_correlation();
   double mean_weighted_cross_correlation_error = 0.0;
   for (int k = 0; k < n_region_; k++)
-    mean_weighted_cross_correlation_error +=
-        (avg_weighted_cross_correlation - weighted_cross_correlation(k)) *
-        (avg_weighted_cross_correlation - weighted_cross_correlation(k));
-  return (n_region_ == 0 ? 0.0 :
-          (n_region_ - 1.0) * sqrt(mean_weighted_cross_correlation_error) /
-          n_region_);
+    mean_weighted_cross_correlation_error += (avg_weighted_cross_correlation
+        - weighted_cross_correlation(k)) * (avg_weighted_cross_correlation
+        - weighted_cross_correlation(k));
+  return (n_region_ == 0 ? 0.0 : (n_region_ - 1.0) * sqrt(
+      mean_weighted_cross_correlation_error) / n_region_);
 }
 
 inline double angular_bin::mean_weight() const {
   double mean_weight = 0.0;
   for (int k = 0; k < n_region_; k++)
-    mean_weight += weight_region_[k] / (1.0 * n_region_);
+    mean_weight += pair_weight_region_[k] / (1.0 * n_region_);
   return mean_weight;
 }
 
 inline double angular_bin::mean_counter() const {
   double mean_counter = 0.0;
   for (int k = 0; k < n_region_; k++)
-    mean_counter += 1.0 * counter_region_[k] / (1.0 * n_region_);
+    mean_counter += 1.0 * pair_counts_region_[k] / (1.0 * n_region_);
   return mean_counter;
 }
 
 inline double angular_bin::mean_pair_counts(Counter c) const {
   double mean_pair_counts = 0.0;
   switch (c) {
-    case GAL_GAL:
-      for (int k = 0; k < n_region_; k++)
-        mean_pair_counts += gal_gal_region_[k] / (1.0 * n_region_);
-      break;
-    case GAL_RAND:
-      for (int k = 0; k < n_region_; k++)
-        mean_pair_counts += gal_rand_region_[k] / (1.0 * n_region_);
-      break;
-    case RAND_GAL:
-      for (int k = 0; k < n_region_; k++)
-        mean_pair_counts += rand_gal_region_[k] / (1.0 * n_region_);
-      break;
-    case RAND_RAND:
-      for (int k = 0; k < n_region_; k++)
-        mean_pair_counts += rand_rand_region_[k] / (1.0 * n_region_);
-      break;
+  case GAL_GAL:
+    for (int k = 0; k < n_region_; k++)
+      mean_pair_counts += gal_gal_region_[k] / (1.0 * n_region_);
+    break;
+  case GAL_RAND:
+    for (int k = 0; k < n_region_; k++)
+      mean_pair_counts += gal_rand_region_[k] / (1.0 * n_region_);
+    break;
+  case RAND_GAL:
+    for (int k = 0; k < n_region_; k++)
+      mean_pair_counts += rand_gal_region_[k] / (1.0 * n_region_);
+    break;
+  case RAND_RAND:
+    for (int k = 0; k < n_region_; k++)
+      mean_pair_counts += rand_rand_region_[k] / (1.0 * n_region_);
+    break;
   }
   return mean_pair_counts;
 }
 
-inline bool angular_bin::theta_order(
-    const angular_bin& theta_a, const angular_bin& theta_b) {
+inline bool angular_bin::theta_order(const angular_bin& theta_a,
+    const angular_bin& theta_b) {
   return (theta_a.theta_min() < theta_b.theta_min() ? true : false);
 }
 
-inline bool angular_bin::sin_theta_order(
-    const angular_bin& theta_a, const angular_bin& theta_b) {
+inline bool angular_bin::sin_theta_order(const angular_bin& theta_a,
+    const angular_bin& theta_b) {
   return (theta_a.sin2_theta_min() < theta_b.sin2_theta_min() ? true : false);
 }
 
-inline bool angular_bin::reverse_level_order(
-    const angular_bin& theta_a, const angular_bin& theta_b) {
+inline bool angular_bin::reverse_level_order(const angular_bin& theta_a,
+    const angular_bin& theta_b) {
   return (theta_b.level() < theta_a.level() ? true : false);
 }
 

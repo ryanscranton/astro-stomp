@@ -28,7 +28,7 @@ public:
   circle_bound();
   circle_bound(const point& axis, double height);
   virtual ~circle_bound();
-  static double get_height_for_angle(double theta_radians);
+  static double get_height_for_angle(double theta_degrees);
 
   static circle_bound* from_angular_bin(const point& axis,
                                         const angular_bin& bin);
