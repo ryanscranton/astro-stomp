@@ -55,8 +55,8 @@ public:
   // Static constructors are also available to instantiate
   // from point objects (either at a specific input level or at the maximum
   // resolution).
-  static pixel* from_point(const point& p);
-  static pixel* from_point(const point& p, int level);
+  static pixel from_point(const point& p);
+  static pixel from_point(const point& p, int level);
 
   // Accessor methods for our basic parameters.
   inline uint64 id() const {
@@ -192,7 +192,7 @@ public:
 
   // inherited API from bound_interface
   virtual bool is_empty() const {
-    return is_valid();
+    return !is_valid();
   }
   virtual long size() const {
     return is_valid() ? 1 : 0;

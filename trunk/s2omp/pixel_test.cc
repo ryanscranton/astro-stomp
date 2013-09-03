@@ -1,269 +1,187 @@
-/*
- * pixel_test.cc
- *
- *  Created on: Aug 19, 2012
- *      Author: cbmorrison
- */
+#include <gtest/gtest.h>
 
-#include <stdint.h>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <iostream>
-#include <sstream>
 #include "pixel.h"
 #include "point.h"
 
-using namespace s2omp;
+TEST(pixel, TestPixelDefaultConstructor) {
+  // The default constructor without any arguments should produce an invalid
+  // pixel.
+  s2omp::pixel pix;
+  ASSERT_FALSE(pix.is_valid());
 
-void test_pixel_construction() {
-  std::cout << "Testing Pixel Construction...\n";
-  std::cout << "\tTesting Default Constructor...\n";
-  // If my knowledge of pixel IDs is correct this should give us
-  // a leaf pixel on the first face, the "first" quadrant aka the corner.
-  pixel pix = pixel(1);
-
-  // For this pixel these tests should return the id(1), level(30),
-  // is_leaf(true), is_face(false), and area(really tiny);
-  std::cout << "\t\tPixel id=" << pix.id() << ": Should be 1\n"
-      << "\t\tPixel level=" << pix.level() << ": Should be 30\n"
-      << "\t\tis_leaf() : " << pix.is_leaf() << ": Should be true.\n"
-      << "\t\tis_face() : " << pix.is_face() << ": Should be false.\n"
-      << "\t\tarea=" << pix.exact_area() << " should be tiny\n";
-
-  // Now that we've tested the default constructor we should test to see if we
-  // can properly make a pixel from a point at various levels
-  std::cout << "\tTesting from_point Constructor...\n";
-  pixel* pix_leaf = pixel::from_point(point(0, 0, 1, 0));
-  pixel* pix_mid = pixel::from_point(point(0, 0, 1, 0), 15);
-  pixel* pix_face = pixel::from_point(point(0, 0, 1, 0), 0);
-
-  // Even though we are saving the bulk of the geometry tests for later we would
-  // still like to see how the pixel centers compare to the input point. If they
-  // are in the correct hemisphere and close to the z axis we declare success.
-  // To do this we test that the dot product between the centers and the z axis
-  // is greater than zero and also close to 1.
-  std::cout << "\t\tPixel Leaf: id=" << hex << pix_leaf->id() << "; level="
-      << dec << pix_leaf->level() << "; is_leaf=" << pix_leaf->is_leaf()
-      << "; is_face=" << pix_leaf->is_face() << "\n";
-  std::cout << "\t\tPixel Mid: id=" << hex << pix_mid->id() << "; level="
-      << dec << pix_mid->level() << "\n";
-  std::cout << "\t\tPixel Face: id=" << hex << pix_face->id() << "; level="
-      << dec << pix_face->level() << "\n";
-  if (pix_leaf->center_point().dot(point(0, 0, 1, 0)) > 0
-      && pix_mid->center_point().dot(point(0, 0, 1, 0)) > 0
-      && pix_face->center_point().dot(point(0, 0, 1, 0)) > 0) {
-    std::cout << "Successfully created pixels in the correct quadrant.\n";
-  } else {
-    std::cout << "Failed to created pixels in the correct quadrant.\n"
-        << "\tCheck pixel from point creation, point, or dot product.";
-  }
-  delete pix_leaf;
-  delete pix_mid;
-  delete pix_face;
+  // A pixel with id = 1 should be a valid leaf cell.
+  pix = s2omp::pixel(1ULL);
+  ASSERT_TRUE(pix.is_valid());
+  ASSERT_EQ(pix.id(), 1L);
+  ASSERT_EQ(pix.level(), s2omp::MAX_LEVEL);
+  ASSERT_TRUE(pix.is_leaf());
+  ASSERT_FALSE(pix.is_face());
 }
 
-void test_pixel_refinement() {
-  std::cout << "Testing Pixel Refinement...\n";
-  std::cout << "\tTesting Children...\n";
-  // Now we test our ablity return both children and parents of the current
-  // pixel as well as iterating through the pixels.
+TEST(pixel, TestPixelAltConstructors) {
+  // Test constructing a pixel from an input point.
+  s2omp::point p(0.0, 0.0, 1.0, 0.0);
+  s2omp::pixel pix = s2omp::pixel::from_point(p);
 
-  //First we create a face pixel.
-  pixel* pix = pixel::from_point(point(1, 0, 0, 0), 0);
-  pixel_vector pixels;
+  // This should be a leaf cell
+  ASSERT_TRUE(pix.is_leaf());
 
-  // Now we fill the pixels up with a resonable level so we can test that it is
-  // the right length.
-  pix->children(&pixels);
-  if (pixels.size() == 4) {
-    std::cout << "\t\tSuccessfully created child pixels.\n";
-  } else {
-    std::cout << "\t\tFailed to create expected number of child pixels.\n"
-        << "\t\tCheck children method in pixel.";
-    std::cout << "\t\tExpected 4, Got " << pixels.size() << "\n";
-  }
-
-  // Now we fill the pixels up with a resonable level so we can test that it is
-  // the right length.
-  pix->children(5, &pixels);
-  if (pixels.size() == 1024) {
-    std::cout << "Successfully created child pixels.\n";
-  } else {
-    std::cout << "\t\tFailed to create expected number of child pixels.\n"
-        << "\t\tCheck children method in pixel.\n";
-    std::cout << "\t\tExpected 1024, Got " << pixels.size() << "\n";
-  }
-
-  if (pix->contains(*pix)) {
-    std::cout << "Pixel self-containment works\n";
-  } else {
-    std::cout << "Pixel doesn't contain itself.\n";
-  }
-
-  std::cout << "\tTesting Parents...\n";
-  // Now we test so see if you can successfully create parent pixels.
-  delete pix;
-  pixel* pix2 = pixel::from_point(point(1, 0, 0, 0), 30);
-  pixel parent = pix2->parent();
-  std::cout << "\t\tParent level is " << parent.level() << "\n";
-  std::cout << "\t\tParent id | child id:" << parent.id() << " | "
-      << pix2->id() << "\n";
-
-  pixel parent2 = pix2->parent(10);
-  std::cout << "\t\tParent level is " << parent2.level() << "\n";
-  std::cout << "\t\tParent id | child id:" << parent2.id() << " | "
-      << pix2->id() << "\n";
-  delete pix2;
-
-  std::cout << "\tTesting Child Iteration...\n";
-  pixel* pix3 = pixel::from_point(point(1, 0, 0, 0), 15);
-  int n_child = 0;
-  pixel end = pix3->child_end();
-  pixel child = pix3->child_begin();
-  while (child != end) {
-    n_child++;
-    child = child.next();
-  }
-  if (n_child == 4) {
-    std::cout << "\t\tSuccessfully created 4 children.\n";
-  } else {
-    std::cout << "\t\tFailed to create 4 children."
-        << "Check next and child_end/begin.\n";
-    std::cout << "\t\tExpected 4, Got " << n_child << "\n";
-  }
-
-  std::cout << "\tTesting Neighbors...\n";
-  pix3->neighbors(&pixels);
-  if (pixels.size() == 8) {
-    std::cout << "\t\tSuccessfully created 8 neighbors.";
-  } else {
-    std::cout << "\t\tFailed to create 8 children. "
-        << "Check next and child_end/begin.\n" << "Expected 8, Got "
-        << pixels.size() << "\n";
-  }
+  // Now use the constructor to generate a coarser resolution pixel.
+  int level = 15;
+  s2omp::pixel pix_mid = s2omp::pixel::from_point(p, level);
+  ASSERT_EQ(pix_mid.level(), level);
+  ASSERT_FALSE(pix_mid.is_leaf());
+  ASSERT_EQ(pix_mid.id(), pix.parent(level).id());
 }
 
-void test_pixel_geometry() {
-  std::cout << "Testing Pixel Geometry...\n";
-  std::cout << "\tTesting Pixel Area...\n";
-  pixel* pix = pixel::from_point(point(0, 1, 0, 0), 15);
-  std::cout << "\t\tAverage are at level 15: " << pix->average_area()
-      << " 14: " << pix->average_area(14) << " 16: " << pix->average_area(16)
-      << "\n";
+TEST(pixel, TestPixelChildren) {
+  // Test generation and containment ofchild pixels.
 
-  std::cout << "\tTesting Pixel Contains/Intersect...\n";
-  pixel child_begin = pix->child_begin(17);
-  if (pix->contains(point(0, 1, 0, 0))) {
-    std::cout << "\t\tSuccessfully Contains point.\n";
-  } else {
-    std::cout << "\t\tFaield on contains point.\n";
-  }
-  if (pix->contains(child_begin)) {
-    std::cout << "\t\tSuccessfully Contains point.\n";
-  } else {
-    std::cout << "\t\tFaield on contains pixel.\n";
-  }
-  pixel parent = pix->parent(4);
-  if (pix->intersects(parent)) {
-    std::cout << "\t\tSuccessfully Contains point.\n";
-  } else {
-    std::cout << "\t\tFaield on intersect pixel.\n";
-  }
+  // Create a face pixel.
+  s2omp::point p(0, 0, 1, 0);
+  s2omp::pixel pix = s2omp::pixel::from_point(p, 0);
+  s2omp::pixel_vector pixels;
 
-  std::cout << "\tTesting Pixel Vertices/Edges...\n";
-  point_vector vertices;
-  point_vector edges;
-  for (int k = 0; k < 4; ++k) {
-    vertices.push_back(pix->vertex(k));
-    edges.push_back(pix->edge(k));
+  // Verify that the pixel contains itself.
+  ASSERT_TRUE(pix.contains(pix));
+
+  // Generate the 4 immediate children of this pixel.
+  pix.children(&pixels);
+  ASSERT_EQ(pixels.size(), 4);
+
+  // Verify that all children are contained within the starting pixel but not
+  // vice versa
+  for (s2omp::pixel_iterator iter = pixels.begin();
+      iter != pixels.end(); ++iter) {
+    ASSERT_TRUE(iter->is_valid());
+
+    ASSERT_TRUE(pix.contains(*iter));
+    ASSERT_FALSE(iter->contains(pix));
+
+    // Intersection should be true both ways.
+    ASSERT_TRUE(pix.intersects(*iter));
+    ASSERT_TRUE(iter->intersects(pix));
   }
 
-  if (vertices.size() == 4) {
-    std::cout << "\t\tSuccessfully Created 4 Vertices.\n";
-  } else {
-    std::cout << "\t\tFailed on create vertices.\n";
-  }
-
-  if (edges.size() == 4) {
-    std::cout << "\t\tSuccessfully Created 4 Edges.\n";
-  } else {
-    std::cout << "\t\tFailed on create edges.\n";
-  }
+  // Now go a few levels deeper and verify that we've picked up a factor of 4
+  // pixels for each level.
+  int level = 5;
+  pix.children(level, &pixels);
+  ASSERT_EQ(pixels.size(), 1024); // 4^5 = 1024
 }
 
-void test_pixel_filling_fraction() {
-  int level = 25;
-  pixel* pix = pixel::from_point(point(0, 1, 0, 0), level);
+TEST(pixel, TestPixelParents) {
+  // Test parent creation and containment.
 
-  uint64 valid_pixels = 0;
-  uint64 range_min = pix->range_min().id();
-  uint64 range_max = pix->range_max().id();
-  uint64 range_ids = range_max - range_min + 1;
-  for (uint64 k = range_min; k <= range_max; k++) {
-    pixel test = pixel(k);
-    if (test.is_valid())
-      valid_pixels++;
-  }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
-      * valid_pixels / range_ids << " percent valid\n";
+  // Create a leaf pixel
+  s2omp::point p(0, 0, 1, 0);
+  s2omp::pixel pix = s2omp::pixel::from_point(p, s2omp::MAX_LEVEL);
 
-  level = 20;
-  pixel parent = pix->parent(level);
-  valid_pixels = 0;
-  range_min = parent.range_min().id();
-  range_max = parent.range_max().id();
-  range_ids = range_max - range_min + 1;
-  for (uint64 k = range_min; k <= range_max; k++) {
-    pixel test = pixel(k);
-    if (test.is_valid())
-      valid_pixels++;
-  }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
-      * valid_pixels / range_ids << " percent valid\n";
+  // Verify that the immediate parent satisfies the expect level and containment
+  // relations
+  s2omp::pixel parent = pix.parent();
+  ASSERT_TRUE(parent.is_valid());
+  ASSERT_FALSE(parent.is_leaf());
+  ASSERT_EQ(parent.level(), s2omp::MAX_LEVEL - 1);
+  ASSERT_TRUE(parent.contains(pix));
+  ASSERT_FALSE(pix.contains(parent));
 
-  level = 17;
-  parent = pix->parent(level);
-  valid_pixels = 0;
-  range_min = parent.range_min().id();
-  range_max = parent.range_max().id();
-  range_ids = range_max - range_min + 1;
-  for (uint64 k = range_min; k <= range_max; k++) {
-    pixel test = pixel(k);
-    if (test.is_valid())
-      valid_pixels++;
-  }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
-      * valid_pixels / range_ids << " percent valid\n";
-
-  level = 15;
-  parent = pix->parent(level);
-  valid_pixels = 0;
-  range_min = parent.range_min().id();
-  range_max = parent.range_max().id();
-  range_ids = range_max - range_min + 1;
-  for (uint64 k = range_min; k <= range_max; k++) {
-    pixel test = pixel(k);
-    if (test.is_valid())
-      valid_pixels++;
-  }
-  std::cout << "Level " << level << ": " << range_ids << " indices, " << 100.0
-      * valid_pixels / range_ids << " percent valid\n";
+  // Now go up a few levels and check again.
+  int level = 10;
+  s2omp::pixel uber_parent = pix.parent(level);
+  ASSERT_TRUE(uber_parent.is_valid());
+  ASSERT_EQ(uber_parent.level(), level);
+  ASSERT_TRUE(uber_parent.contains(pix));
+  ASSERT_TRUE(uber_parent.contains(parent));
+  ASSERT_EQ(uber_parent.id(), parent.parent(level).id());
 }
 
-void pixel_unit_tests() {
-  test_pixel_construction(); // test all of pixels constructor methods and
-  // get/setters.
-  test_pixel_refinement(); // test get children and pixel area form the face
-  // pixel to the leaf(and back) as well as accessing
-  // neighbor pixels.
-  test_pixel_geometry(); // Test that all pixel methods for accessing
-  // vertices/edges as well as contains and may_intersect
-  test_pixel_filling_fraction();
+TEST(pixel, TestPixelIteration) {
+  // Verify that pixel id ordering works as expected
+
+  // Create a leaf cell in the middle of a face.
+  s2omp::point p(0, 0, 1, 0);
+  s2omp::pixel pix = s2omp::pixel::from_point(p, s2omp::MAX_LEVEL);
+  ASSERT_LT(pix.id(), pix.next().id());
+  ASSERT_GT(pix.id(), pix.prev().id());
+
+  // Reset to a corner pixel and this no longer holds.
+  pix = s2omp::pixel(1ULL);
+  ASSERT_FALSE(pix.prev().id() == pix.prev_wrap().id());
+  ASSERT_GT(pix.prev_wrap().id(), pix.id());
 }
 
-int main(int argc, char **argv) {
-  pixel_unit_tests();
+TEST(pixel, TestPixelNeighbors) {
+  // Test creation of pixel neighbors
 
-  return 0;
+  // Create a leaf cell in the middle of a face.
+  s2omp::point p(0, 0, 1, 0);
+  s2omp::pixel pix = s2omp::pixel::from_point(p, s2omp::MAX_LEVEL);
+  s2omp::pixel_vector neighbors;
+
+  // For most pixels, the expected number of neighbors is 8
+  pix.neighbors(&neighbors);
+  EXPECT_EQ(neighbors.size(), 8);
+  for (s2omp::pixel_iterator iter = neighbors.begin();
+      iter != neighbors.end(); ++iter) {
+    ASSERT_TRUE(iter->is_valid());
+    ASSERT_EQ(pix.level(), iter->level());
+
+    ASSERT_FALSE(pix.contains(*iter));
+    ASSERT_FALSE(iter->contains(pix));
+
+    ASSERT_FALSE(pix.intersects(*iter));
+  }
+
+  // For face pixels, there should only be 4 neighbors.
+  s2omp::pixel face = pix.parent(0);
+  face.neighbors(&neighbors);
+  ASSERT_TRUE(face.is_face());
+  EXPECT_EQ(neighbors.size(), 8);
+
+  // If we ask for the neighbors at a finer resolution than our current pixel,
+  // then we should expect more of them.  At one level finer, we should get
+  // twice as many edge neighbors and an equal number of vertex neighbors,
+  // raising the number from 8 to 12.
+  s2omp::pixel parent = pix.parent();
+  parent.neighbors(s2omp::MAX_LEVEL, &neighbors);
+  EXPECT_EQ(neighbors.size(), 12);
+}
+
+TEST(pixel, TestPixelBoundBasics) {
+  // Testing the basic inherited interface from bound_interface.
+
+  // An invalid pixel should be empty with size == 0.
+  s2omp::pixel pix;
+  ASSERT_TRUE(pix.is_empty());
+  ASSERT_EQ(pix.size(), 0);
+
+  // A valid pixel should not be empty and should have size == 1.
+  pix = s2omp::pixel(1);
+  ASSERT_FALSE(pix.is_empty());
+  ASSERT_EQ(pix.size(), 1);
+
+  // A pixel should contain its center and center_point.
+  ASSERT_TRUE(pix.contains(pix.center_point()));
+  ASSERT_TRUE(pix.contains(pix.get_center()));
+
+  // Verify some simple contained_area calculations.
+  s2omp::pixel parent = pix.parent();
+  ASSERT_DOUBLE_EQ(pix.exact_area(), pix.contained_area(pix));
+  ASSERT_DOUBLE_EQ(pix.exact_area(), pix.contained_area(parent));
+  ASSERT_DOUBLE_EQ(pix.exact_area(), parent.contained_area(pix));
+
+  // After clearing a pixel, it should be empty.
+  pix.clear();
+  ASSERT_TRUE(pix.is_empty());
+  ASSERT_FALSE(pix.is_valid());
+}
+
+TEST(pixel, TestPixelScales) {
+  // Not really a test, but rather a delineation of pixel scales.
+  for (int level = 0; level <= s2omp::MAX_LEVEL; level++) {
+    std::cout << "Level " << level << ": Average area = " <<
+        s2omp::pixel::average_area(level) << " sq. deg.; Average scale = " <<
+        sqrt(s2omp::pixel::average_area(level)) << " deg.\n";
+  }
 }

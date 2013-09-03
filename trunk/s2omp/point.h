@@ -95,20 +95,32 @@ public:
       double* elon_rad, double* elat_rad);
   static void ecliptic_to_equatorial(double elon_rad, double elat_rad,
       double* ra_rad, double* dec_rad);
+  static void galactic_to_ecliptic(double glon_rad, double glat_rad,
+      double* elon_rad, double* elat_rad);
+  static void ecliptic_to_galactic(double elon_rad, double elat_rad,
+      double* glon_rad, double* glat_rad);
 
-  inline double unit_sphere_x() const {
+  bool is_normalized() const;
+
+  void normalize();
+
+  inline double x() const {
     return point_.x();
   }
-  inline double unit_sphere_y() const {
+  inline double y() const {
     return point_.y();
   }
-  inline double unit_sphere_z() const {
+  inline double z() const {
     return point_.z();
   }
 
-  double unit_sphere_x(Coordinate c) const;
-  double unit_sphere_y(Coordinate c) const;
-  double unit_sphere_z(Coordinate c) const;
+  double unit_sphere_x();
+  double unit_sphere_y();
+  double unit_sphere_z();
+
+  double unit_sphere_x(Coordinate c);
+  double unit_sphere_y(Coordinate c);
+  double unit_sphere_z(Coordinate c);
 
   inline double weight() const {
     return weight_;
@@ -170,6 +182,7 @@ private:
 
   S2Point point_;
   double weight_;
+  static double const NORMALIZATION_PRECISION = 1.0e-6;
 };
 
 inline bool operator==(point const& a, point const& b) {
@@ -201,8 +214,7 @@ inline point point::operator-() const {
 }
 
 inline double point::dot(const point& p) const {
-  return point_.x() * p.unit_sphere_x() + point_.y() * p.unit_sphere_y()
-      + point_.z() * p.unit_sphere_z();
+  return point_.x() * p.x() + point_.y() * p.y() + point_.z() * p.z();
 }
 
 inline uint64 point::id() const {
@@ -226,7 +238,7 @@ inline point point::s2point_to_point(const S2Point& p) {
 }
 
 inline S2Point point::point_to_s2point(const point& p) {
-  return S2Point(p.unit_sphere_x(), p.unit_sphere_y(), p.unit_sphere_z());
+  return S2Point(p.x(), p.y(), p.z());
 }
 
 } // end namespace s2omp
