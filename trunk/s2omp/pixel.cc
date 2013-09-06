@@ -26,19 +26,19 @@ pixel::pixel() {
 }
 
 pixel pixel::from_point(const point& p) {
-  return pixel(p.id());
+  return pixel(S2CellId::FromPoint(p.s2point()));
 }
 
 pixel pixel::from_point(const point& p, int level) {
-  return pixel(p.id(level));
+  return from_point(p).parent(level);
 }
 
 pixel pixel::parent() const {
-  return pixel(id_.parent().id());
+  return pixel(id_.parent());
 }
 
 pixel pixel::parent(int level) const {
-  return pixel(id_.parent(level).id());
+  return pixel(id_.parent(level));
 }
 
 void pixel::children(pixel_vector* child_pixels) const {
@@ -46,7 +46,7 @@ void pixel::children(pixel_vector* child_pixels) const {
   if (!is_leaf()) {
     child_pixels->reserve(4);
     for (int k = 0; k < 4; k++) {
-      child_pixels->push_back(pixel(id_.child(k).id()));
+      child_pixels->push_back(pixel(id_.child(k)));
     }
   }
 }
@@ -54,43 +54,42 @@ void pixel::children(pixel_vector* child_pixels) const {
 void pixel::children(int level, pixel_vector* child_pixels) const {
   child_pixels->clear();
   if (!is_leaf() && level <= MAX_LEVEL) {
-    for (pixel c = child_begin(level); c != child_end(level); c
-        = c.next()) {
+    for (pixel c = child_begin(level); c != child_end(level); c = c.next()) {
       child_pixels->push_back(c);
     }
   }
 }
 
 pixel pixel::child_begin() const {
-  return pixel(id_.child_begin().id());
+  return pixel(id_.child_begin());
 }
 
 pixel pixel::child_begin(int level) const {
-  return pixel(id_.child_begin(level).id());
+  return pixel(id_.child_begin(level));
 }
 
 pixel pixel::child_end() const {
-  return pixel(id_.child_end().id());
+  return pixel(id_.child_end());
 }
 
 pixel pixel::child_end(int level) const {
-  return pixel(id_.child_end(level).id());
+  return pixel(id_.child_end(level));
 }
 
 pixel pixel::next() const {
-  return pixel(id_.next().id());
+  return pixel(id_.next());
 }
 
 pixel pixel::prev() const {
-  return pixel(id_.prev().id());
+  return pixel(id_.prev());
 }
 
 pixel pixel::next_wrap() const {
-  return pixel(id_.next_wrap().id());
+  return pixel(id_.next_wrap());
 }
 
 pixel pixel::prev_wrap() const {
-  return pixel(id_.prev_wrap().id());
+  return pixel(id_.prev_wrap());
 }
 
 S2Cell pixel::get_cell() const {
@@ -106,28 +105,27 @@ double pixel::exact_area() const {
 }
 
 bool pixel::contains(const point& p) const {
-  return id_.contains(S2CellId(p.id()));
+  return id_.contains(S2CellId::FromPoint(p.s2point()));
 }
 
 bool pixel::contains(const pixel& pix) const {
-  return id_.contains(S2CellId(pix.id()));
+  return id_.contains(pix.get_cellid());
 }
 
 bool pixel::intersects(const pixel& pix) const {
-  return id_.intersects(S2CellId(pix.id()));
+  return id_.intersects(pix.get_cellid());
 }
 
 pixel pixel::range_min() const {
-  return pixel(id_.range_min().id());
+  return pixel(id_.range_min());
 }
 
 pixel pixel::range_max() const {
-  return pixel(id_.range_max().id());
+  return pixel(id_.range_max());
 }
 
 point pixel::center_point() const {
-  // point will normalize itself.
-  return point::s2point_to_point(id_.ToPointRaw());
+  return point::s2point_to_point(id_.ToPoint());
 }
 
 point pixel::vertex(int k) const {
@@ -235,7 +233,7 @@ void pixel::neighbors(int level, pixel_vector* pixels) const {
     id_.AppendAllNeighbors(level, &neighbor_ids);
     pixels->clear();
     for (unsigned int k = 0; k < neighbor_ids.size(); k++) {
-      pixels->push_back(pixel(neighbor_ids[k].id()));
+      pixels->push_back(pixel(neighbor_ids[k]));
     }
   }
 }

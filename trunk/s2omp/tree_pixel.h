@@ -200,6 +200,10 @@ public:
     return !points_.empty();
   }
 
+  // Overriding the method in pixel since we carry a copy of the S2Cell to
+  // save time constructing it for intersection tests with bounds.
+  virtual S2Cell get_cell() const;
+
   // inherited API from bound_interface
   virtual bool is_empty() const {
     return point_count_ == 0;
@@ -228,6 +232,7 @@ private:
   uint maximum_points_;
   long point_count_;
   double weight_;
+  S2Cell cell_;
 };
 
 class nearest_neighbor_pixel {

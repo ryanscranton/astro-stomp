@@ -119,7 +119,7 @@ void circle_bound::get_weighted_random_points(long n_points,
 }
 
 bool circle_bound::is_empty() const {
-  return height_ < 0;
+  return !is_valid();
 }
 
 long circle_bound::size() const {

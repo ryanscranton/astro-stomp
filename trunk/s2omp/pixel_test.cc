@@ -177,6 +177,27 @@ TEST(pixel, TestPixelBoundBasics) {
   ASSERT_FALSE(pix.is_valid());
 }
 
+TEST(pixel, TestPixelCenter) {
+  // Test the routines for generating the pixel center.
+
+  // Start with a pixel at the north pole.
+  s2omp::point p(0.0, 0.0, 1.0, 1.0);
+  s2omp::pixel pix(p.id());
+
+  s2omp::point center = pix.center_point();
+  ASSERT_TRUE(center.is_normalized());
+  ASSERT_NEAR(p.dot(center), 1.0, 1.0e-5);
+  ASSERT_TRUE(pix.contains(center));
+
+  // Now use a point that's well away from the pole.
+  p = s2omp::point(1.0, 1.0, 1.0, 1.0);
+  pix = s2omp::pixel::from_point(p);
+  center = pix.center_point();
+  ASSERT_TRUE(center.is_normalized());
+  ASSERT_NEAR(p.dot(center), 1.0, 1.0e-5);
+  ASSERT_TRUE(pix.contains(center));
+}
+
 TEST(pixel, TestPixelScales) {
   // Not really a test, but rather a delineation of pixel scales.
   for (int level = 0; level <= s2omp::MAX_LEVEL; level++) {

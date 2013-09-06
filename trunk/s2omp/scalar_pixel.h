@@ -19,6 +19,10 @@
 #ifndef SCALAR_PIXEL_H_
 #define SCALAR_PIXEL_H_
 
+#include "core.h"
+#include "bound_interface.h"
+#include "pixel.h"
+
 namespace s2omp {
 
 class scalar_pixel;
@@ -67,15 +71,6 @@ public:
   inline long n_points() const {
     return n_points_;
   }
-  inline double unit_sphere_x() const {
-    return unit_sphere_x_;
-  }
-  inline double unit_sphere_y() const {
-    return unit_sphere_y_;
-  }
-  inline double unit_sphere_z() const {
-    return unit_sphere_z_;
-  }
 
   inline void set_intensity(double intensity) {
     intensity_ = intensity;
@@ -104,11 +99,17 @@ public:
     return is_overdensity_;
   }
 
+  // For the purposes of speeding up iterations in correlation functions, we
+  // override the default behavior for get_center();
+  inline virtual point get_center() const {
+    return center_;
+  }
+
 private:
   scalar_pixel();
 
   double intensity_, weight_;
-  double unit_sphere_x_, unit_sphere_y_, unit_sphere_z_;
+  point center_;
   long n_points_;
   bool is_overdensity_;
 };
@@ -118,6 +119,7 @@ scalar_pixel::scalar_pixel() {
   intensity_ = 0.0;
   weight_ = 0.0;
   n_points_ = 0L;
+  center_ = point();
 }
 
 scalar_pixel::scalar_pixel(uint64 id) {
@@ -125,10 +127,7 @@ scalar_pixel::scalar_pixel(uint64 id) {
   intensity_ = 0.0;
   weight_ = 0.0;
   n_points_ = 0L;
-  point p = center_point();
-  unit_sphere_x_ = p.unit_sphere_x();
-  unit_sphere_y_ = p.unit_sphere_y();
-  unit_sphere_z_ = p.unit_sphere_z();
+  center_ = center_point();
 }
 
 scalar_pixel::scalar_pixel(
@@ -137,10 +136,7 @@ scalar_pixel::scalar_pixel(
   intensity_ = intensity;
   weight_ = weight;
   n_points_ = n_points;
-  point p = center_point();
-  unit_sphere_x_ = p.unit_sphere_x();
-  unit_sphere_y_ = p.unit_sphere_y();
-  unit_sphere_z_ = p.unit_sphere_z();
+  center_ = center_point();
 }
 
 scalar_pixel::~scalar_pixel() {

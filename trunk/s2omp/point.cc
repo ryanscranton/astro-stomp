@@ -410,11 +410,11 @@ point point::rotate_about(const point& p, const point& axis,
 }
 
 pixel point::to_pixel() const {
-  return pixel(id());
+  return pixel(S2CellId::FromPoint(point_));
 }
 
 pixel point::to_pixel(int level) const {
-  return pixel(id(level));
+  return to_pixel().parent(level);
 }
 
 void point::set_latlon_degrees(double lat_deg, double lon_deg, Coordinate c) {

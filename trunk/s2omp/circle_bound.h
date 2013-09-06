@@ -45,6 +45,16 @@ public:
     return height_;
   }
 
+  // Change the central axis
+  inline void set_axis(const point& p) {
+    axis_ = p;
+  }
+
+  // Boolean to indicate whether or not the circle_bound is valid.
+  inline bool is_valid() const {
+    return double_le(0.0, height_) && double_ge(2.0, height_);
+  }
+
   // circle_bound is the default object for describing the rough bound
   // for any bound_interface-derived object.  In order to return a circle_bound,
   // many objects will start with some center point at then expand the circle

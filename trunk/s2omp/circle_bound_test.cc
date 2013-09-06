@@ -9,6 +9,7 @@ TEST(circle_bound, TestCircleBoundDefaultConstructor) {
   // The default constructor without any arguments should produce an invalid
   // circle_bound
   s2omp::circle_bound bound;
+  ASSERT_FALSE(bound.is_valid());
   ASSERT_TRUE(bound.is_empty());
   ASSERT_EQ(bound.size(), 0);
 
