@@ -66,10 +66,10 @@ typedef std::vector<angular_bin *> theta_ptr_vector;
 typedef theta_ptr_vector::const_iterator theta_ptr_iterator;
 
 // First some trigonometric values.
-static double const PI = 2.0*asin(1.0);
-static double const DEG_TO_RAD = PI/180.0;
-static double const RAD_TO_DEG = 180.0/PI;
-static double const STRAD_TO_DEG2 = 180.0*180.0/(PI*PI);
+static double const PI = 2.0 * asin(1.0);
+static double const DEG_TO_RAD = PI / 180.0;
+static double const RAD_TO_DEG = 180.0 / PI;
+static double const STRAD_TO_DEG2 = 180.0 * 180.0 / (PI * PI);
 
 // Angle of obliquity for converting Equatorial to Ecliptic coordinates:
 // 23° 26′ 21.406″ from JPL (2000) in J2000.
