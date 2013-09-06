@@ -29,16 +29,19 @@ tree_pixel::tree_pixel() {
   // The default constructor is an invalid pixel.
   set_id(0);
   initialize_node(DEFAULT_MAX_POINTS);
+  cell_ = S2Cell(S2CellId(id()));
 }
 
 tree_pixel::tree_pixel(uint64 id) {
   set_id(id);
   initialize_node(DEFAULT_MAX_POINTS);
+  cell_ = S2Cell(S2CellId(id));
 }
 
 tree_pixel::tree_pixel(uint64 id, uint max_points) {
   set_id(id);
   initialize_node(max_points);
+  cell_ = S2Cell(S2CellId(id));
 }
 
 tree_pixel::~tree_pixel() {
@@ -523,6 +526,10 @@ void tree_pixel::clear() {
     delete *iter;
   }
   subnodes_.clear();
+}
+
+S2Cell tree_pixel::get_cell() const {
+  return cell_;
 }
 
 tree_neighbor::tree_neighbor(const point& reference_point) {

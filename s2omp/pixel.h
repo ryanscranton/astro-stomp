@@ -22,8 +22,6 @@
 #include "core.h"
 #include "bound_interface.h"
 
-#include "MersenneTwister.h"
-
 // S2 Includes for pixel.h
 #include <s2/s2.h>
 #include <s2/s2cellid.h>
@@ -50,6 +48,7 @@ public:
   // pixelization).
   pixel();
   explicit pixel(uint64 id) : id_(S2CellId(id)) {}
+  explicit pixel(S2CellId id) : id_(id) {}
   virtual ~pixel() {};
 
   // Static constructors are also available to instantiate
@@ -184,7 +183,10 @@ public:
   void neighbors(pixel_vector* pixels) const;
   void neighbors(int level, pixel_vector* pixels) const;
 
-  S2Cell get_cell() const;
+  virtual S2Cell get_cell() const;
+  inline S2CellId get_cellid() const {
+    return id_;
+  }
 
   inline static bool pixel_order(const pixel& a, const pixel& b) {
     return a.id() < b.id();

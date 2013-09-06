@@ -130,10 +130,11 @@ bool tree_union::find_pairs_with_regions(const point_vector& points,
   pixel_vector pixels;
   int point_region = INVALID_REGION_VALUE;
 
+  annulus_bound* bound = annulus_bound::from_angular_bin(*(points.begin()), *bin);
   for (point_iterator point_iter = points.begin(); point_iter != points.end(); ++point_iter) {
     // Find the covering pixels for an annulus bound defined by this point
     // and the input angular_bin.
-    annulus_bound* bound = annulus_bound::from_angular_bin(*point_iter, *bin);
+    bound->set_axis(*point_iter);
     bound->get_simple_covering(level_, &pixels);
 
     // Set our point_region value based on the input region_map if we're using
@@ -152,9 +153,8 @@ bool tree_union::find_pairs_with_regions(const point_vector& points,
       bin->add_to_pair_wtheta(pairs.total_weight, pairs.n_pairs, point_region,
           region_map::find_region(regions, *cover_iter));
     }
-
-    delete bound;
   }
+  delete bound;
 
   return true;
 }

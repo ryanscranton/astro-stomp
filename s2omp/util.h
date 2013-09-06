@@ -61,6 +61,37 @@ private:
   static const double BB_;
 };
 
+class timer {
+  // A simple class to handle time keeping inside of a program.  The return
+  // values are in seconds, so the primary goal here is not high precision so
+  // much as providing a tool for tuning algorithm performance on a fixed data
+  // set.
+ public:
+  timer() {
+    gettimeofday(&start_, NULL);
+    stop_ = start_;
+  }
+
+  inline void start_timer() {
+    gettimeofday(&start_, NULL);
+  }
+
+  inline void stop_timer() {
+    gettimeofday(&stop_, NULL);
+  }
+
+  inline double elapsed_time() {
+    timeval interval;
+    timersub(&stop, &start, &interval);
+    // Need to convert tv_usec from microseconds to seconds.
+    return interval.tv_sec + interval.tv_usec/1000000.0;
+  }
+
+ private:
+  timeval start_;
+  timeval stop_;
+};
+
 // Define our default WMAP5 flat, LCDM cosmology.
 double cosmology::omega_m_ = 0.2736;
 double cosmology::h_ = 0.705;
@@ -69,61 +100,81 @@ const double cosmology::BB_ = 0.315;
 double cosmology::a_ = cosmology::AA_*cosmology::omega_m;
 double cosmology::b_ = cosmology::BB_*sqrt(cosmology::omega_m);
 
-inline double cosmology::omega_m() {
+double cosmology::omega_m() {
   return omega_m_;
 }
 
-inline double cosmology::hubble_constant() {
+double cosmology::hubble_constant() {
   return h_*100.0;
 }
 
-inline double cosmology::hubble_distance() {
+double cosmology::hubble_distance() {
   return 3000.0/h_;
 }
 
-inline double cosmology::omega_l() {
+double cosmology::omega_l() {
   return 1.0 - omega_m_;
 }
 
-inline void cosmology::set_omega_m(double new_omega_m) {
+void cosmology::set_omega_m(double new_omega_m) {
   omega_m_ = new_omega_m;
   a_ = AA_*omega_m_;
   b_ = BB_*sqrt(omega_m_);
 }
 
-inline void cosmology::set_hubble_constant(double hubble) {
-	h_ = hubble/100.0;
+void cosmology::set_hubble_constant(double hubble) {
+  h_ = hubble/100.0;
 }
 
-inline void cosmology::set_omega_l(double omega_lambda) {
+void cosmology::set_omega_l(double omega_lambda) {
   omega_m_ = 1.0 - omega_lambda;
   a_ = AA_*omega_m_;
   b_ = BB_*sqrt(omega_m_);
 }
 
-inline double cosmology::comoving_distance(double z) {
+double cosmology::comoving_distance(double z) {
   // In Mpc/h.
   return hubble_distance()*z/sqrt(1.0 + a_*z + b_*z*z);
 }
 
-inline double cosmology::angular_diameter_distance(double z) {
+double cosmology::angular_diameter_distance(double z) {
   // In Mpc/h.
   return comoving_distance(z)/(1.0+z);
 }
 
-inline double cosmology::luminosity_distance(double z) {
+double cosmology::luminosity_distance(double z) {
   // In Mpc/h.
   return comoving_distance(z)*(1.0+z);
 }
 
-inline double cosmology::projected_distance(double z, double theta) {
+double cosmology::projected_distance(double z, double theta_deg) {
   // where theta is assumed to be in degrees and the return value in Mpc/h.
   return theta*DEG_TO_RAD*angular_diameter_distance(z);
 }
 
-inline double cosmology::projected_angle(double z, double radius) {
+double cosmology::projected_angle(double z, double radius) {
   // where radius is in Mpc/h and the return angle is in degrees.
   return RAD_TO_DEG*radius/angular_diameter_distance(z);
+}
+
+timer::timer() {
+  gettimeofday(&start_, NULL);
+  stop_ = start_;
+}
+
+void timer::start_timer() {
+  gettimeofday(&start_, NULL);
+}
+
+void timer::stop_timer() {
+  gettimeofday(&stop_, NULL);
+}
+
+double timer::elapsed_time() {
+  timeval interval;
+  timersub(&stop, &start, &interval);
+  // Need to convert tv_usec from microseconds to seconds.
+  return interval.tv_sec + interval.tv_usec/1000000.0;
 }
 
 } // end namespace s2omp

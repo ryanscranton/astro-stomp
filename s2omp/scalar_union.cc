@@ -448,11 +448,11 @@ bool scalar_union::correlate_unions(scalar_union& s, const region_map& regions,
   }
 
   theta->reset_pixel_wtheta();
+  annulus_bound* bound = annulus_bound::from_angular_bin(
+      pixels_.begin()->center_point(), *theta);
   for (scalar_const_iterator iter = pixels_.begin(); iter != pixels_.end(); ++iter) {
     // First, calculate the center covering for an annulus_bound, centered on
     // this pixel.
-    annulus_bound* bound = annulus_bound::from_angular_bin(
-        iter->center_point(), *theta);
     pixel_vector covering;
     bound->get_center_covering(level_, &covering);
 
@@ -502,9 +502,8 @@ bool scalar_union::correlate_unions(scalar_union& s, const region_map& regions,
         }
       }
     }
-
-    delete bound;
   }
+  delete bound;
 
   return true;
 }
