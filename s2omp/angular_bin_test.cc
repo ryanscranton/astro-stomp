@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "angular_bin-inl.h"
+
 #include "pixel.h"
 #include "point.h"
 

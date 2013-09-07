@@ -29,10 +29,10 @@
 #include "core.h"
 #include "bound_interface.h"
 #include "circle_bound.h"
+#include "pixel.h"
 
 namespace s2omp {
 
-class pixel;
 class point;
 
 class pixel_union : public bound_interface {
@@ -52,7 +52,6 @@ public:
   // pixels will be sorted by index and child pixels will be combined into
   // parent pixels where possible.
   void init(pixel_vector& pixels);
-  void init_swap(pixel_vector* pixels);
 
   // In some cases, we may wish to soften the edges of our pixel_union (for
   // instance if the current union is formed from combining multiple high
@@ -65,24 +64,28 @@ public:
   // on pixel_unions: union, intersection and exclusion.  In all cases, the
   // contents of the current pixel_union are replaced by the results of the
   // operation, which may lead to an empty pixel_union.
-  void combine(const pixel_union& u);
-  void intersect(const pixel_union& u);
-  void exclude(const pixel_union& u);
+  void combine_with(const pixel_union& pix_union);
+  void intersect_with(const pixel_union& pix_union);
+  void exclude_from(const pixel_union& pix_union);
 
   // Alternatively, we can initialize this pixel_union from the results of
   // doing a union, intersection or exclusion between two other pixel_unions.
-  void init_from_combination(pixel_union& a, pixel_union& b);
-  void init_from_intersection(pixel_union& a, pixel_union& b);
-  void init_from_exclusion(pixel_union& a, pixel_union& b);
+  void init_from_combination(const pixel_union& a, const pixel_union& b);
+  void init_from_intersection(const pixel_union& a, const pixel_union& b);
+  void init_from_exclusion(const pixel_union& a, const pixel_union& b);
 
   bool intersects(const pixel& pix) const;
+  bool may_intersect(const pixel_union& pix_union) const;
+  bool intersects(const pixel_union& pix_union) const;
 
-  // Method for returning the child pixels that intersect with the union
+  // Method for returning the child pixels that intersect with a union
   void pixel_intersection(const pixel& pix, pixel_vector* pixels) const;
-  void pixel_exclusion(const pixel& pix, pixel_vector* pixels) const;
-  static void pixel_intersection(const pixel& pix, const pixel_union& u,
+  static void pixel_intersection(const pixel_union& pix_union, const pixel& pix,
                                  pixel_vector* pixels);
-  static void pixel_exclusion(const pixel& pix, const pixel_union& u,
+
+  // Same for returning the parts of the input pixel that are outside a union.
+  void pixel_exclusion(const pixel& pix, pixel_vector* pixels) const;
+  static void pixel_exclusion(const pixel_union& pix_union, const pixel& pix,
                        pixel_vector* pixels);
 
   inline int min_level() const {
@@ -90,6 +93,16 @@ public:
   }
   inline int max_level() const {
     return max_level_;
+  }
+
+  // Like with pixel, we can define a range_min and range_max of the pixels
+  // that bound our pixel_union.  For compact regions, this can be used for
+  // quick and dirty random point generation.
+  inline pixel range_min() const {
+    return range_min_;
+  }
+  inline pixel range_max() const {
+    return range_max_;
   }
 
   inline pixel_iterator begin() const {
@@ -101,7 +114,7 @@ public:
 
   // API from bound_interface.h
   inline virtual bool is_empty() const {
-    return !pixels_.empty();
+    return pixels_.empty();
   }
   inline virtual long size() const {
     return pixels_.size();
@@ -138,8 +151,9 @@ private:
   // a pixel is in our union.
 
   pixel_vector pixels_;
-  pixel_vector covering_;
   circle_bound bound_;
+  pixel range_min_;
+  pixel range_max_;
   int min_level_, max_level_;
   double area_;
   bool initialized_, initialized_bound_;
