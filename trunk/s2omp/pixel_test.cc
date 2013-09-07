@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "pixel.h"
+
 #include "point.h"
 
 TEST(pixel, TestPixelDefaultConstructor) {

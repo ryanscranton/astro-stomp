@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "pixel.h"
 #include "point.h"
+
+#include "pixel.h"
 
 TEST(point, TestPointDefaultConstructor) {
   // The default constructor without any arguments should produce an invalid
