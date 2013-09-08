@@ -2,6 +2,7 @@
 
 #include "pixel.h"
 
+#include "circle_bound.h"
 #include "point.h"
 
 TEST(pixel, TestPixelDefaultConstructor) {
@@ -197,6 +198,23 @@ TEST(pixel, TestPixelCenter) {
   ASSERT_TRUE(center.is_normalized());
   ASSERT_NEAR(p.dot(center), 1.0, 1.0e-5);
   ASSERT_TRUE(pix.contains(center));
+}
+
+TEST(pixel, TestPixelBound) {
+  // Test the virtual methods for finding the circle_bound enclosing the
+  // pixel.
+
+  // Start with a pixel at the north pole.
+  int level = 20;
+  s2omp::point p(0.0, 0.0, 1.0, 1.0);
+  s2omp::pixel pix(p.id(level));
+
+  s2omp::circle_bound bound = pix.get_bound();
+  ASSERT_FALSE(bound.is_empty());
+  ASSERT_TRUE(bound.is_valid());
+  ASSERT_TRUE(bound.contains(p));
+  ASSERT_TRUE(bound.contains(pix));
+  ASSERT_TRUE(bound.contains(pix.center_point()));
 }
 
 TEST(pixel, TestPixelScales) {

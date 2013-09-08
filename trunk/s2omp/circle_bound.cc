@@ -79,7 +79,7 @@ void circle_bound::add_circle_bound(const circle_bound& bound) {
   } else {
     // Calculate the maximum angular distance between the axis and the edge of
     // the input circle_bound.  Increase the height accordingly.
-    double angle = axis_.angular_distance(bound.axis()) + bound.radius();
+    double angle = axis_.angular_distance_deg(bound.axis()) + bound.radius();
     height_ = max(height_, FLOAT_ROUND_UP * get_height_for_angle(angle));
   }
 }
@@ -137,7 +137,7 @@ double circle_bound::area() const {
 
 bool circle_bound::contains(const point& p) const {
   double p_height = 1.0 - axis_.dot(p);
-  return height_ >= p_height;
+  return double_ge(height_, p_height);
 }
 
 bool circle_bound::contains(const pixel& pix) const {

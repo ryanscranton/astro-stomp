@@ -312,14 +312,6 @@ double point::dot(const point& a, const point& b) {
   return a.x() * b.x() + a.y() * b.y() + a.z() * b.z();
 }
 
-double point::angular_distance(const point& p) const {
-  return acos(dot(p));
-}
-
-double point::angular_distance(const point& a, const point& b) {
-  return acos(dot(a, b));
-}
-
 // TODO(cbmorrison) Not sure what the rules should be for returning the weight
 // on the cross product of the points. Currently I return the weight of the
 // first point.
@@ -333,6 +325,34 @@ point point::cross(const point& a, const point& b) {
   double z = a.x() * b.y() - a.y() * b.x();
 
   return point(x, y, z, a.weight());
+}
+
+double point::cross_norm(const point& p) const {
+  return cross_norm(*this, p);
+}
+
+double point::cross_norm(const point& a, const point& b) {
+  double x = a.y() * b.z() - a.z() * b.y();
+  double y = a.z() * b.x() - a.x() * b.z();
+  double z = a.x() * b.y() - a.y() * b.x();
+
+  return sqrt(x * x + y * y + z * z);
+}
+
+double point::angular_distance_deg(const point& p) const {
+  return angular_distance_deg(*this, p);
+}
+
+double point::angular_distance_deg(const point& a, const point& b) {
+  return angular_distance_rad(a, b) * RAD_TO_DEG;
+}
+
+double point::angular_distance_rad(const point& p) const {
+  return angular_distance_rad(*this, p);
+}
+
+double point::angular_distance_rad(const point& a, const point& b) {
+  return atan2(cross_norm(a,b), dot(a, b));
 }
 
 // TODO(cbmorrison) Currently great_circle is just a wrapper for cross that
