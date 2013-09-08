@@ -129,14 +129,24 @@ public:
     weight_ = weight;
   }
 
-  double angular_distance(const point& p) const;
-  static double angular_distance(const point& a, const point& b);
-
   inline double dot(const point& p) const;
   static double dot(const point& a, const point& b);
 
+  // For cross products, we have two options.  We can either return the point
+  // that's in the direction of A x B but which will be a unit normal vector,
+  // or we can return the amplitude of A x B, which is |A|B| sin (theta).  For
+  // the former, we have the cross() method and for the latter, cross_norm().
   point cross(const point& p) const;
   static point cross(const point& a, const point& b);
+  double cross_norm(const point& p) const;
+  static double cross_norm(const point& a, const point& b);
+
+  // To get an accurate angular distance at small scales, we use both dot()
+  // and cross_norm().
+  double angular_distance_deg(const point& p) const;
+  static double angular_distance_deg(const point& a, const point& b);
+  double angular_distance_rad(const point& p) const;
+  static double angular_distance_rad(const point& a, const point& b);
 
   point great_circle(const point& p) const;
   static point great_circle(const point& a, const point& b);

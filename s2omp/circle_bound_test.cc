@@ -157,3 +157,79 @@ TEST(circle_bound, TestCircleBoundRandomPoints) {
     ASSERT_FALSE(bound.contains(points[k]));
   }
 }
+
+TEST(circle_bound, TestCircleBoundAddPoint) {
+  // Test the routines that potentially alter the bound by making sure that
+  // it includes input points.
+
+  // Start with an axis at the north pole.
+  s2omp::point axis = s2omp::point::from_radec_deg(0.0, 90.0);
+  double theta_deg = 10.0;
+  double height = s2omp::circle_bound::get_height_for_angle(theta_deg);
+  s2omp::circle_bound bound(axis, height);
+  ASSERT_NEAR(bound.axis().dot(axis), 1.0, 1.0e-10);
+  ASSERT_NEAR(bound.radius(), theta_deg, 1.0e-10);
+
+  // Now add a point that's within the current bound and verify that the bound
+  // remains unchanged.
+  s2omp::point p = s2omp::point::from_radec_deg(axis.ra_deg(),
+          axis.dec_deg() - 0.5 * theta_deg);
+  bound.add_point(p);
+  ASSERT_TRUE(bound.contains(p));
+  ASSERT_NEAR(bound.axis().dot(axis), 1.0, 1.0e-10);
+  ASSERT_NEAR(bound.radius(), theta_deg, 1.0e-10);
+
+  // Add a point that's outside the bound.  The bound should expand to include
+  // the point.
+  p = s2omp::point::from_radec_deg(axis.ra_deg(),
+        axis.dec_deg() - 2.0 * theta_deg);
+  bound.add_point(p);
+  ASSERT_TRUE(bound.contains(p));
+  ASSERT_NEAR(bound.axis().dot(axis), 1.0, 1.0e-10);
+  ASSERT_NEAR(bound.radius(), 2.0 * theta_deg, 1.0e-10);
+}
+
+TEST(circle_bound, TestCircleBoundAddBound) {
+  // Test the method for adding a circle_bound to a current circle_bound.
+
+  // Start with an axis at the north pole.
+  s2omp::point axis = s2omp::point::from_radec_deg(0.0, 90.0);
+  double theta_deg = 10.0;
+  double height = s2omp::circle_bound::get_height_for_angle(theta_deg);
+  s2omp::circle_bound bound(axis, height);
+  ASSERT_NEAR(bound.radius(), theta_deg, 1.0e-10);
+
+  // Start by adding a circle_bound that's inside our current bound.  Verify
+  // that this leaves our current bound unchanged.
+  bound.add_circle_bound(s2omp::circle_bound(axis, 0.5 * height));
+  ASSERT_NEAR(bound.axis().dot(axis), 1.0, 1.0e-10);
+  ASSERT_NEAR(bound.radius(), theta_deg, 1.0e-10);
+
+  // Now add a circle_bound that's outside our original bound.
+  s2omp::point p = s2omp::point::from_radec_deg(axis.ra_deg(),
+          axis.dec_deg() - 3.0 * theta_deg);
+  ASSERT_FALSE(bound.contains(p));
+
+  s2omp::circle_bound outside_bound(p, height);
+  // Random points generated inside this bound should not be contained by the
+  // original circle_bound.
+  int n_random = 1000;
+  s2omp::point_vector points;
+  outside_bound.get_random_points(n_random, &points);
+  for (int k = 0; k < n_random; k++) {
+    ASSERT_FALSE(bound.contains(points[k]));
+  }
+
+  bound.add_circle_bound(outside_bound);
+  // The resulting circle_bound should have the same axis, but have a radius
+  // 4 times as large.
+  ASSERT_NEAR(bound.axis().dot(axis), 1.0, 1.0e-10);
+  ASSERT_NEAR(bound.radius(), 4.0 * theta_deg, 1.0e-10);
+  ASSERT_TRUE(bound.contains(p));
+
+  // The random points we generated previously should now all be contained
+  // within the modified circle_bound.
+  for (int k = 0; k < n_random; k++) {
+    ASSERT_TRUE(bound.contains(points[k]));
+  }
+}
