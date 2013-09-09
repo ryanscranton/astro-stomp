@@ -535,10 +535,10 @@ circle_bound tree_union::get_bound() const {
 void tree_union::get_covering(pixel_vector* pixels) const {
   // this is the default mode for a pixel covering. For this as for other
   // coverings we use only 8 pixels at max to cover our union.
-  get_covering(DEFAULT_COVERING_PIXELS, pixels);
+  get_size_covering(DEFAULT_COVERING_PIXELS, pixels);
 }
 
-void tree_union::get_covering(long max_pixels, pixel_vector* pixels) const {
+void tree_union::get_size_covering(long max_pixels, pixel_vector* pixels) const {
   // For this class we want to keep as few pixels as possible (defined by
   // max_pixels) and retain a close approximation of the area contained by the
   // union.
@@ -562,7 +562,7 @@ void tree_union::get_covering(long max_pixels, pixel_vector* pixels) const {
   }
 }
 
-void tree_union::get_covering(double fractional_area_tolerance,
+void tree_union::get_area_covering(double fractional_area_tolerance,
     pixel_vector* pixels) const {
   if (!pixels->empty())
     pixels->clear();

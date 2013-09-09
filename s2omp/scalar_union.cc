@@ -721,10 +721,11 @@ point scalar_union::get_center() const {
 void scalar_union::get_covering(pixel_vector* pixels) const {
   // this is the default mode for a pixel covering. For this as for other
   // coverings we use only 8 pixels at max to cover our union.
-  get_covering(DEFAULT_COVERING_PIXELS, pixels);
+  get_size_covering(DEFAULT_COVERING_PIXELS, pixels);
 }
 
-void scalar_union::get_covering(const long max_pixels, pixel_vector* pixels) const {
+void scalar_union::get_size_covering(
+    const long max_pixels, pixel_vector* pixels) const {
   // For this class we want to keep as few pixels as possible (defined by
   // max_pixels) and retain a close approximation of the area contained by the
   // union.
@@ -748,19 +749,20 @@ void scalar_union::get_covering(const long max_pixels, pixel_vector* pixels) con
   }
 }
 
-void scalar_union::get_covering(double fractional_area_tolerance,
+void scalar_union::get_area_covering(double fractional_area_tolerance,
     pixel_vector* pixels) const {
   if (!pixels->empty())
     pixels->clear();
   pixels->reserve(pixels_.size());
 
-  for (scalar_const_iterator iter = pixels_.begin(); iter != pixels_.end(); ++iter) {
+  for (scalar_const_iterator iter = pixels_.begin();
+      iter != pixels_.end(); ++iter) {
     pixels->push_back(iter->parent(level_));
   }
 
   pixel_union pix_union;
   pix_union.init(*pixels);
-  pix_union.get_covering(fractional_area_tolerance, pixels);
+  pix_union.get_size_covering(fractional_area_tolerance, pixels);
 }
 
 void scalar_union::get_interior_covering(int max_level, pixel_vector* pixels) const {

@@ -55,20 +55,20 @@ void bound_interface::get_covering(pixel_vector* pixels) const {
   cover.get_covering(*this, pixels);
 }
 
-void bound_interface::get_covering(
+void bound_interface::get_size_covering(
     long max_pixels, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover;
 
-  cover.get_covering(max_pixels, *this, pixels);
+  cover.get_size_covering(max_pixels, *this, pixels);
 }
 
-void bound_interface::get_covering(
+void bound_interface::get_area_covering(
     double fractional_area_tolerance, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover;
 
-  cover.get_covering(fractional_area_tolerance, *this, pixels);
+  cover.get_area_covering(fractional_area_tolerance, *this, pixels);
 }
 
 void bound_interface::get_interior_covering(

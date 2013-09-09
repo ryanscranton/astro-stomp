@@ -92,6 +92,42 @@ pixel pixel::prev_wrap() const {
   return pixel(id_.prev_wrap());
 }
 
+bool pixel::is_cohort(const pixel& pix) const {
+  return are_cohorts(*this, pix);
+}
+
+bool pixel::are_cohorts(const pixel& pix_a, const pixel& pix_b) {
+  // Borrowing this implementation from S2::S2CellIdUnion::Normalize
+
+  uint64 mask = pix_b.lsb() << 1;
+  mask = ~(mask + (mask << 1));
+  uint64 id_masked = (pix_b.id() & mask);
+  return (pix_a.id() & mask) == id_masked;
+}
+
+bool pixel::are_cohorts(const pixel& pix_a, const pixel& pix_b,
+    const pixel& pix_c, const pixel& pix_d) {
+  // Borrowing this implementation from S2::S2CellIdUnion::Normalize
+
+  // First do some fast XOR math to see if the current pixel is possibly the
+  // 4th child pixel.  This establishes that the pixels are consecutive
+  // bit values, which is a necessary but not sufficient condition.
+  if ((pix_a.id() ^ pix_b.id() ^ pix_c.id()) != pix_d.id()) {
+    return false;
+  }
+
+  // Ok, if we passed that filter, then we need a more precise but
+  // expensive test.  For this, we need to create a mask that strips out
+  // the bits other than the ones that correspond to our current cohort.
+  // If all of our potential cohorts agree with that mask, then we have
+  // a full set of children.
+  uint64 mask = pix_d.lsb() << 1;
+  mask = ~(mask + (mask << 1));
+  uint64 id_masked = (pix_d.id() & mask);
+  return (pix_a.id() & mask) == id_masked && (pix_b.id() & mask) == id_masked
+      && (pix_c.id() & mask) == id_masked;
+}
+
 S2Cell pixel::get_cell() const {
   return S2Cell(id_);
 }
@@ -228,13 +264,16 @@ void pixel::neighbors(pixel_vector* pixels) const {
 }
 
 void pixel::neighbors(int level, pixel_vector* pixels) const {
-  if (level <= MAX_LEVEL) {
-    vector<S2CellId> neighbor_ids;
-    id_.AppendAllNeighbors(level, &neighbor_ids);
-    pixels->clear();
-    for (unsigned int k = 0; k < neighbor_ids.size(); k++) {
-      pixels->push_back(pixel(neighbor_ids[k]));
-    }
+  if (level > MAX_LEVEL || level < 0) {
+    return;
+  }
+
+  vector<S2CellId> neighbor_ids;
+  id_.AppendAllNeighbors(level, &neighbor_ids);
+  pixels->clear();
+  pixels->reserve(neighbor_ids.size());
+  for (unsigned int k = 0; k < neighbor_ids.size(); k++) {
+    pixels->push_back(pixel(neighbor_ids[k]));
   }
 }
 
@@ -260,29 +299,31 @@ circle_bound pixel::get_bound() const {
 }
 
 void pixel::get_covering(pixel_vector* pixels) const {
-  if (!pixels->empty()) pixels->clear();
+  if (!pixels->empty())
+    pixels->clear();
   pixels->push_back(*this);
 }
 
-void pixel::get_covering(
-    const long max_pixels, pixel_vector* pixels) const {
+void pixel::get_size_covering(const long max_pixels, pixel_vector* pixels) const {
   get_covering(pixels);
 }
 
-void pixel::get_covering(
-    double fractional_area_tolerance, pixel_vector* pixels) const {
+void pixel::get_area_covering(double fractional_area_tolerance,
+    pixel_vector* pixels) const {
   get_covering(pixels);
 }
 
 void pixel::get_interior_covering(int max_level, pixel_vector* pixels) const {
-  if (!pixels->empty()) pixels->clear();
+  if (!pixels->empty())
+    pixels->clear();
   if (level() <= max_level) {
     get_covering(pixels);
   }
 }
 
 void pixel::get_simple_covering(int level, pixel_vector* pixels) const {
-  if (!pixels->empty()) pixels->clear();
+  if (!pixels->empty())
+    pixels->clear();
 
   if (level == this->level()) {
     pixels->push_back(*this);

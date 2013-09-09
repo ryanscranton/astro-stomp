@@ -48,9 +48,16 @@ public:
   // to a normalized pixel_union from a vector of pixels.
   inline static pixel_union* from_covering(pixel_vector& pixels);
 
+  // In order to efficiently store and search the area covered by a given set
+  // of pixels, we need to sort them by index and combine child pixels into
+  // parent pixels where possible.  normalize() performs this task and we make
+  // it a static method so that this capability is available without
+  // initializing a full pixel_union.
+  static void normalize(pixel_vector* pixels);
+
   // Use the input vector of pixels to initialize this pixel_union.  These
-  // pixels will be sorted by index and child pixels will be combined into
-  // parent pixels where possible.
+  // pixels will be normalized and stored internally.  The input pixel_vector
+  // will be emptied by this method.
   void init(pixel_vector& pixels);
 
   // In some cases, we may wish to soften the edges of our pixel_union (for
@@ -134,9 +141,9 @@ public:
   virtual point get_center() const;
 
   virtual void get_covering(pixel_vector* pixels) const;
-  virtual void get_covering(
+  virtual void get_size_covering(
       const long max_pixels, pixel_vector* pixels) const;
-  virtual void get_covering(
+  virtual void get_area_covering(
       double fractional_area_tolerance, pixel_vector* pixels) const;
   virtual void get_interior_covering(int max_level, pixel_vector* pixels) const;
   virtual void get_simple_covering(int level, pixel_vector* pixels) const;

@@ -70,7 +70,7 @@ public:
 
   // Some getter methods to describe the state of the region_map.
   inline uint n_region() const {
-    return n_region_;
+    return region_area_.size();
   }
   inline int level() const {
     return level_;
@@ -82,7 +82,6 @@ public:
     region_map_.clear();
     region_area_.clear();
     level_ = -1;
-    n_region_ = 0;
   }
 
   // Return iterators for the set of region_map objects.
@@ -101,7 +100,6 @@ private:
   region_dict region_map_;
   region_area region_area_;
   int level_;
-  uint n_region_;
 };
 
 } // end namespace s2omp

@@ -78,14 +78,14 @@ public:
   //   median ratio:  5.33   3.32  2.73  2.34  1.98  1.66  1.42  1.11   1.01
   //   worst case:  215518  14.41  9.72  5.26  3.91  2.75  1.92  1.20   1.02"
   bool get_covering(const bound_interface& bound, pixel_vector* pixels);
-  bool get_covering(long max_pixels, const bound_interface& bound,
+  bool get_size_covering(long max_pixels, const bound_interface& bound,
       pixel_vector* pixels);
 
   // This covering works by specifying a target fractional area tolerance. The
   // method will continually refine the covering until either the tolerance is
   // achieved or no pixels at a level above max_level_ (that are not contained)
   // remain. The return is a boolean specifying if the tolerance was reached.
-  bool get_covering(double fractional_area_tolerace,
+  bool get_area_covering(double fractional_area_tolerace,
                     const bound_interface& bound, pixel_vector* pixels);
 
   // Interior coverings are different from the coverings above in that each
@@ -122,20 +122,21 @@ public:
   static void get_center_covering(
       const bound_interface& bound, int level, pixel_vector* pixels);
 
-  inline int get_min_level() {
+  inline int min_level() {
     return min_level_;
   }
-  inline int get_max_level() {
+  inline int max_level() {
     return max_level_;
   }
 
-  inline bool set_min_level(int level) {
-    return set_min_max_level(level, max_level_);
-  }
-  inline bool set_max_level(int level) {
-    return set_min_max_level(min_level_, level);
-  }
+  bool set_min_level(int level);
+  bool set_max_level(int level);
   bool set_min_max_level(int min, int max);
+
+  // Since we're generally instantiating a coverer to generate a covering for
+  // a specific bound_interface-derived object, it's often easier to
+  // automatically choose level bounds based on that object's area.
+  void set_levels_from_area(double area_deg2);
 
 private:
   bool generate_covering(const bound_interface& bound, long max_pixels,
