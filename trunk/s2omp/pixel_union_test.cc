@@ -40,6 +40,7 @@ TEST(pixel_union, TestPixelUnionInitialization) {
 
   s2omp::pixel_union* pix_union = s2omp::pixel_union::from_covering(children);
   ASSERT_FALSE(pix_union->is_empty());
+  ASSERT_TRUE(children.empty());
   ASSERT_EQ(pix_union->size(), 1);
   ASSERT_TRUE(pix_union->contains(p));
   ASSERT_TRUE(pix_union->contains(pix));
@@ -51,13 +52,17 @@ TEST(pixel_union, TestPixelUnionInitialization) {
   pix.children(&children);
   s2omp::pixel removed_pix = children.back();
   children.pop_back();
+  // Initializing the pixel_union will empty the input pixel_vector, so we need
+  // to grab any pixels we'll use later before we initialize.
+  s2omp::pixel first_child = children[0];
   pix_union->init(children);
+
   ASSERT_FALSE(pix_union->is_empty());
   ASSERT_EQ(pix_union->size(), 3);
   ASSERT_FALSE(pix_union->contains(pix));
   ASSERT_FALSE(pix_union->contains(removed_pix));
-  ASSERT_TRUE(pix_union->contains(children[0]));
-  ASSERT_NEAR(pix_union->contained_area(children[0]), children[0].exact_area(),
+  ASSERT_TRUE(pix_union->contains(first_child));
+  ASSERT_NEAR(pix_union->contained_area(first_child), first_child.exact_area(),
       1.0e-10);
   ASSERT_NEAR(pix_union->area(), pix.exact_area() - removed_pix.exact_area(),
       1.0e-10);

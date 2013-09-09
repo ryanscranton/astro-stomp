@@ -125,6 +125,14 @@ public:
   pixel next_wrap() const;
   pixel prev_wrap() const;
 
+  // Rounding out our methods for child and parent pixels, it can often be
+  // useful to know if pixels are cohorts of one another: pixels at the same
+  // level that share a common parent.
+  bool is_cohort(const pixel& pix) const;
+  static bool are_cohorts(const pixel& pix_a, const pixel& pix_b);
+  static bool are_cohorts(const pixel& pix_a, const pixel& pix_b,
+      const pixel& pix_c, const pixel& pix_d);
+
   // Our first methods using the functionality from S2::S2Cell.  Since S2 cells
   // are only roughly equal-area, there is some small difference between the
   // average area of a cell at a given level at the exact area of a given cell.
@@ -135,11 +143,15 @@ public:
   double exact_area() const;
 
   // For some methods we need would like a way to calculate the level at which
-  // the average area of the level is less than the input area. This function
-  // will return levels less than 0 and greater than 30 so it must be tested
-  // after calling if a valid level is needed.
-  inline static int get_level_from_area(double area) {
-    return int(ceil(log(21600.0 / (PI * area)) / log(4.0)));
+  // the average area of the level is less than the input area.
+  inline static int get_level_from_area(double area_deg2) {
+    // The average steradian area of a pixel at a given level is
+    // area = 4 * PI /(6 * 4**level).  Solving for level and canceling factors
+    // gives you this:
+    int level = int(ceil(log(21600.0 / (PI * area_deg2)) / log(4.0)));
+
+    // Ensure that the return value is a valid level.
+    return min(max(level, 0), MAX_LEVEL);
   }
 
   // Return true if the input point or pixel is inside our current pixel
@@ -216,9 +228,9 @@ public:
   virtual circle_bound get_bound() const;
 
   virtual void get_covering(pixel_vector* pixels) const;
-  virtual void get_covering(
+  virtual void get_size_covering(
       const long max_pixels, pixel_vector* pixels) const;
-  virtual void get_covering(
+  virtual void get_area_covering(
       double fractional_area_tolerance, pixel_vector* pixels) const;
   virtual void get_interior_covering(int max_level, pixel_vector* pixels) const;
   virtual void get_simple_covering(int level, pixel_vector* pixels) const;

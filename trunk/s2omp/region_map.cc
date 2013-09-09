@@ -50,7 +50,7 @@ uint region_map::init(const bound_interface& bound, uint n_region, int level) {
     // The test is fuzzy in the sense that as long as we are within the average
     // area of one pixel of the target area we complete the region. If we are
     // on the last region, just keep adding until we reach the end.
-    if (region_area + contained_area < target_region_area - pixel_average_area
+    if (region_area + 0.75 * contained_area < target_region_area
         || created_regions == n_region - 1) {
       region_map_[iter->id()] = created_regions;
       region_area += contained_area;
@@ -68,14 +68,15 @@ uint region_map::init(const bound_interface& bound, uint n_region, int level) {
   created_regions++;
 
   level_ = level;
-  n_region_ = created_regions;
 
   pixels.clear();
 
-  return n_region_;
+  return region_area_.size();
 }
 
 int region_map::find_region(const point& p) const {
+  if (is_empty()) return INVALID_REGION_VALUE;
+
   region_iterator iter = region_map_.find(p.id(level_));
   // If the point is within our region_map, return the region.
   return iter != region_map_.end() ? iter->second : INVALID_REGION_VALUE;
@@ -83,7 +84,7 @@ int region_map::find_region(const point& p) const {
 
 int region_map::find_region(const pixel& pix) const {
   // If the pixel is larger than our region_map level.
-  if (pix.level() < level_) {
+  if (is_empty() || pix.level() < level_) {
     return INVALID_REGION_VALUE;
   }
 
@@ -122,7 +123,7 @@ void region_map::get_covering(int region_idx, pixel_vector* pixels) const {
   }
 
   // If the input region is outside our range, stop now.
-  if (region_idx < 0 || region_idx >= n_region_) {
+  if (region_idx < 0 || region_idx >= region_map_.size()) {
     return;
   }
 
@@ -145,13 +146,7 @@ int region_map::find_regionation_level(const bound_interface& bound,
   // To cleanly sub-divide our bound area (i.e., each region has approximately
   // the same area), we want on order 50 pixels per region.  Increase the level
   // until we get to that resolution.
-  double target_area = bound.area() / (50 * n_region);
-  int level = 0;
-  while ((pixel::average_area(level) > target_area) && (level < MAX_LEVEL)) {
-    level++;
-  }
-
-  return level;
+  return pixel::get_level_from_area(bound.area() / (50 * n_region));
 }
 
 int region_map::validate_level(double bound_area, uint n_region, int level) const {

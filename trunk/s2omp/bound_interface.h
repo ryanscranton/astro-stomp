@@ -79,9 +79,9 @@ public:
   virtual void get_random_points(long n_points, point_vector* points);
 
   virtual void get_covering(pixel_vector* pixels) const;
-  virtual void get_covering(
+  virtual void get_size_covering(
       long max_pixels, pixel_vector* pixels) const;
-  virtual void get_covering(
+  virtual void get_area_covering(
       double fractional_area_tolerance, pixel_vector* pixels) const;
   virtual void get_interior_covering(int max_level, pixel_vector* pixels) const;
   virtual void get_simple_covering(int level, pixel_vector* pixels) const;

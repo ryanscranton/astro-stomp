@@ -98,6 +98,41 @@ TEST(pixel, TestPixelParents) {
   ASSERT_EQ(uber_parent.id(), parent.parent(level).id());
 }
 
+TEST(pixel, TestPixelCohorts) {
+  // Test the routines for determining if one or more pixels are cohorts of
+  // one another.
+
+  // Start with a leaf pixel.
+  s2omp::point p(0, 0, 1, 0);
+  s2omp::pixel pix = p.to_pixel(s2omp::MAX_LEVEL);
+
+  // We can find the cohort pixels by creating the parent to our starting
+  // pixel at then finding its children.
+  s2omp::pixel parent = pix.parent();
+  s2omp::pixel_vector child;
+  parent.children(&child);
+
+  // Each child pixel should be a cohort of the starting pixel, including the
+  // child pixel that is the starting pixel.
+  for (int k = 0; k < child.size(); k++) {
+    ASSERT_TRUE(pix.is_cohort(child[k]));
+    ASSERT_TRUE(s2omp::pixel::are_cohorts(pix, child[k]));
+  }
+
+  // Finally, verify that we can recognize at the child pixels are cohorts
+  // regardless of the order specified in calling the static method
+  ASSERT_TRUE(s2omp::pixel::are_cohorts(
+      child[0], child[1], child[2], child[3]));
+  ASSERT_TRUE(s2omp::pixel::are_cohorts(
+      child[1], child[0], child[3], child[2]));
+  ASSERT_TRUE(s2omp::pixel::are_cohorts(
+      child[0], child[2], child[1], child[3]));
+  ASSERT_TRUE(s2omp::pixel::are_cohorts(
+      child[3], child[1], child[2], child[0]));
+  ASSERT_TRUE(s2omp::pixel::are_cohorts(
+      child[3], child[2], child[1], child[0]));
+}
+
 TEST(pixel, TestPixelIteration) {
   // Verify that pixel id ordering works as expected
 

@@ -37,12 +37,12 @@ bool coverer::get_covering(const bound_interface& bound, pixel_vector* pixels) {
   return generate_covering(bound, DEFAULT_COVERING_PIXELS, false, -1.0, pixels);
 }
 
-bool coverer::get_covering(
+bool coverer::get_size_covering(
     long max_pixels, const bound_interface& bound, pixel_vector* pixels) {
   return generate_covering(bound, max_pixels, false, -1.0, pixels);
 }
 
-bool coverer::get_covering(
+bool coverer::get_area_covering(
     double fractional_area_tolerace, const bound_interface& bound,
     pixel_vector* pixels) {
   return generate_covering(bound, 0, false, fractional_area_tolerace,
@@ -203,7 +203,7 @@ bool coverer::generate_covering(
         pixels->push_back(candidate.pix);
         if (fraction > 0.0)
           covered_area += candidate.pix.exact_area();
-      } else {
+      } else if (!candidate.is_terminal) {
 
         // If we can't add this pixel, we resolve it's children and add them to
         // the queue.
@@ -217,21 +217,21 @@ bool coverer::generate_covering(
     }
   }
 
-  // We define "success" if a) we return fewer than or equal to the number of
-  // pixels requested b) we have reached the fractional area tolerance or
-  // c), for interior coverings only, we return a non-empty vector.
-  bool success = false;
-  if (!interior && fraction <= 0.0) {
-    if (!pixels->empty() && pixels->size() <= max_pixels)
-      success = true;
-  } else if (fraction > 0.0) {
-    if (!pixels->empty() &&
-        fabs(bound_area - covered_area)/bound_area < fraction)
-      success = true;
-  } else {
-    success = !pixels->empty();
+  // We define "success" depending on our input parameters.
+
+  // Interior covering: only looking for a non-empty covering.
+  if (interior) {
+    return !pixels->empty();
   }
-  return success;
+
+  // Size-limited exterior covering
+  if (fraction <= 0.0) {
+    return !pixels->empty() && pixels->size() <= max_pixels;
+  }
+
+  // The remaining case: area-limited exterior covering
+  return !pixels->empty() &&
+      double_le(fabs(bound_area - covered_area)/bound_area, fraction);
 }
 
 void coverer::get_simple_covering(
@@ -312,14 +312,34 @@ void coverer::get_center_covering(
   sort(pixels->begin(), pixels->end());
 }
 
+bool coverer::set_min_level(int level) {
+  // Verify that we have a valid level.
+  if (level < 0 || level > MAX_LEVEL) return false;
+  min_level_ = level;
+  return true;
+}
+
+bool coverer::set_max_level(int level) {
+  if (level < 0 || level > MAX_LEVEL) return false;
+  max_level_ = level;
+  return true;
+}
+
 bool coverer::set_min_max_level(int min, int max) {
-  if (min <= max && min >= 0 && min <= MAX_LEVEL &&
-      max >= 0 && max < MAX_LEVEL) {
-    min_level_ = min;
-    max_level_ = max;
-    return true;
-  }
-  return false;
+  // Verify that we have a valid pair of levels.
+  if (min < 0 || min > MAX_LEVEL) return false;
+  if (max < 0 || max > MAX_LEVEL) return false;
+  if (min > max) return false;
+
+  min_level_ = min;
+  max_level_ = max;
+  return true;
+}
+
+void coverer::set_levels_from_area(double area_deg2) {
+  int level = pixel::get_level_from_area(area_deg2);
+  min_level_ = max(0, level - 3);
+  max_level_ = min(MAX_LEVEL, level + 10);
 }
 
 void coverer::get_initial_covering(

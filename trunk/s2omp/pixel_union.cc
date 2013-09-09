@@ -23,6 +23,12 @@
 #include "point.h"
 
 #include <s2/s2cellunion.h>
+#if defined(OS_MACOSX)
+#include <ext/hash_set>
+#else
+#include <hash_set>
+#endif
+using __gnu_cxx::hash_set;
 
 namespace s2omp {
 
@@ -42,53 +48,91 @@ pixel_union::~pixel_union() {
   area_ = 0.0;
 }
 
+void pixel_union::normalize(pixel_vector* pixels) {
+  // This is going to follow the methodology of the corresponding
+  // S2:S2CellId::Normalize method.
+
+  // Start by creating a workspace vector that we can store intermediate
+  // results in.
+  pixel_vector output;
+  output.reserve(pixels->size());
+
+  // Now put the input pixels into sorted order.
+  sort(pixels->begin(), pixels->end());
+
+  // We loop through the sorted input pixels looking for potential cases where
+  // we can combine child pixels into parents.
+  for (int k = 0; k < pixels->size(); k++) {
+    pixel pix = pixels->at(k);
+
+    // Make sure that this pixel isn't contained by the last pixel added.
+    if (!output.empty() && output.back().contains(pix))
+      continue;
+
+    // Drop any of the current output cells that are contained by the current
+    // pixel.
+    while (!output.empty() && pix.contains(output.back())) {
+      output.pop_back();
+    }
+
+    // If this is a face pixel, then we know that we don't need to look for
+    // potential cohort pixels to combine with into a larger pixel.
+    if (pix.is_face()) {
+      output.push_back(pix);
+      continue;
+    }
+
+    // Now we start looking for children.  If this is the last of a set of
+    // child pixels that would form a parent, then those cohort pixels should
+    // be the last three pixels we successfully added.
+    while (output.size() >= 3) {
+      if (!pixel::are_cohorts(output.end()[-3], output.end()[-2],
+          output.end()[-1], pix)) {
+        break;
+      }
+
+      // If we have all four cohorts, then remove the last three pixels added
+      // and replace our working pixel with its parent.
+      output.erase(output.end() - 3, output.end());
+      pix = pix.parent();
+    }
+
+    output.push_back(pix);
+  }
+
+  if (pixels->size() > output.size()) {
+    pixels->clear();
+    pixels->swap(output);
+  }
+}
+
 void pixel_union::init(pixel_vector& pixels) {
   clear();
   if (pixels.empty()) {
     return;
   }
 
-  std::vector<S2CellId> input_cells;
-  std::vector<S2CellId> output_cells;
-  input_cells.reserve(pixels.size());
-  output_cells.reserve(pixels.size());
+  // Normalize the input pixels to sort them and combine all cohort pixels into
+  // parent pixels.
+  normalize(&pixels);
+  pixels_.reserve(pixels.size());
+  pixels_.swap(pixels);
 
-  // Copy the S2CellIds into a vector and initialize an S2CellUnion from them.
-  for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    input_cells.push_back(iter->get_cellid());
-  }
-  pixels.clear();
-
-  S2CellUnion s2cellunion;
-  s2cellunion.Init(input_cells);
-  input_cells.clear();
-
-  // Now extract the normalized S2CellIds and convert them to pixels.
-  s2cellunion.Detach(&output_cells);
-
-  pixels_.reserve(output_cells.size());
   initialized_ = false;
-  int min_level = MAX_LEVEL;
-  int max_level = 0;
-  double area = 0.0;
-  for (int k = 0; k < output_cells.size(); k++) {
-    pixel pix(output_cells[k]);
-    if (pix.level() > max_level)
-      max_level = pix.level();
-    if (pix.level() < min_level)
-      min_level = pix.level();
-    area += pix.exact_area();
-    pixels_.push_back(pix);
+  min_level_ = MAX_LEVEL;
+  max_level_ = 0;
+  area_ = 0.0;
+  for (pixel_iterator iter = pixels_.begin(); iter != pixels_.end(); ++iter) {
+    int level = iter->level();
+    if (level > max_level_) max_level_ = level;
+    if (level < min_level_) min_level_ = level;
+
+    area_ += iter->exact_area();
   }
 
-  if (!pixels_.empty()) {
-    initialized_ = true;
-    max_level_ = max_level;
-    min_level_ = min_level;
-    area_ = area;
-    range_min_ = pixels_.front().range_min();
-    range_max_ = pixels_.back().range_max();
-  }
+  initialized_ = true;
+  range_min_ = pixels_.front().range_min();
+  range_max_ = pixels_.back().range_max();
 }
 
 void pixel_union::soften(int max_level) {
@@ -290,7 +334,7 @@ void pixel_union::initialize_bound() {
 void pixel_union::clear() {
   pixels_.clear();
   bound_.clear();
-  min_level_ = MAX_LEVEL;
+  min_level_ = 0;
   max_level_ = 0;
   area_ = 0.0;
   initialized_ = false;
@@ -362,34 +406,39 @@ circle_bound pixel_union::get_bound() const {
 void pixel_union::get_covering(pixel_vector* pixels) const {
   // this is the default mode for a pixel covering. For this as for other
   // coverings we use only 8 pixels at max to cover our union.
-  get_covering(DEFAULT_COVERING_PIXELS, pixels);
+  get_size_covering(DEFAULT_COVERING_PIXELS, pixels);
 }
 
-void pixel_union::get_covering(long max_pixels, pixel_vector* pixels) const {
+void pixel_union::get_size_covering(
+    long max_pixels, pixel_vector* pixels) const {
   // For this class we want to keep as few pixels as possible (defined by
   // max_pixels) and retain a close approximation of the area contained by the
   // union.
-  if (!pixels->empty())
-    pixels->clear();
-  double average_area = area_ / (1.0 * max_pixels);
-  int level = MAX_LEVEL;
 
-  while (pixel::average_area(level) < average_area) {
-    if (level == 0)
-      break;
-    level--;
-  }
-  if (level < MAX_LEVEL)
-    level++;
+  // If the specified number of pixels is <= our current size(), then we can
+  // just return the current set of pixels.  Failing that, we need to try to
+  // reduce the number of pixels.
+  int max_level = max_level_;
 
-  while (pixels->empty() || pixels->size() > max_pixels) {
+  while ((pixels->empty() || pixels->size() > max_pixels) && max_level > 0) {
     pixels->clear();
-    get_simple_covering(level, pixels);
-    level--;
+
+    hash_set<uint64> ids;
+    for (pixel_iterator iter = pixels_.begin(); iter != pixels_.end(); ++iter) {
+      if (iter->level() <= max_level) {
+        pixels->push_back(*iter);
+        ids.insert(iter->id());
+      } else {
+        if (ids.insert(iter->parent(max_level).id()).second) {
+          pixels->push_back(*iter);
+        }
+      }
+    }
+    max_level--;
   }
 }
 
-void pixel_union::get_covering(double fractional_area_tolerance,
+void pixel_union::get_area_covering(double fractional_area_tolerance,
     pixel_vector* pixels) const {
   if (!pixels->empty())
     pixels->clear();
