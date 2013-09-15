@@ -94,8 +94,8 @@ void annulus_bound::update_caps() {
 }
 
 bool annulus_bound::inner_contains(const point& p) const {
-  double p_height = 1.0 - axis_.dot(p);
-  return inner_height_ >= p_height;
+  return double_le((axis_.s2point() - p.s2point()).Norm2(),
+      2.0 * inner_height_);
 }
 
 bool annulus_bound::inner_contains(const pixel& pix) const {
@@ -107,8 +107,8 @@ bool annulus_bound::inner_may_intersect(const pixel& pix) const {
 }
 
 bool annulus_bound::outer_contains(const point& p) const {
-  double p_height = 1.0 - axis_.dot(p);
-  return outer_height_ >= p_height;
+  return double_le((axis_.s2point() - p.s2point()).Norm2(),
+      2.0 * outer_height_);
 }
 
 bool annulus_bound::outer_contains(const pixel& pix) const {

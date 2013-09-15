@@ -140,6 +140,8 @@ public:
   static point cross(const point& a, const point& b);
   double cross_norm(const point& p) const;
   static double cross_norm(const point& a, const point& b);
+  double cross_norm2(const point& p) const;
+  static double cross_norm2(const point& a, const point& b);
 
   // To get an accurate angular distance at small scales, we use both dot()
   // and cross_norm().

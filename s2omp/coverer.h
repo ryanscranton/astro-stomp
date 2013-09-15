@@ -44,7 +44,7 @@ struct compare_pixels : public std::less<pixel_entry> {
 };
 
 typedef std::priority_queue<pixel_entry, pixel_entry_vector,
-                            compare_pixels> pixel_queue;
+    compare_pixels> candidate_queue;
 
 class coverer {
 
@@ -147,7 +147,7 @@ private:
   void new_candidate(const bound_interface& bound, const pixel& pix);
 
   int min_level_, max_level_;
-  pixel_queue pix_q_;
+  candidate_queue pix_q_;
 };
 
 } // end namespace s2omp

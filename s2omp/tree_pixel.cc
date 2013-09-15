@@ -49,8 +49,8 @@ tree_pixel::~tree_pixel() {
 }
 
 void tree_pixel::initialize_node(uint max_points) {
+  maximum_points_ = max_points;
   weight_ = 0.0;
-  maximum_points_ = 0;
   point_count_ = 0;
   subnodes_.clear();
   points_.clear();
@@ -217,12 +217,15 @@ void tree_pixel::_neighbor_recursion(const point& p, tree_neighbor* neighbors) c
   // in a priority queue.  This will let us do a follow-up check on nodes in
   // the most productive order.
   pixel_queue pix_queue;
-  for (tree_ptr_iterator iter = subnodes_.begin(); iter != subnodes_.end(); ++iter) {
-    if ((*iter)->contains(p)) {
-      (*iter)->_neighbor_recursion(p, neighbors);
+  for (int k = 0; k < subnodes_.size(); k++) {
+    tree_pixel* node = subnodes_[k];
+    if (node->contains(p)) {
+      node->_neighbor_recursion(p, neighbors);
     } else {
-      distance_pixel_pair dist_pair((*iter)->nearest_edge_distance(p), (*iter));
-      pix_queue.push(dist_pair);
+      double dist = node->nearest_edge_distance(p);
+      if (dist < neighbors->max_distance() || neighbors->n_neighbors() == 0) {
+        pix_queue.push(distance_pixel_pair(dist, node));
+      }
     }
   }
 
@@ -234,54 +237,47 @@ void tree_pixel::_neighbor_recursion(const point& p, tree_neighbor* neighbors) c
   //
   // There's also the possibility that the input point is completely outside
   // our tree.  In that case (where the number of neighbors in the
-  // TreeNeighbor object is less than the maximum), we want to check
-  // all nodes.
+  // tree_neighbor object is less than the maximum), we want to check
+  // all nodes, starting with the node nearest the input point.
   while (!pix_queue.empty()) {
     double pix_distance = pix_queue.top().first;
-    tree_pixel* pix_iter = pix_queue.top().second;
+    tree_pixel* node = pix_queue.top().second;
     if (pix_distance < neighbors->max_distance()) {
-      pix_iter->_neighbor_recursion(p, neighbors);
+      node->_neighbor_recursion(p, neighbors);
     }
     pix_queue.pop();
   }
 }
 
-long tree_pixel::find_k_nearest_neighbors(const point& p, uint n_neighbors,
+void tree_pixel::find_k_nearest_neighbors(const point& p, uint n_neighbors,
     point_vector* neighbor_vector) const {
   tree_neighbor neighbors(p, n_neighbors);
 
   _neighbor_recursion(p, &neighbors);
 
   neighbors.nearest_neighbors(neighbor_vector, false);
-
-  return neighbors.nodes_visited();
 }
 
-long tree_pixel::find_nearest_neighbor(const point& p, point* neighbor) const {
-  point_vector p_vector;
+point tree_pixel::find_nearest_neighbor(const point& p) const {
+  point_vector points;
 
-  long nodes_visited = find_k_nearest_neighbors(p, 1, &p_vector);
+  find_k_nearest_neighbors(p, 1, &points);
 
-  neighbor = point::copy_point(p_vector[0]);
-
-  return nodes_visited;
+  return points[0];
 }
 
 double tree_pixel::k_nearest_neighbor_distance(const point& p,
-    uint n_neighbors, long& nodes_visited) const {
+    uint n_neighbors) const {
 
   tree_neighbor neighbors(p, n_neighbors);
 
   _neighbor_recursion(p, &neighbors);
 
-  nodes_visited = neighbors.nodes_visited();
-
   return neighbors.max_angular_distance();
 }
 
-double tree_pixel::nearest_neighbor_distance(const point& p,
-    long& nodes_visited) const {
-  return k_nearest_neighbor_distance(p, 1, nodes_visited);
+double tree_pixel::nearest_neighbor_distance(const point& p) const {
+  return k_nearest_neighbor_distance(p, 1);
 }
 
 bool tree_pixel::closest_match(const point& p, double max_angular_distance,
@@ -384,14 +380,13 @@ double tree_pixel::covering_fraction() const {
 
   // Otherwise, we recursively count the number of subnodes in the tree that
   // contain points.
-  double total_area = exact_area();
   double covered_area = 0.0;
 
   for (tree_ptr_iterator iter = subnodes_.begin(); iter != subnodes_.end(); iter++) {
     covered_area += (*iter)->covering_fraction() * (*iter)->exact_area();
   }
 
-  return covered_area / total_area;
+  return covered_area / exact_area();
 }
 
 double tree_pixel::covering_fraction(const pixel& pix) const {
@@ -403,48 +398,48 @@ double tree_pixel::covering_fraction(const pixel& pix) const {
 
   // If that's not true and this node does not contain the input pixel, then the
   // covering fraction is 0.  This also holds if this node is empty.
-  if (!contains(pix) || point_count_ == 0) {
+  if (!contains(pix) || is_empty()) {
     return 0.0;
   }
 
   // Finally, we deal with the case that our node contains either points or
-  // subnodes and the input pixel.  First, deal with the former case.  If any
-  // of our contained points is also contained by the input pixel, then the
-  // contained fraction is unity.  Otherwise, the fraction is zero.
-  if (!points_.empty()) {
-    for (point_ptr_iterator iter = points_.begin(); iter != points_.end(); iter++) {
-      if (pix.contains(*(*iter))) {
-        return 1.0;
+  // subnodes and the input pixel.  First, deal with the latter case.  If we
+  // have subnodes, then iterate over them and return the value for the
+  // containing subnode.
+  if (!subnodes_.empty()) {
+    for (tree_ptr_iterator iter = subnodes_.begin(); iter != subnodes_.end(); iter++) {
+      if ((*iter)->contains(pix)) {
+        return (*iter)->covering_fraction(pix);
       }
     }
-
-    return 0.0;
   }
 
-  // If we have subnodes, then iterate over them and return the aggregate.
-  double covered_fraction = 0.0;
-  for (tree_ptr_iterator iter = subnodes_.begin(); iter != subnodes_.end(); iter++) {
-    covered_fraction += (*iter)->covering_fraction(pix);
+  // If any of our contained points is also contained by the input pixel, then
+  // the contained fraction is unity.  Otherwise, the fraction is zero.
+  for (point_ptr_iterator iter = points_.begin(); iter != points_.end(); iter++) {
+    if (pix.contains(*(*iter))) {
+      return 1.0;
+    }
   }
 
-  return covered_fraction;
+  return 0.0;
 }
 
-void tree_pixel::points(point_vector* p) const {
-  if (!p->empty())
-    p->clear();
+void tree_pixel::copy_points(point_vector* points) const {
+  if (!points->empty())
+    points->clear();
 
   if (point_count_ == 0) {
     return;
   }
 
   // The output vector should be the same size as our current point count.
-  p->reserve(point_count_);
+  points->reserve(point_count_);
 
   // If we have points in this node, then copy them to the output vector.
   if (!points_.empty()) {
     for (point_ptr_iterator iter = points_.begin(); iter != points_.end(); iter++) {
-      p->push_back(point::copy_point(*iter));
+      points->push_back(point::copy_point(*iter));
     }
     return;
   }
@@ -453,21 +448,19 @@ void tree_pixel::points(point_vector* p) const {
   // to the output vector.  This should probably be avoid if at all possible.
   for (tree_ptr_iterator iter = subnodes_.begin(); iter != subnodes_.end(); iter++) {
     point_vector tmp_points;
-    (*iter)->points(&tmp_points);
-    for (point_iterator p_iter = tmp_points.begin(); p_iter != tmp_points.end(); p_iter++) {
-      p->push_back(*p_iter);
-    }
+    (*iter)->copy_points(&tmp_points);
+    points->insert(points->end(), tmp_points.begin(), tmp_points.end());
   }
 }
 
-void tree_pixel::points(const pixel& pix, point_vector* p) const {
-  if (!p->empty())
-    p->clear();
+void tree_pixel::copy_points(const pixel& pix, point_vector* points) const {
+  if (!points->empty())
+    points->clear();
 
   // If the input pixel contains this node, then copy all of this node's points
   // into the output array.
   if (pix.contains(*this)) {
-    points(p);
+    copy_points(points);
     return;
   }
 
@@ -480,12 +473,12 @@ void tree_pixel::points(const pixel& pix, point_vector* p) const {
   // If the input pixel is contained in the node, then we need to copy the
   // contained points to the output array.  Start with the case where our
   // node contains points and copy over the ones contained in the input pixel.
-  p->reserve(point_count_);
+  points->reserve(point_count_);
 
   if (!points_.empty()) {
     for (point_ptr_iterator iter = points_.begin(); iter != points_.end(); iter++) {
       if (pix.contains(*(*iter))) {
-        p->push_back(point::copy_point(*iter));
+        points->push_back(point::copy_point(*iter));
       }
     }
     return;
@@ -495,10 +488,8 @@ void tree_pixel::points(const pixel& pix, point_vector* p) const {
   // to the output vector.  This should probably be avoid if at all possible.
   for (tree_ptr_iterator iter = subnodes_.begin(); iter != subnodes_.end(); iter++) {
     point_vector tmp_points;
-    (*iter)->points(pix, &tmp_points);
-    for (point_iterator p_iter = tmp_points.begin(); p_iter != tmp_points.end(); p_iter++) {
-      p->push_back(*p_iter);
-    }
+    (*iter)->copy_points(pix, &tmp_points);
+    points->insert(points->end(), tmp_points.begin(), tmp_points.end());
   }
 }
 
@@ -519,13 +510,13 @@ void tree_pixel::clear() {
   for (point_ptr_iterator iter = points_.begin(); iter != points_.end(); iter++) {
     delete *iter;
   }
-  points_.clear();
 
   for (tree_ptr_iterator iter = subnodes_.begin(); iter != subnodes_.end(); ++iter) {
     (*iter)->clear();
     delete *iter;
   }
-  subnodes_.clear();
+
+  initialize_node(maximum_points_);
 }
 
 S2Cell tree_pixel::get_cell() const {
@@ -534,39 +525,44 @@ S2Cell tree_pixel::get_cell() const {
 
 tree_neighbor::tree_neighbor(const point& reference_point) {
   reference_point_ = reference_point;
-  n_neighbors_ = DEFAULT_N_NEIGHBORS;
+  max_neighbors_ = DEFAULT_MAX_NEIGHBORS;
   max_distance_ = sin(DEG_TO_RAD * DEFAULT_MAX_NEIGHBOR_DISTANCE);
   max_distance_ *= max_distance_;
   n_nodes_visited_ = 0;
 }
 
-tree_neighbor::tree_neighbor(const point& reference_point, uint n_neighbors) {
+tree_neighbor::tree_neighbor(const point& reference_point, uint max_neighbors) {
   reference_point_ = reference_point;
-  n_neighbors_ = n_neighbors;
+  max_neighbors_ = max_neighbors;
   max_distance_ = sin(DEG_TO_RAD * DEFAULT_MAX_NEIGHBOR_DISTANCE);
   max_distance_ *= max_distance_;
   n_nodes_visited_ = 0;
 }
 
-tree_neighbor::tree_neighbor(const point& reference_point, uint n_neighbors,
+tree_neighbor::tree_neighbor(const point& reference_point, uint max_neighbors,
     double max_angular_distance) {
   reference_point_ = reference_point;
-  n_neighbors_ = n_neighbors;
+  max_neighbors_ = max_neighbors;
   max_distance_ = sin(DEG_TO_RAD * max_angular_distance);
   max_distance_ *= max_distance_;
   n_nodes_visited_ = 0;
 }
 
-void tree_neighbor::nearest_neighbors(point_vector* p, bool save_neighbors) {
-  if (!p->empty())
-    p->clear();
+tree_neighbor::~tree_neighbor() {
+  while (!point_queue_.empty()) point_queue_.pop();
+}
+
+void tree_neighbor::nearest_neighbors(point_vector* points,
+    bool save_neighbors) {
+  if (!points->empty()) points->clear();
   std::vector<distance_point_pair> backup_copy;
 
+  points->reserve(point_queue_.size());
   while (!point_queue_.empty()) {
     distance_point_pair dist_pair = point_queue_.top();
     point_queue_.pop();
 
-    p->push_back(point::copy_point(dist_pair.second));
+    points->push_back(point::copy_point(dist_pair.second));
     backup_copy.push_back(dist_pair);
   }
 
@@ -582,12 +578,12 @@ point tree_neighbor::nearest_neighbor() const {
 }
 
 bool tree_neighbor::test_point(point* test_point) {
-  double costheta = reference_point_.dot(*test_point);
-  double sin2theta = 1.0 - costheta * costheta;
+  double sin2theta = reference_point_.cross_norm2(*test_point);
 
   if (sin2theta < max_distance_ || n_neighbors() < max_neighbors()) {
-    if (n_neighbors() == max_neighbors())
+    if (n_neighbors() == max_neighbors()) {
       point_queue_.pop();
+    }
     point_queue_.push(distance_point_pair(sin2theta, test_point));
     max_distance_ = point_queue_.top().first;
 

@@ -332,11 +332,19 @@ double point::cross_norm(const point& p) const {
 }
 
 double point::cross_norm(const point& a, const point& b) {
+  return sqrt(cross_norm2(a, b));
+}
+
+double point::cross_norm2(const point& p) const {
+  return cross_norm2(*this, p);
+}
+
+double point::cross_norm2(const point& a, const point& b) {
   double x = a.y() * b.z() - a.z() * b.y();
   double y = a.z() * b.x() - a.x() * b.z();
   double z = a.x() * b.y() - a.y() * b.x();
 
-  return sqrt(x * x + y * y + z * z);
+  return x * x + y * y + z * z;
 }
 
 double point::angular_distance_deg(const point& p) const {

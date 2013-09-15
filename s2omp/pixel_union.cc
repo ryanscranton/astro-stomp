@@ -33,19 +33,14 @@ using __gnu_cxx::hash_set;
 namespace s2omp {
 
 pixel_union::pixel_union() {
-  min_level_ = MAX_LEVEL;
+  min_level_ = 0;
   max_level_ = 0;
   area_ = 0.0;
   initialized_ = false;
 }
 
 pixel_union::~pixel_union() {
-  pixels_.clear();
-  bound_.clear();
-  initialized_ = false;
-  min_level_ = MAX_LEVEL;
-  max_level_ = 0;
-  area_ = 0.0;
+  clear();
 }
 
 void pixel_union::normalize(pixel_vector* pixels) {

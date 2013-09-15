@@ -29,6 +29,7 @@ annulus_bound::annulus_bound(const point& axis, double inner_height,
 }
 
 annulus_bound::~annulus_bound() {
+  clear();
 }
 
 annulus_bound* annulus_bound::from_radii(const point& axis,
@@ -59,9 +60,8 @@ long annulus_bound::size() const {
 }
 
 void annulus_bound::clear() {
-  axis_ = point();
-  inner_height_ = -1.0;
-  outer_height_ = -1.0;
+  inner_height_ = 0.0;
+  outer_height_ = 0.0;
 }
 
 double annulus_bound::area() const {

@@ -33,6 +33,10 @@ pixel pixel::from_point(const point& p, int level) {
   return from_point(p).parent(level);
 }
 
+pixel pixel::from_token(const string& token) {
+  return pixel(S2CellId::FromToken(token));
+}
+
 pixel pixel::parent() const {
   return pixel(id_.parent());
 }
@@ -165,26 +169,27 @@ point pixel::center_point() const {
 }
 
 point pixel::vertex(int k) const {
-  return point::s2point_to_point(get_cell().GetVertexRaw(k));
+  return point::s2point_to_point(get_cell().GetVertex(k));
 }
 
 point pixel::edge(int k) const {
-  return point::s2point_to_point(get_cell().GetEdgeRaw(k));
+  return point::s2point_to_point(get_cell().GetEdge(k));
 }
 
 bool pixel::edge_distances(const point& p, double& near_edge_distance,
-    double& far_edge_distance) {
+    double& far_edge_distance) const {
   // First, find the nearest vertex.
   S2Cell cell = get_cell();
   near_edge_distance = 100.0;
   far_edge_distance = -100.0;
   for (int k = 0; k < 4; k++) {
-    double costheta = point::s2point_to_point(cell.GetVertexRaw(k)).dot(p);
-    if (1.0 - costheta * costheta < near_edge_distance) {
-      near_edge_distance = 1.0 - costheta * costheta;
+    double sin2theta =
+        point::s2point_to_point(cell.GetVertex(k)).cross_norm2(p);
+    if (sin2theta < near_edge_distance) {
+      near_edge_distance = sin2theta;
     }
-    if (1.0 - costheta * costheta > far_edge_distance) {
-      far_edge_distance = 1.0 - costheta * costheta;
+    if (sin2theta > far_edge_distance) {
+      far_edge_distance = sin2theta;
     }
   }
 
@@ -198,9 +203,9 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
   edges.reserve(4);
   edge_caps.reserve(4);
   for (int k = 0; k < 4; k++) {
-    point edge = point::s2point_to_point(cell.GetEdgeRaw(k));
+    point edge = point::s2point_to_point(cell.GetEdge(k));
     edges.push_back(edge);
-    edge_caps.push_back(circle_bound::from_height(edge, 0.0));
+    edge_caps.push_back(circle_bound::from_height(edge, 1.0));
   }
 
   // Now iterate over the edge pairs, check containment and calculate the
@@ -218,41 +223,45 @@ bool pixel::edge_distances(const point& p, double& near_edge_distance,
       // to the edge great circle and x needs to be on the edge great circle).
       // The solution is x = edge(k).cross(p.cross(edge(k))).
       // point nearest_point = edges[k].cross(p.cross(edges[k])); // normalize?
-      point nearest_point = edges[k].cross(point::cross(p, edges[k]));
-      double costheta = nearest_point.dot(p);
-      if (1.0 - costheta * costheta < near_edge_distance) {
-        near_edge_distance = 1.0 - costheta * costheta;
+      int k_lo = k == 0 ? 1 : 0;
+      point nearest_point = edges[k_lo].cross(point::cross(p, edges[k_lo]));
+      double sin2theta = nearest_point.cross_norm2(p);
+      if (sin2theta < near_edge_distance) {
+        near_edge_distance = sin2theta;
         nearest_point_on_edge = true;
       }
-      if (1.0 - costheta * costheta > far_edge_distance) {
-        far_edge_distance = 1.0 - costheta * costheta;
+      if (sin2theta > far_edge_distance) {
+        far_edge_distance = sin2theta;
       }
 
-      nearest_point = edges[k + 2].cross(point::cross(p, edges[k + 2]));
+      int k_hi = k == 0 ? 3 : 2;
+      nearest_point = edges[k_hi].cross(point::cross(p, edges[k_hi]));
       // nearest_point = edges[k + 2].cross(p.cross(edges[k + 2]));
       // normalize?
-      costheta = nearest_point.dot(p);
-      if (1.0 - costheta * costheta < near_edge_distance) {
-        near_edge_distance = 1.0 - costheta * costheta;
+      sin2theta = nearest_point.cross_norm2(p);
+      if (sin2theta < near_edge_distance) {
+        near_edge_distance = sin2theta;
         nearest_point_on_edge = true;
       }
-      if (1.0 - costheta * costheta > far_edge_distance) {
-        far_edge_distance = 1.0 - costheta * costheta;
+      if (sin2theta > far_edge_distance) {
+        far_edge_distance = sin2theta;
       }
     }
+    delete edge_caps[k];
+    delete edge_caps[k + 2];
   }
 
   return nearest_point_on_edge;
 }
 
-double pixel::nearest_edge_distance(const point& p) {
+double pixel::nearest_edge_distance(const point& p) const {
   double sin2theta_min, sin2theta_max;
   edge_distances(p, sin2theta_min, sin2theta_max);
 
   return sin2theta_min;
 }
 
-double pixel::farthest_edge_distance(const point& p) {
+double pixel::farthest_edge_distance(const point& p) const {
   double sin2theta_min, sin2theta_max;
   edge_distances(p, sin2theta_min, sin2theta_max);
 
@@ -337,5 +346,10 @@ void pixel::get_simple_covering(int level, pixel_vector* pixels) const {
 void pixel::get_center_covering(int level, pixel_vector* pixels) const {
   get_simple_covering(level, pixels);
 }
+
+void pixel::set_id(uint64 id) {
+  id_ = S2CellId(id);
+}
+
 
 } // end namespace s2omp

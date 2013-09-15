@@ -105,20 +105,18 @@ public:
 
   // Our first preferred method, return a vector of the nearest k neighbors
   // to the input point.
-  long find_k_nearest_neighbors(
+  void find_k_nearest_neighbors(
       const point& p, uint n_neighbors, point_vector* neighbors) const;
 
   // The special case where we're only interested in the nearest point.
-  long find_nearest_neighbor(const point& p, point* neighbor) const;
+  point find_nearest_neighbor(const point& p) const;
 
   // In some cases, we're only interested in the distance to the kth nearest
   // neighbor.  The return value will be the angular distance in degrees.
-  double k_nearest_neighbor_distance(
-      const point& p, uint n_neighbors, long& nodes_visited) const;
+  double k_nearest_neighbor_distance(const point& p, uint n_neighbors) const;
 
   // Or in the distance to the nearest neighbor.
-  double nearest_neighbor_distance(
-      const point& p, long& nodes_visited) const;
+  double nearest_neighbor_distance(const point& p) const;
 
   // Alternatively, we could be less interested in the nearest neighbor and
   // more interested in finding a direct match to our input point.  The
@@ -161,17 +159,17 @@ public:
 
   // If we want to extract a copy of all of the points that have been added
   // to this pixel, this method allows for that.
-  void points(point_vector* p) const;
+  void copy_points(point_vector* p) const;
 
   // And an associated method that will extract a copy of the points associated
   // with an input pixel.
-  void points(const pixel& pix, point_vector* p) const;
+  void copy_points(const pixel& pix, point_vector* p) const;
 
   // Recurse through the nodes below this one to return the number of nodes in
   // the tree.
   long n_nodes() const;
 
-  inline uint pixel_capacity() const {
+  inline uint node_capacity() const {
     return maximum_points_;
   }
 
@@ -253,9 +251,9 @@ public:
   }
 };
 
-// Default values for our nearest neigbhor finding.
-static uint const DEFAULT_N_NEIGHBORS = 1;
-static double const DEFAULT_MAX_NEIGHBOR_DISTANCE = 10.0;
+// Default values for our nearest neighbor finding.
+static uint const DEFAULT_MAX_NEIGHBORS = 1;
+static double const DEFAULT_MAX_NEIGHBOR_DISTANCE = 100.0;
 
 class tree_neighbor {
   // In order to do the nearest neighbor finding in the TreePixel class, we
@@ -267,8 +265,8 @@ class tree_neighbor {
 public:
   friend class nearest_neighbor_point;
   tree_neighbor(const point& reference_point);
-  tree_neighbor(const point& reference_point, uint n_neighbors);
-  tree_neighbor(const point& reference_point, uint n_neighbors,
+  tree_neighbor(const point& reference_point, uint max_neighbors);
+  tree_neighbor(const point& reference_point, uint max_neighbors,
                 double max_angular_distance);
   ~tree_neighbor();
 
@@ -280,12 +278,12 @@ public:
 
   // Return the number of neighbors in the list.  This should always be at most
   // the value used to instantiate the class, which is returned by calling
-  // MaxNeighbors()
+  // max_neighbors()
   inline uint n_neighbors() {
     return point_queue_.size();
   }
   inline uint max_neighbors() {
-    return n_neighbors_;
+    return max_neighbors_;
   }
 
   // Submit a point for possible inclusion.  Return value indicates whether the
@@ -316,7 +314,7 @@ public:
 private:
   point reference_point_;
   point_queue point_queue_;
-  uint n_neighbors_;
+  uint max_neighbors_;
   long n_nodes_visited_;
   double max_distance_;
 };

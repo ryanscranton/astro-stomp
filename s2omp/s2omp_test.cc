@@ -3,6 +3,7 @@
 #include "point_test.cc"
 
 #include "pixel_test.cc"
+#include "tree_pixel_test.cc"
 
 #include "angular_bin_test.cc"
 #include "circle_bound_test.cc"

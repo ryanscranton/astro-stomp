@@ -7,6 +7,7 @@
 namespace s2omp {
 
 bound_interface::~bound_interface() {
+  clear();
 }
 
 bool bound_interface::is_empty() const {
@@ -49,16 +50,14 @@ circle_bound bound_interface::get_bound() const {
 }
 
 void bound_interface::get_covering(pixel_vector* pixels) const {
-  if (!pixels->empty()) pixels->clear();
-  coverer cover;
-
-  cover.get_covering(*this, pixels);
+  get_size_covering(DEFAULT_COVERING_PIXELS, pixels);
 }
 
 void bound_interface::get_size_covering(
     long max_pixels, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover;
+  cover.set_levels_from_area(area());
 
   cover.get_size_covering(max_pixels, *this, pixels);
 }
@@ -67,6 +66,7 @@ void bound_interface::get_area_covering(
     double fractional_area_tolerance, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover;
+  cover.set_levels_from_area(area());
 
   cover.get_area_covering(fractional_area_tolerance, *this, pixels);
 }
@@ -75,6 +75,7 @@ void bound_interface::get_interior_covering(
     int max_level, pixel_vector* pixels) const {
   if (!pixels->empty()) pixels->clear();
   coverer cover;
+  cover.set_levels_from_area(area());
 
   cover.get_interior_covering(*this, pixels);
 }
@@ -103,12 +104,11 @@ point bound_interface::get_random_point() {
   return p;
 }
 
-void bound_interface::get_random_points(
-    long int n_points, point_vector* points) {
+void bound_interface::get_random_points(long n_points, point_vector* points) {
   if (!points->empty()) points->clear();
+  points->reserve(n_points);
 
   circle_bound cap = get_bound();
-
   for (long int i = 0; i < n_points; ++i) {
     point p = cap.create_random_point();
     while (!contains(p)) {
