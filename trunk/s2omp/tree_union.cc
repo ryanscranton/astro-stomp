@@ -43,6 +43,10 @@ tree_union::tree_union(int level, int max_points) {
   initialized_bound_ = false;
 }
 
+tree_union::~tree_union() {
+  clear();
+}
+
 // Moving private method here since add_point uses it.
 tree_map_iterator tree_union::add_node(uint64 id) {
   tree_map_insert_iterator iter = tree_map_.insert(std::pair<uint64,
@@ -374,22 +378,19 @@ double tree_union::weight(const pixel& pix) const {
   return total_weight;
 }
 
-void tree_union::points(point_vector* points) const {
+void tree_union::copy_points(point_vector* points) const {
   if (!points->empty())
     points->clear();
 
+  points->reserve(n_points());
   for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
     point_vector tmp_points;
-    iter->second->points(&tmp_points);
-
-    for (point_iterator p_iter = tmp_points.begin(); p_iter
-        != tmp_points.end(); ++p_iter) {
-      points->push_back(*p_iter);
-    }
+    iter->second->copy_points(&tmp_points);
+    points->insert(points->end(), tmp_points.begin(), tmp_points.end());
   }
 }
 
-void tree_union::points(const pixel& pix, point_vector* points) const {
+void tree_union::copy_points(const pixel& pix, point_vector* points) const {
   if (!points->empty())
     points->clear();
 
@@ -405,12 +406,8 @@ void tree_union::points(const pixel& pix, point_vector* points) const {
     tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
     if (t_iter != tree_map_.end()) {
       point_vector tmp_points;
-      t_iter->second->points(*iter, &tmp_points);
-
-      for (point_iterator p_iter = tmp_points.begin(); p_iter
-          != tmp_points.end(); ++p_iter) {
-        points->push_back(*p_iter);
-      }
+      t_iter->second->copy_points(*iter, &tmp_points);
+      points->insert(points->end(), tmp_points.begin(), tmp_points.end());
     }
   }
 }
@@ -423,6 +420,11 @@ void tree_union::clear() {
   tree_map_.clear();
   nodes_.clear();
   bound_.clear();
+  point_count_ = 0;
+  weight_ = 0.0;
+  area_ = 0.0;
+  modified_ = false;
+  initialized_bound_ = false;
 }
 
 void tree_union::calculate_area() {

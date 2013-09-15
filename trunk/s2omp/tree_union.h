@@ -47,6 +47,7 @@ public:
   tree_union();
   tree_union(int level);
   tree_union(int level, int max_points);
+  virtual ~tree_union();
 
   bool add_point(const point& p);
 
@@ -125,17 +126,17 @@ public:
   inline int level() const {
     return level_;
   }
-  inline int pixel_capacity() const {
+  inline int node_capacity() const {
     return maximum_points_;
   }
 
   // If we want to extract a copy of all of the points that have been added
   // to this pixel, this method allows for that.
-  void points(point_vector* points) const;
+  void copy_points(point_vector* points) const;
 
   // And an associated method that will extract a copy of the points associated
   // with an input pixel.
-  void points(const pixel& pix, point_vector* points) const;
+  void copy_points(const pixel& pix, point_vector* points) const;
 
   // API from pixelized_bound_interface.h
   inline virtual bool is_empty() const {

@@ -19,6 +19,7 @@
 
 #include <utility>
 #include <algorithm>
+#include <string>
 #include "core.h"
 #include "bound_interface.h"
 
@@ -56,6 +57,7 @@ public:
   // resolution).
   static pixel from_point(const point& p);
   static pixel from_point(const point& p, int level);
+  static pixel from_token(const string& token);
 
   // Accessor methods for our basic parameters.
   inline uint64 id() const {
@@ -127,7 +129,7 @@ public:
 
   // Rounding out our methods for child and parent pixels, it can often be
   // useful to know if pixels are cohorts of one another: pixels at the same
-  // level that share a common parent.
+  // level that share a common immediate parent.
   bool is_cohort(const pixel& pix) const;
   static bool are_cohorts(const pixel& pix_a, const pixel& pix_b);
   static bool are_cohorts(const pixel& pix_a, const pixel& pix_b,
@@ -181,14 +183,14 @@ public:
 
   // For some uses of the code we would like to know both the distance to
   // the closest and farthest edge given an external point.
-  double nearest_edge_distance(const point& p);
-  double farthest_edge_distance(const point& p);
+  double nearest_edge_distance(const point& p) const;
+  double farthest_edge_distance(const point& p) const;
 
   // Alternatively, we can get both edge distances in a single call.  The
   // returned boolean tells us whether the distances are to pixel edges (true)
   // or pixel corners (false).
   bool edge_distances(const point& p, double& near_edge_distance,
-      double& far_edge_distance);
+      double& far_edge_distance) const;
 
   // Return a vector of pixels containing the neighbors of this pixel.  In the
   // second case, we return the neighboring pixels at an input level.
@@ -198,6 +200,10 @@ public:
   virtual S2Cell get_cell() const;
   inline S2CellId get_cellid() const {
     return id_;
+  }
+
+  inline string to_token() const {
+    return id_.ToToken();
   }
 
   inline static bool pixel_order(const pixel& a, const pixel& b) {
@@ -240,7 +246,6 @@ protected:
   void set_id(uint64 id);
 
 private:
-
   S2CellId id_;
 };
 

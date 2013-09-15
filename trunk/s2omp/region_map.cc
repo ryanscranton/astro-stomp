@@ -123,7 +123,7 @@ void region_map::get_covering(int region_idx, pixel_vector* pixels) const {
   }
 
   // If the input region is outside our range, stop now.
-  if (region_idx < 0 || region_idx >= region_map_.size()) {
+  if (region_idx < 0 || region_idx >= n_region()) {
     return;
   }
 

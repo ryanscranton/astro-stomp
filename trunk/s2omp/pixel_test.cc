@@ -185,6 +185,48 @@ TEST(pixel, TestPixelNeighbors) {
   EXPECT_EQ(neighbors.size(), 12);
 }
 
+TEST(pixel, TestPixelEdgeDistances) {
+  // Test the method for determining the nearest and farthest edge distances
+  // for an input point.
+
+  // Create a leaf cell in the middle of a face.
+  s2omp::point p(0, 0, 1, 0);
+  s2omp::pixel pix = s2omp::pixel::from_point(p, s2omp::MAX_LEVEL);
+
+  // Verify that the vertices all return 0 distance and that the nearest
+  // point is not on the edge.
+  double near_dist, far_dist;
+  for (int k = 0; k < 4; k++) {
+    s2omp::point vertex = pix.vertex(k);
+    ASSERT_NEAR(pix.nearest_edge_distance(vertex), 0.0, 1.0e-15);
+    ASSERT_FALSE(pix.edge_distances(vertex, near_dist, far_dist));
+    ASSERT_LT(near_dist, far_dist);
+  }
+
+  // Conversely, the nearest point to the center of the next pixel should be
+  // on the edge of our current pixel.
+  ASSERT_TRUE(pix.edge_distances(pix.next().center_point(),
+      near_dist, far_dist));
+
+  // Finally, if we consider the centers of this pixel's neighbors, then we
+  // should find that half have their nearest point on the edge and half on
+  // a vertex.
+  s2omp::pixel_vector neighbors;
+  pix.neighbors(&neighbors);
+  ASSERT_EQ(neighbors.size(), 8);
+  int n_edge = 0;
+  int n_not_edge = 0;
+  for (int k = 0; k < neighbors.size(); k++) {
+    if (pix.edge_distances(neighbors[k].center_point(), near_dist, far_dist)) {
+      n_edge++;
+    } else {
+      n_not_edge++;
+    }
+    ASSERT_LT(near_dist, far_dist);
+  }
+  ASSERT_EQ(n_edge, n_not_edge);
+}
+
 TEST(pixel, TestPixelBoundBasics) {
   // Testing the basic inherited interface from bound_interface.
 
@@ -254,9 +296,20 @@ TEST(pixel, TestPixelBound) {
 
 TEST(pixel, TestPixelScales) {
   // Not really a test, but rather a delineation of pixel scales.
-  for (int level = 0; level <= s2omp::MAX_LEVEL; level++) {
+  /* for (int level = 0; level <= s2omp::MAX_LEVEL; level++) {
     std::cout << "Level " << level << ": Average area = " <<
         s2omp::pixel::average_area(level) << " sq. deg.; Average scale = " <<
         sqrt(s2omp::pixel::average_area(level)) << " deg.\n";
+  } */
+}
+
+TEST(pixel, TestPixelString) {
+  s2omp::point p(0.0, 0.0, 1.0, 1.0);
+  s2omp::pixel pix(p.id());
+  for (int level = 0; level <= s2omp::MAX_LEVEL; level++) {
+    s2omp::pixel parent = pix.parent(level);
+    std::cout << level << ": 0x" << parent.to_token() << "\n";
+    std::cout << "\tRange: 0x" << parent.range_min().to_token() << " - 0x" <<
+        parent.range_max().to_token() << "\n";
   }
 }

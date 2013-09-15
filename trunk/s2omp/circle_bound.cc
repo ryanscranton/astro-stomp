@@ -128,7 +128,6 @@ long circle_bound::size() const {
 
 void circle_bound::clear() {
   height_ = 0.0;
-  axis_ = point();
 }
 
 double circle_bound::area() const {
@@ -136,8 +135,10 @@ double circle_bound::area() const {
 }
 
 bool circle_bound::contains(const point& p) const {
-  double p_height = 1.0 - axis_.dot(p);
-  return double_ge(height_, p_height);
+  // This is a bit convoluted, but we're following the same criteria as given
+  // in S2Cap.cc.  As before, for small angles, we need to use a check based on
+  // sin(theta) rather than dot products.
+  return double_le((axis_.s2point() - p.s2point()).Norm2(), 2.0 * height_);
 }
 
 bool circle_bound::contains(const pixel& pix) const {

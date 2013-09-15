@@ -15,6 +15,7 @@
 #define UTIL_H_
 
 #include <sys/time.h>
+#include <math.h>
 #include <string>
 #include "core.h"
 
@@ -31,7 +32,7 @@ class cosmology {
  public:
   // First, some basic setters and getters for our cosmological parameters.
   static double omega_m();
-  static double hubble_honstant();
+  static double hubble_constant();
   static double hubble_distance();
   static double omega_l();
   static void set_omega_m(double omega_m);
@@ -67,25 +68,13 @@ class timer {
   // much as providing a tool for tuning algorithm performance on a fixed data
   // set.
  public:
-  timer() {
-    gettimeofday(&start_, NULL);
-    stop_ = start_;
-  }
+  timer();
 
-  inline void start_timer() {
-    gettimeofday(&start_, NULL);
-  }
+  inline void start_timer();
 
-  inline void stop_timer() {
-    gettimeofday(&stop_, NULL);
-  }
+  inline void stop_timer();
 
-  inline double elapsed_time() {
-    timeval interval;
-    timersub(&stop, &start, &interval);
-    // Need to convert tv_usec from microseconds to seconds.
-    return interval.tv_sec + interval.tv_usec/1000000.0;
-  }
+  inline double elapsed_time();
 
  private:
   timeval start_;
@@ -97,19 +86,19 @@ double cosmology::omega_m_ = 0.2736;
 double cosmology::h_ = 0.705;
 const double cosmology::AA_ = 1.718;
 const double cosmology::BB_ = 0.315;
-double cosmology::a_ = cosmology::AA_*cosmology::omega_m;
-double cosmology::b_ = cosmology::BB_*sqrt(cosmology::omega_m);
+double cosmology::a_ = cosmology::AA_ * cosmology::omega_m_;
+double cosmology::b_ = cosmology::BB_ * sqrt(cosmology::omega_m_);
 
 double cosmology::omega_m() {
   return omega_m_;
 }
 
 double cosmology::hubble_constant() {
-  return h_*100.0;
+  return h_ * 100.0;
 }
 
 double cosmology::hubble_distance() {
-  return 3000.0/h_;
+  return 3000.0 / h_;
 }
 
 double cosmology::omega_l() {
@@ -118,43 +107,43 @@ double cosmology::omega_l() {
 
 void cosmology::set_omega_m(double new_omega_m) {
   omega_m_ = new_omega_m;
-  a_ = AA_*omega_m_;
-  b_ = BB_*sqrt(omega_m_);
+  a_ = AA_ * omega_m_;
+  b_ = BB_ * sqrt(omega_m_);
 }
 
 void cosmology::set_hubble_constant(double hubble) {
-  h_ = hubble/100.0;
+  h_ = hubble / 100.0;
 }
 
 void cosmology::set_omega_l(double omega_lambda) {
   omega_m_ = 1.0 - omega_lambda;
-  a_ = AA_*omega_m_;
-  b_ = BB_*sqrt(omega_m_);
+  a_ = AA_ * omega_m_;
+  b_ = BB_ * sqrt(omega_m_);
 }
 
 double cosmology::comoving_distance(double z) {
   // In Mpc/h.
-  return hubble_distance()*z/sqrt(1.0 + a_*z + b_*z*z);
+  return hubble_distance() * z / sqrt(1.0 + a_ * z + b_ * z * z);
 }
 
 double cosmology::angular_diameter_distance(double z) {
   // In Mpc/h.
-  return comoving_distance(z)/(1.0+z);
+  return comoving_distance(z) / (1.0 + z);
 }
 
 double cosmology::luminosity_distance(double z) {
   // In Mpc/h.
-  return comoving_distance(z)*(1.0+z);
+  return comoving_distance(z) * (1.0 + z);
 }
 
 double cosmology::projected_distance(double z, double theta_deg) {
   // where theta is assumed to be in degrees and the return value in Mpc/h.
-  return theta*DEG_TO_RAD*angular_diameter_distance(z);
+  return theta_deg * DEG_TO_RAD * angular_diameter_distance(z);
 }
 
-double cosmology::projected_angle(double z, double radius) {
+double cosmology::projected_angle(double z, double radius_mpc_over_h) {
   // where radius is in Mpc/h and the return angle is in degrees.
-  return RAD_TO_DEG*radius/angular_diameter_distance(z);
+  return RAD_TO_DEG * radius_mpc_over_h / angular_diameter_distance(z);
 }
 
 timer::timer() {
@@ -172,7 +161,7 @@ void timer::stop_timer() {
 
 double timer::elapsed_time() {
   timeval interval;
-  timersub(&stop, &start, &interval);
+  timersub(&stop_, &start_, &interval);
   // Need to convert tv_usec from microseconds to seconds.
   return interval.tv_sec + interval.tv_usec/1000000.0;
 }

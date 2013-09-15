@@ -16,8 +16,9 @@ namespace s2omp {
 scalar_union::scalar_union(ScalarType t) {
   type_ = t;
 }
-scalar_union::~scalar_union() {
 
+scalar_union::~scalar_union() {
+  clear();
 }
 
 scalar_union* scalar_union::from_bound(const bound_interface& bound, int level,

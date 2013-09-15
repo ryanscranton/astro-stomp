@@ -11,6 +11,8 @@ TEST(pixel_union, TestPixelUnionDefaultConstructor) {
 
   ASSERT_TRUE(pix_union.is_empty());
   ASSERT_EQ(pix_union.size(), 0);
+  ASSERT_EQ(pix_union.min_level(), 0);
+  ASSERT_EQ(pix_union.max_level(), 0);
   ASSERT_DOUBLE_EQ(pix_union.area(), 0.0);
 
   // This shouldn't contain anything.
@@ -319,7 +321,7 @@ TEST(pixel_union, TestPixelUnionBound) {
   // pixel_union and its center.
 
   // Start with a pixel_bound consisting of a single pixel.
-  int level = 18;
+  int level = 20;
   s2omp::point p(0.0, 0.0, 1.0, 1.0);
   s2omp::pixel pix = p.to_pixel(level);
   s2omp::pixel_union* pix_union = create_union_from_pixel(pix, false);
@@ -332,12 +334,6 @@ TEST(pixel_union, TestPixelUnionBound) {
   ASSERT_TRUE(bound.is_valid());
   ASSERT_TRUE(s2omp::double_ge(bound.radius(), pix.get_bound().radius()));
   ASSERT_TRUE(pix.get_bound().contains(p));
-  // TODO(scranton): This test passes, but there are some numerical issues here
-  // for finer pixels wherein the pixel_union bound may not contain the point
-  // that the original pixel was based on even if the bound for the
-  // corresponding pixel does.  I *think* this is is just flakiness based on
-  // the way that we're instantiating the point and that this won't be a real
-  // problem, but it's worth keeping an eye on.
   ASSERT_TRUE(bound.contains(p));
   ASSERT_TRUE(bound.contains(pix));
 
