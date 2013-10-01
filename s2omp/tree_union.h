@@ -35,10 +35,10 @@
 #include "tree_pixel.h"
 
 namespace s2omp {
-typedef std::map<const uint64, tree_pixel *> tree_map;
-typedef tree_map::const_iterator tree_map_iterator;
-typedef std::pair<tree_map_iterator, tree_map_iterator> tree_map_pair;
-typedef std::pair<tree_map_iterator, bool> tree_map_insert_iterator;
+typedef std::map<uint64, tree_pixel *> node_map;
+typedef node_map::const_iterator node_map_iterator;
+typedef std::pair<node_map_iterator, node_map_iterator> node_map_pair;
+typedef std::pair<node_map_iterator, bool> node_map_insert_iterator;
 
 class tree_union: public bound_interface {
 public:
@@ -46,8 +46,10 @@ public:
 
   tree_union();
   tree_union(int level);
-  tree_union(int level, int max_points);
+  tree_union(int level, int node_capacity);
   virtual ~tree_union();
+
+  void init(int level, int node_capacity);
 
   bool add_point(const point& p);
 
@@ -108,8 +110,8 @@ public:
   // in degrees.  As with nearest neighbors, the preferred interface is
   // "closest_match" and not "_match_recursion".
   void _match_recursion(const point& p, tree_neighbor* neighbor) const;
-  bool
-      closest_match(const point& p, double max_angular_distance, point& match) const;
+  bool closest_match(const point& p, double max_angular_distance,
+      point& match) const;
 
   long n_points() const {
     return point_count_;
@@ -127,8 +129,9 @@ public:
     return level_;
   }
   inline int node_capacity() const {
-    return maximum_points_;
+    return node_capacity_;
   }
+
 
   // If we want to extract a copy of all of the points that have been added
   // to this pixel, this method allows for that.
@@ -140,10 +143,10 @@ public:
 
   // API from pixelized_bound_interface.h
   inline virtual bool is_empty() const {
-    return !tree_map_.empty();
+    return node_map_.empty();
   }
   inline virtual long size() const {
-    return tree_map_.size();
+    return node_map_.size();
   }
   virtual void clear();
   virtual double area() const;
@@ -166,15 +169,15 @@ public:
   virtual void get_center_covering(int level, pixel_vector* pixels) const;
 
 private:
-  tree_map_iterator add_node(uint64 id);
+  node_map_iterator add_node(uint64 id);
   void get_node_level_pixels(const pixel& pix, pixel_vector* pixels) const;
   void initialize_bound();
   void calculate_area();
 
-  tree_map tree_map_;
+  node_map node_map_;
   pixel_set nodes_;
   circle_bound bound_;
-  int maximum_points_;
+  int node_capacity_;
   long level_, point_count_;
   double weight_, area_;
   bool modified_, initialized_bound_;

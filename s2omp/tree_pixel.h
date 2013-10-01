@@ -127,7 +127,7 @@ public:
   // point is within the specified radius and the maximum distance is
   // in degrees.
   bool closest_match(
-      const point& p, double max_angular_distance, point* match) const;
+      const point& p, double max_distance_deg, point& match) const;
 
   // Return the number of points contained in the current pixel and all
   // sub-pixels.
@@ -170,7 +170,7 @@ public:
   long n_nodes() const;
 
   inline uint node_capacity() const {
-    return maximum_points_;
+    return node_capacity_;
   }
 
   // Occasionally, it can be useful for outside code to be able to traverse
@@ -227,7 +227,7 @@ private:
 
   point_ptr_vector points_;
   tree_ptr_vector subnodes_;
-  uint maximum_points_;
+  uint node_capacity_;
   long point_count_;
   double weight_;
   S2Cell cell_;
@@ -267,14 +267,14 @@ public:
   tree_neighbor(const point& reference_point);
   tree_neighbor(const point& reference_point, uint max_neighbors);
   tree_neighbor(const point& reference_point, uint max_neighbors,
-                double max_angular_distance);
+                double max_distance_deg);
   ~tree_neighbor();
 
   // Return a list of the nearest neighbors found so far.
-  void nearest_neighbors(point_vector* p, bool save_neighbors);
+  void nearest_neighbors(point_vector* points, bool save_neighbors);
 
   // Return a copy of the nearest neighbor found so far.
-  point nearest_neighbor() const;
+  point nearest_neighbor();
 
   // Return the number of neighbors in the list.  This should always be at most
   // the value used to instantiate the class, which is returned by calling
@@ -300,7 +300,7 @@ public:
   // The default distance returned is in sin^2(theta) units since that's what
   // the edge detection code uses.  If we're interested in human units, this
   // provides that distance in degrees.
-  double max_angular_distance();
+  double max_distance_deg();
 
   // For accounting purposes, it can be useful to keep track of how many nodes
   // we have visited during our traversal through the tree.

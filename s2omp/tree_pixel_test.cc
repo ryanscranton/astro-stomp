@@ -12,7 +12,7 @@ class TreePixelTest : public testing::Test {
   virtual void SetUp() {
     s2omp::point p(0.0, 0.0, 1.0, 1.0);
     level_ = 20;
-    max_points_ = s2omp::DEFAULT_MAX_POINTS;
+    max_points_ = s2omp::DEFAULT_NODE_CAPACITY;
     pix_ = s2omp::tree_pixel::from_point(p, level_, max_points_);
   }
 
@@ -38,7 +38,7 @@ TEST(tree_pixel, TestTreePixelConstructors) {
   ASSERT_TRUE(pix.contains(p));
 
   // Default point and node counts for an empty pixel.
-  ASSERT_EQ(pix.node_capacity(), s2omp::DEFAULT_MAX_POINTS);
+  ASSERT_EQ(pix.node_capacity(), s2omp::DEFAULT_NODE_CAPACITY);
   ASSERT_EQ(pix.n_nodes(), 1);
   ASSERT_EQ(pix.n_points(), 0);
   ASSERT_DOUBLE_EQ(pix.weight(), 0.0);
@@ -46,7 +46,7 @@ TEST(tree_pixel, TestTreePixelConstructors) {
   ASSERT_EQ(pix.size(), 0);
 
   // Verify that our other constructors also yield valid tree_pixels.
-  int max_points = 2 * s2omp::DEFAULT_MAX_POINTS;
+  int max_points = 2 * s2omp::DEFAULT_NODE_CAPACITY;
   s2omp::tree_pixel* pix_ptr =
       s2omp::tree_pixel::from_pixel(p.to_pixel(level), max_points);
   ASSERT_TRUE(pix_ptr->is_valid());
@@ -301,6 +301,48 @@ TEST_F(TreePixelTest, TestTreePixelNearestNeighbor) {
   double min_ang_dist = p.angular_distance_deg(outside);
   for (int k = 0; k < points.size(); k++) {
     if (points[k] != p) {
+      ASSERT_GT(points[k].angular_distance_deg(outside), min_ang_dist);
+    }
+  }
+}
+
+TEST_F(TreePixelTest, TestTreePixelClosestMatch) {
+  // Test the methods for finding the closest match to an input point.
+
+  // Start by adding some random points to a tree_pixel.
+  int n_points = 1000;
+  s2omp::point_vector points;
+  pix_->get_random_points(n_points, &points);
+
+  for (int k = 0; k < points.size(); k++) {
+    ASSERT_TRUE(pix_->add_point(points[k]));
+  }
+
+  // Now try finding the closest match to one of the points
+  double tol_deg = 1.0e-10;
+  s2omp::point test_point = points[n_points/2];
+  s2omp::point match;
+  ASSERT_TRUE(pix_->closest_match(test_point, tol_deg, match));
+  ASSERT_LT(test_point.angular_distance_deg(match), tol_deg);
+
+  // Now find the closest match to a point outside the pixel.  With the same
+  // tolerance, this should fail.  Likewise, the input point should remain
+  // unchanged.
+  s2omp::point outside = pix_->next().center_point();
+  ASSERT_FALSE(pix_->closest_match(outside, tol_deg, match));
+  ASSERT_LT(test_point.angular_distance_deg(match), tol_deg);
+
+  // If we increase the allowable distance to the distance between the two
+  // pixels, we should find an acceptable match.
+  tol_deg = pix_->center_point().angular_distance_deg(outside);
+  ASSERT_TRUE(pix_->closest_match(outside, tol_deg, match));
+  ASSERT_LT(outside.angular_distance_deg(match), tol_deg);
+
+  // Verify that the returned point is, in fact, closer to the input point than
+  // any other point in the pixel.
+  double min_ang_dist = match.angular_distance_deg(outside);
+  for (int k = 0; k < points.size(); k++) {
+    if (points[k] != match) {
       ASSERT_GT(points[k].angular_distance_deg(outside), min_ang_dist);
     }
   }

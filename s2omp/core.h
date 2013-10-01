@@ -89,7 +89,7 @@ static int const DEFAULT_LEVEL = 6;
 
 // For the tree_pixel and tree_union classes, it's also useful to define a
 // default carrying capacity for each node in the tree structure.
-static uint const DEFAULT_MAX_POINTS = 200;
+static uint const DEFAULT_NODE_CAPACITY = 200;
 
 // From S2: Multiply a positive number by this constant to ensure that the
 // result of a floating point operation is at least as large as the true
@@ -135,6 +135,10 @@ inline double random_double() {
 
 inline uint64 random_uint64() {
   return UNIFORM_UINT64(MT_GENERATOR);
+}
+
+inline uint64 random_uint64(uint64 max_value) {
+  return static_cast<uint64>(max_value * UNIFORM_DOUBLE(MT_GENERATOR));
 }
 
 } // end namespace s2omp

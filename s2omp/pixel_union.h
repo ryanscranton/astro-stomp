@@ -62,7 +62,7 @@ public:
 
   // In some cases, we may wish to soften the edges of our pixel_union (for
   // instance if the current union is formed from combining multiple high
-  // resolution unions producing a union that is unweidly).  In this case,
+  // resolution unions producing a union that is unwieldy).  In this case,
   // we combine all pixels smaller than the input level, producing a parent
   // pixel at max_level if more than half its area was in the original union.
   void soften(int max_level);

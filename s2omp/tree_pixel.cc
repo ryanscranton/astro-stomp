@@ -28,19 +28,19 @@ namespace s2omp {
 tree_pixel::tree_pixel() {
   // The default constructor is an invalid pixel.
   set_id(0);
-  initialize_node(DEFAULT_MAX_POINTS);
+  initialize_node(DEFAULT_NODE_CAPACITY);
   cell_ = S2Cell(S2CellId(id()));
 }
 
 tree_pixel::tree_pixel(uint64 id) {
   set_id(id);
-  initialize_node(DEFAULT_MAX_POINTS);
+  initialize_node(DEFAULT_NODE_CAPACITY);
   cell_ = S2Cell(S2CellId(id));
 }
 
-tree_pixel::tree_pixel(uint64 id, uint max_points) {
+tree_pixel::tree_pixel(uint64 id, uint node_capacity) {
   set_id(id);
-  initialize_node(max_points);
+  initialize_node(node_capacity);
   cell_ = S2Cell(S2CellId(id));
 }
 
@@ -48,8 +48,8 @@ tree_pixel::~tree_pixel() {
   clear();
 }
 
-void tree_pixel::initialize_node(uint max_points) {
-  maximum_points_ = max_points;
+void tree_pixel::initialize_node(uint node_capacity) {
+  node_capacity_ = node_capacity;
   weight_ = 0.0;
   point_count_ = 0;
   subnodes_.clear();
@@ -72,7 +72,7 @@ bool tree_pixel::initialize_subnodes() {
 
   subnodes_.reserve(4);
   for (pixel c = child_begin(); c != child_end(); c = c.next()) {
-    subnodes_.push_back(from_pixel(c, maximum_points_));
+    subnodes_.push_back(from_pixel(c, node_capacity_));
   }
 
   for (point_ptr_iterator p_iter = points_.begin(); p_iter != points_.end(); ++p_iter) {
@@ -102,9 +102,9 @@ bool tree_pixel::add_point(point* p) {
 
   // Add the point to the pixel if we are below capacity or if we're a leaf
   // node.
-  if (point_count_ < maximum_points_ || is_leaf()) {
+  if (point_count_ < node_capacity_ || is_leaf()) {
     if (point_count_ == 0)
-      points_.reserve(maximum_points_);
+      points_.reserve(node_capacity_);
     points_.push_back(p);
     weight_ += p->weight();
     point_count_++;
@@ -273,31 +273,28 @@ double tree_pixel::k_nearest_neighbor_distance(const point& p,
 
   _neighbor_recursion(p, &neighbors);
 
-  return neighbors.max_angular_distance();
+  return neighbors.max_distance_deg();
 }
 
 double tree_pixel::nearest_neighbor_distance(const point& p) const {
   return k_nearest_neighbor_distance(p, 1);
 }
 
-bool tree_pixel::closest_match(const point& p, double max_angular_distance,
-    point* match) const {
+bool tree_pixel::closest_match(const point& p, double max_distance_deg,
+    point& match) const {
 
-  tree_neighbor neighbors(p, 1, max_angular_distance);
+  tree_neighbor neighbors(p, 1, max_distance_deg);
 
   _neighbor_recursion(p, &neighbors);
 
-  bool found_match = false;
-  if (neighbors.n_neighbors() == neighbors.max_neighbors()
-      && neighbors.max_angular_distance() < max_angular_distance) {
-    found_match = true;
-
-    point_vector p_vector;
-    neighbors.nearest_neighbors(&p_vector, false);
-    match = point::copy_point(p_vector[0]);
+  if (neighbors.n_neighbors() != neighbors.max_neighbors()
+      || neighbors.max_distance_deg() > max_distance_deg) {
+    return false;
   }
 
-  return found_match;
+  match = neighbors.nearest_neighbor();
+
+  return true;
 }
 
 long tree_pixel::n_points(const pixel& pix) const {
@@ -516,7 +513,7 @@ void tree_pixel::clear() {
     delete *iter;
   }
 
-  initialize_node(maximum_points_);
+  initialize_node(node_capacity_);
 }
 
 S2Cell tree_pixel::get_cell() const {
@@ -540,10 +537,10 @@ tree_neighbor::tree_neighbor(const point& reference_point, uint max_neighbors) {
 }
 
 tree_neighbor::tree_neighbor(const point& reference_point, uint max_neighbors,
-    double max_angular_distance) {
+    double max_distance_deg) {
   reference_point_ = reference_point;
   max_neighbors_ = max_neighbors;
-  max_distance_ = sin(DEG_TO_RAD * max_angular_distance);
+  max_distance_ = sin(DEG_TO_RAD * max_distance_deg);
   max_distance_ *= max_distance_;
   n_nodes_visited_ = 0;
 }
@@ -573,8 +570,10 @@ void tree_neighbor::nearest_neighbors(point_vector* points,
   }
 }
 
-point tree_neighbor::nearest_neighbor() const {
-  return point::copy_point(point_queue_.top().second);
+point tree_neighbor::nearest_neighbor() {
+  point_vector points;
+  nearest_neighbors(&points, true);
+  return points.back();
 }
 
 bool tree_neighbor::test_point(point* test_point) {
@@ -593,8 +592,8 @@ bool tree_neighbor::test_point(point* test_point) {
   return false;
 }
 
-double tree_neighbor::max_angular_distance() {
-  return RAD_TO_DEG * asin(sqrt(fabs(max_distance_)));
+double tree_neighbor::max_distance_deg() {
+  return RAD_TO_DEG * sqrt(asin(fabs(max_distance_)));
 }
 
 } //end namespace s2omp

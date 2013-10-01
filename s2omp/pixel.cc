@@ -286,6 +286,47 @@ void pixel::neighbors(int level, pixel_vector* pixels) const {
   }
 }
 
+ostream& operator<<(ostream& output, pixel const& pix) {
+  return output << pix.to_token();
+}
+
+istream& operator>>(istream& input, pixel& pix) {
+  string token;
+  input >> token;
+  pix.id_ = S2CellId::FromToken(token);
+
+  return input;
+}
+
+point pixel::quick_random_point() const {
+  uint64 min_id = range_min().id();
+  uint64 range = range_max().id() - min_id + 1;
+
+  while (true) {
+    S2CellId id = S2CellId(min_id + random_uint64(range));
+    if (id.is_valid()) {
+      return point(id.ToPoint(), 1.0);
+    }
+  }
+}
+
+void pixel::quick_random_points(long n_points, point_vector* points) const {
+  if (!points->empty()) points->clear();
+  points->reserve(n_points);
+
+  uint64 min_id = range_min().id();
+  uint64 range = range_max().id() - min_id + 1;
+
+  for (long k = 0; k < n_points; k++) {
+    S2CellId id = S2CellId(min_id + random_uint64(range));
+    while (!id.is_valid()) {
+      id = S2CellId(min_id + random_uint64(range));
+    }
+
+    points->push_back(point(id.ToPoint(), 1.0));
+  }
+}
+
 double pixel::contained_area(const pixel& pix) const {
   if (contains(pix)) {
     return pix.exact_area();
