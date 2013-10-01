@@ -8,15 +8,34 @@
 #ifndef POLYGON_BOUND_H_
 #define POLYGON_BOUND_H_
 
+#include <stdint.h>
+#include <math.h>
+#include <vector>
+#include <algorithm>
+
+#include <s2/s2.h>
+#include <s2/s2polygon.h>
+
+#include "core.h"
+#include "point.h"
+#include "bound_interface.h"
+
 namespace s2omp {
 
 class polygon_bound : public geometric_bound {
 public:
+  polygon_bound(const point_vector& points);
   virtual ~polygon_bound();
 
   static polygon_bound* from_points(const point_vector& points);
 
   bool add_loop(const point_vector& points);
+
+  inline bool is_valid() const {
+    return polygon_.IsValid();
+  }
+
+  bool intersects(const polygon_bound& bound) const;
 
   // API from geometric_bound
   virtual bool is_empty();

@@ -21,6 +21,11 @@ point::point(double x, double y, double z, double weight) {
   point_ = S2Point(x / norm, y / norm, z / norm);
 }
 
+point::point(uint64 id, double weight) {
+  point_ = S2CellId(id).ToPoint();
+  weight_ = weight;
+}
+
 point::point(S2Point point, double weight) {
   point_ = point;
   weight_ = weight;

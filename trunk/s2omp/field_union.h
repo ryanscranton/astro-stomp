@@ -8,16 +8,16 @@
 // a way as to make the analysis of that data as algorithmically efficient as
 // possible.
 //
-// This header file contains the ScalarMap class.  Unlike Maps, the primary
-// goal here is to encode a scalar field over some area of the sky.  As such,
+// This header file contains the fieldMap class.  Unlike Maps, the primary
+// goal here is to encode a field field over some area of the sky.  As such,
 // we sacrifice some degree of precision in describing the exact area of the
 // field and we use a uniform sampling of the field across the area in
 // question.  This makes the class ideal for calculating angular correlation
 // functions on the encoded field.
 
 
-#ifndef SCALAR_UNION_H_
-#define SCALAR_UNION_H_
+#ifndef FIELD_UNION_H_
+#define FIELD_UNION_H_
 
 #include <stdint.h>
 #include <math.h>
@@ -31,44 +31,44 @@
 #include "angular_correlation.h"
 #include "core.h"
 #include "point.h"
-#include "scalar_pixel.h"
+#include "field_pixel-inl.h"
 #include "bound_interface.h"
 #include "circle_bound.h"
 
 namespace s2omp {
 
-class scalar_union: public bound_interface {
+class field_union: public bound_interface {
 public:
-  enum ScalarType {
+  enum FieldType {
     SCALAR_FIELD, DENSITY_FIELD, SAMPLED_FIELD
   };
 
-  explicit scalar_union(ScalarType scalar_type);
-  ~scalar_union();
+  field_union();
+  ~field_union();
 
-  static scalar_union* from_bound(const bound_interface& bound, int level,
-      ScalarType scalar_type);
-  static scalar_union* from_scalar_pixels(const scalar_vector& pixels,
-      ScalarType scalar_type);
-  static scalar_union* from_scalar_union(const scalar_union& s, int level);
+  static field_union* from_bound(const bound_interface& bound, int level,
+      FieldType field_type);
+  static field_union* from_field_pixels(const field_vector& pixels,
+      FieldType field_type);
+  static field_union* from_field_union(const field_union& s, int level);
 
-  bool init(const bound_interface& bound, int level, ScalarType t);
-  bool init(const scalar_vector& pixels, ScalarType t);
-  bool init(const scalar_union& u, int level);
+  bool init(const bound_interface& bound, int level, FieldType t);
+  bool init(const field_vector& pixels, FieldType t);
+  bool init(const field_union& field, int level);
 
-  bool add_point(point& p, double intensity);
-  bool add_point(point& p);
+  bool add_point(const point& p, double intensity);
+  bool add_point(const point& p);
 
-  scalar_pixel resample(const pixel& pix) const;
+  field_pixel resample(const pixel& pix) const;
 
   double find_intensity(const pixel& pix) const;
   double find_density(const pixel& pix) const;
   double find_point_density(const pixel& pix) const;
 
-  double find_local_area(const annulus_bound& bound) const;
-  double find_local_intensity(const annulus_bound& bound) const;
-  double find_local_density(const annulus_bound& bound) const;
-  double find_local_point_density(const annulus_bound& bound) const;
+  double find_local_area(const bound_interface& bound) const;
+  double find_local_intensity(const bound_interface& bound) const;
+  double find_local_density(const bound_interface& bound) const;
+  double find_local_point_density(const bound_interface& bound) const;
 
   void calculate_mean_intensity();
   void convert_to_over_density();
@@ -82,19 +82,19 @@ public:
   bool auto_correlate_with_regions(const region_map& regions,
       angular_correlation* wtheta);
 
-  bool cross_correlate(scalar_union& s, angular_bin* theta);
-  bool cross_correlate(scalar_union& s, angular_correlation* wtheta);
+  bool cross_correlate(field_union& f, angular_bin* theta);
+  bool cross_correlate(field_union& f, angular_correlation* wtheta);
 
-  bool cross_correlate_with_regions(scalar_union& s, const region_map& regions,
+  bool cross_correlate_with_regions(field_union& f, const region_map& regions,
       angular_bin* theta);
-  bool cross_correlate_with_regions(scalar_union& s, const region_map& regions,
+  bool cross_correlate_with_regions(field_union& f, const region_map& regions,
       angular_correlation* wtheta);
 
-  // Basic accessors for scalar_union parameters.
+  // Basic accessors for field_union parameters.
   inline int level() const {
     return level_;
   }
-  inline ScalarType type() const {
+  inline FieldType type() const {
     return type_;
   }
   inline double intensity() const {
@@ -117,10 +117,10 @@ public:
   inline bool is_over_density() const {
     return converted_to_overdensity_;
   }
-  inline scalar_const_iterator begin() const {
+  inline field_const_iterator begin() const {
     return pixels_.begin();
   }
-  inline scalar_const_iterator end() const {
+  inline field_const_iterator end() const {
     return pixels_.end();
   }
 
@@ -158,14 +158,13 @@ public:
   virtual void get_center_covering(int level, pixel_vector* pixels) const;
 
 private:
-  scalar_union();
   void initialize_bound();
-  bool correlate_unions(scalar_union& s, const region_map& regions,
+  bool correlate_unions(field_union& s, const region_map& regions,
       bool autocorrelate, angular_bin* theta);
 
-  scalar_vector pixels_;
+  field_vector pixels_;
   double area_, mean_intensity_, unmasked_fraction_minimum_, total_intensity_;
-  ScalarType type_;
+  FieldType type_;
   int level_;
   uint32_t total_points_;
   circle_bound bound_;
@@ -175,4 +174,4 @@ private:
 
 } // end namespace s2omp
 
-#endif /* SCALAR_UNION_H_ */
+#endif /* FIELD_UNION_H_ */

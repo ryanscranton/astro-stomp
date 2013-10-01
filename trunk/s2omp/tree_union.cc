@@ -14,43 +14,31 @@
 namespace s2omp {
 
 tree_union::tree_union() {
-  maximum_points_ = DEFAULT_MAX_POINTS;
-  level_ = DEFAULT_LEVEL;
-  point_count_ = 0;
-  weight_ = 0.0;
-  area_ = 0.0;
-  modified_ = false;
-  initialized_bound_ = false;
+  init(DEFAULT_LEVEL, DEFAULT_NODE_CAPACITY);
 }
 
 tree_union::tree_union(int level) {
-  maximum_points_ = DEFAULT_MAX_POINTS;
-  level_ = level;
-  point_count_ = 0;
-  weight_ = 0.0;
-  area_ = 0.0;
-  modified_ = false;
-  initialized_bound_ = false;
+  init(level, DEFAULT_NODE_CAPACITY);
 }
 
-tree_union::tree_union(int level, int max_points) {
-  maximum_points_ = max_points;
-  point_count_ = 0;
-  level_ = level;
-  weight_ = 0.0;
-  area_ = 0.0;
-  modified_ = false;
-  initialized_bound_ = false;
+tree_union::tree_union(int level, int node_capacity) {
+  init(level, node_capacity);
 }
 
 tree_union::~tree_union() {
   clear();
 }
 
+void tree_union::init(int level, int node_capacity) {
+  clear();
+  node_capacity_ = node_capacity;
+  level_ = level;
+}
+
 // Moving private method here since add_point uses it.
-tree_map_iterator tree_union::add_node(uint64 id) {
-  tree_map_insert_iterator iter = tree_map_.insert(std::pair<uint64,
-      tree_pixel*>(id, new tree_pixel(id, maximum_points_)));
+node_map_iterator tree_union::add_node(uint64 id) {
+  node_map_insert_iterator iter = node_map_.insert(std::pair<uint64,
+      tree_pixel*>(id, new tree_pixel(id, node_capacity_)));
   if (!iter.second) {
     std::cout << "s2omp::tree_union::add_node - "
         << "Creating new tree_union node failed. Exiting.\n";
@@ -64,14 +52,14 @@ tree_map_iterator tree_union::add_node(uint64 id) {
 }
 
 bool tree_union::add_point(const point& p) {
-  tree_map_iterator iter = tree_map_.find(p.id(level_));
+  node_map_iterator iter = node_map_.find(p.id(level_));
 
-  if (iter == tree_map_.end()) {
+  if (iter == node_map_.end()) {
     // Add a new node to contain the point.
     iter = add_node(p.id(level_));
   }
 
-  if (!(*iter).second->add_point(p)) {
+  if (!iter->second->add_point(p)) {
     std::cout << "s2omp::tree_union::add_point - "
         << "Adding point to tree_union failed. Exiting.\n";
     exit(2);
@@ -90,8 +78,8 @@ long tree_union::find_pairs(const annulus_bound& bound) const {
 
   long n_pairs = 0;
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    tree_map_iterator tree_iter = tree_map_.find(iter->id());
-    if (tree_iter == tree_map_.end())
+    node_map_iterator tree_iter = node_map_.find(iter->id());
+    if (tree_iter == node_map_.end())
       continue;
 
     n_pairs += (*tree_iter).second->find_pairs(bound);
@@ -106,8 +94,8 @@ double tree_union::find_weighted_pairs(const annulus_bound& bound) const {
 
   double total_weight = 0.0;
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    tree_map_iterator tree_iter = tree_map_.find(iter->id());
-    if (tree_iter == tree_map_.end())
+    node_map_iterator tree_iter = node_map_.find(iter->id());
+    if (tree_iter == node_map_.end())
       continue;
 
     total_weight += (*tree_iter).second->find_weighted_pairs(bound);
@@ -148,8 +136,8 @@ bool tree_union::find_pairs_with_regions(const point_vector& points,
 
     // Iterate over the covering pixels and find pairs for all of the
     for (pixel_iterator cover_iter = pixels.begin(); cover_iter != pixels.end(); ++cover_iter) {
-      tree_map_iterator tree_iter = tree_map_.find(cover_iter->id());
-      if (tree_iter == tree_map_.end())
+      node_map_iterator tree_iter = node_map_.find(cover_iter->id());
+      if (tree_iter == node_map_.end())
         continue;
 
       pair_weight pairs;
@@ -165,10 +153,10 @@ bool tree_union::find_pairs_with_regions(const point_vector& points,
 
 void tree_union::_neighbor_recursion(const point& p, tree_neighbor* neighbors) const {
   // First we need to find out if the input point is within our map area.
-  tree_map_iterator iter = tree_map_.find(p.id(level_));
+  node_map_iterator iter = node_map_.find(p.id(level_));
 
   // If a node containing this point exists, then start finding neighbors there.
-  if (iter != tree_map_.end())
+  if (iter != node_map_.end())
     iter->second->_neighbor_recursion(p, neighbors);
 
   // That should give us back a tree_neighbor object that contains a workable
@@ -186,7 +174,7 @@ void tree_union::_neighbor_recursion(const point& p, tree_neighbor* neighbors) c
     // We've got a starting list of neighbors, so we only have to look at
     // nodes within our current bounding radius.
     circle_bound* bound = circle_bound::from_radius(p,
-        neighbors->max_angular_distance());
+        neighbors->max_distance_deg());
     bound->get_simple_covering(level_, &pixels);
     delete bound;
   } else {
@@ -199,8 +187,8 @@ void tree_union::_neighbor_recursion(const point& p, tree_neighbor* neighbors) c
   // to the input point first.
   pixel_queue pix_queue;
   for (pixel_iterator pix_iter = pixels.begin(); pix_iter != pixels.end(); ++pix_iter) {
-    iter = tree_map_.find(pix_iter->id());
-    if (iter != tree_map_.end() && !pix_iter->contains(p)) {
+    iter = node_map_.find(pix_iter->id());
+    if (iter != node_map_.end() && !pix_iter->contains(p)) {
       double min_edge_distance, max_edge_distance;
       iter->second->edge_distances(p, min_edge_distance, max_edge_distance);
       distance_pixel_pair dist_pair(min_edge_distance, iter->second);
@@ -248,7 +236,7 @@ double tree_union::k_nearest_neighbor_distance(const point& p, int n_neighbors,
 
   nodes_visited = neighbors.nodes_visited();
 
-  return neighbors.max_angular_distance();
+  return neighbors.max_distance_deg();
 }
 
 double tree_union::nearest_neighbor_distance(const point& p,
@@ -259,10 +247,10 @@ double tree_union::nearest_neighbor_distance(const point& p,
 void tree_union::_match_recursion(const point& p, tree_neighbor* neighbors) const {
   // First we need to find out if the input point is within our map area.
   pixel center_pix = p.to_pixel(level_);
-  tree_map_iterator iter = tree_map_.find(center_pix.id());
+  node_map_iterator iter = node_map_.find(center_pix.id());
 
   // If a node containing this point exists, then start finding neighbors there.
-  if (iter != tree_map_.end())
+  if (iter != node_map_.end())
     iter->second->_neighbor_recursion(p, neighbors);
 
   // There's also a possibility that the matching point is just on the other
@@ -276,7 +264,7 @@ void tree_union::_match_recursion(const point& p, tree_neighbor* neighbors) cons
 
   pixel_vector pixels;
   circle_bound* bound = circle_bound::from_radius(p,
-      neighbors->max_angular_distance());
+      neighbors->max_distance_deg());
   bound->get_simple_covering(level_, &pixels);
   delete bound;
 
@@ -284,8 +272,8 @@ void tree_union::_match_recursion(const point& p, tree_neighbor* neighbors) cons
   // to the input point first.
   pixel_queue pix_queue;
   for (pixel_iterator pix_iter = pixels.begin(); pix_iter != pixels.end(); ++pix_iter) {
-    iter = tree_map_.find(pix_iter->id());
-    if (iter != tree_map_.end() && !pix_iter->contains(p)) {
+    iter = node_map_.find(pix_iter->id());
+    if (iter != node_map_.end() && !pix_iter->contains(p)) {
       double min_edge_distance, max_edge_distance;
       iter->second->edge_distances(p, min_edge_distance, max_edge_distance);
       distance_pixel_pair dist_pair(min_edge_distance, iter->second);
@@ -304,16 +292,16 @@ void tree_union::_match_recursion(const point& p, tree_neighbor* neighbors) cons
   }
 }
 
-bool tree_union::closest_match(const point& p, double max_angular_distance,
+bool tree_union::closest_match(const point& p, double max_distance_deg,
     point& match) const {
-  tree_neighbor neighbors(p, 1, max_angular_distance);
+  tree_neighbor neighbors(p, 1, max_distance_deg);
 
   _match_recursion(p, &neighbors);
 
   // If we weren't able to find a nearest point or if the distance to the
   // neighbor point is greater than the threshold, then we have no match.
   if (neighbors.n_neighbors() != neighbors.max_neighbors()
-      || neighbors.max_angular_distance() > max_angular_distance) {
+      || neighbors.max_distance_deg() > max_distance_deg) {
     return false;
   }
 
@@ -326,7 +314,7 @@ void tree_union::get_node_level_pixels(const pixel& pix, pixel_vector* pixels) c
   if (!pixels->empty())
     pixels->clear();
 
-  // Assemble an array of pixels at the level of the tree_map or higher from
+  // Assemble an array of pixels at the level of the node_map or higher from
   // the input pixel.
   if (pix.level() >= level_) {
     pixels->push_back(pix);
@@ -349,8 +337,8 @@ long tree_union::n_points(const pixel& pix) const {
   // Scan over those pixels and gather the aggregate to return.
   long total_points = 0;
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
-    if (t_iter != tree_map_.end()) {
+    node_map_iterator t_iter = node_map_.find(iter->parent(level_).id());
+    if (t_iter != node_map_.end()) {
       total_points = t_iter->second->n_points(*iter);
     }
   }
@@ -369,8 +357,8 @@ double tree_union::weight(const pixel& pix) const {
   // Scan over those pixels and gather the aggregate to return.
   double total_weight = 0;
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
-    if (t_iter != tree_map_.end()) {
+    node_map_iterator t_iter = node_map_.find(iter->parent(level_).id());
+    if (t_iter != node_map_.end()) {
       total_weight = t_iter->second->weight(*iter);
     }
   }
@@ -383,7 +371,7 @@ void tree_union::copy_points(point_vector* points) const {
     points->clear();
 
   points->reserve(n_points());
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
     point_vector tmp_points;
     iter->second->copy_points(&tmp_points);
     points->insert(points->end(), tmp_points.begin(), tmp_points.end());
@@ -403,8 +391,8 @@ void tree_union::copy_points(const pixel& pix, point_vector* points) const {
 
   // Scan over those pixels and gather the aggregate to return.
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
-    if (t_iter != tree_map_.end()) {
+    node_map_iterator t_iter = node_map_.find(iter->parent(level_).id());
+    if (t_iter != node_map_.end()) {
       point_vector tmp_points;
       t_iter->second->copy_points(*iter, &tmp_points);
       points->insert(points->end(), tmp_points.begin(), tmp_points.end());
@@ -413,11 +401,11 @@ void tree_union::copy_points(const pixel& pix, point_vector* points) const {
 }
 
 void tree_union::clear() {
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
     iter->second->clear();
     delete iter->second;
   }
-  tree_map_.clear();
+  node_map_.clear();
   nodes_.clear();
   bound_.clear();
   point_count_ = 0;
@@ -442,7 +430,7 @@ double tree_union::area() const {
     return area_;
 
   double total_area = 0.0;
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
     total_area += iter->second->covering_fraction()
         * iter->second->exact_area();
   }
@@ -478,8 +466,8 @@ double tree_union::contained_area(const pixel& pix) const {
   // Scan over those pixels and gather the aggregate to return.
   double total_area = 0.0;
   for (pixel_iterator iter = pixels.begin(); iter != pixels.end(); ++iter) {
-    tree_map_iterator t_iter = tree_map_.find(iter->parent(level_).id());
-    if (t_iter != tree_map_.end()) {
+    node_map_iterator t_iter = node_map_.find(iter->parent(level_).id());
+    if (t_iter != node_map_.end()) {
       total_area = iter->exact_area()
           * t_iter->second->covering_fraction(*iter);
     }
@@ -496,7 +484,7 @@ bool tree_union::may_intersect(const pixel& pix) const {
 }
 
 void tree_union::initialize_bound() {
-  if (tree_map_.empty()) {
+  if (node_map_.empty()) {
     bound_ = circle_bound();
   }
 
@@ -510,12 +498,12 @@ point tree_union::get_center() const {
   }
 
   double x = 0.0, y = 0.0, z = 0.0;
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
-    double area = iter->second->exact_area();
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
+    double weight = iter->second->weight();
     point center = iter->second->center_point();
-    x += area * center.unit_sphere_x();
-    y += area * center.unit_sphere_y();
-    z += area * center.unit_sphere_z();
+    x += weight * center.unit_sphere_x();
+    y += weight * center.unit_sphere_y();
+    z += weight * center.unit_sphere_z();
   }
 
   return point(x, y, z, 1.0);
@@ -527,7 +515,7 @@ circle_bound tree_union::get_bound() const {
   }
 
   circle_bound bound = circle_bound(get_center(), 0.0);
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
     bound.add_circle_bound(iter->second->get_bound());
   }
 
@@ -570,7 +558,7 @@ void tree_union::get_area_covering(double fractional_area_tolerance,
     pixels->clear();
   pixels->reserve(nodes_.size());
 
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
     pixels->push_back(*(iter->second));
   }
 }
@@ -580,7 +568,7 @@ void tree_union::get_interior_covering(int max_level, pixel_vector* pixels) cons
     pixels->clear();
   pixels->reserve(nodes_.size());
 
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
     if (iter->second->level() <= max_level) {
       pixels->push_back(*(iter->second));
     }
@@ -595,7 +583,7 @@ void tree_union::get_simple_covering(int level, pixel_vector* pixels) const {
   if (!pixels->empty())
     pixels->clear();
 
-  for (tree_map_iterator iter = tree_map_.begin(); iter != tree_map_.end(); ++iter) {
+  for (node_map_iterator iter = node_map_.begin(); iter != node_map_.end(); ++iter) {
     tree_pixel* pix_iter = iter->second;
     if (pix_iter->level() < level) {
       for (pixel c = pix_iter->child_begin(); c != pix_iter->child_end(); c

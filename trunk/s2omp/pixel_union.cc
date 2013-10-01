@@ -131,22 +131,31 @@ void pixel_union::init(pixel_vector& pixels) {
 }
 
 void pixel_union::soften(int max_level) {
-  // Since init has already given us an ordered set of pixels all we need to do
-  // is loop through the pixels until we hit the resolution we are interested in
-  // softening to. Starting from the end of the vector and looping backwards
-  // sounds like the best bet here.
-
   pixel_vector pixels;
+  hash_set<uint64> parent_ids;
   for (pixel_iterator iter = pixels_.begin(); iter != pixels_.end(); ++iter) {
     if (iter->level() <= max_level) {
       pixels.push_back(*iter);
     } else {
+      // If we're finer than the input limit but we've already added the parent,
+      // then ignore this pixel.
       if (!pixels.empty() && pixels.back().contains(iter->parent(max_level))) {
         continue;
       }
-      pixels.push_back(iter->parent(max_level));
+
+      // Otherwise, we need to test to see if the covered_area for the parent
+      // is > 50%.  If not, then we ignore it.  We use a hash_map to make sure
+      // that we don't check the same parent twice.
+      pixel parent = iter->parent(max_level);
+      if (!parent_ids.insert(parent.id()).second) {
+        continue;
+      }
+      if (double_ge(contained_area(parent), 0.5 * parent.exact_area())) {
+        pixels.push_back(parent);
+      }
     }
   }
+
   init(pixels);
 }
 

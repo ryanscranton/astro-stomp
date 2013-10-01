@@ -9,10 +9,10 @@
 // possible.
 //
 // This header file contains a variant on the pixel class.  The goal here is to
-// encode some manner of scalar field (galaxy density on the sky, CMB
+// encode some manner of field field (galaxy density on the sky, CMB
 // temperature, etc.) where we need both the value and an associated noise on
-// the value.  Likewise, as will be seen in the scalar_union class, these pixels
-// will generally be used to sample this scalar field uniformly over some
+// the value.  Likewise, as will be seen in the field_union class, these pixels
+// will generally be used to sample this field field uniformly over some
 // region.  This is in contrast with the pixel_union object where the goal is to
 // accurately describe a region's geometry using pixels of various sizes.
 
@@ -22,24 +22,25 @@
 #include "core.h"
 #include "bound_interface.h"
 #include "pixel.h"
+#include "point.h"
 
 namespace s2omp {
 
-class scalar_pixel;
+class field_pixel;
 
-typedef std::vector<scalar_pixel> scalar_vector;
-typedef scalar_vector::iterator scalar_iterator;
-typedef scalar_vector::const_iterator scalar_const_iterator;
-typedef std::pair<scalar_const_iterator, scalar_const_iterator> scalar_pair;
-typedef std::vector<scalar_pixel *> scalar_ptr_vector;
-typedef scalar_ptr_vector::const_iterator scalar_ptr_iterator;
+typedef std::vector<field_pixel> field_vector;
+typedef field_vector::iterator field_iterator;
+typedef field_vector::const_iterator field_const_iterator;
+typedef std::pair<field_const_iterator, field_const_iterator> field_pair;
+typedef std::vector<field_pixel *> field_ptr_vector;
+typedef field_ptr_vector::const_iterator field_ptr_iterator;
 
-class scalar_pixel: public pixel {
+class field_pixel: public pixel {
   // In order to do correlation function calculations, we need some
   // functionality beyond the normal pixel object.  In particular, we want
   // to be able to encode fields, which may take one of three forms:
   //
-  // * Pure scalar quantities (e.g. CMB temperature or radio flux).
+  // * Pure field quantities (e.g. CMB temperature or radio flux).
   // * Point-field densities (e.g. the projected galaxy density over some area).
   // * Point-sampled averages (e.g. the mean galaxy magnitude over some area).
   //
@@ -47,20 +48,15 @@ class scalar_pixel: public pixel {
   // and a point count (int), along with a weight (double).  pixels are taken
   // to be units of a pixel_union where the geometry of the map is the union of
   // all of the pixels and the pixels are not assumed to be at the same
-  // resolution level.  scalar_pixels, OTOH, form the basis for a scalar_union
+  // resolution level.  field_pixels, OTOH, form the basis for a field_union
   // where the map is taken to be a regular sampling of some field over a given
   // area.  The total area for the map can be calculated, but operations like
   // determining whether or not a given position is inside or outside the
   // map is not generically available.
 public:
-  scalar_pixel(uint64 id);
-  scalar_pixel(uint64 id, double intensity, double weight, long n_points);
-  virtual ~scalar_pixel();
-
-  static scalar_pixel from_pixel(pixel pix, double intensity, double weight,
-                                 long n_points);
-  static scalar_pixel from_point(point p, int level, double intensity,
-                                 double weight, long n_points);
+  field_pixel(uint64 id);
+  field_pixel(uint64 id, double intensity, double weight, long n_points);
+  virtual ~field_pixel() {};
 
   inline double intensity() const {
     return intensity_;
@@ -85,14 +81,15 @@ public:
   inline double mean_intensity() const;
   inline void add_to_intensity(const double intensity, const long n_point);
 
-  inline void convert_to_overdensity(double expected_intensity);
-
-  inline void convert_to_fractional_overdensity(double expected_intensity);
+  // Convert from our raw values to over-densities.  The return value indicates
+  // whether or not the conversion was successful.
+  inline bool convert_to_overdensity(double expected_intensity);
+  inline bool convert_to_fractional_overdensity(double expected_intensity);
 
   // And two complementary methods to take us from over-densities back to raw
   // intensities.
-  inline void convert_from_overdensity(double expected_intensity);
-  inline void convert_from_fractional_overdensity(double expected_intensity);
+  inline bool convert_from_overdensity(double expected_intensity);
+  inline bool convert_from_fractional_overdensity(double expected_intensity);
 
   // Finally, a method to tell us whether we're in over-density mode or not.
   inline bool is_overdensity() const {
@@ -106,7 +103,7 @@ public:
   }
 
 private:
-  scalar_pixel();
+  field_pixel();
 
   double intensity_, weight_;
   point center_;
@@ -114,77 +111,87 @@ private:
   bool is_overdensity_;
 };
 
-scalar_pixel::scalar_pixel() {
+inline field_pixel::field_pixel() {
   set_id(0ULL);
   intensity_ = 0.0;
   weight_ = 0.0;
   n_points_ = 0L;
   center_ = point();
+  is_overdensity_ = false;
 }
 
-scalar_pixel::scalar_pixel(uint64 id) {
+inline field_pixel::field_pixel(uint64 id) {
   set_id(id);
   intensity_ = 0.0;
   weight_ = 0.0;
   n_points_ = 0L;
   center_ = center_point();
+  is_overdensity_ = false;
 }
 
-scalar_pixel::scalar_pixel(
+inline field_pixel::field_pixel(
     uint64 id, double intensity, double weight, long n_points) {
   set_id(id);
   intensity_ = intensity;
   weight_ = weight;
   n_points_ = n_points;
   center_ = center_point();
+  is_overdensity_ = false;
 }
 
-scalar_pixel::~scalar_pixel() {
-}
-
-scalar_pixel scalar_pixel::from_pixel(
-    pixel pix, double intensity, double weight, long n_points) {
-  return scalar_pixel(pix.id(), intensity, weight, n_points);
-}
-
-scalar_pixel scalar_pixel::from_point(
-    point p, int level, double intensity, double weight, long n_points) {
-  return scalar_pixel(p.id(level), intensity, weight, n_points);
-}
-
-inline double scalar_pixel::mean_intensity() const {
+inline double field_pixel::mean_intensity() const {
   return n_points_ == 0 ? intensity_ : intensity_/n_points_;
 }
 
-inline void scalar_pixel::add_to_intensity(
+inline void field_pixel::add_to_intensity(
     const double intensity, const long n_point) {
   intensity_ += intensity;
   n_points_ += n_point;
 }
 
-inline void scalar_pixel::convert_to_overdensity(double expected_intensity) {
+inline bool field_pixel::convert_to_overdensity(double expected_intensity) {
+  if (is_overdensity_) {
+    return false;
+  }
+
   intensity_ -= expected_intensity;
   is_overdensity_ = true;
+  return true;
 }
 
-inline void scalar_pixel::convert_to_fractional_overdensity(
+inline bool field_pixel::convert_to_fractional_overdensity(
     double expected_intensity) {
+  if (is_overdensity_) {
+    return false;
+  }
+
   intensity_ =
     (intensity_ - expected_intensity * weight_)/
     (expected_intensity * weight_);
   is_overdensity_ = true;
+  return true;
 }
 
-inline void scalar_pixel::convert_from_overdensity(double expected_intensity) {
-  intensity_ += expected_intensity;
+inline bool field_pixel::convert_from_overdensity(double expected_intensity) {
+  if (!is_overdensity_) {
+    return false;
+  }
+
+  intensity_ = intensity_ + expected_intensity;
   is_overdensity_ = false;
+  return true;
 }
 
-inline void scalar_pixel::convert_from_fractional_overdensity(
+inline bool field_pixel::convert_from_fractional_overdensity(
     double expected_intensity) {
+  if (!is_overdensity_) {
+    return false;
+  }
+
   double norm_intensity = expected_intensity * weight_;
   intensity_ = intensity_ * norm_intensity + norm_intensity;
   is_overdensity_ = false;
+  return true;
 }
 
 } // end namespace s2omp

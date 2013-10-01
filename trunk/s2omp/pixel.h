@@ -17,9 +17,11 @@
 #ifndef PIXEL_H_
 #define PIXEL_H_
 
-#include <utility>
 #include <algorithm>
+#include <iostream>
 #include <string>
+#include <utility>
+
 #include "core.h"
 #include "bound_interface.h"
 
@@ -202,9 +204,16 @@ public:
     return id_;
   }
 
+  // We serialize pixels using the S2CellId Token methods.  We also make use
+  // of the << and >> operators to read and write pixels to I/O streams.
   inline string to_token() const {
     return id_.ToToken();
   }
+  friend ostream& operator<<(ostream& output, pixel const& pix);
+  friend istream& operator>>(istream& input, pixel& pix);
+
+  point quick_random_point() const;
+  void quick_random_points(long n_points, point_vector* points) const;
 
   inline static bool pixel_order(const pixel& a, const pixel& b) {
     return a.id() < b.id();

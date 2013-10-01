@@ -4,6 +4,7 @@
 
 #include "circle_bound.h"
 #include "point.h"
+#include "util.h"
 
 TEST(pixel, TestPixelDefaultConstructor) {
   // The default constructor without any arguments should produce an invalid
@@ -227,6 +228,48 @@ TEST(pixel, TestPixelEdgeDistances) {
   ASSERT_EQ(n_edge, n_not_edge);
 }
 
+TEST(pixel, TestPixelRandomPoints) {
+  // Testing and comparing the methods for generating random points within
+  // the pixel.
+
+  // Create a cell in the middle of a face.
+  s2omp::point p(0, 0, 1, 0);
+  s2omp::pixel pix = p.to_pixel(20);
+
+  // Verify that a random point generated from the inherited bound_interface
+  // method is contained in the pixel.
+  ASSERT_TRUE(pix.contains(pix.get_random_point()));
+
+  // Verify that a random point generated based on the pixel range_min and
+  // range_max is contained in the pixel.
+  ASSERT_TRUE(pix.contains(pix.quick_random_point()));
+
+  // Now we compare the time performance of the two methods.
+  long n_points = 100;
+  s2omp::point_vector points;
+  s2omp::timer timer;
+
+  for (int k = 0; k < 3; k++) {
+    timer.start_timer();
+    pix.get_random_points(n_points, &points);
+    timer.stop_timer();
+    double virtual_elapsed = timer.elapsed_time();
+
+    points.clear();
+    timer.start_timer();
+    pix.quick_random_points(n_points, &points);
+    timer.stop_timer();
+    double quick_elapsed = timer.elapsed_time();
+
+    std::cout << n_points << " points\n" <<
+        "\tVirtual method: " << virtual_elapsed * 1000 << " msec, " <<
+        "quick method: " << quick_elapsed * 1000 << " msec\n";
+
+    n_points *= 10;
+    points.clear();
+  }
+}
+
 TEST(pixel, TestPixelBoundBasics) {
   // Testing the basic inherited interface from bound_interface.
 
@@ -308,8 +351,8 @@ TEST(pixel, TestPixelString) {
   s2omp::pixel pix(p.id());
   for (int level = 0; level <= s2omp::MAX_LEVEL; level++) {
     s2omp::pixel parent = pix.parent(level);
-    std::cout << level << ": 0x" << parent.to_token() << "\n";
-    std::cout << "\tRange: 0x" << parent.range_min().to_token() << " - 0x" <<
-        parent.range_max().to_token() << "\n";
+    std::cout << level << ": 0x" << parent << "\n";
+    std::cout << "\tRange: 0x" << parent.range_min() << " - 0x" <<
+        parent.range_max() << "\n";
   }
 }

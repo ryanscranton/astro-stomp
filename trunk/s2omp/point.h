@@ -58,6 +58,7 @@ public:
 public:
   point();
   point(double x, double y, double z, double weight);
+  point(uint64 id, double weight);
   point(S2Point s2point, double weight); // Does not normalize the input point.
   point(S2LatLng s2latlng, double weight);
   virtual ~point();
