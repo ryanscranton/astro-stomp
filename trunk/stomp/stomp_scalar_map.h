@@ -110,7 +110,9 @@ class ScalarMap : public BaseMap {
   // format assumed is:
   // hpixnum, superpixnum, resolution, unmasked fraction, intensity, npoints
   bool Read(const std::string& InputFile,
+  		ScalarMapType scalar_map_type = ScalarField,
   		double min_unmasked_fraction = 0.0000001);
+  bool Write(const std::string& OutputFile);
 
   // This is generally set through the constructor.  However, if
   // you want to re-initialize the same object with different parameters or
@@ -278,6 +280,7 @@ class ScalarMap : public BaseMap {
   int NPoints();
   double Density();
   double PointDensity();
+  void ScalarPixels(ScalarVector& s_pix);
   ScalarIterator Begin();
   ScalarIterator End();
   double MeanIntensity();
