@@ -228,7 +228,7 @@ ScalarMap::~ScalarMap() {
 }
 
 bool ScalarMap::Read(const std::string& InputFile,
-		double min_unmasked_fraction) {
+		ScalarMapType scalar_map_type, double min_unmasked_fraction) {
   Clear();
 
   std::ifstream input_file(InputFile.c_str());
@@ -267,7 +267,7 @@ bool ScalarMap::Read(const std::string& InputFile,
 
   resolution_ = pix[0].Resolution();
   unmasked_fraction_minimum_ = min_unmasked_fraction;
-  map_type_ = ScalarField;
+  map_type_ = scalar_map_type;
 
   pix_.reserve(pix.size());
 
@@ -294,6 +294,28 @@ bool ScalarMap::Read(const std::string& InputFile,
   use_local_mean_intensity_ = false;
 
   return found_file;
+}
+
+bool ScalarMap::Write(const std::string& OutputFile) {
+
+  std::ofstream output_file(OutputFile.c_str());
+
+  if (output_file.is_open()) {
+    for (ScalarIterator iter=Begin();iter!=End();++iter) {
+    	output_file << iter->HPixnum() << " " <<
+    	  iter->Superpixnum() << " " <<
+    	  iter->Resolution() << " " <<
+    	  iter->Weight() << " " <<
+    	  iter->Intensity() << " " <<
+    	  iter->NPoints() << "\n";
+    }
+
+	output_file.close();
+
+	return true;
+  } else {
+    return false;
+  }
 }
 
 void ScalarMap::SetResolution(uint32_t resolution) {
@@ -1637,6 +1659,15 @@ double ScalarMap::Density() {
 
 double ScalarMap::PointDensity() {
   return 1.0*total_points_/area_;
+}
+
+void ScalarMap::ScalarPixels(ScalarVector& s_pix) {
+	  if (!s_pix.empty()) s_pix.clear();
+
+	  s_pix.reserve(pix_.size());
+
+	  for (ScalarIterator iter=Begin();iter!=End();++iter)
+	    s_pix.push_back(*iter);
 }
 
 ScalarIterator ScalarMap::Begin() {

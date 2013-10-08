@@ -927,6 +927,7 @@ class IndexedTreeMap : public BaseMap {
 %template(CosmoVector) std::vector<Stomp::CosmoCoordinate>;
 %template(IAngularVector) std::vector<Stomp::IndexedAngularCoordinate>;
 %template(PixelVector) std::vector<Stomp::Pixel>;
+%template(ScalarVector) std::vector<Stomp::ScalarPixel>;
 %template(FieldDict) std::map<std::string, double>;
 %template(FieldColumnDict) std::map<std::string, uint8_t>;
 %template(DoubleVector) std::vector<double>;
