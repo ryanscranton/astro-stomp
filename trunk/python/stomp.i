@@ -5,6 +5,7 @@
 #include "../stomp/stomp_radial_bin.h"
 #include "../stomp/stomp_angular_coordinate.h"
 #include "../stomp/stomp_angular_correlation.h"
+#include "../stomp/stomp_radial_correlation.h"
 #include "../stomp/stomp_pixel.h"
 #include "../stomp/stomp_scalar_pixel.h"
 #include "../stomp/stomp_tree_pixel.h"
@@ -49,6 +50,7 @@ class PixelOrdering;
 class AngularBin;
 class RadialBin;
 class AngularCorrelation;
+class RadialCorrelation;
 class AngularCoordinate;
 class WeightedAngularCoordinate;
 class CosmoCoordinate;
@@ -113,6 +115,7 @@ typedef IndexVector::iterator IndexIterator;
 %include "../stomp/stomp_angular_bin.h"
 %include "../stomp/stomp_radial_bin.h"
 %include "../stomp/stomp_angular_correlation.h"
+%include "../stomp/stomp_radial_correlation.h"
 %include "../stomp/stomp_pixel.h"
 %include "../stomp/stomp_scalar_pixel.h"
 %include "../stomp/stomp_base_map.h"
@@ -936,6 +939,10 @@ class IndexedTreeMap : public BaseMap {
 SETUP_GENERATOR(std::vector<Stomp::AngularBin>::const_iterator)
 ADD_GENERATOR(Stomp::AngularCorrelation, Bins,
 std::vector<Stomp::AngularBin>::const_iterator, Stomp::AngularBin, Begin, End)
+
+SETUP_GENERATOR(std::vector<Stomp::RadialBin>::const_iterator)
+ADD_GENERATOR(Stomp::RadialCorrelation, Bins,
+std::vector<Stomp::RadialBin>::const_iterator, Stomp::RadialBin, Begin, End)
 
 SETUP_GENERATOR(std::vector<Stomp::HistogramBin>::const_iterator)
 ADD_GENERATOR(Stomp::Histogram, Bins,
