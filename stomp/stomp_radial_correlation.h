@@ -38,12 +38,14 @@ typedef RWThetaVector::iterator RWThetaIterator;
 
 class RadialCorrelation : public AngularCorrelation {
   // Class object for calculating auto-correlations and cross-correlations
-  // given a set of objects and a Map in projected physical distand. 
+  // given a set of objects and a Map in projected physical distance.
   // Broadly speaking, this is a container class for a set of RadialBin objects
   // which collectively span some range of Radial scales.  Accordingly, the 
-  // methods are generall intended to package the machinery of the 
+  // methods are general intended to package the machinery of the
   // auto-correlation and cross-correlation calculations into simple, one-line 
-  // calls.
+  // calls. These correlators do not utilize the pixel based correlators of the
+	// original angular based estimators as the annuli are more difficult do
+	// define.
 
   // The first constructor takes an radial minimum and maximum (in Mpc/h)
   // and constructs a logrithmic binning scheme using the specified number
@@ -77,17 +79,29 @@ class RadialCorrelation : public AngularCorrelation {
   void FindAutoCorrelation(Map& stomp_map,
 			   CosmoVector& galaxy,
 			   uint8_t random_iterations = 1);
+  void FindCrossCorrelation(Map& stomp_map,
+  			   CosmoVector& galaxy_z,
+  			   WAngularVector& galaxy_w,
+  			   uint8_t random_iterations = 1);
   void FindAutoCorrelationWithRegions(Map& stomp_map,
 				      CosmoVector& galaxy,
 				      uint8_t random_iterations = 1,
 				      uint16_t n_regions = 0);
+  void FindCrossCorrelationWithRegions(Map& stomp_map,
+  			      CosmoVector& galaxy_z,
+  			      WAngularVector& galaxy_w,
+  			      uint8_t random_iterations = 1,
+  			      uint16_t n_regions = 0);
 
   // In general, the code will use a pair-based method for small angular
-  // scanes and a pixel-based method for large angular scales.  In the above
+  // scales and a pixel-based method for large angular scales.  In the above
   // methods, this happens automatically.  If you want to run these processes
   // separately, these methods allow you to do this.  If the Map used
   // to call these methods has initialized regions, then the estimators will
   // use the region-based methods.
+
+  //
+
   //void FindPixelAutoCorrelation(Map& stomp_map, CosmoVector& galaxy);
   //void FindPixelAutoCorrelation(ScalarMap& stomp_map);
   //void FindPixelCrossCorrelation(Map& stomp_map, CosmoVector& galaxy_a,
@@ -97,8 +111,8 @@ class RadialCorrelation : public AngularCorrelation {
   void FindPairAutoCorrelation(Map& stomp_map, CosmoVector& galaxy,
 			       uint8_t random_iterations = 1);
   void FindPairCrossCorrelation(Map& stomp_map,
-				CosmoVector& galaxy_a,
-				CosmoVector& galaxy_b,
+				CosmoVector& galaxy_z,
+				WAngularVector& galaxy_w,
 				uint8_t random_iterations = 1);
 
   // Once we're done calculating our correlation function, we can write it out
