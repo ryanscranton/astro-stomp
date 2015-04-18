@@ -58,7 +58,7 @@ class GeometricBound;     // class declaration in stomp_geometry.h
 class SubMap;
 class Map;
 
-typedef std::map<const uint32_t, uint32_t> ResolutionDict;
+typedef std::map<uint32_t, uint32_t> ResolutionDict;
 typedef ResolutionDict::iterator ResolutionIterator;
 typedef std::pair<ResolutionIterator, ResolutionIterator> ResolutionPair;
 

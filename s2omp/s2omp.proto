@@ -6,14 +6,14 @@ message PointProto {
 }
 
 // Basic storage class for s2omp::pixel as well as the derived classes
-// s2omp::scalar_pixel and s2omp::tree_pixel.  The expectation is that the
+// s2omp::field_pixel and s2omp::tree_pixel.  The expectation is that the
 // creation of proto buffers containing Pixel messages will happen for unions
 // of the various pixel versions.
 message PixelProto {
   // All pixels must have an index value.
   required uint64 id = 1;
 
-  // s2omp::scalar_pixels also contain weight, intensity and point counts.
+  // s2omp::field_pixels also contain weight, intensity and point counts.
   // There is also a boolean indicating whether or not the pixel is an
   // over-density, but none of the constructors take that parameter, so we
   // assume that that's false.
@@ -25,7 +25,7 @@ message PixelProto {
   // have been added to the pixel.  The other basic parameter is the number of
   // points that we want to store per node.
   repeated PointProto point = 5;
-  optional uint32 max_points = 6;
+  optional uint32 node_capacity = 6;
 }
 
 message PointVectorProto {
