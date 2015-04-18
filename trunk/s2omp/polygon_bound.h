@@ -22,7 +22,7 @@
 
 namespace s2omp {
 
-class polygon_bound : public geometric_bound {
+class polygon_bound : public bound_interface {
 public:
   polygon_bound(const point_vector& points);
   virtual ~polygon_bound();
@@ -31,39 +31,49 @@ public:
 
   bool add_loop(const point_vector& points);
 
+  // We require a non-empty polygon for our validity check, unlike S2Polygon.
   inline bool is_valid() const {
-    return polygon_.IsValid();
+    return polygon_->num_vertices() > 0 && polygon_->IsValid();
+  }
+
+  inline long num_vertices() const {
+    return polygon_->num_vertices();
+  }
+
+  inline long num_loops() const {
+    return polygon_->num_loops();
   }
 
   bool intersects(const polygon_bound& bound) const;
 
-  // API from geometric_bound
-  virtual bool is_empty();
-  virtual long size();
+  static S2Loop* point_vector_to_s2loop(const point_vector& points);
+
+  // API from bound_interface.h
+  virtual bool is_empty() const;
+  virtual long size() const;
   virtual void clear();
-  virtual void area();
+  virtual double area() const;
 
-  virtual bool contains(const point& p);
-  virtual bool contains(const pixel& pix);
-  virtual bool contains(const geometric_bound& b);
+  virtual bool contains(const point& p) const;
+  virtual bool contains(const pixel& pix) const;
 
-  virtual double contained_area(const pixel& pix);
-  virtual bool may_intersect(const pixel& pix);
+  virtual double contained_area(const pixel& pix) const;
+  virtual bool may_intersect(const pixel& pix) const;
 
-  virtual void covering(pixel_vector* pixels);
-  virtual void covering(int max_pixels, pixel_vector* pixels);
-  virtual void covering(double fractional_area_tolerance, pixel_vector* pixels);
-  virtual void simple_covering(int level, pixel_vector* pixels);
+  virtual point get_center() const;
+  virtual circle_bound get_bound() const;
 
-  virtual circle_bound get_bound();
-
-  virtual point get_random_point();
-  virtual void get_random_points(long n_points, pixel_vector* points);
+protected:
+  inline S2Polygon* get_s2polygon() const;
 
 private:
   polygon_bound();
-  S2Polygon polygon_;
+  S2Polygon* polygon_;
 };
+
+S2Polygon* polygon_bound::get_s2polygon() const {
+  return polygon_;
+}
 
 } // end namespace s2omp
 

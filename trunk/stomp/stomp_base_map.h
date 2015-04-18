@@ -39,15 +39,15 @@ class BaseMap;
 typedef std::vector<RegionBound> RegionBoundVector;
 typedef RegionBoundVector::iterator RegionBoundIterator;
 
-typedef std::map<const uint32_t, int16_t> RegionDict;
+typedef std::map<uint32_t, int16_t> RegionDict;
 typedef RegionDict::iterator RegionIterator;
 typedef std::pair<RegionIterator, RegionIterator> RegionPair;
 
-typedef std::map<const int16_t, double> RegionAreaDict;
+typedef std::map<int16_t, double> RegionAreaDict;
 typedef RegionAreaDict::iterator RegionAreaIterator;
 typedef std::pair<RegionAreaIterator, RegionAreaIterator> RegionAreaPair;
 
-typedef std::map<const Pixel, bool, PixelOrdering> CoverageDict;
+typedef std::map<Pixel, bool, PixelOrdering> CoverageDict;
 typedef CoverageDict::iterator CoverageIterator;
 
 struct section {
